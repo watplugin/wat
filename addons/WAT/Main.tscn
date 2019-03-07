@@ -1,13 +1,50 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/WAT/Display.gd" type="Script" id=1]
 
 [node name="Main" type="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="."]
-margin_left = 225.0
-margin_top = 151.0
-margin_right = 350.0
-margin_bottom = 165.0
-text = "PLACEHOLDER TEXT"
+[node name="Split" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 5
+
+[node name="Config" type="VBoxContainer" parent="Split"]
+margin_right = 200.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="Button" type="Button" parent="Split/Config"]
+margin_right = 200.0
+margin_bottom = 20.0
+text = "Run All Tests"
+
+[node name="Button2" type="Button" parent="Split/Config"]
+margin_top = 20.0
+margin_right = 200.0
+margin_bottom = 40.0
+text = "Clear Display"
+
+[node name="Button3" type="Button" parent="Split/Config"]
+margin_top = 40.0
+margin_right = 200.0
+margin_bottom = 60.0
+text = "Beep"
+
+[node name="Display" type="Tree" parent="Split"]
+margin_left = 205.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/draw_relationship_lines = 1
+script = ExtResource( 1 )
 
