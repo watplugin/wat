@@ -11,13 +11,12 @@ func _ready():
 
 func _run():
 	display.reset()
-	for path in self.tests():
-		var test = load(path).new()
-#		test.title = path # We can probably self-reference path
+	for script in self.tests():
+		var test: WATT = script.new()
 		add_child(test)
 		test.run()
 		display.display(test.testcase)
-		test.free()
+		test.free() # This might cause issues?
 	
 func tests() -> Array:
 	# In future this might be better in its own script
@@ -29,6 +28,6 @@ func tests() -> Array:
 	var title = dir.get_next()
 	while title != "":
 		if title.begins_with("test_") and title.ends_with(".gd"):
-			results.append(_TEST_DIR + title)
+			results.append(load(_TEST_DIR + title))
 		title = dir.get_next()
 	return results
