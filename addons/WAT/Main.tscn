@@ -1,12 +1,14 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://addons/WAT/Display.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/Main.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/Display.gd" type="Script" id=2]
 
 [node name="Main" type="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource( 1 )
 
 [node name="Split" type="HBoxContainer" parent="."]
 anchor_right = 1.0
@@ -46,5 +48,5 @@ margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/draw_relationship_lines = 1
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
