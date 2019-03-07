@@ -6,13 +6,12 @@ var testcase: WATCase
 var title: String
 
 func _init():
-	# We pass the title in from the Runner
 	self.expect = Expectations.new()
-	self.testcase = WATCase.new()
+	self.testcase = WATCase.new(self._title())
 	self.expect.connect("OUTPUT", self.testcase, "_add_expectation")
 
 func run() -> void:
-	self.testcase.details = self.title
+	print(_title())
 	_start()
 	for test in self._test_methods():
 		self.testcase.add_method(test)
@@ -40,3 +39,6 @@ func _test_methods() -> Array:
 		if method.name.begins_with("test_"):
 			results.append(method.name)
 	return results
+	
+func _title() -> String:
+	return self.get_script().get_path()

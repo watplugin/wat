@@ -5,6 +5,9 @@ var details: String
 var success: bool = true
 var _tests: Dictionary = {}
 var _current_method: String
+
+func _init(details: String) -> void:
+	self.details = details
 	
 func add_method(method: String) -> void:
 	# Called by the Test Script

@@ -13,7 +13,7 @@ func _run():
 	display.reset()
 	for path in self.tests():
 		var test = load(path).new()
-		test.title = path # We can probably self-reference path
+#		test.title = path # We can probably self-reference path
 		add_child(test)
 		test.run()
 		display.display(test.testcase)
