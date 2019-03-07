@@ -6,7 +6,6 @@ var _root: TreeItem
 	
 func _enter_tree() -> void:
 	reset()
-	var success = create_item(self._root)
 	
 func reset() -> void:
 	self.clear()
