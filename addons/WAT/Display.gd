@@ -19,7 +19,6 @@ func display(testcase: WATCase) -> void:
 	for test in testcase.tests():
 		var method_item: TreeItem = create_item(script_item)
 		_display(test.details, test.success, method_item)
-		print(test)
 		for expectation in test.expectations:
 			var expect_item: TreeItem = create_item(method_item)
 			_display(expectation.details, expectation.success, expect_item)
