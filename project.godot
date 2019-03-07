@@ -8,9 +8,26 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Reference",
+"class": "Expectations",
+"language": "GDScript",
+"path": "res://addons/WAT/Scripts/expectations.gd"
+}, {
+"base": "Node",
+"class": "WATCase",
+"language": "GDScript",
+"path": "res://addons/WAT/Scripts/WATCase.gd"
+}, {
+"base": "Node",
+"class": "WATT",
+"language": "GDScript",
+"path": "res://addons/WAT/Scripts/WATT.gd"
+} ]
 _global_script_class_icons={
-
+"Expectations": "",
+"WATCase": "",
+"WATT": ""
 }
 
 [application]
