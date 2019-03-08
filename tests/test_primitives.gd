@@ -23,4 +23,4 @@ func test_expect_is_true_all_of_these_should_fail():
 	expect.is_true((bad.vec2 is Vector2), "Vector2(0, 0) is Vector2")
 	expect.is_true((bad.vec3 is Vector3), "Vector3(0, 0, 0) is Vector3")
 	expect.is_true((bad.array is Array), "[] is Array")
-	expect.is_true((bad.dictionary is Dictionary), "{} is Dictionary")
+	expect.is_true((bad.dict is Dictionary), "{} is Dictionary")
