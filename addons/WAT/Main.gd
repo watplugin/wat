@@ -17,7 +17,7 @@ func _run():
 		test.run()
 		display.display(test.testcase)
 		test.free() # This might cause issues?
-	
+
 func tests() -> Array:
 	# In future this might be better in its own script
 	var ONLY_SEARCH_CHILDREN: bool = true
