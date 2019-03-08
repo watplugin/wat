@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
-"class": "Calculator",
-"language": "GDScript",
-"path": "res://examples/calculator.gd"
-}, {
 "base": "Reference",
 "class": "Expectations",
 "language": "GDScript",
@@ -30,7 +25,6 @@ _global_script_classes=[ {
 "path": "res://addons/WAT/Scripts/WATT.gd"
 } ]
 _global_script_class_icons={
-"Calculator": "",
 "Expectations": "",
 "WATCase": "",
 "WATT": ""
