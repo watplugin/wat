@@ -55,6 +55,7 @@ func _set_base_details(item: TreeItem, test) -> void:
 	item.set_text(0, test.details)
 	if test.success:
 		item.set_custom_color(0, SUCCESS)
+		item.set_custom_color(1, SUCCESS)
 		
 func _add_total(key: int, success) -> void:
 	TOTALS[key][TOTAL] += 1

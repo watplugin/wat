@@ -4,6 +4,7 @@ class_name Expectations
 signal OUTPUT
 
 func output(success: bool, message: String, got: String = "") -> void:
+	message = "Expect:    %s" % message
 	emit_signal("OUTPUT", success, message, got)
 	
 func is_true(condition: bool, message: String) -> void:
@@ -16,4 +17,4 @@ func is_equal(a, b, message: String) -> void:
 	output((a == b), message, result)
 	
 func _stringify(variable) -> String:
-	return "<%s | %s>" % [BuiltIn.to_string(variable), str(variable)]
+	return "< %s | %s >" % [BuiltIn.to_string(variable), str(variable)]
