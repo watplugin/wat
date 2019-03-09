@@ -26,20 +26,21 @@ func reset() -> void:
 	self._root.set_text(0, "Test Root Created")
 	
 func display(testcase: WATCase) -> void:
-	TOTALS[SCRIPT][TOTAL] += 1
+#	TOTALS[SCRIPT][TOTAL] += 1
 	var script: TreeItem = create_item(self._root)
 	for test in testcase.tests():
-		_add_tests(testcase, script)
+		_add_tests(test, script)
 	_set_base_details(script, testcase)
+	_add_total(SCRIPT, testcase.success)
+	_set_totals(SCRIPT)
 	
-func _add_tests(testcase: WATCase, root_script: TreeItem) -> void:
-	TOTALS[METHOD][TOTAL] += 1
-	
-	for test in testcase.tests():
-		var method: TreeItem = create_item(root_script)
-		for expectation in test.expectations:
-			_add_expectation(expectation, method)
-		_set_base_details(method, test)
+func _add_tests(test, root_script: TreeItem) -> void:
+#	TOTALS[METHOD][TOTAL] += 1
+#	for test in testcase.tests():
+	var method: TreeItem = create_item(root_script)
+	for expectation in test.expectations:
+		_add_expectation(expectation, method)
+	_set_base_details(method, test)
 
 func _add_expectation(expectation: Dictionary, method: TreeItem):
 	TOTALS[EXPECTATION][TOTAL] += 1
@@ -50,4 +51,11 @@ func _set_base_details(item: TreeItem, test) -> void:
 	item.set_text(0, test.details)
 	if test.success:
 		item.set_custom_color(0, SUCCESS)
+		
+func _add_total(key: int, success) -> void:
+	TOTALS[key][TOTAL] += 1
+	if success:
+		TOTALS[key][PASSED] += 1
 
+func _set_totals(key: int, item: TreeItem = self._root):
+	item.set_text(1, "%s / %s " % [TOTALS[key][PASSED], TOTALS[key][TOTAL]])
