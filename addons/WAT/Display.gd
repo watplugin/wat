@@ -1,6 +1,13 @@
 tool
 extends Tree
 
+enum {
+	SCRIPT
+	METHOD
+	EXPECTATION
+}
+
+
 const PASSED: Color = Color(0, 1, 0, 1)
 var _root: TreeItem
 
@@ -11,18 +18,26 @@ func reset() -> void:
 	self.clear()
 	self._root = create_item()
 	self._root.set_text(0, "Test Root Created")
-
+	
 func display(testcase: WATCase) -> void:
-	var script_item: TreeItem = create_item(self._root)
-	_display(testcase, script_item)
+	var script: TreeItem = create_item(self._root)
 	for test in testcase.tests():
-		var method_item: TreeItem = create_item(script_item)
-		_display(test, method_item)
+		_add_tests(testcase, script)
+	_set_base_details(script, testcase)
+	
+func _add_tests(testcase: WATCase, root_script: TreeItem) -> void:
+	for test in testcase.tests():
+		var method: TreeItem = create_item(root_script)
 		for expectation in test.expectations:
-			var expect_item: TreeItem = create_item(method_item)
-			_display(expectation, expect_item)
+			_add_expectation(expectation, method)
+		_set_base_details(method, test)
 
-func _display(test, item: TreeItem) -> void:
+func _add_expectation(expectation: Dictionary, method: TreeItem):
+	# We may need to expand this further later
+	_set_base_details(create_item(method), expectation)
+		
+func _set_base_details(item: TreeItem, test) -> void:
 	item.set_text(0, test.details)
 	if test.success:
 		item.set_custom_color(0, PASSED)
+
