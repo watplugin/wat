@@ -45,7 +45,9 @@ func _add_tests(test, root_script: TreeItem) -> void:
 
 func _add_expectation(expectation: Dictionary, method: TreeItem):
 	# We may need to expand this further later
-	_set_base_details(create_item(method), expectation)
+	var expect: TreeItem = create_item(method)
+	_set_base_details(expect, expectation)
+	expect.set_text(1, "Result:    %s" % expectation.got)
 	_add_total(EXPECTATION, expectation.success)
 	_set_totals(EXPECTATION, method)
 		

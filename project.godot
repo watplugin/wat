@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Reference",
+"class": "BuiltIn",
+"language": "GDScript",
+"path": "res://addons/WAT/constants/type_library.gd"
+}, {
+"base": "Reference",
 "class": "Expectations",
 "language": "GDScript",
 "path": "res://addons/WAT/Scripts/expectations.gd"
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://addons/WAT/Scripts/WATT.gd"
 } ]
 _global_script_class_icons={
+"BuiltIn": "",
 "Expectations": "",
 "WATCase": "",
 "WATT": ""

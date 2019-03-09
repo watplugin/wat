@@ -14,9 +14,9 @@ func add_method(method: String) -> void:
 	self._current_method = method
 	self._tests[method] = {"details": method, "success": true, "expectations": []}
 	
-func _add_expectation(success: bool, expectation: String) -> void:
+func _add_expectation(success: bool, expectation: String, got: String) -> void:
 	# Called via signal from expectations.gd
-	self._tests[self._current_method].expectations.append({"details": expectation, "success": success})
+	self._tests[self._current_method].expectations.append({"details": expectation, "success": success, "got": got})
 	if not success:
 		self._tests[self._current_method].success = false
 		self.success = false
