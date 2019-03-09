@@ -41,6 +41,8 @@ func _add_tests(test, root_script: TreeItem) -> void:
 	for expectation in test.expectations:
 		_add_expectation(expectation, method)
 	_set_base_details(method, test)
+	_add_total(METHOD, test.success)
+	_set_totals(METHOD, root_script)
 
 func _add_expectation(expectation: Dictionary, method: TreeItem):
 	TOTALS[EXPECTATION][TOTAL] += 1
