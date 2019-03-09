@@ -63,7 +63,10 @@ func _set_totals(key: int, item: TreeItem = self._root):
 	item.set_text(1, "%s / %s " % [TOTALS[key][PASSED], TOTALS[key][TOTAL]])
 	if TOTALS[key][PASSED] == TOTALS[key][TOTAL]:
 		item.set_custom_color(1, SUCCESS)
+		# We're mainly doing this for the top root but maybe we can change it for others to?
+		item.set_custom_color(0, SUCCESS)
 	else:
+		item.set_custom_color(0, FAILED)
 		item.set_custom_color(1, FAILED)
 	
 func _reset_totals(key: int):
