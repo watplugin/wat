@@ -19,6 +19,7 @@ func _add_expectation(success: bool, expectation: String) -> void:
 	self._tests[self._current_method].expectations.append({"details": expectation, "success": success})
 	if not success:
 		self._tests[self._current_method].success = false
+		self.success = false
 		
 func tests() -> Array:
 	return self._tests.values()
