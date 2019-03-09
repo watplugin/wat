@@ -21,6 +21,7 @@ func _enter_tree() -> void:
 
 func reset() -> void:
 	# ADD A DICT CLEAR METHOD HERE
+	self._reset_all_totals()
 	self.clear()
 	self._root = create_item()
 	self._root.set_text(0, "Test Root Created")
@@ -43,11 +44,13 @@ func _add_tests(test, root_script: TreeItem) -> void:
 	_set_base_details(method, test)
 	_add_total(METHOD, test.success)
 	_set_totals(METHOD, root_script)
+	_reset_totals(EXPECTATION)
 
 func _add_expectation(expectation: Dictionary, method: TreeItem):
-	TOTALS[EXPECTATION][TOTAL] += 1
 	# We may need to expand this further later
 	_set_base_details(create_item(method), expectation)
+	_add_total(EXPECTATION, expectation.success)
+	_set_totals(EXPECTATION, method)
 		
 func _set_base_details(item: TreeItem, test) -> void:
 	item.set_text(0, test.details)
@@ -61,3 +64,14 @@ func _add_total(key: int, success) -> void:
 
 func _set_totals(key: int, item: TreeItem = self._root):
 	item.set_text(1, "%s / %s " % [TOTALS[key][PASSED], TOTALS[key][TOTAL]])
+#	if TOTALS[key][PASSED] == TOTALS[key][TOTAL]:
+#		item.set_custom_color(1, PASSED)
+	
+func _reset_totals(key: int):
+	TOTALS[key][PASSED] = 0
+	TOTALS[key][TOTAL] = 0
+	
+func _reset_all_totals():
+	_reset_totals(SCRIPT)
+	_reset_totals(METHOD)
+	_reset_totals(EXPECTATION)
