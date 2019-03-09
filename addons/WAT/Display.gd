@@ -20,12 +20,9 @@ func display(testcase: WATCase) -> void:
 		_display(test, method_item)
 		for expectation in test.expectations:
 			var expect_item: TreeItem = create_item(method_item)
-			_display(expectation, expect_item, true)
+			_display(expectation, expect_item)
 
-func _display(test, item: TreeItem, is_expectation: bool = false) -> void:
+func _display(test, item: TreeItem) -> void:
 	item.set_text(0, test.details)
-	if is_expectation:
-		item.set_text(1, "Expected: %s, Got: %s" % [test.expected, test.got])
 	if test.success:
 		item.set_custom_color(0, PASSED)
-		item.set_custom_color(1, PASSED)
