@@ -14,20 +14,19 @@ enum {
 
 const TOTALS: Dictionary = {SCRIPT: {TOTAL: 0, PASSED: 0}, METHOD: {TOTAL: 0, PASSED: 0}, EXPECTATION: {TOTAL: 0, PASSED: 0}}
 const SUCCESS: Color = Color(0, 1, 0, 1)
+const FAILED: Color = Color(1, 1, 1, 1)
 var _root: TreeItem
 
 func _enter_tree() -> void:
 	reset()
 
 func reset() -> void:
-	# ADD A DICT CLEAR METHOD HERE
 	self._reset_all_totals()
 	self.clear()
 	self._root = create_item()
 	self._root.set_text(0, "Test Root Created")
 	
 func display(testcase: WATCase) -> void:
-#	TOTALS[SCRIPT][TOTAL] += 1
 	var script: TreeItem = create_item(self._root)
 	for test in testcase.tests():
 		_add_tests(test, script)
@@ -36,8 +35,6 @@ func display(testcase: WATCase) -> void:
 	_set_totals(SCRIPT)
 	
 func _add_tests(test, root_script: TreeItem) -> void:
-#	TOTALS[METHOD][TOTAL] += 1
-#	for test in testcase.tests():
 	var method: TreeItem = create_item(root_script)
 	for expectation in test.expectations:
 		_add_expectation(expectation, method)
@@ -64,8 +61,10 @@ func _add_total(key: int, success) -> void:
 
 func _set_totals(key: int, item: TreeItem = self._root):
 	item.set_text(1, "%s / %s " % [TOTALS[key][PASSED], TOTALS[key][TOTAL]])
-#	if TOTALS[key][PASSED] == TOTALS[key][TOTAL]:
-#		item.set_custom_color(1, PASSED)
+	if TOTALS[key][PASSED] == TOTALS[key][TOTAL]:
+		item.set_custom_color(1, SUCCESS)
+	else:
+		item.set_custom_color(1, FAILED)
 	
 func _reset_totals(key: int):
 	TOTALS[key][PASSED] = 0
