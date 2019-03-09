@@ -17,4 +17,4 @@ func is_equal(a, b, message: String) -> void:
 	output((a == b), message, result)
 	
 func _stringify(variable) -> String:
-	return "< %s | %s >" % [BuiltIn.to_string(variable), str(variable)]
+	return "< %s | %s >" % [BuiltIn.to_string(variable).to_upper(), str(variable)]
