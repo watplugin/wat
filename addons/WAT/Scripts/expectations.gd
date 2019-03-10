@@ -9,6 +9,9 @@ class OP:
 	const GREATER_THAN_OR_EQUAL = "=>"
 	const LESS_THAN_OR_EQUAL = "<="
 	const IS = "is"
+	const IN = "in"
+	const NOT = "not"
+	const EXCLAIMATION = "!"
 
 signal OUTPUT
 
