@@ -2,12 +2,14 @@ tool
 extends Panel
 
 onready var run_button = $Split/Config/Button
+onready var clear_button = $Split/Config/Button2
 onready var display = $Split/Display
 #var example = preload("res://tests/test_calculator_methods.gd")
 const _TEST_DIR: String = "res://tests/"
 
 func _ready():
 	self.run_button.connect("pressed", self, "_run")
+	self.clear_button.connect("pressed", self.display, "reset")
 
 func _run():
 	display.reset()
