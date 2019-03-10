@@ -27,13 +27,13 @@ func is_equal(a, b, expected: String) -> void:
 	# May need to add a typeof check here
 	var success: bool = (a == b)
 	var operator: String = OP.EQUAL if success else OP.INEQUAL
-	var result: String = "%s %s %s" %[_stringify(a), operator, _stringify(b)]
+	var result: String = "%s    %s    %s" %[_stringify(a), operator, _stringify(b)]
 	output(success, expected, result)
 	
 func is_not_equal(a, b, expected: String) -> void:
 	var success: bool = (a != b)
 	var operator: String = OP.INEQUAL if success else OP.EQUAL
-	var result: String = "%s %s %s" % [_stringify(a), operator, _stringify(b)]
+	var result: String = "%s    %s    %s" % [_stringify(a), operator, _stringify(b)]
 	output((a != b), expected, result)
 	
 func is_greater_than(a, b, expected: String) -> void:
@@ -45,7 +45,7 @@ func is_greater_than(a, b, expected: String) -> void:
 	else:
 		success = a > b
 	var operator: String = OP.GREATER if success else OP.LESS_THAN_OR_EQUAL
-	var result: String = "%s %s %s" % [_stringify(a), operator, _stringify(b)]
+	var result: String = "%s    %s    %s" % [_stringify(a), operator, _stringify(b)]
 	output(success, expected, result)
 	
 func is_less_than(a, b, expected: String) -> void:
@@ -57,8 +57,8 @@ func is_less_than(a, b, expected: String) -> void:
 	else:
 		success = a < b
 	var operator: String = OP.LESSER if success else OP.GREATER_THAN_OR_EQUAL
-	var result: String = "%s %s %s" % [_stringify(a), operator, _stringify(b)]
+	var result: String = "%s    %s    %s" % [_stringify(a), operator, _stringify(b)]
 	output(success, expected, result)
 	
 func _stringify(variable) -> String:
-	return "< %s | %s >" % [BuiltIn.to_string(variable).to_upper(), str(variable)]
+	return "| %s | %s |" % [BuiltIn.to_string(variable).to_upper(), str(variable)]
