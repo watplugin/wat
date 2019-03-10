@@ -1,6 +1,10 @@
 extends Reference
 class_name Expectations
 
+class OP:
+	const EQUAL = "=="
+	const INEQUAL = "!="
+
 signal OUTPUT
 
 func output(success: bool, message: String, got: String = "", notes = "") -> void:
@@ -13,11 +17,15 @@ func is_true(condition: bool, message: String) -> void:
 	
 func is_equal(a, b, message: String) -> void:
 	# May need to add a typeof check here
-	var result: String = "%s == %s" %[_stringify(a), _stringify(b)]
-	output((a == b), message, result)
+	var success: bool = (a == b)
+	var operator: String = OP.EQUAL if success else OP.INEQUAL
+	var result: String = "%s %s %s" %[_stringify(a), operator, _stringify(b)]
+	output(success, message, result)
 	
 func is_not_equal(a, b, message: String) -> void:
-	var result: String = "%s != %s" % [_stringify(a), _stringify(b)]
+	var success: bool = (a != b)
+	var operator: String = OP.INEQUAL if success else OP.EQUAL
+	var result: String = "%s %s %s" % [_stringify(a), operator, _stringify(b)]
 	output((a != b), message, result)
 	
 func _stringify(variable) -> String:
