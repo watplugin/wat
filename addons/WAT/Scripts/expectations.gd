@@ -3,9 +3,9 @@ class_name Expectations
 
 signal OUTPUT
 
-func output(success: bool, message: String, got: String = "") -> void:
+func output(success: bool, message: String, got: String = "", notes = "") -> void:
 	message = "Expect:    %s" % message
-	emit_signal("OUTPUT", success, message, got)
+	emit_signal("OUTPUT", success, message, got, notes)
 	
 func is_true(condition: bool, message: String) -> void:
 	# We'll expand on these later but this should be fine now

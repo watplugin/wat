@@ -21,6 +21,7 @@ func _enter_tree() -> void:
 	reset()
 
 func reset() -> void:
+	print("reset called")
 	self._reset_all_totals()
 	self.clear()
 	self._root = create_item()
@@ -31,16 +32,14 @@ func display(testcase: WATCase) -> void:
 	for test in testcase.tests():
 		_add_tests(test, script)
 	_set_base_details(script, testcase)
-	_add_total(SCRIPT, testcase.success)
-	_set_totals(SCRIPT)
+	_transform_totals(SCRIPT, self._root, testcase.success)
 	
 func _add_tests(test, root_script: TreeItem) -> void:
 	var method: TreeItem = create_item(root_script)
 	for expectation in test.expectations:
 		_add_expectation(expectation, method)
 	_set_base_details(method, test)
-	_add_total(METHOD, test.success)
-	_set_totals(METHOD, root_script)
+	_transform_totals(METHOD, root_script, test.success)
 	_reset_totals(EXPECTATION)
 
 func _add_expectation(expectation: Dictionary, method: TreeItem):
@@ -48,14 +47,18 @@ func _add_expectation(expectation: Dictionary, method: TreeItem):
 	var expect: TreeItem = create_item(method)
 	_set_base_details(expect, expectation)
 	expect.set_text(1, "Result:    %s" % expectation.got)
-	_add_total(EXPECTATION, expectation.success)
-	_set_totals(EXPECTATION, method)
+	_transform_totals(EXPECTATION, method, expectation.success)
 		
 func _set_base_details(item: TreeItem, test) -> void:
 	item.set_text(0, test.details)
 	if test.success:
 		item.set_custom_color(0, SUCCESS)
 		item.set_custom_color(1, SUCCESS)
+	if test.has("notes"):
+		var example = "Implicit Conversion\nInt will never be Float\nRandomNote"
+		test.notes = example
+		item.set_text(2, "Notes: %s" % str(len(test.notes.split("\n"))))
+		item.set_tooltip(2, test.notes)
 		
 func _add_total(key: int, success) -> void:
 	TOTALS[key][TOTAL] += 1
@@ -71,6 +74,10 @@ func _set_totals(key: int, item: TreeItem = self._root):
 	else:
 		item.set_custom_color(0, FAILED)
 		item.set_custom_color(1, FAILED)
+		
+func _transform_totals(key: int, parent: TreeItem, success: bool):
+	_add_total(key, success)
+	_set_totals(key, parent)
 	
 func _reset_totals(key: int):
 	TOTALS[key][PASSED] = 0
@@ -80,3 +87,4 @@ func _reset_all_totals():
 	_reset_totals(SCRIPT)
 	_reset_totals(METHOD)
 	_reset_totals(EXPECTATION)
+	
