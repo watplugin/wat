@@ -54,7 +54,7 @@ func _set_base_details(item: TreeItem, test) -> void:
 	if test.success:
 		item.set_custom_color(0, SUCCESS)
 		item.set_custom_color(1, SUCCESS)
-	if test.has("notes"):
+	if test.get("notes"):
 		var example = "Implicit Conversion\nInt will never be Float\nRandomNote"
 		test.notes = example
 		item.set_text(2, "Notes: %s" % str(len(test.notes.split("\n"))))

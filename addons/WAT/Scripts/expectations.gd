@@ -37,6 +37,8 @@ func is_greater_than(a, b, message: String) -> void:
 	var success: bool
 	if a is Dictionary or a is Array:
 		success = a.size() > b.size()
+	elif a is String:
+		success = a.length() > b.length()
 	else:
 		success = a > b
 	var operator: String = OP.GREATER if success else OP.LESS_THAN_OR_EQUAL
