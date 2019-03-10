@@ -1,6 +1,22 @@
 extends Reference
 class_name Expectations
 
+### TO ADD ###
+# =>
+# <=
+# has(value)
+# !has(value)
+# in range
+# not in range
+# in collection
+# not in collection
+# dict keys are equal
+# dicts values are equal
+# dict k/v are equal
+# hash is equal
+# Others for doubles (call, call count, called by signal, object emitted signal, called with parameters, signal w parameters)
+
+
 class OP:
 	const EQUAL = "=="
 	const INEQUAL = "!="
