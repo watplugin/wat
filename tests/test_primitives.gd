@@ -81,3 +81,23 @@ func test_expect_is_greater_than_all_of_these_should_pass():
 	expect.is_greater_than([1, 2, 3], [], "[1, 2, 3] > []")
 	expect.is_greater_than({0: 10, 1: 20}, {0: 0}, "{0: 10, 1: 20, {0: 0}")
 	expect.is_greater_than([1, 2, 3], {0: 0}, "[1, 2, 3] > {0:0}") # Add a note?
+	
+func test_expect_is_less_than_all_of_these_should_pass():
+	expect.is_less_than(0, 1, "0 < 1")
+	expect.is_less_than("Small", "Massive", '"Massive" < "Small"')
+	expect.is_less_than(Vector2(0, 0), Vector2(10, 10), "Vector2(0, 0) < Vector2(10, 10)")
+	expect.is_less_than(Vector3(0, 0, 0), Vector3(10, 10, 10), "Vector3(0, 0, 0), Vector3(10, 10, 10)")
+	expect.is_less_than(0.5, 1.0, "0.5 < 1.0")
+	expect.is_less_than([], [1, 2, 3], "[] < [1, 2, 3]")
+	expect.is_less_than({0: 0}, {0:0, 1: 1}, "{0: 0} < {0: 0, 1: 1}")
+	expect.is_less_than([], {0: 1}, "[] < {0: 1}")
+	
+func test_expect_is_less_than_all_of_these_should_fail():
+	expect.is_less_than(0, -1, "0 < 1")
+	expect.is_less_than("Massive", "Massive", '"Small" < "Massive"')
+	expect.is_less_than(Vector2(0, 0), Vector2(-5, -5), "Vector2(0, 0) < Vector2(5, 5)")
+	expect.is_less_than(Vector3(0, 0, 0), Vector3(-2, -2, -2), "Vector3(0, 0, 0) < Vector3(2, 2, 2)")
+	expect.is_less_than(0.5, -2.0, "0.5 < 2")
+	expect.is_less_than([1, 2, 3], [0, 1], "[] < [0, 1]")
+	expect.is_less_than({0:0, 1:1}, {}, "{0:0, 0:1} < {0: 0}")
+	expect.is_less_than([1, 2], {}, "[1, 2] < {0: 0, 1:1, 2:2}")

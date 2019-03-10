@@ -10,7 +10,7 @@ class OP:
 	const LESS_THAN_OR_EQUAL = "<="
 	const IS = "is"
 	const IN = "in"
-	const NOT = "not"
+	const NOT = "not "
 	const EXCLAIMATION = "!"
 
 signal OUTPUT
@@ -45,7 +45,19 @@ func is_greater_than(a, b, expected: String) -> void:
 	else:
 		success = a > b
 	var operator: String = OP.GREATER if success else OP.LESS_THAN_OR_EQUAL
-	var result: String = "%s %s %s" %[_stringify(a), operator, _stringify(b)]
+	var result: String = "%s %s %s" % [_stringify(a), operator, _stringify(b)]
+	output(success, expected, result)
+	
+func is_less_than(a, b, expected: String) -> void:
+	var success: bool
+	if a is Dictionary or a is Array:
+		success = a.size() < b.size()
+	elif a is String:
+		success = a.length() < b.length()
+	else:
+		success = a < b
+	var operator: String = OP.LESSER if success else OP.GREATER_THAN_OR_EQUAL
+	var result: String = "%s %s %s" % [_stringify(a), operator, _stringify(b)]
 	output(success, expected, result)
 	
 func _stringify(variable) -> String:
