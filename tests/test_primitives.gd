@@ -48,10 +48,27 @@ func test_expect_is_equal_all_of_these_should_pass():
 func test_expect_is_equal_all_of_these_should_fail():
 	# Add Notes for these comparisons due to implicit conversion
 	# expect.is_equal(1, 1.0, "1 equals 1")
-	expect.is_equal(1.0, 1, "1.0 equals 1.0")
+	#	expect.is_equal(1.0, 1, "1.0 equals 1.0")
 	expect.is_equal(true, false, "true equals true")
 	expect.is_equal(false, true, "false equals false")
 	expect.is_equal("String", "Words", '"String" equals "String"')
 	expect.is_equal([], [1, 2, 3], "[] equals []")
 	expect.is_equal(Vector2(0, 0), Vector2(10, 10), "Vector2(0, 0) equals Vector2(0, 0)")
 	expect.is_equal(Vector3(0, 0, 0), Vector3(10, 10, 10), "Vector3(0, 0, 0) equals Vector3(0, 0, 0)")
+	
+func test_expect_is_not_equal_all_of_these_should_pass():
+	expect.is_not_equal(true, false, "true != false")
+	expect.is_not_equal(false, true, "false != true")
+	expect.is_not_equal("String", "Words", '"String != "String"')
+	expect.is_not_equal([], [1, 2, 3], "[] != [1, 2, 3]")
+	expect.is_not_equal(Vector2(0, 0), Vector2(10, 10), "Vector2(0, 0) != Vector2(0, 0)")
+	expect.is_not_equal(Vector3(0, 0, 0), Vector3(10, 10, 10), "Vector3(0, 0, 0) != Vector3(0, 0)")
+	
+func test_expect_is_not_equal_all_of_these_should_fail():
+	expect.is_not_equal(true, true, "true != false")
+	expect.is_not_equal(false, false, "false != true")
+	expect.is_not_equal("String", "String", '"String != "String"')
+	expect.is_not_equal([], [], "[] != [1, 2, 3]")
+	expect.is_not_equal(Vector2(0, 0), Vector2(0, 0), "Vector2(0, 0) != Vector2(0, 0)")
+	expect.is_not_equal(Vector3(0, 0, 0), Vector3(0, 0, 0), "Vector3(0, 0, 0) != Vector3(0, 0)")
+	
