@@ -3,14 +3,21 @@ extends Node
 # to have a WAT accessor script (maybe the config?)
 class_name WATDouble
 
+const USERDIR = "user://WAT/"
 var instance
 var methods: Dictionary = {}
 
 func _init(script: Script) -> void:
-	# Rewrite Script
-	# Save Script
-	# Add self as metadata to script (we could do a property object but using metadata is more inconspicoius)
-	pass
+	var dir = Directory.new()
+	if not dir.dir_exists(USERDIR):
+		dir.make_dir(USERDIR)
+	var file: File = File.new()
+	file.open("%s%s.gd" %[USERDIR, "test"], file.WRITE)
+	file.close()
+
+
+#	# Add self as metadata to script (we could do a property object but using metadata is more inconspicoius)
+
 # Requirements? (Not set in stone)
 # Doubler - Delegates to others
 # Writer - Reads/Write saves scripts (probably to a user://WATemp folder
