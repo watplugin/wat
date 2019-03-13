@@ -21,7 +21,6 @@ func _enter_tree() -> void:
 	reset()
 
 func reset() -> void:
-	print("reset called")
 	self._reset_all_totals()
 	self.clear()
 	self._root = create_item()

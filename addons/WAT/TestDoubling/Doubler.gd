@@ -3,11 +3,17 @@ extends Node
 # to have a WAT accessor script (maybe the config?)
 class_name WATDouble
 
-const USERDIR = "user://WAT/"
-const _WRITER = preload("Writer.gd")
+####	# Add self as metadata to script (we could do a property object but using metadata is more inconspicoius)
+#### Requirements? (Not set in stone)
+#### Doubler - Delegates to others
+#### Writer - Reads/Write saves scripts (probably to a user://WATemp folder
+#### Config for type checking (do we keep as is, remove param/return types or mod elsewhere?)
+#### Handle variables (like constants etc)
+#### Add a Method Class, a Call class (or data structure?)
+
+const _WRITER = preload("res://addons/WAT/TestDoubling/Writer.gd")
 var instance
-var writer = _WRITER.new()
 var methods: Dictionary = {}
 
 func _init(script: Script) -> void:
-	var instance = writer.rewrite(script)
+	var writer = _WRITER.new().rewrite(script)

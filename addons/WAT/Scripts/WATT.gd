@@ -11,7 +11,6 @@ func _init():
 	self.expect.connect("OUTPUT", self.testcase, "_add_expectation")
 
 func run() -> void:
-	print(_title())
 	_start()
 	for test in self._test_methods():
 		self.testcase.add_method(test)
