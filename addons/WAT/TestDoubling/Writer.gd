@@ -3,22 +3,29 @@ extends Reference
 const _USERDIR: String = "user://WAT/"
 var _script: Script
 var _source: String
+var _title: String
 var _tokens: Array
 var _rewrite: String
 
 func rewrite(script: Script):
 	_script = script
 	self._source = script.source_code
+	_set_title()
 	_tokenize()
 	_parse_to_string()
-	_save_as("test", _rewrite)
+	_save()
 	return null
+	
+func _set_title():
+	var source_title: String = Array(_script.resource_path.replace(".gd", "").split("/")).pop_back()
+	_title = "Doubled_%s" % source_title
+	print(_title)
 
 func _tokenize() -> void:
 	_tokens = []
 	var _results: Array = _source.split("\n")
 	for line in _results:
-		if "var" in line or "func" in line:
+		if line.begins_with("var") or line.begins_with("func"):
 			_tokens.append(line.dedent())
 #
 func _parse_to_string() -> void:
@@ -47,11 +54,11 @@ func _method(line: String) -> String:
 func _var(line):
 	pass
 
-func _save_as(title: String, content: String) -> void:
+func _save() -> void:
 	var file: File = File.new()
 	#warning-ignore:return_value_discarded
-	file.open("%s%s.gd" % [_USERDIR, title], file.WRITE)
-	file.store_string(content)
+	file.open("%s%s.gd" % [_USERDIR, _title], file.WRITE)
+	file.store_string(_rewrite)
 	file.close()
 
 func _create_directory() -> void: # Maybe change this to a bool?
