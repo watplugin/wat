@@ -28,7 +28,7 @@ func _tokenize() -> void:
 			_tokens.append(line.dedent())
 #
 func _parse_to_string() -> void:
-	_rewrite = 'extends "%s"\n\n' % _script.resource_path
+	_rewrite = _get_extends()
 	for line in _tokens:
 		if line.begins_with("func"):
 			_rewrite += _method(line)
@@ -56,6 +56,9 @@ func _create_directory() -> void: # Maybe change this to a bool?
 		dir.make_dir(_USERDIR)
 		
 # Helper queries
+func _get_extends() -> String:
+	return 'extends "%s"\n\n' % _script.resource_path
+
 func _begins_with_keyword(line: String) -> bool:
 	return line.begins_with("var") or line.begins_with("func")
 	
