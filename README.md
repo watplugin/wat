@@ -1,5 +1,7 @@
 # WAT
 
+NOTE: THIS IS ONLY PUBLIC BECAUSE IT IS REQUIRED TO WRITE A WIKI. IT ISN'T ACTUALLY READY!
+
 A Testing Plugin for Godot Game Engine
 
 ## Overview
