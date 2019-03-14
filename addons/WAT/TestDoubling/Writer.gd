@@ -9,6 +9,7 @@ var _rewrite: String
 
 func rewrite(script):
 	_set_script(script)
+	_set_source()
 	_set_title()
 	_tokenize()
 	_parse_to_string()
@@ -42,16 +43,13 @@ func _parse_to_string() -> void:
 	for line in _tokens:
 		if line.begins_with("func"):
 			_rewrite += _method(line)
-		elif line.begins_with("var"):
-			_rewrite += _var(line)
+		elif line.begins_with("var") or line.begins_with("const") or line.begins_with("signal"):
+			_rewrite += "%s\n" % line
 			
 func _method(line: String) -> String:
 	# Keeping the return value in there if it is already there (the "line" value)
-	var function = line + _arguments(_parameter_dict(line)) + _retval_delegate(_identifier(line))
+	var function = "\n%s" % (line + _arguments(_parameter_dict(line)) + _retval_delegate(_identifier(line)))
 	return function
-
-func _var(line):
-	pass
 
 func _save() -> void:
 	var file: File = File.new()
