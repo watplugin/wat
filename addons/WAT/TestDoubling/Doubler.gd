@@ -48,7 +48,6 @@ class Method:
 		var retval
 		for stub in stubs:
 			retval = stub.retval
-			print("retval: ", stub.retval)
 			var correct: bool = true
 			for key in arguments:
 				if arguments[key] != stub.arguments[key]:

@@ -18,7 +18,7 @@ func run() -> void:
 		self.call(test)
 		self._post()
 	self._end()
-
+	self._delete_doubles()
 
 func _start():
 	pass
@@ -41,3 +41,18 @@ func _test_methods() -> Array:
 	
 func _title() -> String:
 	return self.get_script().get_path()
+
+func _delete_doubles():
+	var BLANK: String = ""
+	var WATemp: String = "user://WATemp/"
+	var ONLY_SEARCH_CHILDREN: bool = true
+	var dir: Directory = Directory.new()
+	dir.open(WATemp)
+	dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
+	var file = dir.get_next()
+	while file != BLANK:
+		if file.begins_with("Doubled") and file.ends_with(".gd"):
+			print(file)
+			dir.remove("%s%s" % [WATemp, file])
+		file = dir.get_next()
+	dir.remove(WATemp)

@@ -45,8 +45,6 @@ func _tokenize(source: Source) -> void:
 		if line.begins_with("func") and not line.split(" ")[1] in source.methods:
 			source.tokens.append(line.dedent())
 			source.methods.append(line.split(" ")[1])
-#		elif not is_parent_scope and (line.begins_with("var") or line.begins_with("const") or line.begins_with("signal")):
-#			source.tokens.append(line.dedent())
 
 func _parse(source: Source) -> void:
 	for line in source.tokens:
