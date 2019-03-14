@@ -1,5 +1,5 @@
-extends BaseTest
-class_name TestTest
+extends BaseLogin
+class_name Login
 
 var age = 1000
 

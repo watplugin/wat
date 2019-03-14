@@ -10,9 +10,9 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
-"class": "BaseTest",
+"class": "BaseLogin",
 "language": "GDScript",
-"path": "res://addons/WAT/TestDoubling/ExamplesToDouble/BaseTest.gd"
+"path": "res://Examples/base_login.gd"
 }, {
 "base": "Reference",
 "class": "BuiltIn",
@@ -24,10 +24,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/WAT/Scripts/expectations.gd"
 }, {
-"base": "BaseTest",
-"class": "TestTest",
+"base": "BaseLogin",
+"class": "Login",
 "language": "GDScript",
-"path": "res://addons/WAT/TestDoubling/ExamplesToDouble/testtest.gd"
+"path": "res://Examples/login.gd"
 }, {
 "base": "Node",
 "class": "WATCase",
@@ -45,10 +45,10 @@ _global_script_classes=[ {
 "path": "res://addons/WAT/Scripts/WATT.gd"
 } ]
 _global_script_class_icons={
-"BaseTest": "",
+"BaseLogin": "",
 "BuiltIn": "",
 "Expectations": "",
-"TestTest": "",
+"Login": "",
 "WATCase": "",
 "WATDouble": "",
 "WATT": ""

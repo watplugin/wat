@@ -21,10 +21,7 @@ func get_retval(id: String, arguments: Dictionary):
 		_methods[id] = Method.new(id, 1, arguments)
 		return null
 	else:
-		var retval = _methods[id].get_retval(arguments)
-		print(retval)
-		return retval
-#		return _methods[id].get_retval(arguments)
+		return _methods[id].get_retval(arguments)
 
 func stub(id: String, arguments: Dictionary, retval) -> void:
 	if not _methods.has(id):
@@ -47,6 +44,7 @@ class Method:
 		stubs.append({"arguments": arguments, "retval": retval})
 
 	func get_retval(arguments: Dictionary):
+		call_count += 1
 		var retval
 		for stub in stubs:
 			retval = stub.retval
@@ -58,5 +56,4 @@ class Method:
 					break # set flag here?
 			if correct:
 				break
-		print(retval)
 		return retval
