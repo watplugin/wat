@@ -7,14 +7,24 @@ var _title: String
 var _tokens: Array
 var _rewrite: String
 
-func rewrite(script: Script):
-	_script = script
-	self._source = script.source_code
+func rewrite(script):
+	_set_script(script)
 	_set_title()
 	_tokenize()
 	_parse_to_string()
 	_save()
-	return null
+	return script
+	
+func _set_script(script) -> void:
+	if script is Script:
+		_script = script
+	elif script is String:
+		_script = load(script)
+	else:
+		push_error("Script must be valid Script or String Path to Script")
+		
+func _set_source():
+	_source = _script.source_code
 	
 func _set_title():
 	_title = "Doubled_%s" % _get_script_title()
