@@ -1,4 +1,4 @@
-extends Node
+extends BaseTest
 class_name TestTest
 
 var age = 1000
@@ -8,3 +8,8 @@ func register(username: String, password: String) -> bool:
 	# Returns false if some names passed in
 	return true
 	
+func login(username: String, password: String) -> bool:
+	return true
+	
+func to_override():
+	print("This should not appear twice")

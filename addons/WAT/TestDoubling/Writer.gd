@@ -1,61 +1,67 @@
 extends Reference
 
 const _USERDIR: String = "user://WAT/"
-var _script: Script
-var _source: String
-var _title: String
-var _tokens: Array
-var _rewrite: String
 
-func rewrite(script):
-	_set_script(script)
-	_set_source()
-	_set_title()
-	_tokenize()
-	_parse_to_string()
-	_save()
-	return script
+class Source extends Reference:
+	var extending: String
+	var script: Script
+	var string: String
+	var tokens: Array
+	var methods: Array
+	var rewrite: String
+	var title: String
 	
-func _set_script(script) -> void:
-	if script is Script:
-		_script = script
-	elif script is String:
-		_script = load(script)
-	else:
-		push_error("Script must be valid Script or String Path to Script")
-		
-func _set_source():
-	_source = _script.source_code
-	
-func _set_title():
-	_title = "Doubled_%s" % _get_script_title()
-	print(_title)
+	func _init():
+		# Its seem in-editor scripts have a hard time freeing themselves? So we do it before hand just to be sure
+		extending = ""
+		string = ""
+		tokens = []
+		methods = []
+		rewrite = ""
+		title = ""
 
-func _tokenize() -> void:
-	_tokens = [] # For some reason this doesn't seem to get cleared when creating a new instance despite not being const?
-	var _results: Array = _source.split("\n")
-	for line in _results:
-		if _begins_with_keyword(line):
-			_tokens.append(line.dedent())
-#
-func _parse_to_string() -> void:
-	_rewrite = _get_extends()
-	for line in _tokens:
-		if line.begins_with("func"):
-			_rewrite += _method(line)
+
+func rewrite(script: Script):
+	var source = Source.new()
+	_set_script(source, script)
+	_set_extends(source, script)
+	_set_title(source)
+	while script:
+		source.string = script.source_code
+		_tokenize(source)
+		# This becomes null if it hits a built in class
+		script = script.get_base_script()
+	_parse(source)
+	_save(source)
+	print(source.rewrite)
+	return source # We need to give double easy access to methods?
+
+func _set_script(source: Source, script) -> void:
+	assert(script is Script or Script is String)
+	source.script = script if script is Script else load(script)
+
+func _tokenize(source: Source) -> void:
+	var lines: Array = source.string.split("\n")
+	for line in lines:
+		if line.begins_with("func") and not line.split(" ")[1] in source.methods:
+			source.tokens.append(line.dedent())
+			source.methods.append(line.split(" ")[1])
 		elif line.begins_with("var") or line.begins_with("const") or line.begins_with("signal"):
-			_rewrite += "%s\n" % line
-			
-func _method(line: String) -> String:
-	# Keeping the return value in there if it is already there (the "line" value)
-	var function = "\n%s" % (line + _arguments(_parameter_dict(line)) + _retval_delegate(_identifier(line)))
-	return function
+			source.tokens.append(line.dedent())
 
-func _save() -> void:
+func _parse(source: Source) -> void:
+	for line in source.tokens:
+		if line.begins_with("func"):
+			source.rewrite += "\n%s" % (line + _arguments(_parameter_dict(line)) + _retval_delegate(_identifier(line)))
+		elif line.begins_with("var") or line.begins_with("const") or line.begins_with("signal"):
+			source.rewrite += "%s\n" % line
+			
+func _save(source) -> void:
+	_create_directory()
 	var file: File = File.new()
 	#warning-ignore:return_value_discarded
-	file.open("%s%s.gd" % [_USERDIR, _title], file.WRITE)
-	file.store_string(_rewrite)
+	file.open("%s%s.gd" % [_USERDIR, source.title], file.WRITE)
+	file.store_string(source.rewrite)
 	file.close()
 
 func _create_directory() -> void: # Maybe change this to a bool?
@@ -64,19 +70,18 @@ func _create_directory() -> void: # Maybe change this to a bool?
 		dir.make_dir(_USERDIR)
 		
 # Helper queries
-func _get_extends() -> String:
-	return 'extends "%s"\n\n' % _script.resource_path
-
-func _begins_with_keyword(line: String) -> bool:
-	return line.begins_with("var") or line.begins_with("func")
+func _set_extends(source, script) -> void:
+	source.rewrite = 'extends "%s"\n\n' % script.resource_path
 	
-func _get_script_title() -> String:
-	return Array(_script.resource_path.replace(".gd", "").split("/")).pop_back()
+func _set_title(source: Source) -> void:
+	source.title = "Doubled_%s" % Array(source.script.resource_path.replace(".gd", "").split("/")).pop_back()
 	
 func _parameter_dict(line: String) -> Dictionary:
 	var results: Dictionary = {}
 	for parameter in _parameter_list(line):
 		parameter = parameter.dedent()
+		if parameter.empty():
+			continue
 		if _has_type(parameter):
 			parameter = parameter.split(":")[0]
 		results['"%s"' % parameter] = parameter
