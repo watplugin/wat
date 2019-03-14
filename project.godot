@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "BaseTest",
 "language": "GDScript",
-"path": "res://addons/WAT/TestDoubling/BaseTest.gd"
+"path": "res://addons/WAT/TestDoubling/ExamplesToDouble/BaseTest.gd"
 }, {
 "base": "Reference",
 "class": "BuiltIn",
@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "BaseTest",
 "class": "TestTest",
 "language": "GDScript",
-"path": "res://addons/WAT/TestDoubling/testtest.gd"
+"path": "res://addons/WAT/TestDoubling/ExamplesToDouble/testtest.gd"
 }, {
 "base": "Node",
 "class": "WATCase",

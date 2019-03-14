@@ -16,4 +16,5 @@ var instance
 var methods: Dictionary = {}
 
 func _init(script: Script) -> void:
-	var writer = _WRITER.new().rewrite(script)
+	var instance = _WRITER.new().rewrite(script)
+	print(instance)

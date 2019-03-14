@@ -1,6 +1,6 @@
 extends Reference
 
-const _USERDIR: String = "user://WAT/"
+const _USERDIR: String = "user://WATemp/"
 
 class Source extends Reference:
 	var extending: String
@@ -19,13 +19,13 @@ class Source extends Reference:
 		methods = []
 		rewrite = ""
 		title = ""
-
-
+	
 func rewrite(script: Script):
 	var source = Source.new()
 	_set_script(source, script)
 	_set_extends(source, script)
 	_set_title(source)
+	# This is so we don't rewrite variables that already exist in parent scopes
 	while script:
 		source.string = script.source_code
 		_tokenize(source)
@@ -33,8 +33,7 @@ func rewrite(script: Script):
 		script = script.get_base_script()
 	_parse(source)
 	_save(source)
-	print(source.rewrite)
-	return source # We need to give double easy access to methods?
+	return _instance(source)
 
 func _set_script(source: Source, script) -> void:
 	assert(script is Script or Script is String)
@@ -46,8 +45,8 @@ func _tokenize(source: Source) -> void:
 		if line.begins_with("func") and not line.split(" ")[1] in source.methods:
 			source.tokens.append(line.dedent())
 			source.methods.append(line.split(" ")[1])
-		elif line.begins_with("var") or line.begins_with("const") or line.begins_with("signal"):
-			source.tokens.append(line.dedent())
+#		elif not is_parent_scope and (line.begins_with("var") or line.begins_with("const") or line.begins_with("signal")):
+#			source.tokens.append(line.dedent())
 
 func _parse(source: Source) -> void:
 	for line in source.tokens:
@@ -55,7 +54,10 @@ func _parse(source: Source) -> void:
 			source.rewrite += "\n%s" % (line + _arguments(_parameter_dict(line)) + _retval_delegate(_identifier(line)))
 		elif line.begins_with("var") or line.begins_with("const") or line.begins_with("signal"):
 			source.rewrite += "%s\n" % line
-			
+
+func _instance(source: Source) -> Script:
+	return load("%s%s.gd" % [_USERDIR, source.title]).new()
+
 func _save(source) -> void:
 	_create_directory()
 	var file: File = File.new()
