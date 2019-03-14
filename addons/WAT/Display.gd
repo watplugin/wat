@@ -21,17 +21,17 @@ func _enter_tree() -> void:
 	reset()
 
 func reset() -> void:
-	self._reset_all_totals()
-	self.clear()
-	self._root = create_item()
-	self._root.set_text(0, "Test Root Created")
+	_reset_all_totals()
+	clear()
+	_root = create_item()
+	_root.set_text(0, "Test Root Created")
 	
 func display(testcase: WATCase) -> void:
-	var script: TreeItem = create_item(self._root)
+	var script: TreeItem = create_item(_root)
 	for test in testcase.tests():
 		_add_tests(test, script)
 	_set_base_details(script, testcase)
-	_transform_totals(SCRIPT, self._root, testcase.success)
+	_transform_totals(SCRIPT, _root, testcase.success)
 	
 func _add_tests(test, root_script: TreeItem) -> void:
 	var method: TreeItem = create_item(root_script)

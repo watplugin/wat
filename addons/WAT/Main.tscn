@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/WAT/Main.gd" type="Script" id=1]
-[ext_resource path="res://addons/WAT/Button3.gd" type="Script" id=2]
-[ext_resource path="res://addons/WAT/Display.gd" type="Script" id=3]
+[ext_resource path="res://addons/WAT/Display.gd" type="Script" id=2]
 
 [node name="Main" type="Panel"]
 anchor_right = 1.0
@@ -36,13 +35,6 @@ margin_right = 200.0
 margin_bottom = 40.0
 text = "Clear Display"
 
-[node name="Button3" type="Button" parent="Split/Config"]
-margin_top = 40.0
-margin_right = 200.0
-margin_bottom = 60.0
-text = "Test File Save"
-script = ExtResource( 2 )
-
 [node name="Display" type="Tree" parent="Split"]
 margin_left = 205.0
 margin_right = 1024.0
@@ -51,5 +43,5 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/draw_relationship_lines = 1
 columns = 3
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 

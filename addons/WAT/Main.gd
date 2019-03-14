@@ -4,7 +4,6 @@ extends Panel
 onready var run_button = $Split/Config/Button
 onready var clear_button = $Split/Config/Button2
 onready var display = $Split/Display
-#var example = preload("res://tests/test_calculator_methods.gd")
 const _TEST_DIR: String = "res://tests/"
 
 func _ready():

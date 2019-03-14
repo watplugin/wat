@@ -6,19 +6,19 @@ var testcase: WATCase
 var title: String
 
 func _init():
-	self.expect = Expectations.new()
-	self.testcase = WATCase.new(self._title())
-	self.expect.connect("OUTPUT", self.testcase, "_add_expectation")
+	expect = Expectations.new()
+	testcase = WATCase.new(self._title())
+	expect.connect("OUTPUT", testcase, "_add_expectation")
 
 func run() -> void:
 	_start()
-	for test in self._test_methods():
-		self.testcase.add_method(test)
-		self._pre()
-		self.call(test)
-		self._post()
-	self._end()
-	self._delete_doubles()
+	for test in _test_methods():
+		testcase.add_method(test)
+		_pre()
+		call(test)
+		_post()
+	_end()
+	_delete_doubles()
 
 func _start():
 	pass
@@ -34,7 +34,7 @@ func _end():
 
 func _test_methods() -> Array:
 	var results: Array = []
-	for method in self.get_method_list():
+	for method in get_method_list():
 		if method.name.begins_with("test_"):
 			results.append(method.name)
 	return results
