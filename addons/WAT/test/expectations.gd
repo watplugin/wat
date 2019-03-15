@@ -29,7 +29,10 @@ func output(success: bool, expected: String, result: String = "", notes = "") ->
 	emit_signal("OUTPUT", success, expected, result, notes)
 
 func is_true(condition: bool, expected: String) -> void:
-	output(condition, expected)
+	output(condition, expected, "is false")
+	
+func is_false(condition: bool, expected: String) -> void:
+	output(not condition, expected, "is true")
 
 func is_equal(a, b, expected: String) -> void:
 	var success: bool = (a == b)
@@ -139,7 +142,7 @@ func is_not_null(value, expected: String) -> void:
 	output(success, expected, result)
 	
 func was_called(double: WATDouble, method: String, expected: String) -> void:
-	var success = double.call_count(method) == 0
+	var success = double.call_count(method) > 0
 	var result: String = "method: %s was %s called" % [method, ("" if success else "not")]
 	output(success, expected, result)
 

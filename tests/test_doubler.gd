@@ -8,7 +8,7 @@ func _pre():
 	login.stub("login", {"username": "jack", "password": "captain"}, "Hello Captain Jack")
 	login.stub("register", {"username": "dank", "password": "pass"}, "Username 'Dank' is unacceptable")
 
-func test_doubler_works():
+func test_doubler_all_should_pass():
 	# In real tests, we would usually expect these to be called from elsewhere
 	login.instance.login("alex", "explode")
 	expect.is_equal(login.instance.login("alex", "code"), "Logged In", "Logged In == Logged In")

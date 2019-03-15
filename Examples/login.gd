@@ -1,7 +1,7 @@
 extends BaseLogin
 class_name Login
 
-var age = 1000
+signal LOGGED_IN
 
 func register(username: String, password: String) -> bool:
 	# Return false if passed in censored words as username
@@ -9,6 +9,7 @@ func register(username: String, password: String) -> bool:
 	return true
 	
 func login(username: String, password: String) -> bool:
+	emit_signal("LOGGED_IN", username)
 	return true
 	
 func to_override():
