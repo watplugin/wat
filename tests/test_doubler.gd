@@ -15,7 +15,7 @@ func test_doubler_works():
 	expect.is_equal(login.instance.login("jack", "captain"), "Hello Captain Jack", "Hello Captain Jack == Hello Captain Jack")
 	expect.was_called(login, "login", "Login was called")
 	expect.was_not_called(login, "register", "Register was not called")
-	
+
 func test_doubler_all_of_these_should_fail():
 	login.instance.login("alex", "explode")
 	expect.was_not_called(login, "login", "Login was not called")
