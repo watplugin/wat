@@ -1,13 +1,11 @@
 extends Node
-# If we're prefixing everything with WAT, might be better
-# to have a WAT accessor script (maybe the config?)
 class_name WATDouble
 
 ####	# Add self as metadata to script (we could do a property object but using metadata is more inconspicoius)
 #### Config for type checking (do we keep as is, remove param/return types or mod elsewhere?)
 #### Add a Method Class, a Call class (or data structure?)
 
-const _WRITER = preload("res://addons/WAT/TestDoubling/Writer.gd")
+const _WRITER = preload("writer.gd")
 var instance
 var _methods: Dictionary = {}
 

@@ -13,7 +13,7 @@ func _ready():
 func _run():
 	display.reset()
 	for script in self.tests():
-		var test: WAT.TEST = script.new()
+		var test: WATTest = script.new()
 		add_child(test)
 		test.run()
 		display.display(test.case)

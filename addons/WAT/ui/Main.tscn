@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://addons/WAT/Main.gd" type="Script" id=1]
-[ext_resource path="res://addons/WAT/Display.gd" type="Script" id=2]
+[ext_resource path="res://addons/WAT/ui/main.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/ui/display.gd" type="Script" id=2]
 
 [node name="Main" type="Panel"]
 anchor_right = 1.0

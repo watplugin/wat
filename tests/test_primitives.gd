@@ -1,4 +1,4 @@
-extends WAT.TEST
+extends WATTest
 
 ### BEGIN NOTES ###
 # All of these tests are standalone expressions so some of what they're doing doesn't look

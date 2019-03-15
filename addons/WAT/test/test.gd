@@ -1,13 +1,13 @@
 extends Node
-#class_name WATT
+class_name WATTest
 
-var expect: WAT.EXPECTATIONS
-var case: WAT.CASE
+var expect: WATExpectations
+var case: WATCase
 var title: String
 
 func _init():
-	expect = WAT.EXPECTATIONS.new()
-	case = WAT.CASE.new(self._title())
+	expect = WATExpectations.new()
+	case = WATCase.new(self._title())
 	expect.connect("OUTPUT", case, "_add_expectation")
 
 func run() -> void:
@@ -38,7 +38,7 @@ func _test_methods() -> Array:
 		if method.name.begins_with("test_"):
 			results.append(method.name)
 	return results
-	
+
 func _title() -> String:
 	return self.get_script().get_path()
 
@@ -52,7 +52,6 @@ func _delete_doubles():
 	var file = dir.get_next()
 	while file != BLANK:
 		if file.begins_with("Doubled") and file.ends_with(".gd"):
-			print(file)
 			dir.remove("%s%s" % [WATemp, file])
 		file = dir.get_next()
 	dir.remove(WATemp)

@@ -25,15 +25,15 @@ func reset() -> void:
 	clear()
 	_root = create_item()
 	_root.set_text(0, "Test Root Created")
-	
-func display(case: WAT.CASE) -> void:
+
+func display(case: WATCase) -> void:
 	var script: TreeItem = create_item(_root)
 	for test in case.tests():
 		_add_tests(test, script)
 	_set_base_details(script, case)
 	_transform_totals(SCRIPT, _root, case.success)
 	_reset_totals(METHOD)
-	
+
 func _add_tests(test, root_script: TreeItem) -> void:
 	var method: TreeItem = create_item(root_script)
 	for expectation in test.expectations:
@@ -48,7 +48,7 @@ func _add_expectation(expectation: Dictionary, method: TreeItem):
 	_set_base_details(expect, expectation)
 	expect.set_text(1, "Result:    %s" % expectation.result)
 	_transform_totals(EXPECTATION, method, expectation.success)
-		
+
 func _set_base_details(item: TreeItem, test) -> void:
 	item.set_text(0, test.details)
 	if test.success:
@@ -59,7 +59,7 @@ func _set_base_details(item: TreeItem, test) -> void:
 		test.notes = example
 		item.set_text(2, "Notes: %s" % str(len(test.notes.split("\n"))))
 		item.set_tooltip(2, test.notes)
-		
+
 func _add_total(key: int, success) -> void:
 	TOTALS[key][TOTAL] += 1
 	if success:
@@ -74,17 +74,17 @@ func _set_totals(key: int, item: TreeItem = self._root):
 	else:
 		item.set_custom_color(0, FAILED)
 		item.set_custom_color(1, FAILED)
-		
+
 func _transform_totals(key: int, parent: TreeItem, success: bool):
 	_add_total(key, success)
 	_set_totals(key, parent)
-	
+
 func _reset_totals(key: int):
 	TOTALS[key][PASSED] = 0
 	TOTALS[key][TOTAL] = 0
-	
+
 func _reset_all_totals():
 	_reset_totals(SCRIPT)
 	_reset_totals(METHOD)
 	_reset_totals(EXPECTATION)
-	
+

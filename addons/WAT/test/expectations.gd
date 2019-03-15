@@ -1,5 +1,5 @@
 extends Reference
-class_name Expectations
+class_name WATExpectations
 
 ### TO ADD ###
 # =>
@@ -14,7 +14,7 @@ class_name Expectations
 # dicts values are equal
 # dict k/v are equal
 # hash is equal
-# Others for doubles (call, call count, called by signal, object emitted signal, called with parameters, signal w parameters)
+# Others for double: WATDoubles (call, call count, called by signal, object emitted signal, called with parameters, signal w parameters)
 
 
 class OP:
@@ -75,19 +75,19 @@ func is_less_than(a, b, expected: String) -> void:
 	var operator: String = OP.LESSER if success else OP.GREATER_THAN_OR_EQUAL
 	var result: String = "%s    %s    %s" % [_stringify(a), operator, _stringify(b)]
 	output(success, expected, result)
-	
+
 func was_called(double: WATDouble, method: String, expected: String) -> void:
 	var success = (double._methods[method].call_count != 0)
 	var result: String = "method: %s was %s called" % [method, ("" if success else "not")]
 	output(success, expected, result)
-	
+
 func was_not_called(double: WATDouble, method: String, expected: String) -> void:
 	var success = (double._methods[method].call_count == 0)
 	var result: String = "method %s was %s called" % [method, ("not" if success else "")]
 	output(success, expected, result)
-	
+
 func was_called_with_arguments(double: WATDouble, method: String, arguments: Dictionary) -> void:
 	pass
 
 func _stringify(variable) -> String:
-	return "| %s | %s |" % [BuiltIn.to_string(variable).to_upper(), str(variable)]
+	return "| %s | %s |" % [WATBuiltins.to_string(variable).to_upper(), str(variable)]
