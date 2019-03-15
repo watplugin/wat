@@ -1,9 +1,9 @@
-extends WATT
+extends WAT.TEST
 
-var login: WATDouble
+var login: WAT.DOUBLE
 
 func _pre():
-	login = WATDouble.new(Login)
+	login = WAT.DOUBLE.new(Login)
 	login.stub("login", {"username": "alex", "password": "code"}, "Logged In")
 	login.stub("login", {"username": "jack", "password": "captain"}, "Hello Captain Jack")
 	login.stub("register", {"username": "dank", "password": "pass"}, "Username 'Dank' is unacceptable")

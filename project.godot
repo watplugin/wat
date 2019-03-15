@@ -30,28 +30,22 @@ _global_script_classes=[ {
 "path": "res://Examples/login.gd"
 }, {
 "base": "Node",
-"class": "WATCase",
+"class": "WAT",
 "language": "GDScript",
-"path": "res://addons/WAT/Scripts/WATCase.gd"
+"path": "res://addons/WAT/namespace.gd"
 }, {
 "base": "Node",
 "class": "WATDouble",
 "language": "GDScript",
 "path": "res://addons/WAT/TestDoubling/Doubler.gd"
-}, {
-"base": "Node",
-"class": "WATT",
-"language": "GDScript",
-"path": "res://addons/WAT/Scripts/WATT.gd"
 } ]
 _global_script_class_icons={
 "BaseLogin": "",
 "BuiltIn": "",
 "Expectations": "",
 "Login": "",
-"WATCase": "",
-"WATDouble": "",
-"WATT": ""
+"WAT": "",
+"WATDouble": ""
 }
 
 [application]

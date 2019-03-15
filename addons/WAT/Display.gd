@@ -26,12 +26,13 @@ func reset() -> void:
 	_root = create_item()
 	_root.set_text(0, "Test Root Created")
 	
-func display(testcase: WATCase) -> void:
+func display(case: WAT.CASE) -> void:
 	var script: TreeItem = create_item(_root)
-	for test in testcase.tests():
+	for test in case.tests():
 		_add_tests(test, script)
-	_set_base_details(script, testcase)
-	_transform_totals(SCRIPT, _root, testcase.success)
+	_set_base_details(script, case)
+	_transform_totals(SCRIPT, _root, case.success)
+	_reset_totals(METHOD)
 	
 func _add_tests(test, root_script: TreeItem) -> void:
 	var method: TreeItem = create_item(root_script)

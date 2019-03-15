@@ -1,19 +1,19 @@
 extends Node
-class_name WATT
+#class_name WATT
 
-var expect: Expectations
-var testcase: WATCase
+var expect: WAT.EXPECTATIONS
+var case: WAT.CASE
 var title: String
 
 func _init():
-	expect = Expectations.new()
-	testcase = WATCase.new(self._title())
-	expect.connect("OUTPUT", testcase, "_add_expectation")
+	expect = WAT.EXPECTATIONS.new()
+	case = WAT.CASE.new(self._title())
+	expect.connect("OUTPUT", case, "_add_expectation")
 
 func run() -> void:
 	_start()
 	for test in _test_methods():
-		testcase.add_method(test)
+		case.add_method(test)
 		_pre()
 		call(test)
 		_post()

@@ -13,10 +13,10 @@ func _ready():
 func _run():
 	display.reset()
 	for script in self.tests():
-		var test: WATT = script.new()
+		var test: WAT.TEST = script.new()
 		add_child(test)
 		test.run()
-		display.display(test.testcase)
+		display.display(test.case)
 		test.free() # This might cause issues?
 
 func tests() -> Array:
