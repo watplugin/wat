@@ -25,6 +25,9 @@ func stub(id: String, arguments: Dictionary, retval) -> void:
 	if not _methods.has(id):
 		_methods[id] = Method.new(id, 0)
 	_methods[id].stub(arguments, retval)
+	
+func call_count(method: String) -> int:
+	return _methods[method].call_count
 
 class Method:
 	var identifier: String
@@ -43,6 +46,7 @@ class Method:
 
 	func get_retval(arguments: Dictionary):
 		call_count += 1
+		calls.append(arguments)
 		var retval
 		for stub in stubs:
 			retval = stub.retval
