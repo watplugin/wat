@@ -4,7 +4,7 @@ A Testing Plugin for Godot Game Engine
 
 NOTE: ALPHA RELEASE. EXPECT BUGS AND BE DILLIGENT ABOUT BACKING UP YOUR WORK. DOCUMENTATION IS NON-EXISTANT.
 
-[example](https://github.com/CodeDarigan/WAT/blob/master/screenshots/main.png)
+![example](https://github.com/CodeDarigan/WAT/blob/master/screenshots/main.png)
 
 ## Quickstart Guide (intended for those familler with testing and or godot)
 
