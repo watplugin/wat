@@ -5,6 +5,31 @@ var expect: WATExpectations
 var case: WATCase
 var title: String
 
+#### WATCHER
+var watching: Dictionary = {}
+#
+#
+func watch(instance: Object, _signal: String):
+	if not expect.has_meta("test"):
+		expect.set_meta("test", self)
+	instance.connect(_signal, self, "_add_emitted_signal", [instance, _signal])
+	print("a: _signal / instance -> ", _signal, " / ", instance)
+	watching[_signal] = {emit_count = 0, calls = []}
+
+func _add_emitted_signal(a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null, j = null, k = null):
+	var arguments: Array = [a, b, c, d, e, f, g, h, i, j, k]
+	var parsed: Array = []
+	var sig: String
+	var obj: Object
+	for i in arguments.size():
+		parsed.append(arguments[i])
+		if arguments[i] == null:
+			obj = parsed.pop_back()
+			sig = parsed.pop_back()
+			break
+	watching[sig].emit_count += 1
+	watching[sig].calls.append({emitter = obj, args = parsed})
+
 func _init():
 	expect = WATExpectations.new()
 	case = WATCase.new(self._title())

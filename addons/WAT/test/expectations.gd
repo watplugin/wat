@@ -174,6 +174,18 @@ func was_called_with_arguments(double: WATDouble, method: String, arguments: Dic
 	var operator: String = "" if success else OP.NOT
 	var result: String = "method %s was %s called with arguments %s" % [method, operator, arguments]
 	output(success, expected, result)
+	
+func signal_was_emitted(_signal, expected: String) -> void:
+	var success: bool = self.get_meta("test").watching[_signal].emit_count > 0
+	var operator: String = "" if success else OP.NOT
+	var result: String = "Signal: %s was %s emitted" % [_signal, operator]
+	output(success, expected, result)
+	
+func signal_was_not_emitted(_signal: String, expected: String) -> void:
+	var success: bool = self.get_meta("test").watching[_signal].emit_count == 0
+	var operator: String = OP.NOT if success else ""
+	var result: String = "Signal: %s was %s emitted" % [_signal, operator]
+	output(success, expected, result)
 
 func string_contains(value, string: String, expected: String) -> void:
 	var success: bool = value in string

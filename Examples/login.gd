@@ -9,7 +9,7 @@ func register(username: String, password: String) -> bool:
 	return true
 	
 func login(username: String, password: String) -> bool:
-	emit_signal("LOGGED_IN", username)
+	emit_signal("LOGGED_IN", username, password)
 	return true
 	
 func to_override():
