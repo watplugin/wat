@@ -80,14 +80,14 @@ func _delete_doubles():
 		file = dir.get_next()
 	dir.remove(WATemp)
 
-# Untested
+## Untested
+## Thanks to bitwes @ https://github.com/bitwes/Gut/
 func simulate(obj, times, delta):
 	for i in range(times):
 		if(obj.has_method("_process")):
+			obj._process(delta)
+		if(obj.has_method("_physics_process")):
 			obj._physics_process(delta)
 
 		for kid in obj.get_children():
 			simulate(kid, 1, delta)
-
-func yield_until(instance, _signal, time_limit: float) -> void:
-	instance.connect(_signal, self, "timeout")
