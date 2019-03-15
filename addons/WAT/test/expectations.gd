@@ -2,14 +2,6 @@ extends Reference
 class_name WATExpectations
 
 ### TO ADD ###
-# =>
-# <=
-# has(value)
-# !has(value)
-# in range
-# not in range
-# in collection
-# not in collection
 # dict keys are equal
 # dicts values are equal
 # dict k/v are equal
@@ -37,11 +29,9 @@ func output(success: bool, expected: String, result: String = "", notes = "") ->
 	emit_signal("OUTPUT", success, expected, result, notes)
 
 func is_true(condition: bool, expected: String) -> void:
-	# We'll expand on these later but this should be fine now
 	output(condition, expected)
 
 func is_equal(a, b, expected: String) -> void:
-	# May need to add a typeof check here
 	var success: bool = (a == b)
 	var operator: String = OP.EQUAL if success else OP.INEQUAL
 	var result: String = "%s    %s    %s" %[_stringify(a), operator, _stringify(b)]
@@ -149,25 +139,25 @@ func is_not_null(value, expected: String) -> void:
 	output(success, expected, result)
 	
 func was_called(double: WATDouble, method: String, expected: String) -> void:
-	var success = (double._methods[method].call_count != 0)
+	var success = double.call_count(method) == 0
 	var result: String = "method: %s was %s called" % [method, ("" if success else "not")]
 	output(success, expected, result)
 
 func was_not_called(double: WATDouble, method: String, expected: String) -> void:
-	var success = (double._methods[method].call_count == 0)
+	var success = double.call_count(method) == 0
 	var result: String = "method %s was %s called" % [method, ("not" if success else "")]
 	output(success, expected, result)
 
 func was_called_with_arguments(double: WATDouble, method: String, arguments: Dictionary, expected: String) -> void:
 	var success: bool
-	if double._methods[method].call_count == 0:
+	if double.call_count(method) == 0:
 		success = false
 		var result: String = "method was not called at all"
 		output(success, expected, result)
 		return
 	else:
 		var count: int = 0
-		for call in double._methods[method].call_count:
+		for call in double.call_count(method):
 			var found_match: bool = true
 			var current = double._methods[method].calls[call]
 			for key in arguments:

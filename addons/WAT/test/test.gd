@@ -55,3 +55,15 @@ func _delete_doubles():
 			dir.remove("%s%s" % [WATemp, file])
 		file = dir.get_next()
 	dir.remove(WATemp)
+
+# Untested
+func simulate(obj, times, delta):
+	for i in range(times):
+		if(obj.has_method("_process")):
+			obj._physics_process(delta)
+
+		for kid in obj.get_children():
+			simulate(kid, 1, delta)
+
+func yield_until(instance, _signal, time_limit: float) -> void:
+	instance.connect(_signal, self, "timeout")
