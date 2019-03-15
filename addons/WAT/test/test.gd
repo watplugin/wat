@@ -13,7 +13,6 @@ func watch(instance: Object, _signal: String):
 	if not expect.has_meta("test"):
 		expect.set_meta("test", self)
 	instance.connect(_signal, self, "_add_emitted_signal", [instance, _signal])
-	print("a: _signal / instance -> ", _signal, " / ", instance)
 	watching[_signal] = {emit_count = 0, calls = []}
 
 func _add_emitted_signal(a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null, j = null, k = null):
