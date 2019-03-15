@@ -1,55 +1,19 @@
 # WAT
 
-NOTE: THIS IS ONLY PUBLIC BECAUSE IT IS REQUIRED TO WRITE A WIKI. IT ISN'T ACTUALLY READY!
-
 A Testing Plugin for Godot Game Engine
 
-## Overview
+NOTE: ALPHA RELEASE. EXPECT BUGS AND BE DILLIGENT ABOUT BACKING UP YOUR WORK. DOCUMENTATION IS NON-EXISTANT.
 
-### Basics
+## Quickstart Guide (intended for those familler with testing and or godot)
 
-- Test Script
-- Test Case - Stores result of a test: *When using nested classes, each class get its own case object*
-- Display
-- Expectations *The actual test methods*
-- Assert *Used for setup/teardown, cancels the test due to broken fixtures*
+1) Add the WAT folder from here to your addons folder in your project
+2) Turn WAT on in your Plugin settings
+3) Create a test folder in the top level of your project directory
+4) Create a script called "test_" + whatever you'd like to call it (e.g "test_login_functionality") that extends from WATTest
+5) Tests have _start(), _pre(), _post() and _end() methods (if you require fixtures)
+6) To write tests, create a method name "test_<NAMEHERE>" and use methods from expect (eg. expect.is_true(true, "true is true"))
+7) You can double tests via WATDouble.new(script) (where script is a loaded script, class_name or string)
+8) You can watch signal emits from the "watch(emitter, signal)" method inside WATTest scripts
+9) When you want to run tests, go to "WAT:TestRunner" and click run.
+10) Look into the expectations.gd script for what methods you can use
 
-### Doubles
-
-- Rewrite Source Code *We may never need to actually save these scripts since they'll be passed around via DI*
-
-- The default rewrite is for your immediate script: We may need to use a config to default
-back to how far we want to rewrite the source code when it comes to extended. May need to
-use get_base_script recursion along with a null check
-
-- Stub Methods (predefine parameter sets, loop through on call)
-
-- Spies
-  - How many times x Signal was emitted
-  - How many times x method called
-  - Record call with Kwargs
-  - Record what value it returned when called
-  - If Method was called by Signal? (Not sure if possible?)
-
-- Doubling Scenes
-
-    I'm not sure how to approach this or the particular use case for it (that cannot
-    already be achieved by doubling scripts themselves)
-
-### Helpers
-
-- Simulate
-- Yield / Yield For X
-
-### Configurations
-
-- Command Line vs Display
-- Enforcing Strict Syntax
-- Inner Classes
-- Prefix Settings
-- Directories (We'll start off with a basic generic "tests" folder for the moment)
-- Print to console or not
-- Change test prefix
-- Change file prefix
-- Directory information
-- Log Levels
