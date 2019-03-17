@@ -25,7 +25,7 @@ func stub(id: String, arguments: Dictionary, retval) -> void:
 	if not _methods.has(id):
 		_methods[id] = Method.new(id, 0)
 	_methods[id].stub(arguments, retval)
-	
+
 func call_count(method: String) -> int:
 	return _methods[method].call_count
 
