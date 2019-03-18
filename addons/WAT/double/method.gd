@@ -1,16 +1,13 @@
 extends Reference
 
-var identifier: String
+var name: String
 var calls: Array = []
 var stubs: Array = []
 var call_count: int = 0
 
-func _init(method_id, call: int, arguments: Dictionary = {}) -> void:
-	self.identifier = method_id
-	call_count += call
-	if call_count != 0:
-		calls.append(arguments)
-		
+func _init(_name: String) -> void:
+	self.name = _name
+ 
 func stub(arguments: Dictionary, retval):
 	stubs.append({"arguments": arguments, "retval": retval})
 	
