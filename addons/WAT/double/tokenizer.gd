@@ -5,13 +5,13 @@ const SOURCE = preload("source.gd")
 
 
 static func start(script) -> SOURCE:
-#	script = Login # For debug
 	script = script if script is Script else load(script)
 	var title: String = "Doubled_%s" % Array(script.resource_path.replace(".gd", "").split("/")).pop_back()
 	var extend: String = 'extends "%s"\n\n' % script.resource_path
 	var source: String = ""
 	while script:
 		source += script.source_code
+		# This becomes null if it hits a built-in class
 		script = script.get_base_script()
 	var tokens: Array = _tokenize(source)
 	return SOURCE.new(title, extend, tokens)
@@ -21,7 +21,6 @@ static func _tokenize(source: String):
 	var duplicates: Array = []
 	var results: Array = []
 	for token in tokens:
-		# Break into "extract_function?"
 		var identifier = _extract_name(token)
 		if identifier in duplicates:
 			# Skip if already parsed

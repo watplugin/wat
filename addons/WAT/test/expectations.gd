@@ -159,21 +159,19 @@ func was_called_with_arguments(double: WATDouble, method: String, arguments: Dic
 		output(success, expected, result)
 		return
 	else:
-		var count: int = 0
-		for call in double.call_count(method):
-			var found_match: bool = true
-			var current = double._methods[method].calls[call]
-			for key in arguments:
-				if arguments[key] != current[key]:
-					found_match = false
-					break
-			if found_match:
-				count = call
-				success = true
-				break
-	var operator: String = OP.BLANK if success else OP.NOT
-	var result: String = "method %s was %s called with arguments %s" % [method, operator, arguments]
+		for call in double.calls(method):
+			if key_value_match(arguments, call):
+				var result: String = "method: %s was called with arguments: %s" % [method, arguments]
+				output(true, expected, result)
+				return
+	var result: String = "method: %s was not called with arguments %s" % [method, arguments]
 	output(success, expected, result)
+	
+func key_value_match(a: Dictionary, b: Dictionary) -> bool:
+	for key in a:
+		if a[key] != b[key]:
+			return false
+	return true
 
 func signal_was_emitted(_signal, expected: String) -> void:
 	var success: bool = self.get_meta("test").watching[_signal].emit_count > 0
