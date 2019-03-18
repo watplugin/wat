@@ -13,6 +13,9 @@ var _methods: Dictionary = {}
 func _init(script: Script) -> void:
 	self.instance = _WRITER.new().rewrite(script)
 	instance.set_meta("double", self)
+	
+#	func _instance(source: Source) -> Script:
+#	return load("%s%s.gd" % [_USERDIR, source.title]).new()
 
 func get_retval(id: String, arguments: Dictionary):
 	if not _methods.has(id):

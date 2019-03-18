@@ -33,6 +33,7 @@ func rewrite(script: Script):
 		script = script.get_base_script()
 	_parse(source)
 	_save(source)
+	print(source.methods)
 	return _instance(source)
 
 func _set_script(source: Source, script) -> void:
@@ -42,9 +43,9 @@ func _set_script(source: Source, script) -> void:
 func _tokenize(source: Source) -> void:
 	var lines: Array = source.string.split("\n")
 	for line in lines:
-		if line.begins_with("func") and not line.split(" ")[1] in source.methods:
+		if line.begins_with("func") and not line.split(" ")[1].split("(")[0] in source.methods:
 			source.tokens.append(line.dedent())
-			source.methods.append(line.split(" ")[1])
+			source.methods.append(line.split(" ")[1].split("(")[0])
 
 func _parse(source: Source) -> void:
 	for line in source.tokens:
