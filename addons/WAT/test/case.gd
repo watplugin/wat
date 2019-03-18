@@ -12,7 +12,8 @@ func _init(details: String) -> void:
 func add_method(method: String) -> void:
 	# Called by the Test Script
 	_current_method = method
-	_tests[method] = {"details": method, "success": true, "expectations": []}
+	var _clean_name: String = method.replace("test_", "").replace("_", " ")
+	_tests[method] = {"details": _clean_name, "success": true, "expectations": []}
 
 func _add_expectation(success: bool, expected: String, result: String, notes: String) -> void:
 	# Called via signal from expectations.gd
