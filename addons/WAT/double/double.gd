@@ -5,17 +5,22 @@ class_name WATDouble
 #### Config for type checking (do we keep as is, remove param/return types or mod elsewhere?)
 #### Add a Method Class, a Call class (or data structure?)
 
-const METHOD = preload("method.gd")
-const _WRITER = preload("writer.gd")
-var instance
-var _methods: Dictionary = {}
+# TOKENIZER
+# STUBBER?
+# WRITER
 
-func _init(script: Script) -> void:
-	self.instance = _WRITER.new().rewrite(script)
-	instance.set_meta("double", self)
-	
-#	func _instance(source: Source) -> Script:
-#	return load("%s%s.gd" % [_USERDIR, source.title]).new()
+#func _init():
+var tokenizer = preload("res://addons/WAT/double/tokenizer.gd")
+var rewriter = preload("res://addons/WAT/double/rewriter.gd")
+var instance
+
+func _init(script):
+	var source = tokenizer.start(script)
+	self.instance = rewriter.start(source)
+	self.instance.set_meta("double", self)
+
+const METHOD = preload("method.gd")
+var _methods: Dictionary = {}
 
 func get_retval(id: String, arguments: Dictionary):
 	if not _methods.has(id):
