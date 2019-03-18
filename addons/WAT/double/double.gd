@@ -14,7 +14,6 @@ func _init(script: Script) -> void:
 	self.instance = _WRITER.new().rewrite(script)
 	instance.set_meta("double", self)
 
-
 func get_retval(id: String, arguments: Dictionary):
 	if not _methods.has(id):
 		_methods[id] = METHOD.new(id, 1, arguments)
