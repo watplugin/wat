@@ -58,7 +58,7 @@ static func _define_parameter(parameter: String) -> Dictionary:
 
 static func _extract_return_type(method: String) -> Dictionary:
 	var result: Dictionary = {type = "var", typed = false}
-	var type: String = method.replace("->", " ").replace(":", "").split(")")[1] # Issue
+	var type: String = method.replace("->", " ").replace(":", "").split(")")[1].dedent() # Issue
 	if not type.empty():
 		result.type = type.dedent()
 		result.typed = true
