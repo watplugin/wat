@@ -1,36 +1,19 @@
 extends Node
 class_name WATTest
 
+var watcher
 var expect: WATExpectations
 var case: WATCase
 var title: String
+const WATCHER = preload("watcher.gd")
 
-#### WATCHER
-var watching: Dictionary = {}
-#
-#
-func watch(instance: Object, _signal: String):
-	if not expect.has_meta("test"):
-		expect.set_meta("test", self)
-	instance.connect(_signal, self, "_add_emitted_signal", [instance, _signal])
-	watching[_signal] = {emit_count = 0, calls = []}
-
-func _add_emitted_signal(a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null, j = null, k = null):
-	var arguments: Array = [a, b, c, d, e, f, g, h, i, j, k]
-	var parsed: Array = []
-	var sig: String
-	var obj: Object
-	for i in arguments.size():
-		parsed.append(arguments[i])
-		if arguments[i] == null:
-			obj = parsed.pop_back()
-			sig = parsed.pop_back()
-			break
-	watching[sig].emit_count += 1
-	watching[sig].calls.append({emitter = obj, args = parsed})
+func watch(emitter, event: String) -> void:
+	watcher.watch(emitter, event)
 
 func _init():
+	watcher = WATCHER.new()
 	expect = WATExpectations.new()
+	expect.set_meta("watcher", self.watcher)
 	case = WATCase.new(self._title())
 	expect.connect("OUTPUT", case, "_add_expectation")
 
