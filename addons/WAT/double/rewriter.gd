@@ -14,12 +14,13 @@ static func start(source: Object) -> String:
 ##	return load(_TEMP + source.title + ".gd")
 	
 static func _rewrite_method(method: Dictionary) -> String:
-	var rewritten_method: String = "func %s(%s)%s:%s"
+	var rewritten_method: String = "func %s(%s)%s%s"
 	var title: String = method.name
 	var parameters: String = _rewrite_parameters(method.parameters)
 	var retval: String = _rewrite_retval(method.retval)
 	var body: String = _rewrite_body(title, method.parameters)
-	return (rewritten_method % [title, parameters, retval, body]).replace(" :", ":")
+	var rewrite = rewritten_method % [title, parameters, retval, body]
+	return rewrite
 	
 static func _rewrite_parameters(parameters: Array) -> String:
 	var result: String = ""
@@ -33,9 +34,8 @@ static func _rewrite_parameters(parameters: Array) -> String:
 	
 static func _rewrite_retval(retval: Dictionary) -> String:
 	if retval.typed:
-		assert(retval.typed is bool)
-		return " -> %s" % retval.type
-	return ""
+		return " -> %s:" % retval.type
+	return ":"
 	
 static func _rewrite_body(title, parameters) -> String:
 	var args: String = "\n\tvar arguments = {"

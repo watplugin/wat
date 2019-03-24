@@ -174,13 +174,13 @@ func key_value_match(a: Dictionary, b: Dictionary) -> bool:
 	return true
 
 func signal_was_emitted(_signal, expected: String) -> void:
-	var success: bool = self.get_meta("test").watching[_signal].emit_count > 0
+	var success: bool = self.get_meta("watcher").watching[_signal].emit_count > 0
 	var operator: String = OP.BLANK if success else OP.NOT
 	var result: String = "Signal: %s was %s emitted" % [_signal, operator]
 	output(success, expected, result)
 	
 func signal_was_not_emitted(_signal: String, expected: String) -> void:
-	var success: bool = self.get_meta("test").watching[_signal].emit_count == 0
+	var success: bool = self.get_meta("watcher").watching[_signal].emit_count == 0
 	var operator: String = OP.NOT if success else OP.BLANK
 	var result: String = "Signal: %s was %s emitted" % [_signal, operator]
 	output(success, expected, result)
