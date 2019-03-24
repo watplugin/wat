@@ -8,11 +8,6 @@ static func start(source: Object) -> String:
 		rewrite += _rewrite_method(method)
 	return rewrite
 	
-	#	_save(source.title, rewrite)
-#	var x = load(_TEMP + source.title + ".gd").new()
-#	return x
-##	return load(_TEMP + source.title + ".gd")
-	
 static func _rewrite_method(method: Dictionary) -> String:
 	var rewritten_method: String = "func %s(%s)%s%s"
 	var title: String = method.name
@@ -46,26 +41,5 @@ static func _rewrite_body(title, parameters) -> String:
 	var retval: String = '\n\treturn self.get_meta("double").get_retval("%s", arguments)\n\n' % title
 	return args + retval
 
-#static func _save(title: String, rewrite: String) -> void:
-#	_create_directory()
-#	var script = load("res://addons/WAT/double/Blank.gd")
-#	script.source_code = rewrite
-#	ResourceSaver.save("%s%s.gd" % [_TEMP, title], script)
-#
-#static func _create_directory() -> void:
-#	var dir = Directory.new()
-#	if not dir.dir_exists(_TEMP):
-#		dir.make_dir(_TEMP)
-# write
-# save
-#func _instance(source: Source) -> Script:
-#	return load("%s%s.gd" % [_TEMP, source.title]).new()
-#
-
-#
-#func _create_directory() -> void: # Maybe change this to a bool?
-
-#
-#
 #func _retval_delegate(identifier: String) -> String:
 #	return "\n\treturn self.get_meta('double').get_retval('%s', parameters)\n" % identifier

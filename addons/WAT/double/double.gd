@@ -19,7 +19,7 @@ func _init(script):
 		_add_method(method.name)
 	var doubled_source: String = REWRITER.start(source)
 	_save(source.title, doubled_source)
-	instance = _load(source.title)
+	self.instance = _load(source.title)
 	instance.set_meta("double", self)
 	
 static func _load(title: String) -> Object:
