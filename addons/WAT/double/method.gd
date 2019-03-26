@@ -18,7 +18,6 @@ func get_retval(id: String, arguments: Dictionary):
 	return _methods[id].get_retval(arguments)
 
 func stub(id: String, arguments: Dictionary, retval) -> void:
-	print("calling")
 	_methods[id].stub(arguments, retval)
 
 func call_count(method: String) -> int:
