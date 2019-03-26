@@ -142,17 +142,17 @@ func is_not_null(value, expected: String) -> void:
 	var result: String = "%s %s null" % [value, operator]
 	output(success, expected, result)
 	
-func was_called(double: WATDouble, method: String, expected: String) -> void:
+func was_called(double, method: String, expected: String) -> void:
 	var success = double.call_count(method) > 0
 	var result: String = "method: %s was %s called" % [method, (OP.BLANK if success else OP.NOT)]
 	output(success, expected, result)
 
-func was_not_called(double: WATDouble, method: String, expected: String) -> void:
+func was_not_called(double, method: String, expected: String) -> void:
 	var success = double.call_count(method) == 0
 	var result: String = "method %s was %s called" % [method, (OP.NOT if success else OP.BLANK)]
 	output(success, expected, result)
 
-func was_called_with_arguments(double: WATDouble, method: String, arguments: Dictionary, expected: String) -> void:
+func was_called_with_arguments(double, method: String, arguments: Dictionary, expected: String) -> void:
 	var success: bool
 	if double.call_count(method) == 0:
 		var result: String = "method was not called at all"
