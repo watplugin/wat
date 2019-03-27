@@ -29,10 +29,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/WAT/test/case.gd"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "WATDouble",
 "language": "GDScript",
-"path": "res://addons/WAT/double/double.gd"
+"path": "res://addons/WAT/double/doubler.gd"
 }, {
 "base": "Reference",
 "class": "WATExpectations",
