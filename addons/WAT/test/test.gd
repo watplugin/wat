@@ -25,7 +25,7 @@ func run() -> void:
 		call(test)
 		_post()
 	_end()
-	_delete_doubles()
+#	_delete_doubles()
 
 func _start():
 	pass
