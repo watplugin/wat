@@ -143,6 +143,8 @@ func is_not_null(value, expected: String) -> void:
 	output(success, expected, result)
 	
 func was_called(double, method: String, expected: String) -> void:
+	if method == "execute":
+		print(double.call_count(method))
 	var success = double.call_count(method) > 0
 	var result: String = "method: %s was %s called" % [method, (OP.BLANK if success else OP.NOT)]
 	output(success, expected, result)
