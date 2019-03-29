@@ -157,7 +157,7 @@ func _script_was_called(double, method: String, expected: String) -> void:
 	output(success, expected, result)
 	
 func was_not_called(double, a: String = "", b: String = "", c: String = "") -> void:
-	_scene_was_not_called(double, a, b, c) if double.is_scene else _script_was_called(double, a, b)
+	_scene_was_not_called(double, a, b, c) if double.is_scene else _script_was_not_called(double, a, b)
 	
 func _scene_was_not_called(double, nodepath: String, method: String, expected: String) -> void:
 	var success = double.call_count(nodepath, method) == 0
