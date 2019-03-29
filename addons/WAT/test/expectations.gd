@@ -155,8 +155,17 @@ func _script_was_called(double, method: String, expected: String) -> void:
 	var success = double.call_count(method) > 0
 	var result: String = "method: %s was %s called" % [method, (OP.BLANK if success else OP.NOT)]
 	output(success, expected, result)
-
-func was_not_called(double, method: String, expected: String) -> void:
+	
+func was_not_called(double, a: String = "", b: String = "", c: String = "") -> void:
+	_scene_was_not_called(double, a, b, c) if double.is_scene else _script_was_not_called(double, a, b)
+	
+func _scene_was_not_called(double, nodepath: String, method: String, expected: String) -> void:
+	var success = double.call_count(nodepath, method) == 0
+	var operator = OP.NOT if success else OP.BLANK
+	var result: String = "method: %s was %s called from node: %s" % [method, operator, nodepath]
+	output(success, expected, result)
+	
+func _script_was_not_called(double, method: String, expected: String) -> void:
 	var success = double.call_count(method) == 0
 	var result: String = "method %s was %s called" % [method, (OP.NOT if success else OP.BLANK)]
 	output(success, expected, result)
