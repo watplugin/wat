@@ -4,14 +4,19 @@ const DOUBLE: String = "double"
 var _methods: Dictionary = {}
 var instance: Object
 const is_scene: bool = false
+signal DOUBLE_EXECUTE_METHOD
 
 func _init(methods: Array, instance) -> void:
 	self.instance = instance
 	instance.set_meta(DOUBLE, self)
 	for method in methods:
 		_add_method(method.name)
-		
-		
+
+func execute(method: String, count: int = 0, a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null):
+	var args: Array = [a, b, c, d, e,f, g, h, i]
+	args.resize(count)
+	return self.instance.callv(method, args)
+
 func _add_method(_name) -> void:
 	_methods[_name] = Method.new(_name)
 	

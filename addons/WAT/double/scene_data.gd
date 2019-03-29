@@ -13,6 +13,9 @@ func _init(nodes, scene: Node) -> void:
 			var node = instance.get_node(path)
 			var methods = data.methods
 			_nodes[path] = SCRIPT_DATA.new(methods, node)
+			
+func execute(node: String, method: String, count: int = 0, a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null):
+	return _nodes[node].execute(method, count, a, b, c, d, e, f, g, h, i)
 	
 func get_retval(node: String, method: String, arguments: Dictionary):
 	return _nodes[node].get_retval(method, arguments)
