@@ -30,7 +30,7 @@ static func scene(tscn) -> SCENE_DATA:
 
 static func _get_tree_outline(scene_path: String, scene: Node) -> Array:
 	# SEPERATE METHOD
-	var paths: Array = []
+	var outline: Array = []
 	var frontier: Array = [scene]
 	while not frontier.empty():
 		var node = frontier.pop_front()
@@ -46,8 +46,8 @@ static func _get_tree_outline(scene_path: String, scene: Node) -> Array:
 			IO.save_script(tokens.title, rewrite, scene_path)
 			data.scriptpath = IO.SCRIPT_PATH % [scene_path, tokens.title]
 			data.methods = tokens.methods
-		paths.append(data)
-	return paths
+		outline.append(data)
+	return outline
 
 static func _create_scene_double(paths: Array, name) -> Node:
 	var root = Node # May cause issues later
