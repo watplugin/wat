@@ -3,6 +3,7 @@ extends Reference
 const SCRIPT_DATA = preload("script_data.gd")
 var _nodes: Dictionary = {}
 var instance: Node
+const is_scene: bool = true
 
 func _init(nodes, scene: Node) -> void:
 	self.instance = scene

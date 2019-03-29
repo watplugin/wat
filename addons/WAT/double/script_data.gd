@@ -3,12 +3,14 @@ extends Reference
 const DOUBLE: String = "double"
 var _methods: Dictionary = {}
 var instance: Object
+const is_scene: bool = false
 
 func _init(methods: Array, instance) -> void:
 	self.instance = instance
 	instance.set_meta(DOUBLE, self)
 	for method in methods:
 		_add_method(method.name)
+		
 		
 func _add_method(_name) -> void:
 	_methods[_name] = Method.new(_name)
