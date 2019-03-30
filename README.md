@@ -17,7 +17,7 @@ For those unfamiller with GUT, you can check it out [here](https://github.com/bi
 
 ## How do I use WAT?
 
-You can out the WAT Guide on the [WAT Wiki](https://github.com/CodeDarigan/WAT/wiki)
+You can check out the WAT Guide on the [WAT Wiki](https://github.com/CodeDarigan/WAT/wiki)
 
 ## Who created WAT?
 
