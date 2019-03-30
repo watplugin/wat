@@ -7,10 +7,10 @@ func _pre():
 	login.stub("login", {"username": "alex", "password": "code"}, "Logged In")
 	login.stub("login", {"username": "jack", "password": "captain"}, "Hello Captain Jack")
 	login.stub("register", {"username": "dank", "password": "pass"}, "Username 'Dank' is unacceptable")
+	login.default("register", "alloallo")
 
 func test_doubler_all_should_pass():
 	# In real tests, we would usually expect these to be called from elsewhere
-	login.instance.login("alex", "code")
 	expect.is_equal(login.execute("login", 2, "alex", "code"), "Logged In", "Logged In == Logged In")
 	expect.is_equal(login.instance.login("jack", "captain"), "Hello Captain Jack", "Hello Captain Jack == Hello Captain Jack")
 	expect.was_called(login, "login", "Login was called")

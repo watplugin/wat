@@ -16,9 +16,12 @@ func execute(method: String, count: int = 0, a = null, b = null, c = null, d = n
 	var args: Array = [a, b, c, d, e,f, g, h, i]
 	args.resize(count)
 	return self.instance.callv(method, args)
+	
+func default(title: String, value) -> void:
+	_methods[title].default(value)
 
-func _add_method(_name) -> void:
-	_methods[_name] = Method.new(_name)
+func _add_method(title) -> void:
+	_methods[title] = Method.new(title)
 	
 func stub(title: String, arguments: Dictionary, retval) -> void:
 	_methods[title].stub(arguments, retval)
@@ -34,9 +37,13 @@ class Method extends Reference:
 	var calls: Array = []
 	var stubs: Array = []
 	var call_count: int = 0
+	var default_retval
 	
 	func _init(title: String) -> void:
 		self.title = title
+	
+	func default(value):
+		default_retval = value
 		
 	func stub(arguments: Dictionary, retval) -> void:
 		stubs.append({"arguments": arguments, "retval": retval})
@@ -46,7 +53,7 @@ class Method extends Reference:
 		for stub in stubs:
 			if _key_value_match(arguments, stub.arguments):
 				return stub.retval
-		return null
+		return default_retval
 
 	func _add_call(arguments: Dictionary) -> void:
 		self.call_count += 1

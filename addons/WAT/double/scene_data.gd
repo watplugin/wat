@@ -17,6 +17,9 @@ func _init(nodes, scene: Node) -> void:
 func execute(node: String, method: String, count: int = 0, a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null):
 	return _nodes[node].execute(method, count, a, b, c, d, e, f, g, h, i)
 	
+func default(node: String, method: String, default) -> void:
+	_nodes[node].default(method, default)
+	
 func get_retval(node: String, method: String, arguments: Dictionary):
 	return _nodes[node].get_retval(method, arguments)
 	
