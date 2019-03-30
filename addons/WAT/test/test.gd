@@ -28,15 +28,27 @@ func run() -> void:
 	_clear_all_directories()
 
 func _start():
+	start()
+	
+func start():
 	pass
 
 func _pre():
+	pre()
+	
+func pre():
 	pass
-
+	
 func _post():
+	post()
+	
+func post():
 	pass
 
 func _end():
+	end()
+	
+func end():
 	pass
 
 func _test_methods() -> Array:
