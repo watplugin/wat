@@ -50,16 +50,16 @@ static func _get_tree_outline(scene_path: String, scene: Node) -> Array:
 	return outline
 
 static func _create_scene_double(paths: Array, name) -> Node:
-	var root = Node.new() # May cause issues later 
+	var root = Node.new() # May cause issues later
 	for i in paths:
 		var node: Node = _create_node(i)
 		var split_node_path: Array = split_nodepath(i.nodepath)
 		if _is_scene_root(split_node_path):
 			_add_root(name, node, root)
-			continue # Unnecessary?
+			continue # Need to move this away without making root its own owner
 		elif _is_child_of_root(split_node_path):
 			_add_child(split_node_path, node, root)
-		else:
+		elif _is_grandchild(split_node_path):
 			_add_grandchild(split_node_path, node, root)
 		# Setting all owners to root for saving
 		node.owner = root
@@ -77,9 +77,12 @@ static func split_nodepath(nodepath: String) -> Array:
 static func _is_scene_root(node: Array) -> bool:
 	return node[0] == "." and node.size() == 1
 	
-static func _is_child_of_root(node) -> bool:
-	return node.size() == 1
-	
+static func _is_child_of_root(nodepath: Array) -> bool:
+	return nodepath.size() == 1
+
+static func _is_grandchild(nodepath: Array) -> bool:
+	return nodepath.size() > 1
+
 static func _add_root(name: String, node: Node, root: Node) -> void:
 		root = node
 		root.name = name
