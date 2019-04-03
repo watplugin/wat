@@ -63,7 +63,7 @@ static func _create_scene_double(paths: Array, name) -> Node:
 			root.name = name
 			continue # Unnecessary?
 		elif hieracy.size() == 1:
-			# We're an immediate hcild
+			# We're an immediate child
 			node.name = hieracy[0]
 			root.add_child(node)
 		else:
