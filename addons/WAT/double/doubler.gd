@@ -54,15 +54,13 @@ static func _create_scene_double(paths: Array, name) -> Node:
 	for i in paths:
 		var node: Node = _create_node(i)
 		var split_node_path: Array = split_nodepath(i.nodepath)
-		
-		if _is_child_of_root(split_node_path):
+		if _is_scene_root(split_node_path):
+			_add_root(name, node, root)
+			continue # Need to move this away without making root its own owner
+		elif _is_child_of_root(split_node_path):
 			_add_child(split_node_path, node, root)
 		elif _is_grandchild(split_node_path):
 			_add_grandchild(split_node_path, node, root)
-		elif _is_scene_root(split_node_path):
-			_add_root(name, node, root)
-			continue # Need to move this away without making root its own owner
-
 		# Setting all owners to root for saving
 		node.owner = root
 	return root
