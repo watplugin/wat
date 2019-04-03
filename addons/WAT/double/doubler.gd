@@ -50,14 +50,9 @@ static func _get_tree_outline(scene_path: String, scene: Node) -> Array:
 	return outline
 
 static func _create_scene_double(paths: Array, name) -> Node:
-#	print(paths)
 	var root = Node # May cause issues later
 	for i in paths:
-#		print(i)
-		var node = Node.new()
-		if i.scriptpath != null: # Need to figure out for defaults
-			node = load(i["scriptpath"]).new() # Loading Custom Script
-#		var split_node_path: Array = Array(str(i["nodepath"]).split("/"))
+		var node: Node = _create_node(i)
 		var split_node_path: Array = split_nodepath(i.nodepath)
 		if _is_scene_root(split_node_path):
 			root = node
@@ -79,6 +74,9 @@ static func _create_scene_double(paths: Array, name) -> Node:
 
 static func _has_custom_script(node: Node) -> bool:
 	return node.script != null
+	
+static func _create_node(data: Dictionary) -> Node:
+	return load(data.scriptpath).new() if data.scriptpath != null else Node.new()
 	
 static func split_nodepath(nodepath: String) -> Array:
 	return Array(nodepath.split("/"))
