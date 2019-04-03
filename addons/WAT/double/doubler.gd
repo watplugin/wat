@@ -57,17 +57,18 @@ static func _create_scene_double(paths: Array, name) -> Node:
 		var node = Node.new()
 		if i.scriptpath != null: # Need to figure out for defaults
 			node = load(i["scriptpath"]).new() # Loading Custom Script
-		var hieracy = str(i["nodepath"]).split("/")
-		if _is_scene_root(hieracy):
+#		var split_node_path: Array = Array(str(i["nodepath"]).split("/"))
+		var split_node_path: Array = split_nodepath(i.nodepath)
+		if _is_scene_root(split_node_path):
 			root = node
 			root.name = name
 			continue # Unnecessary?
-		if _is_child_of_root(hieracy):
-			node.name = hieracy[0]
+		if _is_child_of_root(split_node_path):
+			node.name = split_node_path[0]
 			root.add_child(node)
 		else:
 			# Adding Subchildren
-			var nodepath_list = Array(hieracy)
+			var nodepath_list = Array(split_node_path)
 			var main_node = nodepath_list.pop_back()
 			var parent_node = nodepath_list.pop_back()
 			node.name = main_node
@@ -78,6 +79,9 @@ static func _create_scene_double(paths: Array, name) -> Node:
 
 static func _has_custom_script(node: Node) -> bool:
 	return node.script != null
+	
+static func split_nodepath(nodepath: String) -> Array:
+	return Array(nodepath.split("/"))
 	
 static func _is_scene_root(node: Array) -> bool:
 	return node[0] == "." and node.size() == 1
