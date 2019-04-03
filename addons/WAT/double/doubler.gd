@@ -63,11 +63,11 @@ static func _create_scene_double(paths: Array, name) -> Node:
 			root.add_child(node)
 		else:
 			# Adding Subchildren
-			var nodepath_list = Array(split_node_path)
-			var main_node = nodepath_list.pop_back()
-			var parent_node = nodepath_list.pop_back()
-			node.name = main_node
-			root.get_node(parent_node).add_child(node)
+			_add_grandchildren(split_node_path, node, root)
+#			var main_node = split_node_path.pop_back()
+#			var parent_node = split_node_path.pop_back()
+#			node.name = main_node
+#			root.get_node(parent_node).add_child(node)
 		# Setting all owners to root for saving
 		node.owner = root
 	return root
@@ -87,3 +87,8 @@ static func _is_scene_root(node: Array) -> bool:
 static func _is_child_of_root(node) -> bool:
 	return node.size() == 1
 		
+static func _add_grandchildren(split_node_path: Array, node: Node, root: Node) -> void:
+	var grandchild_name = split_node_path.pop_back()
+	var child_name = split_node_path.pop_back()
+	node.name = grandchild_name
+	root.get_node(child_name).add_child(node)
