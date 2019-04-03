@@ -50,24 +50,18 @@ static func _get_tree_outline(scene_path: String, scene: Node) -> Array:
 	return outline
 
 static func _create_scene_double(paths: Array, name) -> Node:
-	var root = Node # May cause issues later
+	var root = Node.new() # May cause issues later 
 	for i in paths:
 		var node: Node = _create_node(i)
 		var split_node_path: Array = split_nodepath(i.nodepath)
 		if _is_scene_root(split_node_path):
-			root = node
-			root.name = name
+			_add_root(name, node, root)
 			continue # Unnecessary?
 		if _is_child_of_root(split_node_path):
-			node.name = split_node_path[0]
-			root.add_child(node)
+			_add_child(split_node_path, node, root)
 		else:
 			# Adding Subchildren
-			_add_grandchildren(split_node_path, node, root)
-#			var main_node = split_node_path.pop_back()
-#			var parent_node = split_node_path.pop_back()
-#			node.name = main_node
-#			root.get_node(parent_node).add_child(node)
+			_add_grandchild(split_node_path, node, root)
 		# Setting all owners to root for saving
 		node.owner = root
 	return root
@@ -86,8 +80,16 @@ static func _is_scene_root(node: Array) -> bool:
 	
 static func _is_child_of_root(node) -> bool:
 	return node.size() == 1
+	
+static func _add_root(name: String, node: Node, root: Node) -> void:
+		root = node
+		root.name = name
 		
-static func _add_grandchildren(split_node_path: Array, node: Node, root: Node) -> void:
+static func _add_child(split_node_path: Array, node: Node, root: Node) -> void:
+	node.name = split_node_path.front()
+	root.add_child(node)
+		
+static func _add_grandchild(split_node_path: Array, node: Node, root: Node) -> void:
 	var grandchild_name = split_node_path.pop_back()
 	var child_name = split_node_path.pop_back()
 	node.name = grandchild_name
