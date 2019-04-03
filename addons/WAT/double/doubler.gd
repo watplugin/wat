@@ -50,8 +50,10 @@ static func _get_tree_outline(scene_path: String, scene: Node) -> Array:
 	return outline
 
 static func _create_scene_double(paths: Array, name) -> Node:
+#	print(paths)
 	var root = Node # May cause issues later
 	for i in paths:
+#		print(i)
 		var node = Node.new()
 		if i.scriptpath != null: # Need to figure out for defaults
 			node = load(i["scriptpath"]).new() # Loading Custom Script
@@ -75,10 +77,6 @@ static func _create_scene_double(paths: Array, name) -> Node:
 		node.owner = root
 	return root
 
-
 static func _has_custom_script(node: Node) -> bool:
 	return node.script != null
-	
-static func _get_node_path(root: Node, node: Node) -> String:
-	return str(root.get_path_to(node))
 		
