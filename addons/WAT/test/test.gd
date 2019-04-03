@@ -25,7 +25,7 @@ func run() -> void:
 		call(test)
 		_post()
 	_end()
-	_clear_all_directories()
+#	_clear_all_directories()
 
 func _start():
 	start()
