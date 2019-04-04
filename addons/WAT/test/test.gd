@@ -1,20 +1,28 @@
 extends Node
 class_name WATTest
 
-var watcher
-var expect: WATExpectations
-var case: WATCase
-var title: String
-const WATCHER = preload("watcher.gd")
+# We can't namespace stuff in a single script unfortunately
+const EXPECTATIONS = preload("res://addons/WAT/test/expectations.gd")
+const WATCHER = preload("res://addons/WAT/test/watcher.gd")
+const CASE = preload("res://addons/WAT/test/case.gd")
 
-func watch(emitter, event: String) -> void:
-	watcher.watch(emitter, event)
+var expect: EXPECTATIONS
+var watcher: WATCHER
+var case: CASE
+var title: String
+
 
 func _init():
+	_set_properties()
+	_create_connections()
+	
+func _set_properties():
+	expect = EXPECTATIONS.new()
 	watcher = WATCHER.new()
-	expect = WATExpectations.new()
-	expect.set_meta("watcher", self.watcher)
-	case = WATCase.new(self._title())
+	case = CASE.new(_title())
+
+func _create_connections():
+	expect.set_meta("watcher", watcher)
 	expect.connect("OUTPUT", case, "_add_expectation")
 
 func run() -> void:
@@ -60,6 +68,9 @@ func _test_methods() -> Array:
 
 func _title() -> String:
 	return self.get_script().get_path()
+	
+func watch(emitter, event: String) -> void:
+	watcher.watch(emitter, event)
 	
 func _clear_all_directories():
 	var path: String = "user://WATemp/"
