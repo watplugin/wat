@@ -5,6 +5,7 @@ onready var run_button = $Split/Config/Button
 onready var clear_button = $Split/Config/Button2
 onready var display = $Split/Display
 const _TEST_DIR: String = "res://tests/"
+const TEST = preload("res://addons/WAT/test/test.gd")
 
 func _ready():
 	self.run_button.connect("pressed", self, "_run")
@@ -13,7 +14,7 @@ func _ready():
 func _run():
 	display.reset()
 	for script in self.tests():
-		var test: WATTest = script.new()
+		var test: TEST = script.new()
 		add_child(test)
 		test.run()
 		display.display(test.case)
