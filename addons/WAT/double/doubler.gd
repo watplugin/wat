@@ -1,5 +1,4 @@
 extends Reference
-class_name WATDouble
 
 # Controllers
 const TOKENIZER = preload("res://addons/WAT/double/tokenizer.gd")

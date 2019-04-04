@@ -29,11 +29,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/WAT/constants/type_library.gd"
 }, {
-"base": "Reference",
-"class": "WATDouble",
-"language": "GDScript",
-"path": "res://addons/WAT/double/doubler.gd"
-}, {
 "base": "Node",
 "class": "WATTest",
 "language": "GDScript",
@@ -44,7 +39,6 @@ _global_script_class_icons={
 "Calculator": "",
 "Login": "",
 "WATBuiltins": "",
-"WATDouble": "",
 "WATTest": ""
 }
 
