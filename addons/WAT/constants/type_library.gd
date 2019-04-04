@@ -1,5 +1,4 @@
 extends Reference
-class_name WATBuiltins
 
 static func to_string(property) -> String:
 	match typeof(property):

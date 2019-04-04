@@ -2,6 +2,7 @@ extends Reference
 
 const SCENE = preload("res://addons/WAT/double/scene_data.gd")
 const SCRIPT = preload("res://addons/WAT/double/script_data.gd")
+const BUILT_INS = preload("res://addons/WAT/constants/type_library.gd")
 ### TO ADD ###
 # dict keys are equal
 # dicts values are equal
@@ -241,4 +242,4 @@ func string_does_not_end_with(value, string: String, expected: String) -> void:
 	output(success, expected, result)
 
 func _stringify(variable) -> String:
-	return "| %s | %s |" % [WATBuiltins.to_string(variable).to_upper(), str(variable)]
+	return "| %s | %s |" % [BUILT_INS.to_string(variable).to_upper(), str(variable)]
