@@ -34,11 +34,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/WAT/double/doubler.gd"
 }, {
-"base": "Reference",
-"class": "WATExpectations",
-"language": "GDScript",
-"path": "res://addons/WAT/test/expectations.gd"
-}, {
 "base": "Node",
 "class": "WATTest",
 "language": "GDScript",
@@ -50,7 +45,6 @@ _global_script_class_icons={
 "Login": "",
 "WATBuiltins": "",
 "WATDouble": "",
-"WATExpectations": "",
 "WATTest": ""
 }
 

@@ -1,5 +1,4 @@
 extends Reference
-class_name WATExpectations
 
 const SCENE = preload("res://addons/WAT/double/scene_data.gd")
 const SCRIPT = preload("res://addons/WAT/double/script_data.gd")
