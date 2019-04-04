@@ -1,5 +1,4 @@
 extends Node
-class_name WATCase
 
 var details: String
 var success: bool = true
