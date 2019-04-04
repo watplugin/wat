@@ -1,6 +1,8 @@
 extends Reference
 class_name WATExpectations
 
+const SCENE = preload("res://addons/WAT/double/scene_data.gd")
+const SCRIPT = preload("res://addons/WAT/double/script_data.gd")
 ### TO ADD ###
 # dict keys are equal
 # dicts values are equal
@@ -145,13 +147,13 @@ func is_not_null(value, expected: String) -> void:
 func was_called(double, a: String = "", b: String = "", c: String = "") -> void:
 	_scene_was_called(double, a, b, c) if double.is_scene else _script_was_called(double, a, b)
 	
-func _scene_was_called(double, nodepath: String, method: String, expected: String) -> void:
+func _scene_was_called(double: SCENE, nodepath: String, method: String, expected: String) -> void:
 	var success = double.call_count(nodepath, method) > 0
 	var operator = OP.BLANK if success else OP.NOT
 	var result: String = "method: %s was %s called from node: %s" % [method, operator, nodepath]
 	output(success, expected, result)
 	
-func _script_was_called(double, method: String, expected: String) -> void:
+func _script_was_called(double: SCRIPT, method: String, expected: String) -> void:
 	var success = double.call_count(method) > 0
 	var result: String = "method: %s was %s called" % [method, (OP.BLANK if success else OP.NOT)]
 	output(success, expected, result)
@@ -159,13 +161,13 @@ func _script_was_called(double, method: String, expected: String) -> void:
 func was_not_called(double, a: String = "", b: String = "", c: String = "") -> void:
 	_scene_was_not_called(double, a, b, c) if double.is_scene else _script_was_not_called(double, a, b)
 	
-func _scene_was_not_called(double, nodepath: String, method: String, expected: String) -> void:
+func _scene_was_not_called(double: SCENE, nodepath: String, method: String, expected: String) -> void:
 	var success = double.call_count(nodepath, method) == 0
 	var operator = OP.NOT if success else OP.BLANK
 	var result: String = "method: %s was %s called from node: %s" % [method, operator, nodepath]
 	output(success, expected, result)
 	
-func _script_was_not_called(double, method: String, expected: String) -> void:
+func _script_was_not_called(double: SCRIPT, method: String, expected: String) -> void:
 	var success = double.call_count(method) == 0
 	var result: String = "method %s was %s called" % [method, (OP.NOT if success else OP.BLANK)]
 	output(success, expected, result)
