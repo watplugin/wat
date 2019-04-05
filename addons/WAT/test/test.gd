@@ -6,7 +6,7 @@ const EXPECTATIONS = preload("res://addons/WAT/test/expectations.gd")
 const DOUBLE = preload("res://addons/WAT/double/doubler.gd")
 const WATCHER = preload("res://addons/WAT/test/watcher.gd")
 const CASE = preload("res://addons/WAT/test/case.gd")
-const IO = preload("res://addons/WAT/double/input_output.gd")
+const IO = preload("res://addons/WAT/input_output.gd")
 
 var expect: EXPECTATIONS
 var watcher: WATCHER
