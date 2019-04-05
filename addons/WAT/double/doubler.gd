@@ -16,6 +16,7 @@ static func script(gdscript) -> SCRIPT_DATA:
 	var script: Script = IO.load_script(gdscript)
 	var tokens = TOKENIZER.start(script)
 	var rewrite: String = REWRITER.start(tokens)
+	IO.save_script(tokens.title, rewrite)
 	return SCRIPT_DATA.new(tokens.methods, IO.load_doubled_script(tokens.title))
 
 static func scene(tscn) -> SCENE_DATA:
@@ -23,8 +24,9 @@ static func scene(tscn) -> SCENE_DATA:
 	var path: String = IO.TEMP_DIR_PATH + IO.SCENE_DIR_PATH % scene.name
 	var outline: Array = _get_tree_outline(path, scene)
 	var doubled: Node = _create_scene_double(outline, scene.name)
+	IO.save_scene(doubled, path, scene.name)
 	return SCENE_DATA.new(outline, doubled)
-	
+
 static func _get_tree_outline(scene_path: String, scene: Node) -> Array:
 	# SEPERATE METHOD
 	var outline: Array = []
