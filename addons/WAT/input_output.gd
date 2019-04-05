@@ -5,7 +5,7 @@ const SCENE_DIR_PATH: String = "%s/"
 const SCRIPT_PATH: String = "%s%s.gd"
 const SCENE_PATH: String = "%s.tscn"
 const NO_SUB_DIR: String = ""
-const BLANK: Script = preload("blank.gd")
+const BLANK: Script = preload("res://addons/WAT/double/blank.gd")
 
 static func load_script(gdscript) -> Script:
 	assert(gdscript is Script or (gdscript is String and gdscript.ends_with(".gd")))
