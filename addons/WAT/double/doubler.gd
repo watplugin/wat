@@ -25,7 +25,19 @@ static func scene(tscn) -> SCENE_DATA:
 	var outline: Array = _get_tree_outline(path, scene)
 	var doubled: Node = _create_scene_double(outline, scene.name)
 	IO.save_scene(doubled, path, scene.name)
-	return SCENE_DATA.new(outline, doubled)
+	var nodes = scene_node_data(doubled, outline)
+	return SCENE_DATA.new(nodes, doubled)
+	
+#	self.instance = scene
+static func scene_node_data(instance, outline: Array) -> Dictionary:
+	var nodes: Dictionary
+	for data in outline:
+		if data.scriptpath != null:
+			var path: String = str(data.nodepath)
+			var node = instance.get_node(path)
+			var methods = data.methods
+			nodes[path] = SCRIPT_DATA.new(methods, node)
+	return nodes
 
 static func _get_tree_outline(scene_path: String, scene: Node) -> Array:
 	# SEPERATE METHOD
