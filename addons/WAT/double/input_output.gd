@@ -36,3 +36,39 @@ static func _create_directory_if_it_does_not_exist(path: String) -> void:
 	var dir = Directory.new()
 	if not dir.dir_exists(path):
 		dir.make_dir(path)
+
+static func clear_all_temp_directories():
+	var path: String = "user://WATemp/"
+	var d = Directory.new()
+	if not d.dir_exists(path):
+		print("dir: %s does not exist" % path)
+	var result = d.open(path)
+	if result != OK:
+		print("Error %s when trying to open dir: %s" % [str(result), path])
+		return
+		
+	d.list_dir_begin(true)
+	var file = d.get_next()
+	while file != "":
+		if d.current_is_dir():
+			_clear_dir(path + file)
+		d.remove(path + file)
+		file = d.get_next()
+	# Don't delete WATemp itself. Just keep it empty
+	
+static func _clear_dir(path: String):
+	var d = Directory.new()
+	if not d.dir_exists(path):
+		print("dir: %s does not exist" % path)
+		return
+	var result = d.open(path)
+	if result != OK:
+		print("Error %s when trying to opening dir: %s" % [str(result), path])
+		return
+	d.list_dir_begin(true)
+	var file = d.get_next()
+	while file != "":
+		var res = d.remove(file)
+		if res != OK:
+			print("Error %s when trying to remove file: %s" % [str(res), file])
+		file = d.get_next()
