@@ -3,6 +3,7 @@ extends Reference
 const SCENE = preload("res://addons/WAT/double/scene_data.gd")
 const SCRIPT = preload("res://addons/WAT/double/script_data.gd")
 const BUILT_INS = preload("res://addons/WAT/constants/type_library.gd")
+const OP = preload("res://addons/WAT/constants/operators.gd")
 ### TO ADD ###
 # dict keys are equal
 # dicts values are equal
@@ -11,19 +12,7 @@ const BUILT_INS = preload("res://addons/WAT/constants/type_library.gd")
 # Others for double: WATDoubles (call, call count, called by signal, object emitted signal, called with parameters, signal w parameters)
 
 
-class OP:
-	const EQUAL = "=="
-	const INEQUAL = "!="
-	const GREATER = ">"
-	const LESSER = "<"
-	const GREATER_THAN_OR_EQUAL = "=>"
-	const LESS_THAN_OR_EQUAL = "<="
-	const IS = "is"
-	const IN = "in"
-	const NOT = "not "
-	const EXCLAIMATION = "!"
-	const IS_NOT = "is not"
-	const BLANK = ""
+
 
 signal OUTPUT
 
