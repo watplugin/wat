@@ -17,6 +17,7 @@ static func script(gdscript) -> SCRIPT_DATA:
 	var tokens = TOKENIZER.start(script)
 	var rewrite: String = REWRITER.start(tokens)
 	IO.save_script(tokens.title, rewrite)
+	var s = IO.load_doubled_script(tokens.title)
 	return SCRIPT_DATA.new(tokens.methods, IO.load_doubled_script(tokens.title))
 
 static func scene(tscn) -> SCENE_DATA:
