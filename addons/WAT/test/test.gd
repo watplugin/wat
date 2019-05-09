@@ -7,12 +7,12 @@ const DOUBLE = preload("res://addons/WAT/double/doubler.gd")
 const WATCHER = preload("res://addons/WAT/test/watcher.gd")
 const CASE = preload("res://addons/WAT/test/case.gd")
 const IO = preload("res://addons/WAT/input_output.gd")
+const YIELDER = preload("res://addons/WAT/test/yielder.gd")
 
 var expect: EXPECTATIONS
 var watcher: WATCHER
 var case: CASE
 var title: String
-
 
 func _init():
 	_set_properties()
@@ -32,12 +32,13 @@ var cursor: int = -1
 var waiting: bool = false # Likely redundant
 
 func _start():
-	self.cursor = -1
-	_set_test_methods()
 	start()
 	
 func _is_active() -> bool:
 	return not waiting and self.cursor < methods.size() - 1
+	
+func _is_finished() -> bool:
+	return self.cursor >= methods.size()
 	
 func _get_next() -> String:
 	self.cursor += 1
