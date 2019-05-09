@@ -26,20 +26,22 @@ func _set_properties():
 func _create_connections():
 	expect.set_meta("watcher", watcher)
 	expect.connect("OUTPUT", case, "_add_expectation")
-
-func run() -> void:
-	_start()
-	for test in _test_methods():
-		case.add_method(test)
-		_pre()
-		call(test)
-		_post()
-	_end()
-	IO.clear_all_temp_directories()
-#	_clear_all_directories()
+	
+var methods: Array = []
+var cursor: int = -1
+var waiting: bool = false # Likely redundant
 
 func _start():
+	self.cursor = -1
+	_set_test_methods()
 	start()
+	
+func _is_active() -> bool:
+	return not waiting and self.cursor < methods.size() - 1
+	
+func _get_next() -> String:
+	self.cursor += 1
+	return self.methods[self.cursor]
 	
 func start():
 	pass
@@ -62,12 +64,12 @@ func _end():
 func end():
 	pass
 
-func _test_methods() -> Array:
+func _set_test_methods() -> void:
 	var results: Array = []
 	for method in get_method_list():
 		if method.name.begins_with("test_"):
 			results.append(method.name)
-	return results
+	self.methods = results
 
 func _title() -> String:
 	return self.get_script().get_path()
