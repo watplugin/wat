@@ -17,21 +17,21 @@ func _ready():
 	self.clear_button.connect("pressed", self.display, "reset")
 
 func start():
+	print("WAT: Starting Test Runner")
 	self.cases = []
+	self.tests = []
 	display.reset()
 	self.tests = _get_tests()
-	print("Test Script Count: %s" % self.tests.size())
+	print("WAT: %s Test Scripts Collected" % self.tests.size())
 	self.cursor = -1
 	_loop()
-	if paused:
-		return
-	display()
 	
 func _loop():
 	while self.cursor < self.tests.size() - 1:
 		# Handle Pause Here
 		self.cursor += 1
 		_set_tests()
+		print("WAT: Executing Test Script: %s" % self.test._title())
 		_execute_test_methods()
 		if paused:
 			return
@@ -43,10 +43,9 @@ func display():
 		display.display(case)
 			
 func _set_tests():
-		print(self.cursor , " is cursor count")
 		test = self.tests[self.cursor].new()
 		add_child(test)
-		test.cursor = 0
+		test.cursor = -1
 		test._set_test_methods()
 		test._start()
 		
@@ -54,6 +53,7 @@ func _execute_test_methods():
 	while test.cursor < test.methods.size() - 1:
 		test.cursor += 1
 		var method: String = test.methods[test.cursor]
+		print("WAT: Executing Method: %s from Test Script %s" % [method, test._title()])
 		test.case.add_method(method)
 		test._pre()
 		test.call(method)
@@ -62,7 +62,7 @@ func _execute_test_methods():
 		test._post()
 		
 func resume():
-	print("resuming: called from main.gd")
+	print("WAT: Resuming Test Script %s" % test._title())
 	paused = false
 	test._post()
 	_execute_test_methods()
@@ -72,9 +72,12 @@ func resume():
 func _finish_test():
 	self.cases.append(test.case)
 	test._end()
+	print("WAT: Finished executing %s" % test._title())
+	print("WAT: Clearing all files in user/WATEMP")
 	test.IO.clear_all_temp_directories()
 
 func _get_tests() -> Array:
+	print("WAT: Collecting Test Scripts")
 	# In future this might be better in its own script
 	var ONLY_SEARCH_CHILDREN: bool = true
 	var results: Array = []
