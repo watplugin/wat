@@ -18,42 +18,48 @@ func _ready():
 func start():
 	display.reset()
 	self.tests = _get_tests()
-	self.cursor = 0
+	print("Test Script Count: %s" % self.tests.size())
+	self.cursor = -1
 	_loop()
 	
 func _loop():
-	while self.cursor < self.tests.size():
+	while self.cursor < self.tests.size() - 1:
 		# Handle Pause Here
+		self.cursor += 1
+		_set_tests()
+		_execute_test_methods()
+		if paused:
+			return
+		_finish_test()
+			
+func _set_tests():
+		print(self.cursor , " is cursor count")
 		test = self.tests[self.cursor].new()
 		add_child(test)
-		test.cursor = -1
+		test.cursor = 0
 		test._set_test_methods()
 		test._start()
-		while test.cursor < test.methods.size() - 1:
-			# Handle Pause Here
-			test.cursor += 1
-			var method: String = test.methods[test.cursor]
-			test.case.add_method(method)
-			test._pre()
-			test.call(method)
-			if paused:
-				return
-			self.cursor += 1
-			# Handle Pause Here
-			test._post()
-		# This will be called
-		_finish_test()
+		
+func _execute_test_methods():
+	while test.cursor < test.methods.size() - 1:
+		test.cursor += 1
+		var method: String = test.methods[test.cursor]
+		test.case.add_method(method)
+		test._pre()
+		test.call(method)
+		if paused:
+			return
+		test._post()
 		
 func resume():
 	print("resuming: called from main.gd")
-	# called by yield objects
 	paused = false
-	test._post() # We don't need to call .end() because _loop should handle it
+	test._post()
+	_execute_test_methods()
+	_finish_test()
 	_loop()
-	# Called by yield objects
 		
 func _finish_test():
-	self.cursor += 1
 	display.display(test.case)
 	test._end()
 	test.IO.clear_all_temp_directories()

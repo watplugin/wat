@@ -18,18 +18,18 @@ func _init(time_limit: float, emitter: Object, _signal: String, testrunner) -> v
 	testrunner.add_child(self)
 	self.add_child(timer)
 	self.timer.start()
-	self.testrunner._pause()
+	self.testrunner.paused = true
 	
 	# what if other signal?
 func on_timeout():
 	print("timed out")
-	self.testrunner._resume()
 	emit_signal("finished")
+	self.testrunner.resume()
 	
 func on_signal():
 	timer.stop()
 	print("signal emitted")
 	emitted = true
 	emit_signal("finished")
-	self.testrunner._resume()
+	self.testrunner.resume()
 	self.queue_free()

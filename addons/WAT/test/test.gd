@@ -34,16 +34,6 @@ var waiting: bool = false # Likely redundant
 func _start():
 	start()
 	
-func _is_active() -> bool:
-	return not waiting and self.cursor < methods.size() - 1
-	
-func _is_finished() -> bool:
-	return self.cursor >= methods.size()
-	
-func _get_next() -> String:
-	self.cursor += 1
-	return self.methods[self.cursor]
-	
 func start():
 	pass
 
