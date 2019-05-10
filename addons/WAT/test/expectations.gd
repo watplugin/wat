@@ -21,10 +21,10 @@ func output(success: bool, expected: String, result: String = "", notes = "") ->
 	emit_signal("OUTPUT", success, expected, result, notes)
 
 func is_true(condition: bool, expected: String) -> void:
-	output(condition, expected, "is false")
+	output(condition, expected, "True")
 	
 func is_false(condition: bool, expected: String) -> void:
-	output(not condition, expected, "is true")
+	output(not condition, expected, "False")
 
 func is_equal(a, b, expected: String) -> void:
 	var success: bool = (a == b)
