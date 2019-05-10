@@ -10,17 +10,22 @@ var tests: Array = []
 var cursor: int = 0
 var test: TEST
 var paused: bool = false
+var cases: Array = []
 
 func _ready():
 	self.run_button.connect("pressed", self, "start")
 	self.clear_button.connect("pressed", self.display, "reset")
 
 func start():
+	self.cases = []
 	display.reset()
 	self.tests = _get_tests()
 	print("Test Script Count: %s" % self.tests.size())
 	self.cursor = -1
 	_loop()
+	if paused:
+		return
+	display()
 	
 func _loop():
 	while self.cursor < self.tests.size() - 1:
@@ -31,6 +36,11 @@ func _loop():
 		if paused:
 			return
 		_finish_test()
+	display()
+	
+func display():
+	for case in self.cases:
+		display.display(case)
 			
 func _set_tests():
 		print(self.cursor , " is cursor count")
@@ -60,7 +70,7 @@ func resume():
 	_loop()
 		
 func _finish_test():
-	display.display(test.case)
+	self.cases.append(test.case)
 	test._end()
 	test.IO.clear_all_temp_directories()
 
