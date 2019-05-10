@@ -24,16 +24,16 @@ func _init(time_limit: float, emitter: Object, _signal: String, testrunner) -> v
 	# what if other signal?
 func on_timeout():
 	print("WAT: Yield timed out")
-	emit_signal("finished")
 	self.queue_free()
-	self.testrunner.resume()
+	emit_signal("finished")
+
 	
 func on_signal():
 	print("WAT: Signal: %s was emitted before time out: %s" % [_signal, time_limit])
+	self.queue_free()
 	emitted = true
 	emit_signal("finished")
-	self.testrunner.resume()
-	self.free()
+
 
 var i = 0
 

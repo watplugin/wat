@@ -38,8 +38,10 @@ signal hello
 func test_yielder_works():
 	expect.is_true(true, "true is true. Yield not called")
 	yield(YIELDER.new(2.0, self, "hello", get_parent()), "finished")
+	yield(YIELDER.new(2.0, self, "hello", get_parent()), "finished")
 	print("test_yielder_works returned from yield")
 	expect.is_true(true, "true is true. Yield was called")
+	get_parent().resume() # Resuming the test runner (since we called multiple yields this method)
 #
 
 func test_expect_is_true_all_of_these_should_pass():
