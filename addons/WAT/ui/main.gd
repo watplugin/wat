@@ -29,7 +29,7 @@ func clear_lines():
 
 func start():
 	plugin.make_bottom_panel_item_visible(self._log)
-	output("WAT: Starting Test Runner")
+	output("Starting Test Runner")
 	self._log.text = ""
 	self._log.cache = ""
 	self.cursor = -1
@@ -37,14 +37,14 @@ func start():
 	self.tests = []
 	display.reset()
 	self.tests = _get_tests()
-	output("WAT: %s Test Scripts Collected" % self.tests.size())
+	output("%s Test Scripts Collected" % self.tests.size())
 	_loop()
 	
 func _loop():
 	while self.cursor < self.tests.size() - 1:
 		self.cursor += 1
 		_set_tests()
-		output("WAT: Executing Test Script: %s" % test.title)
+		output("Executing Test Script: %s" % test.title)
 		_execute_test_methods()
 		if paused:
 			return
@@ -66,7 +66,7 @@ func _execute_test_methods():
 	while test.cursor < test.methods.size() - 1:
 		test.cursor += 1
 		var method: String = test.methods[test.cursor]
-		output("WAT: Executing Method: %s from Test Script %s" % [method, test.title])
+		output("Executing Method: %s from Test Script %s" % [method, test.title])
 		test.case.add_method(method)
 		test._pre()
 		test.call(method)
@@ -75,7 +75,7 @@ func _execute_test_methods():
 		test._post()
 		
 func resume():
-	output("WAT: Resuming Test Script %s" % test.title)
+	output("Resuming Test Script %s" % test.title)
 	paused = false
 	test._post()
 	_execute_test_methods()

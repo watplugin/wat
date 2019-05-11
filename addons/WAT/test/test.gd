@@ -51,8 +51,8 @@ func post():
 
 func _end():
 	end()
-	get_parent().output("WAT: Finished executing %s" % self.title)
-	get_parent().output("WAT: Clearing all files in user/WATemp")
+	get_parent().output("Finished executing %s" % self.title)
+	get_parent().output("Clearing all files in user/WATemp")
 	return self.case
 	
 func end():
@@ -85,7 +85,7 @@ func simulate(obj, times, delta):
 			
 func to(emitter: Object, event: String, time_limit: float) -> Node:
 	watch(emitter, event)
-	get_parent().output("WAT: Yielding for signal: %s from emitter: %s with timeout of %s" % [event, emitter, time_limit])
+	get_parent().output("Yielding for signal: %s from emitter: %s with timeout of %s" % [event, emitter, time_limit])
 	var yielder = YIELDER.new(time_limit, emitter, event)
 	get_parent().paused = true
 	get_parent().add_child(yielder)

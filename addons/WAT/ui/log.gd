@@ -7,7 +7,7 @@ var cache: String
 
 func add_line(msg):
 		var output = "%s\n" % msg
-		if msg.begins_with("WAT: Yielding"):
+		if msg.begins_with("Yielding"):
 			self.text = cache + output
 		else:
 			cache += output
