@@ -12,7 +12,7 @@ const YIELDER = preload("res://addons/WAT/test/yielder.gd")
 var expect: EXPECTATIONS
 var watcher: WATCHER
 var case: CASE
-var title: String
+var title: String setget ,_get_title
 
 func _init():
 	_set_properties()
@@ -21,7 +21,7 @@ func _init():
 func _set_properties():
 	expect = EXPECTATIONS.new()
 	watcher = WATCHER.new()
-	case = CASE.new(_title())
+	case = CASE.new(self.title)
 
 func _create_connections():
 	expect.set_meta("watcher", watcher)
@@ -51,6 +51,9 @@ func post():
 
 func _end():
 	end()
+	print("WAT: Finished executing %s" % self.title)
+	print("WAT: Clearing all files in user/WATemp")
+	return self.case
 	
 func end():
 	pass
@@ -62,13 +65,12 @@ func _set_test_methods() -> void:
 			results.append(method.name)
 	self.methods = results
 
-func _title() -> String:
+func _get_title() -> String:
 	return self.get_script().get_path()
 	
 func watch(emitter, event: String) -> void:
 	watcher.watch(emitter, event)
 	
-			
 ## Untested
 ## Thanks to bitwes @ https://github.com/bitwes/Gut/
 func simulate(obj, times, delta):

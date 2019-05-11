@@ -2,7 +2,7 @@ extends WATTest
 
 var login
 
-func _pre():
+func pre():
 	login = DOUBLE.script(Login)
 	login.stub("login", {"username": "alex", "password": "code"}, "Logged In")
 	login.stub("login", {"username": "jack", "password": "captain"}, "Hello Captain Jack")

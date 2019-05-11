@@ -7,7 +7,7 @@ onready var display = $Split/Display
 const _TEST_DIR: String = "res://tests/"
 const TEST = preload("res://addons/WAT/test/test.gd")
 var tests: Array = []
-var cursor: int = 0
+var cursor: int = -1
 var test: TEST
 var paused: bool = false
 var cases: Array = []
@@ -18,24 +18,24 @@ func _ready():
 
 func start():
 	print("WAT: Starting Test Runner")
+	self.cursor = -1
 	self.cases = []
 	self.tests = []
 	display.reset()
 	self.tests = _get_tests()
 	print("WAT: %s Test Scripts Collected" % self.tests.size())
-	self.cursor = -1
+
 	_loop()
 	
 func _loop():
 	while self.cursor < self.tests.size() - 1:
-		# Handle Pause Here
 		self.cursor += 1
 		_set_tests()
-		print("WAT: Executing Test Script: %s" % self.test._title())
+		print("WAT: Executing Test Script: %s" % test.title)
 		_execute_test_methods()
 		if paused:
 			return
-		_finish_test()
+		self.cases.append(test._end())
 	display()
 	
 func display():
@@ -53,7 +53,7 @@ func _execute_test_methods():
 	while test.cursor < test.methods.size() - 1:
 		test.cursor += 1
 		var method: String = test.methods[test.cursor]
-		print("WAT: Executing Method: %s from Test Script %s" % [method, test._title()])
+		print("WAT: Executing Method: %s from Test Script %s" % [method, test.title])
 		test.case.add_method(method)
 		test._pre()
 		test.call(method)
@@ -62,20 +62,13 @@ func _execute_test_methods():
 		test._post()
 		
 func resume():
-	print("WAT: Resuming Test Script %s" % test._title())
+	print("WAT: Resuming Test Script %s" % test.title)
 	paused = false
 	test._post()
 	_execute_test_methods()
-	_finish_test()
+	self.cases.append(test._end())
 	_loop()
-		
-func _finish_test():
-	self.cases.append(test.case)
-	test._end()
-	print("WAT: Finished executing %s" % test._title())
-	print("WAT: Clearing all files in user/WATEMP")
-	test.IO.clear_all_temp_directories()
-
+	
 func _get_tests() -> Array:
 	print("WAT: Collecting Test Scripts")
 	# In future this might be better in its own script
