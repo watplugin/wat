@@ -9,6 +9,12 @@ extends WATTest
 
 signal hello
 
+func test_hash_comparison():
+	var N = Node.new()
+	var C = Node.new()
+	expect.hashes_are_equal(N, N, "hash of N is equal to hash of the same N (should pass)")
+	expect.hashes_are_equal(N, C, "hash of N is equal to hash of C (should fail)")
+
 func test_yielder_works():
 	expect.is_true(true, "true is true. Yield not called")
 	yield(to(self, "hello", 10.0), "finished")

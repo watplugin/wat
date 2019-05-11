@@ -25,6 +25,14 @@ func is_true(condition: bool, expected: String) -> void:
 	
 func is_false(condition: bool, expected: String) -> void:
 	output(not condition, expected, "False")
+	
+func hashes_are_equal(a, b, expected: String) -> void:
+	var hashed_a = hash(a)
+	var hashed_b = hash(b)
+	var success: bool = (hashed_a == hashed_b)
+	var operator: String = OP.EQUAL if success else OP.INEQUAL
+	var result: String = "%s    %s    %s" % [_stringify(hashed_a), operator, _stringify(hashed_b)]
+	output(success, expected, result)
 
 func is_equal(a, b, expected: String) -> void:
 	var success: bool = (a == b)
