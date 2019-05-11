@@ -7,42 +7,15 @@ extends WATTest
 # that Y is a wrong "return value". 
 ### END NOTES ###
 
-#var emitted: bool = false
-#var time_limit: float
-#var timer: Timer
-#var _signal: String
-#var testrunner
-#
-#func _init(time_limit: float, emitter: Object, _signal: String, testrunner) -> void:
-#	self.timer = Timer.new()
-#	self.timer.time_left = time_limit
-#	timer.connect("timeout", self, "on_timeout")
-#	emitter.connect(_signal, self, "on_signal")
-#	self._signal = _signal
-#	self.testrunner = testrunner
-#	self.timer.start()
-#
-#	# what if other signal?
-#func on_timeout():
-#	print("timed out")
-#	self.testrunner.resume()
-#
-#func on_signal():
-#	print("signal emitted")
-#	emitted = true
-#	self.testrunner.resume()
-#	self.queue_free()
-
 signal hello
-##
+
 func test_yielder_works():
 	expect.is_true(true, "true is true. Yield not called")
-	yield(YIELDER.new(2.0, self, "hello", get_parent()), "finished")
-	yield(YIELDER.new(2.0, self, "hello", get_parent()), "finished")
+	yield(to(self, "hello", 2.0), "finished")
+	yield(to(self, "hello", 2.0), "finished")
 	print("test_yielder_works returned from yield")
 	expect.is_true(true, "true is true. Yield was called")
 	get_parent().resume() # Resuming the test runner (since we called multiple yields this method)
-#
 
 func test_expect_is_true_all_of_these_should_pass():
 	expect.is_true((true), "true is true")

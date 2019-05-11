@@ -3,6 +3,8 @@ extends Reference
 var watching: Dictionary = {}
 
 func watch(emitter, event: String) -> void:
+	if emitter.is_connected(event, self, "_add_emit"):
+		return
 	emitter.connect(event, self, "_add_emit", [emitter, event])
 	watching[event] = {emit_count = 0, calls = []}
 

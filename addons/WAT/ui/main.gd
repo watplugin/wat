@@ -24,7 +24,6 @@ func start():
 	display.reset()
 	self.tests = _get_tests()
 	print("WAT: %s Test Scripts Collected" % self.tests.size())
-
 	_loop()
 	
 func _loop():

@@ -82,3 +82,11 @@ func simulate(obj, times, delta):
 
 		for kid in obj.get_children():
 			simulate(kid, 1, delta)
+			
+func to(emitter: Object, event: String, time_limit: float) -> Node:
+	watch(emitter, event)
+	var yielder = YIELDER.new(time_limit, emitter, event)
+	get_parent().paused = true
+	get_parent().add_child(yielder)
+	yielder.timer.start()
+	return yielder
