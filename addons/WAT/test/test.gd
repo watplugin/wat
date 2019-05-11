@@ -85,6 +85,7 @@ func simulate(obj, times, delta):
 			
 func to(emitter: Object, event: String, time_limit: float) -> Node:
 	watch(emitter, event)
+	get_parent().output("WAT: Yielding for signal: %s from emitter: %s with timeout of %s" % [event, emitter, time_limit])
 	var yielder = YIELDER.new(time_limit, emitter, event)
 	get_parent().paused = true
 	get_parent().add_child(yielder)

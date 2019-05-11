@@ -11,16 +11,25 @@ var cursor: int = -1
 var test: TEST
 var paused: bool = false
 var cases: Array = []
+var _log
+var plugin
 
 func output(msg):
-	print(msg)
+	self._log.add_line(msg)
 
 func _ready():
 	self.run_button.connect("pressed", self, "start")
 	self.clear_button.connect("pressed", self.display, "reset")
+	self.clear_button.connect("pressed", self, "clear_lines")
+	
+func clear_lines():
+	self._log.text = ""
+	self._log.current_line = -1
 
 func start():
+	plugin.make_bottom_panel_item_visible(self._log)
 	output("WAT: Starting Test Runner")
+	self._log.text = ""
 	self.cursor = -1
 	self.cases = []
 	self.tests = []
