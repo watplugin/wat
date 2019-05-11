@@ -13,14 +13,14 @@ func _init(time_limit: float, emitter: Object, event: String) -> void:
 	self.add_child(timer)
 	
 func on_timeout():
-	print("WAT: Yield timed out")
+	get_parent().output("WAT: Yield timed out")
 	self.queue_free()
 	emit_signal("finished")
 
 func on_signal():
-	print("WAT: Signal was emitted before time out")
+	get_parent().output("WAT: Signal was emitted before time out")
 	self.queue_free()
 	emit_signal("finished")
 
 func _process(delta):
-	print("WAT: Yielding: Time Left: %s" % timer.time_left)
+	get_parent().output("WAT: Yielding: Time Left: %s" % timer.time_left)

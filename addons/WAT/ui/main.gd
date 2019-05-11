@@ -12,25 +12,28 @@ var test: TEST
 var paused: bool = false
 var cases: Array = []
 
+func output(msg):
+	print(msg)
+
 func _ready():
 	self.run_button.connect("pressed", self, "start")
 	self.clear_button.connect("pressed", self.display, "reset")
 
 func start():
-	print("WAT: Starting Test Runner")
+	output("WAT: Starting Test Runner")
 	self.cursor = -1
 	self.cases = []
 	self.tests = []
 	display.reset()
 	self.tests = _get_tests()
-	print("WAT: %s Test Scripts Collected" % self.tests.size())
+	output("WAT: %s Test Scripts Collected" % self.tests.size())
 	_loop()
 	
 func _loop():
 	while self.cursor < self.tests.size() - 1:
 		self.cursor += 1
 		_set_tests()
-		print("WAT: Executing Test Script: %s" % test.title)
+		output("WAT: Executing Test Script: %s" % test.title)
 		_execute_test_methods()
 		if paused:
 			return
@@ -52,7 +55,7 @@ func _execute_test_methods():
 	while test.cursor < test.methods.size() - 1:
 		test.cursor += 1
 		var method: String = test.methods[test.cursor]
-		print("WAT: Executing Method: %s from Test Script %s" % [method, test.title])
+		output("WAT: Executing Method: %s from Test Script %s" % [method, test.title])
 		test.case.add_method(method)
 		test._pre()
 		test.call(method)
@@ -61,7 +64,7 @@ func _execute_test_methods():
 		test._post()
 		
 func resume():
-	print("WAT: Resuming Test Script %s" % test.title)
+	output("WAT: Resuming Test Script %s" % test.title)
 	paused = false
 	test._post()
 	_execute_test_methods()
@@ -73,17 +76,12 @@ func _get_tests() -> Array:
 	var tests = []
 	var dirs = _get_subdirs()
 	dirs.push_front("")
-	print("dirs: ", dirs)
 	for d in dirs:
 		var dir: Directory = Directory.new()
-		print("Trying to open %s%s" % [_TEST_DIR, d])
-		var err = dir.open("%s%s" % [_TEST_DIR, d])
-		if err != OK:
-			print('error: %s' % err)
+		dir.open("%s%s" % [_TEST_DIR, d])
 		dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
 		var title = dir.get_next()
 		while title != "":
-			print("title: ", title)
 			if title.begins_with("test_") and title.ends_with(".gd"):
 				tests.append(load(_TEST_DIR + d + "/" + title))
 			title = dir.get_next()
@@ -101,22 +99,3 @@ func _get_subdirs() -> Array:
 			results.append(title)
 		title = dir.get_next()
 	return results
-	
-#func _get_tests() -> Array:
-#	var frontier: Array = [] # Storing folder names
-#	print("WAT: Collecting Test Scripts")
-#	# In future this might be better in its own script
-#	var ONLY_SEARCH_CHILDREN: bool = true
-#	var results: Array = []
-#	var dir: Directory = Directory.new()
-#	dir.open(_TEST_DIR)
-#	dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
-#	var title = dir.get_next()
-#	while title != "":
-#		if title.begins_with("test_") and title.ends_with(".gd"):
-#			results.append(load(_TEST_DIR + title))
-#		elif dir.current_is_dir():
-#			frontier.append(title)
-#		title = dir.get_next()
-#	print(frontier)
-#	return results

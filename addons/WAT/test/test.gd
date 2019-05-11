@@ -51,8 +51,8 @@ func post():
 
 func _end():
 	end()
-	print("WAT: Finished executing %s" % self.title)
-	print("WAT: Clearing all files in user/WATemp")
+	get_parent().output("WAT: Finished executing %s" % self.title)
+	get_parent().output("WAT: Clearing all files in user/WATemp")
 	return self.case
 	
 func end():
