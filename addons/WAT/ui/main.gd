@@ -69,16 +69,54 @@ func resume():
 	_loop()
 	
 func _get_tests() -> Array:
-	print("WAT: Collecting Test Scripts")
-	# In future this might be better in its own script
 	var ONLY_SEARCH_CHILDREN: bool = true
+	var tests = []
+	var dirs = _get_subdirs()
+	dirs.push_front("")
+	print("dirs: ", dirs)
+	for d in dirs:
+		var dir: Directory = Directory.new()
+		print("Trying to open %s%s" % [_TEST_DIR, d])
+		var err = dir.open("%s%s" % [_TEST_DIR, d])
+		if err != OK:
+			print('error: %s' % err)
+		dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
+		var title = dir.get_next()
+		while title != "":
+			print("title: ", title)
+			if title.begins_with("test_") and title.ends_with(".gd"):
+				tests.append(load(_TEST_DIR + d + "/" + title))
+			title = dir.get_next()
+	return tests
+	
+func _get_subdirs() -> Array:
 	var results: Array = []
+	var ONLY_SEARCH_CHILDREN: bool = true
 	var dir: Directory = Directory.new()
 	dir.open(_TEST_DIR)
 	dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
 	var title = dir.get_next()
 	while title != "":
-		if title.begins_with("test_") and title.ends_with(".gd"):
-			results.append(load(_TEST_DIR + title))
+		if dir.current_is_dir():
+			results.append(title)
 		title = dir.get_next()
 	return results
+	
+#func _get_tests() -> Array:
+#	var frontier: Array = [] # Storing folder names
+#	print("WAT: Collecting Test Scripts")
+#	# In future this might be better in its own script
+#	var ONLY_SEARCH_CHILDREN: bool = true
+#	var results: Array = []
+#	var dir: Directory = Directory.new()
+#	dir.open(_TEST_DIR)
+#	dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
+#	var title = dir.get_next()
+#	while title != "":
+#		if title.begins_with("test_") and title.ends_with(".gd"):
+#			results.append(load(_TEST_DIR + title))
+#		elif dir.current_is_dir():
+#			frontier.append(title)
+#		title = dir.get_next()
+#	print(frontier)
+#	return results

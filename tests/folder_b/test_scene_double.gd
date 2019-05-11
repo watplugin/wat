@@ -2,6 +2,7 @@ extends WATTest
 
 const scene = preload("res://Examples/Scene/Main.tscn")
 
+
 func test_double_scene():
 	var scene_double = DOUBLE.scene(scene)
 	add_child(scene_double.instance)
