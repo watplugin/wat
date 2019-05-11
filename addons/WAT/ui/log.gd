@@ -1,7 +1,7 @@
 extends TextEdit
 tool
 
-var current_line: int = -1
+var current_line: int = 5
 var timer
 var cache: String
 
@@ -13,6 +13,6 @@ func add_line(msg):
 			cache += output
 			self.text += output
 			current_line += 1
-			cursor_set_line(current_line + 5)
+		cursor_set_line(current_line)
 
 
