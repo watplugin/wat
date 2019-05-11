@@ -15,7 +15,7 @@ func test_yielder_works():
 	yield(to(self, "hello", 10.0), "finished")
 	print("test_yielder_works returned from yield")
 	expect.is_true(true, "true is true. Yield was called")
-	get_parent().resume() # Resuming the test runner (since we called multiple yields this method)
+#	get_parent().resume() # Resuming the test runner (since we called multiple yields this method)
 
 func test_expect_is_true_all_of_these_should_pass():
 	expect.is_true((true), "true is true")

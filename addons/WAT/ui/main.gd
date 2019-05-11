@@ -62,6 +62,8 @@ func _set_tests():
 		test._set_test_methods()
 		test._start()
 		
+var yields = []
+		
 func _execute_test_methods():
 	while test.cursor < test.methods.size() - 1:
 		test.cursor += 1
@@ -71,11 +73,17 @@ func _execute_test_methods():
 		test.case.add_method(method)
 		test._pre()
 		test.call(method)
-		if paused:
+		if paused and yields.size() > 0:
 			return
 		test._post()
 		
-func resume():
+func resume(yieldobj):
+	output("attempting resuming")
+	remove_child(yieldobj)
+	yields.erase(yieldobj)
+	if yields.size() > 0:
+		output("More Yields to Resume")
+		return # not resuming just yet
 	output("Resuming Test Script %s" % test.title)
 	paused = false
 	test._post()

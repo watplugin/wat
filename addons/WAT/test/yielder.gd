@@ -2,6 +2,7 @@ extends Node
 
 signal finished
 var timer: Timer
+var resumed: bool = false
 
 func _init(time_limit: float, emitter: Object, event: String) -> void:
 	self.timer = Timer.new()
@@ -16,12 +17,19 @@ func on_timeout():
 	self.queue_free()
 	self.set_process(false)
 	emit_signal("finished")
+	if not resumed:
+		resumed = true
+		get_parent().resume(self)
+
 
 func on_signal():
 	get_parent().output("Signal was emitted before time out")
 	self.queue_free()
 	self.set_process(false)
 	emit_signal("finished")
+	if not resumed:
+		resumed = true
+		get_parent().resume(self)
 
 func _process(delta):
 	get_parent().output("Yielding: Time Left: %s" % timer.time_left)
