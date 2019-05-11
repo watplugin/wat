@@ -66,7 +66,8 @@ func _execute_test_methods():
 	while test.cursor < test.methods.size() - 1:
 		test.cursor += 1
 		var method: String = test.methods[test.cursor]
-		output("Executing Method: %s from Test Script %s" % [method, test.title])
+		var clean_method = method.replace("_", " ").lstrip("test")
+		output("Executing Method: %s" % clean_method)
 		test.case.add_method(method)
 		test._pre()
 		test.call(method)
