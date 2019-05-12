@@ -84,10 +84,19 @@ func simulate(obj, times, delta):
 		for kid in obj.get_children():
 			simulate(kid, 1, delta)
 			
-func to(emitter: Object, event: String, time_limit: float) -> Node:
+func on_signal(emitter: Object, event: String, time_limit: float) -> Node:
 	watch(emitter, event)
 	get_parent().output("Yielding for signal: %s from emitter: %s with timeout of %s" % [event, emitter, time_limit])
 	var yielder = YIELDER.new(time_limit, emitter, event)
+	get_parent().yields.append(yielder)
+	get_parent().paused = true
+	get_parent().add_child(yielder)
+	yielder.timer.start()
+	return yielder
+	
+func on_timeout(time_limit: float) -> Node:
+	get_parent().output("Yielding for %s" % time_limit)
+	var yielder = YIELDER.new(time_limit, self, "", true)
 	get_parent().yields.append(yielder)
 	get_parent().paused = true
 	get_parent().add_child(yielder)
