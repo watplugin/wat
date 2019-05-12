@@ -6,10 +6,7 @@
 margin_right = 406.0
 margin_bottom = 175.0
 rect_min_size = Vector2( 0, 100 )
-text = "Starting TestRunner
-Running TestScript
-Executing Method
-.gd
+text = "
 "
 readonly = true
 show_line_numbers = true
