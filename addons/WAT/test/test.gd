@@ -8,6 +8,7 @@ const WATCHER = preload("res://addons/WAT/test/watcher.gd")
 const CASE = preload("res://addons/WAT/test/case.gd")
 const IO = preload("res://addons/WAT/input_output.gd")
 const YIELDER = preload("res://addons/WAT/test/yielder.gd")
+const YIELD: String = "finished"
 
 var expect: EXPECTATIONS
 var watcher: WATCHER

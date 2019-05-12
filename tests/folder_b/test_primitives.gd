@@ -17,9 +17,8 @@ func test_hash_comparison():
 
 func test_yielder_works():
 	expect.is_true(true, "true is true. Yield not called")
-	yield(to(self, "hello", 10.0), "finished")
-	yield(to(self, "hello", 10.0), "finished")
-	print("test_yielder_works returned from yield")
+	yield(to(self, "hello", 10.0), YIELD)
+	yield(to(self, "hello", 10.0), YIELD)
 	expect.is_true(true, "true is true. Yield was called")
 #	get_parent().resume() # Resuming the test runner (since we called multiple yields this method)
 
