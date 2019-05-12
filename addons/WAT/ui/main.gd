@@ -29,7 +29,7 @@ func clear_lines():
 
 func start():
 	plugin.make_bottom_panel_item_visible(self._log)
-	output("Starting Test Runner")
+	output("Starting TestRunner")
 	self._log.text = ""
 	self._log.cache = ""
 	self.cursor = -1
@@ -44,7 +44,7 @@ func _loop():
 	while self.cursor < self.tests.size() - 1:
 		self.cursor += 1
 		_set_tests()
-		output("Executing Test Script: %s" % test.title)
+		output("Running TestScript: %s" % test.title)
 		_execute_test_methods()
 		if paused:
 			return
@@ -78,13 +78,11 @@ func _execute_test_methods():
 		test._post()
 		
 func resume(yieldobj):
-	output("attempting resuming")
 	remove_child(yieldobj)
 	yields.erase(yieldobj)
 	if yields.size() > 0:
-		output("More Yields to Resume")
 		return # not resuming just yet
-	output("Resuming Test Script %s" % test.title)
+	output("Resuming TestScript %s" % test.title)
 	paused = false
 	test._post()
 	_execute_test_methods()
