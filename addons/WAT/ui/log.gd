@@ -2,7 +2,6 @@ extends TextEdit
 tool
 
 var current_line: int = 5
-var timer
 var cache: String
 
 func add_line(msg):

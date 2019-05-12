@@ -52,7 +52,7 @@ func post():
 
 func _end():
 	end()
-	get_parent().output("Finished executing %s" % self.title)
+	get_parent().output("Finished Running %s" % self.title)
 	get_parent().output("Clearing all files in user/WATemp")
 	return self.case
 	

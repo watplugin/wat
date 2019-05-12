@@ -41,6 +41,10 @@ _global_script_class_icons={
 config/name="WAT"
 config/icon="res://icon.png"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "WAT" )
+
 [rendering]
 
 quality/driver/driver_name="GLES2"
