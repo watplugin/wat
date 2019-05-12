@@ -29,7 +29,7 @@ func on_timeout():
 
 
 func on_signal():
-	get_parent().output("Signal was emitted before time out")
+	get_parent().output("{ Signal: %s } was emitted from { emitter: %s } before time out" % [event, emitter])
 	self.queue_free()
 	self.set_process(false)
 	emit_signal("finished")
