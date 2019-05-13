@@ -26,16 +26,25 @@ func clear_lines():
 	self._log.text = ""
 	self._log.cache = ""
 	self._log.current_line = 5
-
-func start():
-	plugin.make_bottom_panel_item_visible(self._log)
-	output("Starting TestRunner")
+	
+func reset():
 	self._log.text = ""
 	self._log.cache = ""
 	self.cursor = -1
 	self.cases = []
 	self.tests = []
 	display.reset()
+
+func start():
+	reset()
+	plugin.make_bottom_panel_item_visible(self._log)
+	output("Starting TestRunner")
+#	self._log.text = ""
+#	self._log.cache = ""
+#	self.cursor = -1
+#	self.cases = []
+#	self.tests = []
+#	display.reset()
 	self.tests = _get_tests()
 	output("%s Test Scripts Collected" % self.tests.size())
 	_loop()
