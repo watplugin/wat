@@ -32,29 +32,15 @@ var methods: Array = []
 var cursor: int = -1
 var waiting: bool = false # Likely redundant
 
-func _start():
-	start()
-	
+
 func start():
 	pass
-
-func _pre():
-	pre()
 	
 func pre():
 	pass
 	
-func _post():
-	post()
-	
 func post():
 	pass
-
-func _end():
-	end()
-	get_parent().output("Finished Running %s" % self.title)
-	get_parent().output("Clearing all files in user/WATemp")
-	return self.case
 	
 func end():
 	pass

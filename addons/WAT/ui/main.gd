@@ -39,12 +39,6 @@ func start():
 	reset()
 	plugin.make_bottom_panel_item_visible(self._log)
 	output("Starting TestRunner")
-#	self._log.text = ""
-#	self._log.cache = ""
-#	self.cursor = -1
-#	self.cases = []
-#	self.tests = []
-#	display.reset()
 	self.tests = _get_tests()
 	output("%s Test Scripts Collected" % self.tests.size())
 	_loop()
@@ -57,19 +51,22 @@ func _loop():
 		_execute_test_methods()
 		if paused:
 			return
-		self.cases.append(test._end())
+		test.end()
+		output("Finished Running %s" % test.title)
+		output("Clearing all files in user/WATemp")
+		self.cases.append(test.case)
 	display()
 	
 func display():
 	for case in self.cases:
 		display.display(case)
-			
+		
 func _set_tests():
 		test = self.tests[self.cursor].new()
 		add_child(test)
 		test.cursor = -1
 		test._set_test_methods()
-		test._start()
+		test.start()
 		
 var yields = []
 		
@@ -80,11 +77,11 @@ func _execute_test_methods():
 		var clean_method = method.replace("_", " ").lstrip("test")
 		output("Executing Method: %s" % clean_method)
 		test.case.add_method(method)
-		test._pre()
+		test.pre()
 		test.call(method)
 		if paused and yields.size() > 0:
 			return
-		test._post()
+		test.post()
 		
 func resume(yieldobj):
 	remove_child(yieldobj)
@@ -93,9 +90,11 @@ func resume(yieldobj):
 		return # not resuming just yet
 	output("Resuming TestScript %s" % test.title)
 	paused = false
-	test._post()
+	test.post()
 	_execute_test_methods()
-	self.cases.append(test._end())
+	output("Finished Running %s" % test.title)
+	output("Clearing all files in user/WATemp")
+	self.cases.append(test.case)
 	_loop()
 	
 func _get_tests() -> Array:
