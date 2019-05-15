@@ -41,6 +41,7 @@ static func scene_node_data(instance, outline: Array) -> Dictionary:
 
 static func _get_tree_outline(scene_path: String, scene: Node) -> Array:
 	# SEPERATE METHOD
+	### WE SHOULD TRY READING TSCN FILES, MAYBE USE A FRONTIER METHOD THERE AS WELL?
 	var outline: Array = []
 	var frontier: Array = [scene]
 	while not frontier.empty():
