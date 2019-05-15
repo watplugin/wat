@@ -44,6 +44,8 @@ static func _extract_parameters(method: String) -> Array:
 	var list: Array = str(method.split("(")[1]).split(")")[0].split(",")
 	var results: Array = []
 	for parameter in list:
+		if parameter.empty():
+			break
 		results.append(_define_parameter(parameter))
 	return results
 	
