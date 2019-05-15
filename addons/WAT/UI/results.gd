@@ -27,6 +27,10 @@ func reset() -> void:
 	clear()
 	_root = create_item()
 	_root.set_text(0, "Test Root Created")
+	
+func _display_results(cases: Array):
+	for case in cases:
+		display(case)
 
 func display(case: CASE) -> void:
 	var script: TreeItem = create_item(_root)

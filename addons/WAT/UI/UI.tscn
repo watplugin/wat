@@ -1,0 +1,170 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/WAT/UI/ui.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=2]
+[ext_resource path="res://addons/WAT/UI/output.gd" type="Script" id=3]
+[ext_resource path="res://addons/WAT/UI/runner.gd" type="Script" id=4]
+
+
+[node name="UI" type="PanelContainer"]
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+
+[node name="Layout" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 15
+
+[node name="MainMenu" type="HBoxContainer" parent="Layout"]
+margin_right = 1010.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+size_flags_horizontal = 3
+
+[node name="Clear" type="Button" parent="Layout/MainMenu"]
+margin_right = 65.0
+margin_bottom = 25.0
+text = "Clear All"
+
+[node name="Run" type="Button" parent="Layout/MainMenu"]
+margin_left = 69.0
+margin_right = 380.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Run All"
+
+[node name="Run -> " type="Button" parent="Layout/MainMenu"]
+margin_left = 384.0
+margin_right = 695.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Run -> (OUT OF ORDER)"
+
+[node name="LineEdit" type="LineEdit" parent="Layout/MainMenu"]
+margin_left = 699.0
+margin_right = 1010.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "OUT OF ORDER"
+editable = false
+
+[node name="Middle" type="HBoxContainer" parent="Layout"]
+margin_top = 40.0
+margin_right = 1010.0
+margin_bottom = 440.0
+rect_min_size = Vector2( 0, 400 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 15
+
+[node name="ConfigMenu" type="VBoxContainer" parent="Layout/Middle"]
+editor/display_folded = true
+margin_right = 83.0
+margin_bottom = 400.0
+rect_clip_content = true
+
+[node name="Button" type="Button" parent="Layout/Middle/ConfigMenu"]
+margin_right = 83.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Menu Item"
+
+[node name="Button2" type="Button" parent="Layout/Middle/ConfigMenu"]
+margin_top = 24.0
+margin_right = 83.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+text = "Menu Item"
+
+[node name="Button3" type="Button" parent="Layout/Middle/ConfigMenu"]
+margin_top = 48.0
+margin_right = 83.0
+margin_bottom = 68.0
+size_flags_horizontal = 3
+text = "Menu Item"
+
+[node name="Button4" type="Button" parent="Layout/Middle/ConfigMenu"]
+margin_top = 72.0
+margin_right = 83.0
+margin_bottom = 92.0
+size_flags_horizontal = 3
+text = "Menu Item"
+
+[node name="Button5" type="Button" parent="Layout/Middle/ConfigMenu"]
+margin_top = 96.0
+margin_right = 83.0
+margin_bottom = 116.0
+size_flags_horizontal = 3
+text = "Menu Item"
+
+[node name="Button6" type="Button" parent="Layout/Middle/ConfigMenu"]
+margin_top = 120.0
+margin_right = 83.0
+margin_bottom = 140.0
+size_flags_horizontal = 3
+text = "Menu Item"
+
+[node name="Button7" type="Button" parent="Layout/Middle/ConfigMenu"]
+margin_top = 144.0
+margin_right = 83.0
+margin_bottom = 164.0
+size_flags_horizontal = 3
+text = "Menu Item"
+
+[node name="Button8" type="Button" parent="Layout/Middle/ConfigMenu"]
+margin_top = 168.0
+margin_right = 83.0
+margin_bottom = 188.0
+size_flags_horizontal = 3
+text = "Menu Item"
+
+[node name="Button9" type="Button" parent="Layout/Middle/ConfigMenu"]
+margin_top = 192.0
+margin_right = 83.0
+margin_bottom = 212.0
+size_flags_horizontal = 3
+text = "Menu Item"
+
+[node name="Button10" type="Button" parent="Layout/Middle/ConfigMenu"]
+margin_top = 216.0
+margin_right = 83.0
+margin_bottom = 236.0
+size_flags_horizontal = 3
+text = "Menu Item"
+
+[node name="Button11" type="Button" parent="Layout/Middle/ConfigMenu"]
+margin_top = 240.0
+margin_right = 83.0
+margin_bottom = 260.0
+size_flags_horizontal = 3
+text = "Menu Item"
+
+[node name="Results" type="Tree" parent="Layout/Middle"]
+margin_left = 98.0
+margin_right = 1010.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+script = ExtResource( 2 )
+
+[node name="Output" type="TextEdit" parent="Layout"]
+margin_top = 455.0
+margin_right = 1010.0
+margin_bottom = 586.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 3 )
+
+[node name="Runner" type="Node" parent="."]
+script = ExtResource( 4 )

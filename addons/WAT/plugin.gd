@@ -1,32 +1,28 @@
 tool
 extends EditorPlugin
 
-const NAME: String = "WAT:TestRunner"
-const MAIN: PackedScene = preload("ui/Main.tscn")
-const LOG : PackedScene = preload("ui/Log.tscn")
-var _screen: Panel
-var _log: TextEdit
+const UI: PackedScene = preload("UI/UI.tscn")
+var interface: PanelContainer
 
 func _enter_tree() -> void:
-	self._screen = MAIN.instance()
-	self._log = LOG.instance()
-	add_control_to_bottom_panel(self._log, "WAT Log")
-	get_editor_interface().get_editor_viewport().add_child(self._screen)
-	make_bottom_panel_item_visible(self._log)
-	self._screen._log = self._log
-	self._screen.plugin = self
+	connect("main_screen_changed", self, "_hide_output")
+	interface = UI.instance()
+	get_editor_interface().get_editor_viewport().add_child(interface)
 	make_visible(false)
 
 func _exit_tree() -> void:
-	remove_control_from_bottom_panel(self._log)
-	self._log.queue_free()
-	self._screen.queue_free()
+	get_editor_interface().get_editor_viewport().remove_child(interface)
+	interface.free()
 
 func has_main_screen() -> bool:
    return true
 
 func make_visible(visible: bool) -> void:
-	self._screen.show() if visible else self._screen.hide()
+	interface.show() if visible else interface.hide()
 
 func get_plugin_name() -> String:
-   return NAME
+   return "WAT"
+
+func _hide_output(title: String) -> void:
+	if title == "WAT":
+		hide_bottom_panel()
