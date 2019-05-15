@@ -29,7 +29,6 @@ static func scene(tscn) -> SCENE_DATA:
 	var nodes = scene_node_data(doubled, outline)
 	return SCENE_DATA.new(nodes, doubled)
 	
-#	self.instance = scene
 static func scene_node_data(instance, outline: Array) -> Dictionary:
 	var nodes: Dictionary
 	for data in outline:

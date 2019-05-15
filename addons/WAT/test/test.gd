@@ -6,14 +6,11 @@ const EXPECTATIONS = preload("res://addons/WAT/test/expectations.gd")
 const DOUBLE = preload("res://addons/WAT/double/doubler.gd")
 const WATCHER = preload("res://addons/WAT/test/watcher.gd")
 const CASE = preload("res://addons/WAT/test/case.gd")
-const IO = preload("res://addons/WAT/input_output.gd")
-const YIELDER = preload("res://addons/WAT/test/yielder.gd")
 const YIELD: String = "finished"
 
 var expect: EXPECTATIONS
 var watcher: WATCHER
 var case: CASE
-var title: String setget ,_get_title
 
 func _init():
 	_set_properties()
@@ -22,16 +19,13 @@ func _init():
 func _set_properties():
 	expect = EXPECTATIONS.new()
 	watcher = WATCHER.new()
-	case = CASE.new(self.title)
+	case = CASE.new(title())
 
 func _create_connections():
 	expect.set_meta("watcher", watcher)
 	expect.connect("OUTPUT", case, "_add_expectation")
 	
 var methods: Array = []
-var cursor: int = -1
-var waiting: bool = false # Likely redundant
-
 
 func start():
 	pass
@@ -45,14 +39,7 @@ func post():
 func end():
 	pass
 
-func _set_test_methods() -> void:
-	var results: Array = []
-	for method in get_method_list():
-		if method.name.begins_with("test_"):
-			results.append(method.name)
-	self.methods = results
-
-func _get_title() -> String:
+func title() -> String:
 	return self.get_script().get_path()
 	
 func watch(emitter, event: String) -> void:
@@ -70,21 +57,9 @@ func simulate(obj, times, delta):
 		for kid in obj.get_children():
 			simulate(kid, 1, delta)
 			
-func on_signal(emitter: Object, event: String, time_limit: float) -> Node:
+func until_signal(emitter: Object, event: String, time_limit: float) -> Node:
 	watch(emitter, event)
-	get_parent().output("Yielding for signal: %s from emitter: %s with timeout of %s" % [event, emitter, time_limit])
-	var yielder = YIELDER.new(time_limit, emitter, event)
-	get_parent().yields.append(yielder)
-	get_parent().paused = true
-	get_parent().add_child(yielder)
-	yielder.timer.start()
-	return yielder
+	return get_parent().until_signal(emitter, event, time_limit)
 	
-func on_timeout(time_limit: float) -> Node:
-	get_parent().output("Yielding for %s" % time_limit)
-	var yielder = YIELDER.new(time_limit, self, "", true)
-	get_parent().yields.append(yielder)
-	get_parent().paused = true
-	get_parent().add_child(yielder)
-	yielder.timer.start()
-	return yielder
+func until_timeout(time_limit: float) -> Node:
+	return get_parent().until_timeout(time_limit)
