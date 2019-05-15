@@ -1,10 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/WAT/UI/ui.gd" type="Script" id=1]
-[ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=2]
-[ext_resource path="res://addons/WAT/UI/output.gd" type="Script" id=3]
-[ext_resource path="res://addons/WAT/UI/runner.gd" type="Script" id=4]
-
+[ext_resource path="res://addons/WAT/UI/log_level.gd" type="Script" id=2]
+[ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=3]
+[ext_resource path="res://addons/WAT/UI/output.gd" type="Script" id=4]
+[ext_resource path="res://addons/WAT/UI/runner.gd" type="Script" id=5]
 
 [node name="UI" type="PanelContainer"]
 margin_right = 1024.0
@@ -23,34 +23,21 @@ size_flags_vertical = 3
 custom_constants/separation = 15
 
 [node name="MainMenu" type="HBoxContainer" parent="Layout"]
+editor/display_folded = true
 margin_right = 1010.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 0, 25 )
 size_flags_horizontal = 3
 
-[node name="Clear" type="Button" parent="Layout/MainMenu"]
-margin_right = 65.0
-margin_bottom = 25.0
-text = "Clear All"
-
-[node name="Run" type="Button" parent="Layout/MainMenu"]
-margin_left = 69.0
-margin_right = 380.0
-margin_bottom = 25.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Run All"
-
 [node name="Run -> " type="Button" parent="Layout/MainMenu"]
-margin_left = 384.0
-margin_right = 695.0
+margin_right = 503.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Run -> (OUT OF ORDER)"
 
 [node name="LineEdit" type="LineEdit" parent="Layout/MainMenu"]
-margin_left = 699.0
+margin_left = 507.0
 margin_right = 1010.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
@@ -67,96 +54,156 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 15
 
-[node name="ConfigMenu" type="VBoxContainer" parent="Layout/Middle"]
-editor/display_folded = true
-margin_right = 83.0
+[node name="Menu" type="VBoxContainer" parent="Layout/Middle"]
+margin_right = 139.0
 margin_bottom = 400.0
 rect_clip_content = true
+size_flags_horizontal = 0
+size_flags_vertical = 3
+custom_constants/separation = 10
 
-[node name="Button" type="Button" parent="Layout/Middle/ConfigMenu"]
-margin_right = 83.0
+[node name="Buttons" type="VBoxContainer" parent="Layout/Middle/Menu"]
+margin_right = 139.0
+margin_bottom = 44.0
+
+[node name="Run" type="Button" parent="Layout/Middle/Menu/Buttons"]
+margin_right = 139.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
-text = "Menu Item"
+text = "Run All Tests"
 
-[node name="Button2" type="Button" parent="Layout/Middle/ConfigMenu"]
+[node name="Clear" type="Button" parent="Layout/Middle/Menu/Buttons"]
 margin_top = 24.0
-margin_right = 83.0
+margin_right = 139.0
 margin_bottom = 44.0
 size_flags_horizontal = 3
-text = "Menu Item"
+text = "Clear"
 
-[node name="Button3" type="Button" parent="Layout/Middle/ConfigMenu"]
-margin_top = 48.0
-margin_right = 83.0
-margin_bottom = 68.0
-size_flags_horizontal = 3
-text = "Menu Item"
+[node name="Typing" type="VBoxContainer" parent="Layout/Middle/Menu"]
+editor/display_folded = true
+margin_top = 54.0
+margin_right = 139.0
+margin_bottom = 152.0
 
-[node name="Button4" type="Button" parent="Layout/Middle/ConfigMenu"]
-margin_top = 72.0
-margin_right = 83.0
-margin_bottom = 92.0
+[node name="Label" type="Label" parent="Layout/Middle/Menu/Typing"]
+margin_right = 139.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
-text = "Menu Item"
+size_flags_vertical = 3
+text = "enforce typing"
+align = 1
+uppercase = true
 
-[node name="Button5" type="Button" parent="Layout/Middle/ConfigMenu"]
-margin_top = 96.0
-margin_right = 83.0
-margin_bottom = 116.0
-size_flags_horizontal = 3
-text = "Menu Item"
+[node name="Parameters" type="CheckBox" parent="Layout/Middle/Menu/Typing"]
+margin_top = 18.0
+margin_right = 139.0
+margin_bottom = 42.0
+hint_tooltip = "If true, any parameters that have defined types (ie param_name: param_type) will keep their types in their doubles.
 
-[node name="Button6" type="Button" parent="Layout/Middle/ConfigMenu"]
-margin_top = 120.0
-margin_right = 83.0
-margin_bottom = 140.0
-size_flags_horizontal = 3
-text = "Menu Item"
+If false, their types will be removed from their doubles."
+text = "Parameters"
 
-[node name="Button7" type="Button" parent="Layout/Middle/ConfigMenu"]
-margin_top = 144.0
-margin_right = 83.0
-margin_bottom = 164.0
-size_flags_horizontal = 3
-text = "Menu Item"
+[node name="ReturnValue" type="CheckBox" parent="Layout/Middle/Menu/Typing"]
+margin_top = 46.0
+margin_right = 139.0
+margin_bottom = 70.0
+hint_tooltip = "If true, any methods that have a defined return value (ie method() -> int:) will keep their return value in their doubles.
 
-[node name="Button8" type="Button" parent="Layout/Middle/ConfigMenu"]
-margin_top = 168.0
-margin_right = 83.0
-margin_bottom = 188.0
-size_flags_horizontal = 3
-text = "Menu Item"
+If false, they will lose their return values in their doubles."
+text = "Return Value"
 
-[node name="Button9" type="Button" parent="Layout/Middle/ConfigMenu"]
-margin_top = 192.0
-margin_right = 83.0
-margin_bottom = 212.0
-size_flags_horizontal = 3
-text = "Menu Item"
+[node name="VoidReturn" type="CheckBox" parent="Layout/Middle/Menu/Typing"]
+margin_top = 74.0
+margin_right = 139.0
+margin_bottom = 98.0
+hint_tooltip = "If set to true, void will be removed as a return value if you've choosen to keep return values enforced. "
+text = "Ignore Void"
 
-[node name="Button10" type="Button" parent="Layout/Middle/ConfigMenu"]
-margin_top = 216.0
-margin_right = 83.0
-margin_bottom = 236.0
-size_flags_horizontal = 3
-text = "Menu Item"
+[node name="Prefix" type="VBoxContainer" parent="Layout/Middle/Menu"]
+editor/display_folded = true
+margin_top = 162.0
+margin_right = 139.0
+margin_bottom = 232.0
 
-[node name="Button11" type="Button" parent="Layout/Middle/ConfigMenu"]
-margin_top = 240.0
-margin_right = 83.0
-margin_bottom = 260.0
-size_flags_horizontal = 3
-text = "Menu Item"
+[node name="Label" type="Label" parent="Layout/Middle/Menu/Prefix"]
+margin_right = 139.0
+margin_bottom = 14.0
+text = "Set Prefixes"
+align = 1
+uppercase = true
+
+[node name="Script" type="LineEdit" parent="Layout/Middle/Menu/Prefix"]
+margin_top = 18.0
+margin_right = 139.0
+margin_bottom = 42.0
+hint_tooltip = "Scripts will only be run by WAT if they start
+with this prefix (e.g test_SCRIPTNAME.gd).
+
+default: test_"
+placeholder_text = "Enter Script Prefix"
+
+[node name="Method" type="LineEdit" parent="Layout/Middle/Menu/Prefix"]
+margin_top = 46.0
+margin_right = 139.0
+margin_bottom = 70.0
+hint_tooltip = "Methods will only be run by WAT if they start
+with this prefix (e.g test_METHODNAME()).
+
+default: test_"
+placeholder_text = "Enter Method Prefix"
+
+[node name="Output" type="VBoxContainer" parent="Layout/Middle/Menu"]
+editor/display_folded = true
+margin_top = 242.0
+margin_right = 139.0
+margin_bottom = 308.0
+
+[node name="Label" type="Label" parent="Layout/Middle/Menu/Output"]
+margin_right = 139.0
+margin_bottom = 14.0
+text = "Output Log"
+align = 1
+uppercase = true
+
+[node name="PrintToConsole" type="CheckBox" parent="Layout/Middle/Menu/Output"]
+margin_top = 18.0
+margin_right = 139.0
+margin_bottom = 42.0
+hint_tooltip = "If set to true, void will be removed as a return value if you've choosen to keep return values enforced. "
+text = "Print to Console"
+
+[node name="LogLevelSelect" type="OptionButton" parent="Layout/Middle/Menu/Output"]
+margin_top = 46.0
+margin_right = 139.0
+margin_bottom = 66.0
+script = ExtResource( 2 )
+
+[node name="Yield" type="VBoxContainer" parent="Layout/Middle/Menu"]
+editor/display_folded = true
+margin_top = 318.0
+margin_right = 139.0
+margin_bottom = 360.0
+
+[node name="Label" type="Label" parent="Layout/Middle/Menu/Yield"]
+margin_right = 139.0
+margin_bottom = 14.0
+text = "Yield Between Tests"
+uppercase = true
+
+[node name="SpinBox" type="SpinBox" parent="Layout/Middle/Menu/Yield"]
+margin_top = 18.0
+margin_right = 139.0
+margin_bottom = 42.0
+max_value = 5.0
 
 [node name="Results" type="Tree" parent="Layout/Middle"]
-margin_left = 98.0
+margin_left = 154.0
 margin_right = 1010.0
 margin_bottom = 400.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="Output" type="TextEdit" parent="Layout"]
 margin_top = 455.0
@@ -164,7 +211,7 @@ margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
 [node name="Runner" type="Node" parent="."]
-script = ExtResource( 4 )
+script = ExtResource( 5 )
