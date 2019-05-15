@@ -48,7 +48,8 @@ static func _get_tree_outline(scene_path: String, scene: Node) -> Array:
 		var node = frontier.pop_front()
 		frontier += node.get_children()
 		var path = scene.get_path_to(node)
-		var data = {"nodepath": path, "scriptpath": null, "methods": null}
+		var data = {"nodepath": path, "scriptpath": null, "methods": null, "size": 0}
+		data.size = Array(str(path).split("/")).size()
 		
 		# We need to create a NEW TREE, rather than anything else. Duplicating will not work.
 		if _has_custom_script(node):
@@ -60,9 +61,21 @@ static func _get_tree_outline(scene_path: String, scene: Node) -> Array:
 			data.methods = tokens.methods
 		outline.append(data)
 	return outline
+	
+
+class MyCustomSorter:
+    static func sort(a, b):
+        if a.size < b.size:
+            return true
+        return false
 
 static func _create_scene_double(paths: Array, name) -> Node:
 	var root = Node.new() # We require to give root a proper node
+#	paths.sort_custom(MyCustomSorter, "sort")
+#	var got_root: bool = false
+#	for i in paths:
+#		if i.nodepath == ".":
+#			got_root = true
 	for i in paths:
 		var node: Node = _create_node(i)
 		var split_node_path: Array = split_nodepath(i.nodepath)
