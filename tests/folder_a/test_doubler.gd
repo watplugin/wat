@@ -3,7 +3,6 @@ extends WATTest
 var login
 
 func pre():
-	print('testing dubler')
 	login = DOUBLE.script(Login)
 	login.stub("login", {"username": "alex", "password": "code"}, "Logged In")
 	login.stub("login", {"username": "jack", "password": "captain"}, "Hello Captain Jack")
