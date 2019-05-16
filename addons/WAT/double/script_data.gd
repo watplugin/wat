@@ -30,7 +30,6 @@ func call_count(title: String) -> int:
 	return _methods[title].call_count
 	
 func get_retval(title: String, arguments: Dictionary):
-	print("retriveing retval for %s" % title)
 	return _methods[title].get_retval(arguments)
 	
 class Method extends Reference:
