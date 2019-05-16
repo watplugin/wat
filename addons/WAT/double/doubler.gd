@@ -24,7 +24,6 @@ class NodeData:
 		self.script = script
 		self.methods = methods
 
-
 static func script(gdscript) -> SCRIPT_DATA:
 	var script: Script = IO.load_script(gdscript)
 	var tokens = TOKENIZER.start(script)
@@ -33,46 +32,36 @@ static func script(gdscript) -> SCRIPT_DATA:
 	return SCRIPT_DATA.new(tokens.methods, IO.load_doubled_script(tokens.title))
 
 static func scene(tscn) -> SCENE_DATA:
-	var copy: Node = IO.load_scene_instance(tscn).duplicate()
+	var copy: Node = IO.load_scene_instance(tscn)
 	var save_path: String = "user://WATemp/%s.tscn" % copy.name
 	var outline: Array = double(copy)
-	var double = double_tree(outline)
-	var packed_double = PackedScene.new()
-	packed_double.pack(double)
-	ResourceSaver.save(save_path, packed_double)
-	return SCENE_DATA.new({}, Node.new())
-	# LOAD SCENE TO COPY
-	# CREATE SAVE PATH
-	# DUPLICATE TREE
-	# MODIFY SCRIPTS HERE?
-	# CREATE SCENE DATA
-	# TEST IF WE CAN CALL METHODS VIA INSTANCE
-
-#	tatic func _create_node(data: Dictionary) -> Node:
-#return load(data.scriptpath).new() if data.scriptpath != null else Node.new()
-
-enum PATH {
-	SCRIPT
-	SELF
-	PARENT
-}
-
+	var tree: Node = double_tree(outline.duplicate()) # tree here?
+	IO.save_scene(tree, "user://WATemp/", tree.name)
+	var nodes: Dictionary = create_scene_data(tree, outline)
+	return SCENE_DATA.new(nodes, tree)
+	
+static func create_scene_data(instance: Node, outline: Array) -> Dictionary:
+	var nodes: Dictionary = {}
+	for data in outline:
+		if data.script != null:
+			var path: String = str(data.path)
+			var node = instance.get_node(path)
+			var methods = data.methods
+			nodes[path] = SCRIPT_DATA.new(methods, node)
+	return nodes
+	
 static func double(root: Node):
 	var count: int = 0
-	#### BEGIN BUILDING OUTLINE ####
-	var tree: Array = [] # NodePath (as string) : {scriptpath}
+	var tree: Array = []
 	var frontier: Array = []
 	# handle root special case
 	frontier += root.get_children()
 
-	# var parent = node.get_path_to(node.get_parent())
 	if root.script != null:
 		var tokens = TOKENIZER.start(root.script)
 		var rewrite = REWRITER.start(tokens)
 		var script_path: String = "user://WATemp/%s.gd" % tokens.title
 		IO.save_script(tokens.title , rewrite)
-
-#		var script: Script = load(script_path)
 		var path: String = str(root.get_path_to(root))
 		tree.append(NodeData.new(root.name, path, null, script_path, tokens.methods))
 	else:
@@ -96,48 +85,15 @@ static func double(root: Node):
 	return tree
 
 
-static func double_tree(outline: Array):
-	# Earliest gens are near the frotn
-	print(outline.size(), " is size")
-	var root: Node
+static func double_tree(outline: Array) -> Node:
 	var first = outline.pop_front()
-	root = load(first.script).new() if first.script != null else Node.new()
+	var root: Node = load(first.script).new() if first.script != null else Node.new()
 	root.name = first.title
-
-	### More
+	
 	for i in outline:
 		var n: Node = load(i.script).new() if i.script != null else Node.new()
-		n.name = i.title
-		print(i.title, " is title")
 		root.add_child(n) if i.parent == "." else root.get_node(i.parent).add_child(n)
+		n.name = i.title
 		n.owner = root
+		
 	return root
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

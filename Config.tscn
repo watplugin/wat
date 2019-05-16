@@ -1,0 +1,19 @@
+[gd_scene format=2]
+
+[node name="Config" type="VBoxContainer"]
+margin_right = 200.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="Button" type="Button" parent="."]
+margin_right = 200.0
+margin_bottom = 20.0
+text = "Run All Tests"
+
+[node name="Button2" type="Button" parent="."]
+margin_top = 20.0
+margin_right = 200.0
+margin_bottom = 40.0
+text = "Clear Display"

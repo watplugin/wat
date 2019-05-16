@@ -8,7 +8,7 @@ signal DOUBLE_EXECUTE_METHOD
 
 func _init(methods: Array, instance) -> void:
 	self.instance = instance
-	instance.set_meta(DOUBLE, self)
+	self.instance.set_meta(DOUBLE, self)
 	for method in methods:
 		_add_method(method.name)
 
@@ -30,6 +30,7 @@ func call_count(title: String) -> int:
 	return _methods[title].call_count
 	
 func get_retval(title: String, arguments: Dictionary):
+	print("retriveing retval for %s" % title)
 	return _methods[title].get_retval(arguments)
 	
 class Method extends Reference:

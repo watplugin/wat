@@ -9,7 +9,6 @@ func _init(nodes, scene: Node) -> void:
 	self.instance = scene
 
 func execute(node: String, method: String, count: int = 0, a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null):
-	print("executing A")
 	return _nodes[node].execute(method, count, a, b, c, d, e, f, g, h, i)
 	
 func default(node: String, method: String, default) -> void:
