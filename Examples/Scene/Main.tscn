@@ -20,4 +20,3 @@ script = ExtResource( 4 )
 
 [node name="D" type="Node" parent="C"]
 script = ExtResource( 5 )
-

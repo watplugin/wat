@@ -26,7 +26,10 @@ static func load_scene_instance(tscn) -> Node:
 	
 static func save_scene(scene: Node, path: String, name: String) -> void:
 	var doubled_scene = PackedScene.new()
-	doubled_scene.pack(scene)
+	var result = doubled_scene.pack(scene)
+	if result != OK:
+		print("ERROR %s when trying to pack scene" % str(result))
+	print("Saving: %s%s.tscn" % [path, name])
 	ResourceSaver.save("%s%s.tscn" % [path, name], doubled_scene)
 	
 static func load_doubled_scene(path: String, name: String) -> Node:
