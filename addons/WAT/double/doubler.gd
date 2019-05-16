@@ -16,8 +16,9 @@ class NodeData:
 	var parent = null
 	var script = null
 	var methods = null
-	
+
 	func _init(title: String, path = null, parent = null, script = null, methods = null):
+		self.title = title
 		self.path = path
 		self.parent = parent
 		self.script = script
@@ -46,7 +47,7 @@ static func scene(tscn) -> SCENE_DATA:
 	# MODIFY SCRIPTS HERE?
 	# CREATE SCENE DATA
 	# TEST IF WE CAN CALL METHODS VIA INSTANCE
-	
+
 #	tatic func _create_node(data: Dictionary) -> Node:
 #return load(data.scriptpath).new() if data.scriptpath != null else Node.new()
 
@@ -68,16 +69,16 @@ static func double(root: Node):
 	if root.script != null:
 		var tokens = TOKENIZER.start(root.script)
 		var rewrite = REWRITER.start(tokens)
-		var script_path: String = "user://WATemp/%s.gd" % tokens.title 
+		var script_path: String = "user://WATemp/%s.gd" % tokens.title
 		IO.save_script(tokens.title , rewrite)
-		
+
 #		var script: Script = load(script_path)
 		var path: String = str(root.get_path_to(root))
 		tree.append(NodeData.new(root.name, path, null, script_path, tokens.methods))
 	else:
 		var path: String = str(root.get_path_to(root))
 		tree.append(NodeData.new(root.name, path, null))
-		
+
 	# Handling other cases
 	while not frontier.empty():
 		var node = frontier.pop_front()
@@ -87,14 +88,14 @@ static func double(root: Node):
 		if node.script != null:
 			var tokens = TOKENIZER.start(node.script)
 			var rewrite = REWRITER.start(tokens)
-			var script_path: String = "user://WATemp/%s.gd" % tokens.title 
+			var script_path: String = "user://WATemp/%s.gd" % tokens.title
 			IO.save_script(tokens.title , rewrite)
 			tree.append(NodeData.new(node.name, path, parent, script_path, tokens.methods))
 		else:
 			tree.append(NodeData.new(node.name, path, parent))
 	return tree
-	
-	
+
+
 static func double_tree(outline: Array):
 	# Earliest gens are near the frotn
 	print(outline.size(), " is size")
@@ -102,41 +103,41 @@ static func double_tree(outline: Array):
 	var first = outline.pop_front()
 	root = load(first.script).new() if first.script != null else Node.new()
 	root.name = first.title
-	
+
 	### More
 	for i in outline:
 		var n: Node = load(i.script).new() if i.script != null else Node.new()
 		n.name = i.title
+		print(i.title, " is title")
 		root.add_child(n) if i.parent == "." else root.get_node(i.parent).add_child(n)
 		n.owner = root
 	return root
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
