@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://C2.gd" type="Script" id=1]
+[ext_resource path="res://G.gd" type="Script" id=2]
+
+[node name="F" type="Node"]
+script = ExtResource( 1 )
+
+[node name="G" type="Node" parent="."]
+script = ExtResource( 2 )
