@@ -12,5 +12,5 @@ func login(username: String, password: String) -> bool:
 	emit_signal("LOGGED_IN", username, password)
 	return true
 	
-func to_override():
+func to_override() -> void:
 	print("This should not appear twice")

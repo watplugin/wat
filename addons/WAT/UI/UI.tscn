@@ -46,6 +46,7 @@ text = "OUT OF ORDER"
 editable = false
 
 [node name="Middle" type="HBoxContainer" parent="Layout"]
+editor/display_folded = true
 margin_top = 40.0
 margin_right = 1010.0
 margin_bottom = 440.0
@@ -55,7 +56,8 @@ size_flags_vertical = 3
 custom_constants/separation = 15
 
 [node name="Menu" type="VBoxContainer" parent="Layout/Middle"]
-margin_right = 109.0
+editor/display_folded = true
+margin_right = 113.0
 margin_bottom = 400.0
 rect_clip_content = true
 size_flags_horizontal = 0
@@ -63,29 +65,31 @@ size_flags_vertical = 3
 custom_constants/separation = 10
 
 [node name="Buttons" type="VBoxContainer" parent="Layout/Middle/Menu"]
-margin_right = 109.0
+editor/display_folded = true
+margin_right = 113.0
 margin_bottom = 44.0
 
 [node name="Run" type="Button" parent="Layout/Middle/Menu/Buttons"]
-margin_right = 109.0
+margin_right = 113.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Run All Tests"
 
 [node name="Clear" type="Button" parent="Layout/Middle/Menu/Buttons"]
 margin_top = 24.0
-margin_right = 109.0
+margin_right = 113.0
 margin_bottom = 44.0
 size_flags_horizontal = 3
 text = "Clear"
 
 [node name="Typing" type="VBoxContainer" parent="Layout/Middle/Menu"]
+editor/display_folded = true
 margin_top = 54.0
-margin_right = 109.0
+margin_right = 113.0
 margin_bottom = 152.0
 
 [node name="Label" type="Label" parent="Layout/Middle/Menu/Typing"]
-margin_right = 109.0
+margin_right = 113.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -95,7 +99,7 @@ uppercase = true
 
 [node name="Parameters" type="CheckBox" parent="Layout/Middle/Menu/Typing"]
 margin_top = 18.0
-margin_right = 109.0
+margin_right = 113.0
 margin_bottom = 42.0
 hint_tooltip = "If ticked: When doubling a script, any typed params e.g \"title: String\" will keep their types instead of being generic params e.g \"title\"in the double script."
 pressed = true
@@ -103,7 +107,7 @@ text = "Parameters"
 
 [node name="ReturnValue" type="CheckBox" parent="Layout/Middle/Menu/Typing"]
 margin_top = 46.0
-margin_right = 109.0
+margin_right = 113.0
 margin_bottom = 70.0
 hint_tooltip = "If ticked: When doubling a script, if a method has a return type e.g  \"-> int:\" will keep their types in the double instead of being removed. "
 pressed = true
@@ -111,7 +115,7 @@ text = "Return Value"
 
 [node name="ExcludeVoid" type="CheckBox" parent="Layout/Middle/Menu/Typing"]
 margin_top = 74.0
-margin_right = 109.0
+margin_right = 113.0
 margin_bottom = 98.0
 hint_tooltip = "This only matters if you have ticked Return Value.
 
@@ -120,13 +124,14 @@ pressed = true
 text = "Ignore Void"
 
 [node name="Prefix" type="VBoxContainer" parent="Layout/Middle/Menu"]
+editor/display_folded = true
 margin_top = 162.0
-margin_right = 109.0
+margin_right = 113.0
 margin_bottom = 232.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="Layout/Middle/Menu/Prefix"]
-margin_right = 109.0
+margin_right = 113.0
 margin_bottom = 14.0
 text = "Set Prefixes"
 align = 1
@@ -134,9 +139,11 @@ uppercase = true
 
 [node name="Script" type="LineEdit" parent="Layout/Middle/Menu/Prefix"]
 margin_top = 18.0
-margin_right = 109.0
+margin_right = 113.0
 margin_bottom = 42.0
-hint_tooltip = "WAT will run all tests scripts that start with any prefix(es) defined here (default: \"test_\")
+hint_tooltip = "WAT will run all tests scripts that start with any prefix(es) defined here (default: \"test\")
+
+Note: WAT will ignore spaces and will replace underscores in names. You do not need to add that underscore here.
 
 Enter a comma delimited list to use multiple prefixes (e.g \"test_, unit, third_prefix\")"
 size_flags_horizontal = 3
@@ -145,12 +152,14 @@ placeholder_text = "Script(s)"
 
 [node name="Method" type="LineEdit" parent="Layout/Middle/Menu/Prefix"]
 margin_top = 46.0
-margin_right = 109.0
+margin_right = 113.0
 margin_bottom = 70.0
-hint_tooltip = "Methods will only be run by WAT if they start
-with this prefix (e.g test_METHODNAME()).
+hint_tooltip = "WAT will run all tests methods that start with any prefix(es) defined here (default: \"test\")
 
-default: test_"
+Note: WAT will ignore spaces and will replace underscores in names. You do not need to add that underscore here.
+
+Enter a comma delimited list to use multiple prefixes (e.g \"test_, unit, third_prefix\")
+"
 size_flags_horizontal = 3
 size_flags_vertical = 3
 placeholder_text = "Method(s)"
@@ -182,8 +191,18 @@ margin_right = 139.0
 margin_bottom = 66.0
 script = ExtResource( 2 )
 
+[node name="DefaultSettings" type="Button" parent="Layout/Middle/Menu"]
+margin_top = 242.0
+margin_right = 113.0
+margin_bottom = 262.0
+hint_tooltip = "Reset all settings to default. 
+
+WARNING: This will overwrite any historical settings.
+"
+text = "Default Settings"
+
 [node name="Results" type="Tree" parent="Layout/Middle"]
-margin_left = 124.0
+margin_left = 128.0
 margin_right = 1010.0
 margin_bottom = 400.0
 size_flags_horizontal = 3

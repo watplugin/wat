@@ -13,12 +13,17 @@ static func _rewrite_method(method: Dictionary) -> String:
 static func _parameters(parameters: Array) -> String:
 	var result: String = ""
 	for param in parameters:
-		result += "%s:%s," % [param.name, param.type] if (param.typed and WATConfig.check_enforced_type_parameters()) else "%s," % [param.name]
+		result += "%s:%s," % [param.name, param.type] if (param.typed and WATConfig.parameters()) else "%s," % [param.name]
 	result = result.rstrip(",")
 	return result
 	
 static func _return_value(retval: Dictionary) -> String:
-	return " -> %s" % retval.type if retval.typed else ""
+	if retval.typed and WATConfig.return_value():
+		if retval.type == "void" and WATConfig.void_excluded():
+			return ""
+		return " -> %s" % retval.type
+	return ""
+#	return " -> %s" % retval.type if retval.typed else ""
 	
 static func _body(title, parameters) -> String:
 	var arguments: String = ""

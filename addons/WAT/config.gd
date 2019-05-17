@@ -5,44 +5,45 @@ class_name WATConfig
 # defaults
 
 static func _set_parameters(tick: CheckBox):
-	ProjectSettings.set("wat/parameters", tick.pressed)
-	
-static func _set_return_value(tick: CheckBox):
-	ProjectSettings.set("wat/returnvalue", tick.pressed)
-	
-static func _set_exclude_void(tick: CheckBox):
-	ProjectSettings.set("wat/voidexcluded", tick.pressed)
-	
-static func _set_text_prefixes(prefixes: Array):
-	ProjectSettings.set("wat/testprefixes", prefixes)
-	
-static func _set_method_prefixes(prefixes: Array):
-	ProjectSettings.set("wat/methodprefixes", prefixes)
-	
-static func _set_double_strategy(tick: CheckBox):
-	ProjectSettings.set("wat/doublestrategy", tick.pressed)
-	
-static func parameters():
-	return ProjectSettings.get("wat/parameters")
-	
-static func return_value():
-	return ProjectSettings.get("wat/returnvalue")
-	
-static func void_excluded():
-	return ProjectSettings.get("wat/voidexcluded")
-	
-static func test_prefixes():
-	return ProjectSettings.get("wat/testprefixes")
-	
-static func method_prefixes():
-	return ProjectSettings.get("wat/methodprefixes")
-	
-static func double_strategy():
-	return ProjectSettings.get("wat/doublestrategy")
+	ProjectSettings.set("wat/Parameters", tick.pressed)
 
-static func defaults():
-	# if not have
-		# create new setting
-	# if setting already exists
-		# affect buttons (ie false = unticked box)
-	pass
+static func _set_return_value(tick: CheckBox):
+	ProjectSettings.set("wat/Returnvalue", tick.pressed)
+
+static func _set_exclude_void(tick: CheckBox):
+	ProjectSettings.set("wat/Voidexcluded", tick.pressed)
+
+static func _set_script_prefixes(prefixes: String):
+	ProjectSettings.set("wat/Scriptprefixes", prefixes)
+
+static func _set_method_prefixes(prefixes: String):
+	ProjectSettings.set("wat/Methodprefixes", prefixes)
+
+static func parameters():
+	return ProjectSettings.get("wat/Parameters")
+
+static func return_value():
+	return ProjectSettings.get("wat/Returnvalue")
+
+static func void_excluded():
+	return ProjectSettings.get("wat/Voidexcluded")
+
+static func script_prefixes() -> String:
+	return ProjectSettings.get("wat/Scriptprefixes")
+
+static func method_prefixes() -> String:
+	return ProjectSettings.get("wat/Methodprefixes")
+
+static func defaults(force: bool = false):
+	print("IGNORE ANY 'Property not found' WARNINGS HERE")
+	if ProjectSettings.get("wat/Parameters") == null or force:
+		ProjectSettings.set("wat/Parameters", true)
+	if ProjectSettings.get("wat/Returnvalue") == null or force:
+		ProjectSettings.set("wat/Returnvalue", true)
+	if ProjectSettings.get("wat/Voidexcluded") == null or force:
+		ProjectSettings.set("wat/Voidexcluded", true)
+	if ProjectSettings.get("wat/Scriptprefixes") == null or force:
+		ProjectSettings.set("wat/Scriptprefixes", "test")
+	if ProjectSettings.get("wat/Methodprefixes") == null or force:
+		ProjectSettings.set("wat/Methodprefixes", "test")
+	print("FINISHED SETTING DEFAULTS OR HISTORICAL VALUES")

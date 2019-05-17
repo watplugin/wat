@@ -9,7 +9,7 @@ func pre():
 	login.stub("register", {"username": "dank", "password": "pass"}, "Username 'Dank' is unacceptable")
 	login.default("register", "alloallo")
 
-func test_doubler_all_should_pass():
+func supra_doubler_all_should_pass():
 	# In real tests, we would usually expect these to be called from elsewhere
 	expect.is_equal(login.execute("login", 2, "alex", "code"), "Logged In", "Logged In == Logged In")
 	expect.is_equal(login.instance.login("jack", "captain"), "Hello Captain Jack", "Hello Captain Jack == Hello Captain Jack")

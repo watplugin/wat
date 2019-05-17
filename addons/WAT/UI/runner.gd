@@ -40,7 +40,7 @@ func _loop():
 			return
 		current_test.end()
 		output("Finished Running %s" % current_test.title())
-#		IO.clear_all_temp_directories()
+		IO.clear_all_temp_directories()
 		cases.append(current_test.case)
 	display()
 		
@@ -103,8 +103,10 @@ func resume(yieldobj) -> void:
 func _set_test_methods() -> Array:
 	var results: Array = []
 	for method in current_test.get_method_list():
-		if method.name.begins_with("test_"):
-			results.append(method.name)
+		for prefix in Array(WATConfig.method_prefixes().split(",")):
+			if method.name.begins_with(prefix.dedent() + "_"):
+				results.append(method.name)
+				break
 	return results
 
 func _get_tests() -> Array:
@@ -118,8 +120,11 @@ func _get_tests() -> Array:
 		dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
 		var title = dir.get_next()
 		while title != "":
-			if title.begins_with("test_") and title.ends_with(".gd"):
-				tests.append(load(TEST_DIRECTORY + d + "/" + title))
+			if title.ends_with(".gd"):
+				for prefix in Array(WATConfig.script_prefixes().split(",")):
+					if title.begins_with(prefix.dedent() + "_"):
+						tests.append(load(TEST_DIRECTORY + d + "/" + title))
+						break
 			title = dir.get_next()
 	return tests
 

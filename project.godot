@@ -42,10 +42,6 @@ _global_script_class_icons={
 "WATTest": ""
 }
 
-[WAT]
-
-EnforceTypedParameters=true
-
 [application]
 
 config/name="WAT"
@@ -71,4 +67,9 @@ vram_compression/import_etc2=false
 
 [wat]
 
-parameters=false
+Parameters=true
+Returnvalue=true
+Voidexcluded=true
+Scriptprefixes="test, unit"
+Methodprefixes="test, supra"
+Doublestrategy="N/A"
