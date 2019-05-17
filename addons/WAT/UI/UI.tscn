@@ -55,7 +55,7 @@ size_flags_vertical = 3
 custom_constants/separation = 15
 
 [node name="Menu" type="VBoxContainer" parent="Layout/Middle"]
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 400.0
 rect_clip_content = true
 size_flags_horizontal = 0
@@ -63,30 +63,29 @@ size_flags_vertical = 3
 custom_constants/separation = 10
 
 [node name="Buttons" type="VBoxContainer" parent="Layout/Middle/Menu"]
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 44.0
 
 [node name="Run" type="Button" parent="Layout/Middle/Menu/Buttons"]
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Run All Tests"
 
 [node name="Clear" type="Button" parent="Layout/Middle/Menu/Buttons"]
 margin_top = 24.0
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 44.0
 size_flags_horizontal = 3
 text = "Clear"
 
 [node name="Typing" type="VBoxContainer" parent="Layout/Middle/Menu"]
-editor/display_folded = true
 margin_top = 54.0
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 152.0
 
 [node name="Label" type="Label" parent="Layout/Middle/Menu/Typing"]
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -96,37 +95,38 @@ uppercase = true
 
 [node name="Parameters" type="CheckBox" parent="Layout/Middle/Menu/Typing"]
 margin_top = 18.0
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 42.0
-hint_tooltip = "If true, any parameters that have defined types (ie param_name: param_type) will keep their types in their doubles.
-
-If false, their types will be removed from their doubles."
+hint_tooltip = "If ticked: When doubling a script, any typed params e.g \"title: String\" will keep their types instead of being generic params e.g \"title\"in the double script."
+pressed = true
 text = "Parameters"
 
 [node name="ReturnValue" type="CheckBox" parent="Layout/Middle/Menu/Typing"]
 margin_top = 46.0
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 70.0
-hint_tooltip = "If true, any methods that have a defined return value (ie method() -> int:) will keep their return value in their doubles.
-
-If false, they will lose their return values in their doubles."
+hint_tooltip = "If ticked: When doubling a script, if a method has a return type e.g  \"-> int:\" will keep their types in the double instead of being removed. "
+pressed = true
 text = "Return Value"
 
-[node name="VoidReturn" type="CheckBox" parent="Layout/Middle/Menu/Typing"]
+[node name="ExcludeVoid" type="CheckBox" parent="Layout/Middle/Menu/Typing"]
 margin_top = 74.0
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 98.0
-hint_tooltip = "If set to true, void will be removed as a return value if you've choosen to keep return values enforced. "
+hint_tooltip = "This only matters if you have ticked Return Value.
+
+If ticked: Any methods that return void will have their void return value excluded."
+pressed = true
 text = "Ignore Void"
 
 [node name="Prefix" type="VBoxContainer" parent="Layout/Middle/Menu"]
-editor/display_folded = true
 margin_top = 162.0
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 232.0
+size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="Layout/Middle/Menu/Prefix"]
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 14.0
 text = "Set Prefixes"
 align = 1
@@ -134,26 +134,30 @@ uppercase = true
 
 [node name="Script" type="LineEdit" parent="Layout/Middle/Menu/Prefix"]
 margin_top = 18.0
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 42.0
-hint_tooltip = "Scripts will only be run by WAT if they start
-with this prefix (e.g test_SCRIPTNAME.gd).
+hint_tooltip = "WAT will run all tests scripts that start with any prefix(es) defined here (default: \"test_\")
 
-default: test_"
-placeholder_text = "Enter Script Prefix"
+Enter a comma delimited list to use multiple prefixes (e.g \"test_, unit, third_prefix\")"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "Script(s)"
 
 [node name="Method" type="LineEdit" parent="Layout/Middle/Menu/Prefix"]
 margin_top = 46.0
-margin_right = 139.0
+margin_right = 109.0
 margin_bottom = 70.0
 hint_tooltip = "Methods will only be run by WAT if they start
 with this prefix (e.g test_METHODNAME()).
 
 default: test_"
-placeholder_text = "Enter Method Prefix"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "Method(s)"
 
 [node name="Output" type="VBoxContainer" parent="Layout/Middle/Menu"]
 editor/display_folded = true
+visible = false
 margin_top = 242.0
 margin_right = 139.0
 margin_bottom = 308.0
@@ -178,26 +182,8 @@ margin_right = 139.0
 margin_bottom = 66.0
 script = ExtResource( 2 )
 
-[node name="Yield" type="VBoxContainer" parent="Layout/Middle/Menu"]
-editor/display_folded = true
-margin_top = 318.0
-margin_right = 139.0
-margin_bottom = 360.0
-
-[node name="Label" type="Label" parent="Layout/Middle/Menu/Yield"]
-margin_right = 139.0
-margin_bottom = 14.0
-text = "Yield Between Tests"
-uppercase = true
-
-[node name="SpinBox" type="SpinBox" parent="Layout/Middle/Menu/Yield"]
-margin_top = 18.0
-margin_right = 139.0
-margin_bottom = 42.0
-max_value = 5.0
-
 [node name="Results" type="Tree" parent="Layout/Middle"]
-margin_left = 154.0
+margin_left = 124.0
 margin_right = 1010.0
 margin_bottom = 400.0
 size_flags_horizontal = 3

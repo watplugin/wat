@@ -12,14 +12,9 @@ func _output(msg):
 func _process(delta):
 	_pop_message()
 	
-func _ready():
-	set_process(true)
-#	self.timer = Timer.new()
-#	timer.wait_time = 0.000000000000001
-#	timer.connect("timeout", self, "_pop_message")
-#	add_child(timer)
-#	timer.start()
-	
+#func _ready():
+#	set_process(true)
+
 func _pop_message():
 	if queue.size() > 0:
 		var msg = queue.pop_front()
