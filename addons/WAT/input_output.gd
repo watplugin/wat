@@ -18,7 +18,8 @@ static func save_script(title: String, rewrite: String, path: String = TEMP_DIR_
 	ResourceSaver.save(SCRIPT_PATH % ["user://WATemp/", str(_count()), title], BLANK)
 	
 static func load_doubled_script(title: String, path: String = TEMP_DIR_PATH + NO_SUB_DIR) -> Script:
-	return load(SCRIPT_PATH % [path, title]).new()
+#	return load(SCRIPT_PATH % [path, title]).new()
+	return load("user://WATemp/%s.gd" % title).new()
 	
 static func load_scene_instance(tscn) -> Node:
 	assert(tscn is PackedScene or (tscn is String and tscn.ends_with(".tscn")))

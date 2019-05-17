@@ -28,14 +28,15 @@ static func script(gdscript) -> SCRIPT_DATA:
 	var script: Script = IO.load_script(gdscript)
 	var tokens = TOKENIZER.start(script)
 	var rewrite: String = REWRITER.start(tokens)
+	var title: String = "%s_%s" % [str(IO._count()), tokens.title]
 	IO.save_script(tokens.title, rewrite)
-	return SCRIPT_DATA.new(tokens.methods, IO.load_doubled_script(tokens.title))
+	return SCRIPT_DATA.new(tokens.methods, IO.load_doubled_script(title))
 
 static func scene(tscn) -> SCENE_DATA:
 	var copy: Node = IO.load_scene_instance(tscn)
-	var save_path: String = "user://WATemp/%s.tscn" % copy.name
 	var outline: Array = double(copy)
 	var tree: Node = double_tree(outline.duplicate()) # tree here?
+	var save_path: String = "user://WATemp/%s_%s.tscn" % [str(IO._count()), copy.name]
 	IO.save_scene(tree, "user://WATemp/", tree.name)
 	var nodes: Dictionary = create_scene_data(tree, outline)
 	return SCENE_DATA.new(nodes, tree)
@@ -60,7 +61,7 @@ static func double(root: Node):
 	if root.script != null:
 		var tokens = TOKENIZER.start(root.script)
 		var rewrite = REWRITER.start(tokens)
-		var script_path: String = "user://WATemp/%s.gd" % tokens.title
+		var script_path: String = "user://WATemp/%s_%s.gd" % [str(IO._count()), tokens.title]
 		IO.save_script(tokens.title , rewrite)
 		var path: String = str(root.get_path_to(root))
 		tree.append(NodeData.new(root.name, path, null, script_path, tokens.methods))
@@ -77,7 +78,7 @@ static func double(root: Node):
 		if node.script != null:
 			var tokens = TOKENIZER.start(node.script)
 			var rewrite = REWRITER.start(tokens)
-			var script_path: String = "user://WATemp/%s.gd" % tokens.title
+			var script_path: String = "user://WATemp/%s_%s.gd" % [str(IO._count()), tokens.title]
 			IO.save_script(tokens.title , rewrite)
 			tree.append(NodeData.new(node.name, path, parent, script_path, tokens.methods))
 		else:
