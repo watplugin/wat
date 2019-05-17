@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Examples/login.gd"
 }, {
+"base": "Object",
+"class": "WATConfig",
+"language": "GDScript",
+"path": "res://addons/WAT/config.gd"
+}, {
 "base": "Node",
 "class": "WATTest",
 "language": "GDScript",
@@ -33,8 +38,13 @@ _global_script_class_icons={
 "BaseLogin": "",
 "Calculator": "",
 "Login": "",
+"WATConfig": "",
 "WATTest": ""
 }
+
+[WAT]
+
+EnforceTypedParameters=true
 
 [application]
 
@@ -58,3 +68,7 @@ enabled=PoolStringArray( "WAT" )
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+
+[wat]
+
+parameters=false

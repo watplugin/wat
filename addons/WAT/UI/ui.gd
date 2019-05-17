@@ -10,9 +10,12 @@ onready var Runner = $Runner
 
 
 func _ready():
+#	ProjectSettings.set("WAT/EnforceTypedParameters", value)
 	Run.connect("pressed", Results, "reset") # be wary of this
 	Run.connect("pressed", Runner, "_start")
 	Runner.connect("display_results", Results, "_display_results") # May need to change display here?
 	Clear.connect("pressed", Results, "reset")
 	Clear.connect("pressed", Output, "_clear")
 	Runner.connect("output", Output, "_output")
+	var param = $Layout/Middle/Menu/Typing/Parameters
+	param.connect("pressed", WATConfig, "enforce_typed_parameters", [param])

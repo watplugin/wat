@@ -13,8 +13,8 @@ static func _rewrite_method(method: Dictionary) -> String:
 static func _parameters(parameters: Array) -> String:
 	var result: String = ""
 	for param in parameters:
-		result += "%s:%s, " % [param.name, param.type] if param.typed else "%s " % [param.name]
-	result = result.rstrip(", ")
+		result += "%s:%s," % [param.name, param.type] if (param.typed and WATConfig.check_enforced_type_parameters()) else "%s," % [param.name]
+	result = result.rstrip(",")
 	return result
 	
 static func _return_value(retval: Dictionary) -> String:
