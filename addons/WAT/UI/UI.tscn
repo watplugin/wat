@@ -46,7 +46,6 @@ text = "OUT OF ORDER"
 editable = false
 
 [node name="Middle" type="HBoxContainer" parent="Layout"]
-editor/display_folded = true
 margin_top = 40.0
 margin_right = 1010.0
 margin_bottom = 440.0

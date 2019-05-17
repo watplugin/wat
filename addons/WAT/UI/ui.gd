@@ -24,6 +24,7 @@ func _ready():
 func connect_buttons():
 	Run.connect("pressed", Results, "reset") # be wary of this
 	Run.connect("pressed", Runner, "_start")
+	Run.connect("pressed", Output, "_clear")
 	Runner.connect("display_results", Results, "_display_results") # May need to change display here?
 	Clear.connect("pressed", Results, "reset")
 	Clear.connect("pressed", Output, "_clear")

@@ -11,7 +11,7 @@ func _init(details: String) -> void:
 func add_method(method: String) -> void:
 	# Called by the Test Script
 	_current_method = method
-	var _clean_name: String = method.replace("test_", "").replace("_", " ")
+	var _clean_name = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
 	_tests[method] = {"details": _clean_name, "success": true, "expectations": []}
 
 func _add_expectation(success: bool, expected: String, result: String, notes: String) -> void:

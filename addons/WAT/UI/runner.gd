@@ -58,7 +58,8 @@ func _execute_test_methods():
 	while cursor.METHOD < methods.size() - 1:
 		cursor.METHOD += 1
 		var method: String = methods[cursor.METHOD]
-		output("Executing Method: %s" % method.replace("_", " ").lstrip("test"))
+		var clean = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
+		output("Executing Method: %s" % clean)
 		current_test.case.add_method(method)
 		current_test.pre()
 		current_test.call(method)

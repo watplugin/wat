@@ -23,7 +23,7 @@ func _pop_message():
 		else:
 			self.text += msg
 			self.cache = text
-			self.cursor += 2
+			self.cursor += 3
 		cursor_set_line(self.cursor)
 	
 func _clear():
