@@ -1,4 +1,5 @@
 extends Reference
+tool
 
 static func start(source: Object) -> String:
 	var rewrite: String
@@ -8,8 +9,7 @@ static func start(source: Object) -> String:
 	return rewrite
 	
 static func _rewrite_method(method: Dictionary) -> String:
-	var retval_is_void: bool = method.retval.typed and method.retval.type == "void"
-	print(retval_is_void)
+	var retval_is_void: bool = method.retval.typed and method.retval.type.strip_edges() == "void"
 	return "func %s(%s)%s:\n\t%s" % [method.name, _parameters(method.parameters), _return_value(method.retval), _body(method.name, method.parameters, retval_is_void)]
 	
 static func _parameters(parameters: Array) -> String:
