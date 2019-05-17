@@ -28,7 +28,8 @@ func reset() -> void:
 	_root = create_item()
 	_root.set_text(0, "Test Root Created")
 	
-func _display_results(cases: Array):
+
+func _display_results(cases: Array):	
 	for case in cases:
 		display(case)
 

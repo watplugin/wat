@@ -39,8 +39,8 @@ func _loop():
 		if paused:
 			return
 		current_test.end()
-		IO.clear_all_temp_directories()
 		output("Finished Running %s" % current_test.title())
+		IO.clear_all_temp_directories()
 		cases.append(current_test.case)
 	display()
 		

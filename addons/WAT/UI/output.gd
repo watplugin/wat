@@ -1,19 +1,52 @@
 extends TextEdit
 tool
-	
-var current_line: int = 5
-var cache: String
+
+var queue: Array = []
+var cache: String = ""
+var cursor: int = 0
+var timer: Timer
 
 func _output(msg):
-		var output = "%s\n" % msg
+	queue.append("%s\n" % msg)
+	
+func _process(delta):
+	_pop_message()
+	
+func _ready():
+	set_process(true)
+#	self.timer = Timer.new()
+#	timer.wait_time = 0.000000000000001
+#	timer.connect("timeout", self, "_pop_message")
+#	add_child(timer)
+#	timer.start()
+	
+func _pop_message():
+	if queue.size() > 0:
+		var msg = queue.pop_front()
 		if msg.begins_with("Yielding"):
-			self.text = cache + output
+			self.text = self.cache + msg
 		else:
-			cache += output
-			self.text += output
-			current_line += 1
-		cursor_set_line(current_line)
-		
+			self.text += msg
+			self.cache = text
+			self.cursor += 2
+		cursor_set_line(self.cursor)
+	
 func _clear():
+	self.cursor = 0
+	cursor_set_line(self.cursor)
 	self.text = ""
-	self.cache = ""
+	self.queue = []
+
+#func _output(msg):
+##	self.paused = true
+##	self.timer.start()
+##	while not timer.is_stopped():
+##		pass
+#	var output = "%s\n" % msg
+##	self.text += output
+#	self.cache += output
+#	current_line += 1
+#	cursor_set_line(current_line)
+#
+#func _process(delta):
+#	self.text = self.cache
