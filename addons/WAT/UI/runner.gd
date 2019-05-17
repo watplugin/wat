@@ -4,6 +4,7 @@ tool
 const TEST_DIRECTORY: String = "res://tests/" # Use buttons and tool menu items to affect this?
 const TEST = preload("res://addons/WAT/test/test.gd")
 const YIELDER = preload("res://addons/WAT/test/yielder.gd")
+const IO = preload("res://addons/WAT/input_output.gd")
 
 signal display_results
 signal output
@@ -38,6 +39,7 @@ func _loop():
 		if paused:
 			return
 		current_test.end()
+		IO.clear_all_temp_directories()
 		output("Finished Running %s" % current_test.title())
 		cases.append(current_test.case)
 	display()
