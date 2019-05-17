@@ -148,7 +148,7 @@ Note: WAT will ignore spaces and will replace underscores in names. You do not n
 Enter a comma delimited list to use multiple prefixes (e.g \"test_, unit, third_prefix\")"
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "test, unit"
+text = "test"
 placeholder_text = "Script(s)"
 
 [node name="Method" type="LineEdit" parent="Layout/Middle/Menu/Prefix"]
@@ -163,7 +163,7 @@ Enter a comma delimited list to use multiple prefixes (e.g \"test_, unit, third_
 "
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "test, supra"
+text = "test"
 placeholder_text = "Method(s)"
 
 [node name="Output" type="VBoxContainer" parent="Layout/Middle/Menu"]
