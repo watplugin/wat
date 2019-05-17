@@ -35,6 +35,7 @@ func _display_results(cases: Array):
 
 func display(case: CASE) -> void:
 	var script: TreeItem = create_item(_root)
+	script.collapsed = true
 	for test in case.tests():
 		_add_tests(test, script)
 	_set_base_details(script, case)

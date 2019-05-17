@@ -40,7 +40,7 @@ func _loop():
 			return
 		current_test.end()
 		output("Finished Running %s" % current_test.title())
-		IO.clear_all_temp_directories()
+#		IO.clear_all_temp_directories()
 		cases.append(current_test.case)
 	display()
 		

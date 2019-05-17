@@ -7,6 +7,7 @@
 [ext_resource path="res://addons/WAT/UI/runner.gd" type="Script" id=5]
 
 [node name="UI" type="PanelContainer"]
+editor/display_folded = true
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
@@ -147,6 +148,7 @@ Note: WAT will ignore spaces and will replace underscores in names. You do not n
 Enter a comma delimited list to use multiple prefixes (e.g \"test_, unit, third_prefix\")"
 size_flags_horizontal = 3
 size_flags_vertical = 3
+text = "test, unit"
 placeholder_text = "Script(s)"
 
 [node name="Method" type="LineEdit" parent="Layout/Middle/Menu/Prefix"]
@@ -161,6 +163,7 @@ Enter a comma delimited list to use multiple prefixes (e.g \"test_, unit, third_
 "
 size_flags_horizontal = 3
 size_flags_vertical = 3
+text = "test, supra"
 placeholder_text = "Method(s)"
 
 [node name="Output" type="VBoxContainer" parent="Layout/Middle/Menu"]

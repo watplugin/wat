@@ -8,7 +8,9 @@ static func start(source: Object) -> String:
 	return rewrite
 	
 static func _rewrite_method(method: Dictionary) -> String:
-	return "func %s(%s)%s:\n\t%s" % [method.name, _parameters(method.parameters), _return_value(method.retval), _body(method.name, method.parameters)]
+	var retval_is_void: bool = method.retval.typed and method.retval.type == "void"
+	print(retval_is_void)
+	return "func %s(%s)%s:\n\t%s" % [method.name, _parameters(method.parameters), _return_value(method.retval), _body(method.name, method.parameters, retval_is_void)]
 	
 static func _parameters(parameters: Array) -> String:
 	var result: String = ""
@@ -19,17 +21,17 @@ static func _parameters(parameters: Array) -> String:
 	
 static func _return_value(retval: Dictionary) -> String:
 	if retval.typed and WATConfig.return_value():
-		if retval.type == "void" and WATConfig.void_excluded():
+		if retval.type.dedent() == "void" and WATConfig.void_excluded():
 			return ""
-		return " -> %s" % retval.type
+		return " -> %s" % retval.type.dedent()
 	return ""
-#	return " -> %s" % retval.type if retval.typed else ""
 	
-static func _body(title, parameters) -> String:
+static func _body(title, parameters, is_void: bool) -> String:
 	var arguments: String = ""
 	for param in parameters:
 		arguments += '"%s": %s, ' % [param.name, param.name]
 	var args = ("var arguments = {%s}" % arguments).replace(", }", "}")
 	# ADD ABILITY TO DO A SUPER CALL HERE IF PARTIAL ENABLED
-	var retval: String = '\n\treturn self.get_meta("double").get_retval("%s", arguments)\n\n' % title
+	var retexpr: String = "\n\treturn retval" if not is_void or WATConfig.void_excluded() else ""
+	var retval: String = '\n\tvar retval = self.get_meta("double").get_retval("%s", arguments)%s\n\n' % [title, retexpr]
 	return args + retval
