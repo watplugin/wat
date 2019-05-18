@@ -28,16 +28,9 @@ func _start():
 func _loop():
 	while not tests.empty():
 		start()
-		_execute_test_methods()
+		execute()
 		if yielding():
 			return
-		test.end()
-		remove_child(test)
-		output("Finished Running %s" % test.title())
-		for double in test.doubles:
-			double.instance.free()
-		test.queue_free()
-		IO.clear_all_temp_directories()
 	emit_signal("display_results", CaseManager.list)
 	CaseManager.list = []
 	tests.clear()
@@ -53,8 +46,7 @@ func start():
 	test.start()
 	output("Running TestScript: %s" % test.title())
 	
-
-func _execute_test_methods():
+func execute():
 	while not methods.empty():
 		var method: String = methods.pop_front()
 		var clean = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
@@ -65,6 +57,15 @@ func _execute_test_methods():
 		if yielding():
 			return
 		test.post()
+		
+func end():
+	test.end()
+	remove_child(test)
+	output("Finished Running %s" % test.title())
+	for double in test.doubles:
+		double.instance.free()
+	test.queue_free()
+	IO.clear_all_temp_directories()
 
 ### BEGIN YIELDING ###
 func until_signal(emitter: Object, event: String, time_limit: float):
@@ -78,7 +79,7 @@ func until_timeout(time_limit: float):
 func resume() -> void:
 	output("Resuming TestScript %s" % test.title())
 	test.post()
-	_execute_test_methods()
+	execute()
 	output("Finished Running %s" % test.title())
 	_loop()
 	
