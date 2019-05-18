@@ -9,7 +9,7 @@ func create(title):
 	return case
 	
 	
-class Case:
+class Case extends Reference:
 	var title: String
 	var methods: Array = []
 #	var cursor: int = -1
@@ -39,7 +39,7 @@ class Case:
 		return successes() == total()
 			
 
-class Method:
+class Method extends Reference:
 	var title: String
 	var expectations: Array = []
 	
@@ -59,7 +59,7 @@ class Method:
 	func success() -> bool:
 		return successes() == total()
 	
-class Expectation:
+class Expectation extends Reference:
 	var success: bool
 	var expected: String
 	var result: String

@@ -9,6 +9,7 @@
 [ext_resource path="res://addons/WAT/UI/CaseManager.gd" type="Script" id=7]
 
 [node name="UI" type="PanelContainer"]
+editor/display_folded = true
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3

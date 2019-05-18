@@ -16,12 +16,12 @@ var doubles: Array = []
 
 func double_scene(scene):
 	var double = DOUBLE.scene(scene)
-	doubles.append(scene)
+	doubles.append(double)
 	return double
 	
 func double_script(script):
 	var double = DOUBLE.script(script)
-	doubles.append(script)
+	doubles.append(double)
 	return double
 
 func _init():

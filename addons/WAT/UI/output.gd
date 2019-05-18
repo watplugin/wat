@@ -12,8 +12,6 @@ func _output(msg):
 func _process(delta):
 	_pop_message()
 	
-#func _ready():
-#	set_process(true)
 
 func _pop_message():
 	if queue.size() > 0:
@@ -30,18 +28,4 @@ func _clear():
 	self.cursor = 0
 	cursor_set_line(self.cursor)
 	self.text = ""
-	self.queue = []
-
-#func _output(msg):
-##	self.paused = true
-##	self.timer.start()
-##	while not timer.is_stopped():
-##		pass
-#	var output = "%s\n" % msg
-##	self.text += output
-#	self.cache += output
-#	current_line += 1
-#	cursor_set_line(current_line)
-#
-#func _process(delta):
-#	self.text = self.cache
+	self.queue.clear()

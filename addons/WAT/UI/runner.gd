@@ -40,13 +40,12 @@ func _loop():
 		if yielding():
 			return
 		test.end()
-		for c in test.get_children():
-			c.queue_free()
 		remove_child(test)
 		output("Finished Running %s" % test.title())
 		for double in test.doubles:
-			if not double is Reference:
-				double.instance.free()
+			print(double is Reference)
+			print(typeof(double))
+			double.instance.free()
 		test.queue_free()
 #		IO.clear_all_temp_directories()
 	display()
