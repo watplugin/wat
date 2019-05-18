@@ -3,8 +3,12 @@ tool
 
 var list: Array = []
 
+func create(title):
+	var case = Case.new(title)
+	list.append(case)
+	return case
+
 class Case:
-	
 	var details: String
 	var success: bool = true
 	var _tests: Dictionary = {}

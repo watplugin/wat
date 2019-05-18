@@ -11,10 +11,9 @@ onready var CaseManager = $CaseManager
 signal display_results
 signal output
 var tests: Array = []
-var cases: Array = []
 var methods: Array = []
 var cursor: Dictionary = {TEST = -1, METHOD = -1}
-var current_test: TEST
+var test: TEST
 
 func output(msg):
 	emit_signal("output", msg)
@@ -22,7 +21,7 @@ func output(msg):
 func _start():
 	cursor.TEST = -1
 	cursor.METHOD = -1
-	cases = []
+	CaseManager.list = []
 	tests = []
 	output("Starting TestRunner")
 	tests = _get_tests()
@@ -36,27 +35,26 @@ func _loop():
 	while cursor.TEST < tests.size() - 1:
 		cursor.TEST += 1
 		prepare_test() # preparing next test
-		output("Running TestScript: %s" % current_test.title())
+		output("Running TestScript: %s" % test.title())
 		_execute_test_methods()
 		if yielding():
 			return
-		current_test.end()
-		output("Finished Running %s" % current_test.title())
+		test.end()
+		output("Finished Running %s" % test.title())
 		IO.clear_all_temp_directories()
-		cases.append(current_test.case)
 	display()
 		
 func prepare_test():
-	current_test = tests[cursor.TEST].new()
-	current_test.case = CaseManager.Case.new(current_test.title())
-	current_test.expect.connect("OUTPUT", current_test.case, "_add_expectation")
-	add_child(current_test)
+	test = tests[cursor.TEST].new()
+	test.case = CaseManager.create(test.title())
+	test.expect.connect("OUTPUT", test.case, "_add_expectation")
+	add_child(test)
 	cursor.METHOD = -1
 	methods = _set_test_methods()
-	current_test.start()
+	test.start()
 
 func display():
-	emit_signal("display_results", cases)
+	emit_signal("display_results", CaseManager.list)
 
 func _execute_test_methods():
 	while cursor.METHOD < methods.size() - 1:
@@ -64,12 +62,12 @@ func _execute_test_methods():
 		var method: String = methods[cursor.METHOD]
 		var clean = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
 		output("Executing Method: %s" % clean)
-		current_test.case.add_method(method)
-		current_test.pre()
-		current_test.call(method)
+		test.case.add_method(method)
+		test.pre()
+		test.call(method)
 		if yielding():
 			return
-		current_test.post()
+		test.post()
 
 ### BEGIN YIELDING ###
 func until_signal(emitter: Object, event: String, time_limit: float):
@@ -81,18 +79,17 @@ func until_timeout(time_limit: float):
 	return Yield.until_timeout(time_limit)
 
 func resume() -> void:
-	output("Resuming TestScript %s" % current_test.title())
-	current_test.post()
+	output("Resuming TestScript %s" % test.title())
+	test.post()
 	_execute_test_methods()
-	output("Finished Running %s" % current_test.title())
+	output("Finished Running %s" % test.title())
 	output("Clearing all files in user/WATemp")
-	cases.append(current_test.case)
 	_loop()
 ### END YIELDING
 
 func _set_test_methods() -> Array:
 	var results: Array = []
-	for method in current_test.get_method_list():
+	for method in test.get_method_list():
 		for prefix in Array(WATConfig.method_prefixes().split(",")):
 			if method.name.begins_with(prefix.dedent() + "_"):
 				results.append(method.name)
