@@ -18,8 +18,6 @@ func output(msg):
 	emit_signal("output", msg)
 
 func _start():
-#	cursor.TEST = -1
-#	cursor.METHOD = -1
 	CaseManager.list = []
 	tests = []
 	output("Starting TestRunner")
@@ -27,18 +25,9 @@ func _start():
 	output("%s Test Scripts Collected" % tests.size())
 	_loop()
 	
-func yielding() -> bool:
-	return Yield.queue.size() > 0
-	
 func _loop():
 	while not tests.empty():
-		test = tests.pop_front().new()
-		test.case = CaseManager.create(test.title())
-		test.expect.connect("OUTPUT", test.case, "_add_expectation")
-		add_child(test)
-		methods = _set_test_methods()
-		test.start()
-		output("Running TestScript: %s" % test.title())
+		start()
 		_execute_test_methods()
 		if yielding():
 			return
@@ -54,9 +43,16 @@ func _loop():
 	tests.clear()
 	methods.clear()
 	CaseManager.list.clear()
-
-func display():
-	pass
+	
+func start():
+	test = tests.pop_front().new()
+	test.case = CaseManager.create(test.title())
+	test.expect.connect("OUTPUT", test.case, "_add_expectation")
+	add_child(test)
+	methods = _set_test_methods()
+	test.start()
+	output("Running TestScript: %s" % test.title())
+	
 
 func _execute_test_methods():
 	while not methods.empty():
@@ -85,7 +81,12 @@ func resume() -> void:
 	_execute_test_methods()
 	output("Finished Running %s" % test.title())
 	_loop()
+	
+func yielding() -> bool:
+	return Yield.queue.size() > 0
 ### END YIELDING
+
+
 
 func _set_test_methods() -> Array:
 	var results: Array = []
