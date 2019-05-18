@@ -14,6 +14,8 @@ func test_hash_comparison():
 	var C = Node.new()
 	expect.hashes_are_equal(N, N, "hash of N is equal to hash of the same N (should pass)")
 	expect.hashes_are_equal(N, C, "hash of N is equal to hash of C (should fail)")
+	C.free()
+	N.free()
 
 func test_yielder_works():
 	expect.is_true(true, "true is true. Yield not called")
