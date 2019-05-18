@@ -33,13 +33,6 @@ static func _body(title, parameters, is_void: bool) -> String:
 		arguments += '"%s": %s, ' % [param.name, param.name]
 	var args = ("var arguments = {%s}" % arguments).replace(", }", "}")
 	# ADD ABILITY TO DO A SUPER CALL HERE IF PARTIAL ENABLED
-	var retexpr: String
-	if is_void and not WATConfig.void_excluded():
-		# If IS VOID and WE DON'T IGNORE VOID
-		# RETURN NOTHING
-		retexpr = ""
-	else:
-		retexpr = "\n\treturn retval"
-#	var retexpr: String = "\n\treturn retval" if
+	var retexpr: String = "" if is_void and not WATConfig.void_excluded() else "\n\treturn retval"
 	var retval: String = '\n\tvar retval = self.get_meta("double").get_retval("%s", arguments)%s\n\n' % [title, retexpr]
 	return args + retval
