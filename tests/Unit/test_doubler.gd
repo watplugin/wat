@@ -2,8 +2,11 @@ extends WATTest
 
 var login
 
+# This causes issues with half of the stray nodes
+
 func pre():
-	login = DOUBLE.script(Login)
+#	login = DOUBLE.script(Login)
+	login = double_script(Login)
 	login.stub("login", {"username": "alex", "password": "code"}, "Logged In")
 	login.stub("login", {"username": "jack", "password": "captain"}, "Hello Captain Jack")
 	login.stub("register", {"username": "dank", "password": "pass"}, "Username 'Dank' is unacceptable")

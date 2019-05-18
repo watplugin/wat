@@ -23,6 +23,7 @@ func output(msg):
 func resume(yield_timer: YieldTimer):
 	remove_child(yield_timer)
 	queue.erase(yield_timer)
+	yield_timer.queue_free()
 	if queue.size() > 0:
 		return
 	get_parent().resume()
@@ -52,8 +53,6 @@ class YieldTimer extends Timer:
 			
 	func _on_signal():
 		get_parent().output("{ Signal: %s } was emitted from { emitter: %s } before time out" % [event, emitter])
-		self.queue_free()
-		self.set_process(false)
 		emit_signal("finished")
 		if not resumed:
 			resumed = true

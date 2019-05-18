@@ -2,9 +2,11 @@ extends WATTest
 
 const scene = preload("res://Examples/Scene/Main.tscn")
 
+# This causes issues 
 
 func test_double_scene():
-	var scene_double = DOUBLE.scene(scene)
+#	var scene_double = DOUBLE.scene(scene)
+	var scene_double = double_scene(scene)
 	add_child(scene_double.instance)
 	scene_double.execute("A", "execute")
 	scene_double.instance.get_node("A").execute()

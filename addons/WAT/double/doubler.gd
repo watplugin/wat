@@ -9,7 +9,7 @@ const IO = preload("res://addons/WAT/input_output.gd")
 const SCRIPT_DATA = preload("res://addons/WAT/double/script_data.gd")
 const SCENE_DATA = preload("res://addons/WAT/double/scene_data.gd")
 
-class NodeData:
+class NodeData extends Reference:
 	var title: String
 	var path = null
 	var parent = null
@@ -33,6 +33,7 @@ static func script(gdscript) -> SCRIPT_DATA:
 static func scene(tscn) -> SCENE_DATA:
 	var copy: Node = IO.load_scene_instance(tscn)
 	var outline: Array = double(copy)
+	copy.free()
 	var tree: Node = double_tree(outline.duplicate())
 	IO.save_scene(tree, tree.name)
 	var nodes: Dictionary = create_scene_data(tree, outline)

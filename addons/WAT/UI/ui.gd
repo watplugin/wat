@@ -7,6 +7,8 @@ onready var Clear = $Layout/Middle/Menu/Buttons/Clear
 onready var Output = $Layout/Output
 onready var Runner = $Runner
 
+onready var printstraynodes = $Layout/Middle/Menu/Buttons/PrintStrayNodes
+
 ### SETTINGS
 onready var parameters = $Layout/Middle/Menu/Typing/Parameters
 onready var retvals = $Layout/Middle/Menu/Typing/ReturnValue
@@ -22,6 +24,7 @@ func _ready():
 	connect_settings()
 	
 func connect_buttons():
+	printstraynodes.connect("pressed", self, "print_stray_nodes")
 	Run.connect("pressed", Results, "reset") # be wary of this
 	Run.connect("pressed", Runner, "_start")
 	Run.connect("pressed", Output, "_clear")

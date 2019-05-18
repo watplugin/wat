@@ -1,6 +1,7 @@
 extends Node
 class_name WATTest
 
+
 # We can't namespace stuff in a single script unfortunately
 const EXPECTATIONS = preload("res://addons/WAT/test/expectations.gd")
 const DOUBLE = preload("res://addons/WAT/double/doubler.gd")
@@ -10,6 +11,18 @@ const YIELD: String = "finished"
 var expect: EXPECTATIONS
 var watcher: WATCHER
 var case
+
+var doubles: Array = []
+
+func double_scene(scene):
+	var double = DOUBLE.scene(scene)
+	doubles.append(scene)
+	return double
+	
+func double_script(script):
+	var double = DOUBLE.script(script)
+	doubles.append(script)
+	return double
 
 func _init():
 	_set_properties()
