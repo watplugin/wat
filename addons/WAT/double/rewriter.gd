@@ -20,11 +20,12 @@ static func _parameters(parameters: Array) -> String:
 	return result
 	
 static func _return_value(retval: Dictionary) -> String:
-	if retval.typed and WATConfig.return_value():
-		if retval.type == "void" and WATConfig.void_excluded():
-			return ""
+	if retval.typed and WATConfig.return_value() and not WATConfig.void_excluded():
 		return " -> %s" % retval.type
-	return ""
+	elif retval.type == "void" and WATConfig.return_value() and WATConfig.void_excluded():
+		return ""
+	else:
+		return ""
 	
 static func _body(title, parameters, is_void: bool) -> String:
 	var arguments: String = ""
