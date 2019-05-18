@@ -31,11 +31,7 @@ func _loop():
 		execute()
 		if yielding():
 			return
-	emit_signal("display_results", CaseManager.list)
-	CaseManager.list = []
-	tests.clear()
-	methods.clear()
-	CaseManager.list.clear()
+	finish()
 	
 func start():
 	test = tests.pop_front().new()
@@ -66,6 +62,13 @@ func end():
 		double.instance.free()
 	test.queue_free()
 	IO.clear_all_temp_directories()
+	
+func finish():
+	emit_signal("display_results", CaseManager.list)
+	CaseManager.list = []
+	tests.clear()
+	methods.clear()
+	CaseManager.list.clear()
 
 ### BEGIN YIELDING ###
 func until_signal(emitter: Object, event: String, time_limit: float):
