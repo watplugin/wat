@@ -8,29 +8,65 @@ func create(title):
 	list.append(case)
 	return case
 	
-class Case:
-	var details: String
-	var success: bool = true
-	var _tests: Dictionary = {}
-	var _current_method: String
 	
-	func _init(details: String) -> void:
-		self.details = details
+class Case:
+	var title: String
+	var methods: Array = []
+	var cursor: int = -1
+	
+	func _init(title: String) -> void:
+		self.title = title
 	
 	func add_method(method: String) -> void:
-		# Called by the Test Script
-		_current_method = method # Hash?
-		_tests[method] = {"details": _clean_method(method), "success": true, "expectations": []}
+		methods.append(Method.new(method))
+		cursor += 1
 	
 	func _add_expectation(success: bool, expected: String, result: String, notes: String) -> void:
 		# Called via signal from expectations.gd
-		_tests[_current_method].expectations.append({"details": expected, "success": success, "result": result, "notes": notes})
-		if not success:
-			_tests[_current_method].success = false
-			self.success = false
+		methods[cursor].expectations.append(Expectation.new(success, expected, result, notes))
+		
+	func total() -> int:
+		return methods.size()
+		
+	func successes() -> int:
+		var success: int = 0
+		for method in methods:
+			if method.success():
+				success += 1
+		return success
+		
+	func success() -> bool:
+		return successes() == total()
 			
-	func _clean_method(method: String) -> String:
-		return method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
+
+class Method:
+	var title: String
+	var expectations: Array = []
 	
-	func tests() -> Array:
-		return _tests.values()
+	func _init(title) -> void:
+		self.title = title.substr(title.find("_"), title.length()).replace("_", " ").dedent()
+	
+	func total() -> int:
+		return expectations.size()
+		
+	func successes() -> int:
+		var success: int = 0
+		for expectation in expectations:
+			if expectation.success:
+				success += 1
+		return success
+		
+	func success() -> bool:
+		return successes() == total()
+	
+class Expectation:
+	var success: bool
+	var expected: String
+	var result: String
+	var notes: String
+	
+	func _init(success, expected, result, notes):
+		self.success = success
+		self.expected = expected
+		self.result = result
+		self.notes = notes

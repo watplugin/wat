@@ -55,6 +55,7 @@ func prepare_test():
 
 func display():
 	emit_signal("display_results", CaseManager.list)
+	CaseManager.list = []
 
 func _execute_test_methods():
 	while cursor.METHOD < methods.size() - 1:
