@@ -9,8 +9,7 @@ static func start(source: Object) -> String:
 	return rewrite
 	
 static func _rewrite_method(method: Dictionary) -> String:
-	var retval_is_void: bool = method.retval.typed and method.retval.type.strip_edges() == "void"
-	print(retval_is_void)
+	var retval_is_void: bool = method.retval.typed and method.retval.type == "void"
 	return "func %s(%s)%s:\n\t%s" % [method.name, _parameters(method.parameters), _return_value(method.retval), _body(method.name, method.parameters, retval_is_void)]
 	
 static func _parameters(parameters: Array) -> String:
@@ -22,9 +21,9 @@ static func _parameters(parameters: Array) -> String:
 	
 static func _return_value(retval: Dictionary) -> String:
 	if retval.typed and WATConfig.return_value():
-		if retval.type.strip_edges() == "void" and WATConfig.void_excluded():
+		if retval.type == "void" and WATConfig.void_excluded():
 			return ""
-		return " -> %s" % retval.type.strip_edges()
+		return " -> %s" % retval.type
 	return ""
 	
 static func _body(title, parameters, is_void: bool) -> String:

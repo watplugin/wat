@@ -54,7 +54,7 @@ static func _define_parameter(parameter: String) -> Dictionary:
 	var result: Dictionary = {name = "", type = "null", typed = false}
 	result.name = _refined.pop_front()
 	if not _refined.empty():
-		result.type = _refined.pop_front()
+		result.type = _refined.pop_front().strip_edges()
 		result.typed = true
 	return result
 
@@ -62,7 +62,7 @@ static func _extract_return_type(method: String) -> Dictionary:
 	var result: Dictionary = {type = "var", typed = false}
 	var type: String = method.replace("->", " ").replace(":", "").split(")")[1].dedent() # Issue
 	if not type.empty():
-		result.type = type.dedent()
+		result.type = type.strip_edges()
 		result.typed = true
 	return result
 	
