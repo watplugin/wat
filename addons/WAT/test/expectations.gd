@@ -16,6 +16,7 @@ const OP = preload("res://addons/WAT/constants/operators.gd")
 
 signal OUTPUT
 
+
 func output(success: bool, expected: String, result: String = "", notes = "") -> void:
 	expected = "Expect:    %s" % expected
 	emit_signal("OUTPUT", success, expected, result, notes)

@@ -3,18 +3,16 @@ tool
 
 const TEST_DIRECTORY: String = "res://tests/" # Use buttons and tool menu items to affect this?
 const TEST = preload("res://addons/WAT/test/test.gd")
-const YIELDER = preload("res://addons/WAT/test/yielder.gd")
 const IO = preload("res://addons/WAT/input_output.gd")
+
+onready var Yield = $Yielder
 
 signal display_results
 signal output
-
-var yields: Array = []
 var tests: Array = []
 var cases: Array = []
 var methods: Array = []
 var cursor: Dictionary = {TEST = -1, METHOD = -1}
-var paused: bool = false
 var current_test: TEST
 
 func output(msg):
@@ -30,13 +28,16 @@ func _start():
 	output("%s Test Scripts Collected" % tests.size())
 	_loop()
 	
+func yielding() -> bool:
+	return Yield.queue.size() > 0
+	
 func _loop():
 	while cursor.TEST < tests.size() - 1:
 		cursor.TEST += 1
 		prepare_test() # preparing next test
 		output("Running TestScript: %s" % current_test.title())
 		_execute_test_methods()
-		if paused:
+		if yielding():
 			return
 		current_test.end()
 		output("Finished Running %s" % current_test.title())
@@ -63,36 +64,21 @@ func _execute_test_methods():
 		current_test.case.add_method(method)
 		current_test.pre()
 		current_test.call(method)
-		if paused and yields.size() > 0:
+		if yielding():
 			return
 		current_test.post()
 
 ### BEGIN YIELDING ###
 func until_signal(emitter: Object, event: String, time_limit: float):
 	output("Yielding for signal: %s from emitter: %s with timeout of %s" % [event, emitter, time_limit])
-	var yieldobj = YIELDER.new(time_limit, emitter, event)
-	yields.append(yieldobj)
-	paused = true
-	add_child(yieldobj)
-	yieldobj.timer.start()
-	return yieldobj
+	return Yield.until_signal(time_limit, emitter, event)
 	
 func until_timeout(time_limit: float):
 	output("Yielding for %s" % time_limit)
-	var yieldobj = YIELDER.new(time_limit, self, "", true)
-	yields.append(yieldobj)
-	paused = true
-	add_child(yieldobj)
-	yieldobj.timer.start()
-	return yieldobj
+	return Yield.until_timeout(time_limit)
 
-func resume(yieldobj) -> void:
-	remove_child(yieldobj)
-	yields.erase(yieldobj)
-	if yields.size() > 0:
-		return # not resuming just yet
+func resume() -> void:
 	output("Resuming TestScript %s" % current_test.title())
-	paused = false
 	current_test.post()
 	_execute_test_methods()
 	output("Finished Running %s" % current_test.title())

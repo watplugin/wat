@@ -68,8 +68,8 @@ vram_compression/import_etc2=false
 [wat]
 
 Parameters=true
-Returnvalue=false
-Voidexcluded=false
+Returnvalue=true
+Voidexcluded=true
 Scriptprefixes="test"
-Methodprefixes="test"
+Methodprefixes="test, supra"
 Doublestrategy="N/A"
