@@ -1,8 +1,6 @@
 tool
 extends Tree
 
-const CASE = preload("res://addons/WAT/test/case.gd")
-
 enum {
 	SCRIPT
 	METHOD
@@ -33,7 +31,7 @@ func _display_results(cases: Array):
 	for case in cases:
 		display(case)
 
-func display(case: CASE) -> void:
+func display(case) -> void:
 	var script: TreeItem = create_item(_root)
 	script.collapsed = true
 	for test in case.tests():

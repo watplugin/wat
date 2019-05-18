@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/WAT/UI/ui.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/UI/log_level.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://addons/WAT/UI/output.gd" type="Script" id=4]
 [ext_resource path="res://addons/WAT/UI/runner.gd" type="Script" id=5]
 [ext_resource path="res://addons/WAT/UI/Yielder.gd" type="Script" id=6]
+[ext_resource path="res://addons/WAT/UI/CaseManager.gd" type="Script" id=7]
 
 [node name="UI" type="PanelContainer"]
 margin_right = 1024.0
@@ -163,7 +164,7 @@ Enter a comma delimited list to use multiple prefixes (e.g \"test_, unit, third_
 "
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "test"
+text = "test, supra"
 placeholder_text = "Method(s)"
 
 [node name="Output" type="VBoxContainer" parent="Layout/Middle/Menu"]
@@ -227,3 +228,6 @@ script = ExtResource( 5 )
 
 [node name="Yielder" type="Node" parent="Runner"]
 script = ExtResource( 6 )
+
+[node name="CaseManager" type="Node" parent="Runner"]
+script = ExtResource( 7 )

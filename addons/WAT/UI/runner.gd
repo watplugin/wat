@@ -6,6 +6,7 @@ const TEST = preload("res://addons/WAT/test/test.gd")
 const IO = preload("res://addons/WAT/input_output.gd")
 
 onready var Yield = $Yielder
+onready var CaseManager = $CaseManager
 
 signal display_results
 signal output
@@ -47,6 +48,8 @@ func _loop():
 		
 func prepare_test():
 	current_test = tests[cursor.TEST].new()
+	current_test.case = CaseManager.Case.new(current_test.title())
+	current_test.expect.connect("OUTPUT", current_test.case, "_add_expectation")
 	add_child(current_test)
 	cursor.METHOD = -1
 	methods = _set_test_methods()
