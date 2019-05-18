@@ -12,15 +12,14 @@ signal display_results
 signal output
 var tests: Array = []
 var methods: Array = []
-var cursor: Dictionary = {TEST = -1, METHOD = -1}
 var test: TEST
 
 func output(msg):
 	emit_signal("output", msg)
 
 func _start():
-	cursor.TEST = -1
-	cursor.METHOD = -1
+#	cursor.TEST = -1
+#	cursor.METHOD = -1
 	CaseManager.list = []
 	tests = []
 	output("Starting TestRunner")
@@ -32,9 +31,13 @@ func yielding() -> bool:
 	return Yield.queue.size() > 0
 	
 func _loop():
-	while cursor.TEST < tests.size() - 1:
-		cursor.TEST += 1
-		prepare_test() # preparing next test
+	while not tests.empty():
+		test = tests.pop_front().new()
+		test.case = CaseManager.create(test.title())
+		test.expect.connect("OUTPUT", test.case, "_add_expectation")
+		add_child(test)
+		methods = _set_test_methods()
+		test.start()
 		output("Running TestScript: %s" % test.title())
 		_execute_test_methods()
 		if yielding():
@@ -43,33 +46,21 @@ func _loop():
 		remove_child(test)
 		output("Finished Running %s" % test.title())
 		for double in test.doubles:
-			print(double is Reference)
-			print(typeof(double))
 			double.instance.free()
 		test.queue_free()
-#		IO.clear_all_temp_directories()
-	display()
+		IO.clear_all_temp_directories()
+	emit_signal("display_results", CaseManager.list)
+	CaseManager.list = []
 	tests.clear()
 	methods.clear()
 	CaseManager.list.clear()
-		
-func prepare_test():
-	test = tests[cursor.TEST].new()
-	test.case = CaseManager.create(test.title())
-	test.expect.connect("OUTPUT", test.case, "_add_expectation")
-	add_child(test)
-	cursor.METHOD = -1
-	methods = _set_test_methods()
-	test.start()
 
 func display():
-	emit_signal("display_results", CaseManager.list)
-	CaseManager.list = []
+	pass
 
 func _execute_test_methods():
-	while cursor.METHOD < methods.size() - 1:
-		cursor.METHOD += 1
-		var method: String = methods[cursor.METHOD]
+	while not methods.empty():
+		var method: String = methods.pop_front()
 		var clean = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
 		output("Executing Method: %s" % clean)
 		test.case.add_method(method)
@@ -93,7 +84,6 @@ func resume() -> void:
 	test.post()
 	_execute_test_methods()
 	output("Finished Running %s" % test.title())
-	output("Clearing all files in user/WATemp")
 	_loop()
 ### END YIELDING
 
