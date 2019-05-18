@@ -7,7 +7,7 @@ func create(title):
 	var case = Case.new(title)
 	list.append(case)
 	return case
-
+	
 class Case:
 	var details: String
 	var success: bool = true
@@ -19,9 +19,8 @@ class Case:
 	
 	func add_method(method: String) -> void:
 		# Called by the Test Script
-		_current_method = method
-		var _clean_name = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
-		_tests[method] = {"details": _clean_name, "success": true, "expectations": []}
+		_current_method = method # Hash?
+		_tests[method] = {"details": _clean_method(method), "success": true, "expectations": []}
 	
 	func _add_expectation(success: bool, expected: String, result: String, notes: String) -> void:
 		# Called via signal from expectations.gd
@@ -29,6 +28,9 @@ class Case:
 		if not success:
 			_tests[_current_method].success = false
 			self.success = false
+			
+	func _clean_method(method: String) -> String:
+		return method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
 	
 	func tests() -> Array:
 		return _tests.values()
