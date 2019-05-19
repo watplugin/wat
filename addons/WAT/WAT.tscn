@@ -2,7 +2,7 @@
 
 [ext_resource path="res://addons/WAT/UI/ui.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/UI/Layout.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/WAT/UI/Runner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/WAT/Runner/Runner.tscn" type="PackedScene" id=3]
 
 [node name="WAT" type="PanelContainer"]
 margin_right = 1024.0
