@@ -15,6 +15,13 @@ var test: TEST
 func output(msg: String) -> void:
 	emit_signal("output", msg)
 
+func _run_single(Selector):
+	clear()
+	var selected: int = Selector.selected
+	var path: String = Selector.get_item_text(selected)
+	tests = [load(path)]
+	_loop()
+
 func _start() -> void:
 	output("Starting Test Runner")
 	clear()

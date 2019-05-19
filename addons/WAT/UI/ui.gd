@@ -16,8 +16,13 @@ onready var excludevoid = $UI/Middle/Menu/Typing/ExcludeVoid
 onready var scriptprefixes = $UI/Middle/Menu/Prefix/Script
 onready var methodprefixes = $UI/Middle/Menu/Prefix/Method
 onready var default = $UI/Middle/Menu/DefaultSettings
+onready var RunScript = $UI/MainMenu/RunScript
+onready var ScriptSelect = $UI/MainMenu/ScriptSelect
 
 func _ready():
+	RunScript.connect("pressed", Output, "_clear")
+	RunScript.connect("pressed", Results, "reset")
+	RunScript.connect("pressed", Runner, "_run_single", [ScriptSelect])
 	_default(false)
 	update_settings_display()
 	connect_buttons()
@@ -43,7 +48,6 @@ func connect_settings():
 	default.connect("pressed", self, "_default", [true])
 	
 func _default(force: bool):
-	print("resetting defaults")
 	parameters.pressed = true
 	retvals.pressed = true
 	excludevoid.pressed = true

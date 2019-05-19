@@ -11,7 +11,6 @@ func _enter_tree() -> void:
 	make_visible(false)
 
 func _exit_tree() -> void:
-	print_stray_nodes()
 	get_editor_interface().get_editor_viewport().remove_child(interface)
 	interface.free()
 

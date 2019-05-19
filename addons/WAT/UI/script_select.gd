@@ -1,21 +1,19 @@
-extends Node
+extends OptionButton
 tool
 
-const TEST_DIRECTORY: String = "res://tests/"
+const TEST_DIRECTORY = "res://tests/"
 
-func methods(test) -> Array:
-	var results: Array = []
-	for method in test.get_method_list():
-		if is_valid_method(method.name):
-			results.append(method.name)
-	return results
-	
-func is_valid_method(method: String) -> bool:
-	for prefix in Array(WATConfig.method_prefixes().split(",")):
-		if method.begins_with(prefix.dedent() + "_"):
-			return true
-	return false
-	
+func _init():
+	self.connect("pressed", self, "_collect")
+
+func _collect():
+	self.clear()
+	var tests = tests()
+	print(tests.size(), " tests collected")
+	for test in tests:
+		print(test.resource_path)
+		add_item(test.resource_path)
+		
 func tests() -> Array:
 	var tests: Array = []
 	var dirs: Array = _get_subdirs()
@@ -45,16 +43,8 @@ func _testloop(d):
 	dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
 	var title: String = dir.get_next()
 	while title != "":
-		if valid_title(title):
+		if title.ends_with(".gd"):
 			results.append(load(TEST_DIRECTORY + d + "/" + title))
 		title = dir.get_next()
 	return results
-	
-func valid_title(title: String) -> bool:
-	if not title.ends_with(".gd"):
-		return false
-	for prefix in Array(WATConfig.script_prefixes().split(",")):
-		if title.begins_with(prefix.dedent() + "_"):
-			return true
-	return false
 	
