@@ -1,21 +1,21 @@
 extends PanelContainer
 tool
 
-onready var Results = $Layout/Middle/Results
-onready var Run = $Layout/Middle/Menu/Buttons/Run
-onready var Clear = $Layout/Middle/Menu/Buttons/Clear
-onready var Output = $Layout/Output
+onready var Results = $UI/Middle/Results
+onready var Run = $UI/Middle/Menu/Buttons/Run
+onready var Clear = $UI/Middle/Menu/Buttons/Clear
+onready var Output = $UI/Output
 onready var Runner = $Runner
 
-onready var printstraynodes = $Layout/Middle/Menu/Buttons/PrintStrayNodes
+onready var printstraynodes = $UI/Middle/Menu/Buttons/PrintStrayNodes
 
 ### SETTINGS
-onready var parameters = $Layout/Middle/Menu/Typing/Parameters
-onready var retvals = $Layout/Middle/Menu/Typing/ReturnValue
-onready var excludevoid = $Layout/Middle/Menu/Typing/ExcludeVoid
-onready var scriptprefixes = $Layout/Middle/Menu/Prefix/Script
-onready var methodprefixes = $Layout/Middle/Menu/Prefix/Method
-onready var default = $Layout/Middle/Menu/DefaultSettings
+onready var parameters = $UI/Middle/Menu/Typing/Parameters
+onready var retvals = $UI/Middle/Menu/Typing/ReturnValue
+onready var excludevoid = $UI/Middle/Menu/Typing/ExcludeVoid
+onready var scriptprefixes = $UI/Middle/Menu/Prefix/Script
+onready var methodprefixes = $UI/Middle/Menu/Prefix/Method
+onready var default = $UI/Middle/Menu/DefaultSettings
 
 func _ready():
 	_default(false)
