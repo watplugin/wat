@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/WAT/UI/ui.gd" type="Script" id=1]
-[ext_resource path="res://addons/WAT/UI/Layout.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/WAT/UI/UI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/WAT/Runner/Runner.tscn" type="PackedScene" id=3]
 
 [node name="WAT" type="PanelContainer"]

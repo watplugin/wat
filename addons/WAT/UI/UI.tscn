@@ -4,7 +4,7 @@
 [ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/UI/output.gd" type="Script" id=3]
 
-[node name="Layout" type="VBoxContainer"]
+[node name="UI" type="VBoxContainer"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
