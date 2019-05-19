@@ -6,8 +6,6 @@ const is_scene: bool = true
 
 func _init(nodes, scene: Node) -> void:
 	self._nodes = nodes
-#	print("instance is PackedScene: %s" % scene is PackedScene)
-	print("instance is Node: %s" % scene is Node)
 	self.instance = scene
 
 func execute(node: String, method: String, count: int = 0, a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null):

@@ -12,17 +12,14 @@ func create(title):
 class Case extends Reference:
 	var title: String
 	var methods: Array = []
-#	var cursor: int = -1
 	
 	func _init(title: String) -> void:
 		self.title = title
 	
 	func add_method(method: String) -> void:
 		methods.append(Method.new(method))
-#		cursor += 1
 	
 	func _add_expectation(success: bool, expected: String, result: String, notes: String) -> void:
-		# Called via signal from expectations.gd
 		methods.back().expectations.append(Expectation.new(success, expected, result, notes))
 		
 	func total() -> int:

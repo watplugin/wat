@@ -1,7 +1,7 @@
 extends Reference
 
-const SCENE = preload("res://addons/WAT/double/scene_data.gd")
-const SCRIPT = preload("res://addons/WAT/double/script_data.gd")
+const SCENE = preload("res://addons/WAT/double/objects/scene_data.gd")
+const SCRIPT = preload("res://addons/WAT/double/objects/script_data.gd")
 const BUILT_INS = preload("res://addons/WAT/constants/type_library.gd")
 const OP = preload("res://addons/WAT/constants/operators.gd")
 ### TO ADD ###

@@ -32,6 +32,7 @@ func connect_buttons():
 	Clear.connect("pressed", Results, "reset")
 	Clear.connect("pressed", Output, "_clear")
 	Runner.connect("output", Output, "_output")
+	Output.connect("finished", Runner, "_finish")
 	
 func connect_settings():
 	parameters.connect("pressed", WATConfig, "_set_parameters", [parameters])

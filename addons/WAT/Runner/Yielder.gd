@@ -5,7 +5,7 @@ var queue: Array = []
 signal resume
 
 func until_signal(time_limit: float, emitter: Object, event: String) -> YieldTimer:
-	output("Yielding for signal: %s from emitter: %s with timeout of %s" % [event, emitter, time_limit])
+	output("Yielding: { signal: %s, emitter: %s, time: %s }" % [event, emitter, time_limit])
 	var yield_timer: YieldTimer = YieldTimer.new(time_limit, emitter, event)
 	queue.append(yield_timer)
 	add_child(yield_timer)
@@ -13,7 +13,7 @@ func until_signal(time_limit: float, emitter: Object, event: String) -> YieldTim
 	return yield_timer
 	
 func until_timeout(time_limit: float) -> YieldTimer:
-	output("Yielding for %s" % time_limit)
+	output("Yielding: { time: %s }" % time_limit)
 	var yield_timer: YieldTimer = YieldTimer.new(time_limit, self, "", true)
 	queue.append(yield_timer)
 	add_child(yield_timer)
@@ -48,14 +48,12 @@ class YieldTimer extends Timer:
 		emitter.connect(event, self, "_on_signal")
 	
 	func _on_timeout():
-		get_parent().output("Yield Timed Out")
 		emit_signal("finished")
 		if not resumed:
 			resumed = true
 			get_parent().resume(self)
 			
 	func _on_signal():
-		get_parent().output("{ Signal: %s } was emitted from { emitter: %s } before time out" % [event, emitter])
 		emit_signal("finished")
 		if not resumed:
 			resumed = true
@@ -63,6 +61,6 @@ class YieldTimer extends Timer:
 
 	func _process(delta):
 		if emitter != null and event != null:
-			get_parent().output("Yielding for { Signal: %s } from { Emitter: %s } for %s" % [event, emitter, time_left])
+			get_parent().output("Yielding: { Signal: %s, emitter: %s, time: %s }" % [event, emitter, time_left])
 		else:
-			get_parent().output("Yielding for %s" % time_left)
+			get_parent().output("Yielding: { time: %s }" % time_left)
