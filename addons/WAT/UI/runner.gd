@@ -14,16 +14,16 @@ var tests: Array = []
 var methods: Array = []
 var test: TEST
 
-func output(msg):
+func output(msg: String) -> void:
 	emit_signal("output", msg)
 
-func _start():
+func _start() -> void:
 	output("Starting TestRunner")
 	clear()
 	tests = _get_tests()
 	_loop()
 	
-func _loop():
+func _loop() -> void:
 	while not tests.empty():
 		start()
 		execute()
@@ -32,7 +32,7 @@ func _loop():
 		end()
 	finish()
 	
-func start():
+func start() -> void:
 	test = tests.pop_front().new()
 	test.case = CaseManager.create(test.title())
 	test.expect.connect("OUTPUT", test.case, "_add_expectation")
@@ -41,7 +41,7 @@ func start():
 	test.start()
 	output("Running TestScript: %s" % test.title())
 	
-func execute():
+func execute() -> void:
 	while not methods.empty():
 		var method: String = methods.pop_front()
 		var clean = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
@@ -53,7 +53,7 @@ func execute():
 			return
 		test.post()
 		
-func end():
+func end() -> void:
 	test.end()
 	remove_child(test)
 	output("Finished Running %s" % test.title())
@@ -62,11 +62,11 @@ func end():
 	test.queue_free()
 	IO.clear_all_temp_directories()
 	
-func finish():
+func finish() -> void:
 	emit_signal("display_results", CaseManager.list)
 	clear()
 	
-func clear():
+func clear() -> void:
 	tests.clear()
 	methods.clear()
 	CaseManager.list.clear()
@@ -97,14 +97,14 @@ func _set_test_methods() -> Array:
 
 func _get_tests() -> Array:
 	var ONLY_SEARCH_CHILDREN: bool = true
-	var tests = []
-	var dirs = _get_subdirs()
+	var tests: Array = []
+	var dirs: Array = _get_subdirs()
 	dirs.push_front("")
 	for d in dirs:
 		var dir: Directory = Directory.new()
 		dir.open("%s%s" % [TEST_DIRECTORY, d])
 		dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
-		var title = dir.get_next()
+		var title: String = dir.get_next()
 		while title != "":
 			if title.ends_with(".gd"):
 				for prefix in Array(WATConfig.script_prefixes().split(",")):
@@ -121,7 +121,7 @@ func _get_subdirs() -> Array:
 	var dir: Directory = Directory.new()
 	dir.open(TEST_DIRECTORY)
 	dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
-	var title = dir.get_next()
+	var title: String = dir.get_next()
 	while title != "":
 		if dir.current_is_dir():
 			results.append(title)
