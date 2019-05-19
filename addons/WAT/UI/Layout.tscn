@@ -1,0 +1,217 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/WAT/UI/log_level.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=2]
+[ext_resource path="res://addons/WAT/UI/output.gd" type="Script" id=3]
+
+[node name="Layout" type="VBoxContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 15
+
+[node name="MainMenu" type="HBoxContainer" parent="."]
+editor/display_folded = true
+margin_right = 1010.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+size_flags_horizontal = 3
+
+[node name="Run -> " type="Button" parent="MainMenu"]
+margin_right = 503.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Run -> (OUT OF ORDER)"
+
+[node name="LineEdit" type="LineEdit" parent="MainMenu"]
+margin_left = 507.0
+margin_right = 1010.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "OUT OF ORDER"
+editable = false
+
+[node name="Middle" type="HBoxContainer" parent="."]
+editor/display_folded = true
+margin_top = 40.0
+margin_right = 1010.0
+margin_bottom = 440.0
+rect_min_size = Vector2( 0, 400 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 15
+
+[node name="Menu" type="VBoxContainer" parent="Middle"]
+margin_right = 122.0
+margin_bottom = 400.0
+rect_clip_content = true
+size_flags_horizontal = 0
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="Buttons" type="VBoxContainer" parent="Middle/Menu"]
+margin_right = 122.0
+margin_bottom = 68.0
+
+[node name="Run" type="Button" parent="Middle/Menu/Buttons"]
+margin_right = 122.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Run All Tests"
+
+[node name="Clear" type="Button" parent="Middle/Menu/Buttons"]
+margin_top = 24.0
+margin_right = 122.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+text = "Clear"
+
+[node name="PrintStrayNodes" type="Button" parent="Middle/Menu/Buttons"]
+margin_top = 48.0
+margin_right = 122.0
+margin_bottom = 68.0
+text = "Print Stray Nodes"
+
+[node name="Typing" type="VBoxContainer" parent="Middle/Menu"]
+editor/display_folded = true
+margin_top = 78.0
+margin_right = 122.0
+margin_bottom = 176.0
+
+[node name="Label" type="Label" parent="Middle/Menu/Typing"]
+margin_right = 122.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "enforce typing"
+align = 1
+uppercase = true
+
+[node name="Parameters" type="CheckBox" parent="Middle/Menu/Typing"]
+margin_top = 18.0
+margin_right = 122.0
+margin_bottom = 42.0
+hint_tooltip = "If ticked: When doubling a script, any typed params e.g \"title: String\" will keep their types instead of being generic params e.g \"title\"in the double script."
+pressed = true
+text = "Parameters"
+
+[node name="ReturnValue" type="CheckBox" parent="Middle/Menu/Typing"]
+margin_top = 46.0
+margin_right = 122.0
+margin_bottom = 70.0
+hint_tooltip = "If ticked: When doubling a script, if a method has a return type e.g  \"-> int:\" will keep their types in the double instead of being removed. "
+pressed = true
+text = "Return Value"
+
+[node name="ExcludeVoid" type="CheckBox" parent="Middle/Menu/Typing"]
+margin_top = 74.0
+margin_right = 122.0
+margin_bottom = 98.0
+hint_tooltip = "This only matters if you have ticked Return Value.
+
+If ticked: Any methods that return void will have their void return value excluded."
+text = "Ignore Void"
+
+[node name="Prefix" type="VBoxContainer" parent="Middle/Menu"]
+editor/display_folded = true
+margin_top = 186.0
+margin_right = 122.0
+margin_bottom = 256.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Middle/Menu/Prefix"]
+margin_right = 122.0
+margin_bottom = 14.0
+text = "Set Prefixes"
+align = 1
+uppercase = true
+
+[node name="Script" type="LineEdit" parent="Middle/Menu/Prefix"]
+margin_top = 18.0
+margin_right = 122.0
+margin_bottom = 42.0
+hint_tooltip = "WAT will run all tests scripts that start with any prefix(es) defined here (default: \"test\")
+
+Note: WAT will ignore spaces and will replace underscores in names. You do not need to add that underscore here.
+
+Enter a comma delimited list to use multiple prefixes (e.g \"test_, unit, third_prefix\")"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "test"
+placeholder_text = "Script(s)"
+
+[node name="Method" type="LineEdit" parent="Middle/Menu/Prefix"]
+margin_top = 46.0
+margin_right = 122.0
+margin_bottom = 70.0
+hint_tooltip = "WAT will run all tests methods that start with any prefix(es) defined here (default: \"test\")
+
+Note: WAT will ignore spaces and will replace underscores in names. You do not need to add that underscore here.
+
+Enter a comma delimited list to use multiple prefixes (e.g \"test_, unit, third_prefix\")
+"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "test, supra"
+placeholder_text = "Method(s)"
+
+[node name="Output" type="VBoxContainer" parent="Middle/Menu"]
+editor/display_folded = true
+visible = false
+margin_top = 242.0
+margin_right = 139.0
+margin_bottom = 308.0
+
+[node name="Label" type="Label" parent="Middle/Menu/Output"]
+margin_right = 139.0
+margin_bottom = 14.0
+text = "Output Log"
+align = 1
+uppercase = true
+
+[node name="PrintToConsole" type="CheckBox" parent="Middle/Menu/Output"]
+margin_top = 18.0
+margin_right = 139.0
+margin_bottom = 42.0
+hint_tooltip = "If set to true, void will be removed as a return value if you've choosen to keep return values enforced. "
+text = "Print to Console"
+
+[node name="LogLevelSelect" type="OptionButton" parent="Middle/Menu/Output"]
+margin_top = 46.0
+margin_right = 139.0
+margin_bottom = 66.0
+script = ExtResource( 1 )
+
+[node name="DefaultSettings" type="Button" parent="Middle/Menu"]
+margin_top = 266.0
+margin_right = 122.0
+margin_bottom = 286.0
+hint_tooltip = "Reset all settings to default. 
+
+WARNING: This will overwrite any historical settings.
+"
+text = "Default Settings"
+
+[node name="Results" type="Tree" parent="Middle"]
+margin_left = 137.0
+margin_right = 1010.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+script = ExtResource( 2 )
+
+[node name="Output" type="TextEdit" parent="."]
+margin_top = 455.0
+margin_right = 1010.0
+margin_bottom = 586.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+highlight_current_line = true
+show_line_numbers = true
+script = ExtResource( 3 )
