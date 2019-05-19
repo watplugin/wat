@@ -18,11 +18,9 @@ func output(msg):
 	emit_signal("output", msg)
 
 func _start():
-	CaseManager.list = []
-	tests = []
 	output("Starting TestRunner")
+	clear()
 	tests = _get_tests()
-	output("%s Test Scripts Collected" % tests.size())
 	_loop()
 	
 func _loop():
@@ -31,6 +29,7 @@ func _loop():
 		execute()
 		if yielding():
 			return
+		end()
 	finish()
 	
 func start():
@@ -65,32 +64,27 @@ func end():
 	
 func finish():
 	emit_signal("display_results", CaseManager.list)
-	CaseManager.list = []
+	clear()
+	
+func clear():
 	tests.clear()
 	methods.clear()
 	CaseManager.list.clear()
-
-### BEGIN YIELDING ###
-func until_signal(emitter: Object, event: String, time_limit: float):
-	output("Yielding for signal: %s from emitter: %s with timeout of %s" % [event, emitter, time_limit])
-	return Yield.until_signal(time_limit, emitter, event)
 	
-func until_timeout(time_limit: float):
-	output("Yielding for %s" % time_limit)
-	return Yield.until_timeout(time_limit)
-
 func resume() -> void:
 	output("Resuming TestScript %s" % test.title())
 	test.post()
 	execute()
-	output("Finished Running %s" % test.title())
 	_loop()
 	
+func until_signal(emitter: Object, event: String, time_limit: float) -> Timer:
+	return Yield.until_signal(time_limit, emitter, event)
+	
+func until_timeout(time_limit: float) -> Timer:
+	return Yield.until_timeout(time_limit)
+
 func yielding() -> bool:
 	return Yield.queue.size() > 0
-### END YIELDING
-
-
 
 func _set_test_methods() -> Array:
 	var results: Array = []
@@ -118,6 +112,7 @@ func _get_tests() -> Array:
 						tests.append(load(TEST_DIRECTORY + d + "/" + title))
 						break
 			title = dir.get_next()
+	output("%s Test Scripts Collected" % tests.size())
 	return tests
 
 func _get_subdirs() -> Array:
