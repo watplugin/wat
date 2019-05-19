@@ -33,6 +33,8 @@ class Case extends Reference:
 		return success
 		
 	func success() -> bool:
+		if total() <= 0:
+			return false
 		return successes() == total()
 			
 
@@ -54,6 +56,8 @@ class Method extends Reference:
 		return success
 		
 	func success() -> bool:
+		if total() <= 0:
+			return false
 		return successes() == total()
 	
 class Expectation extends Reference:
