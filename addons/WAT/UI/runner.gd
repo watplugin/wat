@@ -2,7 +2,7 @@ extends Node
 tool
 
 const TEST = preload("res://addons/WAT/test/test.gd")
-const IO = preload("res://addons/WAT/input_output.gd")
+const IO = preload("res://addons/WAT/utils/input_output.gd")
 onready var Yield = $Yielder
 onready var CaseManager = $CaseManager
 onready var Collect = $Collect

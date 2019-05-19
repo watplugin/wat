@@ -3,7 +3,7 @@ extends Reference
 # Controllers
 const TOKENIZER = preload("res://addons/WAT/double/tokenizer.gd")
 const REWRITER = preload("res://addons/WAT/double/rewriter.gd")
-const IO = preload("res://addons/WAT/input_output.gd")
+const IO = preload("res://addons/WAT/utils/input_output.gd")
 
 # Data Structures
 const SCRIPT_DATA = preload("res://addons/WAT/double/script_data.gd")
