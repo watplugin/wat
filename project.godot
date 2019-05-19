@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "Object",
 "class": "WATConfig",
 "language": "GDScript",
-"path": "res://addons/WAT/config.gd"
+"path": "res://addons/WAT/utils/config.gd"
 }, {
 "base": "Node",
 "class": "WATTest",
