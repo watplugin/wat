@@ -1,13 +1,13 @@
 extends Reference
 
 # Controllers
-const TOKENIZER = preload("res://addons/WAT/double/tokenizer.gd")
-const REWRITER = preload("res://addons/WAT/double/rewriter.gd")
+const TOKENIZER = preload("res://addons/WAT/double/scripts/tokenizer.gd")
+const REWRITER = preload("res://addons/WAT/double/scripts/rewriter.gd")
 const IO = preload("res://addons/WAT/utils/input_output.gd")
 
 # Data Structures
-const SCRIPT_DATA = preload("res://addons/WAT/double/script_data.gd")
-const SCENE_DATA = preload("res://addons/WAT/double/scene_data.gd")
+const SCRIPT_DATA = preload("res://addons/WAT/double/objects/script_data.gd")
+const SCENE_DATA = preload("res://addons/WAT/double/objects/scene_data.gd")
 
 class NodeData extends Reference:
 	var title: String

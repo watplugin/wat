@@ -1,7 +1,7 @@
 extends Reference
 
 const _USERDIR: String = "user://WATemp/"
-const SOURCE = preload("source.gd")
+const SOURCE = preload("res://addons/WAT/double/objects/source.gd")
 
 
 static func start(script) -> SOURCE:

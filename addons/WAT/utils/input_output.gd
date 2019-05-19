@@ -1,7 +1,7 @@
 extends Reference
 
 const TEMP: String = "user://WATemp/"
-const BLANK: Script = preload("res://addons/WAT/double/blank.gd")
+const BLANK: Script = preload("res://addons/WAT/double/objects/blank.gd")
 
 static func load_script(gdscript) -> Script:
 	assert(gdscript is Script or (gdscript is String and gdscript.ends_with(".gd")))
