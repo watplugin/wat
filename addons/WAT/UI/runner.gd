@@ -1,13 +1,11 @@
 extends Node
 tool
 
-const TEST_DIRECTORY: String = "res://tests/" # Use buttons and tool menu items to affect this?
 const TEST = preload("res://addons/WAT/test/test.gd")
 const IO = preload("res://addons/WAT/input_output.gd")
-
 onready var Yield = $Yielder
 onready var CaseManager = $CaseManager
-
+onready var Collect = $Collect
 signal display_results
 signal output
 var tests: Array = []
@@ -20,7 +18,7 @@ func output(msg: String) -> void:
 func _start() -> void:
 	output("Starting TestRunner")
 	clear()
-	tests = _get_tests()
+	tests = Collect.tests()
 	_loop()
 	
 func _loop() -> void:
@@ -37,7 +35,7 @@ func start() -> void:
 	test.case = CaseManager.create(test.title())
 	test.expect.connect("OUTPUT", test.case, "_add_expectation")
 	add_child(test)
-	methods = _set_test_methods()
+	methods = Collect.methods(test)
 	test.start()
 	output("Running TestScript: %s" % test.title())
 	
@@ -85,45 +83,3 @@ func until_timeout(time_limit: float) -> Timer:
 
 func yielding() -> bool:
 	return Yield.queue.size() > 0
-
-func _set_test_methods() -> Array:
-	var results: Array = []
-	for method in test.get_method_list():
-		for prefix in Array(WATConfig.method_prefixes().split(",")):
-			if method.name.begins_with(prefix.dedent() + "_"):
-				results.append(method.name)
-				break
-	return results
-
-func _get_tests() -> Array:
-	var ONLY_SEARCH_CHILDREN: bool = true
-	var tests: Array = []
-	var dirs: Array = _get_subdirs()
-	dirs.push_front("")
-	for d in dirs:
-		var dir: Directory = Directory.new()
-		dir.open("%s%s" % [TEST_DIRECTORY, d])
-		dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
-		var title: String = dir.get_next()
-		while title != "":
-			if title.ends_with(".gd"):
-				for prefix in Array(WATConfig.script_prefixes().split(",")):
-					if title.begins_with(prefix.dedent() + "_"):
-						tests.append(load(TEST_DIRECTORY + d + "/" + title))
-						break
-			title = dir.get_next()
-	output("%s Test Scripts Collected" % tests.size())
-	return tests
-
-func _get_subdirs() -> Array:
-	var results: Array = []
-	var ONLY_SEARCH_CHILDREN: bool = true
-	var dir: Directory = Directory.new()
-	dir.open(TEST_DIRECTORY)
-	dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
-	var title: String = dir.get_next()
-	while title != "":
-		if dir.current_is_dir():
-			results.append(title)
-		title = dir.get_next()
-	return results
