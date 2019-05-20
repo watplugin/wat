@@ -1,6 +1,6 @@
 # WAT
 
-[example](https://www.youtube.com/watch?v=-pzyq5MRNks)
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/-pzyq5MRNks/0.jpg)](http://www.youtube.com/watch?v=-pzyq5MRNks "Video Title")
 
 ## What is WAT?
 
