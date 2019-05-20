@@ -1,6 +1,6 @@
 # WAT
 
-![example](https://www.youtube.com/watch?v=-pzyq5MRNks)
+[example](https://www.youtube.com/watch?v=-pzyq5MRNks)
 
 ## What is WAT?
 
