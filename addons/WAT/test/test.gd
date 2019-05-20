@@ -31,11 +31,9 @@ func _init():
 func _set_properties():
 	expect = EXPECTATIONS.new()
 	watcher = WATCHER.new()
-#	case = CASE.new(title())
 
 func _create_connections():
 	expect.set_meta("watcher", watcher)
-#	expect.connect("OUTPUT", case, "_add_expectation")
 	
 var methods: Array = []
 
