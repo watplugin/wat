@@ -119,16 +119,29 @@ func does_not_have(value, container, expected: String) -> void:
 	var result: String = "%s %s %s" % [value, operator, container]
 	output(success, expected, result)
 	
-func is_type(instance, type, expected: String) -> void:
+func is_class_instance(instance, type: Script, expected: String) -> void:
 	var success: bool = instance is type
 	var operator: String = OP.BLANK if success else OP.NOT
 	var result: String = "%s is %s instance of %s" % [instance, operator, type]
 	output(success, expected, result)
 	
-func is_not_type(instance, type, expected: String) -> void:
+func is_not_class_instance(instance, type: Script, expected: String) -> void:
 	var success: bool = not instance is type
 	var operator: String = OP.NOT if success else ""
 	var result: String = "%s is %s instance of %s" % [instance, operator, type]
+	
+func is_built_in_type(value, type: int, expected: String) -> void:
+	var success: bool = typeof(value) == type
+	var operator: String = OP.EQUAL if success else OP.INEQUAL
+	var result: String = "| %s |  %s  |  %s  |" % [BUILT_INS.to_string(typeof(value)).to_upper(), operator, BUILT_INS.to_string(type).to_upper()]
+	output(success, expected, result)
+	
+func is_not_built_in_type(value, type: int, expected: String) -> void:
+	var success: bool = typeof(value) != type
+	var operator: String = OP.INEQUAL if success else OP.EQUAL
+	var result: String = "|  %s  |   %s   |  %s  |" % [BUILT_INS.to_string(typeof(value)).to_upper(), operator, BUILT_INS.to_string(type).to_upper()]
+	output(success, expected, result)
+	
 	
 func is_null(value, expected: String) -> void:
 	var success: bool = value == null
@@ -240,4 +253,5 @@ func string_does_not_end_with(value, string: String, expected: String) -> void:
 	output(success, expected, result)
 
 func _stringify(variable) -> String:
-	return "| %s | %s |" % [BUILT_INS.to_string(variable).to_upper(), str(variable)]
+	var type = typeof(variable)
+	return "| %s | %s |" % [BUILT_INS.to_string(type).to_upper(), str(variable)]

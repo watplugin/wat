@@ -1,7 +1,7 @@
 extends Reference
 
-static func to_string(property) -> String:
-	match typeof(property):
+static func to_string(property_id: int) -> String:
+	match property_id:
 		TYPE_NIL:
 			return tNIL
 		TYPE_BOOL:

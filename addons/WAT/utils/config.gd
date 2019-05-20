@@ -35,7 +35,7 @@ static func method_prefixes() -> String:
 	return ProjectSettings.get("wat/Methodprefixes")
 
 static func defaults(force: bool = false):
-	print("IGNORE ANY 'Property not found' WARNINGS HERE")
+	print("WAT: IGNORE ANY 'Property not found' WARNINGS HERE")
 	if ProjectSettings.get("wat/Parameters") == null or force:
 		ProjectSettings.set("wat/Parameters", true)
 	if ProjectSettings.get("wat/Returnvalue") == null or force:
@@ -46,4 +46,4 @@ static func defaults(force: bool = false):
 		ProjectSettings.set("wat/Scriptprefixes", "test")
 	if ProjectSettings.get("wat/Methodprefixes") == null or force:
 		ProjectSettings.set("wat/Methodprefixes", "test")
-	print("FINISHED SETTING DEFAULTS OR HISTORICAL VALUES")
+	print("WAT: FINISHED SETTING DEFAULTS OR HISTORICAL VALUES")
