@@ -1,6 +1,6 @@
 # WAT
 
-![example](https://github.com/CodeDarigan/WAT/blob/master/screenshots/main.png)
+![example](https://www.youtube.com/watch?v=-pzyq5MRNks&feature=youtu.be)
 
 ## What is WAT?
 
