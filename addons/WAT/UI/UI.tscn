@@ -213,6 +213,7 @@ margin_bottom = 586.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/member_variable_color = Color( 1, 1, 1, 1 )
+readonly = true
 highlight_current_line = true
 syntax_highlighting = true
 show_line_numbers = true
