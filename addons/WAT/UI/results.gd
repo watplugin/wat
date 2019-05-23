@@ -7,6 +7,25 @@ var successes: int = 0
 var total: int = 0
 var _root: TreeItem
 
+var scripts = []
+var methods = []
+
+func _expand_all(button):
+	# Rushed but very helpful function
+	var fold: bool
+	if button.text == "Expand Results":
+		fold = false
+		button.text = "Collapse Results"
+	else:
+		fold = true
+		button.text = "Expand Results"
+	for s in scripts:
+		s.collapsed = fold
+	for m in methods:
+		m.collapsed = fold
+
+	
+
 func _enter_tree() -> void:
 	reset()
 
@@ -36,6 +55,7 @@ func display(case) -> void:
 	script.set_custom_color(0, SUCCESS if case.success() else FAILED)
 	script.set_custom_color(1, SUCCESS if case.success() else FAILED)
 	script.set_text(1, "%s / %s" % [str(case.successes()), str(case.total())])
+	scripts.append(script)
 	
 	for method in case.methods:
 		var m: TreeItem = create_item(script)
@@ -44,6 +64,7 @@ func display(case) -> void:
 		m.set_custom_color(0, SUCCESS if method.success() else FAILED)
 		m.set_custom_color(1, SUCCESS if method.success() else FAILED)
 		m.set_text(1, "%s / %s" % [str(method.successes()), str(method.total())])
+		methods.append(method)
 		
 		for expectation in method.expectations:
 			var e: TreeItem = create_item(m)

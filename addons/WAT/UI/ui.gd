@@ -18,11 +18,13 @@ onready var methodprefixes = $UI/Middle/Menu/Prefix/Method
 onready var default = $UI/Middle/Menu/DefaultSettings
 onready var RunScript = $UI/MainMenu/RunScript
 onready var ScriptSelect = $UI/MainMenu/ScriptSelect
+onready var ExpandAll = $UI/Middle/Menu/Buttons/ExpandAll
 
 func _ready():
 	RunScript.connect("pressed", Output, "_clear")
 	RunScript.connect("pressed", Results, "reset")
 	RunScript.connect("pressed", Runner, "_run_single", [ScriptSelect])
+	ExpandAll.connect("pressed", Results, "_expand_all", [ExpandAll])
 	_default(false)
 #	update_settings_display()
 	connect_buttons()
