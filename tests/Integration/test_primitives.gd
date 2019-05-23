@@ -4,7 +4,7 @@ extends WATTest
 # All of these tests are standalone expressions so some of what they're doing doesn't look
 # immediatly obvious. In this case, when writing a failing test, we write the message as "x equals x"
 # whereas the expectation is written as x against y. What we're essentially doing here is pretending
-# that Y is a wrong "return value". 
+# that Y is a wrong "return value".
 ### END NOTES ###
 
 signal hello

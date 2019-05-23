@@ -19,6 +19,10 @@ func _run_single(Selector):
 	clear()
 	var selected: int = Selector.selected
 	var path: String = Selector.get_item_text(selected)
+	# make sure it exists
+	if not ResourceLoader.exists(path):
+		OS.alert("Script does not exist. Please reselect and run again")
+		return
 	tests = [load(path)]
 	_loop()
 
