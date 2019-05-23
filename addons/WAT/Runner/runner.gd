@@ -30,6 +30,9 @@ func _start() -> void:
 	output("Starting Test Runner")
 	clear()
 	tests = Collect.tests()
+	if tests.empty():
+		OS.alert("No Scripts To Test!")
+		return
 	_loop()
 	
 func _loop() -> void:
