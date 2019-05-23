@@ -71,5 +71,5 @@ Parameters=true
 Returnvalue=true
 Voidexcluded=true
 Scriptprefixes="test"
-Methodprefixes="test, supra"
+Methodprefixes="test"
 Doublestrategy="N/A"

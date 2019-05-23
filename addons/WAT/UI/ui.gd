@@ -24,7 +24,7 @@ func _ready():
 	RunScript.connect("pressed", Results, "reset")
 	RunScript.connect("pressed", Runner, "_run_single", [ScriptSelect])
 	_default(false)
-	update_settings_display()
+#	update_settings_display()
 	connect_buttons()
 	connect_settings()
 	
@@ -54,6 +54,7 @@ func _default(force: bool):
 	scriptprefixes.text = ""
 	methodprefixes.text = ""
 	WATConfig.defaults(force)
+	update_settings_display()
 	
 func update_settings_display():
 	parameters.pressed = WATConfig.parameters()
@@ -61,3 +62,4 @@ func update_settings_display():
 	excludevoid.pressed = WATConfig.void_excluded()
 	scriptprefixes.text = WATConfig.script_prefixes()
 	methodprefixes.text = WATConfig.method_prefixes()
+	print(WATConfig.script_prefixes())
