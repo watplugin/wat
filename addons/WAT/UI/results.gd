@@ -20,9 +20,11 @@ func _expand_all(button):
 		fold = true
 		button.text = "Expand Results"
 	for s in scripts:
-		s.collapsed = fold
+		if s is TreeItem:
+			s.collapsed = fold
 	for m in methods:
-		m.collapsed = fold
+		if m is TreeItem:
+			m.collapsed = fold
 
 	
 
@@ -35,6 +37,8 @@ func reset() -> void:
 	_root.set_text(0, "Test Root Created")
 	
 func _display_results(cases: Array):
+	scripts = []
+	methods = []
 	successes = 0
 	total = 0
 	
@@ -64,7 +68,7 @@ func display(case) -> void:
 		m.set_custom_color(0, SUCCESS if method.success() else FAILED)
 		m.set_custom_color(1, SUCCESS if method.success() else FAILED)
 		m.set_text(1, "%s / %s" % [str(method.successes()), str(method.total())])
-		methods.append(method)
+		methods.append(m)
 		
 		for expectation in method.expectations:
 			var e: TreeItem = create_item(m)
