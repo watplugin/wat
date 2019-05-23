@@ -9,3 +9,4 @@ func test_calculator_add_works():
 	yield(until_signal(self, "a", 1.0), YIELD)
 	expect.is_true(true, "true is true miss calculator")
 	calc.free()
+	expect.has(4, [1, 2, 3], "4 in [123]")
