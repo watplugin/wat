@@ -9,6 +9,17 @@ func create(test) -> void:
 	self.current = case
 	list.append(case)
 	# No Need to return since case is handled here
+	
+func method_details_to_string() -> Array:
+	var list = []
+	var method = current.methods.back()
+	for expect in method.expectations:
+		list.append("%s:  %s" % ["PASSED" if expect.success else "FAILED", expect.expected.lstrip("Expect:").dedent()])
+	list.append("%s:  %s" % ["PASSED" if method.success() else "FAILED", method.title])
+	return list
+	
+func script_details_to_string() -> String:
+	return "%s:  %s" % ["PASSED" if current.success() else "FAILED", current.title]
 
 class Case extends Reference:
 	var title: String

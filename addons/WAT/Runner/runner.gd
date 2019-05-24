@@ -71,18 +71,11 @@ func execute() -> void:
 	end()
 		
 func log_method():
-	var method = cases.current.methods.back()
-	for expect in method.expectations:
-		var details = expect.expected.lstrip("Expect:").dedent()
-		var msg = "%s:  %s" % ["PASSED" if expect.success else "FAILED", details]
-		output(msg)
-	var msg = "%s:  %s" % ["PASSED" if method.success() else "FAILED", method.title]
-	output(msg)
-	
+	for detail in cases.method_details_to_string():
+		output(detail)
+
 func log_test():
-	var case = cases.current
-	var msg = "%s:  %s" % ["PASSED" if case.success() else "FAILED", case.title]
-	output(msg)
+	output(cases.script_details_to_string())
 		
 func end() -> void:
 	test.end()
