@@ -24,20 +24,22 @@ func script_details_to_string() -> String:
 class Case extends Reference:
 	var title: String
 	var methods: Array = []
+	var _totals: int = 0
 
 	func _init(test) -> void:
 		self.title = test.title()
 		test.expect.connect("OUTPUT", self, "_add_expectation")
 
-
 	func add_method(method: String) -> void:
 		methods.append(Method.new(method))
+		_totals += 1
 
 	func _add_expectation(success: bool, expected: String, result: String, notes: String) -> void:
 		methods.back().expectations.append(Expectation.new(success, expected, result, notes))
+		methods.back()._totals += 1 if success else 0
 
 	func total() -> int:
-		return methods.size()
+		return _totals
 
 	func successes() -> int:
 		var success: int = 0
@@ -47,32 +49,25 @@ class Case extends Reference:
 		return success
 
 	func success() -> bool:
-		if total() <= 0:
-			return false
-		return successes() == total()
-
+		return true if _totals > 0 and _totals == successes() else false
 
 class Method extends Reference:
 	var title: String
 	var expectations: Array = []
+	var _totals: int = 0
+	var _successes: int = 0
 
 	func _init(title) -> void:
 		self.title = title.substr(title.find("_"), title.length()).replace("_", " ").dedent()
 
 	func total() -> int:
-		return expectations.size()
+		return _totals
 
 	func successes() -> int:
-		var success: int = 0
-		for expectation in expectations:
-			if expectation.success:
-				success += 1
-		return success
+		return _successes
 
 	func success() -> bool:
-		if total() <= 0:
-			return false
-		return successes() == total()
+		return true if _totals > 0 and _totals == _successes else false
 
 class Expectation extends Reference:
 	var success: bool
