@@ -50,8 +50,7 @@ func _loop() -> void:
 	
 func start() -> void:
 	test = tests.pop_front().new()
-	test.case = CaseManager.create(test.title())
-	test.expect.connect("OUTPUT", test.case, "_add_expectation")
+	CaseManager.create(test)
 	add_child(test)
 	methods = Collect.methods(test)
 	test.start()
@@ -62,7 +61,7 @@ func execute() -> void:
 		var method: String = methods.pop_front()
 		var clean = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
 		output("Executing Method: %s" % clean)
-		test.case.add_method(method)
+		CaseManager.current.add_method(method)
 		test.pre()
 		test.call(method)
 		if yielding():
@@ -72,7 +71,7 @@ func execute() -> void:
 	end()
 		
 func log_method():
-	var method = test.case.methods.back()
+	var method = CaseManager.current.methods.back()
 	for expect in method.expectations:
 		var details = expect.expected.lstrip("Expect:").dedent()
 		var msg = "%s:  %s" % ["PASSED" if expect.success else "FAILED", details]
@@ -81,7 +80,7 @@ func log_method():
 	output(msg)
 	
 func log_test():
-	var case = test.case
+	var case = CaseManager.current
 	var msg = "%s:  %s" % ["PASSED" if case.success() else "FAILED", case.title]
 	output(msg)
 		

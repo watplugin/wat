@@ -2,19 +2,22 @@ extends Node
 tool
 
 var list: Array = []
+var current: Case
 
-func create(title):
-	var case = Case.new(title)
+func create(test) -> void:
+	var case = Case.new(test)
+	self.current = case
 	list.append(case)
-	return case
-	
-	
+	# No Need to return since case is handled here
+
 class Case extends Reference:
 	var title: String
 	var methods: Array = []
 	
-	func _init(title: String) -> void:
-		self.title = title
+	func _init(test) -> void:
+		self.title = test.title()
+		test.expect.connect("OUTPUT", self, "_add_expectation")
+		
 	
 	func add_method(method: String) -> void:
 		methods.append(Method.new(method))
