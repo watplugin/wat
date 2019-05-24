@@ -1,4 +1,4 @@
-extends Node
+extends Reference
 tool
 
 const TEST_DIRECTORY: String = "res://tests/"

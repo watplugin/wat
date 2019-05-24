@@ -1,4 +1,4 @@
-extends Node
+extends Reference
 tool
 
 var list: Array = []
