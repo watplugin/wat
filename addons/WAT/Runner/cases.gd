@@ -36,7 +36,8 @@ class Case extends Reference:
 
 	func _add_expectation(success: bool, expected: String, result: String, notes: String) -> void:
 		methods.back().expectations.append(Expectation.new(success, expected, result, notes))
-		methods.back()._totals += 1 if success else 0
+		methods.back()._totals += 1
+		methods.back()._successes += 1 if success else 0
 
 	func total() -> int:
 		return _totals
