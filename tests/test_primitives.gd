@@ -1,6 +1,10 @@
 extends WATTest
 
+# Primitives are basic built in types
+# int, float, 
+
 func test_primitives_all_should_pass():
+	expect.is_built_in_type(Color(0, 0, 0, 0), TYPE_OBJECT, "Color(0,0,0,0) is Object")
 	expect.is_true(true, "true is true")
 	expect.is_false(false, "false is false")
 	expect.is_false(bool(0), "0 is falsey")
