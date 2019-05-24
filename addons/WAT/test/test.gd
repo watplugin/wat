@@ -10,8 +10,6 @@ const YIELD: String = "finished"
 
 var expect: EXPECTATIONS
 var watcher: WATCHER
-var case
-
 var doubles: Array = []
 
 func double_scene(scene):
@@ -34,8 +32,6 @@ func _set_properties():
 
 func _create_connections():
 	expect.set_meta("watcher", watcher)
-	
-var methods: Array = []
 
 func start():
 	pass
