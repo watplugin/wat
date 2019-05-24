@@ -3,20 +3,20 @@ tool
 
 const TEST_DIRECTORY: String = "res://tests/"
 
-func methods(test) -> Array:
+static func methods(test) -> Array:
 	var results: Array = []
 	for method in test.get_method_list():
 		if is_valid_method(method.name):
 			results.append(method.name)
 	return results
 	
-func is_valid_method(method: String) -> bool:
+static func is_valid_method(method: String) -> bool:
 	for prefix in Array(WATConfig.method_prefixes().split(",")):
 		if method.begins_with(prefix.dedent() + "_"):
 			return true
 	return false
 	
-func tests() -> Array:
+static func tests() -> Array:
 	var tests: Array = []
 	var dirs: Array = _get_subdirs()
 	dirs.push_front("")
@@ -24,7 +24,7 @@ func tests() -> Array:
 		tests += _testloop(d)
 	return tests
 
-func _get_subdirs() -> Array:
+static func _get_subdirs() -> Array:
 	var results: Array = []
 	var ONLY_SEARCH_CHILDREN: bool = true
 	var dir: Directory = Directory.new()
@@ -37,7 +37,7 @@ func _get_subdirs() -> Array:
 		title = dir.get_next()
 	return results
 	
-func _testloop(d):
+static func _testloop(d):
 	var results: Array = []
 	var ONLY_SEARCH_CHILDREN: bool = true
 	var dir: Directory = Directory.new()
@@ -50,7 +50,7 @@ func _testloop(d):
 		title = dir.get_next()
 	return results
 	
-func valid_title(title: String) -> bool:
+static func valid_title(title: String) -> bool:
 	if not title.ends_with(".gd"):
 		return false
 	for prefix in Array(WATConfig.script_prefixes().split(",")):

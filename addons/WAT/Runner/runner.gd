@@ -3,9 +3,9 @@ tool
 
 const TEST = preload("res://addons/WAT/test/test.gd")
 const IO = preload("res://addons/WAT/utils/input_output.gd")
+const COLLECT = preload("res://addons/WAT/runner/collect.gd")
 onready var Yield = $Yielder
-onready var Cases = load("res://addons/WAT/Runner/Cases.gd").new()
-onready var Collect = $Collect
+var cases = load("res://addons/WAT/Runner/cases.gd").new()
 signal display_results
 signal output
 var tests: Array = []
@@ -29,7 +29,7 @@ func _run_single(Selector):
 func _start() -> void:
 	output("Starting Test Runner")
 	clear()
-	tests = Collect.tests()
+	tests = COLLECT.tests()
 	if tests.empty():
 		OS.alert("No Scripts To Test!")
 		return
@@ -50,9 +50,9 @@ func _loop() -> void:
 	
 func start() -> void:
 	test = tests.pop_front().new()
-	Cases.create(test)
+	cases.create(test)
 	add_child(test)
-	methods = Collect.methods(test)
+	methods = COLLECT.methods(test)
 	test.start()
 	output("Executing: %s" % test.title())
 	
@@ -61,7 +61,7 @@ func execute() -> void:
 		var method: String = methods.pop_front()
 		var clean = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
 		output("Executing Method: %s" % clean)
-		Cases.current.add_method(method)
+		cases.current.add_method(method)
 		test.pre()
 		test.call(method)
 		if yielding():
@@ -71,7 +71,7 @@ func execute() -> void:
 	end()
 		
 func log_method():
-	var method = Cases.current.methods.back()
+	var method = cases.current.methods.back()
 	for expect in method.expectations:
 		var details = expect.expected.lstrip("Expect:").dedent()
 		var msg = "%s:  %s" % ["PASSED" if expect.success else "FAILED", details]
@@ -80,7 +80,7 @@ func log_method():
 	output(msg)
 	
 func log_test():
-	var case = Cases.current
+	var case = cases.current
 	var msg = "%s:  %s" % ["PASSED" if case.success() else "FAILED", case.title]
 	output(msg)
 		
@@ -94,12 +94,12 @@ func end() -> void:
 	IO.clear_all_temp_directories()
 	
 func _finish() -> void:
-	emit_signal("display_results", Cases.list)
+	emit_signal("display_results", cases.list)
 	
 func clear() -> void:
 	tests.clear()
 	methods.clear()
-	Cases.list.clear()
+	cases.list.clear()
 	
 func resume() -> void:
 	test.post()
