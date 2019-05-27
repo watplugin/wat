@@ -12,150 +12,84 @@ const OP = preload("res://addons/WAT/constants/operators.gd")
 # Others for double: WATDoubles (call, call count, called by signal, object emitted signal, called with parameters, signal w parameters)
 
 signal OUTPUT
-
+const _IS_TRUE = preload("../expectations/is_true.gd")
+const _IS_FALSE = preload("../expectations/is_false.gd")
+const _IS_EQUAL = preload("../expectations/is_equal.gd")
+const _IS_NOT_EQUAL = preload("../expectations/is_not_equal.gd")
+const _IS_EQUAL_OR_GREATER_THAN = preload("../expectations/is_equal_or_greater_than.gd")
+const _IS_EQUAL_OR_LESS_THAN = preload("../expectations/is_equal_or_less_than.gd")
+const _IS_GREATER_THAN = preload("../expectations/is_greater_than.gd")
+const _IS_LESS_THAN = preload("../expectations/is_less_than.gd")
+const _IS_IN_RANGE = preload("../expectations/is_in_range.gd")
+const _IS_NOT_IN_RANGE = preload("../expectations/is_not_in_range.gd")
+const _IS_CLASS_INSTANCE = preload("../expectations/is_class_instance.gd")
+const _IS_NOT_CLASS_INSTANCE = preload("../expectations/is_not_class_instance.gd")
+const _IS_BUILT_IN_TYPE = preload("../expectations/is_built_in_type.gd")
+const _IS_NOT_BUILT_IN_TYPE = preload("../expectations/is_not_built_in_type.gd")
+const _HAS = preload("../expectations/has.gd")
+const _DOES_NOT_HAVE = preload("../expectations/does_not_have.gd")
+const _IS_NULL = preload("../expectations/is_null.gd")
+const _IS_NOT_NULL = preload("../expectations/is_not_null.gd")
 
 func output(data) -> void:
 	data.expected = "Expect:    %s" % data.expected
 	emit_signal("OUTPUT", data)
 
-const ISTRUE = preload("../expectations/is_true.gd")
-
 func is_true(condition: bool, expected: String) -> void:
-	output(ISTRUE.new(condition, expected))
-#	output(data.success, data.expected, data.result, data.notes)
-#	output(condition, expected, "True")
-#
-#func is_false(condition: bool, expected: String) -> void:
-#	output(not condition, expected, "False")
-#
-#func hashes_are_equal(a, b, expected: String) -> void:
-#	var hashed_a = hash(a)
-#	var hashed_b = hash(b)
-#	var success: bool = (hashed_a == hashed_b)
-#	var operator: String = OP.EQUAL if success else OP.INEQUAL
-#	var result: String = "%s    %s    %s" % [_stringify(hashed_a), operator, _stringify(hashed_b)]
-#	output(success, expected, result)
-#
-#func is_equal(a, b, expected: String) -> void:
-#	var success: bool = (a == b)
-#	var operator: String = OP.EQUAL if success else OP.INEQUAL
-#	var result: String = "%s    %s    %s" %[_stringify(a), operator, _stringify(b)]
-#	output(success, expected, result)
-#
-#func is_not_equal(a, b, expected: String) -> void:
-#	var success: bool = (a != b)
-#	var operator: String = OP.INEQUAL if success else OP.EQUAL
-#	var result: String = "%s    %s    %s" % [_stringify(a), operator, _stringify(b)]
-#	output((a != b), expected, result)
-#
-#func is_greater_than(a, b, expected: String) -> void:
-#	var success: bool
-#	if a is Dictionary or a is Array:
-#		success = a.size() > b.size()
-#	elif a is String:
-#		success = a.length() > b.length()
-#	else:
-#		success = a > b
-#	var operator: String = OP.GREATER if success else OP.LESS_THAN_OR_EQUAL
-#	var result: String = "%s    %s    %s" % [_stringify(a), operator, _stringify(b)]
-#	output(success, expected, result)
-#
-#func is_less_than(a, b, expected: String) -> void:
-#	var success: bool
-#	if a is Dictionary or a is Array:
-#		success = a.size() < b.size()
-#	elif a is String:
-#		success = a.length() < b.length()
-#	else:
-#		success = a < b
-#	var operator: String = OP.LESSER if success else OP.GREATER_THAN_OR_EQUAL
-#	var result: String = "%s    %s    %s" % [_stringify(a), operator, _stringify(b)]
-#	output(success, expected, result)
-#
-#func is_equal_or_greater_than(a, b, expected: String) -> void:
-#	var success: bool
-#	if a is Dictionary or a is Array:
-#		success = a.size() >= b.size()
-#	elif a is String:
-#		success = a.length() >= b.length()
-#	else:
-#		success = a >= b
-#	var operator: String = OP.GREATER_THAN_OR_EQUAL if success else OP.LESSER
-#	var result: String = "%s    %s    %s" % [_stringify(a), operator, _stringify(b)]
-#	output(success, expected, result)
-#
-#func is_equal_or_less_than(a, b, expected: String) -> void:
-#	var success: bool
-#	if a is Dictionary or a is Array:
-#		success = a.size() <= b.size()
-#	elif a is String:
-#		success = a.length() <= b.length()
-#	else:
-#		success = a <= b
-#	var operator: String = OP.LESSER_THAN_OR_EQUAL if success else OP.GREATER
-#	var result: String = "%s    %s    %s" % [_stringify(a), operator, _stringify(b)]
-#	output(success, expected, result)
-#
-#func is_in_range(value, low, high, expected: String) -> void:
-#	var success: bool = (value > low and value < high)
-#	var operator: String = OP.BLANK if success else OP.NOT
-#	var result: String = "%s is %s in range(%s, %s)" % [value, operator, low, high]
-#	output(success, expected, result)
-#
-#func is_not_in_range(value, low, high, expected: String) -> void:
-#	var success: bool = (value < low or value > high)
-#	var operator: String = OP.NOT if success else OP.BLANK
-#	var result: String = "%s is %s in range(%s, %s)" % [value, operator, low, high]
-#	output(success, expected, result)
-#
-#func has(value, container, expected: String) -> void:
-#	var success: bool = container.has(value)
-#	var operator: String = OP.IN if success else OP.NOT_IN
-#	var result: String = "%s is %s %s" % [value, operator, container]
-#	output(success, expected, result)
-#
-#func does_not_have(value, container, expected: String) -> void:
-#	var success: bool = not container.has(value)
-#	var operator: String = OP.NOT_IN if success else OP.IN
-#	var result: String = "%s %s %s" % [value, operator, container]
-#	output(success, expected, result)
-#
-#func is_class_instance(instance, type: Script, expected: String) -> void:
-#	var success: bool = instance is type
-#	var operator: String = OP.BLANK if success else OP.NOT
-#	var result: String = "%s is %s instance of %s" % [instance, operator, type]
-#	output(success, expected, result)
-#
-#func is_not_class_instance(instance, type: Script, expected: String) -> void:
-#	var success: bool = not instance is type
-#	var operator: String = OP.NOT if success else ""
-#	var result: String = "%s is %s instance of %s" % [instance, operator, type]
-#
-#func is_built_in_type(value, type: int, expected: String) -> void:
-#	var success: bool = typeof(value) == type
-#	var operator: String = OP.EQUAL if success else OP.INEQUAL
-#	var result: String = "| %s |  %s  |  %s  |" % [BUILT_INS.to_string(typeof(value)).to_upper(), operator, BUILT_INS.to_string(type).to_upper()]
-#	output(success, expected, result)
-#
-#func is_not_built_in_type(value, type: int, expected: String) -> void:
-#	var success: bool = typeof(value) != type
-#	var operator: String = OP.INEQUAL if success else OP.EQUAL
-#	var result: String = "|  %s  |   %s   |  %s  |" % [BUILT_INS.to_string(typeof(value)).to_upper(), operator, BUILT_INS.to_string(type).to_upper()]
-#	output(success, expected, result)
-#
-#
-#func is_null(value, expected: String) -> void:
-#	var success: bool = value == null
-#	var operator: String = OP.IS if success else OP.IS_NOT
-#	var result: String = "%s %s null" % [value, operator]
-#	output(success, expected, result)
-#
-#func is_not_null(value, expected: String) -> void:
-#	var success: bool = value != null
-#	var operator: String = OP.IS_NOT if success else OP.IS
-#	var result: String = "%s %s null" % [value, operator]
-#	output(success, expected, result)
-#
+	output(_IS_TRUE.new(condition, expected))
+
+func is_false(condition: bool, expected: String) -> void:
+	output(_IS_FALSE.new())
+
+func is_equal(a, b, expected: String) -> void:
+	output(_IS_EQUAL.new())
+
+func is_not_equal(a, b, expected: String) -> void:
+	output(_IS_NOT_EQUAL.new())
+
+func is_greater_than(a, b, expected: String) -> void:
+	output(_IS_GREATER_THAN.new())
+	
+func is_less_than(a, b, expected: String) -> void:
+	output(_IS_LESS_THAN.new())
+
+func is_equal_or_greater_than(a, b, expected: String) -> void:
+	output(_IS_EQUAL_OR_GREATER_THAN.new())
+
+func is_equal_or_less_than(a, b, expected: String) -> void:
+	output(_IS_EQUAL_OR_LESS_THAN.new())
+
+func is_in_range(value, low, high, expected: String) -> void:
+	output(_IS_IN_RANGE.new())
+
+func is_not_in_range(value, low, high, expected: String) -> void:
+	output(_IS_NOT_IN_RANGE.new())
+
+func has(value, container, expected: String) -> void:
+	output(_HAS.new())
+	
+func does_not_have(value, container, expected: String) -> void:
+	output(_DOES_NOT_HAVE.new())
+	
+func is_class_instance(instance, type, expected: String) -> void:
+	output(_IS_CLASS_INSTANCE.new()) 
+
+func is_not_class_instance(instance, type, expected: String) -> void:
+	output(_IS_NOT_CLASS_INSTANCE.new())
+
+func is_built_in_type(value, type, expected: String) -> void:
+	output(_IS_BUILT_IN_TYPE.new())
+
+func is_not_built_in_type(value, type: int, expected: String) -> void:
+	output(_IS_NOT_BUILT_IN_TYPE.new())
+
+func is_null(value, expected: String) -> void:
+	output(_IS_NULL.new())
+	
+func is_not_null(value, expected: String) -> void:
+	output(_IS_NOT_NULL.new())
+
+##### SLIGHTLY MORE COMPLICATED #####
 #func was_called(double, a: String = "", b: String = "", c: String = "") -> void:
 #	_scene_was_called(double, a, b, c) if double.is_scene else _script_was_called(double, a, b)
 #
