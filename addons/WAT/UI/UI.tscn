@@ -207,8 +207,9 @@ text = "Default Settings"
 margin_left = 137.0
 margin_right = 1010.0
 margin_bottom = 400.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 11
+size_flags_vertical = 11
+custom_constants/draw_relationship_lines = 1
 columns = 2
 script = ExtResource( 3 )
 

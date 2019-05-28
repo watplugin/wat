@@ -30,6 +30,10 @@ func test_all_should_pass():
 	expect.is_not_built_in_type(1.0, TYPE_INT, "1.0 is not type int")
 	expect.is_class_instance(self, WATTest, "self is WATTest instance")
 	expect.is_not_class_instance(self, BaseExpectation, "self is not BaseExpectation")
+	expect.has(3, [1, 2, 3], "[1,2,3] has 3")
+	expect.does_not_have(4, [1, 2, 3], "[1, 2, 3] does not have 4")
+	expect.is_in_range(5, 1, 10, "5 is in range 1-10")
+	expect.is_not_in_range(0, 1, 10, "0 is not in range 1-10")
 
 func test_all_should_fail():
 	expect.is_true(false, "false is true")
@@ -54,6 +58,11 @@ func test_all_should_fail():
 	expect.is_not_built_in_type(1.0, TYPE_REAL, "1.0 is not type float")
 	expect.is_class_instance(self, BaseExpectation, "self is instance of BaseExpectation")
 	expect.is_not_class_instance(self, WATTest, "self is not instance of WATTest")
+	expect.has(4, [1, 2, 3], "[1, 2, 3] has 4")
+	expect.does_not_have(3, [1, 2, 3], "[1,2,3] does not have 3")
+	expect.is_in_range(0, 1, 10, "0 is in range 1-10")
+	expect.is_not_in_range(5, 1, 10, "5 is not in range 1-10")
+
 	
 	
 	

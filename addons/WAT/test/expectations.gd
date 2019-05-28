@@ -61,10 +61,10 @@ func is_equal_or_less_than(a, b, expected: String) -> void:
 	output(_IS_EQUAL_OR_LESS_THAN.new(a, b, expected))
 
 func is_in_range(value, low, high, expected: String) -> void:
-	output(_IS_IN_RANGE.new())
+	output(_IS_IN_RANGE.new(value, low, high, expected))
 
 func is_not_in_range(value, low, high, expected: String) -> void:
-	output(_IS_NOT_IN_RANGE.new())
+	output(_IS_NOT_IN_RANGE.new(value, low, high, expected))
 
 func has(value, container, expected: String) -> void:
 	output(_HAS.new(value, container, expected))

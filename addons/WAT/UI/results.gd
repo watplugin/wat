@@ -26,7 +26,7 @@ func _expand_all(button):
 		if m is TreeItem:
 			m.collapsed = fold
 
-	
+const TEST_INT = preload("res://index.svg")
 
 func _enter_tree() -> void:
 	reset()
@@ -35,7 +35,7 @@ func reset() -> void:
 	clear()
 	_root = create_item()
 	_root.set_text(0, "Test Root Created")
-	
+
 func _display_results(cases: Array):
 	scripts = []
 	methods = []
