@@ -17,6 +17,7 @@ const _IS_FALSE = preload("../expectations/is_false.gd")
 const _IS_EQUAL = preload("../expectations/is_equal.gd")
 const _IS_NOT_EQUAL = preload("../expectations/is_not_equal.gd")
 const _IS_EQUAL_OR_GREATER_THAN = preload("../expectations/is_equal_or_greater_than.gd")
+
 const _IS_EQUAL_OR_LESS_THAN = preload("../expectations/is_equal_or_less_than.gd")
 const _IS_GREATER_THAN = preload("../expectations/is_greater_than.gd")
 const _IS_LESS_THAN = preload("../expectations/is_less_than.gd")
@@ -48,16 +49,16 @@ func is_not_equal(a, b, expected: String) -> void:
 	output(_IS_NOT_EQUAL.new(a, b, expected))
 
 func is_greater_than(a, b, expected: String) -> void:
-	output(_IS_GREATER_THAN.new())
+	output(_IS_GREATER_THAN.new(a, b, expected))
 	
 func is_less_than(a, b, expected: String) -> void:
-	output(_IS_LESS_THAN.new())
+	output(_IS_LESS_THAN.new(a, b, expected))
 
 func is_equal_or_greater_than(a, b, expected: String) -> void:
-	output(_IS_EQUAL_OR_GREATER_THAN.new())
+	output(_IS_EQUAL_OR_GREATER_THAN.new(a, b, expected))
 
 func is_equal_or_less_than(a, b, expected: String) -> void:
-	output(_IS_EQUAL_OR_LESS_THAN.new())
+	output(_IS_EQUAL_OR_LESS_THAN.new(a, b, expected))
 
 func is_in_range(value, low, high, expected: String) -> void:
 	output(_IS_IN_RANGE.new())
@@ -66,28 +67,28 @@ func is_not_in_range(value, low, high, expected: String) -> void:
 	output(_IS_NOT_IN_RANGE.new())
 
 func has(value, container, expected: String) -> void:
-	output(_HAS.new())
+	output(_HAS.new(value, container, expected))
 	
 func does_not_have(value, container, expected: String) -> void:
-	output(_DOES_NOT_HAVE.new())
+	output(_DOES_NOT_HAVE.new(value, container, expected))
 	
 func is_class_instance(instance, type, expected: String) -> void:
-	output(_IS_CLASS_INSTANCE.new()) 
+	output(_IS_CLASS_INSTANCE.new(instance, type, expected)) 
 
 func is_not_class_instance(instance, type, expected: String) -> void:
-	output(_IS_NOT_CLASS_INSTANCE.new())
+	output(_IS_NOT_CLASS_INSTANCE.new(instance, type, expected))
 
 func is_built_in_type(value, type, expected: String) -> void:
-	output(_IS_BUILT_IN_TYPE.new())
+	output(_IS_BUILT_IN_TYPE.new(value, type, expected))
 
 func is_not_built_in_type(value, type: int, expected: String) -> void:
-	output(_IS_NOT_BUILT_IN_TYPE.new())
+	output(_IS_NOT_BUILT_IN_TYPE.new(value, type, expected))
 
 func is_null(value, expected: String) -> void:
-	output(_IS_NULL.new())
+	output(_IS_NULL.new(value, expected))
 	
 func is_not_null(value, expected: String) -> void:
-	output(_IS_NOT_NULL.new())
+	output(_IS_NOT_NULL.new(value, expected))
 
 ##### SLIGHTLY MORE COMPLICATED #####
 #func was_called(double, a: String = "", b: String = "", c: String = "") -> void:

@@ -1,6 +1,6 @@
 extends "base.gd"
 
-func _init(condition: bool, expected: String) -> void:
-	self.success = condition
+func _init(a, expected: String) -> void:
+	self.success = a
 	self.expected = expected
-	self.result = "True is True" if self.success else "False is not True"
+	self.result = "%s == true" % a if self.success else "%s != true" % a

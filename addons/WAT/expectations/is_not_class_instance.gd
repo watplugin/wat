@@ -1,10 +1,6 @@
 extends "base.gd"
 
-#func is_false(condition: bool, expected: String) -> void:
-#	output(not
-
-
-func is_false(condition: bool, expected: String) -> void:
-	self.success = not condition
+func _init(instance, type: Script, expected: String) -> void:
+	self.success = not instance is type
 	self.expected = expected
-	self.result = "False is False" if not condition else "True is not False"
+	self.result = "%s %s %s" % [instance, ("is not" if self.success else "is"), type]

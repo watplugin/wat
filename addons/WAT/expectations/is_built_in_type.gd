@@ -1,10 +1,7 @@
 extends "base.gd"
 
-#func is_false(condition: bool, expected: String) -> void:
-#	output(not
 
-
-func is_false(condition: bool, expected: String) -> void:
-	self.success = not condition
+func _init(value, type: int, expected: String) -> void:
+	self.success = (typeof(value)) == type
 	self.expected = expected
-	self.result = "False is False" if not condition else "True is not False"
+	self.result = "%s %s %s" % [value, ("is builtin type: " if self.success else "is not builtin type: "), type]
