@@ -39,13 +39,13 @@ func is_true(condition: bool, expected: String) -> void:
 	output(_IS_TRUE.new(condition, expected))
 
 func is_false(condition: bool, expected: String) -> void:
-	output(_IS_FALSE.new())
+	output(_IS_FALSE.new(condition, expected))
 
 func is_equal(a, b, expected: String) -> void:
-	output(_IS_EQUAL.new())
+	output(_IS_EQUAL.new(a, b, expected))
 
 func is_not_equal(a, b, expected: String) -> void:
-	output(_IS_NOT_EQUAL.new())
+	output(_IS_NOT_EQUAL.new(a, b, expected))
 
 func is_greater_than(a, b, expected: String) -> void:
 	output(_IS_GREATER_THAN.new())
