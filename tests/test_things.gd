@@ -63,6 +63,11 @@ func test_all_should_pass():
 	
 	expect.signal_was_emitted("a", "a was emitted")
 	expect.signal_was_not_emitted("b", "b was not emitted")
+	expect.was_called_with_arguments(calc, "add", {"a": 2, "b": 2}, "add was called with 2, 2")
+	
+	
+#func was_called_with_arguments(double, method: String, arguments: Dictionary, expected: String) -> void:
+#	output(_CALLED_WITH_ARGUMENTS.new(double, method, arguments, expected))
 
 func test_all_should_fail():
 	expect.is_true(false, "false is true")
@@ -107,6 +112,8 @@ func test_all_should_fail():
 	
 	expect.signal_was_emitted("b", "b was emitted")
 	expect.signal_was_not_emitted("a", "a was not emitted")
+	expect.was_called_with_arguments(calc, "add", {"a": 10, "b": 2}, "add was called with 10, 2")
+	expect.was_called_with_arguments(calc, "subtract", {"a": 2, "b": 2}, "subtract was called with 2, 2")
 
 
 

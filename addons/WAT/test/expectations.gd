@@ -1,9 +1,5 @@
 extends Reference
 
-### TO ADD ###
-# dict k/v are equal
-
-
 signal OUTPUT
 const _IS_TRUE = preload("../expectations/is_true.gd")
 const _IS_FALSE = preload("../expectations/is_false.gd")
@@ -33,7 +29,9 @@ const _SCENE_WAS_CALLED = preload("../expectations/scene_was_called.gd")
 const _SCENE_WAS_NOT_CALLED = preload("../expectations/scene_was_not_called.gd")
 const _SCRIPT_WAS_CALLED = preload("../expectations/script_was_called.gd")
 const _SCRIPT_WAS_NOT_CALLED = preload("../expectations/script_was_not_called.gd")
-#const _WAS_CALLED_WITH_ARGUMENTS = preload("../expectations/was_called_with_arguments.gd")
+const _SIGNAL_WAS_EMITTED = preload("../expectations/signal_was_emitted.gd")
+const _SIGNAL_WAS_NOT_EMITTED = preload("../expectations/signal_was_not_emitted.gd")
+const _CALLED_WITH_ARGUMENTS = preload("../expectations/called_with_arguments.gd")
 
 func output(data) -> void:
 	data.expected = "Expect:    %s" % data.expected
@@ -130,10 +128,7 @@ func _script_was_not_called(double, method: String, expected: String) -> void:
 	output(_SCRIPT_WAS_NOT_CALLED.new(double, method, expected))
 
 func was_called_with_arguments(double, method: String, arguments: Dictionary, expected: String) -> void:
-	pass
-
-const _SIGNAL_WAS_EMITTED = preload("../expectations/signal_was_emitted.gd")
-const _SIGNAL_WAS_NOT_EMITTED = preload("../expectations/signal_was_not_emitted.gd")
+	output(_CALLED_WITH_ARGUMENTS.new(double, method, arguments, expected))
 
 func signal_was_emitted(_signal, expected: String) -> void:
 	output(_SIGNAL_WAS_EMITTED.new(self.get_meta("watcher"), _signal, expected))
