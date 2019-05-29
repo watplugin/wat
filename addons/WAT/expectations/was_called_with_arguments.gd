@@ -1,0 +1,21 @@
+extends "base.gd"
+
+
+func _init(double, method: String, args: Dictionary, expected: String) -> void:
+	self.result = "method: %s was not called with arguments: %s" % [method, arguments]
+	self.expected = expected
+	if double.call_count(method) == 0:
+		self.success = false
+		self.result = "method %s was not called at all" % method
+	else:
+		for call in double.calls(method):
+			if key_value_match(args, call):
+				self.result = "method: %s was called with arguments: %s" % [method, arguments]
+				self.success = true
+
+func key_value_match(a: Dictionary, b: Dictionary) -> bool:
+	for key in a:
+		if a[key] != b[key]:
+			return false
+	return true
+#

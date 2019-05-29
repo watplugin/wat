@@ -5,10 +5,15 @@ extends WATTest
 
 const BaseExpectation: Script = preload("res://addons/WAT/expectations/base.gd")
 const SCENE: PackedScene = preload("res://Examples/Scene/Main.tscn")
+signal a
+signal b
 var calc
 var scene
 
 func start():
+	watch(self, "a")
+	watch(self, "b")
+	emit_signal("a")
 	self.calc = double_script(Calculator)
 	self.calc.instance.add(2, 2)
 	self.scene = double_scene(SCENE)
@@ -55,6 +60,9 @@ func test_all_should_pass():
 	expect.was_not_called(calc, "subtract", "subtract was not called")
 	expect.was_called(scene, "C/D", "wowsers", "wowsers was called from Main/C/D")
 	expect.was_not_called(scene, "C", "blow_up_stuff", "blow_up_stuff was not called from C")
+	
+	expect.signal_was_emitted("a", "a was emitted")
+	expect.signal_was_not_emitted("b", "b was not emitted")
 
 func test_all_should_fail():
 	expect.is_true(false, "false is true")
@@ -95,6 +103,10 @@ func test_all_should_fail():
 	expect.was_not_called(calc, "add", "add was not called")
 	expect.was_not_called(scene, "C/D", "wowsers", "wowsers was not called from Main/C/D")
 	expect.was_called(scene, "C", "blow_up_stuff", "blow_up_stuff was called from C")
+	
+	
+	expect.signal_was_emitted("b", "b was emitted")
+	expect.signal_was_not_emitted("a", "a was not emitted")
 
 
 

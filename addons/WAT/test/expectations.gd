@@ -23,16 +23,17 @@ const _HAS = preload("../expectations/has.gd")
 const _DOES_NOT_HAVE = preload("../expectations/does_not_have.gd")
 const _IS_NULL = preload("../expectations/is_null.gd")
 const _IS_NOT_NULL = preload("../expectations/is_not_null.gd")
-
 const _STRING_BEGINS_WITH = preload("../expectations/string_begins_with.gd")
 const _STRING_CONTAINS = preload("../expectations/string_contains.gd")
 const _STRING_ENDS_WITH = preload("../expectations/string_ends_with.gd")
-
 const _STRING_DOES_NOT_BEGIN_WITH = preload("../expectations/string_does_not_begin_with.gd")
 const _STRING_DOES_NOT_END_WITH = preload("../expectations/string_does_not_end_with.gd")
 const _STRING_DOES_NOT_CONTAIN = preload("../expectations/string_does_not_contain.gd")
-
-
+const _SCENE_WAS_CALLED = preload("../expectations/scene_was_called.gd")
+const _SCENE_WAS_NOT_CALLED = preload("../expectations/scene_was_not_called.gd")
+const _SCRIPT_WAS_CALLED = preload("../expectations/script_was_called.gd")
+const _SCRIPT_WAS_NOT_CALLED = preload("../expectations/script_was_not_called.gd")
+#const _WAS_CALLED_WITH_ARGUMENTS = preload("../expectations/was_called_with_arguments.gd")
 
 func output(data) -> void:
 	data.expected = "Expect:    %s" % data.expected
@@ -110,13 +111,6 @@ func string_ends_with(value, string: String, expected: String) -> void:
 func string_does_not_end_with(value, string: String, expected: String) -> void:
 	output(_STRING_DOES_NOT_END_WITH.new(value, string, expected))
 
-##### SLIGHTLY MORE COMPLICATED #####
-
-const _SCENE_WAS_CALLED = preload("../expectations/scene_was_called.gd")
-const _SCENE_WAS_NOT_CALLED = preload("../expectations/scene_was_not_called.gd")
-const _SCRIPT_WAS_CALLED = preload("../expectations/script_was_called.gd")
-const _SCRIPT_WAS_NOT_CALLED = preload("../expectations/script_was_not_called.gd")
-
 func was_called(double, a: String = "", b: String = "", c: String = "") -> void:
 	_scene_was_called(double, a, b, c) if double.is_scene else _script_was_called(double, a, b)
 
@@ -134,47 +128,15 @@ func _scene_was_not_called(double, nodepath: String, method: String, expected: S
 #
 func _script_was_not_called(double, method: String, expected: String) -> void:
 	output(_SCRIPT_WAS_NOT_CALLED.new(double, method, expected))
-#
-#func was_called_with_arguments(double, method: String, arguments: Dictionary, expected: String) -> void:
-#	var success: bool
-#	if double.call_count(method) == 0:
-#		var result: String = "method was not called at all"
-#		output(success, expected, result)
-#		return
-#	else:
-#		for call in double.calls(method):
-#			if key_value_match(arguments, call):
-#				var result: String = "method: %s was called with arguments: %s" % [method, arguments]
-#				output(true, expected, result)
-#				return
-#	var result: String = "method: %s was not called with arguments %s" % [method, arguments]
-#	output(success, expected, result)
-#
-#func key_value_match(a: Dictionary, b: Dictionary) -> bool:
-#	for key in a:
-#		if a[key] != b[key]:
-#			return false
-#	return true
-#
-#const _SIGNAL_WAS_EMITTED = 0
-#const _SIGNAL_WAS_NOT_EMITTED = 0
 
-#func signal_was_emitted(_signal, expected: String) -> void:
-#	var obj = self.get_meta("watcher").watching[_signal]
-#	pass
-##	var success: bool = self.get_meta("watcher").watching[_signal].emit_count > 0
-##	var operator: String = OP.BLANK if success else OP.NOT
-##	var result: String = "Signal: %s was %s emitted" % [_signal, operator]
-##	output(success, expected, result)
-##
-#func signal_was_not_emitted(_signal: String, expected: String) -> void:
-#	pass
-#	var success: bool = self.get_meta("watcher").watching[_signal].emit_count == 0
-#	var operator: String = OP.NOT if success else OP.BLANK
-#	var result: String = "Signal: %s was %s emitted" % [_signal, operator]
-#	output(success, expected, result)
-#
+func was_called_with_arguments(double, method: String, arguments: Dictionary, expected: String) -> void:
+	pass
 
-#func _stringify(variable) -> String:
-#	var type = typeof(variable)
-#	return "| %s | %s |" % [BUILT_INS.to_string(type).to_upper(), str(variable)]
+const _SIGNAL_WAS_EMITTED = preload("../expectations/signal_was_emitted.gd")
+const _SIGNAL_WAS_NOT_EMITTED = preload("../expectations/signal_was_not_emitted.gd")
+
+func signal_was_emitted(_signal, expected: String) -> void:
+	output(_SIGNAL_WAS_EMITTED.new(self.get_meta("watcher"), _signal, expected))
+
+func signal_was_not_emitted(_signal: String, expected: String) -> void:
+	output(_SIGNAL_WAS_NOT_EMITTED.new(self.get_meta("watcher"), _signal, expected))
