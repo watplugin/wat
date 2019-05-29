@@ -118,33 +118,29 @@ func string_does_not_end_with(value, string: String, expected: String) -> void:
 	output(_STRING_DOES_NOT_END_WITH.new(value, string, expected))
 
 ##### SLIGHTLY MORE COMPLICATED #####
-#func was_called(double, a: String = "", b: String = "", c: String = "") -> void:
-#	_scene_was_called(double, a, b, c) if double.is_scene else _script_was_called(double, a, b)
+
+const _SCENE_WAS_CALLED = preload("../expectations/scene_was_called.gd")
+const _SCENE_WAS_NOT_CALLED = preload("../expectations/scene_was_not_called.gd")
+const _SCRIPT_WAS_CALLED = preload("../expectations/script_was_called.gd")
+const _SCRIPT_WAS_NOT_CALLED = preload("../expectations/script_was_not_called.gd")
+
+func was_called(double, a: String = "", b: String = "", c: String = "") -> void:
+	_scene_was_called(double, a, b, c) if double.is_scene else _script_was_called(double, a, b)
+
+func _scene_was_called(double: SCENE, nodepath: String, method: String, expected: String) -> void:
+	output(_SCENE_WAS_CALLED.new(double, nodepath, method, expected))
+
+func _script_was_called(double: SCRIPT, method: String, expected: String) -> void:
+	output(_SCRIPT_WAS_CALLED.new(double, method, expected))
+
+func was_not_called(double, a: String = "", b: String = "", c: String = "") -> void:
+	_scene_was_not_called(double, a, b, c) if double.is_scene else _script_was_not_called(double, a, b)
 #
-#func _scene_was_called(double: SCENE, nodepath: String, method: String, expected: String) -> void:
-#	var success = double.call_count(nodepath, method) > 0
-#	var operator = OP.BLANK if success else OP.NOT
-#	var result: String = "method: %s was %s called from node: %s" % [method, operator, nodepath]
-#	output(success, expected, result)
+func _scene_was_not_called(double: SCENE, nodepath: String, method: String, expected: String) -> void:
+	output(_SCENE_WAS_NOT_CALLED.new(double, nodepath, method, expected))
 #
-#func _script_was_called(double: SCRIPT, method: String, expected: String) -> void:
-#	var success = double.call_count(method) > 0
-#	var result: String = "method: %s was %s called" % [method, (OP.BLANK if success else OP.NOT)]
-#	output(success, expected, result)
-#
-#func was_not_called(double, a: String = "", b: String = "", c: String = "") -> void:
-#	_scene_was_not_called(double, a, b, c) if double.is_scene else _script_was_not_called(double, a, b)
-#
-#func _scene_was_not_called(double: SCENE, nodepath: String, method: String, expected: String) -> void:
-#	var success = double.call_count(nodepath, method) == 0
-#	var operator = OP.NOT if success else OP.BLANK
-#	var result: String = "method: %s was %s called from node: %s" % [method, operator, nodepath]
-#	output(success, expected, result)
-#
-#func _script_was_not_called(double: SCRIPT, method: String, expected: String) -> void:
-#	var success = double.call_count(method) == 0
-#	var result: String = "method %s was %s called" % [method, (OP.NOT if success else OP.BLANK)]
-#	output(success, expected, result)
+func _script_was_not_called(double: SCRIPT, method: String, expected: String) -> void:
+	output(_SCRIPT_WAS_NOT_CALLED.new(double, method, expected))
 #
 #func was_called_with_arguments(double, method: String, arguments: Dictionary, expected: String) -> void:
 #	var success: bool
@@ -167,54 +163,25 @@ func string_does_not_end_with(value, string: String, expected: String) -> void:
 #			return false
 #	return true
 #
+#const _SIGNAL_WAS_EMITTED = 0
+#const _SIGNAL_WAS_NOT_EMITTED = 0
+
 #func signal_was_emitted(_signal, expected: String) -> void:
-#	var success: bool = self.get_meta("watcher").watching[_signal].emit_count > 0
-#	var operator: String = OP.BLANK if success else OP.NOT
-#	var result: String = "Signal: %s was %s emitted" % [_signal, operator]
-#	output(success, expected, result)
-#
+#	var obj = self.get_meta("watcher").watching[_signal]
+#	pass
+##	var success: bool = self.get_meta("watcher").watching[_signal].emit_count > 0
+##	var operator: String = OP.BLANK if success else OP.NOT
+##	var result: String = "Signal: %s was %s emitted" % [_signal, operator]
+##	output(success, expected, result)
+##
 #func signal_was_not_emitted(_signal: String, expected: String) -> void:
+#	pass
 #	var success: bool = self.get_meta("watcher").watching[_signal].emit_count == 0
 #	var operator: String = OP.NOT if success else OP.BLANK
 #	var result: String = "Signal: %s was %s emitted" % [_signal, operator]
 #	output(success, expected, result)
 #
-#func string_contains(value, string: String, expected: String) -> void:
-#	var success: bool = value in string
-#	var operator: String = OP.BLANK if success else OP.NOT
-#	var result: String = "%s is %s in %s" % [value, operator, string]
-#	output(success, expected, result)
-#
-#func string_does_not_contain(value, string: String, expected: String) -> void:
-#	var success: bool = not value in string
-#	var operator: String = OP.NOT if success else OP.BLANK
-#	var result: String = "%s is %s in %s" % [value, operator, string]
-#	output(success, expected, result)
-#
-#func string_begins_with(value, string: String, expected: String) -> void:
-#	var success: bool = string.begins_with(value)
-#	var operator: String = OP.BLANK if success else OP.NOT
-#	var result: String = "%s does %s begins with %s" % [string, operator, value]
-#	output(success, expected, result)
-#
-#func string_does_not_begin_with(value, string: String, expected: String) -> void:
-#	var success: bool = not string.begins_with(value)
-#	var operator: String = OP.NOT if success else OP.BLANK
-#	var result: String = "%s does %s begins with %s" % [string, operator, value]
-#	output(success, expected, result)
-#
-#func string_ends_with(value, string: String, expected: String) -> void:
-#	var success: bool = string.ends_with(value)
-#	var operator: String = OP.BLANK if success else OP.NOT
-#	var result: String = "%s does %s end with %s" % [string, operator, value]
-#	output(success, expected, result)
-#
-#func string_does_not_end_with(value, string: String, expected: String) -> void:
-#	var success: bool = not string.ends_with(value)
-#	var operator: String = OP.NOT if success else OP.BLANK
-#	var result: String = "%s does %s ends with %s" % [string, operator, value]
-#	output(success, expected, result)
-#
+
 #func _stringify(variable) -> String:
 #	var type = typeof(variable)
 #	return "| %s | %s |" % [BUILT_INS.to_string(type).to_upper(), str(variable)]

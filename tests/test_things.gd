@@ -4,6 +4,11 @@ extends WATTest
 # is/is not in range
 
 const BaseExpectation: Script = preload("res://addons/WAT/expectations/base.gd")
+var calc
+
+func pre():
+	self.calc = double_script(Calculator)
+	self.calc.instance.add(2, 2)
 
 func test_all_should_pass():
 	expect.is_true(true, "true is true")
@@ -40,6 +45,10 @@ func test_all_should_pass():
 	expect.string_does_not_begin_with("World", "Hello World", "Hello World does not begin with World")
 	expect.string_does_not_contain("FooBar", "Hello World", "Hello World does not contain FooBar")
 	expect.string_does_not_end_with("Hello", "Hello World", "Hello World does not end with Hello")
+	
+	# Some Double Specific Things
+	expect.was_called(calc, "add", "add was called")
+	expect.was_not_called(calc, "subtract", "subtract was not called")
 
 func test_all_should_fail():
 	expect.is_true(false, "false is true")
@@ -74,6 +83,10 @@ func test_all_should_fail():
 	expect.string_does_not_begin_with("Hello", "Hello World", "Hello World does not begin with Hello")
 	expect.string_does_not_contain("ello", "Hello World", "Hello World does not contain ello")
 	expect.string_does_not_end_with("World", "Hello World", "Hello World does not end with World")
+	
+	# Some Double Specific things
+	expect.was_called(calc, "subtract", "subtract was called")
+	expect.was_not_called(calc, "add", "add was not called")
 
 
 
