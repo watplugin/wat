@@ -4,11 +4,15 @@ extends WATTest
 # is/is not in range
 
 const BaseExpectation: Script = preload("res://addons/WAT/expectations/base.gd")
+const SCENE: PackedScene = preload("res://Examples/Scene/Main.tscn")
 var calc
+var scene
 
-func pre():
+func start():
 	self.calc = double_script(Calculator)
 	self.calc.instance.add(2, 2)
+	self.scene = double_scene(SCENE)
+	self.scene.instance.get_node("C/D").wowsers()
 
 func test_all_should_pass():
 	expect.is_true(true, "true is true")
@@ -49,6 +53,8 @@ func test_all_should_pass():
 	# Some Double Specific Things
 	expect.was_called(calc, "add", "add was called")
 	expect.was_not_called(calc, "subtract", "subtract was not called")
+	expect.was_called(scene, "C/D", "wowsers", "wowsers was called from Main/C/D")
+	expect.was_not_called(scene, "C", "blow_up_stuff", "blow_up_stuff was not called from C")
 
 func test_all_should_fail():
 	expect.is_true(false, "false is true")
@@ -87,6 +93,8 @@ func test_all_should_fail():
 	# Some Double Specific things
 	expect.was_called(calc, "subtract", "subtract was called")
 	expect.was_not_called(calc, "add", "add was not called")
+	expect.was_not_called(scene, "C/D", "wowsers", "wowsers was not called from Main/C/D")
+	expect.was_called(scene, "C", "blow_up_stuff", "blow_up_stuff was called from C")
 
 
 

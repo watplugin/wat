@@ -1,15 +1,8 @@
 extends Reference
 
-const SCENE = preload("res://addons/WAT/double/objects/scene_data.gd")
-const SCRIPT = preload("res://addons/WAT/double/objects/script_data.gd")
-const BUILT_INS = preload("res://addons/WAT/constants/type_library.gd")
-const OP = preload("res://addons/WAT/constants/operators.gd")
 ### TO ADD ###
-# dict keys are equal
-# dicts values are equal
 # dict k/v are equal
-# hash is equal
-# Others for double: WATDoubles (call, call count, called by signal, object emitted signal, called with parameters, signal w parameters)
+
 
 signal OUTPUT
 const _IS_TRUE = preload("../expectations/is_true.gd")
@@ -127,19 +120,19 @@ const _SCRIPT_WAS_NOT_CALLED = preload("../expectations/script_was_not_called.gd
 func was_called(double, a: String = "", b: String = "", c: String = "") -> void:
 	_scene_was_called(double, a, b, c) if double.is_scene else _script_was_called(double, a, b)
 
-func _scene_was_called(double: SCENE, nodepath: String, method: String, expected: String) -> void:
+func _scene_was_called(double, nodepath: String, method: String, expected: String) -> void:
 	output(_SCENE_WAS_CALLED.new(double, nodepath, method, expected))
 
-func _script_was_called(double: SCRIPT, method: String, expected: String) -> void:
+func _script_was_called(double, method: String, expected: String) -> void:
 	output(_SCRIPT_WAS_CALLED.new(double, method, expected))
 
 func was_not_called(double, a: String = "", b: String = "", c: String = "") -> void:
 	_scene_was_not_called(double, a, b, c) if double.is_scene else _script_was_not_called(double, a, b)
 #
-func _scene_was_not_called(double: SCENE, nodepath: String, method: String, expected: String) -> void:
+func _scene_was_not_called(double, nodepath: String, method: String, expected: String) -> void:
 	output(_SCENE_WAS_NOT_CALLED.new(double, nodepath, method, expected))
 #
-func _script_was_not_called(double: SCRIPT, method: String, expected: String) -> void:
+func _script_was_not_called(double, method: String, expected: String) -> void:
 	output(_SCRIPT_WAS_NOT_CALLED.new(double, method, expected))
 #
 #func was_called_with_arguments(double, method: String, arguments: Dictionary, expected: String) -> void:
