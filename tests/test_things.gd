@@ -34,6 +34,12 @@ func test_all_should_pass():
 	expect.does_not_have(4, [1, 2, 3], "[1, 2, 3] does not have 4")
 	expect.is_in_range(5, 1, 10, "5 is in range 1-10")
 	expect.is_not_in_range(0, 1, 10, "0 is not in range 1-10")
+	expect.string_begins_with("Hell", "Hello World", "Hello World begins with Hell")
+	expect.string_contains("ello", "Hello World", "Hello World contains ello")
+	expect.string_ends_with("World", "Hello World", "Hello World ends with World")
+	expect.string_does_not_begin_with("World", "Hello World", "Hello World does not begin with World")
+	expect.string_does_not_contain("FooBar", "Hello World", "Hello World does not contain FooBar")
+	expect.string_does_not_end_with("Hello", "Hello World", "Hello World does not end with Hello")
 
 func test_all_should_fail():
 	expect.is_true(false, "false is true")
@@ -62,11 +68,15 @@ func test_all_should_fail():
 	expect.does_not_have(3, [1, 2, 3], "[1,2,3] does not have 3")
 	expect.is_in_range(0, 1, 10, "0 is in range 1-10")
 	expect.is_not_in_range(5, 1, 10, "5 is not in range 1-10")
+	expect.string_begins_with("World", "Hello World", "Hello World begins with World")
+	expect.string_contains("FooBar", "Hello World", "Hello World contains FooBar")
+	expect.string_ends_with("Hello", "Hello World", "Hello World ends with Hello")
+	expect.string_does_not_begin_with("Hello", "Hello World", "Hello World does not begin with Hello")
+	expect.string_does_not_contain("ello", "Hello World", "Hello World does not contain ello")
+	expect.string_does_not_end_with("World", "Hello World", "Hello World does not end with World")
 
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+

@@ -17,7 +17,6 @@ const _IS_FALSE = preload("../expectations/is_false.gd")
 const _IS_EQUAL = preload("../expectations/is_equal.gd")
 const _IS_NOT_EQUAL = preload("../expectations/is_not_equal.gd")
 const _IS_EQUAL_OR_GREATER_THAN = preload("../expectations/is_equal_or_greater_than.gd")
-
 const _IS_EQUAL_OR_LESS_THAN = preload("../expectations/is_equal_or_less_than.gd")
 const _IS_GREATER_THAN = preload("../expectations/is_greater_than.gd")
 const _IS_LESS_THAN = preload("../expectations/is_less_than.gd")
@@ -31,6 +30,16 @@ const _HAS = preload("../expectations/has.gd")
 const _DOES_NOT_HAVE = preload("../expectations/does_not_have.gd")
 const _IS_NULL = preload("../expectations/is_null.gd")
 const _IS_NOT_NULL = preload("../expectations/is_not_null.gd")
+
+const _STRING_BEGINS_WITH = preload("../expectations/string_begins_with.gd")
+const _STRING_CONTAINS = preload("../expectations/string_contains.gd")
+const _STRING_ENDS_WITH = preload("../expectations/string_ends_with.gd")
+
+const _STRING_DOES_NOT_BEGIN_WITH = preload("../expectations/string_does_not_begin_with.gd")
+const _STRING_DOES_NOT_END_WITH = preload("../expectations/string_does_not_end_with.gd")
+const _STRING_DOES_NOT_CONTAIN = preload("../expectations/string_does_not_contain.gd")
+
+
 
 func output(data) -> void:
 	data.expected = "Expect:    %s" % data.expected
@@ -89,6 +98,24 @@ func is_null(value, expected: String) -> void:
 	
 func is_not_null(value, expected: String) -> void:
 	output(_IS_NOT_NULL.new(value, expected))
+	
+func string_contains(value, string: String, expected: String) -> void:
+	output(_STRING_CONTAINS.new(value, string, expected))
+	
+func string_does_not_contain(value, string: String, expected: String) -> void:
+	output(_STRING_DOES_NOT_CONTAIN.new(value, string, expected))
+	
+func string_begins_with(value, string: String, expected: String) -> void:
+	output(_STRING_BEGINS_WITH.new(value, string, expected))
+	
+func string_does_not_begin_with(value, string: String, expected: String) -> void:
+	output(_STRING_DOES_NOT_BEGIN_WITH.new(value, string, expected))
+	
+func string_ends_with(value, string: String, expected: String) -> void:
+	output(_STRING_ENDS_WITH.new(value, string, expected))
+	
+func string_does_not_end_with(value, string: String, expected: String) -> void:
+	output(_STRING_DOES_NOT_END_WITH.new(value, string, expected))
 
 ##### SLIGHTLY MORE COMPLICATED #####
 #func was_called(double, a: String = "", b: String = "", c: String = "") -> void:
