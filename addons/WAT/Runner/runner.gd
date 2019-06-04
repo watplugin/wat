@@ -12,6 +12,11 @@ var tests: Array = []
 var methods: Array = []
 var test: TEST
 
+signal NEXT
+
+func _ready():
+	self.connect("NEXT", self, "execute")
+
 func output(msg: String) -> void:
 	emit_signal("output", msg)
 
@@ -24,7 +29,7 @@ func _run_single(Selector):
 		OS.alert("Script does not exist. Please reselect and run again")
 		return
 	tests = [load(path)]
-	_loop()
+	execute()
 
 func _start() -> void:
 	output("Starting Test Runner")
@@ -33,30 +38,21 @@ func _start() -> void:
 	if tests.empty():
 		OS.alert("No Scripts To Test!")
 		return
-	_loop()
+	execute()
 	
-func _loop() -> void:
-	while not tests.empty():
-		start()
-		execute()
-		if yielding():
-			return
-		# When resuming, if our tests are empty, we go straight
-		# to finish, skipping the end() call
-		# end()
-	output("Ending Test Runner")
-	# output calls finish after text changes
-	
-	
-func start() -> void:
-	test = tests.pop_front().new()
-	cases.create(test)
-	add_child(test)
-	methods = COLLECT.methods(test)
-	test.start()
-	output("Executing: %s" % test.title())
-	
-func execute() -> void:
+func execute(new_test: bool = true) -> void:
+	if tests.empty():
+		output("Ending Test Runner")
+		return
+		
+	if new_test:
+		test = tests.pop_front().new()
+		cases.create(test)
+		add_child(test)
+		methods = COLLECT.methods(test)
+		test.start()
+		output("Executing: %s" % test.title())
+		
 	while not methods.empty():
 		var method: String = methods.pop_front()
 		var clean = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
@@ -68,7 +64,12 @@ func execute() -> void:
 			return
 		test.post()
 		log_method()
-	end()
+	test.end()
+	log_test()
+	remove_child(test)
+	test.queue_free()
+	IO.clear_all_temp_directories()
+	emit_signal("NEXT")
 		
 func log_method():
 	for detail in cases.method_details_to_string():
@@ -76,13 +77,6 @@ func log_method():
 
 func log_test():
 	output(cases.script_details_to_string())
-		
-func end() -> void:
-	test.end()
-	log_test()
-	remove_child(test)
-	test.queue_free()
-	IO.clear_all_temp_directories()
 	
 func _finish() -> void:
 	emit_signal("display_results", cases.list)
@@ -95,8 +89,7 @@ func clear() -> void:
 func resume() -> void:
 	test.post()
 	log_method()
-	execute()
-	_loop()
+	execute(false)
 	
 func until_signal(emitter: Object, event: String, time_limit: float) -> Timer:
 	return Yield.until_signal(time_limit, emitter, event)
