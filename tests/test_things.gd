@@ -65,8 +65,8 @@ func test_all_should_pass():
 	expect.was_called(scene, "C/D", "wowsers", "wowsers was called from Main/C/D")
 	expect.was_not_called(scene, "C", "blow_up_stuff", "blow_up_stuff was not called from C")
 	
-	expect.signal_was_emitted("a", "a was emitted")
-	expect.signal_was_not_emitted("b", "b was not emitted")
+	expect.signal_was_emitted(self, "a", "a was emitted")
+	expect.signal_was_not_emitted(self, "b", "b was not emitted")
 	expect.was_called_with_arguments(calc, "add", {"a": 2, "b": 2}, "add was called with 2, 2")
 	
 	
@@ -114,8 +114,8 @@ func test_all_should_fail():
 	expect.was_called(scene, "C", "blow_up_stuff", "blow_up_stuff was called from C")
 	
 	
-	expect.signal_was_emitted("b", "b was emitted")
-	expect.signal_was_not_emitted("a", "a was not emitted")
+	expect.signal_was_emitted(self, "b", "b was emitted")
+	expect.signal_was_not_emitted(self, "a", "a was not emitted")
 	expect.was_called_with_arguments(calc, "add", {"a": 10, "b": 2}, "add was called with 10, 2")
 	expect.was_called_with_arguments(calc, "subtract", {"a": 2, "b": 2}, "subtract was called with 2, 2")
 	

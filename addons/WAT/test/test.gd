@@ -13,14 +13,10 @@ var watcher: WATCHER
 
 func _init():
 	_set_properties()
-	_create_connections()
 	
 func _set_properties():
 	expect = EXPECTATIONS.new()
 	watcher = WATCHER.new()
-
-func _create_connections():
-	expect.set_meta("watcher", watcher)
 
 func start():
 	pass

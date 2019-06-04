@@ -130,8 +130,8 @@ func _script_was_not_called(double, method: String, expected: String) -> void:
 func was_called_with_arguments(double, method: String, arguments: Dictionary, expected: String) -> void:
 	output(_CALLED_WITH_ARGUMENTS.new(double, method, arguments, expected))
 
-func signal_was_emitted(_signal, expected: String) -> void:
-	output(_SIGNAL_WAS_EMITTED.new(self.get_meta("watcher"), _signal, expected))
+func signal_was_emitted(emitter, _signal, expected: String) -> void:
+	output(_SIGNAL_WAS_EMITTED.new(emitter, _signal, expected))
 
-func signal_was_not_emitted(_signal: String, expected: String) -> void:
-	output(_SIGNAL_WAS_NOT_EMITTED.new(self.get_meta("watcher"), _signal, expected))
+func signal_was_not_emitted(emitter, _signal: String, expected: String) -> void:
+	output(_SIGNAL_WAS_NOT_EMITTED.new(emitter, _signal, expected))
