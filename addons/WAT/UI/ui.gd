@@ -64,4 +64,3 @@ func update_settings_display():
 	excludevoid.pressed = WATConfig.void_excluded()
 	scriptprefixes.text = WATConfig.script_prefixes()
 	methodprefixes.text = WATConfig.method_prefixes()
-	print(WATConfig.script_prefixes())

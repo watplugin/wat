@@ -64,6 +64,7 @@ func execute(new_test: bool = true) -> void:
 			return
 		test.post()
 		log_method()
+		
 	test.end()
 	log_test()
 	remove_child(test)
