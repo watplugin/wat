@@ -81,8 +81,6 @@ func end() -> void:
 	test.end()
 	log_test()
 	remove_child(test)
-	for double in test.doubles:
-		double.instance.free()
 	test.queue_free()
 	IO.clear_all_temp_directories()
 	

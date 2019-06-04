@@ -10,17 +10,6 @@ const YIELD: String = "finished"
 
 var expect: EXPECTATIONS
 var watcher: WATCHER
-var doubles: Array = []
-
-func double_scene(scene):
-	var double = DOUBLE.scene(scene)
-	doubles.append(double)
-	return double
-	
-func double_script(script):
-	var double = DOUBLE.script(script)
-	doubles.append(double)
-	return double
 
 func _init():
 	_set_properties()

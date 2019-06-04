@@ -14,10 +14,14 @@ func start():
 	watch(self, "a")
 	watch(self, "b")
 	emit_signal("a")
-	self.calc = double_script(Calculator)
+	self.calc = DOUBLE.script(Calculator)
 	self.calc.instance.add(2, 2)
-	self.scene = double_scene(SCENE)
+	self.scene = DOUBLE.scene(SCENE)
 	self.scene.instance.get_node("C/D").wowsers()
+	
+func end():
+	calc.instance.free()
+	scene.instance.free()
 
 func test_all_should_pass():
 	expect.is_true(true, "true is true")
@@ -114,6 +118,8 @@ func test_all_should_fail():
 	expect.signal_was_not_emitted("a", "a was not emitted")
 	expect.was_called_with_arguments(calc, "add", {"a": 10, "b": 2}, "add was called with 10, 2")
 	expect.was_called_with_arguments(calc, "subtract", {"a": 2, "b": 2}, "subtract was called with 2, 2")
+	
+
 
 
 
