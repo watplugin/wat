@@ -2,6 +2,17 @@ extends OptionButton
 tool
 
 const TEST_DIRECTORY = "res://tests/"
+signal RUN_SINGLE
+
+func _run_test():
+	if selected == -1:
+		OS.alert("Please Select a Script")
+		return
+	elif not ResourceLoader.exists(get_item_text(selected)):
+		OS.alert("Script does not exist. Please reselect and run again")
+		return
+	else:
+		emit_signal("RUN_SINGLE", [load(get_item_text(selected))])
 
 func _init():
 	self.connect("pressed", self, "_collect")

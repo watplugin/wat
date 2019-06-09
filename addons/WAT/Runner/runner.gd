@@ -15,26 +15,13 @@ var test: TEST
 func output(msg: String) -> void:
 	emit_signal("output", msg)
 
-func _run_single(Selector):
-	clear()
-	var selected: int = Selector.selected
-	var path: String = Selector.get_item_text(selected)
-	# make sure it exists
-	if not ResourceLoader.exists(path):
-		OS.alert("Script does not exist. Please reselect and run again")
-		return
-	tests = [load(path)]
-	_start()
-
-func _run_all() -> void:
-	# Rename to _run
-	# Merge with run_single at some point
-	output("Starting Test Runner")
-	clear()
-	tests = COLLECT.tests()
-	if tests.empty():
+func _run(new_tests: Array = COLLECT.tests()) -> void:
+	if new_tests.empty():
 		OS.alert("No Scripts To Test!")
 		return
+	clear()
+	output("Starting Test Runner")
+	self.tests = new_tests
 	_start()
 	
 func _start() -> void:
@@ -58,13 +45,22 @@ func _pre():
 		output("Executing Method: %s" % clean)
 		cases.current.add_method(method)
 		test.pre()
-		test.call(method)
-		if yielding():
-			return
-		test.post()
-		for detail in cases.method_details_to_string():
-			output(detail)
-	_end()
+		_execute_test_method(method)
+		
+func _execute_test_method(method: String):
+	test.call(method)
+	if yielding():
+		return
+	_post()
+		
+func _post():
+	test.post()
+	for detail in cases.method_details_to_string():
+		output(detail)
+	if methods.empty():
+		_end()
+	else:
+		_pre()
 
 func _end():
 	test.end()
@@ -72,6 +68,8 @@ func _end():
 	remove_child(test)
 	test.queue_free()
 	IO.clear_all_temp_directories()
+	# Using call deferred on _start so
+	# we can start the next test on a fresh script
 	call_deferred("_start")
 		
 
@@ -88,10 +86,7 @@ func clear() -> void:
 	cases.list.clear()
 	
 func resume() -> void:
-	test.post()
-	for detail in cases.method_details_to_string():
-		output(detail)
-	_pre()
+	_post()
 	
 func until_signal(emitter: Object, event: String, time_limit: float) -> Timer:
 	return Yield.until_signal(time_limit, emitter, event)

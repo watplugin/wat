@@ -21,9 +21,8 @@ onready var ScriptSelect = $UI/MainMenu/ScriptSelect
 onready var ExpandAll = $UI/Middle/Menu/Buttons/ExpandAll
 
 func _ready():
-	RunScript.connect("pressed", Output, "_clear")
-	RunScript.connect("pressed", Results, "reset")
-	RunScript.connect("pressed", Runner, "_run_single", [ScriptSelect])
+	RunScript.connect("pressed", ScriptSelect, "_run_test")
+	ScriptSelect.connect("RUN_SINGLE", Runner, "_run")
 	ExpandAll.connect("pressed", Results, "_expand_all", [ExpandAll])
 	_default(false)
 #	update_settings_display()
@@ -33,7 +32,7 @@ func _ready():
 func connect_buttons():
 	printstraynodes.connect("pressed", self, "print_stray_nodes")
 	Run.connect("pressed", Results, "reset") # be wary of this
-	Run.connect("pressed", Runner, "_run_all")
+	Run.connect("pressed", Runner, "_run")
 	Run.connect("pressed", Output, "_clear")
 	Runner.connect("display_results", Results, "_display_results") # May need to change display here?
 	Clear.connect("pressed", Results, "reset")
