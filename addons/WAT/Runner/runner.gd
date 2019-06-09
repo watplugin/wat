@@ -47,6 +47,7 @@ func _start(new_test: bool = true) -> void:
 		output("Ending Test Runner")
 		return
 		
+	
 	if new_test:
 		test = tests.pop_front().new()
 		cases.create(test)
@@ -54,7 +55,10 @@ func _start(new_test: bool = true) -> void:
 		methods = COLLECT.methods(test)
 		test.start()
 		output("Executing: %s" % test.title())
+	_pre()
 		
+		
+func _pre():
 	while not methods.empty():
 		var method: String = methods.pop_front()
 		var clean = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
