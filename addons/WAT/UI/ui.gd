@@ -24,6 +24,7 @@ func _ready():
 	RunScript.connect("pressed", ScriptSelect, "_run_test")
 	ScriptSelect.connect("RUN_SINGLE", Runner, "_run")
 	ExpandAll.connect("pressed", Results, "_expand_all", [ExpandAll])
+	Runner.Yield.connect("resume", Runner, "_post")
 	_default(false)
 #	update_settings_display()
 	connect_buttons()

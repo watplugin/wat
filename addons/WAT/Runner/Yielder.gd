@@ -26,7 +26,8 @@ func resume(yield_timer: YieldTimer):
 	yield_timer.queue_free()
 	if queue.size() > 0:
 		return
-	get_parent().resume()
+	emit_signal("resume")
+#	get_parent().resume()
 	
 func output(msg):
 	get_parent().output(msg)
