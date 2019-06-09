@@ -31,7 +31,9 @@ func _run_single(Selector):
 	tests = [load(path)]
 	execute()
 
-func _start() -> void:
+func _run_all() -> void:
+	# Rename to _run
+	# Merge with run_single at some point
 	output("Starting Test Runner")
 	clear()
 	tests = COLLECT.tests()

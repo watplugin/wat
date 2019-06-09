@@ -33,7 +33,7 @@ func _ready():
 func connect_buttons():
 	printstraynodes.connect("pressed", self, "print_stray_nodes")
 	Run.connect("pressed", Results, "reset") # be wary of this
-	Run.connect("pressed", Runner, "_start")
+	Run.connect("pressed", Runner, "_run_all")
 	Run.connect("pressed", Output, "_clear")
 	Runner.connect("display_results", Results, "_display_results") # May need to change display here?
 	Clear.connect("pressed", Results, "reset")
