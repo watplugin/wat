@@ -15,7 +15,7 @@ var test: TEST
 signal NEXT
 
 func _ready():
-	self.connect("NEXT", self, "execute")
+	self.connect("NEXT", self, "_start")
 
 func output(msg: String) -> void:
 	emit_signal("output", msg)
@@ -29,7 +29,7 @@ func _run_single(Selector):
 		OS.alert("Script does not exist. Please reselect and run again")
 		return
 	tests = [load(path)]
-	execute()
+	_start()
 
 func _run_all() -> void:
 	# Rename to _run
@@ -40,9 +40,9 @@ func _run_all() -> void:
 	if tests.empty():
 		OS.alert("No Scripts To Test!")
 		return
-	execute()
+	_start()
 	
-func execute(new_test: bool = true) -> void:
+func _start(new_test: bool = true) -> void:
 	if tests.empty():
 		output("Ending Test Runner")
 		return
@@ -92,7 +92,7 @@ func clear() -> void:
 func resume() -> void:
 	test.post()
 	log_method()
-	execute(false)
+	_start(false)
 	
 func until_signal(emitter: Object, event: String, time_limit: float) -> Timer:
 	return Yield.until_signal(time_limit, emitter, event)
