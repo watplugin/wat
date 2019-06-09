@@ -12,11 +12,6 @@ var tests: Array = []
 var methods: Array = []
 var test: TEST
 
-signal NEXT
-
-func _ready():
-	self.connect("NEXT", self, "_start")
-
 func output(msg: String) -> void:
 	emit_signal("output", msg)
 
@@ -42,19 +37,17 @@ func _run_all() -> void:
 		return
 	_start()
 	
-func _start(new_test: bool = true) -> void:
+func _start() -> void:
 	if tests.empty():
 		output("Ending Test Runner")
 		return
-		
 	
-	if new_test:
-		test = tests.pop_front().new()
-		cases.create(test)
-		add_child(test)
-		methods = COLLECT.methods(test)
-		test.start()
-		output("Executing: %s" % test.title())
+	test = tests.pop_front().new()
+	cases.create(test)
+	add_child(test)
+	methods = COLLECT.methods(test)
+	test.start()
+	output("Executing: %s" % test.title())
 	_pre()
 		
 		
@@ -69,25 +62,26 @@ func _pre():
 		if yielding():
 			return
 		test.post()
-		log_method()
-		
+		for detail in cases.method_details_to_string():
+			output(detail)
+	_end()
+
+func _end():
 	test.end()
-	log_test()
+	output(cases.script_details_to_string())
 	remove_child(test)
 	test.queue_free()
 	IO.clear_all_temp_directories()
-	emit_signal("NEXT")
+	call_deferred("_start")
 		
-func log_method():
-	for detail in cases.method_details_to_string():
-		output(detail)
 
-func log_test():
-	output(cases.script_details_to_string())
-	
 func _finish() -> void:
+	# This gets called from output because
+	# we want to make sure our output log
+	# is finished, before displaying results
+	print(get_stack())
 	emit_signal("display_results", cases.list)
-	
+#
 func clear() -> void:
 	tests.clear()
 	methods.clear()
@@ -95,8 +89,9 @@ func clear() -> void:
 	
 func resume() -> void:
 	test.post()
-	log_method()
-	_start(false)
+	for detail in cases.method_details_to_string():
+		output(detail)
+	_pre()
 	
 func until_signal(emitter: Object, event: String, time_limit: float) -> Timer:
 	return Yield.until_signal(time_limit, emitter, event)
