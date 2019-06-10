@@ -3,7 +3,7 @@ class_name WATTest
 
 
 # We can't namespace stuff in a single script unfortunately
-const EXPECTATIONS = preload("res://addons/WAT/test/expectations.gd")
+const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
 const DOUBLE = preload("res://addons/WAT/double/scripts/doubler.gd")
 const WATCHER = preload("res://addons/WAT/test/watcher.gd")
 const YIELD: String = "finished"
