@@ -54,7 +54,7 @@ class YieldTimer extends Timer:
 			resumed = true
 			get_parent().resume(self)
 			
-	func _on_signal():
+	func _on_signal(a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null, j = null, k = null):
 		emit_signal("finished")
 		if not resumed:
 			resumed = true
