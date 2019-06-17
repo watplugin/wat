@@ -52,10 +52,9 @@ static func clear_all_temp_directories():
 	var path: String = "user://WATemp/"
 	var d = Directory.new()
 	if not d.dir_exists(path):
-		print("dir: %s does not exist" % path)
+		return
 	var result = d.open(path)
 	if result != OK:
-		print("Error %s when trying to open dir: %s" % [str(result), path])
 		return
 		
 	d.list_dir_begin(true)
