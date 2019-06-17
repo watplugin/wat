@@ -8,6 +8,7 @@ var cases = load("res://addons/WAT/Runner/cases.gd").new()
 onready var Yield = $Yielder
 signal display_results
 signal output
+signal CLEARED
 var tests: Array = []
 var methods: Array = []
 var test: TEST
@@ -73,6 +74,7 @@ func _finish() -> void:
 	emit_signal("display_results", cases.list)
 
 func clear() -> void:
+	emit_signal("CLEARED")
 	tests.clear()
 	methods.clear()
 	cases.list.clear()
