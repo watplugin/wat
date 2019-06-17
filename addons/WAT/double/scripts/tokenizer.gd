@@ -20,13 +20,15 @@ static func _tokenize(source: String):
 	var tokens: Array = _extract_tokens(source)
 	var duplicates: Array = []
 	var results: Array = []
-	for token in tokens:
+	for data in tokens:
+		var token = data.signature
 		var identifier = _extract_name(token)
 		if identifier in duplicates:
 			# Skip if already parsed
 			continue
 		duplicates.append(identifier)
-		results.append(_recreate_method(identifier, _extract_parameters(token), _extract_return_type(token)))
+		results.append(_recreate_method(identifier, _extract_parameters(token), _extract_return_type(token), data.returns_value))
+	print(results)
 	return results
 	
 static func _extract_tokens(source: String) -> Array:
@@ -34,8 +36,19 @@ static func _extract_tokens(source: String) -> Array:
 	var tokens: Array = []
 	for line in lines:
 		if line.begins_with("func"):
-			tokens.append(line)
+			var data = {"signature": line, "returns_value": returns_value(lines, lines.find(line))}
+			tokens.append(data)
 	return tokens
+	
+static func returns_value(lines: Array, index: int) -> bool:
+	while index < lines.size()-1:
+		index += 1
+		var line = lines[index]
+		if line.dedent().begins_with("return"):
+			return true
+		elif line.dedent().begins_with("func"):
+			return false
+	return false
 		
 static func _extract_name(method: String) -> String:
 	return method.replace("(", " ").split(" ")[1]
@@ -66,6 +79,6 @@ static func _extract_return_type(method: String) -> Dictionary:
 		result.typed = true
 	return result
 	
-static func _recreate_method(identifier: String, parameters: Array, retval: Dictionary) -> Dictionary:
+static func _recreate_method(identifier: String, parameters: Array, retval: Dictionary, returns_value: bool) -> Dictionary:
 	# We could create the methods here?
-	return {"name": identifier, "parameters": parameters, "retval": retval}
+	return {"name": identifier, "parameters": parameters, "retval": retval, "returns_value": returns_value}
