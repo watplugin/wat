@@ -32,12 +32,16 @@ func call_count(title: String) -> int:
 func get_retval(title: String, arguments: Dictionary):
 	return _methods[title].get_retval(arguments)
 	
+func is_doubled(title: String) -> bool:
+	return _methods[title].is_doubled
+	
 class Method extends Reference:
 	var title: String
 	var calls: Array = []
 	var stubs: Array = []
 	var call_count: int = 0
 	var default_retval
+	var is_doubled: bool = true
 	
 	func _init(title: String) -> void:
 		self.title = title

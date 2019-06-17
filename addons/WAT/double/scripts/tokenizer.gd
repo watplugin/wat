@@ -28,7 +28,6 @@ static func _tokenize(source: String):
 			continue
 		duplicates.append(identifier)
 		results.append(_recreate_method(identifier, _extract_parameters(token), _extract_return_type(token), data.returns_value))
-	print(results)
 	return results
 	
 static func _extract_tokens(source: String) -> Array:
