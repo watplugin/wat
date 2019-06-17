@@ -104,3 +104,9 @@ func signal_was_emitted(emitter, _signal, expected: String) -> void:
 
 func signal_was_not_emitted(emitter, _signal: String, expected: String) -> void:
 	output(load("res://addons/WAT/expectations/signal_was_not_emitted.gd").new(emitter, _signal, expected))
+	
+func file_exists(path: String, expected: String) -> void:
+	output(load("res://addons/WAT/expectations/file_exists.gd").new(path, expected))
+	
+func file_does_not_exist(path: String, expected: String) -> void:
+	output(load("res://addons/WAT/expectations/file_does_not_exist.gd").new(path, expected))
