@@ -41,6 +41,9 @@ func get_retval(title: String, arguments: Dictionary):
 func is_doubled(title: String) -> bool:
 	return _methods[title].is_doubled
 	
+func add_call(title: String, args: Dictionary):
+	_methods[title].add_call(args)
+	
 class Method extends Reference:
 	var title: String
 	var calls: Array = []
@@ -61,13 +64,12 @@ class Method extends Reference:
 		stubs.append({"arguments": arguments, "retval": retval})
 		
 	func get_retval(arguments: Dictionary):
-		_add_call(arguments)
 		for stub in stubs:
 			if _key_value_match(arguments, stub.arguments):
 				return stub.retval
 		return default_retval
 
-	func _add_call(arguments: Dictionary) -> void:
+	func add_call(arguments: Dictionary) -> void:
 		self.call_count += 1
 		calls.append(arguments)
 		
