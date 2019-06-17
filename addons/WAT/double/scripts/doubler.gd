@@ -1,5 +1,10 @@
 extends Reference
 
+enum {
+	FULL
+	PARTIAL
+}
+
 # Controllers
 const TOKENIZER = preload("res://addons/WAT/double/scripts/tokenizer.gd")
 const REWRITER = preload("res://addons/WAT/double/scripts/rewriter.gd")
@@ -23,30 +28,30 @@ class NodeData extends Reference:
 		self.script = script
 		self.methods = methods
 
-static func script(gdscript) -> SCRIPT_DATA:
+static func script(gdscript, strategy = FULL) -> SCRIPT_DATA:
 	var script: Script = IO.load_script(gdscript)
 	var tokens = TOKENIZER.start(script)
 	var rewrite: String = REWRITER.start(tokens)
 	var save_path = IO.save_script(tokens.title, rewrite)
-	return SCRIPT_DATA.new(tokens.methods, IO.load_doubled_script(save_path))
+	return SCRIPT_DATA.new(tokens.methods, IO.load_doubled_script(save_path), strategy)
 
-static func scene(tscn) -> SCENE_DATA:
+static func scene(tscn, strategy = FULL) -> SCENE_DATA:
 	var copy: Node = IO.load_scene_instance(tscn)
 	var outline: Array = double(copy)
 	copy.free()
 	var tree: Node = double_tree(outline.duplicate())
 	IO.save_scene(tree, tree.name)
-	var nodes: Dictionary = create_scene_data(tree, outline)
+	var nodes: Dictionary = create_scene_data(tree, outline, strategy)
 	return SCENE_DATA.new(nodes, tree)
 	
-static func create_scene_data(instance: Node, outline: Array) -> Dictionary:
+static func create_scene_data(instance: Node, outline: Array, strategy: int) -> Dictionary:
 	var nodes: Dictionary = {}
 	for data in outline:
 		if data.script != null:
 			var path: String = str(data.path)
 			var node = instance.get_node(path)
 			var methods = data.methods
-			nodes[path] = SCRIPT_DATA.new(methods, node)
+			nodes[path] = SCRIPT_DATA.new(methods, node, strategy)
 	return nodes
 	
 static func double(root: Node):

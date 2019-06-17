@@ -6,11 +6,17 @@ var instance: Object
 const is_scene: bool = false
 signal DOUBLE_EXECUTE_METHOD
 
-func _init(methods: Array, instance) -> void:
+enum {
+	FULL
+	PARTIAL
+}
+
+func _init(methods: Array, instance, strategy) -> void:
 	self.instance = instance
 	self.instance.set_meta(DOUBLE, self)
 	for method in methods:
 		_add_method(method.name)
+		_methods[method.name].is_doubled = true if strategy == FULL else false
 
 func execute(method: String, count: int = 0, a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null):
 	var args: Array = [a, b, c, d, e,f, g, h, i]
@@ -47,9 +53,11 @@ class Method extends Reference:
 		self.title = title
 	
 	func default(value):
+		is_doubled = true
 		default_retval = value
 		
 	func stub(arguments: Dictionary, retval) -> void:
+		is_doubled = true
 		stubs.append({"arguments": arguments, "retval": retval})
 		
 	func get_retval(arguments: Dictionary):

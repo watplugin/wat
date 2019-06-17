@@ -28,8 +28,7 @@ static func _return_value(retval: Dictionary) -> String:
 	else:
 		return " -> %s" % retval.type
 		
-# if self.get_meta("double").is_doubled("add"):
-#	return .add(a, b) / .add(a, b)
+# force a spy in here
 
 static func _body(title, parameters, is_void: bool, returns_value: bool) -> String:
 	var p_list: Array = []
