@@ -1,6 +1,26 @@
 extends Reference
 tool
 
+class Template:
+	var title: String
+	var parameters: String
+	var return_type: String
+	var kwargs: String
+	var return_value: String
+	var content = \
+"""func %s(%s)%s:
+	var kwargs = %s
+	self.get_meta('double').add_call('%s', kwargs)
+	if not self.get_meta('double').is_doubled('%s'):
+		%s.%s(%s)
+	else:
+		return self.get_meta('double').get_retval('%s', kwargs)
+""" setget ,_get_content
+
+	func _get_content() -> String:
+		return content % [self.title, self.parameters, self.return_type, self.kwargs, self.title, self.title, self.return_value, self.title, self.parameters, self.title]
+	
+
 static func start(source: Object) -> String:
 	var rewrite: String
 	rewrite += "%s" % source.extend
@@ -8,10 +28,21 @@ static func start(source: Object) -> String:
 		rewrite += _rewrite_method(method)
 	return rewrite
 	
-static func _rewrite_method(method: Dictionary) -> String:
-	var retval_is_void: bool = method.retval.typed and method.retval.type == "void"
-	var new_method: String = "func %s(%s)%s:\n\t%s" % [method.name, _parameters(method.parameters), _return_value(method.retval), _body(method.name, method.parameters, retval_is_void, method.returns_value)]
-	return new_method
+static func _rewrite_method(method):
+	var temp = Template.new()
+	temp.title = method.name
+	temp.parameters = _parameters(method.parameters)
+	temp.return_type = _return_type(method.retval)
+	temp.kwargs = _kwargs(method.parameters)
+	temp.return_value = "return " if method.returns_value else ""
+	return temp.content
+
+static func _kwargs(parameters: Array) -> String:
+	var args: Dictionary = {}
+	for p in parameters:
+		args["'%s'" % p.name] = p.name
+	var kwargs = str(args)
+	return kwargs
 	
 static func _parameters(parameters: Array) -> String:
 	var result: String = ""
@@ -20,26 +51,9 @@ static func _parameters(parameters: Array) -> String:
 	result = result.rstrip(",")
 	return result
 	
-static func _return_value(retval: Dictionary) -> String:
+static func _return_type(retval: Dictionary) -> String:
 	if not WATConfig.return_value() or not retval.typed or (retval.type == "void" and WATConfig.void_excluded()):
 		# If we don't use retvals or if retval isn't type or retval is an excluded void type
 		return ""
 	else:
 		return " -> %s" % retval.type
-		
-# force a spy in here
-
-static func _body(title, parameters, is_void: bool, returns_value: bool) -> String:
-	var p_list: Array = []
-	for p in parameters:
-		p_list.append(p.name)
-	var double_check: String = "\n\tif not self.get_meta('double').is_doubled('%s'):\n\t\t%s.%s%s\n\telse:" % [title, "return " if returns_value else "", title, str(p_list).replace("[", "(").replace("]", ")")]
-	var arguments: String = ""
-	for param in parameters:
-		arguments += '"%s": %s, ' % [param.name, param.name]
-	var args = ("var arguments = {%s}" % arguments).replace(", }", "}")
-	# ADD ABILITY TO DO A SUPER CALL HERE IF PARTIAL ENABLED
-	var retexpr: String = "" if is_void and not WATConfig.void_excluded() else "\n\t\treturn retval"
-	var retval: String = '\n\t\tvar retval = self.get_meta("double").get_retval("%s", arguments)%s\n\n' % [title, retexpr]
-	var spy: String = "\n\tself.get_meta('double').add_call('%s', %s)" % [title, args.replace("var arguments = ", "")] 
-	return args + spy + double_check + retval
