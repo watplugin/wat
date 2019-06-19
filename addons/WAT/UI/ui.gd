@@ -29,7 +29,7 @@ func _ready():
 #	update_settings_display()
 	connect_buttons()
 	connect_settings()
-	
+
 func connect_buttons():
 	printstraynodes.connect("pressed", self, "print_stray_nodes")
 	Run.connect("pressed", Runner, "_run")
@@ -40,7 +40,7 @@ func connect_buttons():
 	Clear.connect("pressed", Output, "_clear")
 	Runner.connect("output", Output, "_output")
 	Output.connect("finished", Runner, "_finish")
-	
+
 func connect_settings():
 	parameters.connect("pressed", WATConfig, "_set_parameters", [parameters])
 	retvals.connect("pressed", WATConfig, "_set_return_value", [retvals])
@@ -48,7 +48,7 @@ func connect_settings():
 	scriptprefixes.connect("text_changed", WATConfig, "_set_script_prefixes")
 	methodprefixes.connect("text_changed", WATConfig, "_set_method_prefixes")
 	default.connect("pressed", self, "_default", [true])
-	
+
 func _default(force: bool):
 	parameters.pressed = true
 	retvals.pressed = true
@@ -57,7 +57,7 @@ func _default(force: bool):
 	methodprefixes.text = ""
 	WATConfig.defaults(force)
 	update_settings_display()
-	
+
 func update_settings_display():
 	parameters.pressed = WATConfig.parameters()
 	retvals.pressed = WATConfig.return_value()

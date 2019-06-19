@@ -56,7 +56,7 @@ func test_expectation_methods_pass_when_passed_correct_values():
 	expect.is_true(METHOD.STRING_DOES_NOT_BEGIN_WITH.new("World", "Hello World", "").success, "string_does_not_begin_with_passes when passed: String 'World', String 'Hello World'")
 	expect.is_true(METHOD.STRING_DOES_NOT_CONTAIN.new("FooBar", "Hello World", "").success, "string_does_not_contain passes when passed: String 'FooBar', String 'Hello World'")
 	expect.is_true(METHOD.STRING_DOES_NOT_END_WITH.new("Hello", "Hello World", "").success, "string_does_not_end_with passes when passed: String 'Hello', String 'Hello World'")
-	expect.is_true(METHOD.FILE_EXISTS.new("res://tests/BootStrap/expectations.gd", "").success, "file_exists passes when passed: self (res://tests/BootStrap/expectations.gd")
+	expect.is_true(METHOD.FILE_EXISTS.new("res://tests/BootStrap/test_expectations.gd", "").success, "file_exists passes when passed: self (res://tests/BootStrap/test_expectations.gd")
 	expect.is_true(METHOD.FILE_DOES_NOT_EXIST.new("res://tests/bad_tests.gd", "").success, "file_does_not_exists passes when passed: 'res://tests/bad_tests.gd'")
 
 #	# Some Double Specific Things
@@ -105,7 +105,7 @@ func test_expectation_methods_fail_when_passed_incorrect_values():
 	expect.is_false(METHOD.HAS.new(4, [1, 2, 3], "").success, "has fails when passed: int 4, Array [1, 2, 3]")
 	expect.is_false(METHOD.DOES_NOT_HAVE.new(3, [1, 2, 3], "").success, "does_not_have fails when passed: int 3, Array [1, 2, 3]")
 	expect.is_false(METHOD.IS_IN_RANGE.new(0, 1, 10, "").success, "is_in_range fails when passed: int 0, int low 1, int high 10")
-	expect.is_false(METHOD.IS_NOT_IN_RANGE.new(5, 1, 10, "").success, "is_not_in_range fails when passed: int 5, int low 1, int high 10")	
+	expect.is_false(METHOD.IS_NOT_IN_RANGE.new(5, 1, 10, "").success, "is_not_in_range fails when passed: int 5, int low 1, int high 10")
 	expect.is_false(METHOD.STRING_BEGINS_WITH.new("World", "Hello World", "").success, "string_begins_with fails when passed: String 'World', String 'Hello World'")
 	expect.is_false(METHOD.STRING_CONTAINS.new("FoorBar", "Hello World", "").success, "string_contains fails when passed: String 'FooBar', String 'Hello World'")
 	expect.is_false(METHOD.STRING_ENDS_WITH.new("Hello", "Hello World", "").success, "string_ends_with fails when passed: String 'Hello', String 'Hello World'")
@@ -113,7 +113,7 @@ func test_expectation_methods_fail_when_passed_incorrect_values():
 	expect.is_false(METHOD.STRING_DOES_NOT_CONTAIN.new("ello", "Hello World", "").success, "string_does_not_contain fails when passed: String 'ello', String 'Hello World'")
 	expect.is_false(METHOD.STRING_DOES_NOT_END_WITH.new("World", "Hello World", "").success, "string_does_not_end_with fails when passed: String 'World', String 'Hello World'")
 	expect.is_false(METHOD.FILE_EXISTS.new("res://tests/bad_tests.gd", "").success, "file_exists fails when passed: 'res://tests/bad_tests.gd'")
-	expect.is_false(METHOD.FILE_DOES_NOT_EXIST.new("res://tests/BootStrap/expectations.gd", "").success, "file_does_not_exist fails when passed: 'res://tests/BootStrap/expectations.gd'")
+	expect.is_false(METHOD.FILE_DOES_NOT_EXIST.new("res://tests/BootStrap/test_expectations.gd", "").success, "file_does_not_exist fails when passed: 'res://tests/BootStrap/test_expectations.gd'")
 #
 #
 #	# Some Double Specific things
