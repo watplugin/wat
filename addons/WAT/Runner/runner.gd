@@ -15,7 +15,6 @@ var test: TEST
 
 
 func output(msg: String) -> void:
-	print(msg)
 	emit_signal("output", msg)
 
 func _run(new_tests: Array = COLLECT.tests()) -> void:

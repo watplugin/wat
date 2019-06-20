@@ -39,18 +39,18 @@ func _display_results(cases: Array):
 	methods = []
 	successes = 0
 	total = 0
-	
+
 	for case in cases:
 		display(case)
-		
+
 	_root.set_text(1, "%s / %s" % [str(successes), str(total)])
 	_root.set_custom_color(0, SUCCESS if successes == total else FAILED)
 	_root.set_custom_color(1, SUCCESS if successes == total else FAILED)
-	
+
 func display(case) -> void:
 	successes += 1 if case.success() else 0
 	total += 1
-	
+
 	var script: TreeItem = create_item(_root)
 	script.collapsed = true
 	script.set_text(0, case.title)
@@ -58,7 +58,7 @@ func display(case) -> void:
 	script.set_custom_color(1, SUCCESS if case.success() else FAILED)
 	script.set_text(1, "%s / %s" % [str(case.successes()), str(case.total())])
 	scripts.append(script)
-	
+
 	for method in case.methods:
 		var m: TreeItem = create_item(script)
 		m.collapsed = true
@@ -67,7 +67,7 @@ func display(case) -> void:
 		m.set_custom_color(1, SUCCESS if method.success() else FAILED)
 		m.set_text(1, "%s / %s" % [str(method.successes()), str(method.total())])
 		methods.append(m)
-		
+
 		for expectation in method.expectations:
 			var e: TreeItem = create_item(m)
 			e.set_text(0, expectation.expected)

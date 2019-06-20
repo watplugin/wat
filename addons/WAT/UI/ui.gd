@@ -2,14 +2,16 @@ extends PanelContainer
 tool
 
 onready var Runner = $Runner
-onready var Results = $UI/Runner/Display
+onready var Results = $"UI/Runner/Results/All Tests/Display"
 onready var RunAll = $UI/Runner/Options/RunAll
 onready var Output = $UI/Runner/Output
 
 func _ready():
+	Output.connect("finished", Runner, "_finish")
 	RunAll.connect("pressed", Runner, "_run")
 	Runner.connect("output", Output, "_output")
 	Runner.Yield.connect("resume", Runner, "_post")
+	Runner.connect("display_results", Results, "_display_results")
 
 #onready var Results = $UI/Middle/Results
 #onready var Run = $UI/Middle/Menu/Buttons/Run
@@ -49,7 +51,7 @@ func _ready():
 #	Clear.connect("pressed", Results, "reset")
 #	Clear.connect("pressed", Output, "_clear")
 #	Runner.connect("output", Output, "_output")
-#	Output.connect("finished", Runner, "_finish")
+
 #
 #func connect_settings():
 #	parameters.connect("pressed", WATConfig, "_set_parameters", [parameters])
