@@ -12,5 +12,6 @@ size_flags_vertical = 3
 script = ExtResource( 1 )
 
 [node name="UI" parent="." instance=ExtResource( 2 )]
+margin_bottom = 593.0
 
 [node name="Runner" parent="." instance=ExtResource( 3 )]

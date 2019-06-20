@@ -24,11 +24,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Examples/login.gd"
 }, {
-"base": "Object",
-"class": "WATConfig",
-"language": "GDScript",
-"path": "res://addons/WAT/utils/config.gd"
-}, {
 "base": "Node",
 "class": "WATTest",
 "language": "GDScript",
@@ -38,7 +33,6 @@ _global_script_class_icons={
 "BaseLogin": "",
 "Calculator": "",
 "Login": "",
-"WATConfig": "",
 "WATTest": ""
 }
 
