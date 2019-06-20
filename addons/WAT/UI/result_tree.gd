@@ -7,6 +7,7 @@ const _FAILED: Color = Color(1, 1, 1, 1)
 var _successes: int = 0
 var _total: int = 0
 var _root: TreeItem
+var _cache: Array = []
 
 func display(cases: Array):
 	_root = _display.create_item()
@@ -31,6 +32,7 @@ func _display_results(case) -> void:
 	script.set_custom_color(0, _SUCCESS if case.success() else _FAILED)
 	script.set_custom_color(1, _SUCCESS if case.success() else _FAILED)
 	script.set_text(1, "%s / %s" % [str(case.successes()), str(case.total())])
+	_cache.append(script)
 
 	for method in case.methods:
 		var m: TreeItem = _display.create_item(script)
@@ -39,6 +41,7 @@ func _display_results(case) -> void:
 		m.set_custom_color(0, _SUCCESS if method.success() else _FAILED)
 		m.set_custom_color(1, _SUCCESS if method.success() else _FAILED)
 		m.set_text(1, "%s / %s" % [str(method.successes()), str(method.total())])
+		_cache.append(m)
 
 		for expectation in method.expectations:
 			var e: TreeItem = _display.create_item(m)
@@ -46,3 +49,8 @@ func _display_results(case) -> void:
 			e.set_text(1, expectation.result)
 			e.set_custom_color(0, _SUCCESS if expectation.success else _FAILED)
 			e.set_custom_color(1, _SUCCESS if expectation.success else _FAILED)
+			_cache.append(e)
+
+func expand_all(expand: bool):
+	for item in _cache:
+		item.collapsed = !expand
