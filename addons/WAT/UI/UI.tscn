@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/UI/ResultTree.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/WAT/UI/output.gd" type="Script" id=3]
+[ext_resource path="res://addons/WAT/UI/options.gd" type="Script" id=4]
 
 [node name="UI" type="PanelContainer"]
 margin_left = 7.0
@@ -48,9 +49,9 @@ margin_right = 996.0
 margin_bottom = 577.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
+script = ExtResource( 4 )
 
 [node name="VBox" type="VBoxContainer" parent="Runner/Options"]
-editor/display_folded = true
 margin_right = 241.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
@@ -71,7 +72,6 @@ margin_bottom = 40.0
 text = "Expand All Results"
 
 [node name="Folder" type="VBoxContainer" parent="Runner/Options"]
-editor/display_folded = true
 margin_left = 251.0
 margin_right = 492.0
 margin_bottom = 40.0
@@ -99,8 +99,7 @@ button_mask = 3
 text = "Select Directory"
 align = 1
 
-[node name="Script" type="VBoxContainer" parent="Runner/Options"]
-editor/display_folded = true
+[node name="TestScript" type="VBoxContainer" parent="Runner/Options"]
 margin_left = 502.0
 margin_right = 743.0
 margin_bottom = 40.0
@@ -108,14 +107,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
-[node name="Run" type="Button" parent="Runner/Options/Script"]
+[node name="Run" type="Button" parent="Runner/Options/TestScript"]
 margin_right = 241.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Run Selected Script"
 
-[node name="Select" type="OptionButton" parent="Runner/Options/Script"]
+[node name="Select" type="OptionButton" parent="Runner/Options/TestScript"]
 margin_top = 20.0
 margin_right = 241.0
 margin_bottom = 40.0
@@ -125,7 +124,6 @@ text = "Select Script"
 align = 1
 
 [node name="Method" type="VBoxContainer" parent="Runner/Options"]
-editor/display_folded = true
 margin_left = 753.0
 margin_right = 996.0
 margin_bottom = 40.0
