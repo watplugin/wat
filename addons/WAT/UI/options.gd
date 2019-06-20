@@ -44,8 +44,12 @@ func _select_script() -> void:
 			ScriptSelect.add_item("%s/%s" % [path, file])
 		file = dir.get_next()
 
-func _select_method():
-	print("select method?")
+func _select_method() -> void:
+	MethodSelect.clear()
+	var test = load(ScriptSelect.get_item_text(ScriptSelect.selected)).new()
+	for method in test.get_method_list():
+		if _valid_method(method.name):
+			MethodSelect.add_item(method.name)
 
 func _run_folder() -> void:
 	var tests: Array = []
@@ -61,10 +65,20 @@ func _run_folder() -> void:
 	emit_signal("RUN", tests)
 
 func _run_script() -> void:
-	pass
+	if not ScriptSelect.items.size() > 0:
+		OS.alert("No Scripts to Select")
+		return
+	var path: String = ScriptSelect.get_item_text(ScriptSelect.selected)
+	if _valid_test(path):
+		emit_signal("RUN", [load(path)])
+	else:
+		OS.alert("Not a Valid Test Script")
 
 func _run_method() -> void:
-	pass
+	OS.alert("Not Implemented Yet")
 
 func _valid_test(file: String) -> bool:
 	return file.ends_with(".gd")
+
+func _valid_method(method: String) -> bool:
+	return method.begins_with("test_")
