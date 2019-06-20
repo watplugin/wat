@@ -1,227 +1,268 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene format=2]
 
-[ext_resource path="res://addons/WAT/UI/script_select.gd" type="Script" id=1]
-[ext_resource path="res://addons/WAT/UI/log_level.gd" type="Script" id=2]
-[ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=3]
-[ext_resource path="res://addons/WAT/UI/output.gd" type="Script" id=4]
-
-[node name="UI" type="VBoxContainer"]
+[node name="UI" type="TabContainer"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
-margin_bottom = 593.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 15
+margin_bottom = 598.0
+tab_align = 0
 
-[node name="MainMenu" type="HBoxContainer" parent="."]
+[node name="Runner" type="VBoxContainer" parent="."]
 editor/display_folded = true
-margin_right = 1010.0
-margin_bottom = 25.0
-rect_min_size = Vector2( 0, 25 )
-size_flags_horizontal = 3
-
-[node name="RunScript" type="Button" parent="MainMenu"]
-margin_right = 503.0
-margin_bottom = 25.0
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Run Script ->"
 
-[node name="ScriptSelect" type="OptionButton" parent="MainMenu"]
-margin_left = 507.0
-margin_right = 1010.0
-margin_bottom = 25.0
+[node name="Options" type="HBoxContainer" parent="Runner"]
+editor/display_folded = true
+margin_right = 1002.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="RunAll" type="Button" parent="Runner/Options"]
+margin_right = 247.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Run All Tests"
+
+[node name="Folder" type="VBoxContainer" parent="Runner/Options"]
+editor/display_folded = true
+margin_left = 251.0
+margin_right = 498.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="Run" type="Button" parent="Runner/Options/Folder"]
+margin_right = 247.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Run Directory"
+
+[node name="Select" type="OptionButton" parent="Runner/Options/Folder"]
+margin_top = 20.0
+margin_right = 247.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Select Directory"
+align = 1
+
+[node name="Script" type="VBoxContainer" parent="Runner/Options"]
+editor/display_folded = true
+margin_left = 502.0
+margin_right = 749.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="Run" type="Button" parent="Runner/Options/Script"]
+margin_right = 247.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Run Script"
+
+[node name="Select" type="OptionButton" parent="Runner/Options/Script"]
+margin_top = 20.0
+margin_right = 247.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Select Script"
-script = ExtResource( 1 )
+align = 1
 
-[node name="Middle" type="HBoxContainer" parent="."]
-margin_top = 40.0
-margin_right = 1010.0
-margin_bottom = 440.0
-rect_min_size = Vector2( 0, 400 )
+[node name="Method" type="VBoxContainer" parent="Runner/Options"]
+editor/display_folded = true
+margin_left = 753.0
+margin_right = 1002.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/separation = 15
+custom_constants/separation = 0
 
-[node name="Menu" type="VBoxContainer" parent="Middle"]
-margin_right = 122.0
-margin_bottom = 400.0
-rect_clip_content = true
-size_flags_horizontal = 0
-size_flags_vertical = 3
-custom_constants/separation = 10
-
-[node name="Buttons" type="VBoxContainer" parent="Middle/Menu"]
-margin_right = 122.0
-margin_bottom = 92.0
-
-[node name="Run" type="Button" parent="Middle/Menu/Buttons"]
-margin_right = 122.0
+[node name="Run" type="Button" parent="Runner/Options/Method"]
+margin_right = 249.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
-text = "Run All Tests"
+size_flags_vertical = 3
+text = "Run Method"
 
-[node name="Clear" type="Button" parent="Middle/Menu/Buttons"]
+[node name="Select" type="OptionButton" parent="Runner/Options/Method"]
+margin_top = 20.0
+margin_right = 249.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Select Method"
+align = 1
+
+[node name="Display" type="TabContainer" parent="Runner"]
+editor/display_folded = true
+margin_top = 44.0
+margin_right = 1002.0
+margin_bottom = 297.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/top_margin = 0
+custom_constants/side_margin = 0
+tab_align = 0
+
+[node name="All" type="Tabs" parent="Runner/Display"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="Runner/Display/All"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -2.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextEdit" type="TextEdit" parent="Runner"]
+margin_top = 301.0
+margin_right = 1002.0
+margin_bottom = 555.0
+rect_min_size = Vector2( 0, 200 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Settings" type="GridContainer" parent="."]
+editor/display_folded = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Default" type="Button" parent="Settings"]
+margin_right = 1002.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Reset to Default Settings"
+
+[node name="Parameters" type="CheckBox" parent="Settings"]
 margin_top = 24.0
-margin_right = 122.0
-margin_bottom = 44.0
-size_flags_horizontal = 3
-text = "Clear"
-
-[node name="PrintStrayNodes" type="Button" parent="Middle/Menu/Buttons"]
-margin_top = 48.0
-margin_right = 122.0
-margin_bottom = 68.0
-text = "Print Stray Nodes"
-
-[node name="ExpandAll" type="Button" parent="Middle/Menu/Buttons"]
-margin_top = 72.0
-margin_right = 122.0
-margin_bottom = 92.0
-text = "Expand Results"
-
-[node name="Typing" type="VBoxContainer" parent="Middle/Menu"]
-editor/display_folded = true
-margin_top = 102.0
-margin_right = 122.0
-margin_bottom = 200.0
-
-[node name="Label" type="Label" parent="Middle/Menu/Typing"]
-margin_right = 122.0
-margin_bottom = 14.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "enforce typing"
-align = 1
-uppercase = true
-
-[node name="Parameters" type="CheckBox" parent="Middle/Menu/Typing"]
-margin_top = 18.0
-margin_right = 122.0
-margin_bottom = 42.0
-hint_tooltip = "If ticked: When doubling a script, any typed params e.g \"title: String\" will keep their types instead of being generic params e.g \"title\"in the double script."
+margin_right = 1002.0
+margin_bottom = 48.0
 pressed = true
-text = "Parameters"
+text = "Keep Typed Parameters in Doubled Scripts"
 
-[node name="ReturnValue" type="CheckBox" parent="Middle/Menu/Typing"]
-margin_top = 46.0
-margin_right = 122.0
-margin_bottom = 70.0
-hint_tooltip = "If ticked: When doubling a script, if a method has a return type e.g  \"-> int:\" will keep their types in the double instead of being removed. "
+[node name="Return" type="CheckBox" parent="Settings"]
+margin_top = 52.0
+margin_right = 1002.0
+margin_bottom = 76.0
 pressed = true
-text = "Return Value"
+text = "Keep Typed Return Values in Doubled Scripts"
 
-[node name="ExcludeVoid" type="CheckBox" parent="Middle/Menu/Typing"]
-margin_top = 74.0
-margin_right = 122.0
-margin_bottom = 98.0
-hint_tooltip = "This only matters if you have ticked Return Value.
+[node name="Exclude Void" type="CheckBox" parent="Settings"]
+margin_top = 80.0
+margin_right = 1002.0
+margin_bottom = 104.0
+pressed = true
+text = "Exclude Void Typed Return Values in Doubled Scripts (This is only relevant if above is ticked)"
 
-If ticked: Any methods that return void will have their void return value excluded."
-text = "Ignore Void"
+[node name="Double Strategy" type="CheckBox" parent="Settings"]
+margin_top = 108.0
+margin_right = 1002.0
+margin_bottom = 132.0
+text = "Set Default Double Strategy to Partial (Partially Doubled Scripts keep their implementations until stubbed)"
 
-[node name="Prefix" type="VBoxContainer" parent="Middle/Menu"]
-editor/display_folded = true
-margin_top = 210.0
-margin_right = 122.0
-margin_bottom = 280.0
-size_flags_horizontal = 3
+[node name="Directories Folders" type="CheckBox" parent="Settings"]
+margin_top = 136.0
+margin_right = 1002.0
+margin_bottom = 160.0
+pressed = true
+text = "Tests Include Subdirectories"
 
-[node name="Label" type="Label" parent="Middle/Menu/Prefix"]
-margin_right = 122.0
-margin_bottom = 14.0
-text = "Set Prefixes"
-align = 1
-uppercase = true
+[node name="Include Subdirectories" type="CheckBox" parent="Settings"]
+margin_top = 164.0
+margin_right = 1002.0
+margin_bottom = 188.0
+text = "Show Subdirectories in their own Seperate Tab (This is only relevant if above is ticked)"
 
-[node name="Script" type="LineEdit" parent="Middle/Menu/Prefix"]
-margin_top = 18.0
-margin_right = 122.0
-margin_bottom = 42.0
-hint_tooltip = "WAT will run all tests scripts that start with any prefix(es) defined here (default: \"test\")
+[node name="LogSuccess" type="CheckBox" parent="Settings"]
+margin_top = 192.0
+margin_right = 1002.0
+margin_bottom = 216.0
+pressed = true
+text = "Display Tests that Pass"
 
-Note: WAT will ignore spaces and will replace underscores in names. You do not need to add that underscore here.
+[node name="LogFailure" type="CheckBox" parent="Settings"]
+margin_top = 220.0
+margin_right = 1002.0
+margin_bottom = 244.0
+pressed = true
+text = "Display Tests that Fail"
 
-Enter a comma delimited list to use multiple prefixes (e.g \"test_, unit, third_prefix\")"
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "test"
-placeholder_text = "Script(s)"
+[node name="Folder" type="HBoxContainer" parent="Settings"]
+margin_top = 248.0
+margin_right = 1002.0
+margin_bottom = 272.0
 
-[node name="Method" type="LineEdit" parent="Middle/Menu/Prefix"]
-margin_top = 46.0
-margin_right = 122.0
-margin_bottom = 70.0
-hint_tooltip = "WAT will run all tests methods that start with any prefix(es) defined here (default: \"test\")
+[node name="Label" type="Label" parent="Settings/Folder"]
+margin_top = 5.0
+margin_right = 114.0
+margin_bottom = 19.0
+text = "Main Test Folder: "
 
-Note: WAT will ignore spaces and will replace underscores in names. You do not need to add that underscore here.
-
-Enter a comma delimited list to use multiple prefixes (e.g \"test_, unit, third_prefix\")
-"
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "test, supra"
-placeholder_text = "Method(s)"
-
-[node name="Output" type="VBoxContainer" parent="Middle/Menu"]
-editor/display_folded = true
-visible = false
-margin_top = 242.0
-margin_right = 139.0
-margin_bottom = 308.0
-
-[node name="Label" type="Label" parent="Middle/Menu/Output"]
-margin_right = 139.0
-margin_bottom = 14.0
-text = "Output Log"
-align = 1
-uppercase = true
-
-[node name="PrintToConsole" type="CheckBox" parent="Middle/Menu/Output"]
-margin_top = 18.0
-margin_right = 139.0
-margin_bottom = 42.0
-hint_tooltip = "If set to true, void will be removed as a return value if you've choosen to keep return values enforced. "
-text = "Print to Console"
-
-[node name="LogLevelSelect" type="OptionButton" parent="Middle/Menu/Output"]
-margin_top = 46.0
-margin_right = 139.0
-margin_bottom = 66.0
-script = ExtResource( 2 )
-
-[node name="DefaultSettings" type="Button" parent="Middle/Menu"]
-margin_top = 290.0
-margin_right = 122.0
-margin_bottom = 310.0
-hint_tooltip = "Reset all settings to default. 
-
-WARNING: This will overwrite any historical settings.
-"
-text = "Default Settings"
-
-[node name="Results" type="Tree" parent="Middle"]
-margin_left = 137.0
-margin_right = 1010.0
-margin_bottom = 400.0
-size_flags_horizontal = 11
-size_flags_vertical = 11
-custom_constants/draw_relationship_lines = 1
-columns = 2
-script = ExtResource( 3 )
-
-[node name="Output" type="TextEdit" parent="."]
-margin_top = 455.0
-margin_right = 1010.0
-margin_bottom = 586.0
+[node name="Main" type="LineEdit" parent="Settings/Folder"]
+margin_left = 118.0
+margin_right = 1002.0
+margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_colors/member_variable_color = Color( 1, 1, 1, 1 )
-readonly = true
-highlight_current_line = true
-syntax_highlighting = true
-show_line_numbers = true
-script = ExtResource( 4 )
+
+[node name="Script" type="HBoxContainer" parent="Settings"]
+margin_top = 276.0
+margin_right = 1002.0
+margin_bottom = 300.0
+
+[node name="Label" type="Label" parent="Settings/Script"]
+margin_top = 5.0
+margin_right = 196.0
+margin_bottom = 19.0
+text = "Run Test Scripts with Prefixes: "
+
+[node name="Prefixes" type="LineEdit" parent="Settings/Script"]
+margin_left = 200.0
+margin_right = 1002.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Method" type="HBoxContainer" parent="Settings"]
+margin_top = 304.0
+margin_right = 1002.0
+margin_bottom = 328.0
+
+[node name="Label" type="Label" parent="Settings/Method"]
+margin_top = 5.0
+margin_right = 209.0
+margin_bottom = 19.0
+text = "Run Test Methods with Prefixes: "
+
+[node name="Prefixes" type="LineEdit" parent="Settings/Method"]
+margin_left = 213.0
+margin_right = 1002.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3

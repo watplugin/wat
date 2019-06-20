@@ -1,0 +1,159 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/WAT/UI/TabContainer.gd" type="Script" id=1]
+
+[node name="TabContainer" type="TabContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 598.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/top_margin = 0
+custom_constants/side_margin = 0
+tab_align = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Runner" type="Tabs" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Layout" type="VBoxContainer" parent="Runner"]
+margin_right = 1002.0
+margin_bottom = 549.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Options" type="HBoxContainer" parent="Runner/Layout"]
+margin_right = 1002.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="RunAll" type="Button" parent="Runner/Layout/Options"]
+margin_right = 247.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Run All Tests"
+
+[node name="Folder" type="VBoxContainer" parent="Runner/Layout/Options"]
+margin_left = 251.0
+margin_right = 498.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="Run" type="Button" parent="Runner/Layout/Options/Folder"]
+margin_right = 247.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Run Directory"
+
+[node name="Select" type="OptionButton" parent="Runner/Layout/Options/Folder"]
+margin_top = 20.0
+margin_right = 247.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Script" type="VBoxContainer" parent="Runner/Layout/Options"]
+margin_left = 502.0
+margin_right = 749.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="Run" type="Button" parent="Runner/Layout/Options/Script"]
+margin_right = 247.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Run Script"
+
+[node name="Select" type="OptionButton" parent="Runner/Layout/Options/Script"]
+margin_top = 20.0
+margin_right = 247.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Method" type="VBoxContainer" parent="Runner/Layout/Options"]
+margin_left = 753.0
+margin_right = 1002.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="Run" type="Button" parent="Runner/Layout/Options/Method"]
+margin_right = 249.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Run Method"
+
+[node name="Select" type="OptionButton" parent="Runner/Layout/Options/Method"]
+margin_top = 20.0
+margin_right = 249.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Display" type="TabContainer" parent="Runner/Layout"]
+margin_top = 44.0
+margin_right = 1002.0
+margin_bottom = 294.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/top_margin = 0
+custom_constants/side_margin = 0
+tab_align = 0
+
+[node name="All" type="Tabs" parent="Runner/Layout/Display"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="Runner/Layout/Display/All"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -2.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextEdit" type="TextEdit" parent="Runner/Layout"]
+margin_top = 298.0
+margin_right = 1002.0
+margin_bottom = 549.0
+rect_min_size = Vector2( 0, 200 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Settings" type="Tabs" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
