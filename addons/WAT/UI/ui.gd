@@ -4,11 +4,11 @@ tool
 onready var Runner = $Runner
 onready var Results = $UI/Runner/Display
 onready var RunAll = $UI/Runner/Options/RunAll
+onready var Output = $UI/Runner/Output
 
 func _ready():
 	RunAll.connect("pressed", Runner, "_run")
 	
-
 #onready var Results = $UI/Middle/Results
 #onready var Run = $UI/Middle/Menu/Buttons/Run
 #onready var Clear = $UI/Middle/Menu/Buttons/Clear

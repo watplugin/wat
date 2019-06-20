@@ -16,35 +16,39 @@ size_flags_vertical = 3
 
 [node name="Display" type="TabContainer" parent="Runner"]
 margin_right = 996.0
-margin_bottom = 264.0
+margin_bottom = 329.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/top_margin = 0
 custom_constants/side_margin = 0
 tab_align = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="Runner/Display"]
+[node name="Results" type="PanelContainer" parent="Runner/Display"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
-margin_right = -978.0
-margin_bottom = -218.0
+margin_right = -4.0
+margin_bottom = -4.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="Runner/Display/Results"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 981.0
+margin_bottom = 286.0
 
 [node name="Output" type="TextEdit" parent="Runner"]
-margin_top = 268.0
+margin_top = 333.0
 margin_right = 996.0
-margin_bottom = 532.0
+margin_bottom = 533.0
 rect_min_size = Vector2( 0, 200 )
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="Options" type="HBoxContainer" parent="Runner"]
-margin_top = 536.0
+margin_top = 537.0
 margin_right = 996.0
-margin_bottom = 576.0
+margin_bottom = 577.0
 size_flags_horizontal = 3
 
 [node name="RunAll" type="Button" parent="Runner/Options"]

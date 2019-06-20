@@ -59,12 +59,3 @@ enabled=PoolStringArray( "WAT" )
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
-
-[wat]
-
-Parameters=true
-Returnvalue=true
-Voidexcluded=true
-Scriptprefixes="test"
-Methodprefixes="test"
-Doublestrategy="N/A"
