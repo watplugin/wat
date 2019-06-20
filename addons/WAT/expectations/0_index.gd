@@ -104,6 +104,9 @@ func signal_was_emitted(emitter, _signal, expected: String) -> void:
 func signal_was_not_emitted(emitter, _signal: String, expected: String) -> void:
 	output(EXPECT.SIGNAL_WAS_NOT_EMITTED.new(emitter, _signal, expected))
 	
+func signal_was_emitted_with_arguments(emitter, _signal, arguments: Array, expected: String) -> void:
+	output(EXPECT.SIGNAL_WAS_EMITTED_WITH_ARGUMENTS.new(emitter, _signal, arguments, expected))
+	
 func file_exists(path: String, expected: String) -> void:
 	output(EXPECT.FILE_EXISTS.new(path, expected))
 	

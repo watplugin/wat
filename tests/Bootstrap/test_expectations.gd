@@ -7,11 +7,7 @@ const METHOD = preload("res://addons/WAT/constants/expectation_list.gd")
 #signal b
 #var calc
 #var scene
-#
-#func start():
-#	watch(self, "a")
-#	watch(self, "b")
-#	emit_signal("a")
+
 #	self.calc = DOUBLE.script(Calculator)
 #	self.calc.instance.add(2, 2)
 #	self.scene = DOUBLE.scene(SCENE)
@@ -65,8 +61,7 @@ func test_expectation_methods_pass_when_passed_correct_values():
 #	expect.was_called(scene, "C/D", "wowsers", "wowsers was called from Main/C/D")
 #	expect.was_not_called(scene, "C", "blow_up_stuff", "blow_up_stuff was not called from C")
 #
-#	expect.signal_was_emitted(self, "a", "a was emitted")
-#	expect.signal_was_not_emitted(self, "b", "b was not emitted")
+
 #	expect.was_called_with_arguments(calc, "add", {"a": 2, "b": 2}, "add was called with 2, 2")
 #
 #
@@ -123,8 +118,7 @@ func test_expectation_methods_fail_when_passed_incorrect_values():
 #	expect.was_called(scene, "C", "blow_up_stuff", "blow_up_stuff was called from C")
 #
 #
-#	expect.signal_was_emitted(self, "b", "b was emitted")
-#	expect.signal_was_not_emitted(self, "a", "a was not emitted")
+
 #	expect.was_called_with_arguments(calc, "add", {"a": 10, "b": 2}, "add was called with 10, 2")
 #	expect.was_called_with_arguments(calc, "subtract", {"a": 2, "b": 2}, "subtract was called with 2, 2")
 #

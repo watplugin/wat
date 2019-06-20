@@ -24,6 +24,7 @@ const SCENE_WAS_NOT_CALLED = preload("res://addons/WAT/expectations/scene_was_no
 const SCRIPT_WAS_CALLED = preload("res://addons/WAT/expectations/script_was_called.gd")
 const SCRIPT_WAS_NOT_CALLED = preload("res://addons/WAT/expectations/script_was_not_called.gd")
 const SIGNAL_WAS_EMITTED = preload("res://addons/WAT/expectations/signal_was_emitted.gd")
+const SIGNAL_WAS_EMITTED_WITH_ARGUMENTS = preload("res://addons/WAT/expectations/signal_was_emitted_with_arguments.gd")
 const SIGNAL_WAS_NOT_EMITTED = preload("res://addons/WAT/expectations/signal_was_not_emitted.gd")
 const STRING_BEGINS_WITH = preload("res://addons/WAT/expectations/string_begins_with.gd")
 const STRING_CONTAINS = preload("res://addons/WAT/expectations/string_contains.gd")
