@@ -2,7 +2,7 @@ extends PanelContainer
 tool
 
 onready var Runner = $Runner
-onready var Results = $"UI/Runner/Results/All Tests/Display"
+onready var Results = $"UI/Runner/Results/"
 onready var RunAll = $UI/Runner/Options/RunAll
 onready var Output = $UI/Runner/Output
 

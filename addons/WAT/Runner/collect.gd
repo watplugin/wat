@@ -1,27 +1,57 @@
 extends Reference
 tool
 
+
+const TOP_DIRECTORY = ""
 const TEST_DIRECTORY = "res://tests/"
+const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
+
+class TestInfo:
+	var directory: String
+	var path: String
+	var methods: Array = []
 
 static func tests() -> Array:
-	print("COLLECTING TESTS")
+	var dirs: Array = [TOP_DIRECTORY]
 	var tests: Array = []
-	var dirs: Array = _get_subdirs()
-	dirs.push_front("")
-	for d in dirs:
-		tests += _testloop(d)
+	if CONFIG.tests_include_subdirectories:
+		dirs += _get_subdirs()
+	for subdirectory in dirs:
+		print(dirs)
+		tests += _collect_tests(subdirectory)
 	return tests
-	
+
+static func _collect_tests(subdirectory) -> Array:
+	var path: String = TEST_DIRECTORY + subdirectory
+	var results: Array = []
+	var ONLY_SEARCH_CHILDREN: bool = true
+	var dir: Directory = Directory.new()
+	dir.open("%s%s" % [TEST_DIRECTORY, subdirectory])
+	dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
+	var title: String = dir.get_next()
+	while title != "":
+		if _valid_test(path, title):
+			results.append(load(TEST_DIRECTORY + subdirectory + "/" + title))
+		title = dir.get_next()
+	return results
+
+static func _valid_test(path: String, title) -> bool:
+	if title.ends_with(".gd"):
+		# Add Prefix checks here
+		var test = load(path + "/" + title).new()
+		if test is WATTest:
+			test.free()
+			return true
+	return false
 
 static func _get_subdirs() -> Array:
-	print("COLLECTING SUBDIRS")
 	var results: Array = []
 	var ONLY_SEARCH_CHILDREN: bool = true
 	var dir: Directory = Directory.new()
 	dir.open(TEST_DIRECTORY)
 	dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
 	var title: String = dir.get_next()
-	print("title of subdir: ", title)
+
 	while title != "":
 		if dir.current_is_dir():
 			results.append(title)
@@ -40,25 +70,3 @@ static func is_valid_method(method: String) -> bool:
 	if method.begins_with("test_"):
 		return true
 	return false
-
-static func _testloop(d):
-	var results: Array = []
-	var ONLY_SEARCH_CHILDREN: bool = true
-	var dir: Directory = Directory.new()
-	dir.open("%s%s" % [TEST_DIRECTORY, d])
-	dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
-	var title: String = dir.get_next()
-	while title != "":
-		if valid_title(title):
-			results.append(load(TEST_DIRECTORY + d + "/" + title))
-		title = dir.get_next()
-	return results
-	
-
-static func valid_title(title: String) -> bool:
-	if not title.ends_with(".gd"):
-		return false
-	if title.begins_with("test_"):
-			return true
-	return false
-
