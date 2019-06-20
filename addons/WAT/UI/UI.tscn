@@ -42,37 +42,52 @@ show_line_numbers = true
 script = ExtResource( 3 )
 
 [node name="Options" type="HBoxContainer" parent="Runner"]
-editor/display_folded = true
 margin_top = 537.0
 margin_right = 996.0
 margin_bottom = 577.0
 size_flags_horizontal = 3
+custom_constants/separation = 10
 
-[node name="RunAll" type="Button" parent="Runner/Options"]
-margin_right = 246.0
+[node name="VBox" type="VBoxContainer" parent="Runner/Options"]
+editor/display_folded = true
+margin_right = 241.0
 margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="RunAll" type="Button" parent="Runner/Options/VBox"]
+margin_right = 241.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Run All Tests"
 
+[node name="Expand" type="Button" parent="Runner/Options/VBox"]
+margin_top = 20.0
+margin_right = 241.0
+margin_bottom = 40.0
+text = "Expand All Results"
+
 [node name="Folder" type="VBoxContainer" parent="Runner/Options"]
-margin_left = 250.0
-margin_right = 496.0
+editor/display_folded = true
+margin_left = 251.0
+margin_right = 492.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Run" type="Button" parent="Runner/Options/Folder"]
-margin_right = 246.0
+margin_right = 241.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Run Directory"
+text = "Run Selected Directory"
 
 [node name="Select" type="OptionButton" parent="Runner/Options/Folder"]
 margin_top = 20.0
-margin_right = 246.0
+margin_right = 241.0
 margin_bottom = 40.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -85,23 +100,23 @@ align = 1
 
 [node name="Script" type="VBoxContainer" parent="Runner/Options"]
 editor/display_folded = true
-margin_left = 500.0
-margin_right = 746.0
+margin_left = 502.0
+margin_right = 743.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Run" type="Button" parent="Runner/Options/Script"]
-margin_right = 246.0
+margin_right = 241.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Run Script"
+text = "Run Selected Script"
 
 [node name="Select" type="OptionButton" parent="Runner/Options/Script"]
 margin_top = 20.0
-margin_right = 246.0
+margin_right = 241.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -110,7 +125,7 @@ align = 1
 
 [node name="Method" type="VBoxContainer" parent="Runner/Options"]
 editor/display_folded = true
-margin_left = 750.0
+margin_left = 753.0
 margin_right = 996.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
@@ -118,15 +133,15 @@ size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Run" type="Button" parent="Runner/Options/Method"]
-margin_right = 246.0
+margin_right = 243.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Run Method"
+text = "Run Selected Method"
 
 [node name="Select" type="OptionButton" parent="Runner/Options/Method"]
 margin_top = 20.0
-margin_right = 246.0
+margin_right = 243.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

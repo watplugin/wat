@@ -3,7 +3,7 @@ tool
 
 onready var Runner = $Runner
 onready var Results = $"UI/Runner/Results/"
-onready var RunAll = $UI/Runner/Options/RunAll
+onready var RunAll = $UI/Runner/Options/VBox/RunAll
 onready var Output = $UI/Runner/Output
 
 func _ready():
@@ -12,6 +12,8 @@ func _ready():
 	Runner.connect("output", Output, "_output")
 	Runner.Yield.connect("resume", Runner, "_post")
 	Runner.connect("display_results", Results, "_display_results")
+	RunAll.connect("pressed", Output, "_clear")
+	RunAll.connect("pressed", Results, "_clear")
 
 #onready var Results = $UI/Middle/Results
 #onready var Run = $UI/Middle/Menu/Buttons/Run
@@ -51,28 +53,3 @@ func _ready():
 #	Clear.connect("pressed", Results, "reset")
 #	Clear.connect("pressed", Output, "_clear")
 #	Runner.connect("output", Output, "_output")
-
-#
-#func connect_settings():
-#	parameters.connect("pressed", WATConfig, "_set_parameters", [parameters])
-#	retvals.connect("pressed", WATConfig, "_set_return_value", [retvals])
-#	excludevoid.connect("pressed", WATConfig, "_set_exclude_void", [excludevoid])
-#	scriptprefixes.connect("text_changed", WATConfig, "_set_script_prefixes")
-#	methodprefixes.connect("text_changed", WATConfig, "_set_method_prefixes")
-#	default.connect("pressed", self, "_default", [true])
-#
-#func _default(force: bool):
-#	parameters.pressed = true
-#	retvals.pressed = true
-#	excludevoid.pressed = true
-#	scriptprefixes.text = ""
-#	methodprefixes.text = ""
-#	WATConfig.defaults(force)
-#	update_settings_display()
-#
-#func update_settings_display():
-#	parameters.pressed = WATConfig.parameters()
-#	retvals.pressed = WATConfig.return_value()
-#	excludevoid.pressed = WATConfig.void_excluded()
-#	scriptprefixes.text = WATConfig.script_prefixes()
-#	methodprefixes.text = WATConfig.method_prefixes()
