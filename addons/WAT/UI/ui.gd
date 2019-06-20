@@ -8,7 +8,9 @@ onready var Output = $UI/Runner/Output
 
 func _ready():
 	RunAll.connect("pressed", Runner, "_run")
-	
+	Runner.connect("output", Output, "_output")
+	Runner.Yield.connect("resume", Runner, "_post")
+
 #onready var Results = $UI/Middle/Results
 #onready var Run = $UI/Middle/Menu/Buttons/Run
 #onready var Clear = $UI/Middle/Menu/Buttons/Clear
@@ -32,7 +34,7 @@ func _ready():
 #	RunScript.connect("pressed", ScriptSelect, "_run_test")
 #	ScriptSelect.connect("RUN_SINGLE", Runner, "_run")
 #	ExpandAll.connect("pressed", Results, "_expand_all", [ExpandAll])
-#	Runner.Yield.connect("resume", Runner, "_post")
+
 #	_default(false)
 ##	update_settings_display()
 #	connect_buttons()

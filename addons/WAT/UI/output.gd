@@ -36,14 +36,14 @@ func _ready():
 
 func _output(msg):
 	queue.append("%s\n" % msg)
-	
+
 func _process(delta):
 	_pop_message()
-	
+
 func _pop_message():
 	if queue.size() > 0:
 		display(queue.pop_front())
-		
+
 func display(msg: String) -> void:
 	if msg.begins_with(EXECUTING):
 		self.text += msg
@@ -55,10 +55,10 @@ func display(msg: String) -> void:
 		self.text = self.cache
 		self.cursor += 3
 	cursor_set_line(self.cursor)
-	
+
 	if msg.begins_with(ENDING):
 		emit_signal("finished")
-	
+
 func _clear():
 	self.cursor = 0
 	cursor_set_line(self.cursor)
