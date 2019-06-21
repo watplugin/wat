@@ -4,6 +4,9 @@ tool
 var directories: Dictionary = {}
 const ResultTree: PackedScene = preload("res://addons/WAT/UI/ResultTree.tscn")
 const CONFIG: Resource = preload("res://addons/WAT/Settings/Config.tres")
+const SUCCESS: Texture = preload("res://addons/WAT/UI/icons/success.png")
+const FAILED: Texture = preload("res://addons/WAT/UI/icons/failed.png")
+var tab: int = 0
 
 func _display_results(cases: Array) -> void:
 	_clear()
@@ -25,7 +28,8 @@ func _show_directory_as_a_tab(directory: String) -> void:
 	results.name = directory
 	add_child(results)
 	results.display(cases)
-
+	set_tab_icon(tab, SUCCESS) if results.success() else set_tab_icon(tab, FAILED)
+	tab += 1
 
 func _show_all_tests_together(cases: Array) -> void:
 	var results: PanelContainer = ResultTree.instance()
@@ -47,6 +51,7 @@ func _add_test_to_correct_directory(directory: String, case: Object) -> void:
 	directories[directory].append(case)
 
 func _clear() -> void:
+	tab = 0
 	for child in self.get_children():
 		child.free()
 	directories.clear()

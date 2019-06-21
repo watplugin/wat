@@ -9,6 +9,9 @@ var _total: int = 0
 var _root: TreeItem
 var _cache: Array = []
 
+func success() -> bool:
+	return _successes == _total
+
 func display(cases: Array):
 	_root = _display.create_item()
 	_root.set_text(0, "Root")
