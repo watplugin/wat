@@ -26,6 +26,7 @@ func _show_directory_as_a_tab(directory: String) -> void:
 	add_child(results)
 	results.display(cases)
 
+
 func _show_all_tests_together(cases: Array) -> void:
 	var results: PanelContainer = ResultTree.instance()
 	results.name = "Tests"

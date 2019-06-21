@@ -10,6 +10,9 @@ onready var RunMethod: OptionButton = $Method/Run
 signal RUN
 
 func _ready() -> void:
+	_select_folder()
+	_select_script()
+	_select_method()
 	_connect()
 
 func _connect():
@@ -35,7 +38,7 @@ func _select_folder() -> void:
 func _select_script() -> void:
 	ScriptSelect.clear()
 	var dir: Directory = Directory.new()
-	var path: String = FolderSelect.get_item_text(FolderSelect.selected)
+	var path: String = _get_item_text(FolderSelect)
 	dir.open(path)
 	dir.list_dir_begin(true) # Only Search Children
 	var file = dir.get_next()
@@ -46,7 +49,9 @@ func _select_script() -> void:
 
 func _select_method() -> void:
 	MethodSelect.clear()
-	var test = load(ScriptSelect.get_item_text(ScriptSelect.selected)).new()
+	if ScriptSelect.items.size() <= 0:
+		return
+	var test = load(_get_item_text(ScriptSelect)).new()
 	for method in test.get_method_list():
 		if _valid_method(method.name):
 			MethodSelect.add_item(method.name)
@@ -82,3 +87,6 @@ func _valid_test(file: String) -> bool:
 
 func _valid_method(method: String) -> bool:
 	return method.begins_with("test_")
+
+func _get_item_text(list: OptionButton) -> String:
+	return list.get_item_text(list.selected)
