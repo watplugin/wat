@@ -18,6 +18,7 @@ func output(msg: String) -> void:
 	emit_signal("output", msg)
 
 func _run(new_tests: Array = COLLECT.tests()) -> void:
+	print(new_tests)
 	if new_tests.empty():
 		OS.alert("No Scripts To Test!")
 		return
@@ -39,6 +40,8 @@ func _start() -> void:
 	_pre()
 
 func _pre():
+	if methods.empty():
+		_end() # In case we load an empty script
 	while not methods.empty():
 		var method: String = methods.pop_front()
 		var clean = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
