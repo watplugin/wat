@@ -3,8 +3,8 @@ tool
 
 
 const TOP_DIRECTORY = ""
-const TEST_DIRECTORY = "res://tests/"
 const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
+const TEST_DIRECTORY = CONFIG.main_test_folder
 
 class TestInfo:
 	var directory: String
@@ -12,6 +12,9 @@ class TestInfo:
 	var methods: Array = []
 
 static func tests() -> Array:
+	if TEST_DIRECTORY.empty() or TEST_DIRECTORY == "res://" or TEST_DIRECTORY == "" or Directory.new().dir_exists(TEST_DIRECTORY):
+		OS.alert("You must set a valid main test folder. You cannot use tests directly in res://")
+		return []
 	var dirs: Array = [TOP_DIRECTORY]
 	var tests: Array = []
 	if CONFIG.tests_include_subdirectories:
