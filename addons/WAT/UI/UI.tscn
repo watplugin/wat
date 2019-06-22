@@ -14,14 +14,14 @@ margin_bottom = 598.0
 [node name="Runner" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 1103.0
+margin_right = 1105.0
 margin_bottom = 584.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Results" type="TabContainer" parent="Runner"]
 editor/display_folded = true
-margin_right = 1096.0
+margin_right = 1098.0
 margin_bottom = 329.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -34,7 +34,7 @@ script = ExtResource( 1 )
 
 [node name="Output" type="TextEdit" parent="Runner"]
 margin_top = 333.0
-margin_right = 1096.0
+margin_right = 1098.0
 margin_bottom = 533.0
 rect_min_size = Vector2( 0, 200 )
 custom_colors/member_variable_color = Color( 1, 1, 1, 1 )
@@ -45,7 +45,7 @@ script = ExtResource( 3 )
 
 [node name="Options" type="HBoxContainer" parent="Runner"]
 margin_top = 537.0
-margin_right = 1096.0
+margin_right = 1098.0
 margin_bottom = 577.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
@@ -131,7 +131,7 @@ selected = 0
 
 [node name="Method" type="VBoxContainer" parent="Runner/Options"]
 margin_left = 662.0
-margin_right = 1096.0
+margin_right = 1098.0
 margin_bottom = 40.0
 hint_tooltip = "select a single test method to run (from the selected script)"
 size_flags_horizontal = 3
@@ -139,7 +139,7 @@ size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Run" type="Button" parent="Runner/Options/Method"]
-margin_right = 434.0
+margin_right = 436.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -147,11 +147,11 @@ text = "Run Selected Method"
 
 [node name="Select" type="OptionButton" parent="Runner/Options/Method"]
 margin_top = 20.0
-margin_right = 434.0
+margin_right = 436.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "test_expectation_methods_pass_when_passed_correct_values"
+text = "test_expectation_methods_fail_when_passed_incorrect_values"
 align = 1
-items = [ "test_expectation_methods_pass_when_passed_correct_values", null, false, -1, null, "test_expectation_methods_fail_when_passed_incorrect_values", null, false, -1, null ]
+items = [ "test_expectation_methods_fail_when_passed_incorrect_values", null, false, -1, null, "test_expectation_methods_pass_when_passed_correct_values", null, false, -1, null ]
 selected = 0

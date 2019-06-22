@@ -28,8 +28,9 @@ func _select_folder() -> void:
 	FolderSelect.clear()
 	if CONFIG.main_test_folder.empty() or not Directory.new().dir_exists(CONFIG.main_test_folder):
 		return
+	FolderSelect.add_item(CONFIG.main_test_folder)
 	var dir: Directory = Directory.new()
-	dir.open("res://tests")
+	dir.open(CONFIG.main_test_folder)
 	dir.list_dir_begin(true) # Only Search Children
 	var folder = dir.get_next()
 	while folder != "":
@@ -48,7 +49,7 @@ func _select_script() -> void:
 	var file = dir.get_next()
 	while file != "":
 		if _valid_test(file):
-			ScriptSelect.add_item("%s/%s" % [path, file])
+			ScriptSelect.add_item("%s%s" % [path, file])
 		file = dir.get_next()
 
 func _select_method() -> void:
@@ -69,7 +70,7 @@ func _run_folder() -> void:
 	var file = dir.get_next()
 	while file != "":
 		if _valid_test(file):
-			tests.append(load("%s/%s" % [path, file]))
+			tests.append(load("%s%s" % [path, file]))
 		file = dir.get_next()
 	emit_signal("RUN", tests)
 

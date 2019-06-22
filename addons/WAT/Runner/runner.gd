@@ -16,7 +16,7 @@ var test: TEST
 
 func _cancel_test_on_crash(data) -> void:
 	cases.crash_current(data)
-	output("CRASHED: %s because (%s, Result: %s)" % [cases.current.title, data.expected, data.result])
+	output("CRASHED: %s (%s, Result: %s)" % [cases.current.title, data.expected, data.result])
 	_end()
 
 func output(msg: String) -> void:
