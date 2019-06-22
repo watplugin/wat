@@ -6,6 +6,7 @@ const ResultTree: PackedScene = preload("res://addons/WAT/UI/ResultTree.tscn")
 const CONFIG: Resource = preload("res://addons/WAT/Settings/Config.tres")
 const SUCCESS: Texture = preload("res://addons/WAT/UI/icons/success.png")
 const FAILED: Texture = preload("res://addons/WAT/UI/icons/failed.png")
+const CRASH: Texture = preload("res://addons/WAT/UI/icons/warning.png")
 var tab: int = 0
 
 func _display_results(cases: Array) -> void:
@@ -28,7 +29,10 @@ func _show_directory_as_a_tab(directory: String) -> void:
 	results.name = directory
 	add_child(results)
 	results.display(cases)
-	set_tab_icon(tab, SUCCESS) if results.success() else set_tab_icon(tab, FAILED)
+	if results.includes_crash:
+		set_tab_icon(tab, CRASH)
+	else:
+		set_tab_icon(tab, SUCCESS) if results.success() else set_tab_icon(tab, FAILED)
 	tab += 1
 
 func _show_all_tests_together(cases: Array) -> void:
