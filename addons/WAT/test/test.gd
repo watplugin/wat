@@ -7,9 +7,12 @@ const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
 const DOUBLE = preload("res://addons/WAT/double/scripts/doubler.gd")
 const WATCHER = preload("res://addons/WAT/test/watcher.gd")
 const YIELD: String = "finished"
-
+signal OUTPUT
 var expect: EXPECTATIONS
 var watcher: WATCHER
+
+func output(msg: String):
+	emit_signal("OUTPUT", "USER: %s" % msg)
 
 func _init():
 	_set_properties()

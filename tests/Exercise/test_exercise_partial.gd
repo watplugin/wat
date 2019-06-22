@@ -1,6 +1,7 @@
 extends WATTest
 
 func test_partial_doubling():
+	output("Hello from Test Partial")
 	var calc = DOUBLE.script(Calculator, DOUBLE.PARTIAL)
 	expect.is_equal(4, calc.instance.add(2, 2), "Partial Double Calculator returns super value")
 	expect.was_called(calc, "add", "add was called")

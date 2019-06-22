@@ -35,6 +35,7 @@ func _start() -> void:
 		output("Ending Test Runner")
 		return
 	test = tests.pop_front().new()
+	test.connect("OUTPUT", self, "output")
 	cases.create(test)
 	add_child(test)
 	methods = COLLECT.methods(test)

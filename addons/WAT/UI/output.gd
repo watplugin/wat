@@ -7,12 +7,14 @@ const YIELDING: String = "Yielding"
 const EXECUTING: String = "Executing"
 const PASS: String = "PASSED"
 const FAIL: String = "FAILED"
+const USER: String = "USER"
 const ENDING: String = "Ending"
 const WHITE: Color = Color(1, 1, 1, 1)
 const BLACK: Color = Color(0, 0.5, .5, 1)
 const YELLOW: Color = Color(1, 1, 0, 1)
 const GREEN: Color = Color(0, 1, 0, 1)
 const RED: Color = Color(0.5, 0, 0, 1)
+const USER_COLOR = Color(0.5, 0.5, 1, 1)
 #const PURPLE: Color = Color(0.5, 0.5, 1, 1)
 
 var queue: Array = []
@@ -33,6 +35,7 @@ func _ready():
 	add_keyword_color(FAIL, RED)
 	add_keyword_color(VECTOR2, WHITE)
 	add_keyword_color(VECTOR3, WHITE)
+	add_keyword_color(USER, USER_COLOR)
 
 func _output(msg):
 	queue.append("%s\n" % msg)
