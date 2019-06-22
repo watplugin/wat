@@ -1,6 +1,7 @@
 extends HBoxContainer
 tool
 
+const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
 onready var FolderSelect: OptionButton = $Folder/Select
 onready var ScriptSelect: OptionButton = $TestScript/Select
 onready var MethodSelect: OptionButton = $Method/Select
@@ -25,18 +26,21 @@ func _connect():
 
 func _select_folder() -> void:
 	FolderSelect.clear()
-	FolderSelect.add_item("res://tests")
+	if CONFIG.main_test_folder.empty() or not Directory.new().dir_exists(CONFIG.main_test_folder):
+		return
 	var dir: Directory = Directory.new()
 	dir.open("res://tests")
 	dir.list_dir_begin(true) # Only Search Children
 	var folder = dir.get_next()
 	while folder != "":
 		if dir.current_is_dir():
-			FolderSelect.add_item("res://tests/%s" % folder)
+			FolderSelect.add_item("%s%s" % [CONFIG.main_test_folder, folder])
 		folder = dir.get_next()
 
 func _select_script() -> void:
 	ScriptSelect.clear()
+	if FolderSelect.items.size() <= 0:
+		return
 	var dir: Directory = Directory.new()
 	var path: String = _get_item_text(FolderSelect)
 	dir.open(path)

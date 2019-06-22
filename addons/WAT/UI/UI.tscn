@@ -97,9 +97,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/hseparation = 20
 button_mask = 3
-text = "res://tests"
+text = "Select Directory"
 align = 1
-items = [ "res://tests", null, false, -1, null, "res://tests/Bootstrap", null, false, -1, null, "res://tests/Exercise", null, false, -1, null ]
+items = [ "Select Directory", null, false, 0, null ]
 selected = 0
 
 [node name="TestScript" type="VBoxContainer" parent="Runner/Options"]
@@ -124,10 +124,7 @@ margin_bottom = 40.0
 hint_tooltip = "select a single test script to run (your choices depend on which folder is selected)."
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "res://tests/new_script.gd"
 align = 1
-items = [ "res://tests/new_script.gd", null, false, -1, null ]
-selected = 0
 
 [node name="Method" type="VBoxContainer" parent="Runner/Options"]
 margin_left = 753.0
