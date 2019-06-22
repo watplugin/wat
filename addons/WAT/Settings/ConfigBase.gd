@@ -11,7 +11,7 @@ export(bool) var show_subdirectories_in_their_own_tabs = false
 export(bool) var display_tests_that_pass = true
 export(bool) var display_tests_that_fail = true
 export(String) var main_test_folder = "res://tests/"
-export(Array, String) var test_scripts_with_prefixes = []
-export(Array, String) var test_methods_with_prefixes = []
+export(Array, String) var test_script_prefixes = []
+export(String) var test_method_prefix = "test_"
 
 

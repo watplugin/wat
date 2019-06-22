@@ -38,11 +38,11 @@ static func _valid_test(path: String, title) -> bool:
 	if not title.ends_with(".gd"):
 		return false
 
-	print(CONFIG.test_scripts_with_prefixes, " <- prefix list")
-	if not CONFIG.test_scripts_with_prefixes.empty():
+	print(CONFIG.test_script_prefixes, " <- prefix list")
+	if not CONFIG.test_script_prefixes.empty():
 		print("searching through prefixes")
 		var found_match = false
-		for prefix in CONFIG.test_scripts_with_prefixes:
+		for prefix in CONFIG.test_script_prefixes:
 			print("checking prefix")
 			if title.begins_with(prefix):
 				print("found matching prefix: %s in script: %s/%s" % [prefix, path, title])
@@ -84,11 +84,4 @@ static func methods(test) -> Array:
 	return results
 
 static func is_valid_method(method: String) -> bool:
-	if CONFIG.test_methods_with_prefixes.empty():
-		return true
-	else:
-		for prefix in CONFIG.test_methods_with_prefixes:
-			if method.begins_with(prefix):
-				return true
-	return false
-
+	return method.begins_with(CONFIG.test_method_prefix)

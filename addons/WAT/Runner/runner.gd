@@ -1,6 +1,7 @@
 extends Node
 tool
 
+const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
 const TEST = preload("res://addons/WAT/test/test.gd")
 const IO = preload("res://addons/WAT/utils/input_output.gd")
 const COLLECT = preload("res://addons/WAT/runner/collect.gd")
@@ -18,7 +19,9 @@ func output(msg: String) -> void:
 	emit_signal("output", msg)
 
 func _run(new_tests: Array = COLLECT.tests()) -> void:
-	print(new_tests)
+	if CONFIG.test_method_prefix.empty() or CONFIG.test_method_prefix == "":
+		OS.alert("You must have a test method prefix set")
+		return
 	if new_tests.empty():
 		OS.alert("No Scripts To Test!")
 		return
