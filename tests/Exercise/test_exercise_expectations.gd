@@ -18,7 +18,7 @@ func start():
 	self.calc.instance.add(2, 2)
 	self.scene = DOUBLE.scene(SCENE)
 	self.scene.instance.get_node("C/D").wowsers()
-	
+
 func end():
 	calc.instance.free()
 	scene.instance.free()
@@ -61,19 +61,19 @@ func test_all_should_pass():
 	expect.file_exists("res://tests/test_things.gd", "This test file exists")
 	expect.file_does_not_exist("res://tests/bad_tests.gd", "bad_tests.gd does not exist")
 
-	
+
 	# Some Double Specific Things
 	expect.was_called(calc, "add", "add was called")
 	expect.was_not_called(calc, "subtract", "subtract was not called")
 	expect.was_called(scene, "C/D", "wowsers", "wowsers was called from Main/C/D")
 	expect.was_not_called(scene, "C", "blow_up_stuff", "blow_up_stuff was not called from C")
-	
+
 	expect.signal_was_emitted(self, "a", "a was emitted")
 	expect.signal_was_not_emitted(self, "b", "b was not emitted")
 	expect.was_called_with_arguments(calc, "add", {"a": 2, "b": 2}, "add was called with 2, 2")
-	
-	
-	
+
+
+
 #func was_called_with_arguments(double, method: String, arguments: Dictionary, expected: String) -> void:
 #	output(_CALLED_WITH_ARGUMENTS.new(double, method, arguments, expected))
 
@@ -112,19 +112,19 @@ func test_all_should_fail():
 	expect.string_does_not_end_with("World", "Hello World", "Hello World does not end with World")
 	expect.file_exists("res://tests/bad_test.gd", "This test file exists")
 	expect.file_does_not_exist("res://tests/test_things.gd", "This test file does not exist")
-	
+
 	# Some Double Specific things
 	expect.was_called(calc, "subtract", "subtract was called")
 	expect.was_not_called(calc, "add", "add was not called")
 	expect.was_not_called(scene, "C/D", "wowsers", "wowsers was not called from Main/C/D")
 	expect.was_called(scene, "C", "blow_up_stuff", "blow_up_stuff was called from C")
-	
-	
+
+
 	expect.signal_was_emitted(self, "b", "b was emitted")
 	expect.signal_was_not_emitted(self, "a", "a was not emitted")
 	expect.was_called_with_arguments(calc, "add", {"a": 10, "b": 2}, "add was called with 10, 2")
 	expect.was_called_with_arguments(calc, "subtract", {"a": 2, "b": 2}, "subtract was called with 2, 2")
-	
+
 
 
 

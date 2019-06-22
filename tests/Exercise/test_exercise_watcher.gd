@@ -12,7 +12,7 @@ func test_watcher_all_should_pass():
 	expect.signal_was_not_emitted(self, "B", "B was not emitted from self")
 	expect.signal_was_emitted(self, "A", "A was emitted from self")
 	expect.signal_was_emitted_with_arguments(self, "A", [1, 2, 3], "A was emitted from self with args 1, 2, 3")
-	
+
 func test_watcher_all_should_fail():
 	expect.signal_was_emitted(self, "B", "B was emitted from self")
 	expect.signal_was_not_emitted(self, "A", "A was not emitted from self")

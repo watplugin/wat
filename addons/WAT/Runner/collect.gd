@@ -12,7 +12,6 @@ class TestInfo:
 	var methods: Array = []
 
 static func tests() -> Array:
-	print(TEST_DIRECTORY, " is main folder")
 	if TEST_DIRECTORY.empty() or TEST_DIRECTORY == "res://" or TEST_DIRECTORY == "" or not Directory.new().dir_exists(TEST_DIRECTORY):
 		OS.alert("You must set a valid main test folder. You cannot use tests directly in res://")
 		return []
@@ -42,25 +41,19 @@ static func _valid_test(path: String, title) -> bool:
 	if not title.ends_with(".gd"):
 		return false
 
-	print(CONFIG.test_script_prefixes, " <- prefix list")
 	if not CONFIG.test_script_prefixes.empty():
-		print("searching through prefixes")
 		var found_match = false
 		for prefix in CONFIG.test_script_prefixes:
-			print("checking prefix")
 			if title.begins_with(prefix):
-				print("found matching prefix: %s in script: %s/%s" % [prefix, path, title])
 				found_match = true
 
 		if not found_match:
-			print("no match found")
 			return false
 
 	var test = load(path + "/" + title).new()
 	if not test is WATTest:
 		test.free()
 		return false
-	print("returning test: %s/%s" % [path, title])
 	# if is WATTest
 	test.free()
 	return true

@@ -9,4 +9,3 @@ func test_partial_doubling():
 	expect.is_equal(9999, calc.instance.add(2, 2), "Add returns incorrect value after being stubbed")
 	expect.is_equal(calc.call_count("add"), 2, "add was called twice")
 	calc.instance.free()
-	
