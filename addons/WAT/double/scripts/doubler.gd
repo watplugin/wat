@@ -6,6 +6,7 @@ enum {
 }
 
 # Controllers
+const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
 const TOKENIZER = preload("res://addons/WAT/double/scripts/tokenizer.gd")
 const REWRITER = preload("res://addons/WAT/double/scripts/rewriter.gd")
 const IO = preload("res://addons/WAT/utils/input_output.gd")
@@ -28,14 +29,14 @@ class NodeData extends Reference:
 		self.script = script
 		self.methods = methods
 
-static func script(gdscript, strategy = FULL) -> SCRIPT_DATA:
+static func script(gdscript, strategy = _default_strategy()) -> SCRIPT_DATA:
 	var script: Script = IO.load_script(gdscript)
 	var tokens = TOKENIZER.start(script)
 	var rewrite: String = REWRITER.start(tokens)
 	var save_path = IO.save_script(tokens.title, rewrite)
 	return SCRIPT_DATA.new(tokens.methods, IO.load_doubled_script(save_path), strategy)
 
-static func scene(tscn, strategy = FULL) -> SCENE_DATA:
+static func scene(tscn, strategy = _default_strategy()) -> SCENE_DATA:
 	var copy: Node = IO.load_scene_instance(tscn)
 	var outline: Array = double(copy)
 	copy.free()
@@ -43,7 +44,7 @@ static func scene(tscn, strategy = FULL) -> SCENE_DATA:
 	IO.save_scene(tree, tree.name)
 	var nodes: Dictionary = create_scene_data(tree, outline, strategy)
 	return SCENE_DATA.new(nodes, tree)
-	
+
 static func create_scene_data(instance: Node, outline: Array, strategy: int) -> Dictionary:
 	var nodes: Dictionary = {}
 	for data in outline:
@@ -53,12 +54,12 @@ static func create_scene_data(instance: Node, outline: Array, strategy: int) -> 
 			var methods = data.methods
 			nodes[path] = SCRIPT_DATA.new(methods, node, strategy)
 	return nodes
-	
+
 static func double(root: Node):
 	var count: int = 0
 	var tree: Array = []
 	var frontier: Array = []
-	
+
 	# Handle root as a special case
 	frontier += root.get_children()
 	if root.script != null:
@@ -88,17 +89,20 @@ static func double(root: Node):
 
 
 static func double_tree(outline: Array) -> Node:
-	
+
 	# Handling root as a special case
 	var first = outline.pop_front()
 	var root: Node = load(first.script).new() if first.script != null else Node.new()
 	root.name = first.title
-	
+
 	# Handling other cases
 	for i in outline:
 		var n: Node = load(i.script).new() if i.script != null else Node.new()
 		root.add_child(n) if i.parent == "." else root.get_node(i.parent).add_child(n)
 		n.name = i.title
 		n.owner = root
-		
+
 	return root
+
+static func _default_strategy() -> int:
+	return PARTIAL if CONFIG.double_strategy_is_partial else FULL
