@@ -12,7 +12,8 @@ class TestInfo:
 	var methods: Array = []
 
 static func tests() -> Array:
-	if TEST_DIRECTORY.empty() or TEST_DIRECTORY == "res://" or TEST_DIRECTORY == "" or Directory.new().dir_exists(TEST_DIRECTORY):
+	print(TEST_DIRECTORY, " is main folder")
+	if TEST_DIRECTORY.empty() or TEST_DIRECTORY == "res://" or TEST_DIRECTORY == "" or not Directory.new().dir_exists(TEST_DIRECTORY):
 		OS.alert("You must set a valid main test folder. You cannot use tests directly in res://")
 		return []
 	var dirs: Array = [TOP_DIRECTORY]
