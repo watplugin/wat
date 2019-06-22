@@ -14,6 +14,10 @@ var tests: Array = []
 var methods: Array = []
 var test: TEST
 
+func _cancel_test_on_crash(data) -> void:
+	cases.crash_current(data)
+	output("CRASHED: %s because (%s, Result: %s)" % [cases.current.title, data.expected, data.result])
+	_end()
 
 func output(msg: String) -> void:
 	emit_signal("output", msg)
@@ -36,11 +40,14 @@ func _start() -> void:
 		return
 	test = tests.pop_front().new()
 	test.connect("OUTPUT", self, "output")
+	test.expect.connect("CRASHED", self, "_cancel_test_on_crash")
 	cases.create(test)
 	add_child(test)
 	methods = COLLECT.methods(test)
-	test.start()
 	output("Executing: %s" % test.title())
+	test.start()
+	if cases.current.crashed:
+		return
 	_pre()
 
 func _pre():

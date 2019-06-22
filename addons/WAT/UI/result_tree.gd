@@ -4,6 +4,7 @@ tool
 onready var _display = $Display
 const _SUCCESS: Color = Color(0, 1, 0, 1)
 const _FAILED: Color = Color(1, 1, 1, 1)
+const _CRASHED: Color = Color(1, 1, 0, 1)
 var _successes: int = 0
 var _total: int = 0
 var _root: TreeItem
@@ -26,8 +27,24 @@ func display(cases: Array):
 	_root.set_custom_color(1, _SUCCESS if _successes == _total else _FAILED)
 
 func _display_results(case) -> void:
-	_successes += 1 if case.success() else 0
 	_total += 1
+	if case.crashed:
+		var crash: TreeItem = _display.create_item(_root)
+		crash.set_text(0, case.title)
+		crash.set_text(1, "Crashed")
+		crash.set_custom_color(0, _CRASHED)
+		crash.set_custom_color(1, _CRASHED)
+		var crash_data: TreeItem = _display.create_item(crash)
+		crash_data.set_text(0, case.crash_data.expected)
+		crash_data.set_text(1, case.crash_data.result)
+		crash_data.set_custom_color(0, _CRASHED)
+		crash_data.set_custom_color(1, _CRASHED)
+		_cache.append(crash)
+		_root.set_custom_color(0, _CRASHED)
+		_root.set_custom_color(1, _CRASHED)
+		return
+	_successes += 1 if case.success() else 0
+
 
 	var script: TreeItem = _display.create_item(_root)
 	script.collapsed = true

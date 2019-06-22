@@ -7,6 +7,7 @@ const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
 const DOUBLE = preload("res://addons/WAT/double/scripts/doubler.gd")
 const WATCHER = preload("res://addons/WAT/test/watcher.gd")
 const YIELD: String = "finished"
+const CRASH_IF_TEST_FAILS: bool = true
 signal OUTPUT
 var expect: EXPECTATIONS
 var watcher: WATCHER

@@ -4,6 +4,10 @@ tool
 var list: Array = []
 var current: Case
 
+func crash_current(data):
+	current.crashed = true
+	current.crash_data = data
+
 func create(test) -> void:
 	var case = Case.new(test)
 	self.current = case
@@ -22,6 +26,8 @@ func script_details_to_string() -> String:
 	return "%s:  %s" % ["PASSED" if current.success() else "FAILED", current.title]
 
 class Case extends Reference:
+	var crashed: bool = false
+	var crash_data
 	var title: String
 	var methods: Array = []
 	var _totals: int = 0

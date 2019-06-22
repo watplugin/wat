@@ -14,14 +14,14 @@ margin_bottom = 598.0
 [node name="Runner" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 1003.0
+margin_right = 1103.0
 margin_bottom = 584.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Results" type="TabContainer" parent="Runner"]
 editor/display_folded = true
-margin_right = 996.0
+margin_right = 1096.0
 margin_bottom = 329.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -34,7 +34,7 @@ script = ExtResource( 1 )
 
 [node name="Output" type="TextEdit" parent="Runner"]
 margin_top = 333.0
-margin_right = 996.0
+margin_right = 1096.0
 margin_bottom = 533.0
 rect_min_size = Vector2( 0, 200 )
 custom_colors/member_variable_color = Color( 1, 1, 1, 1 )
@@ -45,21 +45,21 @@ script = ExtResource( 3 )
 
 [node name="Options" type="HBoxContainer" parent="Runner"]
 margin_top = 537.0
-margin_right = 996.0
+margin_right = 1096.0
 margin_bottom = 577.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
 script = ExtResource( 4 )
 
 [node name="VBox" type="VBoxContainer" parent="Runner/Options"]
-margin_right = 241.0
+margin_right = 129.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="RunAll" type="Button" parent="Runner/Options/VBox"]
-margin_right = 241.0
+margin_right = 129.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -67,20 +67,20 @@ text = "Run All Tests"
 
 [node name="Expand" type="Button" parent="Runner/Options/VBox"]
 margin_top = 20.0
-margin_right = 241.0
+margin_right = 129.0
 margin_bottom = 40.0
 text = "Expand All Results"
 
 [node name="Folder" type="VBoxContainer" parent="Runner/Options"]
-margin_left = 251.0
-margin_right = 492.0
+margin_left = 139.0
+margin_right = 331.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Run" type="Button" parent="Runner/Options/Folder"]
-margin_right = 241.0
+margin_right = 192.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -88,7 +88,7 @@ text = "Run Selected Directory"
 
 [node name="Select" type="OptionButton" parent="Runner/Options/Folder"]
 margin_top = 20.0
-margin_right = 241.0
+margin_right = 192.0
 margin_bottom = 40.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -97,21 +97,21 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/hseparation = 20
 button_mask = 3
-text = "Select Directory"
+text = "res://tests/Bootstrap"
 align = 1
-items = [ "Select Directory", null, false, 0, null ]
+items = [ "res://tests/Bootstrap", null, false, -1, null, "res://tests/Exercise", null, false, -1, null ]
 selected = 0
 
 [node name="TestScript" type="VBoxContainer" parent="Runner/Options"]
-margin_left = 502.0
-margin_right = 743.0
+margin_left = 341.0
+margin_right = 652.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Run" type="Button" parent="Runner/Options/TestScript"]
-margin_right = 241.0
+margin_right = 311.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -119,16 +119,19 @@ text = "Run Selected Script"
 
 [node name="Select" type="OptionButton" parent="Runner/Options/TestScript"]
 margin_top = 20.0
-margin_right = 241.0
+margin_right = 311.0
 margin_bottom = 40.0
 hint_tooltip = "select a single test script to run (your choices depend on which folder is selected)."
 size_flags_horizontal = 3
 size_flags_vertical = 3
+text = "res://tests/Bootstrap/test_expectations.gd"
 align = 1
+items = [ "res://tests/Bootstrap/test_expectations.gd", null, false, -1, null, "res://tests/Bootstrap/test_watcher.gd", null, false, -1, null ]
+selected = 0
 
 [node name="Method" type="VBoxContainer" parent="Runner/Options"]
-margin_left = 753.0
-margin_right = 996.0
+margin_left = 662.0
+margin_right = 1096.0
 margin_bottom = 40.0
 hint_tooltip = "select a single test method to run (from the selected script)"
 size_flags_horizontal = 3
@@ -136,7 +139,7 @@ size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Run" type="Button" parent="Runner/Options/Method"]
-margin_right = 243.0
+margin_right = 434.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -144,8 +147,11 @@ text = "Run Selected Method"
 
 [node name="Select" type="OptionButton" parent="Runner/Options/Method"]
 margin_top = 20.0
-margin_right = 243.0
+margin_right = 434.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+text = "test_expectation_methods_pass_when_passed_correct_values"
 align = 1
+items = [ "test_expectation_methods_pass_when_passed_correct_values", null, false, -1, null, "test_expectation_methods_fail_when_passed_incorrect_values", null, false, -1, null ]
+selected = 0

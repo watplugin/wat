@@ -15,6 +15,7 @@ const YELLOW: Color = Color(1, 1, 0, 1)
 const GREEN: Color = Color(0, 1, 0, 1)
 const RED: Color = Color(0.5, 0, 0, 1)
 const USER_COLOR = Color(0.5, 0.5, 1, 1)
+const CRASHED: String = "CRASHED"
 #const PURPLE: Color = Color(0.5, 0.5, 1, 1)
 
 var queue: Array = []
@@ -36,6 +37,7 @@ func _ready():
 	add_keyword_color(VECTOR2, WHITE)
 	add_keyword_color(VECTOR3, WHITE)
 	add_keyword_color(USER, USER_COLOR)
+	add_keyword_color(CRASHED, YELLOW)
 
 func _output(msg):
 	queue.append("%s\n" % msg)
