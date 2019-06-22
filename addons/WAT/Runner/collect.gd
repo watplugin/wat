@@ -84,6 +84,11 @@ static func methods(test) -> Array:
 	return results
 
 static func is_valid_method(method: String) -> bool:
-	if method.begins_with("test_"):
+	if CONFIG.test_methods_with_prefixes.empty():
 		return true
+	else:
+		for prefix in CONFIG.test_methods_with_prefixes:
+			if method.begins_with(prefix):
+				return true
 	return false
+
