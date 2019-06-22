@@ -13,5 +13,5 @@ show_subdirectories_in_their_own_tabs = true
 display_tests_that_pass = true
 display_tests_that_fail = true
 main_test_folder = "res://tests/"
-test_scripts_with_prefixes = [ "", "", "" ]
+test_scripts_with_prefixes = [ "test_", "" ]
 test_methods_with_prefixes = [  ]

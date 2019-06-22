@@ -17,7 +17,6 @@ static func tests() -> Array:
 	if CONFIG.tests_include_subdirectories:
 		dirs += _get_subdirs()
 	for subdirectory in dirs:
-		print(dirs)
 		tests += _collect_tests(subdirectory)
 	return tests
 
@@ -34,15 +33,33 @@ static func _collect_tests(subdirectory) -> Array:
 			results.append(load(TEST_DIRECTORY + subdirectory + "/" + title))
 		title = dir.get_next()
 	return results
-
+#export(Array, String) var test_scripts_with_prefixes = []
 static func _valid_test(path: String, title) -> bool:
-	if title.ends_with(".gd"):
-		# Add Prefix checks here
-		var test = load(path + "/" + title).new()
-		if test is WATTest:
-			test.free()
-			return true
-	return false
+	if not title.ends_with(".gd"):
+		return false
+
+	print(CONFIG.test_scripts_with_prefixes, " <- prefix list")
+	if not CONFIG.test_scripts_with_prefixes.empty():
+		print("searching through prefixes")
+		var found_match = false
+		for prefix in CONFIG.test_scripts_with_prefixes:
+			print("checking prefix")
+			if title.begins_with(prefix):
+				print("found matching prefix: %s in script: %s/%s" % [prefix, path, title])
+				found_match = true
+
+		if not found_match:
+			print("no match found")
+			return false
+
+	var test = load(path + "/" + title).new()
+	if not test is WATTest:
+		test.free()
+		return false
+	print("returning test: %s/%s" % [path, title])
+	# if is WATTest
+	test.free()
+	return true
 
 static func _get_subdirs() -> Array:
 	var results: Array = []
