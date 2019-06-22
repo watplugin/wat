@@ -58,7 +58,7 @@ func test_all_should_pass():
 	expect.string_does_not_begin_with("World", "Hello World", "Hello World does not begin with World")
 	expect.string_does_not_contain("FooBar", "Hello World", "Hello World does not contain FooBar")
 	expect.string_does_not_end_with("Hello", "Hello World", "Hello World does not end with Hello")
-	expect.file_exists("res://tests/test_things.gd", "This test file exists")
+	expect.file_exists("res://tests/exercise/test_exercise_expectations.gd", "This test file exists")
 	expect.file_does_not_exist("res://tests/bad_tests.gd", "bad_tests.gd does not exist")
 
 
@@ -72,6 +72,10 @@ func test_all_should_pass():
 	expect.signal_was_not_emitted(self, "b", "b was not emitted")
 	expect.was_called_with_arguments(calc, "add", {"a": 2, "b": 2}, "add was called with 2, 2")
 
+	var obj = Node.new()
+	expect.is_not_freed(obj, "Test Node is not freed")
+	obj.free()
+	expect.is_freed(obj, "Test Node is freed")
 
 
 #func was_called_with_arguments(double, method: String, arguments: Dictionary, expected: String) -> void:
@@ -111,7 +115,7 @@ func test_all_should_fail():
 	expect.string_does_not_contain("ello", "Hello World", "Hello World does not contain ello")
 	expect.string_does_not_end_with("World", "Hello World", "Hello World does not end with World")
 	expect.file_exists("res://tests/bad_test.gd", "This test file exists")
-	expect.file_does_not_exist("res://tests/test_things.gd", "This test file does not exist")
+	expect.file_does_not_exist("res://tests/Exercise/test_exercise_expectations.gd", "This test file does not exist")
 
 	# Some Double Specific things
 	expect.was_called(calc, "subtract", "subtract was called")
@@ -125,7 +129,10 @@ func test_all_should_fail():
 	expect.was_called_with_arguments(calc, "add", {"a": 10, "b": 2}, "add was called with 10, 2")
 	expect.was_called_with_arguments(calc, "subtract", {"a": 2, "b": 2}, "subtract was called with 2, 2")
 
-
+	var obj = Node.new()
+	expect.is_freed(obj, "Test Node is freed")
+	obj.free()
+	expect.is_not_freed(obj, "Test Node is not freed")
 
 
 

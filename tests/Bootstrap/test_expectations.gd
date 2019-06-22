@@ -54,7 +54,10 @@ func test_expectation_methods_pass_when_passed_correct_values():
 	expect.is_true(METHOD.STRING_DOES_NOT_END_WITH.new("Hello", "Hello World", "").success, "string_does_not_end_with passes when passed: String 'Hello', String 'Hello World'")
 	expect.is_true(METHOD.FILE_EXISTS.new("res://tests/BootStrap/test_expectations.gd", "").success, "file_exists passes when passed: self (res://tests/BootStrap/test_expectations.gd")
 	expect.is_true(METHOD.FILE_DOES_NOT_EXIST.new("res://tests/bad_tests.gd", "").success, "file_does_not_exists passes when passed: 'res://tests/bad_tests.gd'")
-
+	var obj = Node.new()
+	expect.is_true(METHOD.IS_NOT_FREED.new(obj, "").success, "is_not_freed passes when passed: Node in memory")
+	obj.free()
+	expect.is_true(METHOD.IS_FREED.new(obj, "").success, "is_freed passes when passed: Node deleted from memory")
 #	# Some Double Specific Things
 #	expect.was_called(calc, "add", "add was called")
 #	expect.was_not_called(calc, "subtract", "subtract was not called")
@@ -109,8 +112,12 @@ func test_expectation_methods_fail_when_passed_incorrect_values():
 	expect.is_false(METHOD.STRING_DOES_NOT_END_WITH.new("World", "Hello World", "").success, "string_does_not_end_with fails when passed: String 'World', String 'Hello World'")
 	expect.is_false(METHOD.FILE_EXISTS.new("res://tests/bad_tests.gd", "").success, "file_exists fails when passed: 'res://tests/bad_tests.gd'")
 	expect.is_false(METHOD.FILE_DOES_NOT_EXIST.new("res://tests/BootStrap/test_expectations.gd", "").success, "file_does_not_exist fails when passed: 'res://tests/BootStrap/test_expectations.gd'")
-#
-#
+
+	var obj = Node.new()
+	expect.is_false(METHOD.IS_FREED.new(obj, "").success, "is_freed fails when passed: Node in memory")
+	obj.free()
+	expect.is_false(METHOD.IS_NOT_FREED.new(obj, "").success, "is_not_freed fails when passed: Node deleted from memory")
+
 #	# Some Double Specific things
 #	expect.was_called(calc, "subtract", "subtract was called")
 #	expect.was_not_called(calc, "add", "add was not called")
