@@ -10,6 +10,7 @@ onready var Yield = $Yielder
 signal display_results
 signal output
 signal clear
+var current_method: String
 var tests: Array = []
 var methods: Array = []
 var test: TEST
@@ -51,15 +52,24 @@ func _start() -> void:
 	_pre()
 
 func _pre():
-	if methods.empty():
-		_end() # In case we load an empty script
-	while not methods.empty():
-		var method: String = methods.pop_front()
-		var clean = method.substr(method.find("_"), method.length()).replace("_", " ").dedent()
+	var clean: String
+	if test.rerun_method:
+		print("testing current method: %s" % current_method)
+		clean = current_method.substr(current_method.find("_"), current_method.length()).replace("_", " ").dedent()
 		output("Executing Method: %s" % clean)
-		cases.current.add_method(method)
+		cases.current.add_method(current_method)
 		test.pre()
-		_execute_test_method(method)
+		_execute_test_method(current_method)
+	elif not methods.empty():
+		current_method = methods.pop_front()
+		clean = current_method.substr(current_method.find("_"), current_method.length()).replace("_", " ").dedent()
+		output("Executing Method: %s" % clean)
+		cases.current.add_method(current_method)
+		test.pre()
+		_execute_test_method(current_method)
+	elif methods.empty():
+		_end()
+
 
 func _execute_test_method(method: String):
 	test.call(method)
@@ -71,7 +81,7 @@ func _post():
 	test.post()
 	for detail in cases.method_details_to_string():
 		output(detail)
-	_end() if methods.empty() else _pre()
+	_end() if methods.empty() and not test.rerun_method else _pre()
 
 func _end():
 	test.end()

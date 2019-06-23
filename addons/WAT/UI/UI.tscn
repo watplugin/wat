@@ -151,4 +151,7 @@ margin_right = 243.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+text = "test_inline_data"
 align = 1
+items = [ "test_inline_data", null, false, -1, null ]
+selected = 0

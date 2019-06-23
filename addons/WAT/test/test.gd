@@ -11,6 +11,33 @@ const CRASH_IF_TEST_FAILS: bool = true
 signal OUTPUT
 var expect: EXPECTATIONS
 var watcher: WATCHER
+var _p_keys: Array = []
+var _p_values: Array = []
+var p: Dictionary = {}
+var rerun_method: bool = false
+
+#parameters([["a", "b", "expected"], [2, 2, 4], [5, 5, 10], [7, 7, 14]])
+func parameters(list: Array) -> void:
+	if _p_keys.empty():
+		# Keys aren't empty, so we'll be updating this implicilty every time a call is made instead
+		self._p_keys = list.pop_front()
+		self._p_values = list
+	update_parameters()
+
+func update_parameters():
+	print("updating")
+	p.clear()
+	var values = _p_values.pop_front()
+	for i in _p_keys.size():
+		print("index %s" % i)
+		p[_p_keys[i]] = values[i]
+	if not _p_values.empty():
+		rerun_method = true
+	else:
+		rerun_method = false
+		print(rerun_method, ", rerun method?")
+	print("keys: %s / values: %s" % [p.keys(), p.values()])
+
 
 func output(msg: String):
 	emit_signal("OUTPUT", "USER: %s" % msg)
@@ -21,6 +48,7 @@ func _init():
 func _set_properties():
 	expect = EXPECTATIONS.new()
 	watcher = WATCHER.new()
+
 
 func start():
 	pass

@@ -1,8 +1,6 @@
 extends WATTest
 
-func start():
-	print("running")
-	expect.is_true(false, "This should crash", CRASH_IF_TEST_FAILS)
-
-func example_method():
-	expect.is_true(true, "true is true")
+func test_inline_data():
+	parameters([["a", "b", "expected"], [2, 2, 4], [5, 5, 10], [7, 7, 14]])
+	var calc = Calculator.new()
+	expect.is_equal(calc.add(p.a, p.b), p.expected, "%s + %s == %s" % [p.a, p.b, p.expected])
