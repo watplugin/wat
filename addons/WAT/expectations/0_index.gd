@@ -53,7 +53,7 @@ func is_not_class_instance(instance, type, expected: String, crash_on_failure: b
 	output(EXPECT.IS_NOT_CLASS_INSTANCE.new(instance, type, expected), crash_on_failure)
 
 func is_built_in_type(value, type, expected: String, crash_on_failure: bool = false) -> void:
-	print("WARNING: is_built_in_type is depreceated. Use is_x where x is builtin type")
+	print("WARNING: is_built_in_type is deprecated. Use is_x where x is builtin type")
 	output(EXPECT.IS_BUILT_IN_TYPE.new(value, type, expected), crash_on_failure)
 
 func is_not_built_in_type(value, type: int, expected: String, crash_on_failure: bool = false) -> void:
