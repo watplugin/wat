@@ -20,7 +20,7 @@ static func tests() -> Array:
 	if CONFIG.tests_include_subdirectories:
 		dirs += _get_subdirs()
 	for subdirectory in dirs:
-		tests += _collect_tests(subdirectory)
+		tests += _collect_tests("/" + subdirectory)
 	return tests
 
 static func _collect_tests(subdirectory) -> Array:
@@ -28,12 +28,12 @@ static func _collect_tests(subdirectory) -> Array:
 	var results: Array = []
 	var ONLY_SEARCH_CHILDREN: bool = true
 	var dir: Directory = Directory.new()
-	dir.open("%s%s" % [TEST_DIRECTORY, subdirectory])
+	dir.open("%s" % [path])
 	dir.list_dir_begin(ONLY_SEARCH_CHILDREN)
 	var title: String = dir.get_next()
 	while title != "":
 		if _valid_test(path, title):
-			results.append(load(TEST_DIRECTORY + subdirectory + "/" + title))
+			results.append(load(TEST_DIRECTORY + "/" + subdirectory + "/" + title))
 		title = dir.get_next()
 	return results
 #export(Array, String) var test_scripts_with_prefixes = []
