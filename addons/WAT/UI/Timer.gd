@@ -8,11 +8,9 @@ var timer
 
 func _ready() -> void:
 	self.timer = Timer.new()
+	add_child(timer)
 	timer.wait_time = 0.1
-	timer.autostart = true
-	timer.set_process(true)
 	self.timer.connect("timeout", self, "_add_ms")
-#	set_process(true)
 
 func _process(delta):
 	if ms > 9:
@@ -27,10 +25,10 @@ func _start() -> void:
 	ms = 0
 	s = 0
 	m = 0
-	add_child(self.timer)
+	self.timer.start()
 
 func _stop() -> void:
-	remove_child(self.timer)
+	self.timer.stop()
 
 func _add_ms():
 	ms += 1

@@ -61,7 +61,6 @@ text = "0: 0: 0"
 script = ExtResource( 4 )
 
 [node name="Options" type="HBoxContainer" parent="Runner"]
-editor/display_folded = true
 margin_top = 537.0
 margin_right = 996.0
 margin_bottom = 577.0
@@ -115,9 +114,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/hseparation = 20
 button_mask = 3
-text = "res://tests/"
+text = "res://tests"
 align = 1
-items = [ "res://tests/", null, false, -1, null, "res://tests/Bootstrap", null, false, -1, null, "res://tests/Exercise", null, false, -1, null ]
+items = [ "res://tests", null, false, -1, null, "res://tests/Bootstrap", null, false, -1, null, "res://tests/Exercise", null, false, -1, null ]
 selected = 0
 
 [node name="TestScript" type="VBoxContainer" parent="Runner/Options"]
@@ -147,29 +146,17 @@ align = 1
 items = [ "res://tests/builtins.gd", null, false, -1, null, "res://tests/new_script.gd", null, false, -1, null ]
 selected = 0
 
-[node name="Method" type="VBoxContainer" parent="Runner/Options"]
+[node name="Debug" type="VBoxContainer" parent="Runner/Options"]
 margin_left = 753.0
 margin_right = 996.0
 margin_bottom = 40.0
-hint_tooltip = "select a single test method to run (from the selected script)"
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
-[node name="Run" type="Button" parent="Runner/Options/Method"]
-margin_right = 243.0
-margin_bottom = 20.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Run Selected Method"
-
-[node name="Select" type="OptionButton" parent="Runner/Options/Method"]
-margin_top = 20.0
+[node name="PrintStrayNodes" type="Button" parent="Runner/Options/Debug"]
 margin_right = 243.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "test_built_ins_all_should_pass"
-align = 1
-items = [ "test_built_ins_all_should_pass", null, false, -1, null, "test_built_ins_all_should_fail", null, false, -1, null ]
-selected = 0
+text = "Print Stray Nodes"

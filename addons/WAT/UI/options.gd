@@ -4,26 +4,26 @@ tool
 const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
 onready var FolderSelect: OptionButton = $Folder/Select
 onready var ScriptSelect: OptionButton = $TestScript/Select
-onready var MethodSelect: OptionButton = $Method/Select
 onready var RunFolder: OptionButton = $Folder/Run
 onready var RunScript: OptionButton = $TestScript/Run
-onready var RunMethod: OptionButton = $Method/Run
+onready var PrintStrayNodes: Button = $Debug/PrintStrayNodes
 signal RUN
 signal START_TIME
 
 func _ready() -> void:
 	_select_folder()
 	_select_script()
-	_select_method()
 	_connect()
 
 func _connect():
+	PrintStrayNodes.connect("pressed", self, "_print_stray_nodes")
 	FolderSelect.connect("pressed", self, "_select_folder")
 	ScriptSelect.connect("pressed", self, "_select_script")
-	MethodSelect.connect("pressed", self, "_select_method")
 	RunFolder.connect("pressed", self, "_run_folder")
 	RunScript.connect("pressed", self, "_run_script")
-	RunMethod.connect("pressed", self, "_run_method")
+
+func _print_stray_nodes():
+	print_stray_nodes()
 
 func _select_folder() -> void:
 	FolderSelect.clear()
@@ -53,15 +53,6 @@ func _select_script() -> void:
 			ScriptSelect.add_item("%s/%s" % [path, file])
 		file = dir.get_next()
 
-func _select_method() -> void:
-	MethodSelect.clear()
-	if ScriptSelect.items.size() <= 0:
-		return
-	var test = load(_get_item_text(ScriptSelect)).new()
-	for method in test.get_method_list():
-		if _valid_method(method.name):
-			MethodSelect.add_item(method.name)
-
 func _run_folder() -> void:
 	var tests: Array = []
 	var dir: Directory = Directory.new()
@@ -86,9 +77,6 @@ func _run_script() -> void:
 		emit_signal("RUN", [load(path)])
 	else:
 		OS.alert("Not a Valid Test Script")
-
-func _run_method() -> void:
-	OS.alert("Not Implemented Yet")
 
 func _valid_test(file: String) -> bool:
 	return file.ends_with(".gd")
