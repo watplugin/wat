@@ -142,9 +142,9 @@ margin_bottom = 40.0
 hint_tooltip = "select a single test script to run (your choices depend on which folder is selected)."
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "res://tests/new_script.gd"
+text = "res://tests/builtins.gd"
 align = 1
-items = [ "res://tests/new_script.gd", null, false, -1, null ]
+items = [ "res://tests/builtins.gd", null, false, -1, null, "res://tests/new_script.gd", null, false, -1, null ]
 selected = 0
 
 [node name="Method" type="VBoxContainer" parent="Runner/Options"]
@@ -169,7 +169,7 @@ margin_right = 243.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "test_inline_data"
+text = "test_built_ins_all_should_fail"
 align = 1
-items = [ "test_inline_data", null, false, -1, null ]
+items = [ "test_built_ins_all_should_fail", null, false, -1, null, "test_built_ins_all_should_pass", null, false, -1, null ]
 selected = 0
