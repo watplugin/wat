@@ -1,15 +1,6 @@
 extends PanelContainer
 tool
 
-#func _start() -> void:
-#	# Called from buttons
-#	if not timer.is_inside_tree():
-#		add_child(timer)
-#	if timer.is_stopped():
-#		timer.start()
-#
-#func _stop() -> void:
-#	timer.stop()
 
 
 func _ready():
@@ -33,6 +24,7 @@ func _ready():
 	Runner.connect("clear", Results, "_clear")
 	Runner.connect("end_time", TotalTimer, "_stop")
 	Expand.connect("pressed", Results, "_expand_all", [Expand])
+	Options.connect("START_TIME", TotalTimer, "_start")
 	Options.connect("RUN", Runner, "_run")
 	# PrintStrayNodes
 	# ScriptSelects

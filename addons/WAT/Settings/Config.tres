@@ -10,6 +10,6 @@ exclude_void_typed_return_values_in_doubled_scripts = true
 double_strategy_is_partial = false
 tests_include_subdirectories = true
 show_subdirectories_in_their_own_tabs = true
-main_test_folder = "res://tests/"
+main_test_folder = "res://tests"
 test_script_prefixes = [  ]
 test_method_prefix = "test"

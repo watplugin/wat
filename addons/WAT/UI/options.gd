@@ -9,6 +9,7 @@ onready var RunFolder: OptionButton = $Folder/Run
 onready var RunScript: OptionButton = $TestScript/Run
 onready var RunMethod: OptionButton = $Method/Run
 signal RUN
+signal START_TIME
 
 func _ready() -> void:
 	_select_folder()
@@ -35,7 +36,7 @@ func _select_folder() -> void:
 	var folder = dir.get_next()
 	while folder != "":
 		if dir.current_is_dir():
-			FolderSelect.add_item("%s%s" % [CONFIG.main_test_folder, folder])
+			FolderSelect.add_item("%s/%s" % [CONFIG.main_test_folder, folder])
 		folder = dir.get_next()
 
 func _select_script() -> void:
@@ -49,7 +50,7 @@ func _select_script() -> void:
 	var file = dir.get_next()
 	while file != "":
 		if _valid_test(file):
-			ScriptSelect.add_item("%s%s" % [path, file])
+			ScriptSelect.add_item("%s/%s" % [path, file])
 		file = dir.get_next()
 
 func _select_method() -> void:
@@ -70,8 +71,9 @@ func _run_folder() -> void:
 	var file = dir.get_next()
 	while file != "":
 		if _valid_test(file):
-			tests.append(load("%s%s" % [path, file]))
+			tests.append(load("%s/%s" % [path, file]))
 		file = dir.get_next()
+	emit_signal("START_TIME")
 	emit_signal("RUN", tests)
 
 func _run_script() -> void:
@@ -80,6 +82,7 @@ func _run_script() -> void:
 		return
 	var path: String = ScriptSelect.get_item_text(ScriptSelect.selected)
 	if _valid_test(path):
+		emit_signal("START_TIME")
 		emit_signal("RUN", [load(path)])
 	else:
 		OS.alert("Not a Valid Test Script")
