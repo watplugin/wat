@@ -25,18 +25,15 @@ func parameters(list: Array) -> void:
 	update_parameters()
 
 func update_parameters():
-	print("updating")
 	p.clear()
 	var values = _p_values.pop_front()
 	for i in _p_keys.size():
-		print("index %s" % i)
 		p[_p_keys[i]] = values[i]
-	if not _p_values.empty():
-		rerun_method = true
-	else:
-		rerun_method = false
-		print(rerun_method, ", rerun method?")
-	print("keys: %s / values: %s" % [p.keys(), p.values()])
+	rerun_method = not _p_values.empty()
+#	if not _p_values.empty():
+#		rerun_method = true
+#	else:
+#		rerun_method = false
 
 
 func output(msg: String):

@@ -1,7 +1,15 @@
 extends PanelContainer
 tool
 
-
+#func _start() -> void:
+#	# Called from buttons
+#	if not timer.is_inside_tree():
+#		add_child(timer)
+#	if timer.is_stopped():
+#		timer.start()
+#
+#func _stop() -> void:
+#	timer.stop()
 
 
 func _ready():
@@ -12,15 +20,18 @@ func _ready():
 	var Output = get_node("UI/Runner/Output")
 	var Expand = get_node("UI/Runner/Options/VBox/Expand")
 	var Options = get_node("UI/Runner/Options")
+	var TotalTimer = get_node("UI/Runner/Details/Timer")
 	# Connect Nodes
 
 	Output.connect("finished", Runner, "_finish")
+	RunAll.connect("pressed", TotalTimer, "_start")
 	RunAll.connect("pressed", Runner, "_run")
 	Runner.connect("output", Output, "_output")
 	Runner.Yield.connect("resume", Runner, "_post")
 	Runner.connect("display_results", Results, "_display_results")
 	Runner.connect("clear", Output, "_clear")
 	Runner.connect("clear", Results, "_clear")
+	Runner.connect("end_time", TotalTimer, "_stop")
 	Expand.connect("pressed", Results, "_expand_all", [Expand])
 	Options.connect("RUN", Runner, "_run")
 	# PrintStrayNodes

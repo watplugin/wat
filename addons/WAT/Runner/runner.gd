@@ -54,7 +54,6 @@ func _start() -> void:
 func _pre():
 	var clean: String
 	if test.rerun_method:
-		print("testing current method: %s" % current_method)
 		clean = current_method.substr(current_method.find("_"), current_method.length()).replace("_", " ").dedent()
 		output("Executing Method: %s" % clean)
 		cases.current.add_method(current_method)
@@ -92,10 +91,13 @@ func _end():
 	# Using call deferred on _start so we can start the next test on a fresh script
 	call_deferred("_start")
 
+signal end_time
+
 func _finish() -> void:
 	# This gets called from output because we want to make sure our output log is finished before
 	# displaying results
 	emit_signal("display_results", cases.list)
+	emit_signal("end_time")
 
 func clear() -> void:
 	emit_signal("clear")
