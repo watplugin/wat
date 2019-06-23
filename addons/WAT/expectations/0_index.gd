@@ -10,6 +10,10 @@ func output(data, crash_on_failure: bool = false) -> void:
 	else:
 		emit_signal("OUTPUT", data)
 
+func loop(method: String, data: Array) -> void:
+	for set in data:
+		callv(method, set)
+
 func is_true(condition: bool, expected: String, crash_on_failure: bool = false) -> void:
 	output(EXPECT.IS_TRUE.new(condition, expected), crash_on_failure)
 
