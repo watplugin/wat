@@ -1,6 +1,10 @@
 extends "base.gd"
 
-func _init(path: String, expected: String) -> void:
-	self.expected = expected
+
+func _init(path: String, context: String) -> void:
+	var passed: String = "%s exists" % path
+	var failed: String = "%s does not exist" % path
+	self.context = context
 	self.success = File.new().file_exists(path)
-	self.result = "%s exists" % path if self.success else "%s does not exist" % path
+	self.expected = "%s exists" % path
+	self.result = passed if self.success else failed

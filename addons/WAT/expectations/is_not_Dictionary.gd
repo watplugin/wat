@@ -1,6 +1,9 @@
 extends "base.gd"
 
-func _init(value, expected: String) -> void:
+func _init(value, context: String) -> void:
+	var passed: String = "%s is not builtin: Dictionary" % value
+	var failed: String = "%s is builtin: Dictionary" % value
+	self.context = context
 	self.success = not value is Dictionary
-	self.expected = expected
-	self.result = "%s is %s built in: Dictionary" % [str(value), "not" if self.success else ""]
+	self.expected = passed
+	self.result = passed if self.success else failed

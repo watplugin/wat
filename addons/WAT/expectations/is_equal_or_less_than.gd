@@ -1,6 +1,11 @@
 extends "base.gd"
 
-func _init(a, b, expected: String) -> void:
+func _init(a, b, context: String) -> void:
+	var typeofa = type2str(a)
+	var typeofb = type2str(b)
+	var passed: String = "|%s| %s <= |%s| %s" % [typeofa, a, typeofb, b]
+	var failed: String = "|%s| %s > |%s| %s" % [typeofa, a, typeofb, b]
+	self.context = context
 	self.success = (a <= b)
-	self.expected = expected
-	self.result = "|%s| %s %s |%s| %s" % [type2str(a), a, ("<=" if self.success else ">"), type2str(b), b]
+	self.expected = passed
+	self.result = passed if self.success else failed

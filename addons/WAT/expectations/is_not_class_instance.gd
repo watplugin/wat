@@ -1,6 +1,9 @@
 extends "base.gd"
 
-func _init(instance, type: Script, expected: String) -> void:
-	self.success = not instance is type
-	self.expected = expected
-	self.result = "|%s| %s %s %s" % [type2str(instance), instance, ("is not" if self.success else "is"), type]
+func _init(instance, klass: Script, context: String) -> void:
+	var passed: String = "%s is not instance of class: %s" % [instance, klass]
+	var failed: String = "%s is instance of class: %s" % [instance, klass]
+	self.context = context
+	self.success = not instance is klass
+	self.expected = passed
+	self.result = passed if self.success else failed

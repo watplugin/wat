@@ -1,8 +1,8 @@
 extends "base.gd"
 
-func _init(emitter, _signal, arguments: Array, expected: String) -> void:
+func _init(emitter, _signal, arguments: Array, context: String) -> void:
 	self.success = false
-	self.expected = expected
+	self.context = context
 	var data = emitter.get_meta("watcher").watching[_signal]
 	if data.emit_count <= 0:
 		self.success = false

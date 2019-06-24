@@ -18,7 +18,7 @@ func method_details_to_string() -> Array:
 	var list = []
 	var method = current.methods.back()
 	for expect in method.expectations:
-		list.append("%s:  %s" % ["PASSED" if expect.success else "FAILED", expect.expected.lstrip("Expect:").dedent()])
+		list.append("%s:  %s" % ["PASSED" if expect.success else "FAILED", expect.context])
 	list.append("%s:  %s" % ["PASSED" if method.success() else "FAILED", method.title])
 	return list
 
@@ -77,12 +77,14 @@ class Method extends Reference:
 		return true if _totals > 0 and _totals == _successes else false
 
 class Expectation extends Reference:
+	var context: String
 	var success: bool
 	var expected: String
 	var result: String
 	var notes: String
 
 	func _init(data):
+		self.context = data.context
 		self.success = data.success
 		self.expected = data.expected
 		self.result = data.result

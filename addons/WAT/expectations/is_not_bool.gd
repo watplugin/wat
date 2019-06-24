@@ -1,6 +1,9 @@
 extends "base.gd"
 
-func _init(value, expected: String) -> void:
-	self.success = not value is bool
-	self.expected = expected
-	self.result = "%s is %s built in: bool" % [str(value), "not" if self.success else ""]
+func _init(value, context: String) -> void:
+	var passed: String = "%s is not builtin: bool" % value
+	var failed: String = "%s is builtin: bool" % value
+	self.context = context
+	self.success = not value is bool 
+	self.expected = passed
+	self.result = passed if self.success else failed

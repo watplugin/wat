@@ -75,9 +75,14 @@ func _display_results(case) -> void:
 		_cache.append(m)
 
 		for expectation in method.expectations:
-			var e: TreeItem = _display.create_item(m)
-			e.set_text(0, expectation.expected)
-			e.set_text(1, expectation.result)
+			var context: TreeItem = _display.create_item(m)
+			_cache.append(context)
+			context.set_text(0, expectation.context)
+			context.set_custom_color(0, _SUCCESS if expectation.success else _FAILED)
+			context.set_custom_color(1, _SUCCESS if expectation.success else _FAILED)
+			var e: TreeItem = _display.create_item(context)
+			e.set_text(0, "Expect: %s" % expectation.expected)
+			e.set_text(1, "Result: %s" % expectation.result)
 			e.set_custom_color(0, _SUCCESS if expectation.success else _FAILED)
 			e.set_custom_color(1, _SUCCESS if expectation.success else _FAILED)
 			e.set_icon(0, _SUCCESS_ICON if expectation.success else _FAILED_ICON)

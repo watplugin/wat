@@ -1,6 +1,10 @@
 extends "base.gd"
 
-func _init(value, container, expected: String) -> void:
+func _init(value, container, context: String) -> void:
+	var passed: String = "%s has %s" % [container, value]
+	var failed: String = "%s has %s" % [container, value]
+	self.context = context
 	self.success = container.has(value)
-	self.expected = expected
-	self.result = "%s %s %s" % [container, ("has" if self.success else "does not have"), value]
+	self.expected = "%s has %s" % [container, value]
+	self.result = passed if self.success else failed
+

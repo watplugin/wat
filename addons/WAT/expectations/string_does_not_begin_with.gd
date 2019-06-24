@@ -1,6 +1,9 @@
 extends "base.gd"
 
-func _init(value, string: String, expected: String) -> void:
+func _init(value: String, string: String, context: String) -> void:
+	var passed: String = "%s does not begin with %s" % [string, value]
+	var failed: String = "%s begins with %s" % [string, value]
+	self.context = context
 	self.success = not string.begins_with(value)
-	self.expected = expected
-	self.result = "%s %s %s" % [string, ("does not begin with" if self.success else "begins with"), value]
+	self.expected = passed
+	self.result = passed if self.success else failed

@@ -1,6 +1,9 @@
 extends "base.gd"
 
-func _init(value, expected: String) -> void:
-	self.success = not value is Vector3
-	self.expected = expected
-	self.result = "%s is %s built in: Vector3" % [str(value), "not" if self.success else ""]
+func _init(value, context: String) -> void:
+	var passed: String = "%s is not builtin: Vector3" % value
+	var failed: String = "%s is builtin: Vector3" % value
+	self.context = context
+	self.success = not value is Vector3 
+	self.expected = passed
+	self.result = passed if self.success else failed

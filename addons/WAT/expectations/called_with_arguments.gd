@@ -1,9 +1,8 @@
 extends "base.gd"
 
-
-func _init(double, method: String, args: Dictionary, expected: String) -> void:
+func _init(double, method: String, args: Dictionary, context: String) -> void:
 	self.result = "method: %s was not called with arguments: %s" % [method, var2str(args).replace("\n", "")]
-	self.expected = expected
+	self.context = context
 	if double.call_count(method) == 0:
 		self.success = false
 		self.result = "method %s was not called at all" % method

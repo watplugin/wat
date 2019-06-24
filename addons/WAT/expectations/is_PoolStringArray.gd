@@ -1,6 +1,9 @@
 extends "base.gd"
 
-func _init(value, expected: String) -> void:
+func _init(value, context: String) -> void:
+	var passed: String = "%s is builtin: PoolStringArray" % value
+	var failed: String = "%s is not builtin: PoolStringArray" % value
+	self.context = context
 	self.success = value is PoolStringArray
-	self.expected = expected
-	self.result = "%s is %s built in: PoolStringArray" % [str(value), "" if self.success else "not"]
+	self.expected = passed
+	self.result = passed if self.success else failed
