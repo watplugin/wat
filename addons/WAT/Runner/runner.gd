@@ -23,12 +23,17 @@ func _cancel_test_on_crash(data) -> void:
 func output(msg: String) -> void:
 	emit_signal("output", msg)
 
-func _run(new_tests: Array = COLLECT.tests()) -> void:
+func error(new_tests) -> bool:
 	if CONFIG.test_method_prefix.empty() or CONFIG.test_method_prefix == "":
 		OS.alert("You must have a test method prefix set")
-		return
+		return true
 	if new_tests.empty():
 		OS.alert("No Scripts To Test!")
+		return true
+	return false
+
+func _run(new_tests: Array = COLLECT.tests()) -> void:
+	if error(new_tests):
 		return
 	clear()
 	output("Starting Test Runner")
@@ -81,7 +86,6 @@ func _post():
 	for detail in cases.method_details_to_string():
 		output(detail)
 	_pre()
-#	_end() if methods.empty() and not test.rerun_method else _pre()
 
 func _end():
 	test.end()
