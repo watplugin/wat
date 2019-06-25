@@ -1,19 +1,26 @@
 extends PanelContainer
 tool
 
+const RUNNER = preload("res://addons/WAT/Runner/runner.gd")
+const YIELDER = preload("res://addons/WAT/Runner/Yielder.gd")
 
 
 func _ready():
 	# Get Nodes
-	var Runner = get_node("Runner")
+#	var Runner = get_node("Runner")
 	var Results = get_node("UI/Runner/Results")
 	var RunAll = get_node("UI/Runner/Options/VBox/RunAll")
 	var Output = get_node("UI/Runner/Output")
 	var Expand = get_node("UI/Runner/Options/VBox/Expand")
 	var Options = get_node("UI/Runner/Options")
 	var TotalTimer = get_node("UI/Runner/Details/Timer")
-	# Connect Nodes
+	var Runner = RUNNER.new()
+	var Yielder = YIELDER.new()
+	Yielder.name = "Yielder"
+	Runner.add_child(Yielder)
+	add_child(Runner)
 
+	# Connect Nodes
 	Output.connect("finished", Runner, "_finish")
 	RunAll.connect("pressed", TotalTimer, "_start")
 	RunAll.connect("pressed", Runner, "_run")

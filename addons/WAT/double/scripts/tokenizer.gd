@@ -6,7 +6,8 @@ const SOURCE = preload("res://addons/WAT/double/objects/source.gd")
 static func start(script) -> SOURCE:
 	script = script if script is Script else load(script)
 	var title: String = "Doubled_%s" % Array(script.resource_path.replace(".gd", "").split("/")).pop_back()
-	var extend: String = ('extends "%s"\n\n' % script.resource_path).strip_edges()
+	var extend: String = ('extends "%s"\n\n' % script.resource_path)
+	print(extend)
 	var source: String = ""
 	while script:
 		source += script.source_code
@@ -53,12 +54,9 @@ static func _extract_tokens(source: String) -> Array:
 	return tokens
 
 static func returns_value(lines: Array, index: int) -> bool:
-#	var lenght_to_return = lines.find("return", index)
-
 	while index < lines.size()-1:
 		index += 1
 		var line = lines[index]
-#		print("0%s0" % line)
 		if line.dedent().begins_with("return"):
 			return true
 		elif line.dedent().begins_with("func"):
