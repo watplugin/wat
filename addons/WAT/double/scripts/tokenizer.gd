@@ -31,18 +31,18 @@ static func _tokenize(source: String):
 	return results
 
 static func _extract_tokens(source: String) -> Array:
-	var t = []
-	var not_found: int = -1
-	var search_index: int = 0
-	var previous = []
-	print(source, "\nEND")
-	while not search_index in previous:
-		print("search index: %s" % search_index)
-		previous.append(search_index)
-		search_index = source.findn("func", search_index)
-		t.append(source.substr(search_index, 4))
-		search_index += 1
-		print(previous)
+#	var t = []
+#	var not_found: int = -1
+#	var search_index: int = 0
+#	var previous = []
+#	print(source, "\nEND")
+#	while not search_index in previous:
+#		print("search index: %s" % search_index)
+#		previous.append(search_index)
+#		search_index = source.findn("func", search_index)
+#		t.append(source.substr(search_index, 4))
+#		search_index += 1
+#		print(previous)
 
 	var lines: Array = source.split("\n")
 	var tokens: Array = []
