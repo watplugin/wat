@@ -40,12 +40,8 @@ func output(msg: String):
 	emit_signal("OUTPUT", "USER: %s" % msg)
 
 func _init():
-	_set_properties()
-
-func _set_properties():
 	expect = EXPECTATIONS.new()
 	watcher = WATCHER.new()
-
 
 func start():
 	pass
