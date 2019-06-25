@@ -18,6 +18,7 @@ func success() -> bool:
 	return _successes == _total
 
 func display(cases: Array):
+	_cache = []
 	_root = _display.create_item()
 	_root.set_text(0, "Root")
 	_successes = 0
@@ -81,12 +82,13 @@ func _display_results(case) -> void:
 			context.set_custom_color(0, _SUCCESS if expectation.success else _FAILED)
 			context.set_custom_color(1, _SUCCESS if expectation.success else _FAILED)
 			var e: TreeItem = _display.create_item(context)
+			e.collapsed = true
 			e.set_text(0, "Expect: %s" % expectation.expected)
 			e.set_text(1, "Result: %s" % expectation.result)
 			e.set_custom_color(0, _SUCCESS if expectation.success else _FAILED)
 			e.set_custom_color(1, _SUCCESS if expectation.success else _FAILED)
 			e.set_icon(0, _SUCCESS_ICON if expectation.success else _FAILED_ICON)
-			_cache.append(e)
+#			_cache.append(e)
 
 func expand_all(expand: bool):
 	for item in _cache:

@@ -1,5 +1,5 @@
-extends "res://examples/calcbase.gd"
-class_name Calculator
+extends Node
+#class_name Calculator
 
 func add(a, b):
 	return a + b

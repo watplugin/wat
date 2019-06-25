@@ -19,7 +19,7 @@ class Template:
 
 	func _get_content() -> String:
 		return content % [self.title, self.parameters, self.return_type, self.kwargs, self.title, self.title, self.return_value, self.title, self.parameters, self.title]
-	
+
 const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
 
 static func start(source: Object) -> String:
@@ -28,7 +28,7 @@ static func start(source: Object) -> String:
 	for method in source.methods:
 		rewrite += _rewrite_method(method)
 	return rewrite
-	
+
 static func _rewrite_method(method):
 	var temp = Template.new()
 	temp.title = method.name
@@ -44,14 +44,14 @@ static func _kwargs(parameters: Array) -> String:
 		args["'%s'" % p.name] = p.name
 	var kwargs = str(args)
 	return kwargs
-	
+
 static func _parameters(parameters: Array) -> String:
 	var result: String = ""
 	for param in parameters:
 		result += "%s:%s," % [param.name, param.type] if (param.typed and CONFIG.keep_typed_parameters_in_doubled_scripts) else "%s," % [param.name]
 	result = result.rstrip(",")
 	return result
-	
+
 static func _return_type(retval: Dictionary) -> String:
 	if not CONFIG.keep_typed_return_values_in_doubled_scripts or \
 	not retval.typed or (retval.type == "void" and CONFIG.exclude_void_typed_return_values_in_doubled_scripts):
