@@ -80,7 +80,8 @@ func _post():
 	test.post()
 	for detail in cases.method_details_to_string():
 		output(detail)
-	_end() if methods.empty() and not test.rerun_method else _pre()
+	_pre()
+#	_end() if methods.empty() and not test.rerun_method else _pre()
 
 func _end():
 	test.end()
