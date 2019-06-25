@@ -89,3 +89,6 @@ class Expectation extends Reference:
 		self.expected = data.expected
 		self.result = data.result
 		self.notes = data.notes
+
+	func success() -> bool:
+		return success
