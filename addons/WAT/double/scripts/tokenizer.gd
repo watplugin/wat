@@ -7,7 +7,6 @@ static func start(script) -> SOURCE:
 	script = script if script is Script else load(script)
 	var title: String = "Doubled_%s" % Array(script.resource_path.replace(".gd", "").split("/")).pop_back()
 	var extend: String = ('extends "%s"\n\n' % script.resource_path)
-	print(extend)
 	var source: String = ""
 	while script:
 		source += script.source_code
