@@ -3,7 +3,7 @@ tool
 
 const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
 const TEST = preload("res://addons/WAT/test/test.gd")
-const IO = preload("res://addons/WAT/utils/input_output.gd")
+const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 const VALIDATE = preload("res://addons/WAT/Runner/validator.gd")
 var cases = load("res://addons/WAT/Runner/cases.gd").new()
 onready var Yield = $Yielder
@@ -29,7 +29,7 @@ func _run(directory: String = "res://tests") -> void:
 	output("Starting Test Runner")
 	if not VALIDATE.test_method_prefix_is_set():
 		return
-	self.tests = VALIDATE.tests(IO.file_list(directory))
+	self.tests = VALIDATE.tests(FILESYSTEM.file_list(directory))
 	if self.tests.empty():
 		OS.alert("No Scripts to Tests")
 		return
@@ -50,7 +50,7 @@ func _start() -> void:
 	if cases.current.crashed:
 		return
 	_pre()
-	
+
 func _get_current_method_as_alphanumeric_string() -> String:
 	return current_method.dedent().trim_prefix(CONFIG.test_method_prefix).replace("_", "")
 
@@ -81,7 +81,7 @@ func _end():
 	output(cases.script_details_to_string())
 	remove_child(test)
 	test.queue_free()
-	IO.clear_temporary_files()
+	FILESYSTEM.clear_temporary_files()
 	# Using call deferred on _start so we can start the next test on a fresh script
 	call_deferred("_start")
 

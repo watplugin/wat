@@ -2,7 +2,7 @@ extends HBoxContainer
 tool
 
 const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
-const IO = preload("res://addons/WAT/utils/input_output.gd")
+const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 onready var FolderSelect: OptionButton = $Folder/Select
 onready var ScriptSelect: OptionButton = $TestScript/Select
 onready var RunFolder: OptionButton = $Folder/Run
@@ -30,12 +30,12 @@ func _connect():
 func _select_folder(path: String = CONFIG.main_test_folder) -> void:
 	FolderSelect.clear()
 	FolderSelect.add_item(path)
-	for directory in IO.directory_list(path):
+	for directory in FILESYSTEM.directory_list(path):
 		FolderSelect.add_item(directory)
 
 func _select_script() -> void:
 	ScriptSelect.clear()
-	for file in IO.file_list(_selected(FolderSelect)):
+	for file in FILESYSTEM.file_list(_selected(FolderSelect)):
 		if _valid_test(file.name) and file.path == ("%s/%s" % [_selected(FolderSelect), file.name]):
 			ScriptSelect.add_item(file.path)
 
@@ -44,9 +44,9 @@ func _run_folder() -> void:
 		run(_selected(FolderSelect))
 
 func _run_script() -> void:
-	if _exists(ScriptSelect): 
+	if _exists(ScriptSelect):
 		run(_selected(ScriptSelect))
-	
+
 func _exists(list: OptionButton) -> bool:
 	if list.items.empty():
 		OS.alert("Nothing to Run")

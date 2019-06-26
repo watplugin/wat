@@ -9,7 +9,7 @@ enum {
 const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
 const TOKENIZER = preload("res://addons/WAT/double/scripts/tokenizer.gd")
 const REWRITER = preload("res://addons/WAT/double/scripts/rewriter.gd")
-const IO = preload("res://addons/WAT/utils/input_output.gd")
+const IO = preload("res://addons/WAT/utils/loader.gd")
 
 # Data Structures
 const SCRIPT_DATA = preload("res://addons/WAT/double/objects/script_data.gd")

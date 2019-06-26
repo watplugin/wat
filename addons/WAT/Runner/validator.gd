@@ -8,8 +8,7 @@ static func tests(files: Array) -> Array:
 		if _has_valid_name(file.name) and _is_valid_test(file.path):
 			results.append(file.path)
 	return results
-	
-	
+
 static func methods(methodlist: Array) -> Array:
 	var check = false
 	var results: Array = []
@@ -39,7 +38,7 @@ static func _is_valid_test(path: String) -> bool:
 	var x = load(path).new()
 	x.queue_free()
 	return x is WATTest
-	
+
 static func test_method_prefix_is_set() -> bool:
 	if CONFIG.test_method_prefix.empty() or CONFIG.test_method_prefix == "":
 		OS.alert("You must have a test method prefix set")

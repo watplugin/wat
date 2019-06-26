@@ -1,6 +1,6 @@
 extends WATTest
 
-const X = preload("res://addons/WAT/utils/input_output.gd")
+const X = preload("res://addons/WAT/utils/filesystem.gd")
 const TEST = preload("res://addons/WAT/test/test.gd")
 
 func test_inline_data():
