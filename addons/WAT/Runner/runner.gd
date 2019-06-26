@@ -75,6 +75,7 @@ func _start() -> void:
 	if tests.empty():
 		output("Ending Test Runner")
 		return
+#	print(tests[0], "test 0")
 	test = load(tests.pop_front()).new()
 	test.connect("OUTPUT", self, "output")
 	test.expect.connect("CRASHED", self, "_cancel_test_on_crash")

@@ -34,14 +34,14 @@ static func script(gdscript, strategy = _default_strategy()) -> SCRIPT_DATA:
 	var tokens = TOKENIZER.start(script)
 	var rewrite: String = REWRITER.start(tokens)
 	var save_path = IO.save_script(tokens.title, rewrite)
-	return SCRIPT_DATA.new(tokens.methods, IO.load_doubled_script(save_path), strategy)
+	return SCRIPT_DATA.new(tokens.methods, IO.load_script(save_path).new(), strategy)
 
 static func scene(tscn, strategy = _default_strategy()) -> SCENE_DATA:
 	var copy: Node = IO.load_scene_instance(tscn)
 	var outline: Array = double(copy)
 	copy.free()
 	var tree: Node = double_tree(outline.duplicate())
-	IO.save_scene(tree, tree.name)
+	IO.save_scene(tree.name, tree)
 	var nodes: Dictionary = create_scene_data(tree, outline, strategy)
 	return SCENE_DATA.new(nodes, tree)
 
