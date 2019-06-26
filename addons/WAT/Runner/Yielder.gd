@@ -1,15 +1,17 @@
 extends Node
 tool
 
-var queue: Array = []
 signal resume
+var current: YieldTimer = null
+var queue: Array
 
 func until_signal(time_limit: float, emitter: Object, event: String) -> YieldTimer:
 	output("Yielding: { signal: %s, emitter: %s, time: %s }" % [event, emitter, time_limit])
 	var yield_timer: YieldTimer = YieldTimer.new(time_limit, emitter, event)
 	return start(yield_timer)
-	
+
 func start(yield_timer):
+	current = yield_timer
 	queue.append(yield_timer)
 	add_child(yield_timer)
 	yield_timer.start()
@@ -25,15 +27,14 @@ func resume(yield_timer: YieldTimer):
 	yield_timer.queue_free()
 	if queue.size() > 0:
 		return
-	emit_signal("resume")
+	emit_signal("resume") # This resume is for the runner
 
 func output(msg):
 	get_parent().output(msg)
 
 func _process(delta):
-	if queue.empty():
-		return
-	get_parent().output(str(queue[0].message()))
+	if queue.size() > 0:
+		get_parent().output(current.message())
 
 class YieldTimer extends Timer:
 	signal finished
@@ -56,7 +57,7 @@ class YieldTimer extends Timer:
 		emit_signal("finished")
 		set_block_signals(true)
 		get_parent().resume(self)
-		
+
 	func message() -> String:
 		if waiting_for_signal:
 			return "Yielding: { Signal: %s, emitter: %s, time: %s }" % [event, emitter, time_left]
