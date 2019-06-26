@@ -2,6 +2,7 @@ extends HBoxContainer
 tool
 
 const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
+const IO = preload("res://addons/WAT/utils/input_output.gd")
 onready var FolderSelect: OptionButton = $Folder/Select
 onready var ScriptSelect: OptionButton = $TestScript/Select
 onready var RunFolder: OptionButton = $Folder/Run
@@ -25,47 +26,21 @@ func _connect():
 func _print_stray_nodes():
 	print_stray_nodes()
 
-func _select_folder() -> void:
+func _select_folder(path: String = CONFIG.main_test_folder) -> void:
 	FolderSelect.clear()
-	if CONFIG.main_test_folder.empty() or not Directory.new().dir_exists(CONFIG.main_test_folder):
-		return
-	FolderSelect.add_item(CONFIG.main_test_folder)
-	var dir: Directory = Directory.new()
-	dir.open(CONFIG.main_test_folder)
-	dir.list_dir_begin(true) # Only Search Children
-	var folder = dir.get_next()
-	while folder != "":
-		if dir.current_is_dir():
-			FolderSelect.add_item("%s/%s" % [CONFIG.main_test_folder, folder])
-		folder = dir.get_next()
+	FolderSelect.add_item(path)
+	for directory in IO.directory_list(path):
+		FolderSelect.add_item(directory)
 
 func _select_script() -> void:
 	ScriptSelect.clear()
-	if FolderSelect.items.size() <= 0:
-		return
-	var dir: Directory = Directory.new()
-	var path: String = _get_item_text(FolderSelect)
-	dir.open(path)
-	dir.list_dir_begin(true) # Only Search Children
-	var file = dir.get_next()
-	while file != "":
-		if _valid_test(file):
-			ScriptSelect.add_item("%s/%s" % [path, file])
-		file = dir.get_next()
+	for file in IO.file_list(_get_item_text(FolderSelect)):
+		if _valid_test(file.name) and file.path == "%s/%s" % [_get_item_text(FolderSelect), file.name]:
+			ScriptSelect.add_item(file.path)
 
 func _run_folder() -> void:
-	var tests: Array = []
-	var dir: Directory = Directory.new()
-	var path: String = FolderSelect.get_item_text(FolderSelect.selected)
-	dir.open(path)
-	dir.list_dir_begin(true)
-	var file = dir.get_next()
-	while file != "":
-		if _valid_test(file):
-			tests.append(load("%s/%s" % [path, file]))
-		file = dir.get_next()
 	emit_signal("START_TIME")
-	emit_signal("RUN", tests)
+	emit_signal("RUN", FolderSelect.get_item_text(FolderSelect.selected))
 
 func _run_script() -> void:
 	if not ScriptSelect.items.size() > 0:

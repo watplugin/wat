@@ -24,6 +24,24 @@ static func file_list(main_directory: String = "res://tests/", include_files_in_
 		name = directory.get_next()
 	directory.list_dir_end()
 	return filenames
+	
+static func directory_list(path: String = "res://tests/") -> Array:
+	if not _directory_exists(path):
+		OS.alert("Directory: %s does not exist" % path)
+		return []
+	var directories: Array = []
+	var directory: Directory = Directory.new()
+	directory.open(path)
+	directory.list_dir_begin(true)
+	var name: String = directory.get_next()
+	while name != "":
+		if directory.current_is_dir():
+			var subdirectory: String = "%s/%s" % [path, name]
+			directories.append(subdirectory)
+			directories += directory_list(subdirectory)
+		name = directory.get_next()
+	directory.list_dir_end()
+	return directories
 
 static func clear_temporary_files(main_directory: String = "user://WATemp/", delete_subdirectories: bool = true) -> void:
 	if not _directory_exists(main_directory):
