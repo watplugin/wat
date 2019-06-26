@@ -56,8 +56,5 @@ func _run_script() -> void:
 func _valid_test(file: String) -> bool:
 	return file.ends_with(".gd")
 
-func _valid_method(method: String) -> bool:
-	return method.begins_with("test_")
-
 func _get_item_text(list: OptionButton) -> String:
 	return list.get_item_text(list.selected)
