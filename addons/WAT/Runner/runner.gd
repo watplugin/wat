@@ -13,6 +13,7 @@ var current_method: String
 var tests: Array = []
 var methods: Array = []
 var test: TEST
+var validate = preload("res://addons/WAT/Runner/validator.gd")
 
 func _cancel_test_on_crash(data) -> void:
 	cases.crash_current(data)
@@ -31,39 +32,8 @@ func error(new_tests) -> bool:
 		return true
 	return false
 
-func collect_tests() -> Array:
-	print("collecting tests")
-	var tests: Array = []
-	var files: Array = IO.file_list()
-	for file in files:
-		if _has_valid_name(file.name) and _is_valid_test(file.path):
-			tests.append(file.path)
-	return tests
-
-func collect_methods(test) -> Array:
-	var results: Array = []
-	for method in test.get_method_list():
-		if _is_valid_method(method.name):
-			results.append(method.name)
-	return results
-
-func _is_valid_method(method: String) -> bool:
-	return method.begins_with(CONFIG.test_method_prefix)
-
-func _has_valid_name(scriptname: String) -> bool:
-	if CONFIG.test_script_prefixes.empty():
-		return true
-	for prefix in CONFIG.test_script_prefixes:
-		if scriptname.begins_with(prefix):
-			return true
-	return false
-
-func _is_valid_test(path: String) -> bool:
-	var x = load(path).new()
-	x.queue_free()
-	return x is WATTest
-
-func _run(new_tests: Array = collect_tests()) -> void:
+func _run(directory: String = "res://tests") -> void:
+	var new_tests: Array = validate.tests(IO.file_list(directory))
 	if error(new_tests):
 		return
 	clear()
@@ -81,7 +51,7 @@ func _start() -> void:
 	test.expect.connect("CRASHED", self, "_cancel_test_on_crash")
 	cases.create(test)
 	add_child(test)
-	methods = collect_methods(test)
+	methods = validate.methods(test.get_method_list())
 	output("Executing: %s" % test.title())
 	test.start()
 	if cases.current.crashed:

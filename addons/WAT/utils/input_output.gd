@@ -6,6 +6,11 @@ static func file_list(main_directory: String = "res://tests/", include_files_in_
 	if not _directory_exists(main_directory):
 		OS.alert("Directory: %s does not exist" % main_directory)
 		return []
+		
+	elif main_directory.ends_with(".gd"):
+		var filename: String = Array(main_directory.split("/")).back()
+		return [{path = main_directory, file = filename}]
+		
 	var filenames: Array = []
 	var directory: Directory = Directory.new()
 	directory.open(main_directory)

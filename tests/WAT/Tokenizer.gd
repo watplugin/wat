@@ -10,6 +10,7 @@ func test_Tokenizer_when_given_Calculator():
 	var subtract = methods[1]
 	var multiply = methods[2]
 	var divide = methods[3]
+	print(get_stack())
 	expect.is_equal("Doubled_calculator", source_data.title, "Tokenized data name is source script name")
 	expect.is_equal('extends "res://Examples/calculator.gd"', source_data.extend, "Tokenized Data extends from source script")
 	expect.is_equal(4, source_data.methods.size(), "Tokenized Data has 4 Methods")
