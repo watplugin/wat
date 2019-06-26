@@ -4,7 +4,7 @@ tool
 const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
 const TEST = preload("res://addons/WAT/test/test.gd")
 const IO = preload("res://addons/WAT/utils/input_output.gd")
-const COLLECT = preload("res://addons/WAT/runner/collect.gd")
+#const COLLECT = preload("res://addons/WAT/runner/collect_gd")
 var cases = load("res://addons/WAT/Runner/cases.gd").new()
 onready var Yield = $Yielder
 signal display_results
@@ -41,6 +41,16 @@ func collect_tests() -> Array:
 			tests.append(file.path)
 	return tests
 
+func collect_methods(test) -> Array:
+	var results: Array = []
+	for method in test.get_method_list():
+		if is_valid_method(method.name):
+			results.append(method.name)
+	return results
+
+func is_valid_method(method: String) -> bool:
+	return method.begins_with(CONFIG.test_method_prefix)
+
 func _has_valid_name(scriptname: String) -> bool:
 	if CONFIG.test_script_prefixes.empty():
 		return true
@@ -71,7 +81,7 @@ func _start() -> void:
 	test.expect.connect("CRASHED", self, "_cancel_test_on_crash")
 	cases.create(test)
 	add_child(test)
-	methods = COLLECT.methods(test)
+	methods = collect_methods(test)
 	output("Executing: %s" % test.title())
 	test.start()
 	if cases.current.crashed:
