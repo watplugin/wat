@@ -5,15 +5,16 @@ const BLANK: Script = preload("res://addons/WAT/double/objects/blank.gd")
 enum { DIRECTORY, FILE }
 
 static func file_list(path: String = "res://tests", searching_for: int = FILE, include_subdirectories: bool = true) -> Array:
+	if path.ends_with(".gd"):
+		return [{"path": path, "name": Array(path.split("/")).back()}]
 	return _list(path, searching_for, include_subdirectories)
 	
 static func directory_list(path: String = "res://tests", searching_for: int = DIRECTORY, include_subdirectories: bool = true) -> Array:
+	if not _directory_exists(path):
+		OS.alert("Directory: %s does not exist" % path)
 	return _list(path, searching_for, include_subdirectories)
 
 static func _list(path: String, searching_for: int, include_subdirectories: bool) -> Array:
-	if not _directory_exists(path):
-		OS.alert("Directory: %s does not exist" % path)
-		return []
 	var results: Array = []
 	
 	var directory: Directory = Directory.new()
@@ -38,19 +39,11 @@ static func _list(path: String, searching_for: int, include_subdirectories: bool
 	return results
 
 static func clear_temporary_files(main_directory: String = "user://WATemp/", delete_subdirectories: bool = true) -> void:
-	if not _directory_exists(main_directory):
-		return
 	var directory: Directory = Directory.new()
-	directory.open(main_directory)
-	directory.list_dir_begin(true)
-	var name: String = directory.get_next()
-	while name != "":
-		if directory.current_is_dir():
-			clear_temporary_files("%s/%s" % [main_directory, name])
-		else:
-			directory.remove(name)
-		name = directory.get_next()
-	directory.list_dir_end()
+	for file in file_list("user://WATemp/"):
+		directory.remove(file.path)
+	for folder in directory_list("user://WATemp/"):
+		directory.remove(folder)
 
 static func _directory_exists(path: String) -> bool:
 	return Directory.new().dir_exists(path)

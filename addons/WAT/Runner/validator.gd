@@ -9,11 +9,19 @@ static func tests(files: Array) -> Array:
 			results.append(file.path)
 	return results
 	
+	
 static func methods(methodlist: Array) -> Array:
+	var check = false
 	var results: Array = []
 	for method in methodlist:
+		if method.name == "test_Tokenizer_when_given_Calculator":
+			check = true
+			print(method.name)
+			print(method.name.begins_with(CONFIG.test_method_prefix))
 		if _is_valid_method(method.name):
 			results.append(method.name)
+	if check:
+		print(results)
 	return results
 
 static func _is_valid_method(method: String) -> bool:

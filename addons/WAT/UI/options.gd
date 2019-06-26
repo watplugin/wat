@@ -49,7 +49,7 @@ func _run_script() -> void:
 	var path: String = ScriptSelect.get_item_text(ScriptSelect.selected)
 	if _valid_test(path):
 		emit_signal("START_TIME")
-		emit_signal("RUN", [load(path)])
+		emit_signal("RUN", path)
 	else:
 		OS.alert("Not a Valid Test Script")
 

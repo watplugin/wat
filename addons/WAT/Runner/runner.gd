@@ -55,9 +55,8 @@ func _get_current_method_as_alphanumeric_string() -> String:
 	return current_method.dedent().trim_prefix(CONFIG.test_method_prefix).replace("_", "")
 
 func _pre():
-	if not test.rerun_method and not methods.empty():
-		current_method = methods.pop_front()
-	if not methods.empty():
+	if not methods.empty() or test.rerun_method:
+		var current_method = current_method if test.rerun_method else methods.pop_front()
 		output("Executing Method: %s" % _get_current_method_as_alphanumeric_string())
 		cases.current.add_method(current_method)
 		test.pre()
