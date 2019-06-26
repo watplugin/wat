@@ -47,21 +47,3 @@ static func _count() -> String:
 		count += 1
 		file = d.get_next()
 	return str(count)
-
-static func clear_all_temp_directories():
-	var path: String = "user://WATemp/"
-	var d = Directory.new()
-	if not d.dir_exists(path):
-		return
-	var result = d.open(path)
-	if result != OK:
-		return
-
-	d.list_dir_begin(true)
-	var file = d.get_next()
-	while file != "":
-		var res = d.remove(file)
-		if res != OK:
-			print("Error %s when trying to remove file: %s" % [str(res), file])
-		d.remove(path + file)
-		file = d.get_next()

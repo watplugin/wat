@@ -4,7 +4,6 @@ tool
 const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
 const TEST = preload("res://addons/WAT/test/test.gd")
 const IO = preload("res://addons/WAT/utils/input_output.gd")
-#const COLLECT = preload("res://addons/WAT/runner/collect_gd")
 var cases = load("res://addons/WAT/Runner/cases.gd").new()
 onready var Yield = $Yielder
 signal display_results
@@ -44,11 +43,11 @@ func collect_tests() -> Array:
 func collect_methods(test) -> Array:
 	var results: Array = []
 	for method in test.get_method_list():
-		if is_valid_method(method.name):
+		if _is_valid_method(method.name):
 			results.append(method.name)
 	return results
 
-func is_valid_method(method: String) -> bool:
+func _is_valid_method(method: String) -> bool:
 	return method.begins_with(CONFIG.test_method_prefix)
 
 func _has_valid_name(scriptname: String) -> bool:
@@ -124,7 +123,7 @@ func _end():
 	output(cases.script_details_to_string())
 	remove_child(test)
 	test.queue_free()
-	IO.clear_all_temp_directories()
+	IO.clear_temporary_files()
 	# Using call deferred on _start so we can start the next test on a fresh script
 	call_deferred("_start")
 
