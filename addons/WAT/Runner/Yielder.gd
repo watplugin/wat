@@ -21,7 +21,6 @@ func until_timeout(time_limit: float) -> YieldTimer:
 	return start(yield_timer)
 
 func resume(yield_timer: YieldTimer):
-	remove_child(yield_timer)
 	queue.erase(yield_timer)
 	yield_timer.queue_free()
 	if queue.size() > 0:
@@ -31,10 +30,16 @@ func resume(yield_timer: YieldTimer):
 func output(msg):
 	get_parent().output(msg)
 
+func _process(delta):
+	if queue.empty():
+		return
+	get_parent().output(str(queue[0].message()))
+
 class YieldTimer extends Timer:
 	signal finished
 	var emitter: Object
 	var event: String
+	var waiting_for_signal: bool = false
 
 	func _init(time_limit: float, emitter: Object, event: String, time_limit_only: bool = false) -> void:
 		one_shot = true
@@ -42,6 +47,7 @@ class YieldTimer extends Timer:
 		connect("timeout", self, "_resume")
 		if time_limit_only:
 			return
+		waiting_for_signal = true
 		self.emitter = emitter
 		self.event = event
 		emitter.connect(event, self, "_resume")
@@ -50,9 +56,9 @@ class YieldTimer extends Timer:
 		emit_signal("finished")
 		set_block_signals(true)
 		get_parent().resume(self)
-
-	func _process(delta):
-		if emitter != null and event != null:
-			get_parent().output("Yielding: { Signal: %s, emitter: %s, time: %s }" % [event, emitter, time_left])
+		
+	func message() -> String:
+		if waiting_for_signal:
+			return "Yielding: { Signal: %s, emitter: %s, time: %s }" % [event, emitter, time_left]
 		else:
-			get_parent().output("Yielding: { time: %s }" % time_left)
+			return "Yielding: { time: %s }" % time_left
