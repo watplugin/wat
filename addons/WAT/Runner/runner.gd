@@ -33,7 +33,26 @@ func error(new_tests) -> bool:
 	return false
 
 func collect_tests() -> Array:
-	return COLLECT.tests()
+	print("collecting tests")
+	var tests: Array = []
+	var files: Array = IO.file_list()
+	for file in files:
+		if _has_valid_name(file.name) and _is_valid_test(file.path):
+			tests.append(file.path)
+	return tests
+
+func _has_valid_name(scriptname: String) -> bool:
+	if CONFIG.test_script_prefixes.empty():
+		return true
+	for prefix in CONFIG.test_script_prefixes:
+		if scriptname.begins_with(prefix):
+			return true
+	return false
+
+func _is_valid_test(path: String) -> bool:
+	var x = load(path).new()
+	x.queue_free()
+	return x is WATTest
 
 func _run(new_tests: Array = collect_tests()) -> void:
 	if error(new_tests):
@@ -47,7 +66,7 @@ func _start() -> void:
 	if tests.empty():
 		output("Ending Test Runner")
 		return
-	test = tests.pop_front().new()
+	test = load(tests.pop_front()).new()
 	test.connect("OUTPUT", self, "output")
 	test.expect.connect("CRASHED", self, "_cancel_test_on_crash")
 	cases.create(test)

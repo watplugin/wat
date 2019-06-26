@@ -4,15 +4,15 @@ const OLD = preload("old_input_output.gd")
 const TEMP: String = "user://WATemp/"
 const BLANK: Script = preload("res://addons/WAT/double/objects/blank.gd")
 
-static func file_list(main_directory: String = "res://tests/", include_files_in_subdirectories: bool = true) -> PoolStringArray:
-	var filenames: PoolStringArray = []
+static func file_list(main_directory: String = "res://tests/", include_files_in_subdirectories: bool = true) -> Array:
+	var filenames: Array = []
 	var directory: Directory = Directory.new()
 	directory.open(main_directory)
 	directory.list_dir_begin(true)
 	var name: String = directory.get_next()
 	while name != "":
 		if name.ends_with(".gd"):
-			filenames.append(name)
+			filenames.append({path = "%s/%s" %[main_directory, name], "name": name})
 		elif directory.current_is_dir() and include_files_in_subdirectories:
 			print("%s/%s" % [main_directory, name])
 			filenames += file_list("%s/%s" % [main_directory, name])
