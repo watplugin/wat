@@ -32,7 +32,10 @@ func error(new_tests) -> bool:
 		return true
 	return false
 
-func _run(new_tests: Array = COLLECT.tests()) -> void:
+func collect_tests() -> Array:
+	return COLLECT.tests()
+
+func _run(new_tests: Array = collect_tests()) -> void:
 	if error(new_tests):
 		return
 	clear()

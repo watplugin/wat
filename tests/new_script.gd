@@ -1,5 +1,7 @@
 extends WATTest
 
+const X = preload("res://addons/WAT/utils/input_output.gd")
+
 func test_inline_data():
 	parameters([["a", "b", "expected"], [2, 2, 4], [5, 5, 10], [7, 7, 14]])
 	var calc = Calculator.new()
@@ -8,3 +10,5 @@ func test_inline_data():
 
 func test_inline_expectations():
 	expect.loop("is_equal", [[2, 2, "2 == 2"], [5, 5, "5 == 5"], [10, 5, "10 == 5"]])
+	var x = X.file_list()
+	expect.is_greater_than(x.size(), 0, "Elements exist")

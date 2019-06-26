@@ -2,6 +2,11 @@ extends Resource
 
 # Use The Settings in WAT instead
 
+enum S {
+	DOUBLE
+	PARTIAL
+}
+
 export(bool) var keep_typed_parameters_in_doubled_scripts = true
 export(bool) var keep_typed_return_values_in_doubled_scripts = true
 export(bool) var exclude_void_typed_return_values_in_doubled_scripts = true
