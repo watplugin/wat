@@ -56,7 +56,7 @@ func _get_current_method_as_alphanumeric_string() -> String:
 
 func _pre():
 	if not methods.empty() or test.rerun_method:
-		var current_method = current_method if test.rerun_method else methods.pop_front()
+		self.current_method = self.current_method if test.rerun_method else methods.pop_front()
 		output("Executing Method: %s" % _get_current_method_as_alphanumeric_string())
 		cases.current.add_method(current_method)
 		test.pre()

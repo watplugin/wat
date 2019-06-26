@@ -11,20 +11,21 @@ onready var PrintStrayNodes: Button = $Debug/PrintStrayNodes
 signal RUN
 signal START_TIME
 
+func run(path: String) -> void:
+	emit_signal("START_TIME")
+	emit_signal("RUN", path)
+
 func _ready() -> void:
 	_select_folder()
 	_select_script()
 	_connect()
 
 func _connect():
-	PrintStrayNodes.connect("pressed", self, "_print_stray_nodes")
+	PrintStrayNodes.connect("pressed", self, "print_stray_nodes")
 	FolderSelect.connect("pressed", self, "_select_folder")
 	ScriptSelect.connect("pressed", self, "_select_script")
 	RunFolder.connect("pressed", self, "_run_folder")
 	RunScript.connect("pressed", self, "_run_script")
-
-func _print_stray_nodes():
-	print_stray_nodes()
 
 func _select_folder(path: String = CONFIG.main_test_folder) -> void:
 	FolderSelect.clear()
@@ -34,27 +35,29 @@ func _select_folder(path: String = CONFIG.main_test_folder) -> void:
 
 func _select_script() -> void:
 	ScriptSelect.clear()
-	for file in IO.file_list(_get_item_text(FolderSelect)):
-		if _valid_test(file.name) and file.path == "%s/%s" % [_get_item_text(FolderSelect), file.name]:
+	for file in IO.file_list(_selected_folder()):
+		if _valid_test(file.name) and file.path == ("%s/%s" % [_selected_folder(), file.name]):
 			ScriptSelect.add_item(file.path)
 
 func _run_folder() -> void:
-	emit_signal("START_TIME")
-	emit_signal("RUN", FolderSelect.get_item_text(FolderSelect.selected))
+	if _exists(FolderSelect):
+		run(_selected_folder())
 
 func _run_script() -> void:
-	if not ScriptSelect.items.size() > 0:
-		OS.alert("No Scripts to Select")
-		return
-	var path: String = ScriptSelect.get_item_text(ScriptSelect.selected)
-	if _valid_test(path):
-		emit_signal("START_TIME")
-		emit_signal("RUN", path)
-	else:
-		OS.alert("Not a Valid Test Script")
+	if _exists(ScriptSelect): 
+		run(_selected_script())
+	
+func _exists(list: OptionButton) -> bool:
+	if list.items.empty():
+		OS.alert("Nothing to Run")
+		return false
+	return true
 
 func _valid_test(file: String) -> bool:
 	return file.ends_with(".gd")
 
-func _get_item_text(list: OptionButton) -> String:
-	return list.get_item_text(list.selected)
+func _selected_folder() -> String:
+	return FolderSelect.get_item_text(FolderSelect.selected)
+	
+func _selected_script() -> String:
+	return ScriptSelect.get_item_text(ScriptSelect.selected)
