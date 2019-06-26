@@ -4,16 +4,17 @@ tool
 const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
 const TEST = preload("res://addons/WAT/test/test.gd")
 const IO = preload("res://addons/WAT/utils/input_output.gd")
+const VALIDATE = preload("res://addons/WAT/Runner/validator.gd")
 var cases = load("res://addons/WAT/Runner/cases.gd").new()
 onready var Yield = $Yielder
 signal display_results
 signal output
 signal clear
+signal end_time
 var current_method: String
 var tests: Array = []
 var methods: Array = []
 var test: TEST
-var validate = preload("res://addons/WAT/Runner/validator.gd")
 
 func _cancel_test_on_crash(data) -> void:
 	cases.crash_current(data)
@@ -33,7 +34,7 @@ func error(new_tests) -> bool:
 	return false
 
 func _run(directory: String = "res://tests") -> void:
-	var new_tests: Array = validate.tests(IO.file_list(directory))
+	var new_tests: Array = VALIDATE.tests(IO.file_list(directory))
 	if error(new_tests):
 		return
 	clear()
@@ -45,13 +46,12 @@ func _start() -> void:
 	if tests.empty():
 		output("Ending Test Runner")
 		return
-#	print(tests[0], "test 0")
 	test = load(tests.pop_front()).new()
 	test.connect("OUTPUT", self, "output")
 	test.expect.connect("CRASHED", self, "_cancel_test_on_crash")
 	cases.create(test)
 	add_child(test)
-	methods = validate.methods(test.get_method_list())
+	methods = VALIDATE.methods(test.get_method_list())
 	output("Executing: %s" % test.title())
 	test.start()
 	if cases.current.crashed:
@@ -97,8 +97,6 @@ func _end():
 	IO.clear_temporary_files()
 	# Using call deferred on _start so we can start the next test on a fresh script
 	call_deferred("_start")
-
-signal end_time
 
 func _finish() -> void:
 	# This gets called from output because we want to make sure our output log is finished before
