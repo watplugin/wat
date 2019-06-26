@@ -59,19 +59,19 @@ func _start() -> void:
 	if cases.current.crashed:
 		return
 	_pre()
+	
+func _get_current_method_as_alphanumeric_string() -> String:
+	return current_method.dedent().trim_prefix(CONFIG.test_method_prefix).replace("_", "")
 
 func _pre():
-	var clean: String
 	if test.rerun_method:
-		clean = current_method.substr(current_method.find("_"), current_method.length()).replace("_", " ").dedent()
-		output("Executing Method: %s" % clean)
+		output("Executing Method: %s" % _get_current_method_as_alphanumeric_string())
 		cases.current.add_method(current_method)
 		test.pre()
 		_execute_test_method(current_method)
 	elif not methods.empty():
 		current_method = methods.pop_front()
-		clean = current_method.substr(current_method.find("_"), current_method.length()).replace("_", " ").dedent()
-		output("Executing Method: %s" % clean)
+		output("Executing Method: %s" % _get_current_method_as_alphanumeric_string())
 		cases.current.add_method(current_method)
 		test.pre()
 		_execute_test_method(current_method)
