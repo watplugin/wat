@@ -104,4 +104,4 @@ func until_timeout(time_limit: float) -> Timer:
 	return Yield.until_timeout(time_limit)
 
 func yielding() -> bool:
-	return Yield.current != null
+	return Yield.queue.size()

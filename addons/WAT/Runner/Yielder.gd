@@ -2,7 +2,6 @@ extends Node
 tool
 
 signal resume
-var current: YieldTimer = null
 var queue: Array
 
 func until_signal(time_limit: float, emitter: Object, event: String) -> YieldTimer:
@@ -11,7 +10,6 @@ func until_signal(time_limit: float, emitter: Object, event: String) -> YieldTim
 	return start(yield_timer)
 
 func start(yield_timer):
-	current = yield_timer
 	queue.append(yield_timer)
 	add_child(yield_timer)
 	yield_timer.start()
@@ -34,7 +32,7 @@ func output(msg):
 
 func _process(delta):
 	if queue.size() > 0:
-		get_parent().output(current.message())
+		get_parent().output(queue.back().message())
 
 class YieldTimer extends Timer:
 	signal finished
