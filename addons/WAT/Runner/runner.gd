@@ -24,21 +24,12 @@ func _cancel_test_on_crash(data) -> void:
 func output(msg: String) -> void:
 	emit_signal("output", msg)
 
-func _method_prefix_is_invalid() -> bool:
-	if CONFIG.test_method_prefix.empty() or CONFIG.test_method_prefix == "":
-		OS.alert("You must have a test method prefix set")
-		return true
-	return false
-
 func _run(directory: String = "res://tests") -> void:
 	clear()
 	output("Starting Test Runner")
-	
-	if _method_prefix_is_invalid():
+	if not VALIDATE.test_method_prefix_is_set():
 		return
-		
 	self.tests = VALIDATE.tests(IO.file_list(directory))
-	
 	if self.tests.empty():
 		OS.alert("No Scripts to Tests")
 		return

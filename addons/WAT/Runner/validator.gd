@@ -31,3 +31,9 @@ static func _is_valid_test(path: String) -> bool:
 	var x = load(path).new()
 	x.queue_free()
 	return x is WATTest
+	
+static func test_method_prefix_is_set() -> bool:
+	if CONFIG.test_method_prefix.empty() or CONFIG.test_method_prefix == "":
+		OS.alert("You must have a test method prefix set")
+		return false
+	return true
