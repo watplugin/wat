@@ -35,17 +35,17 @@ func _select_folder(path: String = CONFIG.main_test_folder) -> void:
 
 func _select_script() -> void:
 	ScriptSelect.clear()
-	for file in IO.file_list(_selected_folder()):
-		if _valid_test(file.name) and file.path == ("%s/%s" % [_selected_folder(), file.name]):
+	for file in IO.file_list(_selected(FolderSelect)):
+		if _valid_test(file.name) and file.path == ("%s/%s" % [_selected(FolderSelect), file.name]):
 			ScriptSelect.add_item(file.path)
 
 func _run_folder() -> void:
 	if _exists(FolderSelect):
-		run(_selected_folder())
+		run(_selected(FolderSelect))
 
 func _run_script() -> void:
 	if _exists(ScriptSelect): 
-		run(_selected_script())
+		run(_selected(ScriptSelect))
 	
 func _exists(list: OptionButton) -> bool:
 	if list.items.empty():
@@ -56,8 +56,5 @@ func _exists(list: OptionButton) -> bool:
 func _valid_test(file: String) -> bool:
 	return file.ends_with(".gd")
 
-func _selected_folder() -> String:
-	return FolderSelect.get_item_text(FolderSelect.selected)
-	
-func _selected_script() -> String:
-	return ScriptSelect.get_item_text(ScriptSelect.selected)
+func _selected(item: OptionButton) -> String:
+	return item.get_item_text(item.selected)
