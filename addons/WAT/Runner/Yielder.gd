@@ -6,7 +6,7 @@ var queue: Array
 
 func until_signal(time_limit: float, emitter: Object, event: String) -> Timer:
 	output("Yielding: { signal: %s, emitter: %s, time: %s }" % [event, emitter, time_limit])
-	var yield_timer: YieldTimer = YieldTimer.new()
+	var yield_timer: Timer = Timer.new()
 	yield_timer.wait_time = time_limit
 	emitter.connect(event, yield_timer, "emit_signal", ["finished"])
 	return start(yield_timer)
@@ -21,13 +21,13 @@ func start(yield_timer):
 	yield_timer.start()
 	return yield_timer
 
-func until_timeout(time_limit: float) -> YieldTimer:
+func until_timeout(time_limit: float) -> Timer:
 	output("Yielding: { time: %s }" % time_limit)
-	var yield_timer: YieldTimer = YieldTimer.new()
+	var yield_timer: Timer = Timer.new()
 	yield_timer.wait_time = time_limit
 	return start(yield_timer)
 
-func resume(yield_timer: YieldTimer):
+func resume(yield_timer: Timer):
 	print("resume called")
 	queue.erase(yield_timer)
 	yield_timer.queue_free()
@@ -40,9 +40,4 @@ func output(msg):
 
 func _process(delta):
 	if queue.size() > 0:
-		get_parent().output(queue.back().message())
-
-class YieldTimer extends Timer:
-
-	func message() -> String:
-		return "Yielding: { time: %s }" % time_left
+		get_parent().output(str(queue.back().time_left))
