@@ -39,6 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="WAT"
+run/main_scene="res://addons/WAT/WAT.tscn"
 config/icon="res://icon.png"
 
 [debug]

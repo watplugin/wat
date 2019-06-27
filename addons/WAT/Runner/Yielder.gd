@@ -4,12 +4,18 @@ tool
 signal resume
 var queue: Array
 
-func until_signal(time_limit: float, emitter: Object, event: String) -> YieldTimer:
+func until_signal(time_limit: float, emitter: Object, event: String) -> Timer:
 	output("Yielding: { signal: %s, emitter: %s, time: %s }" % [event, emitter, time_limit])
-	var yield_timer: YieldTimer = YieldTimer.new(time_limit, emitter, event)
+	var yield_timer: YieldTimer = YieldTimer.new()
+	yield_timer.wait_time = time_limit
+	emitter.connect(event, yield_timer, "emit_signal", ["finished"])
 	return start(yield_timer)
 
 func start(yield_timer):
+	yield_timer.add_user_signal("finished")
+	yield_timer.one_shot = true
+	yield_timer.connect("timeout", yield_timer, "emit_signal", ["finished"])
+	yield_timer.connect("finished", self, "resume", [yield_timer], CONNECT_DEFERRED)
 	queue.append(yield_timer)
 	add_child(yield_timer)
 	yield_timer.start()
@@ -17,10 +23,12 @@ func start(yield_timer):
 
 func until_timeout(time_limit: float) -> YieldTimer:
 	output("Yielding: { time: %s }" % time_limit)
-	var yield_timer: YieldTimer = YieldTimer.new(time_limit, self, "", true)
+	var yield_timer: YieldTimer = YieldTimer.new()
+	yield_timer.wait_time = time_limit
 	return start(yield_timer)
 
 func resume(yield_timer: YieldTimer):
+	print("resume called")
 	queue.erase(yield_timer)
 	yield_timer.queue_free()
 	if queue.size() > 0:
@@ -35,29 +43,6 @@ func _process(delta):
 		get_parent().output(queue.back().message())
 
 class YieldTimer extends Timer:
-	signal finished
-	var emitter: Object
-	var event: String
-	var waiting_for_signal: bool = false
-
-	func _init(time_limit: float, emitter: Object, event: String, time_limit_only: bool = false) -> void:
-		one_shot = true
-		wait_time = time_limit
-		connect("timeout", self, "_resume")
-		if time_limit_only:
-			return
-		waiting_for_signal = true
-		self.emitter = emitter
-		self.event = event
-		emitter.connect(event, self, "_resume")
-
-	func _resume(a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null, j = null, k = null):
-		emit_signal("finished")
-		set_block_signals(true)
-		get_parent().resume(self)
 
 	func message() -> String:
-		if waiting_for_signal:
-			return "Yielding: { Signal: %s, emitter: %s, time: %s }" % [event, emitter, time_left]
-		else:
-			return "Yielding: { time: %s }" % time_left
+		return "Yielding: { time: %s }" % time_left
