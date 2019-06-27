@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/WAT/UI/ui.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/UI/ResultTree.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/WAT/UI/output.gd" type="Script" id=4]
-[ext_resource path="res://addons/WAT/UI/Timer.gd" type="Script" id=5]
-[ext_resource path="res://addons/WAT/UI/options.gd" type="Script" id=6]
+[ext_resource path="res://addons/WAT/UI/Timer.gd" type="Script" id=4]
+[ext_resource path="res://addons/WAT/UI/options.gd" type="Script" id=5]
 
 [node name="WAT" type="PanelContainer"]
 margin_right = 1024.0
@@ -31,7 +30,7 @@ size_flags_vertical = 3
 [node name="Results" type="TabContainer" parent="UI/Runner"]
 editor/display_folded = true
 margin_right = 996.0
-margin_bottom = 290.0
+margin_bottom = 494.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/top_margin = 0
@@ -40,15 +39,6 @@ tab_align = 0
 script = ExtResource( 2 )
 
 [node name="Tests" parent="UI/Runner/Results" instance=ExtResource( 3 )]
-
-[node name="Output" type="RichTextLabel" parent="UI/Runner"]
-margin_top = 294.0
-margin_right = 996.0
-margin_bottom = 494.0
-rect_min_size = Vector2( 0, 200 )
-bbcode_enabled = true
-scroll_following = true
-script = ExtResource( 4 )
 
 [node name="Details" type="HBoxContainer" parent="UI/Runner"]
 editor/display_folded = true
@@ -66,7 +56,7 @@ margin_top = 8.0
 margin_right = 502.0
 margin_bottom = 22.0
 text = "0"
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 
 [node name="Options" type="HBoxContainer" parent="UI/Runner"]
 editor/display_folded = true
@@ -75,7 +65,7 @@ margin_right = 996.0
 margin_bottom = 572.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
-script = ExtResource( 6 )
+script = ExtResource( 5 )
 
 [node name="VBox" type="VBoxContainer" parent="UI/Runner/Options"]
 margin_right = 241.0

@@ -30,14 +30,6 @@ func update_parameters():
 	for i in _p_keys.size():
 		p[_p_keys[i]] = values[i]
 	rerun_method = not _p_values.empty()
-#	if not _p_values.empty():
-#		rerun_method = true
-#	else:
-#		rerun_method = false
-
-
-func output(msg: String):
-	emit_signal("OUTPUT", "USER: %s" % msg)
 
 func _init():
 	expect = EXPECTATIONS.new()

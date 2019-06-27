@@ -1,7 +1,6 @@
 extends WATTest
 
 func test_Doubling_Calculator_When_Double_Strategy_is_set_to_Partial():
-	output("Hello from Test Partial")
 	var calc = DOUBLE.script(Calculator, DOUBLE.PARTIAL)
 	expect.is_equal(4, calc.instance.add(2, 2), "add(2, 2) returns correct value (4)")
 	expect.is_equal(calc.call_count("add"), 1, "Partially Doubled Calculator called {method: add} exactly once")

@@ -2,7 +2,6 @@ extends Node
 tool
 
 const CASE = preload("res://addons/WAT/runner/case.gd")
-var initialized: bool = false
 var Yield: Node
 var settings: Resource
 var filesystem: Reference
@@ -17,12 +16,10 @@ var test: WATTest
 signal started
 signal ended
 signal display_results
-signal output
 
 func create(test) -> void:
 	self.current = CASE.new(test)
 	caselist.append(self.current)
-
 
 func _init(validate: Reference, filesystem: Reference, settings: Resource, Yield: Node) -> void:
 	self.validate = validate
@@ -30,14 +27,10 @@ func _init(validate: Reference, filesystem: Reference, settings: Resource, Yield
 	self.settings = settings
 	self.Yield = Yield
 	add_child(Yield)
-	self.initialized = true
 
 func _run(directory: String = "res://tests") -> void:
-	if not initialized:
-		OS.alert("Please Set Dependecies")
-		return
 	clear()
-	output("Starting Test Runner")
+	print("WAT: Starting Test Runner")
 	if not validate.test_method_prefix_is_set():
 		return
 	self.tests = validate.tests(filesystem.file_list(directory))
@@ -48,12 +41,11 @@ func _run(directory: String = "res://tests") -> void:
 
 func _start() -> void:
 	if tests.empty():
-		output("Ending Test Runner")
+		print("WAT: Ending Test Runner")
 		emit_signal("ended")
 		emit_signal("display_results", caselist)
 		return
 	test = load(tests.pop_front()).new()
-	test.connect("OUTPUT", self, "output")
 	test.expect.connect("CRASHED", self, "_cancel_test_on_crash")
 	create(test)
 	add_child(test)
@@ -91,8 +83,6 @@ func _end():
 	call_deferred("_start")
 
 func _finish() -> void:
-	# This gets called from output because we want to make sure our output log is finished before
-	# displaying results
 	emit_signal("display_results", caselist)
 	emit_signal("end_time")
 
@@ -113,8 +103,5 @@ func yielding() -> bool:
 	
 func _cancel_test_on_crash(data) -> void:
 	current.crash(data)
-	output("CRASHED: %s (%s, Result: %s)" % [current.title, data.expected, data.result])
+	print("CRASHED: %s (%s, Result: %s)" % [current.title, data.expected, data.result])
 	_end()
-
-func output(msg: String) -> void:
-	emit_signal("output", msg)
