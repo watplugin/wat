@@ -20,19 +20,22 @@ func display(cases: Array) -> void:
 		_show_all_tests_together(cases)
 
 func _add_test_directories(case: Object) -> void:
-	var directory: String = _extract_directory(case.title)
+	var directory: String = case.title.get_base_dir().replace("res://", "")
 	_add_test_to_correct_directory(directory, case)
-
+#
 func _show_directory_as_a_tab(directory: String) -> void:
 	var cases: Array = directories[directory]
 	var results: PanelContainer = ResultTree.instance()
+	print(directory)
 	results.name = directory
+	print(results.name)
 	add_child(results)
 	results.display(cases)
 	if results.includes_crash:
 		set_tab_icon(tab, CRASH)
 	else:
 		set_tab_icon(tab, SUCCESS) if results.success() else set_tab_icon(tab, FAILED)
+	set_tab_title(tab, directory)
 	tab += 1
 
 func _show_all_tests_together(cases: Array) -> void:
@@ -41,17 +44,10 @@ func _show_all_tests_together(cases: Array) -> void:
 	add_child(results)
 	results.display(cases)
 
-func _extract_directory(path: String) -> String:
-	var file = path.substr(path.find_last("/"), path.find(".gd" ) + 1)
-	var absolute_path = path.replace(file, "")
-	if absolute_path == "res://tests":
-		return "Tests"
-	else:
-		return absolute_path.replace("res://tests/", "").capitalize()
-
 func _add_test_to_correct_directory(directory: String, case: Object) -> void:
 	if not directory in directories:
 		directories[directory] = []
+	print(directory)
 	directories[directory].append(case)
 
 func _clear() -> void:
