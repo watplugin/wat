@@ -3,15 +3,15 @@ tool
 
 var directories: Dictionary = {}
 const ResultTree: PackedScene = preload("res://addons/WAT/UI/ResultTree.tscn")
-const CONFIG: Resource = preload("res://addons/WAT/Settings/Config.tres")
 const SUCCESS: Texture = preload("res://addons/WAT/UI/icons/success.png")
 const FAILED: Texture = preload("res://addons/WAT/UI/icons/failed.png")
 const CRASH: Texture = preload("res://addons/WAT/UI/icons/warning.png")
 var tab: int = 0
+var settings: Resource
 
 func display(cases: Array) -> void:
 	_clear()
-	if CONFIG.show_subdirectories_in_their_own_tabs:
+	if settings.show_subdirectories_in_their_own_tabs:
 		for case in cases:
 			_add_test_directories(case)
 		for directory in directories:

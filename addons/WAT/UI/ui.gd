@@ -10,8 +10,10 @@ const VALIDATE: Script = preload("res://addons/WAT/runner/validator.gd")
 
 func _ready():
 	var Results = get_node("UI/Runner/Results")
+	Results.settings = SETTINGS
 	var Runner: Node = RUNNER.new(VALIDATE, FILESYSTEM, SETTINGS, YIELDER.new(), Results)
 	add_child(Runner)
+	
 	var RunAll = get_node("UI/Runner/Options/VBox/RunAll")
 	var Expand = get_node("UI/Runner/Options/VBox/Expand")
 	var Options = get_node("UI/Runner/Options")
