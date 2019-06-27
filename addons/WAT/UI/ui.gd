@@ -1,24 +1,23 @@
 extends PanelContainer
 tool
 
-const RUNNER = preload("res://addons/WAT/Runner/runner.gd")
-const YIELDER = preload("res://addons/WAT/Runner/Yielder.gd")
-
+const RUNNER: Script = preload("res://addons/WAT/Runner/runner.gd")
+const YIELDER: Script = preload("res://addons/WAT/Runner/Yielder.gd")
+const SETTINGS: Resource = preload("res://addons/WAT/Settings/Config.tres")
+const FILESYSTEM: Script = preload("res://addons/WAT/utils/filesystem.gd")
+const VALIDATE: Script = preload("res://addons/WAT/runner/validator.gd")
+const CASES: Script = preload("res://addons/WAT/runner/cases.gd")
+var Runner: Node
 
 func _ready():
-	# Get Nodes
-#	var Runner = get_node("Runner")
+	Runner = RUNNER.new(VALIDATE, FILESYSTEM, SETTINGS, YIELDER.new(), CASES.new())
+	add_child(Runner)
 	var Results = get_node("UI/Runner/Results")
 	var RunAll = get_node("UI/Runner/Options/VBox/RunAll")
 	var Output = get_node("UI/Runner/Output")
 	var Expand = get_node("UI/Runner/Options/VBox/Expand")
 	var Options = get_node("UI/Runner/Options")
 	var TotalTimer = get_node("UI/Runner/Details/Timer")
-	var Runner = RUNNER.new()
-	var Yielder = YIELDER.new()
-	Yielder.name = "Yielder"
-	Runner.add_child(Yielder)
-	add_child(Runner)
 
 	# Connect Nodes
 	Output.connect("finished", Runner, "_finish")

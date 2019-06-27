@@ -1,35 +1,39 @@
 extends Node
 tool
 
-const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
-const TEST = preload("res://addons/WAT/test/test.gd")
-const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
-const VALIDATE = preload("res://addons/WAT/Runner/validator.gd")
-var cases = load("res://addons/WAT/Runner/cases.gd").new()
-onready var Yield = $Yielder
+var initialized: bool = false
+var Yield: Node
+var settings: Resource
+var filesystem: Reference
+var validate: Reference
+var cases: Reference
+var current_method: String
+var tests: Array = []
+var methods: Array = []
+var test: WATTest
 signal display_results
 signal output
 signal clear
 signal end_time
-var current_method: String
-var tests: Array = []
-var methods: Array = []
-var test: TEST
 
-func _cancel_test_on_crash(data) -> void:
-	cases.crash_current(data)
-	output("CRASHED: %s (%s, Result: %s)" % [cases.current.title, data.expected, data.result])
-	_end()
-
-func output(msg: String) -> void:
-	emit_signal("output", msg)
+func _init(validate: Reference, filesystem: Reference, settings: Resource, Yield: Node, cases: Reference) -> void:
+	self.validate = validate
+	self.filesystem = filesystem
+	self.settings = settings
+	self.Yield = Yield
+	self.cases = cases
+	add_child(Yield)
+	self.initialized = true
 
 func _run(directory: String = "res://tests") -> void:
+	if not initialized:
+		OS.alert("Please Set Dependecies")
+		return
 	clear()
 	output("Starting Test Runner")
-	if not VALIDATE.test_method_prefix_is_set():
+	if not validate.test_method_prefix_is_set():
 		return
-	self.tests = VALIDATE.tests(FILESYSTEM.file_list(directory))
+	self.tests = validate.tests(filesystem.file_list(directory))
 	if self.tests.empty():
 		OS.alert("No Scripts to Tests")
 		return
@@ -44,7 +48,7 @@ func _start() -> void:
 	test.expect.connect("CRASHED", self, "_cancel_test_on_crash")
 	cases.create(test)
 	add_child(test)
-	methods = VALIDATE.methods(test.get_method_list())
+	methods = validate.methods(test.get_method_list())
 	output("Executing: %s" % test.title())
 	test.start()
 	if cases.current.crashed:
@@ -52,7 +56,7 @@ func _start() -> void:
 	_pre()
 
 func _get_current_method_as_alphanumeric_string() -> String:
-	return current_method.dedent().trim_prefix(CONFIG.test_method_prefix).replace("_", "")
+	return current_method.dedent().trim_prefix(settings.test_method_prefix).replace("_", "")
 
 func _pre():
 	if not methods.empty() or test.rerun_method:
@@ -81,7 +85,7 @@ func _end():
 	output(cases.script_details_to_string())
 	remove_child(test)
 	test.queue_free()
-	FILESYSTEM.clear_temporary_files()
+	filesystem.clear_temporary_files()
 	# Using call deferred on _start so we can start the next test on a fresh script
 	call_deferred("_start")
 
@@ -105,3 +109,12 @@ func until_timeout(time_limit: float) -> Timer:
 
 func yielding() -> bool:
 	return Yield.queue.size()
+	
+func _cancel_test_on_crash(data) -> void:
+	cases.crash_current(data)
+	output("CRASHED: %s (%s, Result: %s)" % [cases.current.title, data.expected, data.result])
+	_end()
+
+func output(msg: String) -> void:
+	emit_signal("output", msg)
+	

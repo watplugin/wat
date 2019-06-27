@@ -1,6 +1,10 @@
 extends Reference
 tool
 
+# Case is Script: MethodList: ExpectationList
+# We know how many methods we are testing, so we can preload it probably?
+# list can be moved to the runner?
+
 var list: Array = []
 var current: Case
 
