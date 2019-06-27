@@ -2,8 +2,11 @@ extends Node
 tool
 
 signal resume
-var queue: Array
+var queue: Array = []
 var message: String
+
+func _init():
+	set_process(false)
 
 func until_signal(time_limit: float, emitter: Object, event: String) -> Timer:
 	var timer: Timer = _setup_timer(time_limit)

@@ -29,6 +29,7 @@ var words: String = ""
 signal finished
 
 func _ready():
+	_clear()
 	add_color_override("member_variable_color", WHITE)
 	add_keyword_color(EXECUTING, BLACK)
 	add_keyword_color(YIELDING, YELLOW)
