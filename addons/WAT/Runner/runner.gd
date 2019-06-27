@@ -14,10 +14,10 @@ var methods: Array = []
 var caselist: Array = []
 var current: CASE
 var test: WATTest
+signal started
+signal ended
 signal display_results
 signal output
-signal clear
-signal end_time
 
 func create(test) -> void:
 	self.current = CASE.new(test)
@@ -49,6 +49,8 @@ func _run(directory: String = "res://tests") -> void:
 func _start() -> void:
 	if tests.empty():
 		output("Ending Test Runner")
+		emit_signal("ended")
+		emit_signal("display_results", caselist)
 		return
 	test = load(tests.pop_front()).new()
 	test.connect("OUTPUT", self, "output")
@@ -56,7 +58,6 @@ func _start() -> void:
 	create(test)
 	add_child(test)
 	methods = validate.methods(test.get_method_list())
-	output("Executing: %s" % test.title())
 	test.start()
 	if current.crashed:
 		return
@@ -65,7 +66,6 @@ func _start() -> void:
 func _pre():
 	if not methods.empty() or test.rerun_method:
 		self.current_method = self.current_method if test.rerun_method else methods.pop_front()
-		output("Executing Method: %s" % _get_current_method_as_alphanumeric_string())
 		current.add_method(current_method)
 		test.pre()
 		_execute_test_method(current_method)
@@ -97,7 +97,7 @@ func _finish() -> void:
 	emit_signal("end_time")
 
 func clear() -> void:
-	emit_signal("clear")
+	emit_signal("started")
 	tests.clear()
 	methods.clear()
 	caselist.clear()
@@ -118,6 +118,3 @@ func _cancel_test_on_crash(data) -> void:
 
 func output(msg: String) -> void:
 	emit_signal("output", msg)
-	
-func _get_current_method_as_alphanumeric_string() -> String:
-	return current_method.dedent().trim_prefix(settings.test_method_prefix).replace("_", "")

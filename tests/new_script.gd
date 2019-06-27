@@ -15,5 +15,4 @@ func test_inline_expectations():
 	expect.is_greater_than(x.size(), 0, "Elements exist")
 	var z = get_script()
 	expect.is_class_instance(z, TEST, "self is WATTest")
-	print("ahahaha")
 	var d = DOUBLE.scene("res://Examples/Scene/Main.tscn")

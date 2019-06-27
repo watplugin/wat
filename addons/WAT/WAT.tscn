@@ -41,15 +41,13 @@ script = ExtResource( 2 )
 
 [node name="Tests" parent="UI/Runner/Results" instance=ExtResource( 3 )]
 
-[node name="Output" type="TextEdit" parent="UI/Runner"]
+[node name="Output" type="RichTextLabel" parent="UI/Runner"]
 margin_top = 294.0
 margin_right = 996.0
 margin_bottom = 494.0
 rect_min_size = Vector2( 0, 200 )
-custom_colors/member_variable_color = Color( 1, 1, 1, 1 )
-readonly = true
-syntax_highlighting = true
-show_line_numbers = true
+bbcode_enabled = true
+scroll_following = true
 script = ExtResource( 4 )
 
 [node name="Details" type="HBoxContainer" parent="UI/Runner"]
@@ -59,14 +57,15 @@ margin_right = 996.0
 margin_bottom = 528.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
+custom_constants/separation = 50
 alignment = 1
 
 [node name="Timer" type="Label" parent="UI/Runner/Details"]
-margin_left = 478.0
+margin_left = 494.0
 margin_top = 8.0
-margin_right = 518.0
+margin_right = 502.0
 margin_bottom = 22.0
-text = "0: 0: 0"
+text = "0"
 script = ExtResource( 5 )
 
 [node name="Options" type="HBoxContainer" parent="UI/Runner"]
