@@ -2,6 +2,7 @@ extends Node
 tool
 
 const CASE = preload("res://addons/WAT/runner/case.gd")
+var Results: TabContainer
 var Yield: Node
 var settings: Resource
 var filesystem: Reference
@@ -15,18 +16,18 @@ var current: CASE
 var test: WATTest
 signal started
 signal ended
-signal display_results
 
-func create(test) -> void:
-	self.current = CASE.new(test)
-	caselist.append(self.current)
-
-func _init(validate: Reference, filesystem: Reference, settings: Resource, Yield: Node) -> void:
+func _init(validate: Reference, filesystem: Reference, settings: Resource, Yield: Node, Results) -> void:
 	self.validate = validate
 	self.filesystem = filesystem
 	self.settings = settings
 	self.Yield = Yield
+	self.Results = Results
 	add_child(Yield)
+	
+func create(test) -> void:
+	self.current = CASE.new(test)
+	caselist.append(self.current)
 
 func _run(directory: String = "res://tests") -> void:
 	clear()
@@ -43,7 +44,7 @@ func _start() -> void:
 	if tests.empty():
 		print("WAT: Ending Test Runner")
 		emit_signal("ended")
-		emit_signal("display_results", caselist)
+		Results.display(caselist)
 		return
 	test = load(tests.pop_front()).new()
 	test.expect.connect("CRASHED", self, "_cancel_test_on_crash")
@@ -79,12 +80,8 @@ func _end():
 	remove_child(test)
 	test.queue_free()
 	filesystem.clear_temporary_files()
-	# Using call deferred on _start so we can start the next test on a fresh script
+	# Using call deferred on _start so we can start the next test on a fresh call stack
 	call_deferred("_start")
-
-func _finish() -> void:
-	emit_signal("display_results", caselist)
-	emit_signal("end_time")
 
 func clear() -> void:
 	emit_signal("started")

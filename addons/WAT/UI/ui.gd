@@ -1,17 +1,17 @@
 extends PanelContainer
 tool
 
+# DEFAULTS
 const RUNNER: Script = preload("res://addons/WAT/Runner/runner.gd")
 const YIELDER: Script = preload("res://addons/WAT/Runner/Yielder.gd")
 const SETTINGS: Resource = preload("res://addons/WAT/Settings/Config.tres")
 const FILESYSTEM: Script = preload("res://addons/WAT/utils/filesystem.gd")
 const VALIDATE: Script = preload("res://addons/WAT/runner/validator.gd")
-var Runner: Node
 
 func _ready():
-	Runner = RUNNER.new(VALIDATE, FILESYSTEM, SETTINGS, YIELDER.new())
-	add_child(Runner)
 	var Results = get_node("UI/Runner/Results")
+	var Runner: Node = RUNNER.new(VALIDATE, FILESYSTEM, SETTINGS, YIELDER.new(), Results)
+	add_child(Runner)
 	var RunAll = get_node("UI/Runner/Options/VBox/RunAll")
 	var Expand = get_node("UI/Runner/Options/VBox/Expand")
 	var Options = get_node("UI/Runner/Options")
@@ -21,10 +21,8 @@ func _ready():
 	RunAll.connect("pressed", TotalTimer, "_start")
 	RunAll.connect("pressed", Runner, "_run")
 	Runner.Yield.connect("resume", Runner, "_post")
-	Runner.connect("display_results", Results, "_display_results")
 	Runner.connect("ended", TotalTimer, "_stop")
 	Runner.connect("started", Results, "_clear")
 	Expand.connect("pressed", Results, "_expand_all", [Expand])
 	Options.connect("START_TIME", TotalTimer, "_start")
 	Options.connect("RUN", Runner, "_run")
-

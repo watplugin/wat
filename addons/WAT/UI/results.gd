@@ -9,7 +9,7 @@ const FAILED: Texture = preload("res://addons/WAT/UI/icons/failed.png")
 const CRASH: Texture = preload("res://addons/WAT/UI/icons/warning.png")
 var tab: int = 0
 
-func _display_results(cases: Array) -> void:
+func display(cases: Array) -> void:
 	_clear()
 	if CONFIG.show_subdirectories_in_their_own_tabs:
 		for case in cases:
