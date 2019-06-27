@@ -7,7 +7,6 @@ class Cache:
 	var contexts: Array = []
 	var expectations: Array = []
 
-
 onready var _display = $Display
 const _SUCCESS: Color = Color(0, 1, 0, 1)
 const _FAILED: Color = Color(1, 1, 1, 1)
@@ -21,8 +20,6 @@ var _root: TreeItem
 var _cache: Cache
 var includes_crash: bool = false
 
-
-
 func success() -> bool:
 	return _successes == _total
 
@@ -34,6 +31,7 @@ func display(cases: Array):
 	_total = 0
 
 	for case in cases:
+		case.calculate()
 		_display_results(case)
 
 	_root.set_text(1, "%s / %s" % [str(_successes), str(_total)])
@@ -45,18 +43,18 @@ func _display_results(case) -> void:
 	if case.crashed:
 		display_crash(case)
 		return
-	_successes += 1 if case.success() else 0
+	_successes += 1 if case.success else 0
 
 	var script: TreeItem = _display.create_item(_root)
 	_cache.scripts.append(script)
 	add_result(script, case, case.title)
-	script.set_text(1, "%s / %s" % [str(case.successes()), str(case.total())])
+	script.set_text(1, "%s / %s" % [str(case.passed), str(case.total)])
 
 	for method in case.methods:
 		var m: TreeItem = _display.create_item(script)
 		_cache.methods.append(m)
 		add_result(m, method, method.title)
-		m.set_text(1, "%s / %s" % [str(method.successes()), str(method.total())])
+		m.set_text(1, "%s / %s" % [str(method.passed), str(method.total)])
 
 		for expectation in method.expectations:
 			var context: TreeItem = _display.create_item(m)
@@ -66,9 +64,9 @@ func _display_results(case) -> void:
 
 func add_result(item: TreeItem, data, text) -> void:
 	item.set_text(0, text)
-	item.set_custom_color(0, _SUCCESS if data.success() else _FAILED)
-	item.set_custom_color(1, _SUCCESS if data.success() else _FAILED)
-	item.set_icon(0, _SUCCESS_ICON if data.success() else _FAILED_ICON)
+	item.set_custom_color(0, _SUCCESS if data.success else _FAILED)
+	item.set_custom_color(1, _SUCCESS if data.success else _FAILED)
+	item.set_icon(0, _SUCCESS_ICON if data.success else _FAILED_ICON)
 	item.collapsed = true
 
 func display_crash(case) -> bool:

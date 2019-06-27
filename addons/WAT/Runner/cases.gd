@@ -1,98 +1,46 @@
 extends Reference
 tool
 
-# Case is Script: MethodList: ExpectationList
-# We know how many methods we are testing, so we can preload it probably?
-# list can be moved to the runner?
-
 var list: Array = []
 var current: Case
 
-func crash_current(data):
-	current.crashed = true
-	current.crash_data = data
+func crash_current():
+	pass
 
 func create(test) -> void:
 	var case = Case.new(test)
 	self.current = case
 	list.append(case)
-	# No Need to return since case is handled here
 
-func method_details_to_string() -> Array:
-	var list = []
-	var method = current.methods.back()
-	for expect in method.expectations:
-		list.append("%s:  %s" % ["PASSED" if expect.success else "FAILED", expect.context])
-	list.append("%s:  %s" % ["PASSED" if method.success() else "FAILED", method.title])
-	return list
-
-func script_details_to_string() -> String:
-	return "%s:  %s" % ["PASSED" if current.success() else "FAILED", current.title]
-
-class Case extends Reference:
-	var crashed: bool = false
-	var crash_data
+class Case:
+	var total: int = 0
+	var passed: int = 0
 	var title: String
 	var methods: Array = []
-	var _totals: int = 0
-
+	var crashed: bool = false
+	var crashdata: Reference
+	var success: bool = false
+	
 	func _init(test) -> void:
 		self.title = test.title()
 		test.expect.connect("OUTPUT", self, "_add_expectation")
-
+		
 	func add_method(method: String) -> void:
-		methods.append(Method.new(method))
-		_totals += 1
-
-	func _add_expectation(data) -> void:
-		methods.back().expectations.append(Expectation.new(data))
-		methods.back()._totals += 1
-		methods.back()._successes += 1 if data.success else 0
-
-	func total() -> int:
-		return _totals
-
-	func successes() -> int:
-		var success: int = 0
+		methods.append({title = method, expectations = [], total = 0, passed = 0, success = false})
+		
+	func _add_expectation(expectation) -> void:
+		var method: Dictionary = methods.back()
+		method.expectations.append(expectation)
+		
+	func crash(expectation: Reference) -> void:
+		crashdata = expectation
+		
+	func calculate() -> void:
 		for method in methods:
-			if method.success():
-				success += 1
-		return success
-
-	func success() -> bool:
-		return true if _totals > 0 and _totals == successes() else false
-
-class Method extends Reference:
-	var title: String
-	var expectations: Array = []
-	var _totals: int = 0
-	var _successes: int = 0
-
-	func _init(title) -> void:
-		self.title = title.substr(title.find("_"), title.length()).replace("_", " ").dedent()
-
-	func total() -> int:
-		return _totals
-
-	func successes() -> int:
-		return _successes
-
-	func success() -> bool:
-		return true if _totals > 0 and _totals == _successes else false
-
-class Expectation extends Reference:
-	var context: String
-	var success: bool
-	var expected: String
-	var result: String
-	var notes: String
-
-	func _init(data):
-		self.context = data.context
-		self.success = data.success
-		self.expected = data.expected
-		self.result = data.result
-		self.notes = data.notes
-
-	func success() -> bool:
-		return success
+			for expectation in method.expectations:
+				method.passed += int(expectation.success)
+			method.total = method.expectations.size()
+			method.success = method.total > 0 and method.total == method.passed
+			passed += int(method.success)
+		total = methods.size()
+		success = total > 0 and total == passed

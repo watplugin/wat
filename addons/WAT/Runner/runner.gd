@@ -73,13 +73,10 @@ func _execute_test_method(method: String):
 
 func _post():
 	test.post()
-	for detail in cases.method_details_to_string():
-		output(detail)
 	_pre()
 
 func _end():
 	test.end()
-	output(cases.script_details_to_string())
 	remove_child(test)
 	test.queue_free()
 	filesystem.clear_temporary_files()
