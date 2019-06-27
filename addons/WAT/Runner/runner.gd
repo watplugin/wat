@@ -55,9 +55,6 @@ func _start() -> void:
 		return
 	_pre()
 
-func _get_current_method_as_alphanumeric_string() -> String:
-	return current_method.dedent().trim_prefix(settings.test_method_prefix).replace("_", "")
-
 func _pre():
 	if not methods.empty() or test.rerun_method:
 		self.current_method = self.current_method if test.rerun_method else methods.pop_front()
@@ -118,3 +115,5 @@ func _cancel_test_on_crash(data) -> void:
 func output(msg: String) -> void:
 	emit_signal("output", msg)
 	
+func _get_current_method_as_alphanumeric_string() -> String:
+	return current_method.dedent().trim_prefix(settings.test_method_prefix).replace("_", "")

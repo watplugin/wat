@@ -62,12 +62,7 @@ func _display_results(case) -> void:
 			var context: TreeItem = _display.create_item(m)
 			_cache.contexts.append(context)
 			add_result(context, expectation, expectation.context)
-
-			var e: TreeItem = _display.create_item(context)
-			_cache.expectations.append(e)
-			add_result(e, expectation, "")
-			e.set_text(0, "Expect: %s" % expectation.expected)
-			e.set_text(1, "Result: %s" % expectation.result)
+			context.set_tooltip(0, "Expected: " + expectation.expected + "\n" +  "Result: " + expectation.result)
 
 func add_result(item: TreeItem, data, text) -> void:
 	item.set_text(0, text)
