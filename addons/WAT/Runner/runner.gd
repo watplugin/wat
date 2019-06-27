@@ -1,6 +1,7 @@
 extends Node
 tool
 
+const CASE = preload("res://addons/WAT/runner/case.gd")
 var initialized: bool = false
 var Yield: Node
 var settings: Resource
@@ -10,18 +11,24 @@ var cases: Reference
 var current_method: String
 var tests: Array = []
 var methods: Array = []
+var caselist: Array = []
+var current: CASE
 var test: WATTest
 signal display_results
 signal output
 signal clear
 signal end_time
 
-func _init(validate: Reference, filesystem: Reference, settings: Resource, Yield: Node, cases: Reference) -> void:
+func create(test) -> void:
+	self.current = CASE.new(test)
+	caselist.append(self.current)
+
+
+func _init(validate: Reference, filesystem: Reference, settings: Resource, Yield: Node) -> void:
 	self.validate = validate
 	self.filesystem = filesystem
 	self.settings = settings
 	self.Yield = Yield
-	self.cases = cases
 	add_child(Yield)
 	self.initialized = true
 
@@ -46,12 +53,12 @@ func _start() -> void:
 	test = load(tests.pop_front()).new()
 	test.connect("OUTPUT", self, "output")
 	test.expect.connect("CRASHED", self, "_cancel_test_on_crash")
-	cases.create(test)
+	create(test)
 	add_child(test)
 	methods = validate.methods(test.get_method_list())
 	output("Executing: %s" % test.title())
 	test.start()
-	if cases.current.crashed:
+	if current.crashed:
 		return
 	_pre()
 
@@ -59,7 +66,7 @@ func _pre():
 	if not methods.empty() or test.rerun_method:
 		self.current_method = self.current_method if test.rerun_method else methods.pop_front()
 		output("Executing Method: %s" % _get_current_method_as_alphanumeric_string())
-		cases.current.add_method(current_method)
+		current.add_method(current_method)
 		test.pre()
 		_execute_test_method(current_method)
 	else:
@@ -86,14 +93,14 @@ func _end():
 func _finish() -> void:
 	# This gets called from output because we want to make sure our output log is finished before
 	# displaying results
-	emit_signal("display_results", cases.list)
+	emit_signal("display_results", caselist)
 	emit_signal("end_time")
 
 func clear() -> void:
 	emit_signal("clear")
 	tests.clear()
 	methods.clear()
-	cases.list.clear()
+	caselist.clear()
 
 func until_signal(emitter: Object, event: String, time_limit: float) -> Timer:
 	return Yield.until_signal(time_limit, emitter, event)
@@ -105,8 +112,8 @@ func yielding() -> bool:
 	return Yield.queue.size()
 	
 func _cancel_test_on_crash(data) -> void:
-	cases.crash_current(data)
-	output("CRASHED: %s (%s, Result: %s)" % [cases.current.title, data.expected, data.result])
+	current.crash(data)
+	output("CRASHED: %s (%s, Result: %s)" % [current.title, data.expected, data.result])
 	_end()
 
 func output(msg: String) -> void:

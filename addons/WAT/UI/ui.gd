@@ -6,11 +6,10 @@ const YIELDER: Script = preload("res://addons/WAT/Runner/Yielder.gd")
 const SETTINGS: Resource = preload("res://addons/WAT/Settings/Config.tres")
 const FILESYSTEM: Script = preload("res://addons/WAT/utils/filesystem.gd")
 const VALIDATE: Script = preload("res://addons/WAT/runner/validator.gd")
-const CASES: Script = preload("res://addons/WAT/runner/cases.gd")
 var Runner: Node
 
 func _ready():
-	Runner = RUNNER.new(VALIDATE, FILESYSTEM, SETTINGS, YIELDER.new(), CASES.new())
+	Runner = RUNNER.new(VALIDATE, FILESYSTEM, SETTINGS, YIELDER.new())
 	add_child(Runner)
 	var Results = get_node("UI/Runner/Results")
 	var RunAll = get_node("UI/Runner/Options/VBox/RunAll")
