@@ -11,13 +11,18 @@ var success: bool = false
 func _init(test) -> void:
 	self.title = test.title()
 	test.expect.connect("OUTPUT", self, "_add_expectation")
+	test.connect("described", self, "_add_method_context")
 
 func add_method(method: String) -> void:
-	methods.append({title = method, expectations = [], total = 0, passed = 0, success = false})
+	methods.append({title = method, expectations = [], total = 0, passed = 0, success = false, context = ""})
 
 func _add_expectation(expectation) -> void:
 	var method: Dictionary = methods.back()
 	method.expectations.append(expectation)
+
+func _add_method_context(context: String) -> void:
+	if methods.back().context == "": # Only set context per method once
+		methods.back().context = context
 
 func crash(expectation: Reference) -> void:
 	crashdata = expectation

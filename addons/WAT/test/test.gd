@@ -15,7 +15,10 @@ var _p_keys: Array = []
 var _p_values: Array = []
 var p: Dictionary = {}
 var rerun_method: bool = false
+signal described
 
+func context(message: String) -> void:
+	emit_signal("described", message)
 
 #parameters([["a", "b", "expected"], [2, 2, 4], [5, 5, 10], [7, 7, 14]])
 func parameters(list: Array) -> void:
