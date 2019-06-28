@@ -1,43 +1,33 @@
 extends TabContainer
 tool
 
-var directories: Dictionary = {}
 const ResultTree: PackedScene = preload("res://addons/WAT/UI/ResultTree.tscn") # Pass this in?
+var directories: Dictionary = {}
 var tab: int = 0
 var settings: Resource
 
 func display(cases: Array) -> void:
-	if settings.show_subdirectories_in_their_own_tabs:
-		for case in cases:
-			_add_test_directories(case)
-		for directory in directories:
-			_show_directory_as_a_tab(directory)
-	else:
-		_show_all_tests_together(cases)
+	_display_directories_as_individual_tabs(cases) if settings.show_subdirectories_in_their_own_tabs else _add_result_display(cases)
 
-func _add_test_directories(case: Object) -> void:
-	var directory: String = case.title.get_base_dir().replace("res://", "").capitalize().replace(" ", "")
-	_add_test_to_correct_directory(directory, case)
-#
-func _show_directory_as_a_tab(directory: String) -> void:
-	var cases: Array = directories[directory]
+func _display_directories_as_individual_tabs(cases: Array) -> void:
+	_add_directories(cases)
+	for directory in directories:
+		_add_result_display(directories[directory], directory)
+
+func _add_result_display(cases: Array, title: String = "Tests") -> void:
 	var results: PanelContainer = ResultTree.instance()
-	add_child(results)
 	results.display(cases)
+	add_child(results)
+	set_tab_title(tab, "%s (%s/%s)" % [title, results.passed, results.total])
 	set_tab_icon(tab, results.icon)
-	set_tab_title(tab, directory + " (%s/%s)" % [results.passed, results.total])
 	tab += 1
 
-func _show_all_tests_together(cases: Array) -> void:
-	var results: PanelContainer = ResultTree.instance()
-	results.name = "Tests %s/%s" % [results.passed, results.total]
-	add_child(results)
-	results.display(cases)
-
-func _add_test_to_correct_directory(directory: String, case: Object) -> void:
-	if not directory in directories:
-		directories[directory] = []
-	directories[directory].append(case)
+func _add_directories(cases: Array) -> void:
+	for case in cases:
+		var directory: String = case.title.get_base_dir().replace("res://", "").capitalize().replace(" ", "")
+		if not directory in directories:
+			directories[directory] = []
+		directories[directory].append(case)
 
 func clear() -> void:
 	tab = 0
