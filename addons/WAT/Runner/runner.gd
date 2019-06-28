@@ -31,9 +31,9 @@ func create(test) -> void:
 func _run(directory: String = "res://tests") -> void:
 	clear()
 	print("WAT: Starting Test Runner")
-	if not validate.test_method_prefix_is_set():
+	if not validate.test_method_prefix_is_set(settings.test_method_prefix):
 		return
-	self.tests = validate.tests(filesystem.file_list(directory))
+	self.tests = validate.tests(filesystem.file_list(directory), settings.test_script_prefixes)
 	if self.tests.empty():
 		OS.alert("No Scripts to Tests")
 		return
@@ -49,7 +49,7 @@ func _start() -> void:
 	test.expect.connect("CRASHED", self, "_cancel_test_on_crash")
 	create(test)
 	add_child(test)
-	methods = validate.methods(test.get_method_list())
+	methods = validate.methods(test.get_method_list(), settings.test_method_prefix)
 	test.start()
 	if current.crashed:
 		return
