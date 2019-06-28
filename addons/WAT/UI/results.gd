@@ -35,12 +35,11 @@ func clear() -> void:
 		child.free()
 	directories.clear()
 
-func _expand_all(button: Button) -> void:
-	var should_expand: bool
-	var expand: String = "Expand All Results"
-	var collapse: String = "Collapse All Results"
-	should_expand = true if button.text == expand else false
-	button.text = collapse if should_expand else expand
+var collapsed: bool = false
+
+func _collapse_all(button) -> void:
+	collapsed = !collapsed
+	button.text = "Expand All Results" if collapsed else "Collapse All Results"
 	for i in self.get_tab_count():
-		get_tab_control(i).expand_all(should_expand)
+		get_tab_control(i).collapse_all(collapsed)
 

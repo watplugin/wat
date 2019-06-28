@@ -23,6 +23,6 @@ func _ready():
 	RunAll.connect("pressed", TotalTimer, "_start")
 	RunAll.connect("pressed", Runner, "_run")
 	Runner.connect("ended", TotalTimer, "_stop")
-	Expand.connect("pressed", Results, "_expand_all", [Expand])
+	Expand.connect("pressed", Results, "_collapse_all", [Expand])
 	Options.connect("START_TIME", TotalTimer, "_start")
 	Options.connect("RUN", Runner, "_run")

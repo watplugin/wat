@@ -51,7 +51,6 @@ func _add_method_data(method: TreeItem, data: Dictionary) -> void:
 	method.set_icon(0, ICON_SUCCESS if data.success else ICON_FAILED)
 	method.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	method.collapsed = true
-	cache.append(method)
 
 func _add_expectation_data(expectation: TreeItem, data) -> void:
 	expectation.set_text(0, data.context)
@@ -59,17 +58,11 @@ func _add_expectation_data(expectation: TreeItem, data) -> void:
 	expectation.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	expectation.set_tooltip(0, "Expected: %s\nResult: %s" % [data.expected, data.result])
 	expectation.collapsed = true
-	cache.append(expectation)
 
 func crash(data) -> void:
 	print("Crash Not Implemented")
 	print("Crash Data Should Not Reach Results?")
 
-func expand_all(expand: bool):
-	print(000)
-#	for item in _cache.scripts:
-#		item.collapsed = !expand
-#	for item in _cache.method.s:
-#		item.collapsed = !expand
-#	for item in _cache.es:
-#		item.collapsed = true
+func collapse_all(collapse):
+	for item in cache:
+		item.collapsed = collapse

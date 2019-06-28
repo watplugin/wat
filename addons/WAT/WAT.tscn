@@ -59,7 +59,6 @@ text = "0"
 script = ExtResource( 4 )
 
 [node name="Options" type="HBoxContainer" parent="UI/Runner"]
-editor/display_folded = true
 margin_top = 532.0
 margin_right = 996.0
 margin_bottom = 572.0
@@ -85,7 +84,7 @@ text = "Run All Tests"
 margin_top = 20.0
 margin_right = 241.0
 margin_bottom = 40.0
-text = "Expand All Results"
+text = "Collapse All Results"
 
 [node name="Folder" type="VBoxContainer" parent="UI/Runner/Options"]
 margin_left = 251.0
