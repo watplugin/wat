@@ -25,12 +25,12 @@ func _show_directory_as_a_tab(directory: String) -> void:
 	add_child(results)
 	results.display(cases)
 	set_tab_icon(tab, results.icon)
-	set_tab_title(tab, directory)
+	set_tab_title(tab, directory + " (%s/%s)" % [results.passed, results.total])
 	tab += 1
 
 func _show_all_tests_together(cases: Array) -> void:
 	var results: PanelContainer = ResultTree.instance()
-	results.name = "Tests"
+	results.name = "Tests %s/%s" % [results.passed, results.total]
 	add_child(results)
 	results.display(cases)
 

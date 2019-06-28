@@ -45,6 +45,7 @@ func _add_script_data(script: TreeItem, data) -> void:
 	script.set_icon(0, ICON_SUCCESS if data.success else ICON_FAILED)
 	script.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	script.set_custom_color(1, COLOR_SUCCESS if data.success else COLOR_FAILED)
+	script.collapsed = true
 	cache.append(script)
 
 func _add_method_data(method: TreeItem, data: Dictionary) -> void:
@@ -53,6 +54,7 @@ func _add_method_data(method: TreeItem, data: Dictionary) -> void:
 	method.set_icon(0, ICON_SUCCESS if data.success else ICON_FAILED)
 	method.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	method.set_custom_color(1, COLOR_SUCCESS if data.success else COLOR_FAILED)
+	method.collapsed = true
 	cache.append(method)
 
 func _add_expectation_data(expectation: TreeItem, data) -> void:
@@ -60,6 +62,7 @@ func _add_expectation_data(expectation: TreeItem, data) -> void:
 	expectation.set_icon(0, ICON_SUCCESS if data.success else ICON_FAILED)
 	expectation.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	expectation.set_tooltip(0, "Expected: %s\nResult: %s" % [data.expected, data.result])
+	expectation.collapsed = true
 	cache.append(expectation)
 
 func crash(data) -> void:
