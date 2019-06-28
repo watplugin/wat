@@ -28,14 +28,9 @@ func _show_directory_as_a_tab(directory: String) -> void:
 	var results: PanelContainer = ResultTree.instance()
 	add_child(results)
 	results.display(cases)
-	set_tab_icon(tab, _get_icon(results))
+	set_tab_icon(tab, results.icon)
 	set_tab_title(tab, directory)
 	tab += 1
-
-func _get_icon(results):
-	if results.crashed:
-		return CRASH
-	return SUCCESS if results.success else FAILED
 
 func _show_all_tests_together(cases: Array) -> void:
 	var results: PanelContainer = ResultTree.instance()
