@@ -67,6 +67,7 @@ func _pre():
 func _execute_test_method(method: String):
 	test.call(method)
 	if yielding():
+		Yield.connect("resume", self, "_post", [], CONNECT_ONESHOT)
 		return
 	_post()
 

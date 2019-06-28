@@ -3,18 +3,20 @@ class_name WATTest
 
 
 # We can't namespace stuff in a single script unfortunately
+# Have to keep this here for auto-completion
 const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
 const DOUBLE = preload("res://addons/WAT/double/scripts/doubler.gd")
 const WATCHER = preload("res://addons/WAT/test/watcher.gd")
 const YIELD: String = "finished"
 const CRASH_IF_TEST_FAILS: bool = true
-signal OUTPUT
 var expect: EXPECTATIONS
 var watcher: WATCHER
 var _p_keys: Array = []
 var _p_values: Array = []
 var p: Dictionary = {}
 var rerun_method: bool = false
+#var test_methods: Array = []
+#var current_method: String
 
 #parameters([["a", "b", "expected"], [2, 2, 4], [5, 5, 10], [7, 7, 14]])
 func parameters(list: Array) -> void:
@@ -32,8 +34,21 @@ func update_parameters():
 	rerun_method = not _p_values.empty()
 
 func _init():
-	expect = EXPECTATIONS.new()
-	watcher = WATCHER.new()
+	self.expect = EXPECTATIONS.new()
+	self.watcher = WATCHER.new()
+#	self.test_methods = test_methods
+#
+#func run(resuming: bool = false):
+#	start()
+#	execute()
+#	end()
+#
+#func execute() -> void:
+#	var next_method: String = test_methods.pop_front() if not rerun_method else current_method
+#	pre()
+#	call(next_method)
+#	post() # Hmm?
+
 
 func start():
 	pass

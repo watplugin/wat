@@ -14,6 +14,7 @@ func start():
 	watch(self, "a")
 	watch(self, "b")
 	emit_signal("a")
+
 	self.calc = DOUBLE.script(Calculator)
 	self.calc.instance.add(2, 2)
 	self.scene = DOUBLE.scene(SCENE)
