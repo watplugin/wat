@@ -24,8 +24,6 @@ func _init(validate: Reference, filesystem: Reference, settings: Resource, Yield
 func _run(directory: String = "res://tests") -> void:
 	clear()
 	print("WAT: Starting Test Runner")
-	if not validate.test_method_prefix_is_set(settings.test_method_prefix):
-		return
 	self.tests = validate.tests(filesystem.file_list(directory), settings.test_script_prefixes)
 	if self.tests.empty():
 		OS.alert("No Scripts to Tests")
