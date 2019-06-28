@@ -11,17 +11,17 @@ var success: bool = false
 func _init(test) -> void:
 	self.title = test.title()
 	test.expect.connect("OUTPUT", self, "_add_expectation")
-	
+
 func add_method(method: String) -> void:
 	methods.append({title = method, expectations = [], total = 0, passed = 0, success = false})
-	
+
 func _add_expectation(expectation) -> void:
 	var method: Dictionary = methods.back()
 	method.expectations.append(expectation)
-	
+
 func crash(expectation: Reference) -> void:
 	crashdata = expectation
-	
+
 func calculate() -> void:
 	for method in methods:
 		for expectation in method.expectations:

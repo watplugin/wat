@@ -35,3 +35,6 @@ func resume() -> void:
 	emit_signal("finished")
 	if count <= 0:
 		emit_signal("resume")
+
+func active() -> bool:
+	return count > 0

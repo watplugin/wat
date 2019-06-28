@@ -15,8 +15,7 @@ var _p_keys: Array = []
 var _p_values: Array = []
 var p: Dictionary = {}
 var rerun_method: bool = false
-#var test_methods: Array = []
-#var current_method: String
+
 
 #parameters([["a", "b", "expected"], [2, 2, 4], [5, 5, 10], [7, 7, 14]])
 func parameters(list: Array) -> void:
@@ -36,19 +35,6 @@ func update_parameters():
 func _init():
 	self.expect = EXPECTATIONS.new()
 	self.watcher = WATCHER.new()
-#	self.test_methods = test_methods
-#
-#func run(resuming: bool = false):
-#	start()
-#	execute()
-#	end()
-#
-#func execute() -> void:
-#	var next_method: String = test_methods.pop_front() if not rerun_method else current_method
-#	pre()
-#	call(next_method)
-#	post() # Hmm?
-
 
 func start():
 	pass
@@ -82,7 +68,7 @@ func simulate(obj, times, delta):
 
 func until_signal(emitter: Object, event: String, time_limit: float) -> Node:
 	watch(emitter, event)
-	return get_parent().until_signal(emitter, event, time_limit)
+	return get_parent().until_signal(time_limit, emitter, event)
 
 func until_timeout(time_limit: float) -> Node:
 	return get_parent().until_timeout(time_limit)
