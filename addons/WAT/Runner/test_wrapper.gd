@@ -28,7 +28,7 @@ func pre():
 		end()
 
 func execute():
-	case.add_method(active_method)
+	case.add_method(_displayable_method())
 	test.call(active_method)
 	if Yield.active():
 		Yield.connect("resume", self, "post", [], CONNECT_ONESHOT)
@@ -50,3 +50,6 @@ func until_signal(time_limit: float, emitter: Object, event: String) -> Timer:
 
 func until_timeout(time_limit: float) -> Timer:
 	return Yield.until_timeout(time_limit)
+
+func _displayable_method() -> String:
+	return active_method.substr(active_method.find("_"), active_method.length()).replace("_", " ")

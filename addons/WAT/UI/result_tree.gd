@@ -40,20 +40,16 @@ func display(cases: Array) -> void:
 	root.set_custom_color(0, COLOR_SUCCESS if success else COLOR_FAILED)
 
 func _add_script_data(script: TreeItem, data) -> void:
-	script.set_text(0, data.title)
-	script.set_text(1, "%s/%s" % [data.passed, data.total])
+	script.set_text(0, "(%s/%s) %s" % [data.passed, data.total, data.title])
 	script.set_icon(0, ICON_SUCCESS if data.success else ICON_FAILED)
 	script.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
-	script.set_custom_color(1, COLOR_SUCCESS if data.success else COLOR_FAILED)
-	script.collapsed = true
 	cache.append(script)
 
 func _add_method_data(method: TreeItem, data: Dictionary) -> void:
-	method.set_text(0, data.title)
-	method.set_text(1, "%s/%s" % [data.passed, data.total])
+	var title: String = data.title.replace("_", " ").split(" ").join(" ")
+	method.set_text(0, "(%s/%s) %s" % [data.passed, data.total, title])
 	method.set_icon(0, ICON_SUCCESS if data.success else ICON_FAILED)
 	method.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
-	method.set_custom_color(1, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	method.collapsed = true
 	cache.append(method)
 

@@ -49,7 +49,7 @@ func end():
 	pass
 
 func title() -> String:
-	return self.get_script().get_path()
+	return self.get_script().get_path().replace("res://", "").replace("_", "?").capitalize().replace("?", "_").replace(" ", "")
 
 func watch(emitter, event: String) -> void:
 	watcher.watch(emitter, event)
