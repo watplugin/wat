@@ -24,7 +24,6 @@ func _ready():
 	RunAll.connect("pressed", Runner, "_run")
 	Runner.Yield.connect("resume", Runner, "_post")
 	Runner.connect("ended", TotalTimer, "_stop")
-	Runner.connect("started", Results, "_clear")
 	Expand.connect("pressed", Results, "_expand_all", [Expand])
 	Options.connect("START_TIME", TotalTimer, "_start")
 	Options.connect("RUN", Runner, "_run")

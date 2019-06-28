@@ -10,7 +10,7 @@ var tab: int = 0
 var settings: Resource
 
 func display(cases: Array) -> void:
-	_clear()
+#	_clear()
 	if settings.show_subdirectories_in_their_own_tabs:
 		for case in cases:
 			_add_test_directories(case)
@@ -48,7 +48,7 @@ func _add_test_to_correct_directory(directory: String, case: Object) -> void:
 		directories[directory] = []
 	directories[directory].append(case)
 
-func _clear() -> void:
+func clear() -> void:
 	tab = 0
 	for child in self.get_children():
 		child.free()

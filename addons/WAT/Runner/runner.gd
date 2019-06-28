@@ -14,7 +14,6 @@ var methods: Array = []
 var caselist: Array = []
 var current: CASE
 var test: WATTest
-signal started
 signal ended
 
 func _init(validate: Reference, filesystem: Reference, settings: Resource, Yield: Node, Results) -> void:
@@ -24,7 +23,7 @@ func _init(validate: Reference, filesystem: Reference, settings: Resource, Yield
 	self.Yield = Yield
 	self.Results = Results
 	add_child(Yield)
-	
+
 func create(test) -> void:
 	self.current = CASE.new(test)
 	caselist.append(self.current)
@@ -84,10 +83,10 @@ func _end():
 	call_deferred("_start")
 
 func clear() -> void:
-	emit_signal("started")
 	tests.clear()
 	methods.clear()
 	caselist.clear()
+	Results.clear()
 
 func until_signal(emitter: Object, event: String, time_limit: float) -> Timer:
 	return Yield.until_signal(time_limit, emitter, event)
@@ -97,7 +96,7 @@ func until_timeout(time_limit: float) -> Timer:
 
 func yielding() -> bool:
 	return Yield.queue.size()
-	
+
 func _cancel_test_on_crash(data) -> void:
 	current.crash(data)
 	print("CRASHED: %s (%s, Result: %s)" % [current.title, data.expected, data.result])
