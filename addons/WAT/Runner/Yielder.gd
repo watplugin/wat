@@ -18,7 +18,7 @@ func until_timeout(time_limit: float) -> Timer:
 	var timer = _setup_timer(time_limit)
 	timer.start()
 	return timer
-	
+
 func _setup_timer(timer_limit: float) -> Timer:
 	var timer: Timer = Timer.new()
 	timer.wait_time =timer_limit

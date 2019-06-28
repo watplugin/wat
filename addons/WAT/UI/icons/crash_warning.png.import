@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/warning.png-c61271f138d50dc0f4e4388eea3360a8.stex"
+path="res://.import/crash_warning.png-15c6b7205a2e2474f5698a09fa0c44aa.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/WAT/UI/icons/warning.png"
-dest_files=[ "res://.import/warning.png-c61271f138d50dc0f4e4388eea3360a8.stex" ]
+source_file="res://addons/WAT/UI/icons/crash_warning.png"
+dest_files=[ "res://.import/crash_warning.png-15c6b7205a2e2474f5698a09fa0c44aa.stex" ]
 
 [params]
 

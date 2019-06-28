@@ -5,7 +5,7 @@ var directories: Dictionary = {}
 const ResultTree: PackedScene = preload("res://addons/WAT/UI/ResultTree.tscn")
 const SUCCESS: Texture = preload("res://addons/WAT/UI/icons/success.png")
 const FAILED: Texture = preload("res://addons/WAT/UI/icons/failed.png")
-const CRASH: Texture = preload("res://addons/WAT/UI/icons/warning.png")
+const CRASH: Texture = preload("res://addons/WAT/UI/icons/crash_warning.png")
 var tab: int = 0
 var settings: Resource
 
@@ -20,23 +20,22 @@ func display(cases: Array) -> void:
 		_show_all_tests_together(cases)
 
 func _add_test_directories(case: Object) -> void:
-	var directory: String = case.title.get_base_dir().replace("res://", "")
+	var directory: String = case.title.get_base_dir().replace("res://", "").capitalize().replace(" ", "")
 	_add_test_to_correct_directory(directory, case)
 #
 func _show_directory_as_a_tab(directory: String) -> void:
 	var cases: Array = directories[directory]
 	var results: PanelContainer = ResultTree.instance()
-	print(directory)
-	results.name = directory
-	print(results.name)
 	add_child(results)
 	results.display(cases)
-	if results.includes_crash:
-		set_tab_icon(tab, CRASH)
-	else:
-		set_tab_icon(tab, SUCCESS) if results.success() else set_tab_icon(tab, FAILED)
+	set_tab_icon(tab, _get_icon(results))
 	set_tab_title(tab, directory)
 	tab += 1
+
+func _get_icon(results):
+	if results.crashed:
+		return CRASH
+	return SUCCESS if results.success else FAILED
 
 func _show_all_tests_together(cases: Array) -> void:
 	var results: PanelContainer = ResultTree.instance()
@@ -47,7 +46,6 @@ func _show_all_tests_together(cases: Array) -> void:
 func _add_test_to_correct_directory(directory: String, case: Object) -> void:
 	if not directory in directories:
 		directories[directory] = []
-	print(directory)
 	directories[directory].append(case)
 
 func _clear() -> void:

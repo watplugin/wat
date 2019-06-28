@@ -1,98 +1,88 @@
 extends PanelContainer
 tool
 
-class Cache:
-	var scripts: Array = []
-	var methods: Array = []
-	var contexts: Array = []
-	var expectations: Array = []
+const ICON_SUCCESS: Texture = preload("res://addons/WAT/ui/icons/success.png")
+const ICON_FAILED: Texture = preload("res://addons/WAT/ui/icons/failed.png")
+const ICON_CRASH: Texture = preload("res://addons/WAT/ui/icons/crash_warning.png")
+const COLOR_SUCCESS: Color = Color(0, 1, 0, 1)
+const COLOR_FAILED: Color = Color(1, 1, 1, 1)
+const COLOR_CRASHED: Color = Color(1, 1, 0, 1)
 
-onready var _display = $Display
-const _SUCCESS: Color = Color(0, 1, 0, 1)
-const _FAILED: Color = Color(1, 1, 1, 1)
-const _CRASHED: Color = Color(1, 1, 0, 1)
-const _FAILED_ICON: Texture = preload("res://addons/WAT/UI/icons/failed.png")
-const _SUCCESS_ICON: Texture = preload("res://addons/WAT/UI/icons/success.png")
-const _WARNING_ICON: Texture = preload("res://addons/WAT/UI/icons/warning.png")
-var _successes: int = 0
-var _total: int = 0
-var _root: TreeItem
-var _cache: Cache
-var includes_crash: bool = false
+var cache: Array = []
+var success: bool = false
+var crashed: bool = false
+var passed: int = 0
+var total: int = 0
 
-func success() -> bool:
-	return _successes == _total
-
-func display(cases: Array):
-	_cache = Cache.new()
-	_root = _display.create_item()
-	_root.set_text(0, "Root")
-	_successes = 0
-	_total = 0
+func display(cases: Array) -> void:
+	var tree: Tree = $Display
+	var root: TreeItem = tree.create_item()
 
 	for case in cases:
+		if case.crashed:
+			crash(case)
+			return
+
 		case.calculate()
-		_display_results(case)
+		var c: TreeItem = tree.create_item(root)
+		c.set_text(0, case.title)
+		c.set_text(1, "%s/%s" % [case.passed, case.total])
+		c.set_icon(0, ICON_SUCCESS if case.success else ICON_FAILED)
+		c.set_custom_color(0, COLOR_SUCCESS if case.success else COLOR_FAILED)
+		c.set_custom_color(1, COLOR_SUCCESS if case.success else COLOR_FAILED)
+		cache.append(c)
 
-	_root.set_text(1, "%s / %s" % [str(_successes), str(_total)])
-	_root.set_custom_color(0, _SUCCESS if _successes == _total else _FAILED)
-	_root.set_custom_color(1, _SUCCESS if _successes == _total else _FAILED)
+		for method in case.methods:
+			var m: TreeItem = tree.create_item(c)
+			m.set_text(0, method.title)
+			m.set_text(1, "%s/%s" % [method.passed, method.total])
+			m.set_icon(0, ICON_SUCCESS if method.success else ICON_FAILED)
+			m.set_custom_color(0, COLOR_SUCCESS if method.success else COLOR_FAILED)
+			m.set_custom_color(1, COLOR_SUCCESS if method.success else COLOR_FAILED)
+			cache.append(m)
 
-func _display_results(case) -> void:
-	_total += 1
-	if case.crashed:
-		display_crash(case)
-		return
-	_successes += 1 if case.success else 0
+			for expectation in method.expectations:
+				var e: TreeItem = tree.create_item(m)
+				e.set_text(0, expectation.context)
+				e.set_icon(0, ICON_SUCCESS if expectation.success else ICON_FAILED)
+				e.set_custom_color(0, COLOR_SUCCESS if expectation.success else COLOR_FAILED)
+				e.set_tooltip(0, "Expected: %s\nResult: %s" % [expectation.expected, expectation.result])
+				cache.append(e)
 
-	var script: TreeItem = _display.create_item(_root)
-	_cache.scripts.append(script)
-	add_result(script, case, case.title)
-	script.set_text(1, "%s / %s" % [str(case.passed), str(case.total)])
+		passed += int(case.success)
+	total = cases.size()
+	success = total > 0 and total == passed
+	root.set_text(0, "%s/%s" % [passed, total])
+	root.set_custom_color(0, COLOR_SUCCESS if success else COLOR_FAILED)
 
-	for method in case.methods:
-		var m: TreeItem = _display.create_item(script)
-		_cache.methods.append(m)
-		add_result(m, method, method.title)
-		m.set_text(1, "%s / %s" % [str(method.passed), str(method.total)])
-
-		for expectation in method.expectations:
-			var context: TreeItem = _display.create_item(m)
-			_cache.contexts.append(context)
-			add_result(context, expectation, expectation.context)
-			context.set_tooltip(0, "Expected: " + expectation.expected + "\n" +  "Result: " + expectation.result)
-
-func add_result(item: TreeItem, data, text) -> void:
-	item.set_text(0, text)
-	item.set_custom_color(0, _SUCCESS if data.success else _FAILED)
-	item.set_custom_color(1, _SUCCESS if data.success else _FAILED)
-	item.set_icon(0, _SUCCESS_ICON if data.success else _FAILED_ICON)
-	item.collapsed = true
-
-func display_crash(case) -> bool:
-	includes_crash = true
-	var crash: TreeItem = _display.create_item(_root)
-	crash.set_text(0, case.title)
-	crash.set_text(1, "Crashed")
-	crash.set_custom_color(0, _CRASHED)
-	crash.set_custom_color(1, _CRASHED)
-	crash.set_icon(0, _WARNING_ICON)
-
-	var crash_data: TreeItem = _display.create_item(crash)
-	crash_data.set_text(0, case.crash_data.expected)
-	crash_data.set_text(1, case.crash_data.result)
-	crash_data.set_custom_color(0, _CRASHED)
-	crash_data.set_custom_color(1, _CRASHED)
-	crash_data.set_icon(0, _WARNING_ICON)
-	_cache.append(crash)
-	_root.set_custom_color(0, _CRASHED)
-	_root.set_custom_color(1, _CRASHED)
-	return false
-
+func crash(data) -> void:
+	print("Crash Not Implemented")
+#
+#func display_crash(case) -> bool:
+#	includes_crash = true
+#	var crash: TreeItem = _display.create_item(_root)
+#	crash.set_text(0, case.title)
+#	crash.set_text(1, "Crashed")
+#	crash.set_custom_color(0, _CRASHED)
+#	crash.set_custom_color(1, _CRASHED)
+#	crash.set_icon(0, _WARNING_ICON)
+#
+#	var crash_data: TreeItem = _display.create_item(crash)
+#	crash_data.set_text(0, case.crash_data.expected)
+#	crash_data.set_text(1, case.crash_data.result)
+#	crash_data.set_custom_color(0, _CRASHED)
+#	crash_data.set_custom_color(1, _CRASHED)
+#	crash_data.set_icon(0, _WARNING_ICON)
+#	_cache.append(crash)
+#	_root.set_custom_color(0, _CRASHED)
+#	_root.set_custom_color(1, _CRASHED)
+#	return false
+#
 func expand_all(expand: bool):
-	for item in _cache.scripts:
-		item.collapsed = !expand
-	for item in _cache.methods:
-		item.collapsed = !expand
-	for item in _cache.contexts:
-		item.collapsed = true
+	print(000)
+#	for item in _cache.scripts:
+#		item.collapsed = !expand
+#	for item in _cache.methods:
+#		item.collapsed = !expand
+#	for item in _cache.es:
+#		item.collapsed = true
