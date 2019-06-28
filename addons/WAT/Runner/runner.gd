@@ -67,7 +67,7 @@ func _pre():
 func _execute_test_method(method: String):
 	test.call(method)
 	if yielding():
-		Yield.connect("resume", self, "_post", [], CONNECT_ONESHOT)
+		Yield.connect("resume", self, "_post", [], CONNECT_ONESHOT + CONNECT_DEFERRED)
 		return
 	_post()
 
@@ -96,7 +96,7 @@ func until_timeout(time_limit: float) -> Timer:
 	return Yield.until_timeout(time_limit)
 
 func yielding() -> bool:
-	return Yield.queue.size()
+	return Yield.count > 0
 
 func _cancel_test_on_crash(data) -> void:
 	current.crash(data)

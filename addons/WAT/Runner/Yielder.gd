@@ -1,38 +1,37 @@
-extends Node
+extends Timer
 tool
 
 signal resume
-var queue: Array = []
-var message: String
+signal finished
+var emitter_signal
+var emitter
+var count: int = 0
 
 func _init():
-	set_process(false)
+	connect("timeout", self, "resume")
 
-func until_signal(time_limit: float, emitter: Object, event: String) -> Timer:
-	var timer: Timer = _setup_timer(time_limit)
-	emitter.connect(event, timer, "emit_signal", ["finished"])
-	timer.start()
-	return timer
+func until_signal(time_limit: float, emitter: Object, event: String):
+	paused = true
+	emitter.connect(event, self, "timeout")
+	self.emitter = emitter
+	self.emitter_signal = event
+	return until_timeout(time_limit)
 
-func until_timeout(time_limit: float) -> Timer:
-	var timer = _setup_timer(time_limit)
-	timer.start()
-	return timer
+func until_timeout(time_limit: float):
+	count += 1
+	paused = true
+	wait_time = time_limit
+	one_shot = true
+	paused = false
+	start()
+	return self
 
-func _setup_timer(timer_limit: float) -> Timer:
-	var timer: Timer = Timer.new()
-	timer.wait_time =timer_limit
-	timer.one_shot = true
-	timer.add_user_signal("finished")
-	timer.connect("timeout", timer, "emit_signal", ["finished"])
-	timer.connect("finished", self, "_resume", [timer], CONNECT_DEFERRED)
-	queue.append(timer)
-	add_child(timer)
-	return timer
-
-func _resume(timer: Timer) -> void:
-	queue.erase(timer)
-	timer.queue_free()
-	if queue.size() > 0:
-		return
-	emit_signal("resume") # This resume is for the runner
+func resume() -> void:
+	count -= 1
+	if emitter != null:
+		emitter.disconnect(emitter_signal, self, "timeout")
+		emitter = null
+		emitter_signal = null
+	emit_signal("finished")
+	if count <= 0:
+		emit_signal("resume")

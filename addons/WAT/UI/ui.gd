@@ -22,7 +22,6 @@ func _ready():
 	# Connect Nodes
 	RunAll.connect("pressed", TotalTimer, "_start")
 	RunAll.connect("pressed", Runner, "_run")
-#	Runner.Yield.connect("resume", Runner, "_post")
 	Runner.connect("ended", TotalTimer, "_stop")
 	Expand.connect("pressed", Results, "_expand_all", [Expand])
 	Options.connect("START_TIME", TotalTimer, "_start")

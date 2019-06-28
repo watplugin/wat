@@ -142,7 +142,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "res://tests/builtins.gd"
 align = 1
-items = [ "res://tests/builtins.gd", null, false, -1, null, "res://tests/new_script.gd", null, false, -1, null ]
+items = [ "res://tests/builtins.gd", null, false, -1, null, "res://tests/new_script.gd", null, false, -1, null, "res://tests/yielder.gd", null, false, -1, null ]
 selected = 0
 
 [node name="Debug" type="VBoxContainer" parent="UI/Runner/Options"]
