@@ -3,23 +3,20 @@ tool
 
 const TESTWRAPPER = preload("res://addons/WAT/runner/test_wrapper.gd")
 const CASE = preload("res://addons/WAT/runner/case.gd")
+const YIELD = preload("res://addons/WAT/runner/Yielder.gd")
 var Results: TabContainer
-var Yield: Node
 var settings: Resource
 var filesystem: Reference
 var validate: Reference
-var cases: Reference
 var tests: Array = []
 var caselist: Array = []
 signal ended
 
-func _init(validate: Reference, filesystem: Reference, settings: Resource, Yield: Node, Results) -> void:
+func _init(validate: Reference, filesystem: Reference, settings: Resource, Results) -> void:
 	self.validate = validate
 	self.filesystem = filesystem
 	self.settings = settings
-	self.Yield = Yield
 	self.Results = Results
-	add_child(Yield)
 
 func _run(directory: String = "res://tests") -> void:
 	clear()
@@ -39,7 +36,9 @@ func _start() -> void:
 	var test = load(tests.pop_front()).new()
 	var methods = validate.methods(test.get_method_list(), settings.test_method_prefix)
 	var case = CASE.new(test)
-	var wrapper = TESTWRAPPER.new(test, methods, case, Yield)
+	var yielder = YIELD.new()
+	var wrapper = TESTWRAPPER.new(test, methods, case, yielder)
+	wrapper.add_child(yielder)
 	add_child(wrapper)
 	wrapper.connect("ENDED", self, "end")
 	wrapper.start()

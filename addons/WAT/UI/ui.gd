@@ -3,7 +3,6 @@ tool
 
 # DEFAULTS
 const RUNNER: Script = preload("res://addons/WAT/Runner/runner.gd")
-const YIELDER: Script = preload("res://addons/WAT/Runner/Yielder.gd")
 const SETTINGS: Resource = preload("res://addons/WAT/Settings/Config.tres")
 const FILESYSTEM: Script = preload("res://addons/WAT/utils/filesystem.gd")
 const VALIDATE: Script = preload("res://addons/WAT/runner/validator.gd")
@@ -11,7 +10,7 @@ const VALIDATE: Script = preload("res://addons/WAT/runner/validator.gd")
 func _ready():
 	var Results = get_node("UI/Runner/Results")
 	Results.settings = SETTINGS
-	var Runner: Node = RUNNER.new(VALIDATE, FILESYSTEM, SETTINGS, YIELDER.new(), Results)
+	var Runner: Node = RUNNER.new(VALIDATE, FILESYSTEM, SETTINGS, Results)
 	add_child(Runner)
 
 	var RunAll = get_node("UI/Runner/Options/VBox/RunAll")
