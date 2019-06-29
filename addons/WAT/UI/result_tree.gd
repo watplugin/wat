@@ -31,7 +31,10 @@ func display(cases: Array) -> void:
 
 			for expectation in m.expectations:
 				var e: TreeItem = tree.create_item(method)
-				_add_expectation_data(e, expectation)
+				var expect: TreeItem = tree.create_item(e)
+				var result: TreeItem = tree.create_item(e)
+				_add_expectation_data(e, expect, result, expectation)
+
 
 	success = total > 0 and total == passed
 	icon = ICON_SUCCESS if success else ICON_FAILED
@@ -46,18 +49,19 @@ func _add_script_data(script: TreeItem, data) -> void:
 	cache.append(script)
 
 func _add_method_data(method: TreeItem, data: Dictionary) -> void:
+	method.collapsed = true
 	method.set_text(0, "(%s/%s) %s" % [data.passed, data.total, data.context])
 	method.set_icon(0, ICON_SUCCESS if data.success else ICON_FAILED)
 	method.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	method.set_tooltip(0, "Source: %s" % data.title)
-	method.collapsed = true
 
-func _add_expectation_data(expectation: TreeItem, data) -> void:
+func _add_expectation_data(expectation: TreeItem, expect: TreeItem, result: TreeItem, data) -> void:
+	expectation.collapsed = true
 	expectation.set_text(0, data.context)
 	expectation.set_icon(0, ICON_SUCCESS if data.success else ICON_FAILED)
 	expectation.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
-	expectation.set_tooltip(0, "Expected: %s\nResult: %s" % [data.expected, data.result])
-	expectation.collapsed = true
+	expect.set_text(0, "Expect: %s" % data.expected)
+	result.set_text(0, "Result: %s" % data.result)
 
 func crash(data) -> void:
 	print("Crash Not Implemented")

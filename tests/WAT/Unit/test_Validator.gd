@@ -4,6 +4,7 @@ const VALIDATOR = preload("res://addons/WAT/Runner/validator.gd")
 
 func test_func_methods_returns_an_array_of_only_method_names_beginning_with_test_when_test_method_prefix_is_test():
 	describe("function VALIDATE.methods() returns an array of only method names beginning with test when test method prefix is 'test'")
+
 	# Arrange
 	var prefix: String = "test"
 	var methods: Array = [{"name": "test_add"}, {"name": "add_child"}, {"name": "queue_free"}, {"name": "test_subtract"}, {"name": "test_multiply"}, {"name": "print"}]
@@ -13,10 +14,12 @@ func test_func_methods_returns_an_array_of_only_method_names_beginning_with_test
 	var actual: Array = VALIDATOR.methods(methods, prefix)
 
 	# Assert
-	expect.is_equal(expected, actual, "Returns an array of only method names beginning with 'test' when test method prefix is 'test'")
+	var context: String = "Returns an array of only method names beginning with 'test' when test method prefix is 'test'"
+	expect.is_equal(expected, actual, context)
 
 func test_func_tests_returns_an_array_of_only_test_filepaths_beginning_with_test_when_test_prefixes_only_includes_test():
 	describe("function VALIDATE.tests() returns an array of only test filepaths beginning with 'test' when test prefixes only includes test (ie ['test'])'")
+
 	# Arrange
 	var prefixes: Array = ["test"]
 	var tests: Array = [{name = "A", path = "tests/A.gd"}, {name = "test_B", path = "tests/test_B.gd"}, {name = "test_c", path = "tests/test_c.gd"}]
@@ -26,4 +29,5 @@ func test_func_tests_returns_an_array_of_only_test_filepaths_beginning_with_test
 	var actual: Array = VALIDATOR.tests(tests, prefixes)
 
 	# Assert
-	expect.is_equal(expected, actual, "Returns an array of only test filepaths beginning with 'test' when test prefixes are: ['test']")
+	var context: String = "Returns an array of only test filepaths beginning with 'test' when test prefixes are: ['test']"
+	expect.is_equal(expected, actual, context)
