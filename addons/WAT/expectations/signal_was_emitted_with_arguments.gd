@@ -1,21 +1,24 @@
 extends "base.gd"
 
-func _init(emitter, _signal, arguments: Array, context: String) -> void:
-	self.success = false
+func _init(emitter: Object, event: String, arguments: Array, context: String) -> void:
+	var passed: String = "Signal: %s was emitted from %s with arguments: %s" % [event, emitter, arguments]
+	var failed: String = "Signal: %s was not emitted from %s with arguments: %s" % [event, emitter, arguments]
+	var alt_failure: String = "Signal: %s was not emitted from %s" % [event, emitter]
 	self.context = "[Expect.SignalWasEmittedWithArguments] %s" % context
-	var data = emitter.get_meta("watcher").watching[_signal]
+	self.expected = passed
+
+	var data = emitter.get_meta("watcher").watching[event]
 	if data.emit_count <= 0:
 		self.success = false
-		self.result = "Signal: %s was not emitted at all from %s" % [_signal, emitter]
-		return
+		self.result = alt_failure
 
 	elif _found_matching_call(arguments, data.calls):
 		self.success = true
-		self.result = "Signal: %s was emitted from %s with arguments: %s" % [_signal, emitter, arguments]
+		self.result = passed
 
 	else:
-		self.result = "Signal: %s was not emitted from %s with arguments: %s" % [_signal, emitter, arguments]
 		self.success = false
+		self.result = failed
 
 func _found_matching_call(args, calls) -> bool:
 	for call in calls:
