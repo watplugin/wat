@@ -39,6 +39,7 @@ func _start() -> void:
 	var yielder = YIELD.new()
 	var wrapper = TESTWRAPPER.new(test, methods, case, yielder)
 	wrapper.add_child(yielder)
+	wrapper.add_child(test)
 	add_child(wrapper)
 	wrapper.connect("ENDED", self, "end")
 	wrapper.start()

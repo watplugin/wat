@@ -13,7 +13,6 @@ func _init(test: WATTest, methods: Array, case, Yield) -> void:
 	self.methods = methods
 	self.case = case
 	self.Yield = Yield
-	add_child(test)
 
 func start():
 	test.start()
