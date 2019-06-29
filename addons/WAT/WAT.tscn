@@ -7,6 +7,7 @@
 [ext_resource path="res://addons/WAT/UI/options.gd" type="Script" id=5]
 
 [node name="WAT" type="PanelContainer"]
+editor/display_folded = true
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
