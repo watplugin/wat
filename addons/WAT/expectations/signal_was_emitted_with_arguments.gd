@@ -2,7 +2,7 @@ extends "base.gd"
 
 func _init(emitter, _signal, arguments: Array, context: String) -> void:
 	self.success = false
-	self.context = context
+	self.context = "[Expect.SignalWasEmittedWithArguments] %s" % context
 	var data = emitter.get_meta("watcher").watching[_signal]
 	if data.emit_count <= 0:
 		self.success = false

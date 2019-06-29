@@ -2,7 +2,7 @@ extends "base.gd"
 
 func _init(double, method: String, args: Dictionary, context: String) -> void:
 	self.result = "method: %s was not called with arguments: %s" % [method, var2str(args).replace("\n", "")]
-	self.context = context
+	self.context = "[Expect.CalledWithArguments] %s" % context
 	if double.call_count(method) == 0:
 		self.success = false
 		self.result = "method %s was not called at all" % method
