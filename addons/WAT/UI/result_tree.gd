@@ -1,8 +1,8 @@
 extends PanelContainer
 tool
 
-const ICON_SUCCESS: Texture = preload("res://addons/WAT/ui/icons/success.png")
-const ICON_FAILED: Texture = preload("res://addons/WAT/ui/icons/failed.png")
+const ICON_SUCCESS: Texture = preload("res://addons/WAT/UI/icons/success.png")
+const ICON_FAILED: Texture = preload("res://addons/WAT/UI/icons/failed.png")
 const COLOR_SUCCESS: Color = Color(0, 1, 0, 1)
 const COLOR_FAILED: Color = Color(1, 1, 1, 1)
 const COLOR_CRASHED: Color = Color(1, 1, 0, 1)
