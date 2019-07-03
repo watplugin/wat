@@ -46,14 +46,14 @@ static func scene(tscn, strategy = _default_strategy()) -> SCENE_DATA:
 	save_scene(tree.name, tree)
 	var nodes: Dictionary = create_scene_data(tree, outline, strategy)
 	return SCENE_DATA.new(nodes, tree)
-	
+
 static func save_scene(title: String, scene: Node) -> String:
 	var save_path: String = _save_path(title)
 	var double = PackedScene.new()
 	double.pack(scene)
 	ResourceSaver.save(save_path, double)
 	return save_path
-	
+
 static func load_script(gdscript) -> Script:
 	assert(gdscript is Script or (gdscript is String and gdscript.ends_with(".gd")))
 	return gdscript if gdscript is Script else load(gdscript)
@@ -66,8 +66,8 @@ static func save_script(title: String, rewrite: String) -> String:
 	var save_path: String = _save_path(title)
 	BLANK.source_code = rewrite
 	ResourceSaver.save(save_path, BLANK)
-	return save_path	
-	
+	return save_path
+
 static func _save_path(title: String) -> String:
 	_create_directory_if_it_does_not_exist("user://WATemp")
 	return "user://WATemp/%s_%s.gd" % [title, FILESYSTEM.file_list("user://WATemp").size()]

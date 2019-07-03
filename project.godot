@@ -12,17 +12,22 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "BaseLogin",
 "language": "GDScript",
-"path": "res://Examples/base_login.gd"
+"path": "res://Examples/Scripts/base_login.gd"
 }, {
 "base": "Node",
 "class": "Calculator",
 "language": "GDScript",
-"path": "res://Examples/calculator.gd"
+"path": "res://Examples/Scripts/calculator.gd"
+}, {
+"base": "Calculator",
+"class": "ExtendedCalculator",
+"language": "GDScript",
+"path": "res://Examples/Scripts/extendedcalc.gd"
 }, {
 "base": "BaseLogin",
 "class": "Login",
 "language": "GDScript",
-"path": "res://Examples/login.gd"
+"path": "res://Examples/Scripts/login.gd"
 }, {
 "base": "Node",
 "class": "WATTest",
@@ -32,6 +37,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "BaseLogin": "",
 "Calculator": "",
+"ExtendedCalculator": "",
 "Login": "",
 "WATTest": ""
 }

@@ -1,5 +1,4 @@
 extends Node
-#class_name Calculator
 
 func add(a, b):
 	return a + b

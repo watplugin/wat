@@ -1,4 +1,4 @@
-extends "res://examples/calcbase.gd"
+extends "res://examples/scripts/calcbase.gd"
 class_name Calculator
 
 func add(a, b):
