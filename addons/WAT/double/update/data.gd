@@ -1,26 +1,10 @@
-extends Reference
+extends Resource
 
 const BLANK = preload("res://addons/WAT/double/objects/blank.gd")
 const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 const STATIC_METHOD: bool = true
-var initialized: bool = false
-var doubled_path: String
-var methods: Dictionary = {}
-
-func _init(path: String) -> void:
-	_initialize_double(path)
-
-func _initialize_double(path) -> void:
-	if initialized:
-		return
-	var script: Script = load(path)
-	var double: Script = BLANK.duplicate()
-	double.source_code = 'extends "%s"' % script.resource_path
-	doubled_path = "user://WATemp/%s.gd" % FILESYSTEM.file_list("user://WATemp").size() as String
-	ResourceSaver.save(doubled_path, double)
-	for method in load(doubled_path).new().get_method_list():
-		methods[method.name] = {argcount = method.args.size(), retval = null}
-	initialized = true
+export(String) var doubled_path: String
+export(Dictionary) var methods: Dictionary = {}
 
 func double() -> Resource:
 	return load(doubled_path)
