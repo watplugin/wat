@@ -3,7 +3,7 @@ extends Node
 const BLANK = preload("res://addons/WAT/double/objects/blank.gd")
 const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 const DATA = preload("res://addons/WAT/double/update/data.gd")
-	
+
 static func create(path: String) -> DATA:
 	print("calling create")
 	var script: Script = load(path)
@@ -13,7 +13,7 @@ static func create(path: String) -> DATA:
 	var count: String = FILESYSTEM.file_list("user://WATemp").size() as String
 	var datapath: String = "user://WATemp/R%s.tres" % count
 	var doubled_path: String = "user://WATemp/S%s.gd" % count
-	double.source_code = 'extends "%s"' % script.resource_path
+	double.source_code = 'extends "%s"\n\nconst WATR = preload("%s")' % [script.resource_path, datapath]
 	print("past source code")
 	var data = DATA.new()
 	data.doubled_path = doubled_path

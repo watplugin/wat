@@ -4,6 +4,7 @@ class_name WATTest
 
 # We can't namespace stuff in a single script unfortunately
 # Have to keep this here for auto-completion
+const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
 const DOUBLE = preload("res://addons/WAT/double/scripts/doubler.gd")
 const WATCHER = preload("res://addons/WAT/test/watcher.gd")
@@ -56,6 +57,9 @@ func title() -> String:
 
 func watch(emitter, event: String) -> void:
 	watcher.watch(emitter, event)
+
+func clear_temp():
+	FILESYSTEM.clear_temporary_files()
 
 ## Untested
 ## Thanks to bitwes @ https://github.com/bitwes/Gut/
