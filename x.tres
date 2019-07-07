@@ -1,0 +1,584 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/WAT/double/update/data.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+doubled_path = ""
+methods = {
+"_enter_tree": {
+"argcount": 0,
+"retval": null
+},
+"_exit_tree": {
+"argcount": 0,
+"retval": null
+},
+"_get": {
+"argcount": 1,
+"retval": null
+},
+"_get_configuration_warning": {
+"argcount": 0,
+"retval": null
+},
+"_get_import_path": {
+"argcount": 0,
+"retval": null
+},
+"_get_property_list": {
+"argcount": 0,
+"retval": null
+},
+"_init": {
+"argcount": 0,
+"retval": null
+},
+"_input": {
+"argcount": 1,
+"retval": null
+},
+"_notification": {
+"argcount": 1,
+"retval": null
+},
+"_physics_process": {
+"argcount": 1,
+"retval": null
+},
+"_process": {
+"argcount": 1,
+"retval": null
+},
+"_ready": {
+"argcount": 0,
+"retval": null
+},
+"_set": {
+"argcount": 2,
+"retval": null
+},
+"_set_import_path": {
+"argcount": 1,
+"retval": null
+},
+"_unhandled_input": {
+"argcount": 1,
+"retval": null
+},
+"_unhandled_key_input": {
+"argcount": 1,
+"retval": null
+},
+"add": {
+"argcount": 2,
+"retval": null
+},
+"add_child": {
+"argcount": 2,
+"retval": null
+},
+"add_child_below_node": {
+"argcount": 3,
+"retval": null
+},
+"add_to_group": {
+"argcount": 2,
+"retval": null
+},
+"add_user_signal": {
+"argcount": 2,
+"retval": null
+},
+"call": {
+"argcount": 1,
+"retval": null
+},
+"call_deferred": {
+"argcount": 1,
+"retval": null
+},
+"callv": {
+"argcount": 2,
+"retval": null
+},
+"can_process": {
+"argcount": 0,
+"retval": null
+},
+"can_translate_messages": {
+"argcount": 0,
+"retval": null
+},
+"connect": {
+"argcount": 5,
+"retval": null
+},
+"disconnect": {
+"argcount": 3,
+"retval": null
+},
+"divide": {
+"argcount": 2,
+"retval": null
+},
+"duplicate": {
+"argcount": 1,
+"retval": null
+},
+"emit_signal": {
+"argcount": 1,
+"retval": null
+},
+"find_node": {
+"argcount": 3,
+"retval": null
+},
+"find_parent": {
+"argcount": 1,
+"retval": null
+},
+"free": {
+"argcount": 0,
+"retval": null
+},
+"get": {
+"argcount": 1,
+"retval": null
+},
+"get_child": {
+"argcount": 1,
+"retval": null
+},
+"get_child_count": {
+"argcount": 0,
+"retval": null
+},
+"get_children": {
+"argcount": 0,
+"retval": null
+},
+"get_class": {
+"argcount": 0,
+"retval": null
+},
+"get_custom_multiplayer": {
+"argcount": 0,
+"retval": null
+},
+"get_filename": {
+"argcount": 0,
+"retval": null
+},
+"get_groups": {
+"argcount": 0,
+"retval": null
+},
+"get_incoming_connections": {
+"argcount": 0,
+"retval": null
+},
+"get_index": {
+"argcount": 0,
+"retval": null
+},
+"get_indexed": {
+"argcount": 1,
+"retval": null
+},
+"get_instance_id": {
+"argcount": 0,
+"retval": null
+},
+"get_meta": {
+"argcount": 1,
+"retval": null
+},
+"get_meta_list": {
+"argcount": 0,
+"retval": null
+},
+"get_method_list": {
+"argcount": 0,
+"retval": null
+},
+"get_multiplayer": {
+"argcount": 0,
+"retval": null
+},
+"get_name": {
+"argcount": 0,
+"retval": null
+},
+"get_network_master": {
+"argcount": 0,
+"retval": null
+},
+"get_node": {
+"argcount": 1,
+"retval": null
+},
+"get_node_and_resource": {
+"argcount": 1,
+"retval": null
+},
+"get_node_or_null": {
+"argcount": 1,
+"retval": null
+},
+"get_owner": {
+"argcount": 0,
+"retval": null
+},
+"get_parent": {
+"argcount": 0,
+"retval": null
+},
+"get_path": {
+"argcount": 0,
+"retval": null
+},
+"get_path_to": {
+"argcount": 1,
+"retval": null
+},
+"get_pause_mode": {
+"argcount": 0,
+"retval": null
+},
+"get_physics_process_delta_time": {
+"argcount": 0,
+"retval": null
+},
+"get_position_in_parent": {
+"argcount": 0,
+"retval": null
+},
+"get_process_delta_time": {
+"argcount": 0,
+"retval": null
+},
+"get_property_list": {
+"argcount": 0,
+"retval": null
+},
+"get_scene_instance_load_placeholder": {
+"argcount": 0,
+"retval": null
+},
+"get_script": {
+"argcount": 0,
+"retval": null
+},
+"get_signal_connection_list": {
+"argcount": 1,
+"retval": null
+},
+"get_signal_list": {
+"argcount": 0,
+"retval": null
+},
+"get_tree": {
+"argcount": 0,
+"retval": null
+},
+"get_viewport": {
+"argcount": 0,
+"retval": null
+},
+"has_meta": {
+"argcount": 1,
+"retval": null
+},
+"has_method": {
+"argcount": 1,
+"retval": null
+},
+"has_node": {
+"argcount": 1,
+"retval": null
+},
+"has_node_and_resource": {
+"argcount": 1,
+"retval": null
+},
+"has_user_signal": {
+"argcount": 1,
+"retval": null
+},
+"is_a_parent_of": {
+"argcount": 1,
+"retval": null
+},
+"is_blocking_signals": {
+"argcount": 0,
+"retval": null
+},
+"is_class": {
+"argcount": 1,
+"retval": null
+},
+"is_connected": {
+"argcount": 3,
+"retval": null
+},
+"is_displayed_folded": {
+"argcount": 0,
+"retval": null
+},
+"is_greater_than": {
+"argcount": 1,
+"retval": null
+},
+"is_in_group": {
+"argcount": 1,
+"retval": null
+},
+"is_inside_tree": {
+"argcount": 0,
+"retval": null
+},
+"is_network_master": {
+"argcount": 0,
+"retval": null
+},
+"is_physics_processing": {
+"argcount": 0,
+"retval": null
+},
+"is_physics_processing_internal": {
+"argcount": 0,
+"retval": null
+},
+"is_processing": {
+"argcount": 0,
+"retval": null
+},
+"is_processing_input": {
+"argcount": 0,
+"retval": null
+},
+"is_processing_internal": {
+"argcount": 0,
+"retval": null
+},
+"is_processing_unhandled_input": {
+"argcount": 0,
+"retval": null
+},
+"is_processing_unhandled_key_input": {
+"argcount": 0,
+"retval": null
+},
+"is_queued_for_deletion": {
+"argcount": 0,
+"retval": null
+},
+"move_child": {
+"argcount": 2,
+"retval": null
+},
+"multiply": {
+"argcount": 2,
+"retval": null
+},
+"notification": {
+"argcount": 2,
+"retval": null
+},
+"print_stray_nodes": {
+"argcount": 0,
+"retval": null
+},
+"print_tree": {
+"argcount": 0,
+"retval": null
+},
+"print_tree_pretty": {
+"argcount": 0,
+"retval": null
+},
+"propagate_call": {
+"argcount": 3,
+"retval": null
+},
+"propagate_notification": {
+"argcount": 1,
+"retval": null
+},
+"property_list_changed_notify": {
+"argcount": 0,
+"retval": null
+},
+"queue_free": {
+"argcount": 0,
+"retval": null
+},
+"raise": {
+"argcount": 0,
+"retval": null
+},
+"remove_and_skip": {
+"argcount": 0,
+"retval": null
+},
+"remove_child": {
+"argcount": 1,
+"retval": null
+},
+"remove_from_group": {
+"argcount": 1,
+"retval": null
+},
+"replace_by": {
+"argcount": 2,
+"retval": null
+},
+"request_ready": {
+"argcount": 0,
+"retval": null
+},
+"rpc": {
+"argcount": 1,
+"retval": null
+},
+"rpc_config": {
+"argcount": 2,
+"retval": null
+},
+"rpc_id": {
+"argcount": 2,
+"retval": null
+},
+"rpc_unreliable": {
+"argcount": 1,
+"retval": null
+},
+"rpc_unreliable_id": {
+"argcount": 2,
+"retval": null
+},
+"rset": {
+"argcount": 2,
+"retval": null
+},
+"rset_config": {
+"argcount": 2,
+"retval": null
+},
+"rset_id": {
+"argcount": 3,
+"retval": null
+},
+"rset_unreliable": {
+"argcount": 2,
+"retval": null
+},
+"rset_unreliable_id": {
+"argcount": 3,
+"retval": null
+},
+"set": {
+"argcount": 2,
+"retval": null
+},
+"set_block_signals": {
+"argcount": 1,
+"retval": null
+},
+"set_custom_multiplayer": {
+"argcount": 1,
+"retval": null
+},
+"set_deferred": {
+"argcount": 2,
+"retval": null
+},
+"set_display_folded": {
+"argcount": 1,
+"retval": null
+},
+"set_filename": {
+"argcount": 1,
+"retval": null
+},
+"set_indexed": {
+"argcount": 2,
+"retval": null
+},
+"set_message_translation": {
+"argcount": 1,
+"retval": null
+},
+"set_meta": {
+"argcount": 2,
+"retval": null
+},
+"set_name": {
+"argcount": 1,
+"retval": null
+},
+"set_network_master": {
+"argcount": 2,
+"retval": null
+},
+"set_owner": {
+"argcount": 1,
+"retval": null
+},
+"set_pause_mode": {
+"argcount": 1,
+"retval": null
+},
+"set_physics_process": {
+"argcount": 1,
+"retval": null
+},
+"set_physics_process_internal": {
+"argcount": 1,
+"retval": null
+},
+"set_process": {
+"argcount": 1,
+"retval": null
+},
+"set_process_input": {
+"argcount": 1,
+"retval": null
+},
+"set_process_internal": {
+"argcount": 1,
+"retval": null
+},
+"set_process_priority": {
+"argcount": 1,
+"retval": null
+},
+"set_process_unhandled_input": {
+"argcount": 1,
+"retval": null
+},
+"set_process_unhandled_key_input": {
+"argcount": 1,
+"retval": null
+},
+"set_scene_instance_load_placeholder": {
+"argcount": 1,
+"retval": null
+},
+"set_script": {
+"argcount": 1,
+"retval": null
+},
+"subtract": {
+"argcount": 2,
+"retval": null
+},
+"tr": {
+"argcount": 1,
+"retval": null
+}
+}
+source_cache = [ "extends \"res://Examples/Scripts/calcbase.gd\"
+
+", "const WATR = preload(\"user://WATemp/R4.tres\")" ]
