@@ -36,11 +36,12 @@ static func _list(path: String, searching_for: int, include_subdirectories: bool
 	directory.list_dir_end()
 	return results
 
-static func clear_temporary_files(main_directory: String = "user://WATemp/", delete_subdirectories: bool = true) -> void:
+static func clear_temporary_files(main_directory: String = "user://WATemp", delete_subdirectories: bool = true) -> void:
+	return
 	var directory: Directory = Directory.new()
-	for file in file_list("user://WATemp/"):
+	for file in file_list(main_directory):
 		directory.remove(file.path)
-	for folder in directory_list("user://WATemp/"):
+	for folder in directory_list(main_directory):
 		directory.remove(folder)
 
 static func _directory_exists(path: String) -> bool:

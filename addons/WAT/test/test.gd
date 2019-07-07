@@ -60,6 +60,7 @@ func watch(emitter, event: String) -> void:
 
 func clear_temp():
 	FILESYSTEM.clear_temporary_files()
+	assert(FILESYSTEM.file_list("user://WATemp").size() == 0)
 
 ## Untested
 ## Thanks to bitwes @ https://github.com/bitwes/Gut/
