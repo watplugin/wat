@@ -13,15 +13,38 @@ const CALCULATOR = "res://Examples/Scripts/calculator.gd"
 func double(path, inner_class: Array = []):
 	if path is Script:
 		path = path.resource_path
-	var script: Script = load(path)
+#	var script: Script = load(path)
 	var save_path = "user://WAtemp/S0.gd"
-	var blank: Script = GDScript.new()
-	blank.source_code = 'extends "%s"' % path
+	var extends_path: String = 'extends "%s"' % path
 	for inner in inner_class:
-		blank.source_code += ".%s" % inner
+		extends_path += ".%s" % inner
+		print(extends_path)
+	var blank: Script = GDScript.new()
+	blank.source_code = extends_path
 	ResourceSaver.save(save_path, blank)
-	return load(save_path)
-###
+	var double = load(save_path)
+	var instance = double.new()
+	return {source_code = double.source_code, "instance": instance}
+
+func load_source(source):
+	# We assume that we haven't doubled any code yet besides the source extension
+	var list = source.replace("extends ", "").replace("'", "").replace('"', "").split(".")
+
+	# Our first split is .gd, so we add it back
+	var path: String = list[0] + "." + list[1]
+
+	# We remove the two things we just added
+	list.remove(0)
+	list.remove(0)
+
+	# Load the container
+	var script = load(path)
+
+	# Loop through inner classes (if any exist) and change the script to that
+	for inner_class in list:
+		script = script.get(inner_class)
+	return script
+
 
 func test_doubled_script_exists() -> void:
 	describe("When doubling a script, it is saved in user://WATemp/")
@@ -64,16 +87,17 @@ func test_double_script_extends_from_resource_path_of_source_class_name() -> voi
 	expect.is_equal(expected, actual)
 
 func test_double_script_extends_from_source_inner_class() -> void:
-	describe("When doubling a script, it creates a new script that extends from the source script")
+	describe("When doubling a script from an inner class, it creates a new script that extends from the source class")
 
 	clear_temp()
 	var double = double(CALCULATOR, ["Algebra"])
 	var expected: String = 'extends "%s".Algebra' % CALCULATOR
 	var actual: String = double.source_code
-
+	print(double.source_code)
 	# load("path.gd".Inner) is wrong, should be load("path.gd").inner
 	# Might be time to refactor to a manager class or at least a dictionary?
-	var source_class = load("res://Examples/Scripts/calculator.gd.Algrebra")
+#	var source_class = load("res://Examples/Scripts/calculator.gd.Algebra")
+	var source_class = load_source(double.source_code)
 	expect.is_not_null(source_class, "Can load source script from double script's extension path")
 	expect.is_equal(expected, actual)
 
@@ -82,21 +106,8 @@ func test_double_script_that_extends_from_source_inner_class_is_functional() -> 
 
 	clear_temp()
 	var double = double(CALCULATOR, ["Algebra"])
-	var expect_has_method: bool = double.new().has_method("scale")
+	var expect_has_method: bool = double.instance.has_method("scale")
 	var expect_return: Vector2 = Vector2(4, 8)
-	var actual_return: Vector2 = double.new().scale(Vector2(2, 4), 2)
+	var actual_return: Vector2 = double.instance.scale(Vector2(2, 4), 2)
 	expect.is_true(expect_has_method, "Double instance has source method 'scale'")
 	expect.is_equal(expect_return, actual_return, "Double instance has invoked source method 'scale'")
-
-
-
-
-
-
-
-
-
-
-
-
-
