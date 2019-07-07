@@ -9,8 +9,10 @@ extends WATTest
 # *TEST DOUBLING FROM SCRIPT, CLASSNAME, INNER CLASS AND VARIABLE*
 #
 # HELPER
-const CALCULATOR = "res://Examples/Scripts/calcbase.gd"
-func double(path: String, inner_class: Array = []) -> Resource:
+const CALCULATOR = "res://Examples/Scripts/calculator.gd"
+func double(path, inner_class: Array = []):
+	if path is Script:
+		path = path.resource_path
 	var script: Script = load(path)
 	var save_path = "user://WAtemp/S0.gd"
 	var blank: Script = GDScript.new()
@@ -33,7 +35,7 @@ func test_doubled_script_extends_from_source_script() -> void:
 
 	clear_temp()
 	var double = double(CALCULATOR)
-	var expected: String = 'extends "res://Examples/Scripts/calcbase.gd"'
+	var expected: String = 'extends "res://Examples/Scripts/calculator.gd"'
 	var actual: String = double.source_code
 	expect.is_equal(expected, actual)
 
@@ -43,6 +45,23 @@ func test_double_exists_when_doubled_from_inner_class() -> void:
 	clear_temp()
 	var double = double(CALCULATOR, ["Algebra"])
 	expect.file_exists("user://WATemp/S0.gd")
+
+func test_double_exists_when_doubled_from_class_name() -> void:
+	describe("When doubling a script from a class name, it is saved in user://WATemp/")
+
+	clear_temp()
+	var double = double(Calculator)
+	expect.is_not_null(double, "was doubled")
+	expect.file_exists("user://WATemp/S0.gd", "Script was doubled from class_name")
+
+func test_double_script_extends_from_resource_path_of_source_class_name() -> void:
+	describe("When doubling a script from a class name, the doubled script extends from the resource path of the class name")
+
+	clear_temp()
+	var double = double(Calculator)
+	var expected: String = 'extends "res://Examples/Scripts/calculator.gd"'
+	var actual: String = double.source_code
+	expect.is_equal(expected, actual)
 
 func test_double_script_extends_from_source_inner_class() -> void:
 	describe("When doubling a script, it creates a new script that extends from the source script")
@@ -54,7 +73,7 @@ func test_double_script_extends_from_source_inner_class() -> void:
 
 	# load("path.gd".Inner) is wrong, should be load("path.gd").inner
 	# Might be time to refactor to a manager class or at least a dictionary?
-	var source_class = load(expected)
+	var source_class = load("res://Examples/Scripts/calculator.gd.Algrebra")
 	expect.is_not_null(source_class, "Can load source script from double script's extension path")
 	expect.is_equal(expected, actual)
 

@@ -1,4 +1,4 @@
-extends "res://examples/scripts/calcbase.gd"
+extends Node
 class_name Calculator
 
 func add(a, b):
@@ -12,3 +12,10 @@ func multiply(a, b):
 
 func divide(a, b):
 	return a / b
+
+class Algebra:
+
+	func scale(vector, scaler):
+		var x = vector.x * scaler
+		var y = vector.y * scaler
+		return Vector2(x, y)
