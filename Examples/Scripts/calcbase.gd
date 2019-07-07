@@ -11,3 +11,10 @@ func multiply(a, b):
 
 func divide(a, b):
 	return a / b
+
+class Algebra:
+
+	func scale(vector, scaler):
+		var x = vector.x * scaler
+		var y = vector.y * scaler
+		return Vector2(x, y)
