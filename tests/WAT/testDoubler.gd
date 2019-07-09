@@ -106,6 +106,16 @@ func test_when_calling_object_consecutively_there_still_only_exists_two_scripts_
 	var actual = FILESYSTEM.file_list("user://WATemp").size()
 	expect.is_equal(expected, actual, "Only two files exist in user://WATemp (the doubler and doubled script)")
 
+func test_when_instancing_two_copies_from_one_doubler_they_have_different_RIDs():
+	describe("When we instance a double twice from the same doubler, each instance has a unique RID")
+
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	var obj1 = doubler.object()
+	var obj2 = doubler.object()
+	# Need to fix EXPECT on this.
+	expect.is_not_equal(obj1.get_instance_id(), obj2.get_instance_id(), "instance ids are unique")
+
 
 
 

@@ -36,6 +36,8 @@ func object() -> Object:
 	script.source_code = source
 
 	# Freeing these objects are a pain so we want to create a fresh copy time we instance it.
+	# However why are we instancing a new copy instead of locking this down after our first instance
+	# Forcing users to explicitly call another doubler for the second double (keeping it 1:1 doubler: doubled)
 	save_path = "user://WATemp/S%s%s.gd" % [FILESYSTEM.file_list("user://WATemp").size() as String, count as String]
 	count += 1
 	print("saving @%s" % save_path)
