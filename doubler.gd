@@ -9,6 +9,7 @@ var object
 var count = 0
 var cache = []
 var stubs = {} # {method: retval}
+var _created = false
 
 const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 
@@ -30,7 +31,10 @@ func stub(method: String, return_value):
 	stubs[method] = return_value
 	modified_source_code.append("\nfunc add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn load('%s').stubs['%s']\n" % [resource_path, method])
 
-func object() -> Object:
+func object():
+	if _created:
+		return null
+	_created = true
 	# Add a error check here to inform people they've already instanced it.
 	# Our items are stored in memory and it is bit of a pain to free them if they're referenced
 	delete_old_script_if_it_exists()

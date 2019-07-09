@@ -89,27 +89,6 @@ func test_when_invoking_a_dummy_method_in_a_double_we_get_null():
 	var actual_again = obj.add(2, 2)
 	expect.is_equal(expect_again, actual_again, "Dummied add returned null")
 
-func test_when_calling_object_consecutively_there_still_only_exists_two_scripts_in_temp():
-	describe("When we instanced a doubled script, the new doubled script replaces the old one")
-
-	clear_temp()
-	var doubler = double("res://Examples/Scripts/calculator.gd")
-	var obj = doubler.object()
-	var obj2 = doubler.object()
-
-	var expected = 2
-	var actual = FILESYSTEM.file_list("user://WATemp").size()
-	expect.is_equal(expected, actual, "Only two files exist in user://WATemp (the doubler and doubled script)")
-
-func test_when_instancing_two_copies_from_one_doubler_they_have_different_RIDs():
-	describe("When we instance a double twice from the same doubler, each instance has a unique RID")
-
-	clear_temp()
-	var doubler = double("res://Examples/Scripts/calculator.gd")
-	var obj1 = doubler.object()
-	var obj2 = doubler.object()
-	expect.is_not_equal(obj1.get_instance_id(), obj2.get_instance_id(), "instance ids are unique")
-
 func test_when_stubbing_a_method_with_true_with_get_true_back_when_we_call_that_method():
 	describe("When we stub a method to return true, it returns true when we call it")
 
@@ -133,6 +112,15 @@ func test_when_stubbing_a_method_with_an_Node_we_get_the_Node_back():
 	var actual = obj.add(10, 10)
 	expect.is_equal(expected, actual, "we received the same node back")
 	expect.is_equal(expected.get_instance_id(), actual.get_instance_id(), "Nodes share same instance id")
+
+func test_doubler_when_trying_to_create_a_second_double_we_get_null_instead():
+	describe("When we trying to call object() the second time on doubler, we get null instead")
+
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	var obj1 = doubler.object()
+	var obj2 = doubler.object()
+	expect.is_null(obj2, "We got null when we tried to create object() again from doubler")
 
 
 
