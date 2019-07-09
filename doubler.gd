@@ -8,6 +8,7 @@ var save_path: String = ""
 var object
 var count = 0
 var cache = []
+var stubs = {} # {method: retval}
 
 const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 
@@ -19,13 +20,15 @@ func _notification(what: int) -> void:
 
 func dummy(method):
 	print("dummying method: ", method )
-	modified_source_code.append("func add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn null")
+	modified_source_code.append("\nfunc add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn null\n")
 
 func stub(method: String, return_value):
 	print("stubbing method: %s with return value of: %s" % [method, return_value])
-	if return_value is bool:
-		return_value = str(return_value).to_lower()
-	modified_source_code.append("func add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn %s" % str(return_value))
+	if stubs.has("method"):
+		push_error("WAT: This Method has already been stubbed")
+		return
+	stubs[method] = return_value
+	modified_source_code.append("\nfunc add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn load('%s').stubs['%s']\n" % [resource_path, method])
 
 func object() -> Object:
 	# Add a error check here to inform people they've already instanced it.
@@ -35,10 +38,14 @@ func object() -> Object:
 	var script = GDScript.new()
 #	var script = load("res://addons/WAT/double/objects/blank.gd").duplicate(true)
 	var source: String = 'extends "%s"\n' % base_script
+#	source += "const DOUBLER = preload('%s')\n" % resource_path
 	for change in modified_source_code:
 		source += change
 		mini_test = true
 	script.source_code = source
+	print("000000000000000000000000")
+	print(script.source_code)
+	print("1111111111111111111111111")
 
 	# Freeing these objects are a pain so we want to create a fresh copy time we instance it.
 	# However why are we instancing a new copy instead of locking this down after our first instance

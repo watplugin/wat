@@ -121,6 +121,18 @@ func test_when_stubbing_a_method_with_true_with_get_true_back_when_we_call_that_
 	var actual = obj.add(2, 10)
 	expect.is_equal(expected, actual, "true was returned from stubbed method")
 
+func test_when_stubbing_a_method_with_an_Node_we_get_the_Node_back():
+	describe("When stubbing a method with a Node, we should get that Node back")
+
+	clear_temp()
+	var n = Node.new()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	doubler.stub("add", n)
+	var obj = doubler.object()
+	var expected = n
+	var actual = obj.add(10, 10)
+	expect.is_equal(expected, actual, "we received the same node back")
+	expect.is_equal(expected.get_instance_id(), actual.get_instance_id(), "Nodes share same instance id")
 
 
 
