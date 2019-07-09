@@ -19,8 +19,13 @@ func _notification(what: int) -> void:
 
 func dummy(method):
 	print("dummying method: ", method )
-	modified_source_code.append("func add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn 'Hello World'")
+	modified_source_code.append("func add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn null")
 
+func stub(method: String, return_value):
+	print("stubbing method: %s with return value of: %s" % [method, return_value])
+	if return_value is bool:
+		return_value = str(return_value).to_lower()
+	modified_source_code.append("func add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn %s" % str(return_value))
 
 func object() -> Object:
 	# Add a error check here to inform people they've already instanced it.
