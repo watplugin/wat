@@ -10,6 +10,7 @@ var count = 0
 var cache = []
 var stubs = {} # {method: retval}
 var _created = false
+var is_scene = false
 
 const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 
@@ -30,6 +31,9 @@ func stub(method: String, return_value):
 		return
 	stubs[method] = return_value
 	modified_source_code.append("\nfunc add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn load('%s').stubs['%s']\n" % [resource_path, method])
+
+func spy(method: String) -> void:
+	pass
 
 func object():
 	if _created:

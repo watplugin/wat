@@ -79,15 +79,10 @@ func test_when_invoking_a_dummy_method_in_a_double_we_get_null():
 
 	clear_temp()
 	var doubler = double("res://Examples/Scripts/calculator.gd")
-	var expected = 4
-	var actual = doubler.object().add(2, 2)
-	# Misleading test; Treats it as if we weren't creating a new instance
-	expect.is_equal(expected, actual, "We get 4 when we invoke add(2, 2) before dummying it")
 	doubler.dummy("add")
 	var obj = doubler.object()
-	var expect_again = null
-	var actual_again = obj.add(2, 2)
-	expect.is_equal(expect_again, actual_again, "Dummied add returned null")
+	var actual = obj.add(2, 2)
+	expect.is_null(actual, "Dummied add returned null")
 
 func test_when_stubbing_a_method_with_true_with_get_true_back_when_we_call_that_method():
 	describe("When we stub a method to return true, it returns true when we call it")
@@ -121,6 +116,14 @@ func test_doubler_when_trying_to_create_a_second_double_we_get_null_instead():
 	var obj1 = doubler.object()
 	var obj2 = doubler.object()
 	expect.is_null(obj2, "We got null when we tried to create object() again from doubler")
+
+func test_when_we_spy_we_can_check_it_was_spied_on():
+	describe("When we spy on add and then call it, the fact it was called was recorded")
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	doubler.spy("add")
+	var obj1 = doubler.object()
+	expect.was_called(doubler, "add", "add was called")
 
 
 
