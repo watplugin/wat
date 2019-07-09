@@ -70,7 +70,7 @@ func test_when_creating_a_doubled_object_we_receive_the_doubled_script():
 
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	var object = doubler.object()
-	var expected = "user://WATemp/S0.gd"
+	var expected = "user://WATemp/S10.gd" # 1 for the doubler in temp, 0 for the first unique counter
 	var actual = object.get_script().resource_path
 	expect.is_equal(expected, actual, "script path of doubled object from doubler.object() is stored in user://WATemp")
 
@@ -83,10 +83,28 @@ func test_when_invoking_a_dummy_method_in_a_double_we_get_null():
 	var actual = doubler.object().add(2, 2)
 	expect.is_equal(expected, actual, "We get 4 when we invoke add(2, 2) before dummying it")
 	doubler.dummy("add")
+	var obj = doubler.object()
 	var expect_again = null
-	var actual_again = doubler.object().add(2, 2)
+	# Are we eliminating changes when adding them to source?
+#	var actual_again = doubler.object().add(2, 2)
+	var actual_again = obj.add(2, 2) as String
+	expect.is_equal('Hello World', actual_again, "dummied add returned Hello World")
+
+	# This is a failing test because we have actually stubbed it, not dummied it
+	# I'll be confident in keep this here once we implement a partner stub method
 	expect.is_equal(expect_again, actual_again, "Dummied add returned null")
 
+func test_when_calling_object_consecutively_there_still_only_exists_two_scripts_in_temp():
+	describe("When we instanced a doubled script, the new doubled script replaces the old one")
+
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	var obj = doubler.object()
+	var obj2 = doubler.object()
+
+	var expected = 2
+	var actual = FILESYSTEM.file_list("user://WATemp").size()
+	expect.is_equal(expected, actual, "Only two files exist in user://WATemp (the doubler and doubled script)")
 
 
 
