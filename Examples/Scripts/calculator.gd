@@ -13,6 +13,12 @@ func multiply(a, b):
 func divide(a, b):
 	return a / b
 
+func sum(list):
+	var sum = 0
+	for number in list:
+		sum += number
+	return sum
+
 class Algebra:
 
 	func scale(vector, scaler):

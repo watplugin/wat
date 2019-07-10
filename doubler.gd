@@ -6,7 +6,8 @@ tool
 # CalledWithArguments check
 # SceneVersion of doubler
 # Keywords for static methods etc
-# Add dependency managers
+# Add dependency managers (Constructor and Setter)
+# Deal with Inner Classes
 
 export (String) var index
 export(String) var base_script: String
@@ -24,7 +25,7 @@ const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 func add_method(method: String) -> void:
 	if definitions.has(method):
 		return
-	definitions[method] = {spying = false, stubbed = false, calls_super = false}
+	definitions[method] = {spying = false, stubbed = false, calls_super = false, args = null}
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
@@ -81,7 +82,6 @@ func found_matching_call(method, expected_args: Array):
 	var calls: Array = spies[method]
 	for call in calls:
 		if _pattern_matched(expected_args, call):
-			print("was called")
 			return true
 	return false
 
@@ -98,22 +98,37 @@ class CallSuper:
 
 func create_function(name: String) -> String:
 	var method: Dictionary = definitions[name]
-	var function_text: String = "func %s(a, b):" % name
-	function_text += "\n\tvar args = [a, b]"
+	var function_text: String = "func %s(%s):" % [name, method.args]
+	function_text += "\n\tvar args = [%s]" % method.args
 	if method.spying:
 		function_text += "\n\tload('%s').add_call('%s', args)" % [resource_path, name]
 	if method.stubbed:
 		function_text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [resource_path, name]
-		function_text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(a, b)" % [resource_path, name]
+		function_text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)" % [resource_path, name, method.args]
 	assert(function_text.split("\n").size() > 1)
 	return function_text
+
+var instanced_base
+
+func instance_base():
+	self.instanced_base = load(base_script).new()
+
+func method_args():
+	var base_methods: Dictionary
+	for m in self.instanced_base.get_method_list():
+		if definitions.has(m.name):
+			definitions[m.name].args = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
+			print(definitions[m.name].args)
+#	for m in definitions
 
 func object() -> Object:
 	if _created:
 		return null
 	_created = true
 	# Add a error check here to inform people they've already instanced it.
-
+	# CREATE BASE HERE?
+	instance_base()
+	method_args()
 	var script = GDScript.new()
 	var source: String = 'extends "%s"\n' % base_script
 	for name in definitions:

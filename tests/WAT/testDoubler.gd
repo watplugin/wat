@@ -200,6 +200,16 @@ func test_when_we_stub_a_method_twice_with_the_default_to_call_super():
 	expect.is_equal(expect_generic, actual_generic, "Super was called as generic stub")
 	expect.is_equal(expect_specific, actual_specific, "Specific stub returned 9999 when we passed 10, 10")
 
+func test_when_we_spy_methods_it_rewrites_with_the_correct_amount_of_arguments():
+	describe("When we add a method to our doubler, it writes the correct number of arguments")
+
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	doubler.stub("sum", 111)
+	var object = doubler.object()
+	var expected = 111
+	var actual = object.sum([10, 4, 9, 2])
+	expect.is_equal(expected, actual, "Sum was stubbed successfully")
 
 
 
