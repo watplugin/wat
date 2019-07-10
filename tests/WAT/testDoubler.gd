@@ -12,8 +12,9 @@ func double(path):
 	var doubler = Doubler.new()
 	var index = FILESYSTEM.file_list("user://WATemp").size()
 	var savepath: String = "user://WATemp/R%s.tres" % index as String
+#	doubler.index = index as String
 	doubler.base_script = path
-	doubler.index = index
+	doubler.index = index as String
 	ResourceSaver.save(savepath, doubler)
 	return load(savepath)
 
@@ -66,11 +67,11 @@ func test_when_doubling_a_script_we_can_invoke_the_base_script_method():
 
 func test_when_creating_a_doubled_object_we_receive_the_doubled_script():
 	describe("When we invoke object() on doubler, we receive an object whose script is saved in user://WATemp")
-	clear_temp()
 
+	clear_temp()
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	var object = doubler.object()
-	var expected = "user://WATemp/S10.gd" # 1 for the doubler in temp, 0 for the first unique counter
+	var expected = "user://WATemp/S0.gd" # 1 for the doubler in temp, 0 for the first unique counter
 	var actual = object.get_script().resource_path
 	expect.is_equal(expected, actual, "script path of doubled object from doubler.object() is stored in user://WATemp")
 
@@ -119,16 +120,17 @@ func test_doubler_when_trying_to_create_a_second_double_we_get_null_instead():
 
 func test_when_we_spy_we_can_check_it_was_spied_on():
 	describe("When we spy on add and then call it, the fact it was called was recorded")
+
 	clear_temp()
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	doubler.spy("add")
 	var obj1 = doubler.object()
 	obj1.add(5, 5)
 	expect.was_called(doubler, "add", "add was called")
-	
+
 func test_when_we_stub_a_method_with_arguments_we_get_the_arg_method_back():
 	describe("When we stub a method based on what arguments it receives, we get the corresponding return value")
-	
+
 	clear_temp()
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	doubler.stub("add", true)
