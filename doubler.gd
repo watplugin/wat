@@ -14,6 +14,10 @@ var is_scene = false
 
 const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 
+func add_method(method: String) -> void:
+	if definitions.has(method):
+		return
+	definitions[method] = {spying = false, stubbed = false, calls_super = false}
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
@@ -21,51 +25,42 @@ func _notification(what: int) -> void:
 			if item is Object:
 				item.free()
 
-func call_count(method):
+func call_count(method: String) -> int:
 	return spies[method]
 
-func dummy(method):
-	if not definitions.has(method):
-		definitions[method] = {spying = false, stubbed = false, calls_super = false}
+func dummy(method: String) -> void:
+	add_method(method)
 	definitions[method].stubbed = true
 	if not stubs.has(method):
 		stubs[method] = {default = null, patterns = []}
 	stubs[method].default = null
 
-func stub(method: String, return_value, arguments: Array = []):
-	if not definitions.has(method):
-		definitions[method] = {spying = false, stubbed = false, calls_super = false}
+func stub(method: String, return_value, arguments: Array = []) -> void:
+	add_method(method)
 	definitions[method].stubbed = true
 	if not stubs.has(method):
 		stubs[method] = {default = null, patterns = []}
-	if stubs.has("method"):
-		push_error("WAT: This Method has already been stubbed")
-		return
-		# We're returning this directly, problablly need a new method
 	if arguments.empty():
 		stubs[method].default = return_value
 	else:
 		stubs[method].patterns.append({args = arguments, "return_value": return_value})
 
-func get_stub(method, args):
-	var stubbed = stubs[method]
+func get_stub(method: String, args: Array):
+	var stubbed: Dictionary = stubs[method]
 	for s in stubbed.patterns:
 		if args == s.args:
 			# This might cause issues with special objects
-			print("returning ", s.return_value)
 			return s.return_value
-	# If none match, we return the default
 	return stubbed.default
 
 func spy(method: String) -> void:
-	if not definitions.has(method):
-		definitions[method] = {spying = false, stubbed = false, calls_super = false}
+	add_method(method)
 	definitions[method].spying = true
 	spies[method] = 0
 
-func create_function(name):
-	var method = definitions[name]
-	var function_text = "func %s(a, b):" % name
+func create_function(name: String) -> String:
+	var method: Dictionary = definitions[name]
+	var function_text: String = "func %s(a, b):" % name
 	function_text += "\n\tvar args = [a, b]"
 	if method.spying:
 		function_text += "\n\tload('%s').spies['%s'] += 1" % [resource_path, name]
@@ -74,7 +69,7 @@ func create_function(name):
 	assert(function_text.split("\n").size() > 1)
 	return function_text
 
-func object():
+func object() -> Object:
 	if _created:
 		return null
 	_created = true
