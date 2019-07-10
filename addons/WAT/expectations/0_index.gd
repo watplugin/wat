@@ -107,7 +107,7 @@ func _scene_was_not_called(double, nodepath: String, method: String, context: St
 func _script_was_not_called(double, method: String, context: String = "", crash_on_failure: bool = false) -> void:
 	output(EXPECT.SCRIPT_WAS_NOT_CALLED.new(double, method, context), crash_on_failure)
 
-func was_called_with_arguments(double, method: String, arguments: Dictionary, context: String = "", crash_on_failure: bool = false) -> void:
+func was_called_with_arguments(double, method: String, arguments: Array, context: String = "", crash_on_failure: bool = false) -> void:
 	output(EXPECT.CALLED_WITH_ARGUMENTS.new(double, method, arguments, context), crash_on_failure)
 
 func signal_was_emitted(emitter, _signal, context: String = "", crash_on_failure: bool = false) -> void:

@@ -181,7 +181,9 @@ func test_we_can_check_a_method_was_called_with_arguments():
 	doubler.spy("add")
 	var object = doubler.object()
 	object.add(10, 10)
-	expect.was_called_with_arguments(doubler, "add", {"a": 10, "b": 10})
+	expect.was_called_with_arguments(doubler, "add", [10, 10], "Double was called with a(10) & b(10)")
+	expect.was_called_with_arguments(doubler, "add", [10, any()], "Double was called with a(10) and b as anything")
+	object.add(10, 15)
 
 
 

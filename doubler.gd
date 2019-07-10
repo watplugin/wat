@@ -33,7 +33,7 @@ func _notification(what: int) -> void:
 				item.free()
 
 func call_count(method: String) -> int:
-	return spies[method]
+	return spies[method].size()
 
 func dummy(method: String) -> void:
 	add_method(method)
@@ -74,14 +74,37 @@ func _pattern_matched(pattern: Array, args: Array) -> bool:
 func spy(method: String) -> void:
 	add_method(method)
 	definitions[method].spying = true
-	spies[method] = 0
+	spies[method] = []
+
+func found_matching_call(method, expected_args: Array):
+	var calls: Array = spies[method]
+	for call in calls:
+		if _pattern_matched(expected_args, call):
+			print("was called")
+			return true
+	return false
+
+#func _found_matching_call(double, method: String, args) -> bool:
+#	for call in double._methods[method].calls:
+#			if key_value_match(args, call):
+#				return true
+#	return false
+#
+#func key_value_match(a: Dictionary, b: Dictionary) -> bool:
+#	for key in a:
+#		if a[key] != b[key]:
+#			return false
+#	return true
+
+func add_call(method: String, args: Array = []) -> void:
+	spies[method].append(args)
 
 func create_function(name: String) -> String:
 	var method: Dictionary = definitions[name]
 	var function_text: String = "func %s(a, b):" % name
 	function_text += "\n\tvar args = [a, b]"
 	if method.spying:
-		function_text += "\n\tload('%s').spies['%s'] += 1" % [resource_path, name]
+		function_text += "\n\tload('%s').add_call('%s', args)" % [resource_path, name]
 	if method.stubbed:
 		function_text += "\n\treturn load('%s').get_stub('%s', args)" % [resource_path, name]
 	assert(function_text.split("\n").size() > 1)
