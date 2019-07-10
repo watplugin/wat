@@ -164,7 +164,6 @@ func test_when_we_stub_a_method_with_an_any_argument_we_get_retval_back():
 	clear_temp()
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	doubler.stub("add", true)
-#	var x = any()
 	doubler.stub("add", 100, [10, any()])
 	var object = doubler.object()
 	var generic_result = object.add(5, 10)
@@ -173,6 +172,16 @@ func test_when_we_stub_a_method_with_an_any_argument_we_get_retval_back():
 	expect.is_equal(generic_result, true, "We received default stub")
 	expect.is_equal(specific_result, 100, "We received specific result")
 	expect.is_equal(specific_result2, 100, "Received specific result with complex object as second argument")
+
+func test_we_can_check_a_method_was_called_with_arguments():
+	describe("When we spy on a method, we can check which arguments it was called with")
+
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	doubler.spy("add")
+	var object = doubler.object()
+	object.add(10, 10)
+	expect.was_called_with_arguments(doubler, "add", {"a": 10, "b": 10})
 
 
 
