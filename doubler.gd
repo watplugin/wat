@@ -10,6 +10,7 @@ var count = 0
 var cache = []
 var stubs = {} # {method: retval}
 var spies = {} # method / count
+var definitions = {} # {Spying: ?, Stub: {MATCH_PATTERNS, default}, dummied}
 var _created = false
 var is_scene = false
 
@@ -29,7 +30,7 @@ func dummy(method):
 	print("dummying method: ", method )
 	modified_source_code.append("\nfunc add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn null\n")
 
-func stub(method: String, return_value):
+func stub(method: String, return_value, arguments: Array = []):
 	print("stubbing method: %s with return value of: %s" % [method, return_value])
 	if stubs.has("method"):
 		push_error("WAT: This Method has already been stubbed")

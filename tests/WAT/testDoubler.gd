@@ -125,6 +125,18 @@ func test_when_we_spy_we_can_check_it_was_spied_on():
 	var obj1 = doubler.object()
 	obj1.add(5, 5)
 	expect.was_called(doubler, "add", "add was called")
+	
+func test_when_we_stub_a_method_with_arguments_we_get_the_arg_method_back():
+	describe("When we stub a method based on what arguments it receives, we get the corresponding return value")
+	
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	doubler.stub("add", true)
+	doubler.stub("add", 9999, [5000, 5000])
+	var object = doubler.object()
+	# We stubbed add twice, so we're creating two copies of the method
+	expect.is_true(object.add(3, 3), "We received true back from a generic stub")
+	expect.is_equal(9999, object.add(5000, 5000), "We received 9999 non-generic stub when we passed 5000, 5000")
 
 
 
