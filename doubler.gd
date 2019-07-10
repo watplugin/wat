@@ -9,6 +9,7 @@ var object
 var count = 0
 var cache = []
 var stubs = {} # {method: retval}
+var spies = {} # method / count
 var _created = false
 var is_scene = false
 
@@ -19,6 +20,10 @@ func _notification(what: int) -> void:
 		for item in cache:
 			if item is Object:
 				item.free()
+
+func call_count(method):
+	return spies[method]
+	print("checking call count for %s")
 
 func dummy(method):
 	print("dummying method: ", method )
@@ -33,7 +38,8 @@ func stub(method: String, return_value):
 	modified_source_code.append("\nfunc add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn load('%s').stubs['%s']\n" % [resource_path, method])
 
 func spy(method: String) -> void:
-	pass
+	spies[method] = 0
+	modified_source_code.append("\nfunc add(a, b):\n\tload('%s').spies['%s'] += 1" % [resource_path, method])
 
 func object():
 	if _created:

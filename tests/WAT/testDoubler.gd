@@ -123,6 +123,7 @@ func test_when_we_spy_we_can_check_it_was_spied_on():
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	doubler.spy("add")
 	var obj1 = doubler.object()
+	obj1.add(5, 5)
 	expect.was_called(doubler, "add", "add was called")
 
 
