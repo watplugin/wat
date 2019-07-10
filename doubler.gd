@@ -4,6 +4,9 @@ tool
 # TODO
 # SuperCall (Stub to call super if passed x, y, z OR default to call super if not stubbed?)
 # CalledWithArguments check
+# SceneVersion of doubler
+# Keywords for static methods etc
+# Add dependency managers
 
 export (String) var index
 export(String) var base_script: String
