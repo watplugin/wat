@@ -31,17 +31,38 @@ func dummy(method):
 	if not definitions.has(method):
 		definitions[method] = {spying = false, stubbed = false, calls_super = false}
 	definitions[method].stubbed = true
-	stubs[method] = null
+	if not stubs.has(method):
+		stubs[method] = {default = null, patterns = []}
+	stubs[method].default = null
 
 func stub(method: String, return_value, arguments: Array = []):
 	if not definitions.has(method):
 		definitions[method] = {spying = false, stubbed = false, calls_super = false}
 	definitions[method].stubbed = true
 	print("stubbing method: %s with return value of: %s" % [method, return_value])
+	if not stubs.has(method):
+		stubs[method] = {default = null, patterns = []}
 	if stubs.has("method"):
 		push_error("WAT: This Method has already been stubbed")
 		return
-	stubs[method] = return_value
+		# We're returning this directly, problablly need a new method
+	if arguments.empty():
+		stubs[method].default = return_value
+	else:
+		stubs[method].patterns.append({args = arguments, "return_value": return_value})
+
+func get_stub(method, args):
+	print(stubs)
+	var stubbed = stubs[method]
+	print(method)
+	print(stubbed)
+	for s in stubbed.patterns:
+		if args == s.args:
+			# This might cause issues with special objects
+			print("returning ", s.return_value)
+			return s.return_value
+	# If none match, we return the default
+	return stubbed.default
 
 func spy(method: String) -> void:
 	if not definitions.has(method):
@@ -52,10 +73,11 @@ func spy(method: String) -> void:
 func create_function(name):
 	var method = definitions[name]
 	var function_text = "func %s(a, b):" % name
+	function_text += "\n\tvar args = [a, b]"
 	if method.spying:
 		function_text += "\n\tload('%s').spies['%s'] += 1" % [resource_path, name]
 	if method.stubbed:
-		function_text += "\n\treturn load('%s').stubs['%s']" % [resource_path, name]
+		function_text += "\n\treturn load('%s').get_stub('%s', args)" % [resource_path, name]
 	assert(function_text.split("\n").size() > 1)
 	return function_text
 
