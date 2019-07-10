@@ -1,6 +1,10 @@
 extends Resource
 tool
 
+# TODO
+# SuperCall (Stub to call super if passed x, y, z OR default to call super if not stubbed?)
+# CalledWithArguments check
+
 export (String) var index
 export(String) var base_script: String
 export(Array, String) var modified_source_code: Array = []
