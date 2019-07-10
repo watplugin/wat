@@ -105,7 +105,6 @@ func create_function(name: String) -> String:
 	if method.stubbed:
 		function_text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [resource_path, name]
 		function_text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)" % [resource_path, name, method.args]
-	assert(function_text.split("\n").size() > 1)
 	return function_text
 
 var instanced_base
@@ -118,8 +117,6 @@ func method_args():
 	for m in self.instanced_base.get_method_list():
 		if definitions.has(m.name):
 			definitions[m.name].args = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
-			print(definitions[m.name].args)
-#	for m in definitions
 
 func object() -> Object:
 	if _created:
