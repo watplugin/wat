@@ -190,6 +190,10 @@ func test_when_we_stub_a_method_twice_with_the_default_to_call_super():
 
 	clear_temp()
 	var doubler = double("res://Examples/Scripts/calculator.gd")
+<<<<<<< HEAD
+=======
+#	doubler.stub("add", doubler.call_super())
+>>>>>>> 3f267e6d868d3a06d22ffdfd96b80197b5c99278
 	doubler.call_super("add")
 	doubler.stub("add", 9999, [10, 10])
 	var object = doubler.object()
