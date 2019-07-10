@@ -143,6 +143,22 @@ func test_when_we_stub_a_method_with_arguments_we_get_the_arg_method_back():
 	expect.is_equal(n, object.add(3, 3), "We received back the same node from a generic stub")
 	expect.is_equal(9999, object.add(5000, 5000), "We received 9999 non-generic stub when we passed 5000, 5000")
 
+func test_when_we_stub_a_method_with_complex_arguments_we_still_get_correct_return_value():
+	describe("When we stub a method based on arguments with complex arguments (Nodes etc), we still get the return value back")
+
+	clear_temp()
+	var complex_object = Node.new()
+	var return_object = Node.new()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	doubler.stub("add", return_object, [10, complex_object]) # What do we do if we don't have a generic stub? Signals?
+	doubler.stub("add", 9999)
+	var object = doubler.object()
+	var result = object.add(10, complex_object)
+	var generic_result = object.add(10, 34)
+	expect.is_equal(9999, generic_result, "Received default stub 9999 when calling without stubbed arguments")
+	expect.is_equal(return_object, result, "We receive correct specific stubbed return_value even when arguments include complex objects")
+#	expect.is_not_equal(complex_object, return_object, "our two objects are not equal")
+
 
 
 
