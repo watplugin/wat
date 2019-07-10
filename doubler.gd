@@ -45,6 +45,7 @@ func dummy(method: String) -> void:
 func stub(method: String, return_value, arguments: Array = []) -> void:
 	add_method(method)
 	definitions[method].stubbed = true
+
 	if not stubs.has(method):
 		stubs[method] = {default = null, patterns = []}
 	if arguments.empty():
@@ -84,20 +85,16 @@ func found_matching_call(method, expected_args: Array):
 			return true
 	return false
 
-#func _found_matching_call(double, method: String, args) -> bool:
-#	for call in double._methods[method].calls:
-#			if key_value_match(args, call):
-#				return true
-#	return false
-#
-#func key_value_match(a: Dictionary, b: Dictionary) -> bool:
-#	for key in a:
-#		if a[key] != b[key]:
-#			return false
-#	return true
-
 func add_call(method: String, args: Array = []) -> void:
 	spies[method].append(args)
+
+func call_super(method: String, args: Array = []) -> void:
+	stub(method, CallSuper.new(), args)
+
+class CallSuper:
+
+	func _init():
+		pass
 
 func create_function(name: String) -> String:
 	var method: Dictionary = definitions[name]
@@ -106,7 +103,8 @@ func create_function(name: String) -> String:
 	if method.spying:
 		function_text += "\n\tload('%s').add_call('%s', args)" % [resource_path, name]
 	if method.stubbed:
-		function_text += "\n\treturn load('%s').get_stub('%s', args)" % [resource_path, name]
+		function_text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [resource_path, name]
+		function_text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(a, b)" % [resource_path, name]
 	assert(function_text.split("\n").size() > 1)
 	return function_text
 
@@ -115,6 +113,7 @@ func object() -> Object:
 		return null
 	_created = true
 	# Add a error check here to inform people they've already instanced it.
+
 	var script = GDScript.new()
 	var source: String = 'extends "%s"\n' % base_script
 	for name in definitions:

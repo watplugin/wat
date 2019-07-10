@@ -185,6 +185,20 @@ func test_we_can_check_a_method_was_called_with_arguments():
 	expect.was_called_with_arguments(doubler, "add", [10, any()], "Double was called with a(10) and b as anything")
 	object.add(10, 15)
 
+func test_when_we_stub_a_method_twice_with_the_default_to_call_super():
+	describe("When we stub a method twice, with the default to call the .super method, super gets called when we don't pass the specific arguments")
+
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	doubler.call_super("add")
+	doubler.stub("add", 9999, [10, 10])
+	var object = doubler.object()
+	var expect_generic = 15
+	var actual_generic = object.add(10, 5)
+	var expect_specific = 9999
+	var actual_specific = object.add(10, 10)
+	expect.is_equal(expect_generic, actual_generic, "Super was called as generic stub")
+	expect.is_equal(expect_specific, actual_specific, "Specific stub returned 9999 when we passed 10, 10")
 
 
 
