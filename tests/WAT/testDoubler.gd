@@ -157,9 +157,22 @@ func test_when_we_stub_a_method_with_complex_arguments_we_still_get_correct_retu
 	var generic_result = object.add(10, 34)
 	expect.is_equal(9999, generic_result, "Received default stub 9999 when calling without stubbed arguments")
 	expect.is_equal(return_object, result, "We receive correct specific stubbed return_value even when arguments include complex objects")
-#	expect.is_not_equal(complex_object, return_object, "our two objects are not equal")
 
+func test_when_we_stub_a_method_with_an_any_argument_we_get_retval_back():
+	describe("When we stubbed a method based on arguments where args is 10, any, we get the specific return value back as long as first arg is 10")
 
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	doubler.stub("add", true)
+#	var x = any()
+	doubler.stub("add", 100, [10, any()])
+	var object = doubler.object()
+	var generic_result = object.add(5, 10)
+	var specific_result = object.add(10, 45)
+	var specific_result2 = object.add(10, Reference.new())
+	expect.is_equal(generic_result, true, "We received default stub")
+	expect.is_equal(specific_result, 100, "We received specific result")
+	expect.is_equal(specific_result2, 100, "Received specific result with complex object as second argument")
 
 
 

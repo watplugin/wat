@@ -18,6 +18,15 @@ var p: Dictionary = {}
 var rerun_method: bool = false
 signal described
 
+
+class ANY extends Reference:
+
+	func get_class() -> String:
+		return "Any"
+
+func any():
+	return ANY.new()
+
 func describe(message: String) -> void:
 	emit_signal("described", message)
 

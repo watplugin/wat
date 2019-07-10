@@ -47,11 +47,22 @@ func stub(method: String, return_value, arguments: Array = []) -> void:
 
 func get_stub(method: String, args: Array):
 	var stubbed: Dictionary = stubs[method]
-	for s in stubbed.patterns:
-		if args == s.args:
-			# This might cause issues with special objects
-			return s.return_value
+	for pattern in stubbed.patterns:
+		if _pattern_matched(pattern.args, args):
+			return pattern.return_value
 	return stubbed.default
+
+func _pattern_matched(pattern: Array, args: Array) -> bool:
+	var indices: Array = []
+	for index in pattern.size():
+		if pattern[index] is Object and pattern[index].get_class() == "Any":
+			continue
+		indices.append(index)
+	for i in indices:
+		# We check based on type first otherwise some errors occur (ie object can't be compared to int)
+		if typeof(pattern[i]) != typeof(args[i]) or pattern[i] != args[i]:
+			return false
+	return true
 
 func spy(method: String) -> void:
 	add_method(method)
