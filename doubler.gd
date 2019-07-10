@@ -28,19 +28,36 @@ func call_count(method):
 
 func dummy(method):
 	print("dummying method: ", method )
-	modified_source_code.append("\nfunc add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn null\n")
+	if not definitions.has(method):
+		definitions[method] = {spying = false, stubbed = false, calls_super = false}
+	definitions[method].stubbed = true
+	stubs[method] = null
 
 func stub(method: String, return_value, arguments: Array = []):
+	if not definitions.has(method):
+		definitions[method] = {spying = false, stubbed = false, calls_super = false}
+	definitions[method].stubbed = true
 	print("stubbing method: %s with return value of: %s" % [method, return_value])
 	if stubs.has("method"):
 		push_error("WAT: This Method has already been stubbed")
 		return
 	stubs[method] = return_value
-	modified_source_code.append("\nfunc add(a, b):\n\tprint('Calling add with', str(a), '&', str(b))\n\treturn load('%s').stubs['%s']\n" % [resource_path, method])
 
 func spy(method: String) -> void:
+	if not definitions.has(method):
+		definitions[method] = {spying = false, stubbed = false, calls_super = false}
+	definitions[method].spying = true
 	spies[method] = 0
-	modified_source_code.append("\nfunc add(a, b):\n\tload('%s').spies['%s'] += 1" % [resource_path, method])
+
+func create_function(name):
+	var method = definitions[name]
+	var function_text = "func %s(a, b):" % name
+	if method.spying:
+		function_text += "\n\tload('%s').spies['%s'] += 1" % [resource_path, name]
+	if method.stubbed:
+		function_text += "\n\treturn load('%s').stubs['%s']" % [resource_path, name]
+	assert(function_text.split("\n").size() > 1)
+	return function_text
 
 func object():
 	if _created:
@@ -53,10 +70,11 @@ func object():
 	var script = GDScript.new()
 #	var script = load("res://addons/WAT/double/objects/blank.gd").duplicate(true)
 	var source: String = 'extends "%s"\n' % base_script
-#	source += "const DOUBLER = preload('%s')\n" % resource_path
-	for change in modified_source_code:
-		source += change
-		mini_test = true
+	for name in definitions:
+		source += create_function(name)
+#	for change in modified_source_code:
+#		source += change
+#		mini_test = true
 	script.source_code = source
 	print("000000000000000000000000")
 	print(script.source_code)
