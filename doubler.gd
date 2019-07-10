@@ -128,9 +128,11 @@ func object() -> Object:
 	method_args()
 	var script = GDScript.new()
 	var source: String = 'extends "%s"\n' % base_script
+	source += "\nconst BASE = preload('%s')\n\n" % base_script
 	for name in definitions:
 		source += create_function(name)
 	script.source_code = source
+#	print("BEGIN\n%s\nEND" % script.source_code)
 	save_path = "user://WATemp/S%s.gd" % index
 	ResourceSaver.save(save_path, script)
 	var object = load(save_path).new()
