@@ -11,4 +11,5 @@ static func double(path, inner: String = "", dependecies = null):
 	doubler.inner = inner
 	doubler.index = index as String
 	ResourceSaver.save(savepath, doubler)
-	return load(savepath)
+	var double = load(savepath)
+	return double
