@@ -6,10 +6,13 @@ extends WATTest
 # 2) We can invoke methods via instance
 # 3) Invoke dummy methods via instance
 
-const FACTORY = preload("res://factory.gd")
+const _FACTORY = preload("res://factory.gd")
+var FACTORY = _FACTORY.new()
 
 func double(path, inner: String = "", dependecies = null):
 	return FACTORY.double(path, inner, dependecies)
+
+
 
 func test_when_doubling_a_script_we_get_a_text_resource_file_back():
 	describe("double(arg) returns a text resource (.tres) file")
@@ -17,7 +20,8 @@ func test_when_doubling_a_script_we_get_a_text_resource_file_back():
 	clear_temp()
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	expect.is_not_null(doubler, "We got something back")
-	expect.is_equal(doubler.resource_path, "user://WATemp/R0.tres", "Which was saved in user://WATemp")
+#	expect.is_equal(doubler.resource_path, "user://WATemp/R0.tres", "Which was saved in user://WATemp")
+	expect.string_ends_with(".tres", doubler.resource_path, "Tres file")
 
 func test_when_doubling_a_script_the_doubler_saves_the_base_script():
 	describe("When doubling a script, the doubler saves the base scripts path")
@@ -32,7 +36,12 @@ func test_when_doubling_two_scripts_they_do_not_share_resources():
 
 	clear_temp()
 	var doubler1 = double("res://Examples/Scripts/calculator.gd")
+
+	clear_temp() # If we clear temp, then our identity doesn't become unique, we will need to add something else
 	var doubler2 = double("res://Examples/Scripts/calculator.gd")
+	var d1 = hash(doubler1)
+	var d2 = hash(doubler2)
+	expect.is_not_equal(d1, d2, "different hashes")
 	# This expect came out null?
 	expect.is_equal(doubler1.base_script, doubler2.base_script, "Doubler 1 & 2 have the same base script")
 	doubler2.base_script = "Whatever.gd"
@@ -66,7 +75,7 @@ func test_when_creating_a_doubled_object_we_receive_the_doubled_script():
 	var object = doubler.object()
 	var expected = "user://WATemp/S0.gd" # 1 for the doubler in temp, 0 for the first unique counter
 	var actual = object.get_script().resource_path
-	expect.is_equal(expected, actual, "script path of doubled object from doubler.object() is stored in user://WATemp")
+	expect.string_begins_with("user://WATemp", actual, "script path of doubled object from doubler.object() is stored in user://WATemp")
 
 func test_when_invoking_a_dummy_method_in_a_double_we_get_null():
 	describe("When we dummy a method in a double we receive null")
