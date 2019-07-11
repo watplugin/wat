@@ -16,37 +16,7 @@ class METHOD:
 	const MASTER: String = "master "
 	const PUPPET: String = "puppet "
 
-class Method:
-	var name: String = ""
-	var spying: bool = false
-	var stubbed: bool = false
-	var calls_super: bool = false
-	var args: String = ""
-	var keyword: String = ""
-
-	func to_string(doubler: String):
-		var text: String
-		text += "%sfunc %s(%s):" % [keyword, name, args]
-		text += "\n\tvar args = [%s]" % args
-		if spying:
-			text += "\n\tload('%s').add_call('%s', args)" % [doubler, name]
-		if stubbed:
-			text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [doubler, name]
-			text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)\n" % [doubler, name, args]
-		return text
-
-#		var method: Dictionary = definitions[name]
-#		if method.args == null:
-#			method.args = ""
-#		var function_text: String = "%sfunc %s(%s):" % [method.keyword, name, method.args]
-#		function_text += "\n\tvar args = [%s]" % method.args
-#		if method.spying:
-#			function_text += "\n\tload('%s').add_call('%s', args)" % [resource_path, name]
-#		if method.stubbed:
-#			function_text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [resource_path, name]
-#			function_text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)\n" % [resource_path, name, method.args]
-#		return function_text
-
+const Method = preload("method.gd")
 export (String) var index
 export(String) var base_script: String
 export(String) var inner: String
@@ -63,8 +33,7 @@ const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 
 func add_method(method: String, keyword: String = "") -> void:
 	if not definitions.has(method):
-		definitions[method] = Method.new()
-#		definitions[method] = {spying = false, stubbed = false, calls_super = false, args = null, keyword = ""}
+		definitions[method] = Method.new(method)
 	if definitions[method].keyword == "" and keyword != "":
 		definitions[method].keyword = keyword
 
@@ -137,19 +106,6 @@ class CallSuper:
 	func _init():
 		pass
 
-func create_function(name: String) -> String:
-	var method: Dictionary = definitions[name]
-	if method.args == null:
-		method.args = ""
-	var function_text: String = "%sfunc %s(%s):" % [method.keyword, name, method.args]
-	function_text += "\n\tvar args = [%s]" % method.args
-	if method.spying:
-		function_text += "\n\tload('%s').add_call('%s', args)" % [resource_path, name]
-	if method.stubbed:
-		function_text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [resource_path, name]
-		function_text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)\n" % [resource_path, name, method.args]
-	return function_text
-
 var instanced_base
 
 func instance_base():
@@ -179,7 +135,7 @@ func save() -> String:
 		source = 'extends "%s"\n' % base_script
 		source += "\nconst BASE = preload('%s')\n\n" % base_script
 	for name in definitions:
-		source += create_function(name)
+		source += definitions[name].to_string(self.resource_path)
 
 	# Add Inner Classes Here?
 	var x = false
