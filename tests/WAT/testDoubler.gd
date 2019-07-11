@@ -262,7 +262,7 @@ func test_we_can_add_doubled_inner_classes_to_a_test_double():
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	var inner_doubler = double("res://Examples/Scripts/calculator.gd", "Algebra")
 	inner_doubler.stub("create_vector", 10, [], doubler.METHOD.STATIC)
-	doubler.add_inner(inner_doubler)
+	doubler.add_inner_class(inner_doubler, "Algebra")
 	var object = doubler.object()
 	var result = object.Algebra.create_vector()
 	expect.is_equal(10, result, "Inner Class Static returned stubbed value")

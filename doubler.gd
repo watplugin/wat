@@ -116,9 +116,6 @@ func create_function(name: String) -> String:
 	if method.stubbed:
 		function_text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [resource_path, name]
 		function_text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)\n" % [resource_path, name, method.args]
-	if name == "create_vector":
-		print(method.args)
-		print(function_text)
 	return function_text
 
 var instanced_base
@@ -126,14 +123,47 @@ var instanced_base
 func instance_base():
 	self.instanced_base = load(base_script).new()
 
-func add_inner_class(klass):
-	pass
+var klasses: Array = []
+
+func add_inner_class(klass, name):
+	klasses.append({"doubler": klass, "name": name})
 
 func method_args():
 	var base_methods: Dictionary
 	for m in self.instanced_base.get_method_list():
 		if definitions.has(m.name):
 			definitions[m.name].args = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
+
+func save() -> String:
+	instance_base()
+	method_args()
+	var script = GDScript.new()
+	var source: String
+	# Top Level Code
+	if inner != "":
+		source = 'extends "%s".%s\n' % [base_script, inner]
+		source += "\nconst BASE = preload('%s').%s\n\n" % [base_script, inner]
+	else:
+		source = 'extends "%s"\n' % base_script
+		source += "\nconst BASE = preload('%s')\n\n" % base_script
+	for name in definitions:
+		source += create_function(name)
+
+	# Add Inner Classes Here?
+	var x = false
+	for klass in klasses:
+		# class Name extends Path\n\t const PLACEHOLDER = 0
+		var save_path = klass.doubler.save()
+		source += "\nclass %s extends '%s':\n\tconst PLACEHOLDER = 0" % [klass.name, save_path]
+		x = true
+	if x:
+		print(source)
+	script.source_code = source
+	if inner != "":
+		print("BEGIN\n%s\nEND" % script.source_code)
+	save_path = "user://WATemp/S%s.gd" % index
+	ResourceSaver.save(save_path, script)
+	return save_path
 
 func object() -> Object:
 	if _created:
@@ -143,21 +173,7 @@ func object() -> Object:
 	# CREATE BASE HERE?
 	instance_base()
 	method_args()
-	var script = GDScript.new()
-	var source: String
-	if inner != "":
-		source = 'extends "%s".%s\n' % [base_script, inner]
-		source += "\nconst BASE = preload('%s').%s\n\n" % [base_script, inner]
-	else:
-		source = 'extends "%s"\n' % base_script
-		source += "\nconst BASE = preload('%s')\n\n" % base_script
-	for name in definitions:
-		source += create_function(name)
-	script.source_code = source
-	if inner != "":
-		print("BEGIN\n%s\nEND" % script.source_code)
-	save_path = "user://WATemp/S%s.gd" % index
-	ResourceSaver.save(save_path, script)
+	var save_path = save()
 	var object = load(save_path).new()
 	cache.append(object)
 	### BEGIN TEST
