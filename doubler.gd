@@ -2,13 +2,7 @@ extends Resource
 tool
 
 # TODO
-# SuperCall (Stub to call super if passed x, y, z OR default to call super if not stubbed?)
-# CalledWithArguments check
 # SceneVersion of doubler
-# Keywords for static methods etc
-# Add dependency managers (Constructor and Setter)
-# Deal with Inner Classes
-
 
 const STATIC: String = "static "
 const REMOTE: String = "remote "
