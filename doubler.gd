@@ -96,31 +96,36 @@ func save() -> String:
 	method_args()
 	var script = GDScript.new()
 	var source: String
-	# Top Level Code
+	source += basic_source()
+	source += add_method_source_code()
+	source += add_inner_class_source_code()
+	script.source_code = source
+	save_path = "user://WATemp/S%s.gd" % index
+	ResourceSaver.save(save_path, script)
+	return save_path
+
+func basic_source():
+	var source: String = ""
 	if inner != "":
 		source = 'extends "%s".%s\n' % [base_script, inner]
 		source += "\nconst BASE = preload('%s').%s\n\n" % [base_script, inner]
 	else:
 		source = 'extends "%s"\n' % base_script
 		source += "\nconst BASE = preload('%s')\n\n" % base_script
+	return source
+
+func add_method_source_code():
+	var source: String = ""
 	for name in methods:
 		source += methods[name].to_string(self.resource_path)
+	return source
 
-	# Add Inner Classes Here?
-	var x = false
+func add_inner_class_source_code():
+	var source: String = ""
 	for klass in klasses:
-		# class Name extends Path\n\t const PLACEHOLDER = 0
 		var save_path = klass.doubler.save()
 		source += "\nclass %s extends '%s':\n\tconst PLACEHOLDER = 0" % [klass.name, save_path]
-		x = true
-	if x:
-		print(source)
-	script.source_code = source
-	if inner != "":
-		print("BEGIN\n%s\nEND" % script.source_code)
-	save_path = "user://WATemp/S%s.gd" % index
-	ResourceSaver.save(save_path, script)
-	return save_path
+	return source
 
 func object() -> Object:
 	if _created:
