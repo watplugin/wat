@@ -20,7 +20,6 @@ const Method = preload("method.gd")
 export (String) var index
 export(String) var base_script: String
 export(String) var inner: String
-#export(Array, String) var modified_source_code: Array = []
 var save_path: String = ""
 var cache = []
 var methods = {} # {Spying: ?, Stub: {MATCH_PATTERNS, default}, dummied} # Can probably rename to methods
@@ -57,18 +56,6 @@ func stub(method: String, return_value, arguments: Array = [], keyword: String =
 
 func get_stub(method: String, args: Array):
 	return methods[method].get_stub(args)
-
-func _pattern_matched(pattern: Array, args: Array) -> bool:
-	var indices: Array = []
-	for index in pattern.size():
-		if pattern[index] is Object and pattern[index].get_class() == "Any":
-			continue
-		indices.append(index)
-	for i in indices:
-		# We check based on type first otherwise some errors occur (ie object can't be compared to int)
-		if typeof(pattern[i]) != typeof(args[i]) or pattern[i] != args[i]:
-			return false
-	return true
 
 func spy(method: String) -> void:
 	add_method(method)
