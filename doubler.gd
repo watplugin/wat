@@ -39,7 +39,7 @@ func add_method(method: String, keyword: String = "") -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		for item in cache:
-			if item is Object:
+			if item is Object and not item is Reference:
 				item.free()
 
 func call_count(method: String) -> int:
