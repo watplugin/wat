@@ -105,7 +105,14 @@ func doubled_source_code():
 	source += basic_source()
 	source += add_method_source_code()
 	source += add_inner_class_source_code()
+<<<<<<< HEAD
 	return source
+=======
+	script.source_code = source
+	save_path = "user://WATemp/S%s.gd" % index
+	ResourceSaver.save(save_path, script)
+	return save_path
+>>>>>>> e56c629e77f890bc633a20444b3167ca5883a108
 
 func basic_source():
 	var source: String = ""
