@@ -9,12 +9,12 @@ tool
 # Add dependency managers (Constructor and Setter)
 # Deal with Inner Classes
 
-class METHOD:
-	const STATIC: String = "static "
-	const REMOTE: String = "remote "
-	const REMOTESYNC: String = "remotesync "
-	const MASTER: String = "master "
-	const PUPPET: String = "puppet "
+
+const STATIC: String = "static "
+const REMOTE: String = "remote "
+const REMOTESYNC: String = "remotesync "
+const MASTER: String = "master "
+const PUPPET: String = "puppet "
 
 const Method = preload("method.gd")
 export (String) var index

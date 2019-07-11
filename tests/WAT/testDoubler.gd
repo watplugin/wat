@@ -8,7 +8,7 @@ extends WATTest
 
 const Doubler = preload("res://doubler.gd")
 
-func double(path, inner: String = ""):
+func double(path, inner: String = "", dependecies = null):
 	var doubler = Doubler.new()
 	var index = FILESYSTEM.file_list("user://WATemp").size()
 	var savepath: String = "user://WATemp/R%s.tres" % index as String
@@ -216,7 +216,7 @@ func test_doubling_static_functions():
 
 	clear_temp()
 	var doubler = double("res://Examples/Scripts/calculator.gd")
-	doubler.stub("pi", 3, [], doubler.METHOD.STATIC)
+	doubler.stub("pi", 3, [], doubler.STATIC)
 	var object = doubler.object()
 	var result = object.pi()
 	expect.is_equal(3, result, "stubbed static method")
@@ -226,7 +226,7 @@ func test_doubling_remote_functions():
 
 	clear_temp()
 	var doubler = double("res://Examples/Scripts/calculator.gd")
-	doubler.stub("math_fight", 10, [], doubler.METHOD.REMOTE) # Check if we can stub methods with underscores
+	doubler.stub("math_fight", 10, [], doubler.REMOTE) # Check if we can stub methods with underscores
 	var object = doubler.object()
 	var result = object.math_fight()
 	expect.is_equal(10, result, "stubbed remote method")
@@ -238,8 +238,8 @@ func test_double_stub_a_static_and_remote_method():
 
 	clear_temp()
 	var doubler = double("res://Examples/Scripts/calculator.gd")
-	doubler.stub("pi", 10, [], doubler.METHOD.STATIC)
-	doubler.stub("math_fight", 10, [], doubler.METHOD.REMOTE)
+	doubler.stub("pi", 10, [], doubler.STATIC)
+	doubler.stub("math_fight", 10, [], doubler.REMOTE)
 	var object = doubler.object()
 	var result1 = object.pi()
 	var result2 = object.math_fight()
@@ -250,7 +250,7 @@ func test_we_can_double_inner_classes():
 
 	clear_temp()
 	var doubler = double("res://Examples/Scripts/calculator.gd", "Algebra")
-	doubler.stub("create_vector", 15, [], doubler.METHOD.STATIC)
+	doubler.stub("create_vector", 15, [], doubler.STATIC)
 	var object = doubler.object()
 	var result = object.create_vector()
 	expect.is_equal(15, result, "Inner double returned stubbed value")
@@ -261,12 +261,10 @@ func test_we_can_add_doubled_inner_classes_to_a_test_double():
 	clear_temp()
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	var inner_doubler = double("res://Examples/Scripts/calculator.gd", "Algebra")
-	inner_doubler.stub("create_vector", 10, [], doubler.METHOD.STATIC)
+	inner_doubler.stub("create_vector", 10, [], doubler.STATIC)
 	doubler.add_inner_class(inner_doubler, "Algebra")
 	var object = doubler.object()
 	var result = object.Algebra.create_vector()
 	expect.is_equal(10, result, "Inner Class Static returned stubbed value")
-
-
 
 
