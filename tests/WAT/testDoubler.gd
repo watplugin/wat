@@ -211,6 +211,39 @@ func test_when_we_spy_methods_it_rewrites_with_the_correct_amount_of_arguments()
 	var actual = object.sum([10, 4, 9, 2])
 	expect.is_equal(expected, actual, "Sum was stubbed successfully")
 
+func test_doubling_static_functions():
+	describe("When we double a script, we can stub a static method")
+
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	doubler.stub("pi", 3, [], doubler.METHOD.STATIC)
+	var object = doubler.object()
+	var result = object.pi()
+	expect.is_equal(3, result, "stubbed static method")
+
+func test_doubling_remote_functions():
+	describe("When we doubled a script, we can stub a remote method")
+
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	doubler.stub("math_fight", 10, [], doubler.METHOD.REMOTE) # Check if we can stub methods with underscores
+	var object = doubler.object()
+	var result = object.math_fight()
+	expect.is_equal(10, result, "stubbed remote method")
+
+func test_double_stub_a_static_and_remote_method():
+	# When we split a test, both worked, so why don't they work together?
+
+	describe("We can stub a static and remote method")
+
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	doubler.stub("pi", 10, [], doubler.METHOD.STATIC)
+	doubler.stub("math_fight", 10, [], doubler.METHOD.REMOTE)
+	var object = doubler.object()
+	var result1 = object.pi()
+	var result2 = object.math_fight()
+	expect.is_equal(result1, result2, "stubbed method results equal each other")
 
 
 

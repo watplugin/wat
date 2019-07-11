@@ -19,6 +19,12 @@ func sum(list):
 		sum += number
 	return sum
 
+static func pi():
+	return PI
+
+remote func math_fight():
+	return null
+
 class Algebra:
 
 	func scale(vector, scaler):
