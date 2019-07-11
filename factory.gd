@@ -20,5 +20,6 @@ func double(path, inner: String = "", dependecies = null):
 	if inner != "":
 		for i in inner.split(".", false):
 			double.instanced_base = double.instanced_base.get(i).new()
-#	double.method_args()
+		assert(double.instanced_base != null)
+	double.method_args()
 	return double

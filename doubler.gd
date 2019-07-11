@@ -26,12 +26,13 @@ var methods = {} # {Spying: ?, Stub: {MATCH_PATTERNS, default}, dummied} # Can p
 var _created = false
 var is_scene = false
 var instanced_base
-#var base_methods: Dictionary = {}
+var base_methods: Dictionary = {}
+var klasses: Array = []
 
 func add_method(method: String, keyword: String = "") -> void:
-	if not methods.has(method):
+	if not methods.has(method): # If methods does not have method
 		methods[method] = Method.new(method)
-#		methods[method].args = base_methods[method]
+		methods[method].args = base_methods[method]
 	if methods[method].keyword == "" and keyword != "":
 		methods[method].keyword = keyword
 
@@ -78,19 +79,14 @@ class CallSuper:
 	func _init():
 		pass
 
-var klasses: Array = []
-
 func add_inner_class(klass, name):
 	klasses.append({"doubler": klass, "name": name})
 
 func method_args():
-	var base_methods: Dictionary
 	for m in self.instanced_base.get_method_list():
-		if methods.has(m.name):
-			methods[m.name].args = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
+		self.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
 
 func save() -> String:
-	method_args()
 	var script = GDScript.new()
 	script.source_code = doubled_source_code()
 	save_path = "user://WATemp/S%s.gd" % index
