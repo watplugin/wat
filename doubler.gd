@@ -15,27 +15,27 @@ const REMOTE: String = "remote "
 const REMOTESYNC: String = "remotesync "
 const MASTER: String = "master "
 const PUPPET: String = "puppet "
-
+const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 const Method = preload("method.gd")
 export (String) var index
 export(String) var base_script: String
 export(String) var inner: String
-export(Array, String) var modified_source_code: Array = []
+#export(Array, String) var modified_source_code: Array = []
 var save_path: String = ""
 var cache = []
-var stubs = {} # {method: retval}
-var spies = {} # method / count
-var definitions = {} # {Spying: ?, Stub: {MATCH_PATTERNS, default}, dummied}
+var stubs = {} # {method: retval} # We can add this to the method object directly
+var spies = {} # method / count # We can add this to the method object directly
+var methods = {} # {Spying: ?, Stub: {MATCH_PATTERNS, default}, dummied} # Can probably rename to methods
 var _created = false
 var is_scene = false
 
-const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
+
 
 func add_method(method: String, keyword: String = "") -> void:
-	if not definitions.has(method):
-		definitions[method] = Method.new(method)
-	if definitions[method].keyword == "" and keyword != "":
-		definitions[method].keyword = keyword
+	if not methods.has(method):
+		methods[method] = Method.new(method)
+	if methods[method].keyword == "" and keyword != "":
+		methods[method].keyword = keyword
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
@@ -48,14 +48,14 @@ func call_count(method: String) -> int:
 
 func dummy(method: String, keyword: String = "") -> void:
 	add_method(method, keyword)
-	definitions[method].stubbed = true
+	methods[method].stubbed = true
 	if not stubs.has(method):
 		stubs[method] = {default = null, patterns = []}
 	stubs[method].default = null
 
 func stub(method: String, return_value, arguments: Array = [], keyword: String = "") -> void:
 	add_method(method, keyword)
-	definitions[method].stubbed = true
+	methods[method].stubbed = true
 
 	if not stubs.has(method):
 		stubs[method] = {default = null, patterns = []}
@@ -85,7 +85,7 @@ func _pattern_matched(pattern: Array, args: Array) -> bool:
 
 func spy(method: String) -> void:
 	add_method(method)
-	definitions[method].spying = true
+	methods[method].spying = true
 	spies[method] = []
 
 func found_matching_call(method, expected_args: Array):
@@ -119,8 +119,8 @@ func add_inner_class(klass, name):
 func method_args():
 	var base_methods: Dictionary
 	for m in self.instanced_base.get_method_list():
-		if definitions.has(m.name):
-			definitions[m.name].args = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
+		if methods.has(m.name):
+			methods[m.name].args = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
 
 func save() -> String:
 	instance_base()
@@ -134,8 +134,8 @@ func save() -> String:
 	else:
 		source = 'extends "%s"\n' % base_script
 		source += "\nconst BASE = preload('%s')\n\n" % base_script
-	for name in definitions:
-		source += definitions[name].to_string(self.resource_path)
+	for name in methods:
+		source += methods[name].to_string(self.resource_path)
 
 	# Add Inner Classes Here?
 	var x = false
