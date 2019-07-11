@@ -8,12 +8,12 @@ extends WATTest
 
 const Doubler = preload("res://doubler.gd")
 
-func double(path):
+func double(path, inner: String = ""):
 	var doubler = Doubler.new()
 	var index = FILESYSTEM.file_list("user://WATemp").size()
 	var savepath: String = "user://WATemp/R%s.tres" % index as String
-#	doubler.index = index as String
 	doubler.base_script = path
+	doubler.inner = inner
 	doubler.index = index as String
 	ResourceSaver.save(savepath, doubler)
 	return load(savepath)
@@ -244,6 +244,28 @@ func test_double_stub_a_static_and_remote_method():
 	var result1 = object.pi()
 	var result2 = object.math_fight()
 	expect.is_equal(result1, result2, "stubbed method results equal each other")
+
+func test_we_can_double_inner_classes():
+	describe("When we double an inner class, we can treat it like an actual script")
+
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd", "Algebra")
+	doubler.stub("create_vector", 15, [], doubler.METHOD.STATIC)
+	var object = doubler.object()
+	var result = object.create_vector()
+	expect.is_equal(15, result, "Inner double returned stubbed value")
+
+func test_we_can_add_doubled_inner_classes_to_a_test_double():
+	describe("When we add a doubled inner class to a test double, we can access its static methods from the main double")
+
+	clear_temp()
+	var doubler = double("res://Examples/Scripts/calculator.gd")
+	var inner_doubler = double("res://Examples/Scripts/calculator.gd", "Algebra")
+	inner_doubler.stub("create_vector", 10, [], doubler.METHOD.STATIC)
+	doubler.add_inner(inner_doubler)
+	var object = doubler.object()
+	var result = object.Algebra.create_vector()
+	expect.is_equal(10, result, "Inner Class Static returned stubbed value")
 
 
 

@@ -27,6 +27,9 @@ remote func math_fight():
 
 class Algebra:
 
+	static func create_vector():
+		return Vector2(10, 10)
+
 	func scale(vector, scaler):
 		var x = vector.x * scaler
 		var y = vector.y * scaler
