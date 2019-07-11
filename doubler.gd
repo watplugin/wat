@@ -23,13 +23,10 @@ export(String) var inner: String
 #export(Array, String) var modified_source_code: Array = []
 var save_path: String = ""
 var cache = []
-var stubs = {} # {method: retval} # We can add this to the method object directly
 var spies = {} # method / count # We can add this to the method object directly
 var methods = {} # {Spying: ?, Stub: {MATCH_PATTERNS, default}, dummied} # Can probably rename to methods
 var _created = false
 var is_scene = false
-
-
 
 func add_method(method: String, keyword: String = "") -> void:
 	if not methods.has(method):
@@ -49,27 +46,18 @@ func call_count(method: String) -> int:
 func dummy(method: String, keyword: String = "") -> void:
 	add_method(method, keyword)
 	methods[method].stubbed = true
-	if not stubs.has(method):
-		stubs[method] = {default = null, patterns = []}
-	stubs[method].default = null
+	methods[method].default = null
 
 func stub(method: String, return_value, arguments: Array = [], keyword: String = "") -> void:
 	add_method(method, keyword)
 	methods[method].stubbed = true
-
-	if not stubs.has(method):
-		stubs[method] = {default = null, patterns = []}
 	if arguments.empty():
-		stubs[method].default = return_value
+		methods[method].default = return_value
 	else:
-		stubs[method].patterns.append({args = arguments, "return_value": return_value})
+		methods[method].stubs.append({args = arguments, "return_value": return_value})
 
 func get_stub(method: String, args: Array):
-	var stubbed: Dictionary = stubs[method]
-	for pattern in stubbed.patterns:
-		if _pattern_matched(pattern.args, args):
-			return pattern.return_value
-	return stubbed.default
+	return methods[method].get_stub(args)
 
 func _pattern_matched(pattern: Array, args: Array) -> bool:
 	var indices: Array = []
