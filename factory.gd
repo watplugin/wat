@@ -16,4 +16,9 @@ func double(path, inner: String = "", dependecies = null):
 	doubler.index = index
 	ResourceSaver.save(savepath, doubler)
 	var double = load(savepath)
+	double.instanced_base = load(path).new()
+	if inner != "":
+		for i in inner.split(".", false):
+			double.instanced_base = double.instanced_base.get(i).new()
+#	double.method_args()
 	return double

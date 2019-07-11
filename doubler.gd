@@ -25,10 +25,13 @@ var cache = []
 var methods = {} # {Spying: ?, Stub: {MATCH_PATTERNS, default}, dummied} # Can probably rename to methods
 var _created = false
 var is_scene = false
+var instanced_base
+#var base_methods: Dictionary = {}
 
 func add_method(method: String, keyword: String = "") -> void:
 	if not methods.has(method):
 		methods[method] = Method.new(method)
+#		methods[method].args = base_methods[method]
 	if methods[method].keyword == "" and keyword != "":
 		methods[method].keyword = keyword
 
@@ -75,11 +78,6 @@ class CallSuper:
 	func _init():
 		pass
 
-var instanced_base
-
-func instance_base():
-	self.instanced_base = load(base_script).new()
-
 var klasses: Array = []
 
 func add_inner_class(klass, name):
@@ -92,7 +90,6 @@ func method_args():
 			methods[m.name].args = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
 
 func save() -> String:
-	instance_base()
 	method_args()
 	var script = GDScript.new()
 	script.source_code = doubled_source_code()
@@ -136,8 +133,6 @@ func object() -> Object:
 	_created = true
 	# Add a error check here to inform people they've already instanced it.
 	# CREATE BASE HERE?
-	instance_base()
-	method_args()
 	var save_path = save()
 	var object = load(save_path).new()
 	cache.append(object)
