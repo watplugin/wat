@@ -33,6 +33,12 @@ func get_stub(args):
 			return stub.return_value
 	return default
 
+func found_matching_call(expected_args) -> bool:
+	for call in calls:
+		if _pattern_matched(expected_args, call):
+			return true
+	return false
+
 func _pattern_matched(pattern: Array, args: Array) -> bool:
 	var indices: Array = []
 	for index in pattern.size():

@@ -23,7 +23,6 @@ export(String) var inner: String
 #export(Array, String) var modified_source_code: Array = []
 var save_path: String = ""
 var cache = []
-var spies = {} # method / count # We can add this to the method object directly
 var methods = {} # {Spying: ?, Stub: {MATCH_PATTERNS, default}, dummied} # Can probably rename to methods
 var _created = false
 var is_scene = false
@@ -74,14 +73,9 @@ func _pattern_matched(pattern: Array, args: Array) -> bool:
 func spy(method: String) -> void:
 	add_method(method)
 	methods[method].spying = true
-	spies[method] = []
 
 func found_matching_call(method, expected_args: Array):
-	var calls: Array = methods[method].calls
-	for call in calls:
-		if _pattern_matched(expected_args, call):
-			return true
-	return false
+	return methods[method].found_matching_call(expected_args)
 
 func add_call(method: String, args: Array = []) -> void:
 	methods[method].add_call(args)
