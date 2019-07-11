@@ -24,11 +24,16 @@ class Method:
 	var args: String = ""
 	var keyword: String = ""
 
-#	func to_string(doubler: String) -> String:
-#		var method: String = "%sfunc %s(%s):" % [keyword, name, arguments]
-#		if spying:
-#			method += "\n\tvar args = [%s]" % arguments
-#		return method
+	func to_string(doubler: String):
+		var text: String
+		text += "%sfunc %s(%s):" % [keyword, name, args]
+		text += "\n\tvar args = [%s]" % args
+		if spying:
+			text += "\n\tload('%s').add_call('%s', args)" % [doubler, name]
+		if stubbed:
+			text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [doubler, name]
+			text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)\n" % [doubler, name, args]
+		return text
 
 #		var method: Dictionary = definitions[name]
 #		if method.args == null:
