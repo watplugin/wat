@@ -6,6 +6,7 @@ var stubbed: bool = false
 var calls_super: bool = false
 var args: String = ""
 var keyword: String = ""
+var calls: Array = []
 
 func _init(name):
 	self.name = name
@@ -20,3 +21,6 @@ func to_string(doubler: String):
 		text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [doubler, name]
 		text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)\n" % [doubler, name, args]
 	return text
+
+func add_call(args) -> void:
+	calls.append(args)

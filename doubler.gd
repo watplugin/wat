@@ -44,7 +44,7 @@ func _notification(what: int) -> void:
 				item.free()
 
 func call_count(method: String) -> int:
-	return spies[method].size()
+	return methods[method].calls.size()
 
 func dummy(method: String, keyword: String = "") -> void:
 	add_method(method, keyword)
@@ -89,14 +89,14 @@ func spy(method: String) -> void:
 	spies[method] = []
 
 func found_matching_call(method, expected_args: Array):
-	var calls: Array = spies[method]
+	var calls: Array = methods[method].calls
 	for call in calls:
 		if _pattern_matched(expected_args, call):
 			return true
 	return false
 
 func add_call(method: String, args: Array = []) -> void:
-	spies[method].append(args)
+	methods[method].add_call(args)
 
 func call_super(method: String, args: Array = [], keyword: String = "") -> void:
 	stub(method, CallSuper.new(), args, keyword)
