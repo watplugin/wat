@@ -6,17 +6,10 @@ extends WATTest
 # 2) We can invoke methods via instance
 # 3) Invoke dummy methods via instance
 
-const Doubler = preload("res://doubler.gd")
+const FACTORY = preload("res://factory.gd")
 
 func double(path, inner: String = "", dependecies = null):
-	var doubler = Doubler.new()
-	var index = FILESYSTEM.file_list("user://WATemp").size()
-	var savepath: String = "user://WATemp/R%s.tres" % index as String
-	doubler.base_script = path
-	doubler.inner = inner
-	doubler.index = index as String
-	ResourceSaver.save(savepath, doubler)
-	return load(savepath)
+	return FACTORY.double(path, inner, dependecies)
 
 func test_when_doubling_a_script_we_get_a_text_resource_file_back():
 	describe("double(arg) returns a text resource (.tres) file")
