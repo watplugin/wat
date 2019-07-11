@@ -16,6 +16,32 @@ class METHOD:
 	const MASTER: String = "master "
 	const PUPPET: String = "puppet "
 
+class Method:
+	var name: String = ""
+	var spying: bool = false
+	var stubbed: bool = false
+	var calls_super: bool = false
+	var args: String = ""
+	var keyword: String = ""
+
+#	func to_string(doubler: String) -> String:
+#		var method: String = "%sfunc %s(%s):" % [keyword, name, arguments]
+#		if spying:
+#			method += "\n\tvar args = [%s]" % arguments
+#		return method
+
+#		var method: Dictionary = definitions[name]
+#		if method.args == null:
+#			method.args = ""
+#		var function_text: String = "%sfunc %s(%s):" % [method.keyword, name, method.args]
+#		function_text += "\n\tvar args = [%s]" % method.args
+#		if method.spying:
+#			function_text += "\n\tload('%s').add_call('%s', args)" % [resource_path, name]
+#		if method.stubbed:
+#			function_text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [resource_path, name]
+#			function_text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)\n" % [resource_path, name, method.args]
+#		return function_text
+
 export (String) var index
 export(String) var base_script: String
 export(String) var inner: String
@@ -32,7 +58,8 @@ const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 
 func add_method(method: String, keyword: String = "") -> void:
 	if not definitions.has(method):
-		definitions[method] = {spying = false, stubbed = false, calls_super = false, args = null, keyword = ""}
+		definitions[method] = Method.new()
+#		definitions[method] = {spying = false, stubbed = false, calls_super = false, args = null, keyword = ""}
 	if definitions[method].keyword == "" and keyword != "":
 		definitions[method].keyword = keyword
 
