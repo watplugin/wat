@@ -81,6 +81,8 @@ func test_when_we_stub_a_method_with_a_return_value_of_an_instantiated_node_we_g
 	var expected = node
 	var actual = doubler.object().add(2, 2)
 	expect.is_equal(expected, actual, "Stubbed method return the exact same Node that we stubbed it with")
+	
+	node.free()
 
 func test_when_we_try_to_create_a_doubled_object_for_a_second_time_from_the_same_doubler_we_get_null_back():
 	describe("When we try to created a doubled object for a second time from the same doubler we get null back")
@@ -130,6 +132,8 @@ func test_when_we_stub_a_method_with_args_that_include_non_primitive_object_we_g
 	var actual = doubler.object().add(0, complex_object)
 
 	expect.is_equal(expected, actual, "Stubbed method add returned 9999 when passed args (0, Node)")
+	
+	complex_object.free()
 
 func test_when_we_stub_a_method_with_args_that_include_any_we_get_the_corresponding_return_values_back_provided_all_args_except_arg_any_matches():
 	describe("When we stub a method that with args that include a call to any(), we get the corresponding return values back provided all args expect any() match")
