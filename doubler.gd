@@ -102,6 +102,8 @@ func basic_source():
 	else:
 		source = 'extends "%s"\n' % base_script
 		source += "\nconst BASE = preload('%s')\n\n" % base_script
+	var constructor_params =  "a,b,c,d,e,f,g,h,i,j,".substr(0, dependecies.size() * 2 - 1)
+	source += "\nfunc _init(%s).(%s):\n\tpass" % [constructor_params, constructor_params]
 	return source
 
 func add_method_source_code():
@@ -117,6 +119,8 @@ func add_inner_class_source_code():
 		source += "\nclass %s extends '%s':\n\tconst PLACEHOLDER = 0" % [klass.name, save_path]
 	return source
 
+var dependecies: Array = []
+
 func object() -> Object:
 	if _created:
 		return null
@@ -124,7 +128,7 @@ func object() -> Object:
 	# Add a error check here to inform people they've already instanced it.
 	# CREATE BASE HERE?
 	var save_path = save()
-	var object = load(save_path).new()
+	var object = load(save_path).callv("new", self.dependecies)
 	cache.append(object)
 	### BEGIN TEST
 	## END TEST

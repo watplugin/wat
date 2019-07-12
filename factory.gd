@@ -10,7 +10,7 @@ const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 
 var count: int = 0
 
-func double(path, inner: String = "", dependecies = null):
+func double(path, inner: String, container: Reference):
 	var doubler = Doubler.new()
 	var index = FILESYSTEM.file_list("user://WATemp").size() as String
 	index += count as String
@@ -21,10 +21,16 @@ func double(path, inner: String = "", dependecies = null):
 	doubler.index = index
 	ResourceSaver.save(savepath, doubler)
 	var double = load(savepath)
-	double.instanced_base = load(path).new()
+	var constructor: Array = []
+	double.instanced_base = container.resolve(load(path)) # We're doubling an inner so this doesn't exist?
+	double.dependecies = container.get_constructor(load(path))
+	print("creating main")
 	if inner != "":
 		for i in inner.split(".", false):
-			double.instanced_base = double.instanced_base.get(i).new()
+			constructor = container.get_constructor(double.instanced_base.get(i))
+			double.instanced_base = container.resolve(double.instanced_base.get(i))
+			print("created %s" % i)
 		assert(double.instanced_base != null)
 	double.method_args()
+	double.dependecies = constructor
 	return double

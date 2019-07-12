@@ -12,6 +12,7 @@ const YIELD: String = "finished"
 const CRASH_IF_TEST_FAILS: bool = true
 var expect: EXPECTATIONS
 var watcher: WATCHER
+var container = preload("res://container.gd").new()
 var _p_keys: Array = []
 var _p_values: Array = []
 var p: Dictionary = {}

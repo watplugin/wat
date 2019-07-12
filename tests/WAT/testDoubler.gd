@@ -9,10 +9,8 @@ extends WATTest
 const _FACTORY = preload("res://factory.gd")
 var FACTORY = _FACTORY.new()
 
-func double(path, inner: String = "", dependecies = null):
-	return FACTORY.double(path, inner, dependecies)
-
-
+func double(path, inner: String = ""):
+	return FACTORY.double(path, inner, container)
 
 func test_when_doubling_a_script_we_get_a_text_resource_file_back():
 	describe("double(arg) returns a text resource (.tres) file")
@@ -268,5 +266,22 @@ func test_we_can_add_doubled_inner_classes_to_a_test_double():
 	var object = doubler.object()
 	var result = object.Algebra.create_vector()
 	expect.is_equal(10, result, "Inner Class Static returned stubbed value")
+
+#func test_we_can_double_classes_with_dependecies():
+#	describe("When we register with the container, we can double classes with dependecies")
+#
+#	container.register(get_script(), [])
+#	container.register(Book, [Author, "Horror", 7])
+#	container.register(Author, ["Stephen King", 50, "America"])
+#	var double = double(get_script().resource_path, "Book")
+#	var object = double.object()
+#	expect.is_class_instance(object, Book, "object is instance of Book")
+
+
+
+
+
+
+
 
 
