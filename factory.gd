@@ -35,6 +35,10 @@ func double(path, inner: String, dependecies: Array, container: Reference, use_c
 				cache.append(instanced_base)
 	elif not use_container:
 		instanced_base = load(path).new()
+		#### This causes a test to fail
+		#### When we comment it out, run the tests, then comment it back in..
+		#### it starts to work, so this is likely a load from memory issue
+		#### Maybe the identifiers aren't unique?
 		cache.append(instanced_base) ######### This causes a test to fail
 		if inner != "":
 			for i in inner.split(".", false):

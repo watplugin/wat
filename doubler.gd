@@ -19,7 +19,6 @@ var cache = []
 var methods = {} # {Spying: ?, Stub: {MATCH_PATTERNS, default}, dummied} # Can probably rename to methods
 var _created = false
 var is_scene = false
-var instanced_base
 var base_methods: Dictionary = {}
 var klasses: Array = []
 
