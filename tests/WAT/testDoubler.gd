@@ -191,11 +191,11 @@ func test_we_can_stub_methods_that_include_keywords_given_we_pass_in_the_correct
 
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	doubler.stub("pi", 3, [], doubler.STATIC)
+	
 	var expected = 3
-
 	var result = doubler.object().pi()
 
-	expect.is_equal(3, result, "stubbed static method")
+	expect.is_equal(expected, result, "stubbed static method")
 
 func test_when_we_double_an_inner_class_then_call_object_on_the_doubler_we_get_the_doubled_inner_class_back():
 	describe("When we double an inner class then call object() on the doubler we get the doubled inner class back")
