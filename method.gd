@@ -23,6 +23,20 @@ func to_string(doubler: String):
 		text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [doubler, name]
 		text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)\n" % [doubler, name, args]
 	return text
+	
+func dummy():
+	stubbed = true
+	default = null
+	
+func spy():
+	spying = true
+	
+func stub(return_value, arguments: Array = []):
+	stubbed = true
+	if arguments.empty():
+		default = return_value
+	else:
+		stubs.append({args = arguments, "return_value": return_value})
 
 func add_call(args) -> void:
 	calls.append(args)

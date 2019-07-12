@@ -21,14 +21,19 @@ var _created = false
 var is_scene = false
 var base_methods: Dictionary = {}
 var klasses: Array = []
+var dependecies: Array = []
 
-func add_method(method: String, keyword: String = "") -> void:
-	if not methods.has(method): # If methods does not have method
-		methods[method] = Method.new(method)
-		methods[method].args = base_methods[method]
-	if methods[method].keyword == "" and keyword != "":
-		methods[method].keyword = keyword
-
+func add_method(name: String, keyword: String = "") -> void:
+	var method: Method
+	if not methods.has(name): # If methods does not have method
+		method = Method.new(name)
+		methods[name] = method
+		method.args = base_methods[name]
+	else:
+		method = methods[name]
+	if method.keyword == "" and keyword != "":
+		method.keyword = keyword
+	
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		for item in cache:
@@ -40,23 +45,18 @@ func call_count(method: String) -> int:
 
 func dummy(method: String, keyword: String = "") -> void:
 	add_method(method, keyword)
-	methods[method].stubbed = true
-	methods[method].default = null
+	methods[method].dummy()
 
 func stub(method: String, return_value, arguments: Array = [], keyword: String = "") -> void:
 	add_method(method, keyword)
-	methods[method].stubbed = true
-	if arguments.empty():
-		methods[method].default = return_value
-	else:
-		methods[method].stubs.append({args = arguments, "return_value": return_value})
+	methods[method].stub(return_value, arguments)
 
 func get_stub(method: String, args: Array):
 	return methods[method].get_stub(args)
 
 func spy(method: String) -> void:
 	add_method(method)
-	methods[method].spying = true
+	methods[method].spy()
 
 func found_matching_call(method, expected_args: Array):
 	return methods[method].found_matching_call(expected_args)
@@ -74,10 +74,6 @@ class CallSuper:
 
 func add_inner_class(klass, name):
 	klasses.append({"doubler": klass, "name": name})
-
-#func method_args():
-#	for m in self.instanced_base.get_method_list():
-#		self.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
 
 func save() -> String:
 	var script = GDScript.new()
@@ -117,8 +113,6 @@ func add_inner_class_source_code():
 		var save_path = klass.doubler.save()
 		source += "\nclass %s extends '%s':\n\tconst PLACEHOLDER = 0" % [klass.name, save_path]
 	return source
-
-var dependecies: Array = []
 
 func object() -> Object:
 	if _created:
