@@ -6,12 +6,6 @@ extends WATTest
 # 2) We can invoke methods via instance
 # 3) Invoke dummy methods via instance
 
-const _FACTORY = preload("res://factory.gd")
-var FACTORY = _FACTORY.new()
-
-func double(path, inner: String = "", dependecies: Array = [], use_container: bool = false):
-	return FACTORY.double(path, inner, dependecies, container, use_container)
-
 func test_when_doubling_a_script_we_get_a_text_resource_file_back():
 	describe("double(arg) returns a text resource (.tres) file")
 

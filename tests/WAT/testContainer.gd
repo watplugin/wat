@@ -48,9 +48,9 @@ func test_we_can_double_classes_with_dependecies():
 	container.register(get_script(), [])
 	container.register(Book, [Author, "Horror", 7])
 	container.register(Author, ["Stephen King", 50, "America"])
-	var double = double(get_script().resource_path, "Book")
+	var double = double(get_script().resource_path, "Book", [], true)
 	var object = double.object()
-	var author_object = double(get_script().resource_path, "Author").object()
+	var author_object = double(get_script().resource_path, "Author", [], true).object()
 	var book = container.resolve(Book)
 	var author = container.resolve(Author)
 	expect.is_class_instance(book, Book, "book is Book")
@@ -71,13 +71,6 @@ class Author:
 
 	func _init(name: String, age: int, location: String):
 		pass
-
-const _FACTORY = preload("res://factory.gd")
-var FACTORY = _FACTORY.new()
-
-func double(path, inner: String = "", dependecies: Array = [], use_container: bool = true):
-	return FACTORY.double(path, inner, dependecies, container, use_container)
-
 
 
 
