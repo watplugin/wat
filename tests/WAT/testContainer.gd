@@ -44,13 +44,15 @@ func test_Container_can_unregister_class():
 func test_we_can_double_classes_with_dependecies():
 	describe("When we register with the container, we can double classes with dependecies")
 
-	print(get_script())
-	container.register(get_script(), [])
+	var library = load("res://Examples/Scripts/library.gd")
+	var Book = library.Book
+	var Author = library.Author
+	container.register(library, [])
 	container.register(Book, [Author, "Horror", 7])
 	container.register(Author, ["Stephen King", 50, "America"])
-	var double = double(get_script().resource_path, "Book", [], true)
+	var double = double(library.resource_path, "Book", [], true)
 	var object = double.object()
-	var author_object = double(get_script().resource_path, "Author", [], true).object()
+	var author_object = double(library.resource_path, "Author", [], true).object()
 	var book = container.resolve(Book)
 	var author = container.resolve(Author)
 	expect.is_class_instance(book, Book, "book is Book")
@@ -59,19 +61,6 @@ func test_we_can_double_classes_with_dependecies():
 	expect.is_class_instance(author_object, Author, "author double is instance of Author")
 	container.unregister(Book)
 	container.unregister(Author)
-
-class Book:
-	const CLASS = "BOOK"
-
-	func _init(author: Author, genre: String, rating: int):
-		pass
-
-class Author:
-	const CLASS = "Author"
-
-	func _init(name: String, age: int, location: String):
-		pass
-
 
 
 
