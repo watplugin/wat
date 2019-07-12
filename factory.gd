@@ -22,24 +22,27 @@ func double(path, inner: String, dependecies: Array, container: Reference, use_c
 	doubler.index = index
 	ResourceSaver.save(savepath, doubler)
 	var double = load(savepath)
+	var instanced_base
 	double.dependecies = dependecies
 	if use_container:
-		double.instanced_base = container.resolve(load(path)) # We're doubling an inner so this doesn't exist?
+		instanced_base = container.resolve(load(path)) # We're doubling an inner so this doesn't exist?
 		double.dependecies = container.get_constructor(load(path))
-		cache.append(double.instanced_base)
+		cache.append(instanced_base)
 		if inner != "":
 			for i in inner.split(".", false):
-				double.dependecies = container.get_constructor(double.instanced_base.get(i))
-				double.instanced_base = container.resolve(double.instanced_base.get(i))
-				cache.append(double.instanced_base)
+				double.dependecies = container.get_constructor(instanced_base.get(i))
+				instanced_base = container.resolve(instanced_base.get(i))
+				cache.append(instanced_base)
 	elif not use_container:
-		double.instanced_base = load(path).new()
-		cache.append(double.instanced_base) ######### This causes a test to fail
+		instanced_base = load(path).new()
+		cache.append(instanced_base) ######### This causes a test to fail
 		if inner != "":
 			for i in inner.split(".", false):
-				double.instanced_base = double.instanced_base.get(i).new()
-				cache.append(double.instanced_base)
-	double.method_args()
+				instanced_base = instanced_base.get(i).new()
+				cache.append(instanced_base)
+#	double.method_args()
+	for m in instanced_base.get_method_list():
+		double.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
 	clear_cache()
 	return double
 	

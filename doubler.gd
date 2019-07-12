@@ -76,9 +76,9 @@ class CallSuper:
 func add_inner_class(klass, name):
 	klasses.append({"doubler": klass, "name": name})
 
-func method_args():
-	for m in self.instanced_base.get_method_list():
-		self.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
+#func method_args():
+#	for m in self.instanced_base.get_method_list():
+#		self.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
 
 func save() -> String:
 	var script = GDScript.new()
