@@ -23,7 +23,6 @@ const _FACTORY = preload("res://factory.gd")
 var FACTORY = _FACTORY.new()
 
 func double(path, inner: String = "", dependecies: Array = [], use_container: bool = false):
-	print("using container: %s" % str(use_container))
 	return FACTORY.double(path, inner, dependecies, container, use_container)
 
 
