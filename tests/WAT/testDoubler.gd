@@ -81,7 +81,7 @@ func test_when_we_stub_a_method_with_a_return_value_of_an_instantiated_node_we_g
 	var expected = node
 	var actual = doubler.object().add(2, 2)
 	expect.is_equal(expected, actual, "Stubbed method return the exact same Node that we stubbed it with")
-	
+
 	node.free()
 
 func test_when_we_try_to_create_a_doubled_object_for_a_second_time_from_the_same_doubler_we_get_null_back():
@@ -132,7 +132,7 @@ func test_when_we_stub_a_method_with_args_that_include_non_primitive_object_we_g
 	var actual = doubler.object().add(0, complex_object)
 
 	expect.is_equal(expected, actual, "Stubbed method add returned 9999 when passed args (0, Node)")
-	
+
 	complex_object.free()
 
 func test_when_we_stub_a_method_with_args_that_include_any_we_get_the_corresponding_return_values_back_provided_all_args_except_arg_any_matches():
@@ -191,7 +191,7 @@ func test_we_can_stub_methods_that_include_keywords_given_we_pass_in_the_correct
 
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	doubler.stub("pi", 3, [], doubler.STATIC)
-	
+
 	var expected = 3
 	var result = doubler.object().pi()
 
@@ -203,7 +203,9 @@ func test_when_we_double_an_inner_class_then_call_object_on_the_doubler_we_get_t
 	var Algebra = load("res://Examples/Scripts/calculator.gd").Algebra
 	var doubler = double("res://Examples/Scripts/calculator.gd", "Algebra")
 	var object = doubler.object()
-
+	for m in object.get_method_list():
+		print(m.name)
+	print(Algebra, "Algebra from test method")
 	expect.is_class_instance(object, Algebra, "doubled inner class is an instance of Algebra")
 
 func test_when_we_consume_other_doubles_as_inner_classes_we_can_access_their_stubbed_static_methods():

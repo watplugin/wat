@@ -44,12 +44,17 @@ func double(path, inner: String, dependecies: Array, container: Reference, use_c
 			for i in inner.split(".", false):
 				instanced_base = instanced_base.get(i).new()
 				cache.append(instanced_base)
+				if i == "Algebra":
+					# We're loading two different instances of the inner class so we
+					# are running into issues here where one loaded script is not the other loaded script
+					# despite both being loaded from the same instance
+					print(instanced_base.get_script(), " is Algebra from Factory")
 #	double.method_args()
 	for m in instanced_base.get_method_list():
 		double.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
 	clear_cache()
 	return double
-	
+
 func clear_cache():
 	for item in cache:
 		if item is Object and not item is Reference:

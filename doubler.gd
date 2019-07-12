@@ -33,7 +33,7 @@ func add_method(name: String, keyword: String = "") -> void:
 		method = methods[name]
 	if method.keyword == "" and keyword != "":
 		method.keyword = keyword
-	
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		for item in cache:
