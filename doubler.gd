@@ -103,7 +103,7 @@ func basic_source():
 		source = 'extends "%s"\n' % base_script
 		source += "\nconst BASE = preload('%s')\n\n" % base_script
 	var constructor_params =  "a,b,c,d,e,f,g,h,i,j,".substr(0, dependecies.size() * 2 - 1)
-	source += "\nfunc _init(%s).(%s):\n\tpass" % [constructor_params, constructor_params]
+	source += "\nfunc _init(%s).(%s):\n\tpass\n" % [constructor_params, constructor_params]
 	return source
 
 func add_method_source_code():

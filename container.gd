@@ -9,10 +9,9 @@ func unregister(klass):
 	registery.erase(klass)
 
 func resolve(klass):
-	print(registery)
-	if "CLASS" in klass:
-		print(klass.CLASS)
-	var dependecies = registery[klass]
+	var dependecies = registery.get(klass, null)
+	if dependecies == null:
+		return null
 	var instances = []
 	for dependecy in dependecies:
 		if dependecy is Object:

@@ -9,8 +9,8 @@ extends WATTest
 const _FACTORY = preload("res://factory.gd")
 var FACTORY = _FACTORY.new()
 
-func double(path, inner: String = ""):
-	return FACTORY.double(path, inner, container)
+func double(path, inner: String = "", dependecies: Array = [], use_container: bool = false):
+	return FACTORY.double(path, inner, dependecies, container, use_container)
 
 func test_when_doubling_a_script_we_get_a_text_resource_file_back():
 	describe("double(arg) returns a text resource (.tres) file")
@@ -249,8 +249,8 @@ func test_we_can_double_inner_classes():
 	describe("When we double an inner class, we can treat it like an actual script")
 
 	clear_temp()
-	var doubler = double("res://Examples/Scripts/calculator.gd", "Algebra")
-	doubler.stub("create_vector", 15, [], doubler.STATIC)
+	var doubler = double("res://Examples/Scripts/calculator.gd", "Algebra") # ???????
+	doubler.stub("create_vector", 15, [], doubler.STATIC) # Null here
 	var object = doubler.object()
 	var result = object.create_vector()
 	expect.is_equal(15, result, "Inner double returned stubbed value")

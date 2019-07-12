@@ -32,13 +32,14 @@ func test_Container_can_resolve_value_dependecies():
 	var instance = container.resolve(C)
 	expect.is_class_instance(instance, C, "instance is instance of C")
 
-#func test_Container_can_unregister_class():
-#	describe("When we register a class, we can unregister it as well (if we can resolve, it should return null)")
-#
-#	container.register(A, [B, C])
-#	container.unregister(A)
-#	var instance = container.resolve(A) # This will throw an error?
-#	expect.is_null(instance, "We didn't receive an instance back")
+func test_Container_can_unregister_class():
+	describe("When we register a class, we can unregister it as well (if we can resolve, it should return null)")
+
+	container.register(A, [B, C])
+	container.unregister(A)
+	# This returns null if not found, handle error somewhere else?
+	var instance = container.resolve(A)
+	expect.is_null(instance, "We didn't receive an instance back")
 
 func test_we_can_double_classes_with_dependecies():
 	describe("When we register with the container, we can double classes with dependecies")
@@ -49,11 +50,15 @@ func test_we_can_double_classes_with_dependecies():
 	container.register(Author, ["Stephen King", 50, "America"])
 	var double = double(get_script().resource_path, "Book")
 	var object = double.object()
+	var author_object = double(get_script().resource_path, "Author").object()
 	var book = container.resolve(Book)
 	var author = container.resolve(Author)
 	expect.is_class_instance(book, Book, "book is Book")
 	expect.is_class_instance(author, Author, "author is Author")
 	expect.is_class_instance(object, Book, "object is instance of Book")
+	expect.is_class_instance(author_object, Author, "author double is instance of Author")
+	container.unregister(Book)
+	container.unregister(Author)
 
 class Book:
 	const CLASS = "BOOK"
@@ -70,8 +75,9 @@ class Author:
 const _FACTORY = preload("res://factory.gd")
 var FACTORY = _FACTORY.new()
 
-func double(path, inner: String = ""):
-	return FACTORY.double(path, inner, container)
+func double(path, inner: String = "", dependecies: Array = [], use_container: bool = true):
+	return FACTORY.double(path, inner, dependecies, container, use_container)
+
 
 
 
