@@ -16,9 +16,11 @@ func _init(name):
 func dummy():
 	stubbed = true
 	default = null
+	return self
 
 func spy():
 	spying = true
+	return self
 
 func stub(return_value, arguments: Array = []):
 	stubbed = true
@@ -26,6 +28,7 @@ func stub(return_value, arguments: Array = []):
 		default = return_value
 	else:
 		stubs.append({args = arguments, "return_value": return_value})
+	return self
 
 func add_call(args) -> void:
 	calls.append(args)

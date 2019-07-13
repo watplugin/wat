@@ -109,9 +109,10 @@ func test_when_we_stub_a_method_based_on_what_args_it_receives_and_then_we_call_
 
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 
-	# We require two to check if retvals differentiate
-	doubler.method("add").stub(9999, [5000, 5000])
-	doubler.method("add").stub(777, [0, 10])
+
+	# We require two stubs so one can act as a control
+	doubler.method("add").stub(9999, [5000, 5000]).stub(777, [0, 10])
+
 	var object = doubler.object()
 	var expect_a = 9999
 	var expect_b = 777
@@ -203,7 +204,7 @@ func test_when_we_double_an_inner_class_then_call_object_on_the_doubler_we_get_t
 	var Algebra = load("res://Examples/Scripts/calculator.gd").Algebra
 	var doubler = double("res://Examples/Scripts/calculator.gd", "Algebra")
 	var object = doubler.object()
-	print(Algebra, "Algebra from test method")
+
 	expect.is_class_instance(object, Algebra, "doubled inner class is an instance of Algebra")
 
 func test_when_we_consume_other_doubles_as_inner_classes_we_can_access_their_stubbed_static_methods():
