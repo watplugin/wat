@@ -52,7 +52,7 @@ func test_when_invoking_a_dummy_method_in_a_double_we_get_null():
 	describe("When we dummy a method in a double we receive null")
 
 	var SUT_double = double("res://Examples/Scripts/calculator.gd")
-	SUT_double.dummy("add")
+	SUT_double.method("add").dummy()
 
 	var SUT = SUT_double.object()
 
@@ -65,7 +65,7 @@ func test_when_stubbing_a_method_with_a_return_value_of_true_that_method_will_re
 	describe("When stubbing a method with a return value of true that method will return true when called")
 
 	var doubler = double("res://Examples/Scripts/calculator.gd")
-	doubler.stub("add", true)
+	doubler.method("add").stub(true)
 
 	var expected = true
 	var actual = doubler.object().add(2, 2)
@@ -76,7 +76,7 @@ func test_when_we_stub_a_method_with_a_return_value_of_an_instantiated_node_we_g
 
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	var node = Node.new()
-	doubler.stub("add", node)
+	doubler.method("add").stub(node)
 
 	var expected = node
 	var actual = doubler.object().add(2, 2)
@@ -99,7 +99,7 @@ func test_when_we_spy_we_can_check_it_was_spied_on():
 
 	# Requires refactoring
 	var doubler = double("res://Examples/Scripts/calculator.gd")
-	doubler.spy("add")
+	doubler.method("add").spy()
 	var obj1 = doubler.object()
 	obj1.add(5, 5)
 	expect.was_called(doubler, "add", "add was called")
@@ -110,8 +110,8 @@ func test_when_we_stub_a_method_based_on_what_args_it_receives_and_then_we_call_
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 
 	# We require two to check if retvals differentiate
-	doubler.stub("add", 9999, [5000, 5000])
-	doubler.stub("add", 777, [0, 10])
+	doubler.method("add").stub(9999, [5000, 5000])
+	doubler.method("add").stub(777, [0, 10])
 	var object = doubler.object()
 	var expect_a = 9999
 	var expect_b = 777
@@ -126,7 +126,7 @@ func test_when_we_stub_a_method_with_args_that_include_non_primitive_object_we_g
 
 	var complex_object = Node.new()
 	var doubler = double("res://Examples/Scripts/calculator.gd")
-	doubler.stub("add", 9999, [0, complex_object])
+	doubler.method("add").stub(9999, [0, complex_object])
 
 	var expected = 9999
 	var actual = doubler.object().add(0, complex_object)
@@ -139,7 +139,7 @@ func test_when_we_stub_a_method_with_args_that_include_any_we_get_the_correspond
 	describe("When we stub a method that with args that include a call to any(), we get the corresponding return values back provided all args expect any() match")
 
 	var doubler = double("res://Examples/Scripts/calculator.gd")
-	doubler.stub("add", 9999, [10, any()])
+	doubler.method("add").stub(9999, [10, any()])
 	var object = doubler.object()
 
 	var expected = 9999
@@ -153,7 +153,7 @@ func test_we_can_check_a_method_was_called_with_arguments():
 
 	# Fix Naming
 	var doubler = double("res://Examples/Scripts/calculator.gd")
-	doubler.spy("add")
+	doubler.method("add").spy()
 	var expected_arguments = [10, 10]
 
 	doubler.object().add(10, 10)
@@ -164,7 +164,7 @@ func test_when_we_stub_a_method_to_call_its_parent_implementation_as_the_default
 
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	doubler.call_super("add")
-	doubler.stub("add", 9999, [10, 10])
+	doubler.method("add").stub(9999, [10, 10])
 	var object = doubler.object()
 	var expected_sut = 10
 	var expected_control = 9999
@@ -180,7 +180,7 @@ func test_when_we_spy_methods_it_rewrites_with_the_correct_amount_of_arguments()
 
 	# Awful misleading test
 	var doubler = double("res://Examples/Scripts/calculator.gd")
-	doubler.stub("sum", 111)
+	doubler.method("sum").stub(111)
 	var object = doubler.object()
 	var expected = 111
 	var actual = object.sum([10, 4, 9, 2])
@@ -190,7 +190,7 @@ func test_we_can_stub_methods_that_include_keywords_given_we_pass_in_the_correct
 	describe("We can stub methods with keywords given we pass in the correct keyword the first time we stub that method")
 
 	var doubler = double("res://Examples/Scripts/calculator.gd")
-	doubler.stub("pi", 3, [], doubler.STATIC)
+	doubler.method("pi", doubler.STATIC).stub(3, [])
 
 	var expected = 3
 	var result = doubler.object().pi()
@@ -212,7 +212,7 @@ func test_when_we_consume_other_doubles_as_inner_classes_we_can_access_their_stu
 	var primary = double("res://Examples/Scripts/calculator.gd")
 	var inner = double("res://Examples/Scripts/calculator.gd", "Algebra")
 	primary.add_inner_class(inner, "Algebra")
-	inner.stub("create_vector", 10, [], inner.STATIC)
+	inner.method("create_vector", inner.STATIC).stub(10, [])
 
 	var object = primary.object()
 

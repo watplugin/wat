@@ -23,7 +23,7 @@ var base_methods: Dictionary = {}
 var klasses: Array = []
 var dependecies: Array = []
 
-func add_method(name: String, keyword: String = "") -> void:
+func method(name: String, keyword: String = "") -> Method:
 	var method: Method
 	if not methods.has(name): # If methods does not have method
 		method = Method.new(name)
@@ -33,6 +33,7 @@ func add_method(name: String, keyword: String = "") -> void:
 		method = methods[name]
 	if method.keyword == "" and keyword != "":
 		method.keyword = keyword
+	return method
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
@@ -43,20 +44,10 @@ func _notification(what: int) -> void:
 func call_count(method: String) -> int:
 	return methods[method].calls.size()
 
-func dummy(method: String, keyword: String = "") -> void:
-	add_method(method, keyword)
-	methods[method].dummy()
-
-func stub(method: String, return_value, arguments: Array = [], keyword: String = "") -> void:
-	add_method(method, keyword)
-	methods[method].stub(return_value, arguments)
-
 func get_stub(method: String, args: Array):
+	# We might be able to write this into source?
+	# However reducing how much we right might be best
 	return methods[method].get_stub(args)
-
-func spy(method: String) -> void:
-	add_method(method)
-	methods[method].spy()
 
 func found_matching_call(method, expected_args: Array):
 	return methods[method].found_matching_call(expected_args)
@@ -65,7 +56,8 @@ func add_call(method: String, args: Array = []) -> void:
 	methods[method].add_call(args)
 
 func call_super(method: String, args: Array = [], keyword: String = "") -> void:
-	stub(method, CallSuper.new(), args, keyword)
+	var m = method(method, keyword)
+	m.stub(CallSuper.new(), args)
 
 class CallSuper:
 
