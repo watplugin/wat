@@ -83,34 +83,16 @@ func save() -> String:
 	return save_path
 
 func doubled_source_code():
+	var script_writer = load("res://script_writer.gd").new()
 	var source: String
-	source += basic_source()
-	source += add_method_source_code()
+	source += script_writer.write(self)
 	source += add_inner_class_source_code()
-	return source
-
-func basic_source():
-	var source: String = ""
-	if inner != "":
-		source = 'extends "%s".%s\n' % [base_script, inner]
-		source += "\nconst BASE = preload('%s').%s\n\n" % [base_script, inner]
-	else:
-		source = 'extends "%s"\n' % base_script
-		source += "\nconst BASE = preload('%s')\n\n" % base_script
-	var constructor_params =  "a,b,c,d,e,f,g,h,i,j,".substr(0, dependecies.size() * 2 - 1)
-	source += "\nfunc _init(%s).(%s):\n\tpass\n" % [constructor_params, constructor_params]
-	return source
-
-func add_method_source_code():
-	var source: String = ""
-	for name in methods:
-		source += methods[name].to_string(self.resource_path)
 	return source
 
 func add_inner_class_source_code():
 	var source: String = ""
 	for klass in klasses:
-		var save_path = klass.doubler.save()
+		var save_path = klass.doubler.save() # We don't want to call this by scriptwriter
 		source += "\nclass %s extends '%s':\n\tconst PLACEHOLDER = 0" % [klass.name, save_path]
 	return source
 
