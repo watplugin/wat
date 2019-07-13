@@ -22,40 +22,40 @@ func double(path, inner: String, dependecies: Array, container: Reference, use_c
 	doubler.index = index
 	ResourceSaver.save(savepath, doubler)
 	var double = load(savepath)
-	var instanced_base
+	var base
 	double.dependecies = dependecies
 	if use_container:
-		instanced_base = container.resolve(load(path)) # We're doubling an inner so this doesn't exist?
-		double.dependecies = container.get_constructor(load(path))
-		cache.append(instanced_base)
-		if inner != "":
-			for i in inner.split(".", false):
-				double.dependecies = container.get_constructor(instanced_base.get(i))
-				instanced_base = container.resolve(instanced_base.get(i))
-				cache.append(instanced_base)
+		base = load_using_container(path, inner, container, double)
 	elif not use_container:
-		instanced_base = load(path).new()
-		#### This causes a test to fail
-		#### When we comment it out, run the tests, then comment it back in..
-		#### it starts to work, so this is likely a load from memory issue
-		#### Maybe the identifiers aren't unique?
-
-		######### This causes a test to fail (if we also clear the cache)
-		######### It might be because it's owner script is cleared
-		cache.append(instanced_base)
-
-		if inner != "":
-			for i in inner.split(".", false):
-				instanced_base = instanced_base.get(i).new()
-				cache.append(instanced_base)
-				if i == "Algebra":
-					# We're loading two different instances of the inner class so we
-					# are running into issues here where one loaded script is not the other loaded script
-					# despite both being loaded from the same instance
-					print(instanced_base.get_script(), " is Algebra from Factory")
-	for m in instanced_base.get_method_list():
+		base = load_not_using_container(path, inner)
+	for m in base.get_method_list():
 		double.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
 	return double
+
+func load_using_container(path, inner, container, double):
+	var base = container.resolve(load(path)) # We're doubling an inner so this doesn't exist?
+	double.dependecies = container.get_constructor(load(path))
+	cache.append(base)
+	if inner != "":
+		for i in inner.split(".", false):
+			double.dependecies = container.get_constructor(base.get(i))
+			base = container.resolve(base.get(i))
+			cache.append(base)
+	return base
+
+func load_not_using_container(path, inner):
+	var base = load(path).new()
+	cache.append(base)
+	if inner != "":
+		print(inner, "x")
+		return load_inner(path, inner)
+	return base
+
+func load_inner(path, inner_classes) -> Object:
+	var expression = Expression.new()
+	var script = load(path)
+	expression.parse("%s.new()" % [inner_classes])
+	return expression.execute([], script, true)
 
 func clear():
 	for item in cache:
