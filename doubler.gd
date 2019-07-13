@@ -75,28 +75,17 @@ func save() -> String:
 	return save_path
 
 func doubled_source_code():
-	var script_writer = load("res://script_writer.gd").new()
-	var source: String
-	source += script_writer.write(self)
-	source += add_inner_class_source_code()
-	return source
-
-func add_inner_class_source_code():
-	var source: String = ""
 	for klass in klasses:
-		var save_path = klass.doubler.save() # We don't want to call this by scriptwriter
-		source += "\nclass %s extends '%s':\n\tconst PLACEHOLDER = 0" % [klass.name, save_path]
+		klass.doubler.save()
+	var source: String = load("res://script_writer.gd").new().write(self)
 	return source
 
 func object() -> Object:
 	if _created:
+		# Can only create unique instances
 		return null
 	_created = true
-	# Add a error check here to inform people they've already instanced it.
-	# CREATE BASE HERE?
 	var save_path = save()
 	var object = load(save_path).callv("new", self.dependecies)
 	cache.append(object)
-	### BEGIN TEST
-	## END TEST
 	return object

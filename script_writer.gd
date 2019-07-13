@@ -18,6 +18,8 @@ func write(double):
 	for name in double.methods:
 		var m = double.methods[name]
 		source += _method_to_string(double.resource_path, m.keyword, m.name, m.args, m.spying, m.stubbed)
+
+	source += _inner_classes(double)
 	return source
 
 #	add_method_source_code()
@@ -31,3 +33,10 @@ func _method_to_string(doubler, keyword, name, args, spying, stubbed):
 		text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [doubler, name]
 		text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)\n" % [doubler, name, args]
 	return text
+
+func _inner_classes(doubler):
+	var source: String = ""
+	for klass in doubler.klasses:
+		print("%s index is %s" % [klass.name, klass.doubler.index])
+		source += "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.doubler.index]
+	return source
