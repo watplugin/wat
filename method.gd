@@ -32,22 +32,22 @@ func stub(return_value, arguments: Array = []):
 		stubs.append({args = arguments, "return_value": return_value})
 	return self
 
-func add_call(args) -> void:
+func add_call(args: Array = []) -> void:
 	calls.append(args)
 
-func get_stub(args):
+func get_stub(args: Array = []):
 	for stub in stubs:
 		if _pattern_matched(stub.args, args):
 			return stub.return_value
 	return default
 
-func found_matching_call(expected_args) -> bool:
+func found_matching_call(expected_args: Array = []) -> bool:
 	for call in calls:
 		if _pattern_matched(expected_args, call):
 			return true
 	return false
 
-func _pattern_matched(pattern: Array, args: Array) -> bool:
+func _pattern_matched(pattern: Array = [], args: Array = []) -> bool:
 	var indices: Array = []
 	for index in pattern.size():
 		if pattern[index] is Object and pattern[index].get_class() == "Any":

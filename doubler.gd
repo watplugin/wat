@@ -1,22 +1,20 @@
 extends Resource
 tool
 
-# TODO
-# SceneVersion of doubler
-
 const STATIC: String = "static "
 const REMOTE: String = "remote "
 const REMOTESYNC: String = "remotesync "
 const MASTER: String = "master "
 const PUPPET: String = "puppet "
 const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
+const SCRIPT_WRITER = preload("res://script_writer.gd")
 const Method = preload("method.gd")
 export (String) var index
 export(String) var base_script: String
 export(String) var inner: String
 var save_path: String = ""
 var cache = []
-var methods = {} # {Spying: ?, Stub: {MATCH_PATTERNS, default}, dummied} # Can probably rename to methods
+var methods = {}
 var _created = false
 var is_scene = false
 var base_methods: Dictionary = {}
@@ -64,7 +62,7 @@ func save() -> String:
 	var script = GDScript.new()
 	for klass in klasses:
 		klass.doubler.save()
-	script.source_code = load("res://script_writer.gd").new().write(self)
+	script.source_code = SCRIPT_WRITER.new().write(self)
 	save_path = "user://WATemp/S%s.gd" % index
 	ResourceSaver.save(save_path, script)
 	return save_path

@@ -14,15 +14,13 @@ func write(double):
 	var constructor_params =  "a,b,c,d,e,f,g,h,i,j,".substr(0, double.dependecies.size() * 2 - 1)
 	source += "\nfunc _init(%s).(%s):\n\tpass\n" % [constructor_params, constructor_params]
 
-	### Methods
 	for name in double.methods:
 		var m = double.methods[name]
 		source += _method_to_string(double.resource_path, m.keyword, m.name, m.args, m.spying, m.stubbed)
-
-	source += _inner_classes(double)
+	for klass in double.klasses:
+		source += _inner_class(klass)
 	return source
 
-#	add_method_source_code()
 func _method_to_string(doubler, keyword, name, args, spying, stubbed):
 	var text: String
 	text += "%sfunc %s(%s):" % [keyword, name, args]
@@ -34,9 +32,9 @@ func _method_to_string(doubler, keyword, name, args, spying, stubbed):
 		text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)\n" % [doubler, name, args]
 	return text
 
-func _inner_classes(doubler):
-	var source: String = ""
-	for klass in doubler.klasses:
-		print("%s index is %s" % [klass.name, klass.doubler.index])
-		source += "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.doubler.index]
-	return source
+func _inner_class(klass):
+	return "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.doubler.index]
+#	var source: String = ""
+#	for klass in doubler.klasses:
+#		source += "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.doubler.index]
+#	return source
