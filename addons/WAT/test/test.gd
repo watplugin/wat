@@ -25,6 +25,9 @@ var FACTORY = _FACTORY.new()
 func double(path, inner: String = "", dependecies: Array = [], use_container: bool = false):
 	return FACTORY.double(path, inner, dependecies, container, use_container)
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		FACTORY.clear()
 
 class ANY extends Reference:
 
