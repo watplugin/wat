@@ -62,16 +62,12 @@ func add_inner_class(klass, name):
 
 func save() -> String:
 	var script = GDScript.new()
-	script.source_code = doubled_source_code()
+	for klass in klasses:
+		klass.doubler.save()
+	script.source_code = load("res://script_writer.gd").new().write(self)
 	save_path = "user://WATemp/S%s.gd" % index
 	ResourceSaver.save(save_path, script)
 	return save_path
-
-func doubled_source_code():
-	for klass in klasses:
-		klass.doubler.save()
-	var source: String = load("res://script_writer.gd").new().write(self)
-	return source
 
 func object() -> Object:
 	if _created:
