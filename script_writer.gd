@@ -34,7 +34,3 @@ func _method_to_string(doubler, keyword, name, args, spying, stubbed):
 
 func _inner_class(klass):
 	return "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.doubler.index]
-#	var source: String = ""
-#	for klass in doubler.klasses:
-#		source += "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.doubler.index]
-#	return source
