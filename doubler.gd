@@ -24,16 +24,9 @@ var klasses: Array = []
 var dependecies: Array = []
 
 func method(name: String, keyword: String = "") -> Method:
-	var method: Method
 	if not methods.has(name): # If methods does not have method
-		method = Method.new(name)
-		methods[name] = method
-		method.args = base_methods[name]
-	else:
-		method = methods[name]
-	if method.keyword == "" and keyword != "":
-		method.keyword = keyword
-	return method
+		methods[name] = Method.new(name, keyword, base_methods[name])
+	return methods[name]
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:

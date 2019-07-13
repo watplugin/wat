@@ -10,8 +10,10 @@ var calls: Array = []
 var stubs: Array = []
 var default
 
-func _init(name):
+func _init(name, keyword, args):
 	self.name = name
+	self.keyword = keyword
+	self.args = args
 
 func dummy():
 	stubbed = true
