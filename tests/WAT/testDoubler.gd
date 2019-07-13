@@ -203,8 +203,6 @@ func test_when_we_double_an_inner_class_then_call_object_on_the_doubler_we_get_t
 	var Algebra = load("res://Examples/Scripts/calculator.gd").Algebra
 	var doubler = double("res://Examples/Scripts/calculator.gd", "Algebra")
 	var object = doubler.object()
-	for m in object.get_method_list():
-		print(m.name)
 	print(Algebra, "Algebra from test method")
 	expect.is_class_instance(object, Algebra, "doubled inner class is an instance of Algebra")
 
