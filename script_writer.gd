@@ -16,7 +16,18 @@ func write(double):
 
 	### Methods
 	for name in double.methods:
-		source += double.methods[name].to_string(double.resource_path)
+		var m = double.methods[name]
+		source += _method_to_string(double.resource_path, m.keyword, m.name, m.args, m.spying, m.stubbed)
 	return source
 
 #	add_method_source_code()
+func _method_to_string(doubler, keyword, name, args, spying, stubbed):
+	var text: String
+	text += "%sfunc %s(%s):" % [keyword, name, args]
+	text += "\n\tvar args = [%s]" % args
+	if spying:
+		text += "\n\tload('%s').add_call('%s', args)" % [doubler, name]
+	if stubbed:
+		text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [doubler, name]
+		text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)\n" % [doubler, name, args]
+	return text
