@@ -28,12 +28,16 @@ func _connect():
 	RunScript.connect("pressed", self, "_run_script")
 
 func _select_folder(path: String = CONFIG.main_test_folder) -> void:
+	if Directory.new().dir_exists(path):
+		return
 	FolderSelect.clear()
 	FolderSelect.add_item(path)
 	for directory in FILESYSTEM.directory_list(path):
 		FolderSelect.add_item(directory)
 
 func _select_script() -> void:
+	if Directory.new().dir_exists(_selected(FolderSelect)):
+		return
 	ScriptSelect.clear()
 	for file in FILESYSTEM.file_list(_selected(FolderSelect)):
 		if _valid_test(file.name) and file.path == ("%s/%s" % [_selected(FolderSelect), file.name]):
