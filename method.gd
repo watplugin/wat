@@ -11,17 +11,17 @@ var stubs: Array = []
 var supers: Array = []
 var default
 
-func _init(name, keyword, args):
+func _init(name: String, keyword: String, args: String) -> void:
 	self.name = name
 	self.keyword = keyword
 	self.args = args
 
-func dummy():
+func dummy() -> Reference:
 	stubbed = true
 	default = null
 	return self
 
-func spy():
+func spy() -> Reference:
 	spying = true
 	return self
 
@@ -43,8 +43,6 @@ func get_stub(args: Array = []):
 	return default
 
 func executes(args: Array) -> bool:
-#	if args == [] and supers.has([]):
-	print("SUPERS: %s" % str(supers))
 	for s in supers:
 		if self._pattern_matched(s, args):
 			return true
@@ -55,8 +53,9 @@ func executes(args: Array) -> bool:
 		return true
 	return false
 
-func call_super(args: Array = []):
+func call_super(args: Array = []) -> void:
 	supers.append(args)
+	calls_super = true
 
 func found_matching_call(expected_args: Array = []) -> bool:
 	for call in calls:
@@ -67,7 +66,6 @@ func found_matching_call(expected_args: Array = []) -> bool:
 func _pattern_matched(pattern: Array = [], args: Array = []) -> bool:
 	var indices: Array = []
 	if pattern.size() != args.size():
-		print(pattern, ' != ', args)
 		return false
 	for index in pattern.size():
 		if pattern[index] is Object and pattern[index].get_class() == "Any":
@@ -76,6 +74,5 @@ func _pattern_matched(pattern: Array = [], args: Array = []) -> bool:
 	for i in indices:
 		# We check based on type first otherwise some errors occur (ie object can't be compared to int)
 		if typeof(pattern[i]) != typeof(args[i]) or pattern[i] != args[i]:
-			print(pattern[i], " != ", args[i])
 			return false
 	return true

@@ -13,10 +13,10 @@ export (String) var index
 export(String) var base_script: String
 export(String) var inner: String
 var save_path: String = ""
-var cache = []
-var methods = {}
-var _created = false
-var is_scene = false
+var cache: Array = []
+var methods: Dictionary = {}
+var _created: bool = false
+var is_scene: bool = false # Requires some updating post our scene version
 var base_methods: Dictionary = {}
 var klasses: Array = []
 var dependecies: Array = []
@@ -41,6 +41,7 @@ func get_stub(method: String, args: Array):
 	return methods[method].get_stub(args)
 
 func found_matching_call(method, expected_args: Array):
+	# Requires changing an expectation method
 	return methods[method].found_matching_call(expected_args)
 
 func add_call(method: String, args: Array = []) -> void:
@@ -50,7 +51,7 @@ func call_super(method: String, args: Array = [], keyword: String = "") -> void:
 	var m = method(method, keyword)
 	m.call_super(args)
 
-func add_inner_class(klass, name):
+func add_inner_class(klass: Resource, name: String) -> void:
 	klasses.append({"doubler": klass, "name": name})
 
 func save() -> String:

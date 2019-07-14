@@ -1,7 +1,7 @@
 extends Reference
 
 
-func write(double):
+func write(double) -> String:
 	var source: String = ""
 	if double.inner != "":
 		source = 'extends "%s".%s\n' % [double.base_script, double.inner]
@@ -14,19 +14,19 @@ func write(double):
 
 	for name in double.methods:
 		var m = double.methods[name]
-		source += _method_to_string(double.resource_path, m.keyword, m.name, m.args, m.supers.size(), m.spying, m.stubbed)
+		source += _method_to_string(double.resource_path, m.keyword, m.name, m.args, m.calls_super, m.spying, m.stubbed)
 	for klass in double.klasses:
 		source += _inner_class(klass)
 	return source
 
-func _method_to_string(doubler, keyword, name, args, super, spying, stubbed):
+func _method_to_string(doubler, keyword: String, name: String, args: String, calls_super: bool, spying: bool, stubbed: bool) -> String:
 	var text: String
 	text += "%sfunc %s(%s):" % [keyword, name, args]
 	text += "\n\tvar args = [%s]" % args
 	text += "\n\tvar method = load('%s').methods['%s']" % [doubler, name]
 	if spying:
 		text += "\n\tmethod.add_call(args)"
-	if super > 0:
+	if calls_super:
 		text += "\n\tif method.executes(args):"
 		text += "\n\t\treturn .%s(%s)" % [name, args]
 	if stubbed:
@@ -34,5 +34,5 @@ func _method_to_string(doubler, keyword, name, args, super, spying, stubbed):
 		text += "\n\treturn retval"
 	return text
 
-func _inner_class(klass):
+func _inner_class(klass) -> String:
 	return "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.doubler.index]
