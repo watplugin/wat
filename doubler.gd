@@ -12,7 +12,6 @@ const Method = preload("method.gd")
 export (String) var index
 export(String) var base_script: String
 export(String) var inner: String
-var save_path: String = ""
 var cache: Array = []
 var methods: Dictionary = {}
 var _created: bool = false
@@ -59,13 +58,14 @@ func save() -> String:
 	for klass in klasses:
 		klass.doubler.save()
 	script.source_code = SCRIPT_WRITER.new().write(self)
-	save_path = "user://WATemp/S%s.gd" % index
+	var save_path = "user://WATemp/S%s.gd" % index
 	ResourceSaver.save(save_path, script)
 	return save_path
 
 func object() -> Object:
 	if _created:
 		# Can only create unique instances
+		push_error("WAT: You can only create one instanc of a double. Create a new doubler Object for new Test Doubles")
 		return null
 	_created = true
 	var save_path = save()

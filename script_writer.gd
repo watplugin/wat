@@ -34,5 +34,5 @@ func _method_to_string(doubler, keyword: String, name: String, args: String, cal
 		text += "\n\treturn retval"
 	return text
 
-func _inner_class(klass) -> String:
+func _inner_class(klass: Dictionary) -> String:
 	return "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.doubler.index]
