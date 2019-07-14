@@ -16,8 +16,8 @@ var cache: Array = []
 var methods: Dictionary = {}
 var _created: bool = false
 var is_scene: bool = false # Requires some updating post our scene version
-var base_methods: Dictionary = {}
 var klasses: Array = []
+var base_methods: Dictionary = {}
 var dependecies: Array = []
 
 func method(name: String, keyword: String = "") -> Method:
@@ -62,10 +62,11 @@ func save() -> String:
 	ResourceSaver.save(save_path, script)
 	return save_path
 
-func object() -> Object:
+func object(show_error = true) -> Object:
 	if _created:
 		# Can only create unique instances
-		push_error("WAT: You can only create one instanc of a double. Create a new doubler Object for new Test Doubles")
+		if show_error:
+			push_error("WAT: You can only create one instance of a double. Create a new doubler Object for new Test Doubles")
 		return null
 	_created = true
 	var save_path = save()

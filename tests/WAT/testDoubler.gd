@@ -89,7 +89,7 @@ func test_when_we_try_to_create_a_doubled_object_for_a_second_time_from_the_same
 
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	var obj1 = doubler.object()
-	var obj2 = doubler.object()
+	var obj2 = doubler.object(false) # We don't want to see the error, so we drop false
 	expect.is_null(obj2, "We got null when we tried to re-create an object from the Doubler for a second time")
 
 func test_when_we_spy_we_can_check_it_was_spied_on():

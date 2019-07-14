@@ -23,30 +23,20 @@ func create_save_and_load_doubler(path, inner, dependecies):
 	ResourceSaver.save(savepath, doubler)
 	var double = load(savepath)
 	return double
+	
+func load_nested_class(path, inner) -> Script:
+	var expression = Expression.new()
+	var script = load(path)
+	expression.parse("%s" % [inner])
+	return expression.execute([], script, true)
 
 func double(path, inner: String, dependecies: Array, container: Reference, use_container: bool):
 	var double = create_save_and_load_doubler(path, inner, dependecies)
-	var base: Object
+	var base: Object = load_nested_class(path, inner) if inner != "" else load(path)
 	if use_container:
-		base = container.resolve(load(path)) # We're doubling an inner so this doesn't exist?
-		double.dependecies = container.get_constructor(load(path))
-		cache.append(base)
-		if inner != "":
-			var expression = Expression.new()
-			var script = load(path)
-			expression.parse("%s" % [inner])
-			base = expression.execute([], script, true)
-			double.dependecies = container.get_constructor(base)
-			base = container.resolve(base)
-			cache.append(base)
-	elif not use_container:
-		base = load(path).new()
-		cache.append(base)
-		if inner != "":
-			var expression = Expression.new()
-			var script = load(path)
-			expression.parse("%s" % [inner])
-			base = expression.execute([], script, true).new()
+		double.dependecies = container.get_constructor(base)
+	base = base.callv("new", double.dependecies)
+	cache.append(base)
 	for m in base.get_method_list():
 		double.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
 	return double
