@@ -40,6 +40,14 @@ func get_stub(args: Array = []):
 		if _pattern_matched(stub.args, args):
 			return stub.return_value
 	return default
+	
+func call_super(args):
+	stub(CallSuper.new(), args)
+
+class CallSuper:
+
+	func _init():
+		pass
 
 func found_matching_call(expected_args: Array = []) -> bool:
 	for call in calls:

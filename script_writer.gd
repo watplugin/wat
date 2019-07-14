@@ -3,8 +3,6 @@ extends Reference
 
 func write(double):
 	var source: String = ""
-
-	## Basic
 	if double.inner != "":
 		source = 'extends "%s".%s\n' % [double.base_script, double.inner]
 		source += "\nconst BASE = preload('%s').%s\n\n" % [double.base_script, double.inner]
@@ -29,7 +27,7 @@ func _method_to_string(doubler, keyword, name, args, spying, stubbed):
 		text += "\n\tload('%s').add_call('%s', args)" % [doubler, name]
 	if stubbed:
 		text += "\n\tvar retval = load('%s').get_stub('%s', args)" % [doubler, name]
-		text += "\n\treturn retval if not retval is load('%s').CallSuper else .%s(%s)\n" % [doubler, name, args]
+		text += "\n\treturn retval if not retval is load('%s').methods['%s'].CallSuper else .%s(%s)\n" % [doubler, name, name, args]
 	return text
 
 func _inner_class(klass):

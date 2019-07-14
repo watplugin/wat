@@ -22,7 +22,7 @@ var klasses: Array = []
 var dependecies: Array = []
 
 func method(name: String, keyword: String = "") -> Method:
-	if not methods.has(name): # If methods does not have method
+	if not methods.has(name):
 		methods[name] = Method.new(name, keyword, base_methods[name])
 	return methods[name]
 
@@ -37,7 +37,7 @@ func call_count(method: String) -> int:
 
 func get_stub(method: String, args: Array):
 	# We might be able to write this into source?
-	# However reducing how much we right might be best
+	# However reducing how much we write might be best
 	return methods[method].get_stub(args)
 
 func found_matching_call(method, expected_args: Array):
@@ -48,12 +48,7 @@ func add_call(method: String, args: Array = []) -> void:
 
 func call_super(method: String, args: Array = [], keyword: String = "") -> void:
 	var m = method(method, keyword)
-	m.stub(CallSuper.new(), args)
-
-class CallSuper:
-
-	func _init():
-		pass
+	m.call_super(args)
 
 func add_inner_class(klass, name):
 	klasses.append({"doubler": klass, "name": name})
