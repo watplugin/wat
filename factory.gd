@@ -10,7 +10,7 @@ const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 var cache: Array = []
 var count: int = 0
 
-func double(path, inner: String, dependecies: Array, container: Reference, use_container: bool):
+func create_save_and_load_doubler(path, inner, dependecies):
 	var doubler = Doubler.new()
 	var index = FILESYSTEM.file_list("user://WATemp").size() as String
 	index += count as String
@@ -22,7 +22,11 @@ func double(path, inner: String, dependecies: Array, container: Reference, use_c
 	doubler.dependecies = dependecies
 	ResourceSaver.save(savepath, doubler)
 	var double = load(savepath)
-	var base
+	return double
+
+func double(path, inner: String, dependecies: Array, container: Reference, use_container: bool):
+	var double = create_save_and_load_doubler(path, inner, dependecies)
+	var base: Object
 	if use_container:
 		base = container.resolve(load(path)) # We're doubling an inner so this doesn't exist?
 		double.dependecies = container.get_constructor(load(path))
