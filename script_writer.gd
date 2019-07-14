@@ -34,7 +34,6 @@ func _method_to_string(doubler, keyword, name, args, super, spying, stubbed):
 	if stubbed:
 		text += "\n\tvar retval = method.get_stub(args)"
 		text += "\n\treturn retval"
-#		text += "\n\treturn retval if not retval is method.CallSuper else .%s(%s)\n" % [name, args]
 	return text
 
 func _inner_class(klass):
