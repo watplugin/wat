@@ -3,13 +3,17 @@ extends Reference
 enum { DIRECTORY, FILE }
 
 static func file_list(path: String = "res://tests", searching_for: int = FILE, include_subdirectories: bool = true) -> Array:
+	if not _directory_exists(path):
+		push_error("WAT: Directory %s does not exist" % path)
+		return []
 	if path.ends_with(".gd"):
 		return [{"path": path, "name": Array(path.split("/")).back()}]
 	return _list(path, searching_for, include_subdirectories)
 
 static func directory_list(path: String = "res://tests", searching_for: int = DIRECTORY, include_subdirectories: bool = true) -> Array:
 	if not _directory_exists(path):
-		OS.alert("Directory: %s does not exist" % path)
+		push_error("WAT: Directory %s does not exist" % path)
+		return []
 	return _list(path, searching_for, include_subdirectories)
 
 static func _list(path: String, searching_for: int, include_subdirectories: bool) -> Array:
