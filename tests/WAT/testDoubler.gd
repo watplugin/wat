@@ -72,7 +72,7 @@ func test_when_stubbing_a_method_with_a_return_value_of_true_that_method_will_re
 	expect.is_equal(expected, actual, "Stubbed method returned true when called")
 
 func test_when_we_stub_a_method_with_a_return_value_of_an_instantiated_node_we_get_that_exact_same_node_back():
-	describe("When we stub a method with a return value of an instantiated Node that method will return that exact Node when called")
+	describe("When we stub a method with a value of an instantiated Node that method will return that exact Node when called")
 
 	var doubler = double("res://Examples/Scripts/calculator.gd")
 	var node = Node.new()
@@ -161,10 +161,11 @@ func test_we_can_check_a_method_was_called_with_arguments():
 	expect.was_called_with_arguments(doubler, "add", expected_arguments, "Double was called with a(10) & b(10)")
 
 func test_when_we_stub_a_method_to_call_its_parent_implementation_as_the_default_it_will_call_its_parents_implementation_unless_a_specific_arg_pattern_was_passed_in():
+	print("---------------------------------------------------------")
 	describe("When we stub a method to call its parent implementation as the default it will call its parent implementation unless a specific argument pattern was passed in")
 
 	var doubler = double("res://Examples/Scripts/calculator.gd")
-	doubler.call_super("add")
+	doubler.call_super("add", []) # We aren't invoking the default
 	doubler.method("add").stub(9999, [10, 10])
 	var object = doubler.object()
 	var expected_sut = 10
@@ -175,6 +176,7 @@ func test_when_we_stub_a_method_to_call_its_parent_implementation_as_the_default
 
 	expect.is_equal(expected_sut, actual_sut, "Parent's implementation of .add(a, b) was called")
 	expect.is_equal(expected_control, actual_control, "add(10, 10) matches a special case args stub pattern so the parent's implementation was not called")
+	print("----------------------------------------------------------")
 
 func test_when_we_spy_methods_it_rewrites_with_the_correct_amount_of_arguments():
 	describe("When we add a method to our doubler, it writes the correct number of arguments")
