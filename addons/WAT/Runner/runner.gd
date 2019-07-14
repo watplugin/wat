@@ -10,6 +10,7 @@ var filesystem: Reference
 var validate: Reference
 var tests: Array = []
 var caselist: Array = []
+signal errored
 signal ended
 
 func _init(validate: Reference, filesystem: Reference, settings: Resource, Results) -> void:
@@ -19,6 +20,10 @@ func _init(validate: Reference, filesystem: Reference, settings: Resource, Resul
 	self.Results = Results
 
 func _run(directory: String = "res://tests") -> void:
+	if not Directory.new().dir_exists(directory):
+		emit_signal("errored")
+		push_error("WAT: Test Directory: %s does not exist" % directory)
+		return
 	clear()
 	print("WAT: Starting Test Runner")
 	self.tests = validate.tests(filesystem.file_list(directory), settings.test_script_prefixes)
