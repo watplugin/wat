@@ -24,13 +24,11 @@ func _method_to_string(doubler, keyword, name, args, super, spying, stubbed):
 	text += "%sfunc %s(%s):" % [keyword, name, args]
 	text += "\n\tvar args = [%s]" % args
 	text += "\n\tvar method = load('%s').methods['%s']" % [doubler, name]
-	if super > 0:
-		text += "\n\tvar call_super: bool = method.supers.size() > 0"
-		text += "\n\tif method.executes(args):"
-		text += "\n\t\treturn .%s(%s)" % [name, args]
-		text += "\n\tprint('Ello')"
 	if spying:
 		text += "\n\tmethod.add_call(args)"
+	if super > 0:
+		text += "\n\tif method.executes(args):"
+		text += "\n\t\treturn .%s(%s)" % [name, args]
 	if stubbed:
 		text += "\n\tvar retval = method.get_stub(args)"
 		text += "\n\treturn retval"
