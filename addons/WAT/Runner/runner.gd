@@ -20,9 +20,14 @@ func _init(validate: Reference, filesystem: Reference, settings: Resource, Resul
 	self.Results = Results
 
 func _run(directory: String = "res://tests") -> void:
-	if not Directory.new().dir_exists(directory):
+	var d = Directory.new()
+	if directory.ends_with(".gd") and not d.file_exists(directory):
 		emit_signal("errored")
-		push_error("WAT: Test Directory: %s does not exist" % directory)
+		push_error("(Runner l:26) WAT: Script %s does not exist")
+		return
+	elif not directory.ends_with(".gd") and not d.dir_exists(directory):
+		emit_signal("errored")
+		push_error("(Runner l:30) WAT: Test Directory %s does not exist" % directory)
 		return
 	clear()
 	print("WAT: Starting Test Runner")
