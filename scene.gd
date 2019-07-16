@@ -32,12 +32,15 @@ func object():
 			root.add_child(node)
 			node.owner = root
 			## IGNORE THIS UNTIL WE CAN DO IMMEDIATE CHILDREN
-#		elif path.size() > 1: # Node is a subchild of other children
-#			var end: int = path.size()-1
-#			node.name = path[end]
-#			path.remove(path[end])
-#			var parent: String = path.join("/")
-#			root.get_node(parent).add_child(node)
+		elif path.size() > 1: # Node is a subchild of other children
+			print("path: ", path)
+			var end: int = path.size()-1
+			print("end: ", end)
+			node.name = path[end]
+			path.remove(end)
+			var parent: String = path.join("/")
+			print("parent: ", parent)
+			root.get_node(parent).add_child(node)
 	root.print_tree_pretty()
 	print(root.name)
 	return root
