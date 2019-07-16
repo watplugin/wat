@@ -7,10 +7,10 @@ var cache: Array = []
 
 func _init(nodes: Dictionary) -> void:
 	self.nodes = nodes
-	
+
 func get_node(path: String):
 	return nodes[path]
-	
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		for item in cache:
@@ -37,7 +37,7 @@ func object():
 			root.get_node(parent).add_child(node)
 	cache.append(root)
 	return root
-		
-	
+
+
 func clear():
 	nodes = {}

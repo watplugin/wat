@@ -49,7 +49,7 @@ func _select_script() -> void:
 			ScriptSelect.add_item(file.path)
 	ScriptSelect.get_popup().popup()
 #	open_and_close(ScriptSelect)
-	
+
 
 func _run_folder() -> void:
 	if _exists(FolderSelect):

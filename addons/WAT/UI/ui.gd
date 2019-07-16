@@ -27,6 +27,6 @@ func _ready():
 	Options.connect("START_TIME", TotalTimer, "_start")
 	Options.connect("RUN", Runner, "_run")
 
-func _notification(what):
-	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-		queue_free()
+#func _notification(what):
+#	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+#		queue_free()

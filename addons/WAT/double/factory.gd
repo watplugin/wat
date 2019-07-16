@@ -22,6 +22,7 @@ func double_scene(scenepath: String):
 		nodes[path] = double(next.get_script().resource_path, "", [], null, false)
 	var double = SCENEDIRECTOR.new(nodes)
 	cache.append(double)
+	instance.queue_free()
 	return double
 
 func create_save_and_load_doubler(path, inner, dependecies):
@@ -37,7 +38,7 @@ func create_save_and_load_doubler(path, inner, dependecies):
 	ResourceSaver.save(savepath, doubler)
 	var double = load(savepath)
 	return double
-	
+
 func load_nested_class(path, inner) -> Script:
 	var expression = Expression.new()
 	var script = load(path)
