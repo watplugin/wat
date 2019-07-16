@@ -5,8 +5,8 @@ extends Reference
 # Something like double(path, inner, depedency array), then using Class.callv("new", dependecy array)
 # Depedencies are only to satisfy constructors that lack defaults, we can probably use the constructor size
 
-const Doubler = preload("doubler.gd")
-const SCENEDIRECTOR = preload("res://scene.gd")
+const Doubler = preload("res://addons/WAT/double/doubler.gd")
+const SCENEDIRECTOR = preload("res://addons/WAT/double/scene.gd")
 const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 var cache: Array = []
 var count: int = 0

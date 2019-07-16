@@ -6,20 +6,20 @@ class_name WATTest
 # Have to keep this here for auto-completion
 const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
-const DOUBLE = preload("res://addons/WAT/double/scripts/doubler.gd")
+#const DOUBLE = preload("res://addons/WAT/double/scripts/doubler.gd")
 const WATCHER = preload("res://addons/WAT/test/watcher.gd")
 const YIELD: String = "finished"
 const CRASH_IF_TEST_FAILS: bool = true
 var expect: EXPECTATIONS
 var watcher: WATCHER
-var container = preload("res://container.gd").new()
+var container = preload("res://addons/WAT/double/container.gd").new()
 var _p_keys: Array = []
 var _p_values: Array = []
 var p: Dictionary = {}
 var rerun_method: bool = false
 signal described
 
-const _FACTORY = preload("res://factory.gd")
+const _FACTORY = preload("res://addons/WAT/double/factory.gd")
 var FACTORY = _FACTORY.new()
 
 func double(path, inner: String = "", dependecies: Array = [], use_container: bool = false):
