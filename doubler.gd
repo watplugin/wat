@@ -28,7 +28,7 @@ func method(name: String, keyword: String = "") -> Method:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		for item in cache:
-			if item is Object and not item is Reference:
+			if item is Object and not item is Reference and is_instance_valid(item):
 				item.free()
 
 func call_count(method: String) -> int:

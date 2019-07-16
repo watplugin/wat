@@ -9,7 +9,7 @@ extends WATTest
 # I don't think we need to save the scene since we're creating
 # the tree on the fly but it might end up necessary for Godot
 # to read the scene contents
-#const SCENEDIRECTOR = preload("res://scene.gd")
+const SCENEDIRECTOR = preload("res://scene.gd")
 const scenepath = "res://Examples/Scene/Main.tscn"
 
 func double_scene(scenepath: String):
@@ -22,7 +22,7 @@ func double_scene(scenepath: String):
 		frontier += next.get_children()
 		var path: String = instance.get_path_to(next)
 		nodes[path] = double(next.get_script().resource_path)
-	return load("res://scene.gd").new(nodes)
+	return SCENEDIRECTOR.new(nodes)
 
 func test_when_we_call_double():
 	clear_temp()
@@ -30,8 +30,8 @@ func test_when_we_call_double():
 	# !!! Everytime we reload the SCENEDIRECTOR script, we get a new instance
 	# However if we don't reload, then we run into repeating objects
 	var scene = double_scene(scenepath)
-	scene.get_node(".").method("test").stub(9999)
 	var inst = scene.object()
+	scene.get_node(".").method("test").stub(9999)
 	expect.is_not_null(scene, "We get a non-null value back")
 	expect.is_Object(scene, "We get an Object back")
 	expect.is_not_null(scene.get_node("A"), "We can call custom get node method")
@@ -39,6 +39,8 @@ func test_when_we_call_double():
 	expect.is_not_null(inst, "We can call .object()")
 	expect.is_greater_than(FILESYSTEM.file_list("user://WATemp/").size(), 0, "Temp is not empty")
 	expect.is_equal(9999, inst.test(), "Called a stubbed test on root")
+	inst.free()
+	scene.free()
 
 # testGivenASceneDoubler
 	# When we call double
