@@ -42,9 +42,26 @@ func test_when_we_call_double():
 	expect.is_greater_than(FILESYSTEM.file_list("user://WATemp/").size(), 0, "Temp is not empty")
 	expect.is_equal(9999, inst.test(), "Called a stubbed test on root")
 	expect.is_equal(9999, inst.get_node("C/D").wowsers(), "Called a stubbed method on a nested child")
-#	expect.is_equal(1111, inst.get_node("A").execute(), "Called a stubbed method on child of root")
 	inst.free()
 	scene.free()
+	
+func test_doubling_two_scenes():
+	describe("Doubles don't share data even if doubling the same item")
+	var d1 = double_scene(scenepath)
+	var d2 = double_scene(scenepath)
+	expect.is_not_equal(d1.nodes["."], d2.nodes["."], "Doubles do not share resources")
+	
+	d1.get_node(".").method("test").stub(9999)
+	d2.get_node(".").method("test").stub(777)
+	
+	var o1 = d1.object()
+	var o2 = d2.object()
+	
+	expect.is_not_equal(o1.test(), o2.test(), "Stubs from different doubles result in different values")
+	o1.free()
+	o2.free()
+	d1.free()
+	d2.free()
 
 # testGivenASceneDoubler
 	# When we call double
