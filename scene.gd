@@ -5,7 +5,6 @@ var nodes: Dictionary = {}
 var _created: bool = false
 
 func _init(nodes: Dictionary) -> void:
-	print(self.nodes.size() == 0)
 	self.nodes = nodes
 	
 func get_node(path: String):
