@@ -26,6 +26,12 @@ func _connect():
 	ScriptSelect.connect("pressed", self, "_select_script")
 	RunFolder.connect("pressed", self, "_run_folder")
 	RunScript.connect("pressed", self, "_run_script")
+	# We trigger these once before opening them so our popup menu
+	# actually pops up, and doesn't get cut off anymore.
+	# However this also means they appear on first instance
+	# so we need to auto-hide them to look nice
+	ScriptSelect.get_popup().hide()
+	FolderSelect.get_popup().hide()
 
 func _select_folder(path: String = CONFIG.main_test_folder) -> void:
 	if not Directory.new().dir_exists(path):
@@ -34,12 +40,16 @@ func _select_folder(path: String = CONFIG.main_test_folder) -> void:
 	FolderSelect.add_item(path)
 	for directory in FILESYSTEM.directory_list(path):
 		FolderSelect.add_item(directory)
+#	FolderSelect.get_popup()
 
 func _select_script() -> void:
 	ScriptSelect.clear()
 	for file in FILESYSTEM.file_list(_selected(FolderSelect)):
 		if _valid_test(file.name) and file.path == ("%s/%s" % [_selected(FolderSelect), file.name]):
 			ScriptSelect.add_item(file.path)
+	ScriptSelect.get_popup().popup()
+#	open_and_close(ScriptSelect)
+	
 
 func _run_folder() -> void:
 	if _exists(FolderSelect):
