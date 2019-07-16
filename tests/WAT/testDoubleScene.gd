@@ -30,7 +30,9 @@ func test_when_we_call_double():
 	# However if we don't reload, then we run into repeating objects
 	var scene = double_scene(scenepath)
 	scene.get_node(".").method("test").stub(9999)
+	scene.get_node("A").method("execute").stub(1111)
 	var inst = scene.object()
+	expect.is_equal(1111, inst.get_node("A").execute(), "We can call method on child of root")
 	expect.is_not_null(scene, "We get a non-null value back")
 	expect.is_Object(scene, "We get an Object back")
 	expect.is_not_null(scene.get_node("A"), "We can call custom get node method")
@@ -38,6 +40,7 @@ func test_when_we_call_double():
 	expect.is_not_null(inst, "We can call .object()")
 	expect.is_greater_than(FILESYSTEM.file_list("user://WATemp/").size(), 0, "Temp is not empty")
 	expect.is_equal(9999, inst.test(), "Called a stubbed test on root")
+#	expect.is_equal(1111, inst.get_node("A").execute(), "Called a stubbed method on child of root")
 	inst.free()
 	scene.free()
 
