@@ -6,9 +6,23 @@ extends Reference
 # Depedencies are only to satisfy constructors that lack defaults, we can probably use the constructor size
 
 const Doubler = preload("doubler.gd")
+const SCENEDIRECTOR = preload("res://scene.gd")
 const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 var cache: Array = []
 var count: int = 0
+
+func double_scene(scenepath: String):
+	var nodes: Dictionary = {}
+	var instance: Node = load(scenepath).instance()
+	var frontier: Array = [instance]
+	while not frontier.empty():
+		var next: Node = frontier.pop_front()
+		frontier += next.get_children()
+		var path: String = instance.get_path_to(next)
+		nodes[path] = double(next.get_script().resource_path, "", [], null, false)
+	var double = SCENEDIRECTOR.new(nodes)
+	cache.append(double)
+	return double
 
 func create_save_and_load_doubler(path, inner, dependecies):
 	var doubler = Doubler.new()

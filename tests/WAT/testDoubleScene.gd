@@ -9,19 +9,19 @@ extends WATTest
 # I don't think we need to save the scene since we're creating
 # the tree on the fly but it might end up necessary for Godot
 # to read the scene contents
-const SCENEDIRECTOR = preload("res://scene.gd")
+#const SCENEDIRECTOR = preload("res://scene.gd")
 const scenepath = "res://Examples/Scene/Main.tscn"
 
-func double_scene(scenepath: String):
-	var nodes: Dictionary = {}
-	var instance: Node = load(scenepath).instance()
-	var frontier: Array = [instance]
-	while not frontier.empty():
-		var next: Node = frontier.pop_front()
-		frontier += next.get_children()
-		var path: String = instance.get_path_to(next)
-		nodes[path] = double(next.get_script().resource_path)
-	return SCENEDIRECTOR.new(nodes)
+#func double_scene(scenepath: String):
+#	var nodes: Dictionary = {}
+#	var instance: Node = load(scenepath).instance()
+#	var frontier: Array = [instance]
+#	while not frontier.empty():
+#		var next: Node = frontier.pop_front()
+#		frontier += next.get_children()
+#		var path: String = instance.get_path_to(next)
+#		nodes[path] = double(next.get_script().resource_path)
+#	return SCENEDIRECTOR.new(nodes)
 
 func test_when_we_call_double():
 	clear_temp()
@@ -42,8 +42,6 @@ func test_when_we_call_double():
 	expect.is_greater_than(FILESYSTEM.file_list("user://WATemp/").size(), 0, "Temp is not empty")
 	expect.is_equal(9999, inst.test(), "Called a stubbed test on root")
 	expect.is_equal(9999, inst.get_node("C/D").wowsers(), "Called a stubbed method on a nested child")
-	inst.free()
-	scene.free()
 	
 func test_doubling_two_scenes():
 	describe("Doubles don't share data even if doubling the same item")
@@ -58,10 +56,6 @@ func test_doubling_two_scenes():
 	var o2 = d2.object()
 	
 	expect.is_not_equal(o1.test(), o2.test(), "Stubs from different doubles result in different values")
-	o1.free()
-	o2.free()
-	d1.free()
-	d2.free()
 
 # testGivenASceneDoubler
 	# When we call double
