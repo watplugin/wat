@@ -6,7 +6,6 @@ var interface: PanelContainer
 
 func _enter_tree() -> void:
 	create_tests_if_it_does_not_exist()
-	connect("main_screen_changed", self, "_hide_output")
 	interface = UI.instance()
 	get_editor_interface().get_editor_viewport().add_child(interface)
 	make_visible(false)
@@ -30,7 +29,3 @@ func make_visible(visible: bool) -> void:
 
 func get_plugin_name() -> String:
    return "WAT"
-
-func _hide_output(title: String) -> void:
-	if title == "WAT":
-		hide_bottom_panel()
