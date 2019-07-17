@@ -20,41 +20,31 @@ func _init():
 	quit()
 
 func command():
-	return Array(OS.get_cmdline_args()).back().to_upper()
+	return Array(OS.get_cmdline_args()).pop_back().replace("-", "")
 
 func execute(command: String) -> void:
-	print(command)
-	match command:
-		"-RUN=DIR(whatever/dir/this/is)":
-			print("running directory")
-		"-F":
-			print("\n-------RESULTS-------")
-			print("\nCalculator") # Script
-			print("  Adds 2 and 2") # ???? # Describe has two parts naming & input (what if no input?)
-			print("    Returns 4") # Expectation
-			print("  Adds 5 and 5")
-			print("    Returns 10")
-			print(" Divides 8 by 2")
-			print("    Returns 4")
-			print(" Divides 20 by 10")
-			print("    Returns 2")
-			print("\nWebsite")
-			print("  Registers User That already exists")
-			print("    Returns Error")
-			print("  Logins User That has valid credentials")
-			print("    Returns true")
-			print("\nObject gets class")
-			print("    Returns 'Object'")
-			print("\n-------RESULTS-------")
-		_: # RunAll is Implicit
-			print("running tests")
-			_run()
+	# Commands default to lower case, don't affect casing (conflicts arg and filepaths)
+	var dir = command.replace("RUN=","")
+	print(dir)
+	if command == "RUN=ALL":
+		print("running all")
+		_run()
+	elif command.begins_with("RUN") and command.ends_with(".gd"):
+		print("running script")
+	elif command.begins_with("RUN") and Directory.new().dir_exists(command.replace("RUN=", "")):
+		print("running directory") # Insist lowercase?
+		_run(command.replace("RUN=", ""))
+	elif command.begins_with("SET"):
+		print("Setting Value")
+	else:
+		print("No Command Given")
 
-func _run():
+
+func _run(directory = "res://tests"):
 	var Runner = RUNNER.new(VALIDATE.new(), FILESYSTEM, SETTINGS, self)
 	root.add_child(Runner)
 	print(Runner.Results == self)
-	Runner._run()
+	Runner._run(directory)
 
 func display(caselist: Array) -> void:
 	root.get_child(0).queue_free()
