@@ -4,7 +4,7 @@ tool
 const TESTWRAPPER = preload("res://addons/WAT/runner/test_wrapper.gd")
 const CASE = preload("res://addons/WAT/runner/case.gd")
 const YIELD = preload("res://addons/WAT/runner/Yielder.gd")
-var Results: TabContainer
+var Results
 var settings: Resource
 var filesystem: Reference
 var validate: Reference
