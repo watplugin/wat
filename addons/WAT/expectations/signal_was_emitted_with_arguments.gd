@@ -4,7 +4,7 @@ func _init(emitter: Object, event: String, arguments: Array, context: String) ->
 	var passed: String = "Signal: %s was emitted from %s with arguments: %s" % [event, emitter, arguments]
 	var failed: String = "Signal: %s was not emitted from %s with arguments: %s" % [event, emitter, arguments]
 	var alt_failure: String = "Signal: %s was not emitted from %s" % [event, emitter]
-	self.context = "[Expect.SignalWasEmittedWithArguments] %s" % context
+	self.context = context
 	self.expected = passed
 
 	var data = emitter.get_meta("watcher").watching[event]

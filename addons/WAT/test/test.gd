@@ -24,7 +24,7 @@ var FACTORY = _FACTORY.new()
 
 func double(path, inner: String = "", dependecies: Array = [], use_container: bool = false):
 	return FACTORY.double(path, inner, dependecies, container, use_container)
-	
+
 func double_scene(scenepath: String):
 	return FACTORY.double_scene(scenepath)
 
