@@ -20,6 +20,7 @@ const LIST_ALL: String = "-list_all"
 const LIST_DIR: String = "-list_dir"
 const PASSED: int = 0
 const FAILED: int = 1
+var start_time: float
 
 func _init():
 	execute(arguments())
@@ -43,6 +44,7 @@ func execute(arguments: Array) -> void:
 			_list(arguments.pop_front())
 
 func _run(directory: String = "res://tests") -> void:
+	start_time = OS.get_ticks_msec()
 	var Runner = RUNNER.new(VALIDATE.new(), FILESYSTEM, SETTINGS, self)
 	root.add_child(Runner)
 	Runner._run(directory) # Need to make API consistent but a signal is a bit OTT considering?
@@ -77,7 +79,8 @@ func display_failures(case) -> void:
 					print("\t%s" % expectation.context, "\n\t  (EXPECTED: %s) | (RESULT: %s)" % [expectation.expected, expectation.result])
 
 func display_summary(cases: Dictionary) -> void:
-	print("\n%s / %s Tests Passed" % [cases.passed, cases.total])
+	print("\nTook %s ms" % str(OS.get_ticks_msec() - start_time))
+	print("%s / %s Tests Passed" % [cases.passed, cases.total])
 	print("-------RESULTS-------")
 	print(PASSED) if cases.total > 0 and cases.total == cases.passed else print(FAILED)
 
