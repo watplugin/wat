@@ -51,14 +51,11 @@ func _list(directory: String = "res://tests") -> void:
 	print()
 	print(FILESYSTEM.file_list(directory))
 
-func clear():
-	# Placeholder for a signal that won't shut up from runner
+func clear(): # Placeholder for a signal that won't shut up from runner
 	pass
 
 func display(caselist: Array) -> void:
-	var output = []
 	var cases = {passed = 0, total = 0}
-	root.get_child(0).queue_free()
 	print("\n-------RESULTS-------")
 	for case in caselist:
 		case.calculate()
