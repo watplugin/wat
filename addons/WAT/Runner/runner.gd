@@ -1,5 +1,5 @@
 extends Node
-tool
+#tool
 
 const TESTWRAPPER = preload("res://addons/WAT/runner/test_wrapper.gd")
 const CASE = preload("res://addons/WAT/runner/case.gd")
@@ -40,8 +40,8 @@ func _run(directory: String = "res://tests") -> void:
 func _start() -> void:
 	if tests.empty():
 		print("WAT: Ending Test Runner")
-		emit_signal("ended")
 		Results.display(caselist)
+		emit_signal("ended")
 		return
 	var test = load(tests.pop_front()).new()
 	var methods = validate.methods(test.get_method_list(), settings.test_method_prefix)
