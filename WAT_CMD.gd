@@ -48,7 +48,7 @@ func _run(directory: String = "res://tests") -> void:
 	var Runner = RUNNER.new(VALIDATE.new(), FILESYSTEM, SETTINGS, self)
 	root.add_child(Runner)
 	Runner._run(directory) # Need to make API consistent but a signal is a bit OTT considering?
-
+	root.get_child(0).queue_free()
 func _list(directory: String = "res://tests") -> void:
 	print()
 	print(FILESYSTEM.file_list(directory))
