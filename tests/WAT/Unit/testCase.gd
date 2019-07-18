@@ -29,9 +29,9 @@ func test_calculate_passing_when_all_tests_passed() -> void:
 
 	# Assert
 	# Is this leaking implementation?
-	expect.is_greater_than(case.total, 0, "there was at least one test")
+	expect.is_greater_than(case.total, 0, "there is at least one test")
 	expect.is_equal(case.passed, case.total, "passing test count is equal to total test count")
-	expect.is_true(case.success, "test passed")
+	expect.is_true(case.success, "passes test")
 
 
 func test_calculate_failure_when_there_are_no_tests() -> void:
@@ -41,7 +41,7 @@ func test_calculate_failure_when_there_are_no_tests() -> void:
 	case.calculate()
 
 	# Assert
-	expect.is_false(case.success, "test failed")
+	expect.is_false(case.success, "fails test")
 
 func test_calculate_failure_when_there_are_failed_tests() -> void:
 	describe("Calculates result when there are passing and failing tests")
@@ -59,4 +59,4 @@ func test_calculate_failure_when_there_are_failed_tests() -> void:
 	case.calculate()
 
 	# Assert
-	expect.is_false(case.success, "test failed")
+	expect.is_false(case.success, "fails test")
