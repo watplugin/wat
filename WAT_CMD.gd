@@ -19,26 +19,30 @@ func _init():
 	execute(command())
 	quit()
 
+func clear():
+	# Placeholder for a signal that won't shut up from runner
+	pass
+
 func command():
 	return Array(OS.get_cmdline_args()).pop_back().replace("-", "")
 
 func execute(command: String) -> void:
 	# Commands default to lower case, don't affect casing (conflicts arg and filepaths)
-	var dir = command.replace("RUN=","")
+	var dir = command.replace("run=","")
 	print(dir)
-	if command == "RUN=ALL":
+	if command == "run":
 		print("running all")
 		_run()
-	elif command.begins_with("RUN") and command.ends_with(".gd"):
+	elif command.begins_with("run") and command.ends_with(".gd"):
 		print("running script")
-	elif command.begins_with("RUN") and Directory.new().dir_exists(command.replace("RUN=", "")):
+		_run(command.replace("run=", ""))
+	elif command.begins_with("run") and Directory.new().dir_exists(command.replace("run=", "")):
 		print("running directory") # Insist lowercase?
-		_run(command.replace("RUN=", ""))
+		_run(command.replace("run=", ""))
 	elif command.begins_with("SET"):
 		print("Setting Value")
 	else:
 		print("No Command Given")
-
 
 func _run(directory = "res://tests"):
 	var Runner = RUNNER.new(VALIDATE.new(), FILESYSTEM, SETTINGS, self)
@@ -46,11 +50,18 @@ func _run(directory = "res://tests"):
 	print(Runner.Results == self)
 	Runner._run(directory)
 
+
 func display(caselist: Array) -> void:
+	var output = []
+	var cases = {passed = 0, total = 0}
+	var methods = {passed = 0, total = 0}
 	root.get_child(0).queue_free()
 	print("\n-------RESULTS-------")
 	for case in caselist:
+		cases.total += 1
 		case.calculate()
+		if case.success:
+			cases.passed += 1
 		if not case.success:
 			print("%s" % case.title)
 			for method in case.methods:
@@ -59,7 +70,12 @@ func display(caselist: Array) -> void:
 					for expectation in method.expectations:
 						if not expectation.success:
 							print("\t%s" % expectation.context, "\n\t  (EXPECTED: %s) | (RESULT: %s)" % [expectation.expected, expectation.result])
-	print("\n-------RESULTS-------")
+	print("\n%s / %s Tests Passed" % [cases.passed, cases.total])
+	print("-------RESULTS-------")
+	if cases.total > 0 and cases.total == cases.passed:
+		print(0) # Return Exit 0 -> 0 Problems
+	else:
+		print(1) # Return Exit 1 -> Some Problems
 
 
 
