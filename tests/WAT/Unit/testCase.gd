@@ -3,6 +3,9 @@ extends WATTest
 var case
 var test
 
+func title() -> String:
+	return "TestCase"
+
 func pre():
 	self.test = WATTest.new()
 	self.test.queue_free()
@@ -10,7 +13,7 @@ func pre():
 
 
 func test_calculate_passing_when_all_tests_passed() -> void:
-	describe("calculate() sets testcase to success when all tests are passing")
+	describe("Calculates result when there are only passing tests")
 
 	# Arrange
 	var add = {title = "add", expectations = [], total = 0, passed = 0, success = false, context = ""}
@@ -25,23 +28,23 @@ func test_calculate_passing_when_all_tests_passed() -> void:
 	case.calculate()
 
 	# Assert
-	expect.is_true(case.success, "case is a success")
-	expect.is_equal(case.passed, case.total, "passed tests are equal to total tests")
+	# Is this leaking implementation?
 	expect.is_greater_than(case.total, 0, "there was at least one test")
+	expect.is_equal(case.passed, case.total, "passing test count is equal to total test count")
+	expect.is_true(case.success, "test passed")
+
 
 func test_calculate_failure_when_there_are_no_tests() -> void:
-	describe("calculate() sets testcase to failure when there are no tests")
+	describe("Calculates result when there are no tests at all")
 
 	# Act
 	case.calculate()
 
 	# Assert
-	expect.is_false(case.success, "case is a failure")
-	expect.is_equal_or_less_than(case.passed, 0, "there are no passed tests")
-	expect.is_equal_or_less_than(case.total, 0, "there are no tests at all")
+	expect.is_false(case.success, "test failed")
 
 func test_calculate_failure_when_there_are_failed_tests() -> void:
-	describe("calculate() sets testcase to failure when some but not all tests failed")
+	describe("Calculates result when there are passing and failing tests")
 
 	# Arrange
 	var add = {title = "add", expectations = [], total = 0, passed = 0, success = false, context = ""}
@@ -56,6 +59,4 @@ func test_calculate_failure_when_there_are_failed_tests() -> void:
 	case.calculate()
 
 	# Assert
-	expect.is_false(case.success, "case is a failure")
-	expect.is_equal(case.total, 3, "there are three tests in total")
-	expect.is_equal(case.passed, 2, "there are two passing tests")
+	expect.is_false(case.success, "test failed")

@@ -44,6 +44,7 @@ func display(cases: Array) -> void:
 
 func _add_script_data(script: TreeItem, data) -> void:
 	script.set_text(0, "(%s/%s) %s" % [data.passed, data.total, data.title])
+	script.set_tooltip(0, data.path)
 	script.set_icon(0, ICON_SUCCESS if data.success else ICON_FAILED)
 	script.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	cache.append(script)

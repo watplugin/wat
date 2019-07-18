@@ -14,6 +14,10 @@ class Calc extends Reference:
 	func multiply(a, b):
 		pass
 
+func title():
+	print(get_stack())
+	return "Calculator"
+
 func test_add():
 	describe("Adds 2 and 2")
 	expect.is_equal(4, Calc.new().add(2, 2), "Returns 4")

@@ -3,6 +3,7 @@ extends Reference
 var total: int = 0
 var passed: int = 0
 var title: String
+var path: String
 var methods: Array = []
 var crashed: bool = false
 var crashdata: Reference
@@ -10,6 +11,7 @@ var success: bool = false
 
 func _init(test) -> void:
 	self.title = test.title()
+	self.path = test.path()
 	test.expect.connect("OUTPUT", self, "_add_expectation")
 	test.connect("described", self, "_add_method_context")
 

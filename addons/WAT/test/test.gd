@@ -74,8 +74,11 @@ func post():
 func end():
 	pass
 
-func title() -> String:
+func path() -> String:
 	return self.get_script().get_path().replace("res://", "").replace("_", "?").capitalize().replace("?", "_").replace(" ", "")
+
+func title() -> String:
+	return "placeholder title"
 
 func watch(emitter, event: String) -> void:
 	watcher.watch(emitter, event)
