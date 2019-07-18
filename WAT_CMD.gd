@@ -1,58 +1,57 @@
 extends SceneTree
 
-# Only Show Failures (default, we'll update with new WinTerminal)
-# RunAll
-# RunDirectory
-# RunScript
-# SetMainDir
-# SetTestScriptPrefixes Add/Remove/List
-# SetTestMethodPrefix
+# ToAdd
+# - Verbose (shows passed tests as well)
+# - Set Main Test Directory
+# - Set Test Method Prefix?
+
+# DontAdd
+# - Set Test Script Prefixes (because we will be removing the prefix system in place of CONST or staticfunc is test())
 
 const RUNNER = preload("res://addons/WAT/Runner/runner.gd")
 const SETTINGS: Resource = preload("res://addons/WAT/Settings/Config.tres")
 const FILESYSTEM: Script = preload("res://addons/WAT/utils/filesystem.gd")
 const VALIDATE: Script = preload("res://addons/WAT/runner/validator.gd")
 
+const RUN_ALL = "-run_all"
+const RUN_DIRECTORY = "-run_dir"
+const RUN_SCRIPT = "-run_script"
+const LIST_ALL = "-list_all"
+const LIST_DIR = "-list_dir"
 
 func _init():
-	print("Hello from WAT")
-	execute(command())
+	execute(arguments())
 	quit()
+
+func arguments() -> Array:
+	return Array(OS.get_cmdline_args()).pop_back().split("=")
+
+func execute(arguments: Array) -> void:
+	var command: String = arguments.pop_front()
+	match command:
+		RUN_ALL:
+			_run()
+		RUN_DIRECTORY:
+			_run(arguments.pop_front())
+		RUN_SCRIPT:
+			_run(arguments.pop_front())
+		LIST_ALL:
+			_list()
+		LIST_DIR:
+			_list(arguments.pop_front())
+
+func _run(directory: String = "res://tests") -> void:
+	var Runner = RUNNER.new(VALIDATE.new(), FILESYSTEM, SETTINGS, self)
+	root.add_child(Runner)
+	Runner._run(directory) # Need to make API consistent but a signal is a bit OTT considering?
+
+func _list(directory: String = "res://tests") -> void:
+	print()
+	print(FILESYSTEM.file_list(directory))
 
 func clear():
 	# Placeholder for a signal that won't shut up from runner
 	pass
-
-func command():
-	return Array(OS.get_cmdline_args()).pop_back().replace("-", "")
-
-func execute(command: String) -> void:
-	# Commands default to lower case, don't affect casing (conflicts arg and filepaths)
-	var dir = command.replace("run=","")
-	print(dir)
-	if command == "run":
-		print("running all")
-		_run()
-	elif command.begins_with("run") and command.ends_with(".gd"):
-		print("running script")
-		_run(command.replace("run=", ""))
-	elif command.begins_with("run") and Directory.new().dir_exists(command.replace("run=", "")):
-		print("running directory") # Insist lowercase?
-		_run(command.replace("run=", ""))
-	elif command.begins_with("list"):
-		var files = FILESYSTEM.file_list()
-		print(files)
-	elif command.begins_with("SET"):
-		print("Setting Value")
-	else:
-		print("No Command Given")
-
-func _run(directory = "res://tests"):
-	var Runner = RUNNER.new(VALIDATE.new(), FILESYSTEM, SETTINGS, self)
-	root.add_child(Runner)
-	print(Runner.Results == self)
-	Runner._run(directory)
-
 
 func display(caselist: Array) -> void:
 	var output = []
