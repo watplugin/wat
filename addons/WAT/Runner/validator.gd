@@ -1,6 +1,6 @@
 extends Reference
 
-static func tests(files: Array, prefixes: Array) -> Array:
+static func tests(files: Array) -> Array:
 	var results: Array = []
 	for file in files:
 		if _is_WAT_test(load(file.path)):
@@ -19,7 +19,7 @@ static func _is_valid_method(method: String, prefix: String) -> bool:
 	return method.begins_with(prefix)
 
 static func _is_WAT_test(script: Script) -> bool:
-	return script.has("IS_WAT_TEST") and script.IS_WAT_TEST
+	return script.IS_WAT_TEST
 
 static func _test_method_prefix_is_valid(prefix: String) -> bool:
 	if prefix.empty() or prefix == "":

@@ -31,7 +31,7 @@ func _run(directory: String = "res://tests") -> void:
 		return
 	clear()
 	print("WAT: Starting Test Runner")
-	self.tests = validate.tests(filesystem.file_list(directory), settings.test_script_prefixes)
+	self.tests = validate.tests(filesystem.file_list(directory))
 	if self.tests.empty():
 		OS.alert("No Scripts to Tests")
 		return
