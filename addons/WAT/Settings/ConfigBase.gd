@@ -21,7 +21,6 @@ export(bool) var show_subdirectories_in_their_own_tabs = false
 
 ### BEGIN MAIN
 export(String) var main_test_folder = "res://tests/"
-export(Array, String) var test_script_prefixes = []
 export(String) var test_method_prefix = "test_"
 ### END MAIN
 

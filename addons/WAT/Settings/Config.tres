@@ -11,5 +11,4 @@ double_strategy_is_partial = false
 tests_include_subdirectories = true
 show_subdirectories_in_their_own_tabs = true
 main_test_folder = "res://tests"
-test_script_prefixes = [ "test" ]
 test_method_prefix = "test"
