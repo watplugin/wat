@@ -39,6 +39,9 @@ func execute(command: String) -> void:
 	elif command.begins_with("run") and Directory.new().dir_exists(command.replace("run=", "")):
 		print("running directory") # Insist lowercase?
 		_run(command.replace("run=", ""))
+	elif command.begins_with("list"):
+		var files = FILESYSTEM.file_list()
+		print(files)
 	elif command.begins_with("SET"):
 		print("Setting Value")
 	else:
