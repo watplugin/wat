@@ -13,11 +13,13 @@ const SETTINGS: Resource = preload("res://addons/WAT/Settings/Config.tres")
 const FILESYSTEM: Script = preload("res://addons/WAT/utils/filesystem.gd")
 const VALIDATE: Script = preload("res://addons/WAT/runner/validator.gd")
 
-const RUN_ALL = "-run_all"
-const RUN_DIRECTORY = "-run_dir"
-const RUN_SCRIPT = "-run_script"
-const LIST_ALL = "-list_all"
-const LIST_DIR = "-list_dir"
+const RUN_ALL: String = "-run_all"
+const RUN_DIRECTORY: String = "-run_dir"
+const RUN_SCRIPT: String = "-run_script"
+const LIST_ALL: String = "-list_all"
+const LIST_DIR: String = "-list_dir"
+const PASSED: int = 0
+const FAILED: int = 1
 
 func _init():
 	execute(arguments())
@@ -56,28 +58,29 @@ func clear():
 func display(caselist: Array) -> void:
 	var output = []
 	var cases = {passed = 0, total = 0}
-	var methods = {passed = 0, total = 0}
 	root.get_child(0).queue_free()
 	print("\n-------RESULTS-------")
 	for case in caselist:
-		cases.total += 1
 		case.calculate()
+		cases.total += 1
 		if case.success:
 			cases.passed += 1
-		if not case.success:
-			print("%s" % case.title)
-			for method in case.methods:
-				if not method.success:
-					print("\n  %s" % method.context)
-					for expectation in method.expectations:
-						if not expectation.success:
-							print("\t%s" % expectation.context, "\n\t  (EXPECTED: %s) | (RESULT: %s)" % [expectation.expected, expectation.result])
+		else:
+			display_failures(case)
+	display_summary(cases)
+
+func display_failures(case) -> void:
+	# Need to format paths to be accurate
+	print("%s (%s)" % [case.title, case.path])
+	for method in case.methods:
+		if not method.success:
+			print("\n  %s" % method.context)
+			for expectation in method.expectations:
+				if not expectation.success:
+					print("\t%s" % expectation.context, "\n\t  (EXPECTED: %s) | (RESULT: %s)" % [expectation.expected, expectation.result])
+
+func display_summary(cases: Dictionary) -> void:
 	print("\n%s / %s Tests Passed" % [cases.passed, cases.total])
 	print("-------RESULTS-------")
-	if cases.total > 0 and cases.total == cases.passed:
-		print(0) # Return Exit 0 -> 0 Problems
-	else:
-		print(1) # Return Exit 1 -> Some Problems
-
-
+	print(PASSED) if cases.total > 0 and cases.total == cases.passed else print(FAILED)
 
