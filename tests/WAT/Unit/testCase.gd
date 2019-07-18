@@ -28,9 +28,6 @@ func test_calculate_passing_when_all_tests_passed() -> void:
 	case.calculate()
 
 	# Assert
-	# Is this leaking implementation?
-	expect.is_greater_than(case.total, 0, "there is at least one test")
-	expect.is_equal(case.passed, case.total, "passing test count is equal to total test count")
 	expect.is_true(case.success, "passes test")
 
 
