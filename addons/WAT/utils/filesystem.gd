@@ -29,6 +29,7 @@ static func _list(path: String, searching_for: int, include_subdirectories: bool
 		if searching_for == FILE:
 			if name.ends_with(".gd") or name.ends_with(".tres"):
 				results.append({path = absolute_path, "name": name})
+				print("adding abs path: %s" % absolute_path)
 			elif directory.current_is_dir() and include_subdirectories:
 				results += _list(absolute_path, searching_for, include_subdirectories)
 

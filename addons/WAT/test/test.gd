@@ -4,6 +4,7 @@ class_name WATTest
 
 # We can't namespace stuff in a single script unfortunately
 # Have to keep this here for auto-completion
+const IS_WAT_TEST: bool = true
 const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
 #const DOUBLE = preload("res://addons/WAT/double/scripts/doubler.gd")

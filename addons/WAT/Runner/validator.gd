@@ -3,7 +3,7 @@ extends Reference
 static func tests(files: Array, prefixes: Array) -> Array:
 	var results: Array = []
 	for file in files:
-		if _has_valid_name(file.name, prefixes):
+		if _is_WAT_test(load(file.path)):
 			results.append(file.path)
 	return results
 
@@ -18,11 +18,8 @@ static func methods(methodlist: Array, prefix: String) -> Array:
 static func _is_valid_method(method: String, prefix: String) -> bool:
 	return method.begins_with(prefix)
 
-static func _has_valid_name(scriptname: String, prefixes: Array) -> bool:
-	for prefix in prefixes:
-		if scriptname.begins_with(prefix):
-			return true
-	return false
+static func _is_WAT_test(script: Script) -> bool:
+	return script.has("IS_WAT_TEST") and script.IS_WAT_TEST
 
 static func _test_method_prefix_is_valid(prefix: String) -> bool:
 	if prefix.empty() or prefix == "":

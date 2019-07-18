@@ -16,16 +16,16 @@ func test_func_methods_returns_an_array_of_only_method_names_beginning_with_test
 	# Assert
 	expect.is_equal(expected, actual)
 
-func test_func_tests_returns_an_array_of_only_test_filepaths_beginning_with_test_when_test_prefixes_only_includes_test():
-	describe("function VALIDATE.tests() returns an array of only test filepaths beginning with 'test' when test prefixes only includes test (ie ['test'])'")
-
-	# Arrange
-	var prefixes: Array = ["test"]
-	var tests: Array = [{name = "A", path = "tests/A.gd"}, {name = "test_B", path = "tests/test_B.gd"}, {name = "test_c", path = "tests/test_c.gd"}]
-
-	# Act
-	var expected: Array = ["tests/test_B.gd", "tests/test_c.gd"]
-	var actual: Array = VALIDATOR.tests(tests, prefixes)
-
-	# Assert
-	expect.is_equal(expected, actual)
+#func test_func_tests_returns_an_array_of_only_test_filepaths_beginning_with_test_when_test_prefixes_only_includes_test():
+#	describe("function VALIDATE.tests() returns an array of only test filepaths beginning with 'test' when test prefixes only includes test (ie ['test'])'")
+#
+#	# Arrange
+#	var prefixes: Array = ["test"]
+#	var tests: Array = [{name = "A", path = "tests/A.gd"}, {name = "test_B", path = "tests/test_B.gd"}, {name = "test_c", path = "tests/test_c.gd"}]
+#
+#	# Act
+#	var expected: Array = ["tests/test_B.gd", "tests/test_c.gd"]
+#	var actual: Array = VALIDATOR.tests(tests, prefixes)
+#
+#	# Assert
+#	expect.is_equal(expected, actual)
