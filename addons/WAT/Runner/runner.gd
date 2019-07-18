@@ -1,5 +1,5 @@
 extends Node
-#tool
+tool
 
 const TESTWRAPPER = preload("res://addons/WAT/runner/test_wrapper.gd")
 const CASE = preload("res://addons/WAT/runner/case.gd")
