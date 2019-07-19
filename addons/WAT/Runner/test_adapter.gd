@@ -1,14 +1,14 @@
 extends Node
 
 signal ENDED
-var test: WATTest
+var test
 var methods: Array = []
 var active_method: String
 var rerun_method: bool
 var Yield: Timer
 var case: Reference
 
-func _init(test: WATTest, case: Reference, Yield: Timer) -> void:
+func _init(test: Node, case: Reference, Yield: Timer) -> void:
 	self.test = test
 	self.case = case
 	self.Yield = Yield

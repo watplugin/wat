@@ -6,7 +6,7 @@ const REMOTE: String = "remote "
 const REMOTESYNC: String = "remotesync "
 const MASTER: String = "master "
 const PUPPET: String = "puppet "
-const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
+const FILESYSTEM = preload("res://addons/WAT/filesystem.gd")
 const SCRIPT_WRITER = preload("res://addons/WAT/double/script_writer.gd")
 const Method = preload("res://addons/WAT/double/method.gd")
 export (String) var index

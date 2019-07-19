@@ -7,7 +7,7 @@ extends Reference
 
 const Doubler = preload("res://addons/WAT/double/doubler.gd")
 const SCENEDIRECTOR = preload("res://addons/WAT/double/scene.gd")
-const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
+const FILESYSTEM = preload("res://addons/WAT/filesystem.gd")
 var cache: Array = []
 var count: int = 0
 

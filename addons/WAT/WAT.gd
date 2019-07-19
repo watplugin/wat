@@ -4,7 +4,7 @@ tool
 # DEFAULTS
 const RUNNER: Script = preload("res://addons/WAT/Runner/runner.gd")
 const SETTINGS: Resource = preload("res://addons/WAT/Settings/Config.tres")
-const FILESYSTEM: Script = preload("res://addons/WAT/utils/filesystem.gd")
+const FILESYSTEM: Script = preload("res://addons/WAT/filesystem.gd")
 var Runner: Node
 var Results: Node
 
