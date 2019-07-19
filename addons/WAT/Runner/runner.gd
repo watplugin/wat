@@ -24,11 +24,8 @@ func _add_tests(files: Array) -> void:
 	# Testnote: Input tests path into runner, compare against results to see if all valid
 	for file in files:
 		var test: Script = load(file.path)
-		if _is_WAT_test(test):
+		if test.get("IS_WAT_TEST") and test.IS_WAT_TEST:
 			tests.append(test)
-
-static func _is_WAT_test(script: Script) -> bool:
-	return script.get("IS_WAT_TEST") and script.IS_WAT_TEST
 
 func _nothing_to_test() -> bool:
 	return tests.empty() and caselist.empty()
