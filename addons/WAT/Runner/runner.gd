@@ -1,7 +1,7 @@
 extends Node
 tool
 
-const TESTWRAPPER = preload("res://addons/WAT/runner/test_wrapper.gd")
+const TEST_ADAPTER = preload("res://addons/WAT/runner/test_adapter.gd")
 const CASE = preload("res://addons/WAT/runner/case.gd")
 const YIELD = preload("res://addons/WAT/runner/Yielder.gd")
 var Results
@@ -40,12 +40,12 @@ func _start() -> void:
 	var methods = validate.methods(test.get_method_list(), settings.test_method_prefix)
 	var case = CASE.new(test)
 	var yielder = YIELD.new()
-	var wrapper = TESTWRAPPER.new(test, methods, case, yielder)
-	wrapper.add_child(yielder)
-	wrapper.add_child(test)
-	add_child(wrapper)
-	wrapper.connect("ENDED", self, "end")
-	wrapper.start()
+	var adapter = TEST_ADAPTER.new(test, methods, case, yielder)
+	adapter.add_child(yielder)
+	adapter.add_child(test)
+	add_child(adapter)
+	adapter.connect("ENDED", self, "end")
+	adapter.start()
 
 func end(case):
 	caselist.append(case)
