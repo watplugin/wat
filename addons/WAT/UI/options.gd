@@ -40,7 +40,6 @@ func _select_folder(path: String = CONFIG.main_test_folder) -> void:
 	FolderSelect.add_item(path)
 	for directory in FILESYSTEM.directory_list(path):
 		FolderSelect.add_item(directory)
-#	FolderSelect.get_popup()
 
 func _select_script() -> void:
 	ScriptSelect.clear()
@@ -48,8 +47,6 @@ func _select_script() -> void:
 		if _valid_test(file.name) and file.path == ("%s/%s" % [_selected(FolderSelect), file.name]):
 			ScriptSelect.add_item(file.path)
 	ScriptSelect.get_popup().popup()
-#	open_and_close(ScriptSelect)
-
 
 func _run_folder() -> void:
 	if _exists(FolderSelect):
