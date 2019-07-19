@@ -10,10 +10,8 @@ onready var RunFolder: Button = $Folder/Run
 onready var RunScript: Button = $TestScript/Run
 onready var PrintStrayNodes: Button = $Debug/PrintStrayNodes
 signal RUN
-signal START_TIME
 
 func _run(path: String = "res://tests") -> void:
-	emit_signal("START_TIME") #???????????
 	emit_signal("RUN", path)
 
 func _run_folder() -> void:

@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/WAT/WAT.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/UI/ResultTree.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/WAT/UI/Timer.gd" type="Script" id=4]
-[ext_resource path="res://addons/WAT/UI/options.gd" type="Script" id=5]
+[ext_resource path="res://addons/WAT/UI/options.gd" type="Script" id=4]
 
 [node name="WAT" type="PanelContainer"]
 margin_right = 1024.0
@@ -41,7 +40,6 @@ script = ExtResource( 2 )
 [node name="Tests" parent="UI/Runner/Results" instance=ExtResource( 3 )]
 
 [node name="Details" type="HBoxContainer" parent="UI/Runner"]
-editor/display_folded = true
 margin_top = 498.0
 margin_right = 996.0
 margin_bottom = 528.0
@@ -51,12 +49,11 @@ custom_constants/separation = 50
 alignment = 1
 
 [node name="Timer" type="Label" parent="UI/Runner/Details"]
-margin_left = 494.0
+margin_left = 414.0
 margin_top = 8.0
-margin_right = 502.0
+margin_right = 581.0
 margin_bottom = 22.0
-text = "0"
-script = ExtResource( 4 )
+text = "TIMER NOT IMPLEMENTED"
 
 [node name="Options" type="HBoxContainer" parent="UI/Runner"]
 margin_top = 532.0
@@ -64,7 +61,7 @@ margin_right = 996.0
 margin_bottom = 572.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 
 [node name="VBox" type="VBoxContainer" parent="UI/Runner/Options"]
 margin_right = 241.0
