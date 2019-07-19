@@ -27,20 +27,24 @@ func _add_tests(files: Array) -> void:
 		if test.get("IS_WAT_TEST") and test.IS_WAT_TEST:
 			tests.append(test)
 
-func _nothing_to_test() -> bool:
+func _no_tests_to_execute() -> bool:
 	return tests.empty() and caselist.empty()
 
 func _all_tests_executed() -> bool:
 	return tests.empty() and not caselist.empty()
 
 func _start() -> void:
-	if _nothing_to_test():
+	if _no_tests_to_execute():
 		OS.alert("No Scripts to Tests")
 		return
 	elif _all_tests_executed():
 		print("WAT: Ending Test Runner")
 		emit_signal("ended", caselist)
 		return
+	else:
+		_execute_next_test()
+
+func _execute_next_test():
 	var test = tests.pop_front().new()
 	var case = CASE.new(test)
 	var yielder = YIELD.new()
