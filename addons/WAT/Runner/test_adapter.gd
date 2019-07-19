@@ -1,52 +1,58 @@
 extends Node
 
 signal ENDED
-var test
+var Test: Node
+var Yield: Timer
+var case: Reference
 var methods: Array = []
 var active_method: String
 var rerun_method: bool
-var Yield: Timer
-var case: Reference
 
-func _init(test: Node, case: Reference, Yield: Timer) -> void:
-	self.test = test
+func _init(Test: Node, Yield: Timer, case: Reference) -> void:
+	self.Test = Test
 	self.case = case
 	self.Yield = Yield
 
 func _add_methods() -> void:
-	for method in test.get_method_list():
+	for method in Test.get_method_list():
 		if method.name.begins_with("test"):
 			methods.append(method.name)
 
+func _ready() -> void:
+	case.title = Test.title()
+	case.path = Test.path()
+	Test.expect.connect("OUTPUT", case, "_add_expectation")
+	Test.connect("described", case, "_add_method_context")
+
 func start() -> void:
 	_add_methods()
-	test.start()
+	Test.start()
 	pre()
 
 func pre() -> void:
-	if not methods.empty() or test.rerun_method:
-		active_method = active_method if test.rerun_method else methods.pop_front()
-		test.pre()
+	if not methods.empty() or Test.rerun_method:
+		active_method = active_method if Test.rerun_method else methods.pop_front()
+		Test.pre()
 		execute()
 	else:
 		end()
 
 func execute() -> void:
 	case.add_method(active_method)
-	test.call(active_method)
+	Test.call(active_method)
 	if Yield.active():
 		Yield.connect("resume", self, "post", [], CONNECT_ONESHOT)
 		return
 	post()
 
 func post() -> void:
-	test.post()
+	Test.post()
 	pre()
 
 func end() -> void:
-	test.end()
-	remove_child(test)
-	test.free()
+	Test.end()
+	remove_child(Test)
+	Test.free()
 	emit_signal("ENDED", case)
 
 func until_signal(time_limit: float, emitter: Object, event: String) -> Timer:
