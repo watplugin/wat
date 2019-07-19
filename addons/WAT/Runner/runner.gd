@@ -52,10 +52,10 @@ func _execute_next_test():
 	adapter.add_child(yielder)
 	adapter.add_child(test)
 	add_child(adapter)
-	adapter.connect("ENDED", self, "end")
+	adapter.connect("ENDED", self, "_end")
 	adapter.start()
 
-func end(case):
+func _end(case):
 	caselist.append(case)
 	filesystem.clear_temporary_files()
 	call_deferred("_start")
