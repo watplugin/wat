@@ -19,7 +19,7 @@ func _init(validate: Reference, filesystem: Reference, settings: Resource, Resul
 	self.settings = settings
 	self.Results = Results
 
-func _run(path: String = "res://tests") -> void:
+func run(path: String) -> void:
 	if not _valid_path(path):
 		return
 	clear()

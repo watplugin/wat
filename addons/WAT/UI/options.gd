@@ -5,15 +5,24 @@ const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
 const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 onready var FolderSelect: OptionButton = $Folder/Select
 onready var ScriptSelect: OptionButton = $TestScript/Select
-onready var RunFolder: OptionButton = $Folder/Run
-onready var RunScript: OptionButton = $TestScript/Run
+onready var RunAll: Button = $VBox/RunAll
+onready var RunFolder: Button = $Folder/Run
+onready var RunScript: Button = $TestScript/Run
 onready var PrintStrayNodes: Button = $Debug/PrintStrayNodes
 signal RUN
 signal START_TIME
 
-func run(path: String) -> void:
-	emit_signal("START_TIME")
+func _run(path: String = "res://tests") -> void:
+	emit_signal("START_TIME") #???????????
 	emit_signal("RUN", path)
+
+func _run_folder() -> void:
+	if _exists(FolderSelect):
+		_run(_selected(FolderSelect))
+
+func _run_script() -> void:
+	if _exists(ScriptSelect):
+		_run(_selected(ScriptSelect))
 
 func _ready() -> void:
 	_select_folder()
@@ -24,6 +33,7 @@ func _connect():
 	PrintStrayNodes.connect("pressed", self, "print_stray_nodes")
 	FolderSelect.connect("pressed", self, "_select_folder")
 	ScriptSelect.connect("pressed", self, "_select_script")
+	RunAll.connect("pressed", self, "_run")
 	RunFolder.connect("pressed", self, "_run_folder")
 	RunScript.connect("pressed", self, "_run_script")
 	# We trigger these once before opening them so our popup menu
@@ -48,13 +58,6 @@ func _select_script() -> void:
 			ScriptSelect.add_item(file.path)
 	ScriptSelect.get_popup().popup()
 
-func _run_folder() -> void:
-	if _exists(FolderSelect):
-		run(_selected(FolderSelect))
-
-func _run_script() -> void:
-	if _exists(ScriptSelect):
-		run(_selected(ScriptSelect))
 
 func _exists(list: OptionButton) -> bool:
 	if list.items.empty():
