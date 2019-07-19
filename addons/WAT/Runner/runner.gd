@@ -18,9 +18,6 @@ func run(path: String) -> void:
 		return
 	_add_tests(filesystem.file_list(path))
 	print("WAT: Starting Test Runner")
-	if self.tests.empty():
-		OS.alert("No Scripts to Tests")
-		return
 	_start()
 
 func _add_tests(files: Array) -> void:
@@ -33,8 +30,17 @@ func _add_tests(files: Array) -> void:
 static func _is_WAT_test(script: Script) -> bool:
 	return script.get("IS_WAT_TEST") and script.IS_WAT_TEST
 
+func _nothing_to_test() -> bool:
+	return tests.empty() and caselist.empty()
+
+func _all_tests_executed() -> bool:
+	return tests.empty() and not caselist.empty()
+
 func _start() -> void:
-	if tests.empty():
+	if _nothing_to_test():
+		OS.alert("No Scripts to Tests")
+		return
+	elif _all_tests_executed():
 		print("WAT: Ending Test Runner")
 		emit_signal("ended", caselist)
 		return
