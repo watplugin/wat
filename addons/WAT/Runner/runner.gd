@@ -19,19 +19,12 @@ func _init(validate: Reference, filesystem: Reference, settings: Resource, Resul
 	self.settings = settings
 	self.Results = Results
 
-func _run(directory: String = "res://tests") -> void:
-	var d = Directory.new()
-	if directory.ends_with(".gd") and not d.file_exists(directory):
-		emit_signal("errored")
-		push_error("(Runner l:26) WAT: Script %s does not exist")
-		return
-	elif not directory.ends_with(".gd") and not d.dir_exists(directory):
-		emit_signal("errored")
-		push_error("(Runner l:30) WAT: Test Directory %s does not exist" % directory)
+func _run(path: String = "res://tests") -> void:
+	if not _valid_path(path):
 		return
 	clear()
 	print("WAT: Starting Test Runner")
-	self.tests = validate.tests(filesystem.file_list(directory))
+	self.tests = validate.tests(filesystem.file_list(path))
 	if self.tests.empty():
 		OS.alert("No Scripts to Tests")
 		return
@@ -58,6 +51,23 @@ func end(case):
 	caselist.append(case)
 	filesystem.clear_temporary_files()
 	call_deferred("_start")
+
+func _valid_path(path: String) -> bool:
+	if _script_does_not_exist(path):
+		emit_signal("errored")
+		push_error("WAT: Script %s does not exist" % path)
+		return false
+	elif _directory_does_not_exist(path):
+		emit_signal("errored")
+		push_error("WAT: Directory %s does not exist" % path)
+		return false
+	return true
+
+func _script_does_not_exist(path: String) -> bool:
+	return path.ends_with(".gd") and not Directory.new().file_exists(path)
+
+func _directory_does_not_exist(path: String) -> bool:
+	return not path.ends_with(".gd") and not Directory.new().dir_exists(path)
 
 func clear() -> void:
 	tests.clear()
