@@ -15,7 +15,6 @@ class Calc extends Reference:
 		pass
 
 func title():
-	print(get_stack())
 	return "Calculator"
 
 func test_add():
