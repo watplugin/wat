@@ -11,7 +11,7 @@ func test_func_methods_returns_an_array_of_only_method_names_beginning_with_test
 
 	# Act
 	var expected: Array = ["test_add", "test_subtract", "test_multiply"]
-	var actual: Array = VALIDATOR.methods(methods, prefix)
+	var actual: Array = VALIDATOR.methods(methods)
 
 	# Assert
 	expect.is_equal(expected, actual)

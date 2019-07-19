@@ -37,7 +37,7 @@ func _start() -> void:
 		emit_signal("ended")
 		return
 	var test = load(tests.pop_front()).new()
-	var methods = validate.methods(test.get_method_list(), settings.test_method_prefix)
+	var methods = validate.methods(test.get_method_list())
 	var case = CASE.new(test)
 	var yielder = YIELD.new()
 	var adapter = TEST_ADAPTER.new(test, methods, case, yielder)
