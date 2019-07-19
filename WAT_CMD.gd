@@ -48,7 +48,7 @@ func _run(directory: String = "res://tests") -> void:
 	Runner.connect("ended", self, "display")
 	root.add_child(Runner)
 	Runner.run(directory) # Need to make API consistent but a signal is a bit OTT considering?
-	root.get_child(0).queue_free()
+#	root.get_child(0).queue_free()
 
 func _list(directory: String = "res://tests") -> void:
 	print()
