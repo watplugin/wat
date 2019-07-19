@@ -11,7 +11,6 @@ extends SceneTree
 const RUNNER = preload("res://addons/WAT/Runner/runner.gd")
 const SETTINGS: Resource = preload("res://addons/WAT/Settings/Config.tres")
 const FILESYSTEM: Script = preload("res://addons/WAT/utils/filesystem.gd")
-const VALIDATE: Script = preload("res://addons/WAT/runner/validator.gd")
 
 const RUN_ALL: String = "-run_all"
 const RUN_DIRECTORY: String = "-run_dir"
@@ -45,7 +44,8 @@ func execute(arguments: Array) -> void:
 
 func _run(directory: String = "res://tests") -> void:
 	start_time = OS.get_ticks_msec()
-	var Runner = RUNNER.new(VALIDATE.new(), FILESYSTEM, SETTINGS, self)
+	var Runner = RUNNER.new(FILESYSTEM)
+	Runner.connect("ended", self, "display")
 	root.add_child(Runner)
 	Runner.run(directory) # Need to make API consistent but a signal is a bit OTT considering?
 	root.get_child(0).queue_free()
