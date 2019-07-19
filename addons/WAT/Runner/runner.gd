@@ -48,11 +48,7 @@ func _start() -> void:
 
 func _execute_next_test() -> void:
 	var test: WATTest = tests.pop_front().new()
-	var case: CASE = CASE.new()
-	var yielder: YIELD = YIELD.new()
-	var adapter: TEST_ADAPTER = TEST_ADAPTER.new(test, case, yielder)
-	adapter.add_child(yielder)
-	adapter.add_child(test)
+	var adapter: TEST_ADAPTER = TEST_ADAPTER.new(test, YIELD.new(), CASE.new())
 	add_child(adapter)
 	adapter.connect("ENDED", self, "_end")
 	test.connect("clear", filesystem, "clear_temporary_files")

@@ -23,6 +23,8 @@ func _ready() -> void:
 	case.path = Test.path()
 	Test.expect.connect("OUTPUT", case, "_add_expectation")
 	Test.connect("described", case, "_add_method_context")
+	add_child(Yield)
+	add_child(Test)
 
 func start() -> void:
 	_add_methods()
