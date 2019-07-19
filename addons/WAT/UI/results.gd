@@ -24,7 +24,6 @@ func _add_result_display(cases: Array, title: String = "Tests") -> void:
 
 func _add_directories(cases: Array) -> void:
 	for case in cases:
-		print(case.path)
 		var directory: String = case.path.get_base_dir().replace("res://", "").capitalize().replace(" ", "")
 		if not directory in directories:
 			directories[directory] = []
