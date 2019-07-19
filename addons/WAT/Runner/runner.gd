@@ -16,12 +16,13 @@ func _init(filesystem: Reference) -> void:
 func run(path: String) -> void:
 	if not _valid_path(path):
 		return
-	_add_tests(filesystem.file_list(path))
 	print("WAT: Starting Test Runner")
+	_add_tests(filesystem.file_list(path))
 	_start()
 
 func _add_tests(files: Array) -> void:
 	# Testnote: Input tests path into runner, compare against results to see if all valid
+	tests = []
 	for file in files:
 		var test: Script = load(file.path)
 		if test.get("IS_WAT_TEST") and test.IS_WAT_TEST:
@@ -78,5 +79,4 @@ func _directory_does_not_exist(path: String) -> bool:
 	return not path.ends_with(".gd") and not Directory.new().dir_exists(path)
 
 func clear() -> void:
-	tests.clear()
 	caselist.clear()
