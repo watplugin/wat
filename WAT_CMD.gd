@@ -54,9 +54,6 @@ func _list(directory: String = "res://tests") -> void:
 	print()
 	print(FILESYSTEM.file_list(directory))
 
-func clear(): # Placeholder for a signal that won't shut up from runner
-	pass
-
 func display(caselist: Array) -> void:
 	var cases = {passed = 0, total = 0}
 	print("\n-------RESULTS-------")
