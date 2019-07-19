@@ -4,16 +4,14 @@ tool
 const TEST_ADAPTER = preload("res://addons/WAT/runner/test_adapter.gd")
 const CASE = preload("res://addons/WAT/runner/case.gd")
 const YIELD = preload("res://addons/WAT/runner/Yielder.gd")
-var Results
 var filesystem: Reference
 var tests: Array = []
 var caselist: Array = []
 signal errored
 signal ended
 
-func _init(filesystem: Reference, Results) -> void:
+func _init(filesystem: Reference) -> void:
 	self.filesystem = filesystem
-	self.Results = Results
 
 func run(path: String) -> void:
 	if not _valid_path(path):
@@ -40,8 +38,7 @@ static func _is_WAT_test(script: Script) -> bool:
 func _start() -> void:
 	if tests.empty():
 		print("WAT: Ending Test Runner")
-		Results.display(caselist)
-		emit_signal("ended")
+		emit_signal("ended", caselist)
 		return
 	var test = tests.pop_front().new()
 	var case = CASE.new(test)
@@ -78,4 +75,4 @@ func _directory_does_not_exist(path: String) -> bool:
 func clear() -> void:
 	tests.clear()
 	caselist.clear()
-	Results.clear()
+#	Results.clear()
