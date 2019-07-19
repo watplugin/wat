@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://addons/WAT/UI/ui.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/WAT.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/UI/ResultTree.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/WAT/UI/Timer.gd" type="Script" id=4]
