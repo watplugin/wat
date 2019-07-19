@@ -23,4 +23,5 @@ func _ready():
 
 func _run(path: String = "res://tests") -> void:
 	Results.clear()
+	Runner.clear()
 	Runner.run(path) # Our call-deferred may cause issues here

@@ -16,10 +16,8 @@ func _init(filesystem: Reference) -> void:
 func run(path: String) -> void:
 	if not _valid_path(path):
 		return
-	clear()
 	_add_tests(filesystem.file_list(path))
 	print("WAT: Starting Test Runner")
-#	self.tests = validate.tests(filesystem.file_list(path))
 	if self.tests.empty():
 		OS.alert("No Scripts to Tests")
 		return
@@ -75,4 +73,3 @@ func _directory_does_not_exist(path: String) -> bool:
 func clear() -> void:
 	tests.clear()
 	caselist.clear()
-#	Results.clear()
