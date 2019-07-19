@@ -5,7 +5,7 @@ const IS_WAT_TEST: bool = true
 const YIELD: String = "finished"
 const CRASH_IF_TEST_FAILS: bool = true
 const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
-const WATCHER = preload("res://addons/WAT/test/watcher.gd")
+const WATCHER = preload("res://addons/WAT/runner/watcher.gd")
 const CONTAINER = preload("res://addons/WAT/double/container.gd")
 const FACTORY = preload("res://addons/WAT/double/factory.gd")
 var expect: EXPECTATIONS

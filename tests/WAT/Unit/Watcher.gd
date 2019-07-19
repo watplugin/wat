@@ -12,7 +12,7 @@ func test_watcher_tracks_all_nonbound_arguments():
 
 	# Arrange
 	add_user_signal("example")
-	var watcher = load("res://addons/WAT/test/watcher.gd").new()
+	var watcher = load("res://addons/WAT/runner/watcher.gd").new()
 
 	# Act
 	watcher.watch(self, "example")
