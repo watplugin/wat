@@ -8,13 +8,18 @@ var rerun_method: bool
 var Yield: Timer
 var case
 
-func _init(test: WATTest, methods: Array, case, Yield) -> void:
+func _init(test: WATTest, case, Yield) -> void:
 	self.test = test
-	self.methods = methods
 	self.case = case
 	self.Yield = Yield
 
+func _add_methods() -> void:
+	for method in test.get_method_list():
+		if method.name.begins_with("test"):
+			methods.append(method.name)
+
 func start():
+	_add_methods()
 	test.start()
 	pre()
 

@@ -7,14 +7,12 @@ const YIELD = preload("res://addons/WAT/runner/Yielder.gd")
 var Results
 var settings: Resource
 var filesystem: Reference
-var validate: Reference
 var tests: Array = []
 var caselist: Array = []
 signal errored
 signal ended
 
-func _init(validate: Reference, filesystem: Reference, settings: Resource, Results) -> void:
-	self.validate = validate
+func _init(filesystem: Reference, settings: Resource, Results) -> void:
 	self.filesystem = filesystem
 	self.settings = settings
 	self.Results = Results
@@ -23,12 +21,24 @@ func run(path: String) -> void:
 	if not _valid_path(path):
 		return
 	clear()
+	_add_tests(filesystem.file_list(path))
 	print("WAT: Starting Test Runner")
-	self.tests = validate.tests(filesystem.file_list(path))
+#	self.tests = validate.tests(filesystem.file_list(path))
 	if self.tests.empty():
 		OS.alert("No Scripts to Tests")
 		return
 	_start()
+
+func _add_tests(files: Array) -> void:
+	# Testnote: Input tests path into runner, compare against results to see if all valid
+	for file in files:
+		var test: Script = load(file.path)
+		if _is_WAT_test(test):
+			tests.append(file.path)
+
+static func _is_WAT_test(script: Script) -> bool:
+	return script.get("IS_WAT_TEST") and script.IS_WAT_TEST
+
 
 func _start() -> void:
 	if tests.empty():
@@ -37,10 +47,9 @@ func _start() -> void:
 		emit_signal("ended")
 		return
 	var test = load(tests.pop_front()).new()
-	var methods = validate.methods(test.get_method_list())
 	var case = CASE.new(test)
 	var yielder = YIELD.new()
-	var adapter = TEST_ADAPTER.new(test, methods, case, yielder)
+	var adapter = TEST_ADAPTER.new(test, case, yielder)
 	adapter.add_child(yielder)
 	adapter.add_child(test)
 	add_child(adapter)
