@@ -5,13 +5,12 @@ tool
 const RUNNER: Script = preload("res://addons/WAT/Runner/runner.gd")
 const SETTINGS: Resource = preload("res://addons/WAT/Settings/Config.tres")
 const FILESYSTEM: Script = preload("res://addons/WAT/utils/filesystem.gd")
-#const VALIDATE: Script = preload("res://addons/WAT/runner/validator.gd")
 var Runner: Node
 
 func _ready():
 	var Results = get_node("Runner/Results")
 	Results.settings = SETTINGS
-	Runner = RUNNER.new(FILESYSTEM, SETTINGS, Results)
+	Runner = RUNNER.new(FILESYSTEM, Results)
 	add_child(Runner)
 	get_node("Runner/Options").connect("RUN", self, "_run")
 

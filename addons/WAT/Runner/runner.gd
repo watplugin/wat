@@ -5,16 +5,14 @@ const TEST_ADAPTER = preload("res://addons/WAT/runner/test_adapter.gd")
 const CASE = preload("res://addons/WAT/runner/case.gd")
 const YIELD = preload("res://addons/WAT/runner/Yielder.gd")
 var Results
-var settings: Resource
 var filesystem: Reference
 var tests: Array = []
 var caselist: Array = []
 signal errored
 signal ended
 
-func _init(filesystem: Reference, settings: Resource, Results) -> void:
+func _init(filesystem: Reference, Results) -> void:
 	self.filesystem = filesystem
-	self.settings = settings
 	self.Results = Results
 
 func run(path: String) -> void:
