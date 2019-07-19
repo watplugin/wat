@@ -21,6 +21,6 @@ func _ready():
 	var Expand = get_node("Runner/Options/VBox/Expand")
 	Expand.connect("pressed", Results, "_collapse_all", [Expand])
 
-func _run(path: String = "res://tests") -> void:
+func _run(path: String) -> void:
 	Results.clear()
 	Runner.run(path) # Our call-deferred may cause issues here
