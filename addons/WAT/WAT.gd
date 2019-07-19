@@ -9,14 +9,15 @@ const VALIDATE: Script = preload("res://addons/WAT/runner/validator.gd")
 var Runner: Node
 
 func _ready():
-	var Results = get_node("UI/Runner/Results")
+	var Results = get_node("Runner/Results")
 	Results.settings = SETTINGS
 	Runner = RUNNER.new(VALIDATE, FILESYSTEM, SETTINGS, Results)
 	add_child(Runner)
 
-	var RunAll = get_node("UI/Runner/Options/VBox/RunAll")
-	var Expand = get_node("UI/Runner/Options/VBox/Expand")
-	var Options = get_node("UI/Runner/Options")
+	# Runner is a misnomer?
+	var RunAll = get_node("Runner/Options/VBox/RunAll")
+	var Expand = get_node("Runner/Options/VBox/Expand")
+	var Options = get_node("Runner/Options")
 	Expand.connect("pressed", Results, "_collapse_all", [Expand])
 	Options.connect("RUN", self, "_run")
 

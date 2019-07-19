@@ -56,7 +56,6 @@ func _select_script() -> void:
 			ScriptSelect.add_item(file.path)
 	ScriptSelect.get_popup().popup()
 
-
 func _exists(list: OptionButton) -> bool:
 	if list.items.empty():
 		OS.alert("Nothing to Run")
