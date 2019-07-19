@@ -1,7 +1,7 @@
 extends Timer
 tool
 
-
+const TIMER = 1
 signal resume
 signal finished
 var emitter_signal
@@ -19,7 +19,7 @@ func until_signal(time_limit: float, emitter: Object, event: String):
 	return until_timeout(time_limit)
 
 func until_timeout(time_limit: float):
-	count += 1
+	count += TIMER
 	paused = true
 	wait_time = time_limit
 	one_shot = true
@@ -28,7 +28,7 @@ func until_timeout(time_limit: float):
 	return self
 
 func resume() -> void:
-	count -= 1
+	count -= TIMER
 	if emitter != null:
 		emitter.disconnect(emitter_signal, self, "timeout")
 		emitter = null
