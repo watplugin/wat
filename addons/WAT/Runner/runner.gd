@@ -55,6 +55,7 @@ func _execute_next_test() -> void:
 	adapter.add_child(test)
 	add_child(adapter)
 	adapter.connect("ENDED", self, "_end")
+	test.connect("clear", filesystem, "clear_temporary_files")
 	adapter.start()
 
 func _end(case: CASE) -> void:

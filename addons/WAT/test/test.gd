@@ -5,9 +5,7 @@ class_name WATTest
 # We can't namespace stuff in a single script unfortunately
 # Have to keep this here for auto-completion
 const IS_WAT_TEST: bool = true
-const FILESYSTEM = preload("res://addons/WAT/utils/filesystem.gd")
 const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
-#const DOUBLE = preload("res://addons/WAT/double/scripts/doubler.gd")
 const WATCHER = preload("res://addons/WAT/test/watcher.gd")
 const YIELD: String = "finished"
 const CRASH_IF_TEST_FAILS: bool = true
@@ -19,6 +17,7 @@ var _p_values: Array = []
 var p: Dictionary = {}
 var rerun_method: bool = false
 signal described
+signal clear
 
 const _FACTORY = preload("res://addons/WAT/double/factory.gd")
 var FACTORY = _FACTORY.new()
@@ -85,8 +84,7 @@ func watch(emitter, event: String) -> void:
 	watcher.watch(emitter, event)
 
 func clear_temp():
-	FILESYSTEM.clear_temporary_files()
-	assert(FILESYSTEM.file_list("user://WATemp").size() == 0)
+	emit_signal("clear")
 
 ## Untested
 ## Thanks to bitwes @ https://github.com/bitwes/Gut/
