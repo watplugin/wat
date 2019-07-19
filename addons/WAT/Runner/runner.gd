@@ -34,11 +34,10 @@ func _add_tests(files: Array) -> void:
 	for file in files:
 		var test: Script = load(file.path)
 		if _is_WAT_test(test):
-			tests.append(file.path)
+			tests.append(test)
 
 static func _is_WAT_test(script: Script) -> bool:
 	return script.get("IS_WAT_TEST") and script.IS_WAT_TEST
-
 
 func _start() -> void:
 	if tests.empty():
@@ -46,7 +45,7 @@ func _start() -> void:
 		Results.display(caselist)
 		emit_signal("ended")
 		return
-	var test = load(tests.pop_front()).new()
+	var test = tests.pop_front().new()
 	var case = CASE.new(test)
 	var yielder = YIELD.new()
 	var adapter = TEST_ADAPTER.new(test, case, yielder)
