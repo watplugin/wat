@@ -46,18 +46,18 @@ func _start() -> void:
 	else:
 		_execute_next_test()
 
-func _execute_next_test():
-	var test = tests.pop_front().new()
-	var case = CASE.new(test)
-	var yielder = YIELD.new()
-	var adapter = TEST_ADAPTER.new(test, case, yielder)
+func _execute_next_test() -> void:
+	var test: WATTest = tests.pop_front().new()
+	var case: CASE = CASE.new(test)
+	var yielder: YIELD = YIELD.new()
+	var adapter: TEST_ADAPTER = TEST_ADAPTER.new(test, case, yielder)
 	adapter.add_child(yielder)
 	adapter.add_child(test)
 	add_child(adapter)
 	adapter.connect("ENDED", self, "_end")
 	adapter.start()
 
-func _end(case):
+func _end(case: CASE) -> void:
 	caselist.append(case)
 	filesystem.clear_temporary_files()
 	call_deferred("_start")

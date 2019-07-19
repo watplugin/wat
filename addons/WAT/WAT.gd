@@ -6,9 +6,9 @@ const RUNNER: Script = preload("res://addons/WAT/Runner/runner.gd")
 const SETTINGS: Resource = preload("res://addons/WAT/Settings/Config.tres")
 const FILESYSTEM: Script = preload("res://addons/WAT/utils/filesystem.gd")
 var Runner: Node
-var Results
+var Results: Node
 
-func _ready():
+func _ready() -> void:
 	Results = get_node("Runner/Results")
 	Results.settings = SETTINGS
 	Runner = RUNNER.new(FILESYSTEM)

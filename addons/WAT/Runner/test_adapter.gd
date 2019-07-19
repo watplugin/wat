@@ -6,9 +6,9 @@ var methods: Array = []
 var active_method: String
 var rerun_method: bool
 var Yield: Timer
-var case
+var case: Reference
 
-func _init(test: WATTest, case, Yield) -> void:
+func _init(test: WATTest, case: Reference, Yield: Timer) -> void:
 	self.test = test
 	self.case = case
 	self.Yield = Yield
@@ -18,12 +18,12 @@ func _add_methods() -> void:
 		if method.name.begins_with("test"):
 			methods.append(method.name)
 
-func start():
+func start() -> void:
 	_add_methods()
 	test.start()
 	pre()
 
-func pre():
+func pre() -> void:
 	if not methods.empty() or test.rerun_method:
 		active_method = active_method if test.rerun_method else methods.pop_front()
 		test.pre()
@@ -31,7 +31,7 @@ func pre():
 	else:
 		end()
 
-func execute():
+func execute() -> void:
 	case.add_method(active_method)
 	test.call(active_method)
 	if Yield.active():
@@ -39,11 +39,11 @@ func execute():
 		return
 	post()
 
-func post():
+func post() -> void:
 	test.post()
 	pre()
 
-func end():
+func end() -> void:
 	test.end()
 	remove_child(test)
 	test.free()
