@@ -48,7 +48,11 @@ func _start() -> void:
 
 func _execute_next_test() -> void:
 	var test: WATTest = tests.pop_front().new()
-	var case: CASE = CASE.new(test)
+	var case: CASE = CASE.new()
+	case.title = test.title()
+	case.path = test.path()
+	test.expect.connect("OUTPUT", case, "_add_expectation")
+	test.connect("described", case, "_add_method_context")
 	var yielder: YIELD = YIELD.new()
 	var adapter: TEST_ADAPTER = TEST_ADAPTER.new(test, case, yielder)
 	adapter.add_child(yielder)

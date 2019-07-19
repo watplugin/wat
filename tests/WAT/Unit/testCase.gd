@@ -9,7 +9,7 @@ func title() -> String:
 func pre():
 	self.test = WATTest.new()
 	self.test.queue_free()
-	self.case = load("res://addons/WAT/Runner/case.gd").new(self.test)
+	self.case = load("res://addons/WAT/Runner/case.gd").new()
 
 
 func test_calculate_passing_when_all_tests_passed() -> void:
