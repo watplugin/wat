@@ -35,10 +35,13 @@ func test_we_cannot_resolve_a_class_that_we_have_unregistered_from_the_container
 	var C = A.C
 
 	container.register(A, [B, C])
+	var a = container.resolve(A)
+	expect.is_not_null(a)
 	container.unregister(A)
 
 	var instance = container.resolve(A)
 	expect.is_null(instance, "We failed to resolve the class because it was unregistered")
+
 
 func test_we_can_double_classes_with_nested_dependecies():
 	describe("We can double classes with nested dependecies")
@@ -58,7 +61,12 @@ func test_we_can_double_classes_with_nested_dependecies():
 	container.unregister(Book)
 	container.unregister(Author)
 
+func test_we_can_register_scripts():
 
-
+	var item = load("res://addons/WAT/filesystem.gd")
+	var X = load("res://Examples/Scripts/new_script.gd")
+	container.register(X, [script(item)])
+	var resolve = container.resolve(X)
+	expect.is_equal(resolve.filesystem.resource_path, "res://addons/WAT/filesystem.gd")
 
 

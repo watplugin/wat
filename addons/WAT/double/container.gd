@@ -1,32 +1,29 @@
 extends Reference
 
-var registery: Dictionary = {}
+var _registery: Dictionary = {}
 
-func register(klass, dependecies: Array):
-	registery[klass] = dependecies
+func register(klass: Object, dependecies: Array) -> void:
+	_registery[klass] = dependecies
 
-func unregister(klass):
-	registery.erase(klass)
+func unregister(klass: Object) -> void:
+	_registery.erase(klass)
 
-func resolve(klass):
-	var dependecies = registery.get(klass, null)
-	if dependecies == null:
-		return null
+func resolve(klass) -> Object:
+	var dependecies = _registery.get(klass, [])
+	if dependecies.empty(): #
+		return null # Return null? Shouldn't we just return the class?
 	var instances = []
 	for dependecy in dependecies:
-		if dependecy is Object:
-			instances.append(resolve(dependecy))
-		else:
-			# We're just a random value
-			instances.append(dependecy)
+		if _registery.has(dependecy):
+			dependecy = resolve(dependecy)
+		instances.append(dependecy)
 	return klass.callv("new", instances)
 
-func get_constructor(klass):
+func get_constructor(klass) -> Array:
 	var constructor: Array = []
-	var base: Array = registery[klass]
+	var base: Array = _registery[klass]
 	for dependecy in base:
-		if dependecy is Object:
-			constructor.append(resolve(dependecy))
-		else:
-			constructor.append(dependecy)
+		if _registery.has(dependecy):
+			dependecy = resolve(dependecy)
+		constructor.append(dependecy)
 	return constructor
