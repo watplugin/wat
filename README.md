@@ -1,3 +1,9 @@
+### WARNING ###
+
+I merged WAT4 into master earlier than I meant too. I don't have documentation for it yet. Don't download if you're unsure of it.
+
+### END WARNING ###
+
 # WAT
 
 <img src="https://github.com/CodeDarigan/WAT/blob/master/screenshots/main.png">
