@@ -36,6 +36,12 @@ _global_script_class_icons={
 "WATTest": ""
 }
 
+[WAT]
+
+Test_Directory=""
+Include_subdirectories_when_running_tests=true
+Show_subdirectories_as_their_own_tabs=true
+
 [application]
 
 config/name="WAT"
