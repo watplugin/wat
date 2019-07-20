@@ -27,18 +27,8 @@ func _init() -> void:
 	self.parameters = PARAMETERS.new()
 	self.p = self.parameters.parameters
 
-
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_PREDELETE:
-		double.clear()
-
-class ANY extends Reference:
-
-	func get_class() -> String:
-		return "Any"
-
 func any():
-	return ANY.new()
+	return load("res://addons/WAT/Runner/any.gd").new()
 
 func describe(message: String) -> void:
 	emit_signal("described", message)
@@ -88,3 +78,8 @@ func until_signal(emitter: Object, event: String, time_limit: float) -> Node:
 
 func until_timeout(time_limit: float) -> Node:
 	return get_parent().until_timeout(time_limit)
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		# This is apparently necessary?
+		double.clear()
