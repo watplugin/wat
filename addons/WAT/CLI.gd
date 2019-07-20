@@ -1,17 +1,10 @@
 extends SceneTree
 
-# ToAdd
-# - Verbose (shows passed tests as well)
-# - Set Main Test Directory
-# - Set Test Method Prefix?
-
-# DontAdd
-# - Set Test Script Prefixes (because we will be removing the prefix system in place of CONST or staticfunc is test())
-
+# You can only call this from root. On Windows, write
+# godot -s addons/WAT/CLI.gd -run_all
+# to run all of the scripts
 const RUNNER = preload("res://addons/WAT/Runner/runner.gd")
-const SETTINGS: Resource = preload("res://addons/WAT/Settings/Config.tres")
 const FILESYSTEM: Script = preload("res://addons/WAT/filesystem.gd")
-
 const RUN_ALL: String = "-run_all"
 const RUN_DIRECTORY: String = "-run_dir"
 const RUN_SCRIPT: String = "-run_script"
@@ -50,8 +43,7 @@ func _run(directory: String) -> void:
 	var Runner = RUNNER.new(FILESYSTEM)
 	Runner.connect("ended", self, "display")
 	root.add_child(Runner)
-	Runner.run(directory) # Need to make API consistent but a signal is a bit OTT considering?
-#	root.get_child(0).queue_free()
+	Runner.run(directory)
 
 func _list(directory: String = "res://tests") -> void:
 	print()
