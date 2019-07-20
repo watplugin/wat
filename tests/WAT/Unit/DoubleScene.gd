@@ -12,7 +12,7 @@ extends WATTest
 #const SCENEDIRECTOR = preload("res://scene.gd")
 const scenepath = "res://Examples/Scene/Main.tscn"
 
-#func double_scene(scenepath: String):
+#func double.scene(scenepath: String):
 #	var nodes: Dictionary = {}
 #	var instance: Node = load(scenepath).instance()
 #	var frontier: Array = [instance]
@@ -28,7 +28,7 @@ func test_when_we_call_double():
 	describe("When we call double")
 	# !!! Everytime we reload the SCENEDIRECTOR script, we get a new instance
 	# However if we don't reload, then we run into repeating objects
-	var scene = double_scene(scenepath)
+	var scene = double.scene(scenepath)
 	scene.get_node(".").method("test").stub(9999)
 	scene.get_node("A").method("execute").stub(1111)
 	scene.get_node("C/D").method("wowsers").stub(9999)
@@ -45,8 +45,8 @@ func test_when_we_call_double():
 
 func test_doubling_two_scenes():
 	describe("Doubles don't share data even if doubling the same item")
-	var d1 = double_scene(scenepath)
-	var d2 = double_scene(scenepath)
+	var d1 = double.scene(scenepath)
+	var d2 = double.scene(scenepath)
 	expect.is_not_equal(d1.nodes["."], d2.nodes["."], "Doubles do not share resources")
 
 	d1.get_node(".").method("test").stub(9999)

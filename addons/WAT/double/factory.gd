@@ -11,7 +11,18 @@ const FILESYSTEM = preload("res://addons/WAT/filesystem.gd")
 var cache: Array = []
 var count: int = 0
 
-func double_scene(scenepath: String):
+func script(path, inner: String = "", dependecies: Array = [], container: Reference = null, use_container: bool = false):
+	var double = _create_save_and_load_doubler(path, inner, dependecies)
+	var base: Object = _load_nested_class(path, inner) if inner != "" else load(path)
+	if use_container:
+		double.dependecies = container.get_constructor(base)
+	base = base.callv("new", double.dependecies)
+	cache.append(base)
+	for m in base.get_method_list():
+		double.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
+	return double
+
+func scene(scenepath: String):
 	var nodes: Dictionary = {}
 	var instance: Node = load(scenepath).instance()
 	var frontier: Array = [instance]
@@ -19,13 +30,13 @@ func double_scene(scenepath: String):
 		var next: Node = frontier.pop_front()
 		frontier += next.get_children()
 		var path: String = instance.get_path_to(next)
-		nodes[path] = double(next.get_script().resource_path, "", [], null, false)
+		nodes[path] = script(next.get_script().resource_path, "", [], null, false)
 	var double = SCENEDIRECTOR.new(nodes)
 	cache.append(double)
 	instance.queue_free()
 	return double
 
-func create_save_and_load_doubler(path, inner, dependecies):
+func _create_save_and_load_doubler(path, inner, dependecies):
 	var doubler = Doubler.new()
 	var index = FILESYSTEM.file_list("user://WATemp").size() as String
 	index += count as String
@@ -39,22 +50,11 @@ func create_save_and_load_doubler(path, inner, dependecies):
 	var double = load(savepath)
 	return double
 
-func load_nested_class(path, inner) -> Script:
+func _load_nested_class(path, inner) -> Script:
 	var expression = Expression.new()
 	var script = load(path)
 	expression.parse("%s" % [inner])
 	return expression.execute([], script, true)
-
-func double(path, inner: String, dependecies: Array, container: Reference, use_container: bool):
-	var double = create_save_and_load_doubler(path, inner, dependecies)
-	var base: Object = load_nested_class(path, inner) if inner != "" else load(path)
-	if use_container:
-		double.dependecies = container.get_constructor(base)
-	base = base.callv("new", double.dependecies)
-	cache.append(base)
-	for m in base.get_method_list():
-		double.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
-	return double
 
 func clear():
 	for item in cache:

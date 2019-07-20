@@ -7,11 +7,11 @@ const CRASH_IF_TEST_FAILS: bool = true
 const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
 const WATCHER = preload("res://addons/WAT/runner/watcher.gd")
 const CONTAINER = preload("res://addons/WAT/double/container.gd")
-const FACTORY = preload("res://addons/WAT/double/factory.gd")
+const DOUBLE = preload("res://addons/WAT/double/factory.gd")
 var expect: EXPECTATIONS
 var watcher: WATCHER
 var container: CONTAINER
-var factory: FACTORY
+var double: DOUBLE
 
 var _p_keys: Array = []
 var _p_values: Array = []
@@ -24,17 +24,17 @@ func _init() -> void:
 	self.expect = EXPECTATIONS.new()
 	self.watcher = WATCHER.new()
 	self.container = CONTAINER.new()
-	self.factory = FACTORY.new()
+	self.double = DOUBLE.new()
 
-func double(path, inner: String = "", dependecies: Array = [], use_container: bool = false) -> Resource:
-	return factory.double(path, inner, dependecies, container, use_container)
-
-func double_scene(scenepath: String) -> Resource:
-	return factory.double_scene(scenepath)
+#func double(path, inner: String = "", dependecies: Array = [], use_container: bool = false) -> Resource:
+#	return factory.double(path, inner, dependecies, container, use_container)
+#
+#func double_scene(scenepath: String) -> Resource:
+#	return factory.double_scene(scenepath)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
-		factory.clear()
+		double.clear()
 
 class ANY extends Reference:
 

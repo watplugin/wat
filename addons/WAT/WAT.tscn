@@ -129,7 +129,10 @@ margin_bottom = 40.0
 hint_tooltip = "select a single test script to run (your choices depend on which folder is selected)."
 size_flags_horizontal = 3
 size_flags_vertical = 3
+text = "res://tests/new_script.gd"
 align = 1
+items = [ "res://tests/new_script.gd", null, false, -1, null ]
+selected = 0
 
 [node name="Debug" type="VBoxContainer" parent="Runner/Options"]
 margin_left = 765.0
