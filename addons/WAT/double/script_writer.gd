@@ -19,11 +19,11 @@ func write(double) -> String:
 		source += _inner_class(klass)
 	return source
 
-func _method_to_string(doubler, keyword: String, name: String, args: String, calls_super: bool, spying: bool, stubbed: bool) -> String:
+func _method_to_string(director, keyword: String, name: String, args: String, calls_super: bool, spying: bool, stubbed: bool) -> String:
 	var text: String
 	text += "%sfunc %s(%s):" % [keyword, name, args]
 	text += "\n\tvar args = [%s]" % args
-	text += "\n\tvar method = load('%s').methods['%s']" % [doubler, name]
+	text += "\n\tvar method = load('%s').methods['%s']" % [director, name]
 	if spying:
 		text += "\n\tmethod.add_call(args)"
 	if calls_super:
@@ -35,4 +35,4 @@ func _method_to_string(doubler, keyword: String, name: String, args: String, cal
 	return text
 
 func _inner_class(klass: Dictionary) -> String:
-	return "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.doubler.index]
+	return "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.director.index]

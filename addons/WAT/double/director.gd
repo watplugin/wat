@@ -51,12 +51,12 @@ func call_super(method: String, args: Array = [], keyword: String = "") -> void:
 	m.call_super(args)
 
 func add_inner_class(klass: Resource, name: String) -> void:
-	klasses.append({"doubler": klass, "name": name})
+	klasses.append({"director": klass, "name": name})
 
 func save() -> String:
 	var script = GDScript.new()
 	for klass in klasses:
-		klass.doubler.save()
+		klass.director.save()
 	script.source_code = SCRIPT_WRITER.new().write(self)
 	var save_path = "user://WATemp/S%s.gd" % index
 	ResourceSaver.save(save_path, script)

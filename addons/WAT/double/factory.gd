@@ -5,14 +5,14 @@ extends Reference
 # Something like double(path, inner, depedency array), then using Class.callv("new", dependecy array)
 # Depedencies are only to satisfy constructors that lack defaults, we can probably use the constructor size
 
-const Doubler = preload("res://addons/WAT/double/doubler.gd")
+const DIRECTOR = preload("res://addons/WAT/double/director.gd")
 const SCENEDIRECTOR = preload("res://addons/WAT/double/scene.gd")
 const FILESYSTEM = preload("res://addons/WAT/filesystem.gd")
 var cache: Array = []
 var count: int = 0
 
 func script(path, inner: String = "", dependecies: Array = [], container: Reference = null, use_container: bool = false):
-	var double = _create_save_and_load_doubler(path, inner, dependecies)
+	var double = _create_save_and_load_director(path, inner, dependecies)
 	var base: Object = _load_nested_class(path, inner) if inner != "" else load(path)
 	if use_container:
 		double.dependecies = container.get_constructor(base)
@@ -36,17 +36,17 @@ func scene(scenepath: String):
 	instance.queue_free()
 	return double
 
-func _create_save_and_load_doubler(path, inner, dependecies):
-	var doubler = Doubler.new()
+func _create_save_and_load_director(path, inner, dependecies):
+	var director = DIRECTOR.new()
 	var index = FILESYSTEM.file_list("user://WATemp").size() as String
 	index += count as String
 	count += 1
 	var savepath: String = "user://WATemp/R%s.tres" % index as String
-	doubler.base_script = path
-	doubler.inner = inner
-	doubler.index = index
-	doubler.dependecies = dependecies
-	ResourceSaver.save(savepath, doubler)
+	director.base_script = path
+	director.inner = inner
+	director.index = index
+	director.dependecies = dependecies
+	ResourceSaver.save(savepath, director)
 	var double = load(savepath)
 	return double
 
