@@ -4,10 +4,9 @@ tool
 const ResultTree: PackedScene = preload("res://addons/WAT/UI/ResultTree.tscn") # Pass this in?
 var directories: Dictionary = {}
 var tab: int = 0
-var settings: Resource
 
 func display(cases: Array) -> void:
-	_display_directories_as_individual_tabs(cases) if settings.show_subdirectories_in_their_own_tabs else _add_result_display(cases)
+	_display_directories_as_individual_tabs(cases) if ProjectSettings.get("WAT/Show_subdirectories_as_their_own_tabs") else _add_result_display(cases)
 
 func _display_directories_as_individual_tabs(cases: Array) -> void:
 	_add_directories(cases)

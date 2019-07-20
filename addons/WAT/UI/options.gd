@@ -1,7 +1,7 @@
 extends HBoxContainer
 tool
 
-const CONFIG = preload("res://addons/WAT/Settings/Config.tres")
+
 const FILESYSTEM = preload("res://addons/WAT/filesystem.gd")
 onready var FolderSelect: OptionButton = $Folder/Select
 onready var ScriptSelect: OptionButton = $TestScript/Select
