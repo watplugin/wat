@@ -5,24 +5,24 @@ extends Reference
 # Something like double(path, inner, depedency array), then using Class.callv("new", dependecy array)
 # Depedencies are only to satisfy constructors that lack defaults, we can probably use the constructor size
 
-const DIRECTOR = preload("res://addons/WAT/double/director.gd")
-const SCENEDIRECTOR = preload("res://addons/WAT/double/scene.gd")
-const FILESYSTEM = preload("res://addons/WAT/filesystem.gd")
-var cache: Array = []
-var count: int = 0
+const _SCRIPT_DIRECTOR: Resource = preload("res://addons/WAT/double/script_director.gd")
+const _SCENE_DIRECTOR: Resource = preload("res://addons/WAT/double/scene_director.gd")
+const _INVALID: String = ""
+var _cache: Array = []
+var _count: int = 0
 
-func script(path, inner: String = "", dependecies: Array = [], container: Reference = null, use_container: bool = false):
-	var double = _create_save_and_load_director(path, inner, dependecies)
-	var base: Object = _load_nested_class(path, inner) if inner != "" else load(path)
+func script(path, inner_class: String = "", dependecies: Array = [], container: Reference = null, use_container: bool = false) -> Resource:
+	var script_director: Resource = _create_save_and_load_director(path, inner_class, dependecies)
+	var base: Object = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
 	if use_container:
-		double.dependecies = container.get_constructor(base)
-	base = base.callv("new", double.dependecies)
-	cache.append(base)
+		script_director.dependecies = container.get_constructor(base)
+	base = base.callv("new", script_director.dependecies)
+	_cache.append(base)
 	for m in base.get_method_list():
-		double.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
-	return double
+		script_director.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
+	return script_director
 
-func scene(scenepath: String):
+func scene(scenepath: String) -> Resource:
 	var nodes: Dictionary = {}
 	var instance: Node = load(scenepath).instance()
 	var frontier: Array = [instance]
@@ -31,24 +31,23 @@ func scene(scenepath: String):
 		frontier += next.get_children()
 		var path: String = instance.get_path_to(next)
 		nodes[path] = script(next.get_script().resource_path, "", [], null, false)
-	var double = SCENEDIRECTOR.new(nodes)
-	cache.append(double)
+	var scene_director = _SCENE_DIRECTOR.new(nodes)
+	_cache.append(scene_director)
 	instance.queue_free()
-	return double
+	return scene_director
 
-func _create_save_and_load_director(path, inner, dependecies):
-	var director = DIRECTOR.new()
-	var index = FILESYSTEM.file_list("user://WATemp").size() as String
-	index += count as String
-	count += 1
-	var savepath: String = "user://WATemp/R%s.tres" % index as String
-	director.base_script = path
-	director.inner = inner
-	director.index = index
-	director.dependecies = dependecies
-	ResourceSaver.save(savepath, director)
-	var double = load(savepath)
-	return double
+func _create_save_and_load_director(path, inner, dependecies) -> Resource:
+	var script_director = _SCRIPT_DIRECTOR.new()
+	_count += 1
+	var index: String = _count as String
+	var savepath: String = "user://WATemp/R%s.tres" % index
+	script_director.base_script = path
+	script_director.inner = inner
+	script_director.index = index
+	script_director.dependecies = dependecies
+	ResourceSaver.save(savepath, script_director)
+	var acting_director = load(savepath)
+	return acting_director
 
 func _load_nested_class(path, inner) -> Script:
 	var expression = Expression.new()
@@ -56,8 +55,8 @@ func _load_nested_class(path, inner) -> Script:
 	expression.parse("%s" % [inner])
 	return expression.execute([], script, true)
 
-func clear():
-	for item in cache:
+func clear() -> void:
+	for item in _cache:
 		if item is Object and not item is Reference:
 			item.free()
-	cache.clear()
+	_cache.clear()
