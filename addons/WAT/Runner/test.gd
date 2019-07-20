@@ -8,14 +8,15 @@ const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
 const WATCHER = preload("res://addons/WAT/runner/watcher.gd")
 const CONTAINER = preload("res://addons/WAT/double/container.gd")
 const DOUBLE = preload("res://addons/WAT/double/factory.gd")
+const PARAMETERS = preload("res://addons/WAT/runner/parameters.gd")
 var expect: EXPECTATIONS
 var watcher: WATCHER
 var container: CONTAINER
 var double: DOUBLE
-
+var parameters: PARAMETERS
+var p: Dictionary
 var _p_keys: Array = []
 var _p_values: Array = []
-var p: Dictionary = {}
 var rerun_method: bool = false
 signal described
 signal clear
@@ -25,12 +26,9 @@ func _init() -> void:
 	self.watcher = WATCHER.new()
 	self.container = CONTAINER.new()
 	self.double = DOUBLE.new()
+	self.parameters = PARAMETERS.new()
+	self.p = self.parameters.parameters
 
-#func double(path, inner: String = "", dependecies: Array = [], use_container: bool = false) -> Resource:
-#	return factory.double(path, inner, dependecies, container, use_container)
-#
-#func double_scene(scenepath: String) -> Resource:
-#	return factory.double_scene(scenepath)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
@@ -47,20 +45,8 @@ func any():
 func describe(message: String) -> void:
 	emit_signal("described", message)
 
-#parameters([["a", "b", "expected"], [2, 2, 4], [5, 5, 10], [7, 7, 14]])
 func parameters(list: Array) -> void:
-	if _p_keys.empty():
-		# Keys aren't empty, so we'll be updating this implicilty every time a call is made instead
-		self._p_keys = list.pop_front()
-		self._p_values = list
-	update_parameters()
-
-func update_parameters():
-	p.clear()
-	var values = _p_values.pop_front()
-	for i in _p_keys.size():
-		p[_p_keys[i]] = values[i]
-	rerun_method = not _p_values.empty()
+	rerun_method = parameters.parameters(list)
 
 func start():
 	pass
