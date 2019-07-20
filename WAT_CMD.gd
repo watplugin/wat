@@ -25,6 +25,9 @@ func _init():
 	execute(arguments())
 	quit()
 
+func _default_directory() -> String:
+	return ProjectSettings.get("WAT/Test_Directory")
+
 func arguments() -> Array:
 	return Array(OS.get_cmdline_args()).pop_back().split("=")
 
@@ -32,7 +35,7 @@ func execute(arguments: Array) -> void:
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
-			_run()
+			_run(_default_directory())
 		RUN_DIRECTORY:
 			_run(arguments.pop_front())
 		RUN_SCRIPT:
@@ -42,7 +45,7 @@ func execute(arguments: Array) -> void:
 		LIST_DIR:
 			_list(arguments.pop_front())
 
-func _run(directory: String = "res://tests") -> void:
+func _run(directory: String) -> void:
 	start_time = OS.get_ticks_msec()
 	var Runner = RUNNER.new(FILESYSTEM)
 	Runner.connect("ended", self, "display")

@@ -2,7 +2,7 @@ extends Reference
 
 enum { DIRECTORY, FILE }
 
-static func file_list(path: String = "res://tests", searching_for: int = FILE, include_subdirectories: bool = true) -> Array:
+static func file_list(path: String, searching_for: int = FILE, include_subdirectories: bool = true) -> Array:
 	if path.ends_with(".gd"):
 		return [{"path": path, "name": Array(path.split("/")).back()}]
 	if not _directory_exists(path):

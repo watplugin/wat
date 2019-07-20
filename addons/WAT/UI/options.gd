@@ -11,7 +11,10 @@ onready var RunScript: Button = $TestScript/Run
 onready var PrintStrayNodes: Button = $Debug/PrintStrayNodes
 signal RUN
 
-func _run(path: String = "res://tests") -> void:
+func _default_directory() -> String:
+	return ProjectSettings.get("WAT/Test_Directory")
+
+func _run(path: String  = _default_directory()) -> void:
 	emit_signal("RUN", path)
 
 func _run_folder() -> void:
@@ -41,7 +44,7 @@ func _connect():
 	ScriptSelect.get_popup().hide()
 	FolderSelect.get_popup().hide()
 
-func _select_folder(path: String = CONFIG.main_test_folder) -> void:
+func _select_folder(path: String = _default_directory()) -> void:
 	if not Directory.new().dir_exists(path):
 		return
 	FolderSelect.clear()
