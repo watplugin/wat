@@ -15,8 +15,6 @@ var container: CONTAINER
 var double: DOUBLE
 var parameters: PARAMETERS
 var p: Dictionary
-var _p_keys: Array = []
-var _p_values: Array = []
 var rerun_method: bool = false
 signal described
 signal clear
