@@ -31,7 +31,7 @@ func scene(scenepath: String) -> Resource:
 	instance.queue_free()
 	return scene_director
 
-func _create_save_and_load_director(path, inner, dependecies) -> Resource:
+func _create_save_and_load_director(path, inner: String, dependecies: Array) -> Resource:
 	var script_director = _SCRIPT_DIRECTOR.new()
 	_count += 1
 	var index: String = _count as String
@@ -44,7 +44,7 @@ func _create_save_and_load_director(path, inner, dependecies) -> Resource:
 	var acting_director = load(savepath)
 	return acting_director
 
-func _load_nested_class(path, inner) -> Script:
+func _load_nested_class(path, inner: String) -> Script:
 	var expression = Expression.new()
 	var script = load(path)
 	expression.parse("%s" % [inner])
