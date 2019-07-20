@@ -25,6 +25,7 @@ func _ready() -> void:
 	Test.connect("described", case, "_add_method_context")
 	add_child(Yield)
 	add_child(Test)
+	Test.Yield = Yield
 
 func start() -> void:
 	_add_methods()
@@ -56,9 +57,3 @@ func end() -> void:
 	remove_child(Test)
 	Test.free()
 	emit_signal("ENDED", case)
-
-func until_signal(time_limit: float, emitter: Object, event: String) -> Timer:
-	return Yield.until_signal(time_limit, emitter, event)
-
-func until_timeout(time_limit: float) -> Timer:
-	return Yield.until_timeout(time_limit)

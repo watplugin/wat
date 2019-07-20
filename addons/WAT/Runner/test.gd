@@ -14,6 +14,7 @@ var watcher: WATCHER
 var container: CONTAINER
 var double: DOUBLE
 var parameters: PARAMETERS
+var Yield: Timer # Set by parent adapter for time being
 var p: Dictionary
 var rerun_method: bool = false
 signal described
@@ -74,10 +75,10 @@ func simulate(obj, times, delta):
 
 func until_signal(emitter: Object, event: String, time_limit: float) -> Node:
 	watch(emitter, event)
-	return get_parent().until_signal(time_limit, emitter, event)
+	return Yield.until_signal(time_limit, emitter, event)
 
 func until_timeout(time_limit: float) -> Node:
-	return get_parent().until_timeout(time_limit)
+	return Yield.until_timeout(time_limit)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
