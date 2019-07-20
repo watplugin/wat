@@ -10,7 +10,7 @@ extends SceneTree
 
 const RUNNER = preload("res://addons/WAT/Runner/runner.gd")
 const SETTINGS: Resource = preload("res://addons/WAT/Settings/Config.tres")
-const FILESYSTEM: Script = preload("res://addons/WAT/utils/filesystem.gd")
+const FILESYSTEM: Script = preload("res://addons/WAT/filesystem.gd")
 
 const RUN_ALL: String = "-run_all"
 const RUN_DIRECTORY: String = "-run_dir"
