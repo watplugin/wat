@@ -6,9 +6,6 @@ var directories: Dictionary = {}
 var tab: int = 0
 
 func display(cases: Array) -> void:
-#	_display_directories_as_individual_tabs(cases)
-#
-#func _display_directories_as_individual_tabs(cases: Array) -> void:
 	_add_directories(cases)
 	for directory in directories:
 		_add_result_display(directories[directory], directory)
