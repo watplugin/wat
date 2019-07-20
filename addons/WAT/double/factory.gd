@@ -1,20 +1,15 @@
 extends Reference
 
-# TODO
-# We'll probably handle dependecies here
-# Something like double(path, inner, depedency array), then using Class.callv("new", dependecy array)
-# Depedencies are only to satisfy constructors that lack defaults, we can probably use the constructor size
-
 const _SCRIPT_DIRECTOR: Resource = preload("res://addons/WAT/double/script_director.gd")
 const _SCENE_DIRECTOR: Resource = preload("res://addons/WAT/double/scene_director.gd")
 const _INVALID: String = ""
 var _cache: Array = []
 var _count: int = 0
 
-func script(path, inner_class: String = "", dependecies: Array = [], container: Reference = null, use_container: bool = false) -> Resource:
+func script(path, inner_class: String = "", dependecies: Array = [], container: Reference = null) -> Resource:
 	var script_director: Resource = _create_save_and_load_director(path, inner_class, dependecies)
 	var base: Object = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
-	if use_container:
+	if container != null:
 		script_director.dependecies = container.get_constructor(base)
 	base = base.callv("new", script_director.dependecies)
 	_cache.append(base)
@@ -30,7 +25,7 @@ func scene(scenepath: String) -> Resource:
 		var next: Node = frontier.pop_front()
 		frontier += next.get_children()
 		var path: String = instance.get_path_to(next)
-		nodes[path] = script(next.get_script().resource_path, "", [], null, false)
+		nodes[path] = script(next.get_script().resource_path)
 	var scene_director = _SCENE_DIRECTOR.new(nodes)
 	_cache.append(scene_director)
 	instance.queue_free()

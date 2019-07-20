@@ -50,7 +50,7 @@ func test_we_can_double_classes_with_nested_dependecies():
 	container.register(library, [])
 	container.register(Book, [Author, "Horror", 7])
 	container.register(Author, ["Stephen King", 50, "America"])
-	var director = double.script(library.resource_path, "Book", [], container, true)
+	var director = double.script(library.resource_path, "Book", [], container)
 	var object = director.object()
 
 	expect.is_class_instance(object, Book, "object is instance of Book")
