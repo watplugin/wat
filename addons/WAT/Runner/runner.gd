@@ -41,6 +41,8 @@ func _start() -> void:
 		return
 	elif _all_tests_executed():
 		print("WAT: Ending Test Runner")
+		for case in caselist:
+			case.calculate()
 		emit_signal("ended", caselist)
 		return
 	else:

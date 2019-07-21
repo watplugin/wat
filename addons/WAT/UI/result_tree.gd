@@ -20,7 +20,6 @@ func display(cases: Array) -> void:
 	total = cases.size()
 
 	for c in cases:
-		c.calculate()
 		passed += int(c.success)
 		var case: TreeItem = tree.create_item(root)
 		_add_script_data(case, c)

@@ -53,7 +53,6 @@ func display(caselist: Array) -> void:
 	var cases = {passed = 0, total = 0}
 	print("\n-------RESULTS-------")
 	for case in caselist:
-		case.calculate()
 		cases.total += 1
 		if case.success:
 			cases.passed += 1
