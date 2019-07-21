@@ -13,7 +13,7 @@ func _init() -> void:
 
 func until_signal(time_limit: float, emitter: Object, event: String) -> Timer:
 	paused = true
-	emitter.connect(event, self, "timeout")
+	emitter.connect(event, self, "resume")
 	self.emitter = emitter
 	self.emitter_signal = event
 	return until_timeout(time_limit)
@@ -27,10 +27,11 @@ func until_timeout(time_limit: float) -> Timer:
 	start()
 	return self
 
-func resume() -> void:
+func resume(a = null, b = null, c = null, d = null, e = null, f = null, h = null, i = null, j = null) -> void:
 	count -= TIMER
+	disconnect("timeout", self, "resume")
 	if emitter != null:
-		emitter.disconnect(emitter_signal, self, "timeout")
+		emitter.disconnect(emitter_signal, self, "resume")
 		emitter = null
 		emitter_signal = ""
 	emit_signal("finished")
