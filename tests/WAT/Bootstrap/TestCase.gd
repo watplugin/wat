@@ -1,5 +1,20 @@
 extends WATTest
 
+# Classes
+#	- Runner # Unit but requires setup
+#	- TestCase
+#	- Test
+# 	- Watcher
+#	- TestAdapter (?)
+#	- Filesystem # Integration Test. Probably not worth it?
+#	- Doubler? Call this Director?
+#	- Method?
+#	- Container?
+#	- Expectations
+#	- SceneDirector
+#	- SceneDoubler
+#	- ScriptWriter? (Unnecessary)
+
 var case
 var test
 

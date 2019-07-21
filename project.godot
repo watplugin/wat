@@ -39,7 +39,6 @@ _global_script_class_icons={
 [WAT]
 
 Test_Directory="res://tests"
-Show_subdirectories_as_their_own_tabs=true
 
 [application]
 
