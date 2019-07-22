@@ -1,14 +1,19 @@
 extends PanelContainer
 tool
 
-# Can't preload any of these things. Might be a tool keyword issue? 
-# (Maybe they are being preloaded before the engine imports them?)
-var ICON_SUCCESS: Texture = load("res://addons/WAT/UI/icons/success.png")
-var ICON_FAILED: Texture = load("res://addons/WAT/UI/icons/failed.png")
-var ICON_CRASH: Texture = load("res://addons/WAT/UI/icons/crash_warning.png")
+# Using seperate non-tool script so we can avoid a resource race vs reimports
 const COLOR_SUCCESS: Color = Color(0, 1, 0, 1)
 const COLOR_FAILED: Color = Color(1, 1, 1, 1)
 const COLOR_CRASHED: Color = Color(1, 1, 0, 1)
+
+func success() -> Resource:
+	return load("res://addons/WAT/UI/icons/success.png")
+
+func failed() -> Resource:
+	return load("res://addons/WAT/UI/icons/failed.png")
+
+func crash_icon() -> Resource:
+	return load("res://addons/WAT/UI/icons/crash_warning.png")
 
 var cache: Array = []
 var success: bool = false
@@ -40,7 +45,7 @@ func display(cases: Array) -> void:
 
 
 	success = total > 0 and total == passed
-	icon = ICON_SUCCESS if success else ICON_FAILED
+	icon = success() if success else failed()
 	root.set_text(0, "%s/%s" % [passed, total])
 	root.set_icon(0, icon)
 	root.set_custom_color(0, COLOR_SUCCESS if success else COLOR_FAILED)
@@ -48,21 +53,21 @@ func display(cases: Array) -> void:
 func _add_script_data(script: TreeItem, data) -> void:
 	script.set_text(0, "(%s/%s) %s" % [data.passed, data.total, data.title])
 	script.set_tooltip(0, data.path)
-	script.set_icon(0, ICON_SUCCESS if data.success else ICON_FAILED)
+	script.set_icon(0, success() if data.success else failed())
 	script.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	cache.append(script)
 
 func _add_method_data(method: TreeItem, data: Dictionary) -> void:
 	method.collapsed = true
 	method.set_text(0, "(%s/%s) %s" % [data.passed, data.total, data.context])
-	method.set_icon(0, ICON_SUCCESS if data.success else ICON_FAILED)
+	method.set_icon(0, success() if data.success else failed())
 	method.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	method.set_tooltip(0, "Source: %s" % data.title)
 
 func _add_expectation_data(expectation: TreeItem, expect: TreeItem, result: TreeItem, data) -> void:
 	expectation.collapsed = true
 	expectation.set_text(0, data.context)
-	expectation.set_icon(0, ICON_SUCCESS if data.success else ICON_FAILED)
+	expectation.set_icon(0, success() if data.success else failed())
 	expectation.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	expect.set_text(0, "Expect: %s" % data.expected)
 	result.set_text(0, "Result: %s" % data.result)
