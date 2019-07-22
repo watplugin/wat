@@ -30,6 +30,15 @@ func test_Runner_with_no_tests():
 	# Assert
 	expect.is_true(cases.empty(), "Runner emits no testcases (times out at 2 seconds)")
 
+func test_Runner_with_one_test_that_has_no_test_methods():
+	describe("Running one test that has no test methods")
+	
+	runner.run("res://Examples/Bootstrap/empty_test.gd")
+	yield(until_signal(runner, "ended", 2.0), YIELD)
+	
+	expect.is_equal(cases.size(), 1, "Emits 1 Testcase")
+	expect.is_false(cases[0].success, "that failed")
+	
 func test_Runner_with_one_passing_test():
 	describe("Running 1 correct test")
 	
@@ -37,13 +46,14 @@ func test_Runner_with_one_passing_test():
 	expect.is_true(cases.empty(), "Before running, testcases are empty")
 	
 	# Act
-	runner.run("res://Examples/Bootstrap")
+	runner.run("res://Examples/Bootstrap/passing_test.gd")
 	yield(until_signal(runner, "ended", 10.0), YIELD)
 	
 	# Assert
 	expect.is_equal(cases.size(), 1, "emits a list of 1 testcase")
 	expect.is_true(cases[0].success, "which is a success")
 	
+
 func display(cases):
 	# HelperMethod
 	self.cases = cases
