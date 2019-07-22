@@ -1,9 +1,11 @@
 extends PanelContainer
 tool
 
-# ICON SUCCESS refuses to work as a const.
+# Can't preload any of these things. Might be a tool keyword issue? 
+# (Maybe they are being preloaded before the engine imports them?)
 var ICON_SUCCESS: Texture = load("res://addons/WAT/UI/icons/success.png")
-const ICON_FAILED: Texture = preload("res://addons/WAT/UI/icons/failed.png")
+var ICON_FAILED: Texture = load("res://addons/WAT/UI/icons/failed.png")
+var ICON_CRASH: Texture = load("res://addons/WAT/UI/icons/crash_warning.png")
 const COLOR_SUCCESS: Color = Color(0, 1, 0, 1)
 const COLOR_FAILED: Color = Color(1, 1, 1, 1)
 const COLOR_CRASHED: Color = Color(1, 1, 0, 1)
