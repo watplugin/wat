@@ -4,6 +4,27 @@ var cases: Array = []
 
 func title():
 	return "TestRunner"
+	
+func test_Runner_with_no_tests():
+	describe("Running no tests")
+
+	var filesystem = load("res://addons/WAT/filesystem.gd")
+	var runner: Node = load("res://addons/WAT/Runner/runner.gd").new(filesystem)
+	runner.connect("ended", self, "display")
+	add_child(runner)
+
+	# Act
+	runner.run("res://Examples/Bootstrap/Empty")
+	yield(until_signal(runner, "ended", 2.0), YIELD)
+
+	# Assert
+	expect.is_true(cases.empty(), "Runner emits no testcases (times out at 2 seconds)")
+
+	# Teardown
+	cases = []
+	remove_child(runner)
+	runner.queue_free()
+	
 
 func test_Runner_with_one_passing_test():
 	describe("Running 1 correct test")

@@ -44,7 +44,8 @@ func execute() -> void:
 	case.add_method(active_method)
 	Test.call(active_method)
 	if Yield.active():
-		Yield.connect("resume", self, "post", [], CONNECT_ONESHOT)
+		if not Yield.is_connected("resume", self, "post"):
+			Yield.connect("resume", self, "post")
 		return
 	post()
 

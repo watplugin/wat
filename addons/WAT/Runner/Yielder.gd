@@ -8,9 +8,6 @@ var emitter_signal: String
 var emitter: Object
 var count: int = 0
 
-func _init() -> void:
-	connect("timeout", self, "resume")
-
 func until_signal(time_limit: float, emitter: Object, event: String) -> Timer:
 	paused = true
 	emitter.connect(event, self, "resume")
@@ -19,6 +16,7 @@ func until_signal(time_limit: float, emitter: Object, event: String) -> Timer:
 	return until_timeout(time_limit)
 
 func until_timeout(time_limit: float) -> Timer:
+	connect("timeout", self, "resume")
 	count += TIMER
 	paused = true
 	wait_time = time_limit
