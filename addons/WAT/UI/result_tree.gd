@@ -59,9 +59,6 @@ func _add_script_data(script: TreeItem, data) -> void:
 func _add_method_data(method: TreeItem, data: Dictionary) -> void:
 	method.set_text(0, "%s" % data.context)
 	method.set_icon(0, success() if data.success else failed())
-	method.collapsed = true
-	method.set_text(0, "(%s/%s) %s" % [data.passed, data.total, data.context])
-	method.set_icon(0, success() if data.success else failed())
 	method.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	method.set_tooltip(0, "Source: %s" % data.title)
 
