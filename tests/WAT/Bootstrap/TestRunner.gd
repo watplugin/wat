@@ -20,6 +20,14 @@ func post():
 	runner.disconnect("ended", self, "display")
 	runner.queue_free()
 	
+func test_Runner_with_invalid_path():
+	describe("Running with an invalid path")
+
+	runner.run("")
+	yield(until_signal(runner, "ended", 1.0), YIELD)
+
+	expect.is_true(cases.empty(), "No Testcases emitted")
+	
 func test_Runner_with_no_tests():
 	describe("Running no tests")
 
@@ -57,3 +65,4 @@ func test_Runner_with_one_passing_test():
 func display(cases):
 	# HelperMethod
 	self.cases = cases
+

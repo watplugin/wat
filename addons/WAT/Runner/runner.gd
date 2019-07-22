@@ -62,15 +62,22 @@ func _end(case: CASE) -> void:
 	call_deferred("_start")
 
 func _valid_path(path: String) -> bool:
-	if _script_does_not_exist(path):
+	if _path_is_empty(path):
 		emit_signal("errored")
-		push_error("WAT: Script %s does not exist" % path)
+		push_error("WAT: TestPath %s is empty" % path)
 		return false
-	elif _directory_does_not_exist(path):
+	if _directory_does_not_exist(path):
 		emit_signal("errored")
 		push_error("WAT: Directory %s does not exist" % path)
 		return false
+	elif _script_does_not_exist(path):
+		emit_signal("errored")
+		push_error("WAT: Script %s does not exist" % path)
+		return false
 	return true
+	
+func _path_is_empty(path: String) -> bool:
+	return path == ""
 
 func _script_does_not_exist(path: String) -> bool:
 	return path.ends_with(".gd") and not Directory.new().file_exists(path)
