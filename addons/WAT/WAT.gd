@@ -12,6 +12,7 @@ func _ready() -> void:
 	Runner = RUNNER.new(FILESYSTEM)
 	Runner.connect("ended", Results, "display")
 	add_child(Runner)
+	Runner.name = Runner.MAIN
 	get_node("Runner/Options").connect("RUN", self, "_run")
 
 

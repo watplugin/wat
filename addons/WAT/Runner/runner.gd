@@ -1,6 +1,7 @@
 extends Node
 tool
 
+const MAIN: String = "Main"
 const TEST_ADAPTER = preload("res://addons/WAT/runner/test_adapter.gd")
 const CASE = preload("res://addons/WAT/runner/case.gd")
 const YIELD = preload("res://addons/WAT/runner/Yielder.gd")
@@ -16,7 +17,8 @@ func _init(filesystem: Reference) -> void:
 func run(path: String) -> void:
 	if not _valid_path(path):
 		return
-	print("WAT: Starting Test Runner")
+	if name == MAIN:
+		print("WAT: Starting Test Runner")
 	caselist = []
 	tests = []
 	_add_tests(filesystem.file_list(path))
@@ -37,10 +39,12 @@ func _all_tests_executed() -> bool:
 
 func _start() -> void:
 	if _no_tests_to_execute():
-		push_warning("WAT: No Scripts to Test")
+		if name == MAIN:
+			push_warning("WAT: No Scripts to Test")
 		return
 	elif _all_tests_executed():
-		print("WAT: Ending Test Runner")
+		if name == MAIN:
+			print("WAT: Ending Test Runner")
 		for case in caselist:
 			case.calculate()
 		emit_signal("ended", caselist)
@@ -64,15 +68,18 @@ func _end(case: CASE) -> void:
 func _valid_path(path: String) -> bool:
 	if _path_is_empty(path):
 		emit_signal("errored")
-		push_warning("WAT: TestPath %s is empty" % path)
+		if name == MAIN:
+			push_warning("WAT: TestPath %s is empty" % path)
 		return false
 	if _directory_does_not_exist(path):
 		emit_signal("errored")
-		push_warning("WAT: Directory %s does not exist" % path)
+		if name == MAIN:
+			push_warning("WAT: Directory %s does not exist" % path)
 		return false
 	elif _script_does_not_exist(path):
 		emit_signal("errored")
-		push_warning("WAT: Script %s does not exist" % path)
+		if name == MAIN:
+			push_warning("WAT: Script %s does not exist" % path)
 		return false
 	return true
 	

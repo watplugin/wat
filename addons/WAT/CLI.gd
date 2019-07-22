@@ -43,6 +43,7 @@ func _run(directory: String) -> void:
 	var Runner = RUNNER.new(FILESYSTEM)
 	Runner.connect("ended", self, "display")
 	root.add_child(Runner)
+	Runner.name = Runner.MAIN
 	Runner.run(directory)
 
 func _list(directory: String = "res://tests") -> void:
