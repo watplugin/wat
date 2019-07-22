@@ -1,5 +1,9 @@
 extends WATTest
 
+# RunManyTests (like 100, 10000)
+# RunTestWithManyMethods
+# RunTestMethodWithYields?
+
 var cases: Array = []
 var filesystem
 var runner
@@ -68,7 +72,7 @@ func test_Runner_with_one_passing_test():
 	expect.is_true(cases[0].success, "Passes TestCase")
 	
 func test_Runner_with_one_failing_test():
-	describe("Running one failing test")
+	describe("Runs one failing test")
 	
 	runner.run("res://Examples/Bootstrap/failing_test.gd")
 	yield(until_signal(runner, "ended", 2.0), YIELD)
