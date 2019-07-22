@@ -37,7 +37,7 @@ func _all_tests_executed() -> bool:
 
 func _start() -> void:
 	if _no_tests_to_execute():
-		push_error("WAT: No Scripts to Test")
+		push_warning("WAT: No Scripts to Test")
 		return
 	elif _all_tests_executed():
 		print("WAT: Ending Test Runner")
