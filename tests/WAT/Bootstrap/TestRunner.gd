@@ -73,7 +73,7 @@ func test_Runner_with_one_failing_test():
 func test_Runner_with_XXXX_passing_tests():
 	parameters([["count"], [1], [100], [1000]])
 	describe("Runs %s passing tests" % p.count as String)
-	
+	cases = []
 	clear_temp()
 	var directory: String = "user://WATemp"
 	Directory.new().make_dir(directory)
@@ -97,6 +97,6 @@ func display(cases):
 
 func all_testcases_pass_in_range(number: int) -> bool:
 	for i in number:
-		if cases.size() < i or not cases[i].success:
+		if cases.empty() or cases.size() < i or not cases[i].success:
 			return false
 	return true
