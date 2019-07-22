@@ -11,18 +11,19 @@ var runner
 func title():
 	return "TestRunner"
 	
-func pre():
-	cases = []
+func start():
 	filesystem = load("res://addons/WAT/filesystem.gd")
 	runner = load("res://addons/WAT/Runner/runner.gd").new(filesystem)
 	runner.connect("ended", self, "display")
 	add_child(runner)
-
-func post():
+	
+func end():
 	filesystem = null
 	remove_child(runner)
-	runner.disconnect("ended", self, "display")
-	runner.queue_free()
+	runner.free()
+	
+func pre():
+	cases = []
 	
 func test_Runner_with_invalid_path():
 	describe("Runs using an invalid path")
