@@ -64,15 +64,15 @@ func _end(case: CASE) -> void:
 func _valid_path(path: String) -> bool:
 	if _path_is_empty(path):
 		emit_signal("errored")
-		push_error("WAT: TestPath %s is empty" % path)
+		push_warning("WAT: TestPath %s is empty" % path)
 		return false
 	if _directory_does_not_exist(path):
 		emit_signal("errored")
-		push_error("WAT: Directory %s does not exist" % path)
+		push_warning("WAT: Directory %s does not exist" % path)
 		return false
 	elif _script_does_not_exist(path):
 		emit_signal("errored")
-		push_error("WAT: Script %s does not exist" % path)
+		push_warning("WAT: Script %s does not exist" % path)
 		return false
 	return true
 	
