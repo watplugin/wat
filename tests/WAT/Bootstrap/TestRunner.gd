@@ -17,13 +17,13 @@ func start():
 	runner.connect("ended", self, "display")
 	add_child(runner)
 	
+func pre():
+	cases = []
+	
 func end():
 	filesystem = null
 	remove_child(runner)
-	runner.free()
-	
-func pre():
-	cases = []
+	runner.queue_free()
 	
 func test_Runner_with_invalid_path():
 	describe("Runs using an invalid path")
@@ -61,17 +61,6 @@ func test_Runner_with_one_test_that_has_one_test_method_with_no_asserts():
 	expect.is_equal(cases.size(), 1, "Creates 1 TestCase")
 	expect.is_false(cases[0].success, "Fails TestCase")
 	
-func test_Runner_with_one_passing_test():
-	describe("Runs one passing test")
-	
-	# Act
-	runner.run("res://Examples/Bootstrap/passing_test.gd")
-	yield(until_signal(runner, "ended", 10.0), YIELD)
-	
-	# Assert
-	expect.is_equal(cases.size(), 1, "Creates 1 TestCase")
-	expect.is_true(cases[0].success, "Passes TestCase")
-	
 func test_Runner_with_one_failing_test():
 	describe("Runs one failing test")
 	
@@ -81,7 +70,33 @@ func test_Runner_with_one_failing_test():
 	expect.is_equal(cases.size(), 1, "Creates 1 TestCase")
 	expect.is_false(cases[0].success, "Fails TestCase")
 
+func test_Runner_with_XXXX_passing_tests():
+	parameters([["count"], [1], [100], [1000]])
+	describe("Runs %s passing tests" % p.count as String)
+	
+	clear_temp()
+	var directory: String = "user://WATemp"
+	Directory.new().make_dir(directory)
+	var test = load("res://Examples/Bootstrap/passing_test.gd")
+	for i in p.count:
+		ResourceSaver.save("%s/%s.gd" % [directory, i as String], test)
+
+	runner.run(directory)
+	yield(until_signal(runner, "ended", 5.0), YIELD)
+	
+	expect.is_equal(cases.size(), p.count, "Creates %s TestCases" % p.count as String)
+	expect.is_true(all_testcases_pass_in_range(p.count), "Passes all TestCases")
+	
+	# Cleanup
+	clear_temp()
+
+
 func display(cases):
 	# HelperMethod
 	self.cases = cases
 
+func all_testcases_pass_in_range(number: int) -> bool:
+	for i in number:
+		if cases.size() < i or not cases[i].success:
+			return false
+	return true
