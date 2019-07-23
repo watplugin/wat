@@ -65,7 +65,7 @@ func test_we_can_register_scripts():
 
 	var item = load("res://addons/WAT/filesystem.gd")
 	var X = load("res://Examples/Scripts/new_script.gd")
-	container.register(X, [script(item)])
+	container.register(X, [item])
 	var resolve = container.resolve(X)
 	expect.is_equal(resolve.filesystem.resource_path, "res://addons/WAT/filesystem.gd")
 
