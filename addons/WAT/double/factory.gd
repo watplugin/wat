@@ -7,6 +7,7 @@ var _cache: Array = []
 var _count: int = 0
 
 func script(path, inner_class: String = "", dependecies: Array = [], container: Reference = null) -> Resource:
+	path = path if path is String else path.resource_path
 	var script_director: Resource = _create_save_and_load_director(path, inner_class, dependecies)
 	var base: Object = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
 	if container != null:
@@ -17,7 +18,9 @@ func script(path, inner_class: String = "", dependecies: Array = [], container: 
 		script_director.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
 	return script_director
 
-func scene(scenepath: String) -> Resource:
+func scene(scenepath) -> Resource:
+	# Must be String.tscn or PackedScene
+	scenepath = scenepath if scenepath is String else scenepath.resource_path
 	var nodes: Dictionary = {}
 	var instance: Node = load(scenepath).instance()
 	var frontier: Array = [instance]
