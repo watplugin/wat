@@ -89,22 +89,10 @@ func string_ends_with(value, string: String, context: String = "", crash_on_fail
 func string_does_not_end_with(value, string: String, context: String = "", crash_on_failure: bool = false) -> void:
 	output(EXPECT.STRING_DOES_NOT_END_WITH.new(value, string, context), crash_on_failure)
 
-func was_called(double, a: String = "", b: String = "", c: String = "") -> void:
-	_scene_was_called(double, a, b, c) if double.is_scene else _script_was_called(double, a, b)
-
-func _scene_was_called(double, nodepath: String, method: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.SCENE_WAS_CALLED.new(double, nodepath, method, context), crash_on_failure)
-
-func _script_was_called(double, method: String, context: String = "", crash_on_failure: bool = false) -> void:
+func was_called(double, method: String, context: String = "", crash_on_failure: bool = false) -> void:
 	output(EXPECT.SCRIPT_WAS_CALLED.new(double, method, context), crash_on_failure)
 
-func was_not_called(double, a: String = "", b: String = "", c: String = "") -> void:\
-	_scene_was_not_called(double, a, b, c) if double.is_scene else _script_was_not_called(double, a, b)
-#
-func _scene_was_not_called(double, nodepath: String, method: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.SCENE_WAS_NOT_CALLED.new(double, nodepath, method, context), crash_on_failure)
-#
-func _script_was_not_called(double, method: String, context: String = "", crash_on_failure: bool = false) -> void:
+func was_not_called(double, method: String, context: String = "", crash_on_failure: bool = false) -> void:
 	output(EXPECT.SCRIPT_WAS_NOT_CALLED.new(double, method, context), crash_on_failure)
 
 func was_called_with_arguments(double, method: String, arguments: Array, context: String = "", crash_on_failure: bool = false) -> void:
