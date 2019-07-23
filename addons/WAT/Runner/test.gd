@@ -12,7 +12,7 @@ const PARAMETERS = preload("res://addons/WAT/runner/parameters.gd")
 var asserts: EXPECTATIONS
 var watcher: WATCHER
 var container: CONTAINER
-var double: DOUBLE
+var direct: DOUBLE
 var parameters: PARAMETERS
 var Yield: Timer # Set by parent adapter for time being
 var p: Dictionary
@@ -24,7 +24,7 @@ func _init() -> void:
 	self.asserts = EXPECTATIONS.new()
 	self.watcher = WATCHER.new()
 	self.container = CONTAINER.new()
-	self.double = DOUBLE.new()
+	self.direct = DOUBLE.new()
 	self.parameters = PARAMETERS.new()
 	self.p = self.parameters.parameters
 
@@ -83,4 +83,4 @@ func until_timeout(time_limit: float) -> Node:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		# This is apparently necessary?
-		double.clear()
+		direct.clear()

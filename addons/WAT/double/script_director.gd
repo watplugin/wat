@@ -62,7 +62,7 @@ func save() -> String:
 	ResourceSaver.save(save_path, script)
 	return save_path
 
-func object(show_error = true) -> Object:
+func double(show_error = true) -> Object:
 	if _created:
 		# Can only create unique instances
 		if show_error:

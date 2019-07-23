@@ -17,13 +17,13 @@ func _notification(what: int) -> void:
 			if item is Object and not item is Reference and is_instance_valid(item):
 				item.free()
 
-func object():
-	var root: Node = nodes["."].object()
+func double():
+	var root: Node = nodes["."].double()
 #	root.name = "Main"
 	for nodepath in nodes:
 		if nodepath == ".":
 			continue # Skip if root node since already defined
-		var node: Node = nodes[nodepath].object()
+		var node: Node = nodes[nodepath].double()
 		var path = nodepath.split("/")
 		if path.size() == 1: # Node is a child of root
 			node.name = path[0]
