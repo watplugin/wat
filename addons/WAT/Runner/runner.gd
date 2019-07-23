@@ -15,12 +15,13 @@ func _init(filesystem: Reference) -> void:
 	self.filesystem = filesystem
 
 func run(path: String) -> void:
+	caselist = []
+	tests = []
 	if not _valid_path(path):
+		emit_signal("ended", caselist)
 		return
 	if name == MAIN:
 		print("WAT: Starting Test Runner")
-	caselist = []
-	tests = []
 	_add_tests(filesystem.file_list(path))
 	_start()
 
@@ -41,6 +42,7 @@ func _start() -> void:
 	if _no_tests_to_execute():
 		if name == MAIN:
 			push_warning("WAT: No Scripts to Test")
+		emit_signal("ended", caselist)
 		return
 	elif _all_tests_executed():
 		if name == MAIN:
