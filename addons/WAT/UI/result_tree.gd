@@ -28,6 +28,13 @@ func display(cases: Array) -> void:
 	total = cases.size()
 
 	for c in cases:
+		if c.crashed:
+			var crash = tree.create_item(root)
+			var expect = tree.create_item(crash)
+			var result = tree.create_item(crash)
+			add_crash_data(crash, expect, result, c)
+			continue
+			
 		passed += int(c.success)
 		var case: TreeItem = tree.create_item(root)
 		_add_script_data(case, c)
@@ -48,6 +55,13 @@ func display(cases: Array) -> void:
 	root.set_text(0, "%s/%s" % [passed, total])
 	root.set_icon(0, icon)
 	root.set_custom_color(0, COLOR_SUCCESS if success else COLOR_FAILED)
+	
+func add_crash_data(crash: TreeItem, expect, result, data) -> void:
+	crash.set_text(0, "Crashed: %s" % data.title)
+	crash.set_tooltip(0, data.path)
+	crash.set_icon(0, crash_icon())
+	expect.set_text(0, "Expect: %s" % data.crashdata.expected)
+	result.set_text(0, "Result: %s" % data.crashdata.result)
 
 func _add_script_data(script: TreeItem, data) -> void:
 	script.set_text(0, "(%s/%s) %s" % [data.passed, data.total, data.title])

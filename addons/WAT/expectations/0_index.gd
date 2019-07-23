@@ -6,10 +6,11 @@ signal OUTPUT
 signal CRASHED
 
 func output(data, crash_on_failure: bool = false) -> void:
-#	data.context = "Expect:    %s" % data.context
-	if crash_on_failure:
+	if crash_on_failure and not data.success:
+		print("l11: expectations, emitting crash")
 		emit_signal("CRASHED", data)
 	else:
+		print("l14: expectations, emitting output")
 		emit_signal("OUTPUT", data)
 
 func loop(method: String, data: Array) -> void:
