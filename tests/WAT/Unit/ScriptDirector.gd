@@ -1,25 +1,28 @@
 extends WATTest
 
+func title():
+	return "ScriptDirector"
+
 func pre():
 	clear_temp()
 
 func test_when_doubling_a_script_we_get_a_text_resource_file_back():
-	describe("When doubling, we get a text resource (.tres) file back")
+	describe("Directs Script")
 
 	var director = direct.script("res://Examples/Scripts/calculator.gd")
 	var expected: String = ".tres"
-	asserts.string_ends_with(expected, director.resource_path)
+	asserts.string_ends_with(expected, director.resource_path, "Returns .tres file")
 
 func test_when_doubling_a_script_the_director_saves_the_base_script():
 	# Misleading?
-	describe("When doubling a script, the director saves the base scripts path")
+	describe("Directs Script")
 
 	var director = direct.script("res://Examples/Scripts/calculator.gd")
 	asserts.is_not_null(director.base_script, "A string was saved")
-	asserts.is_equal(director.base_script, "res://Examples/Scripts/calculator.gd", "Saved string is equal to base scripts path")
+	asserts.is_equal(director.base_script, "res://Examples/Scripts/calculator.gd", "Contains reference to base script")
 
 func test_when_doubling_two_scripts_they_do_not_share_resources():
-	describe("When doubling two scripts, they do not share the same resources")
+	describe("Directs two identical scripts")
 
 	var director_a = direct.script("res://Examples/Scripts/calculator.gd")
 	# When first saving a script, we reload it via its path (in the double method)
@@ -29,7 +32,7 @@ func test_when_doubling_two_scripts_they_do_not_share_resources():
 	clear_temp()
 	var director_b = direct.script("res://Examples/Scripts/calculator.gd")
 	director_b.base_methods["SuperFakeMethod"] = "FakeArgs"
-	asserts.does_not_have("SuperFakeMethod", director_a.methods)
+	asserts.does_not_have("SuperFakeMethod", director_a.methods, "Scripts do not share data")
 
 func test_when_doubling_a_script_we_can_invoke_the_base_script_method():
 	describe("When doubling a script, we can invoke the base methods of the script")

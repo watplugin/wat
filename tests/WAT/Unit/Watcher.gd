@@ -7,6 +7,9 @@ extends WATTest
 # Instead, if you want to track which arguments are passed, you should use spies on the target method
 ### END NOTE
 
+func title():
+	return "Signal Watcher"
+
 func test_watcher_tracks_all_nonbound_arguments():
 	describe("watch() tracks any argument that isn't bound at connection time (to an object other than watcher)")
 
@@ -19,5 +22,5 @@ func test_watcher_tracks_all_nonbound_arguments():
 	emit_signal("example", 1, 20, 5)
 
 	# Assert
-	asserts.signal_was_emitted_with_arguments(self, "example", [1, 20, 5])
+	asserts.signal_was_emitted_with_arguments(self, "example", [1, 20, 5], "Tracked Arguments")
 
