@@ -84,9 +84,3 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		# This is apparently necessary?
 		double.clear()
-
-func script(path) -> Script:
-	assert(path is String or path is Script)
-	var script: Script = load(path) if path is String else path
-	script.set_meta("SCRIPT", true)
-	return script

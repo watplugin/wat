@@ -79,6 +79,7 @@ func test_Runner_with_XXXX_passing_tests():
 	Directory.new().make_dir(directory)
 	var test = load("res://Examples/Bootstrap/passing_test.gd")
 	for i in p.count:
+#		yield(until_timeout(0.0001), YIELD) # Helps but slow
 		ResourceSaver.save("%s/%s.gd" % [directory, i as String], test)
 
 	runner.run(directory)

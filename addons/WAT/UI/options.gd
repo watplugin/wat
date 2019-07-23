@@ -34,7 +34,7 @@ func _connect():
 	PrintStrayNodes.connect("pressed", self, "print_stray_nodes")
 	FolderSelect.connect("pressed", self, "_select_folder")
 	ScriptSelect.connect("pressed", self, "_select_script")
-	RunAll.connect("pressed", self, "_run")
+	RunAll.connect("pressed", self, "_run", [], CONNECT_DEFERRED)
 	RunFolder.connect("pressed", self, "_run_folder")
 	RunScript.connect("pressed", self, "_run_script")
 	# We trigger these once before opening them so our popup menu
