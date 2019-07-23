@@ -6,6 +6,7 @@ const RUNNER: Script = preload("res://addons/WAT/Runner/runner.gd")
 const FILESYSTEM: Script = preload("res://addons/WAT/filesystem.gd")
 var Runner: Node
 var Results: Node
+var run_count: int = 0
 
 func _ready() -> void:
 	Results = get_node("Runner/Results")
@@ -24,4 +25,6 @@ func _ready() -> void:
 func _run(path: String) -> void:
 	Results.clear()
 	$Runner/Details/Timer.start()
+	run_count += 1
+	$Runner/Details/RunCount.text = "Ran Tests: %s Times" % run_count as String
 	Runner.run(path) # Our call-deferred may cause issues here

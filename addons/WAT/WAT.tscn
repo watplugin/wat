@@ -40,12 +40,19 @@ custom_constants/separation = 50
 alignment = 1
 
 [node name="Timer" type="Label" parent="Runner/Details"]
-margin_left = 466.0
+margin_left = 381.0
 margin_top = 8.0
-margin_right = 544.0
+margin_right = 459.0
 margin_bottom = 22.0
 text = "Not Running"
 script = ExtResource( 3 )
+
+[node name="RunCount" type="Label" parent="Runner/Details"]
+margin_left = 509.0
+margin_top = 8.0
+margin_right = 629.0
+margin_bottom = 22.0
+text = "Ran Tests: 0 Times"
 
 [node name="Options" type="HBoxContainer" parent="Runner"]
 margin_top = 546.0
