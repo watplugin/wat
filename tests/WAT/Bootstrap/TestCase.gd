@@ -44,7 +44,7 @@ func test_calculate_passing_when_all_tests_passed() -> void:
 	case.calculate()
 
 	# Assert
-	expect.is_true(case.success, "passes test")
+	asserts.is_true(case.success, "passes test")
 
 
 func test_calculate_failure_when_there_are_no_tests() -> void:
@@ -54,7 +54,7 @@ func test_calculate_failure_when_there_are_no_tests() -> void:
 	case.calculate()
 
 	# Assert
-	expect.is_false(case.success, "fails test")
+	asserts.is_false(case.success, "fails test")
 
 func test_calculate_failure_when_there_are_failed_tests() -> void:
 	describe("Calculates result when there are passing and failing tests")
@@ -72,4 +72,4 @@ func test_calculate_failure_when_there_are_failed_tests() -> void:
 	case.calculate()
 
 	# Assert
-	expect.is_false(case.success, "fails test")
+	asserts.is_false(case.success, "fails test")

@@ -14,7 +14,7 @@ func test_add_two_plus_two_returns_four():
 	var actual = calculator.add(2, 2)
 	
 	# Assert
-	expect.is_equal(expected, actual, "returns four")
+	asserts.is_equal(expected, actual, "returns four")
 	
 	# Cleanup
 	calculator.free()

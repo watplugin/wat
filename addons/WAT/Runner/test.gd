@@ -9,7 +9,7 @@ const WATCHER = preload("res://addons/WAT/runner/watcher.gd")
 const CONTAINER = preload("res://addons/WAT/double/container.gd")
 const DOUBLE = preload("res://addons/WAT/double/factory.gd")
 const PARAMETERS = preload("res://addons/WAT/runner/parameters.gd")
-var expect: EXPECTATIONS
+var asserts: EXPECTATIONS
 var watcher: WATCHER
 var container: CONTAINER
 var double: DOUBLE
@@ -21,7 +21,7 @@ signal described
 signal clear
 
 func _init() -> void:
-	self.expect = EXPECTATIONS.new()
+	self.asserts = EXPECTATIONS.new()
 	self.watcher = WATCHER.new()
 	self.container = CONTAINER.new()
 	self.double = DOUBLE.new()

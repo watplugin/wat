@@ -11,7 +11,7 @@ func test_when_we_register_a_class_in_the_container_we_can_then_create_an_instan
 	container.register(B, [C])
 	var instance = container.resolve(A)
 
-	expect.is_class_instance(instance, A, "instance is instance of A")
+	asserts.is_class_instance(instance, A, "instance is instance of A")
 
 	container.unregister(A)
 	container.unregister(B)
@@ -25,7 +25,7 @@ func test_when_we_have_a_class_that_we_want_to_register_has_primitive_dependecie
 	container.register(C, [10, "Whatever"])
 	var instance = container.resolve(C)
 
-	expect.is_class_instance(instance, C, "instance is instance of C")
+	asserts.is_class_instance(instance, C, "instance is instance of C")
 
 func test_we_cannot_resolve_a_class_that_we_have_unregistered_from_the_container():
 	describe("We cannot resolve a class that we have unregitered for the container")
@@ -36,11 +36,11 @@ func test_we_cannot_resolve_a_class_that_we_have_unregistered_from_the_container
 
 	container.register(A, [B, C])
 	var a = container.resolve(A)
-	expect.is_not_null(a)
+	asserts.is_not_null(a)
 	container.unregister(A)
 
 	var instance = container.resolve(A)
-	expect.is_null(instance, "We failed to resolve the class because it was unregistered")
+	asserts.is_null(instance, "We failed to resolve the class because it was unregistered")
 
 
 func test_we_can_double_classes_with_nested_dependecies():
@@ -56,7 +56,7 @@ func test_we_can_double_classes_with_nested_dependecies():
 	var director = double.script(library.resource_path, "Book", [], container)
 	var object = director.object()
 
-	expect.is_class_instance(object, Book, "object is instance of Book")
+	asserts.is_class_instance(object, Book, "object is instance of Book")
 
 	container.unregister(Book)
 	container.unregister(Author)
@@ -67,6 +67,6 @@ func test_we_can_register_scripts():
 	var X = load("res://Examples/Scripts/new_script.gd")
 	container.register(X, [item])
 	var resolve = container.resolve(X)
-	expect.is_equal(resolve.filesystem.resource_path, "res://addons/WAT/filesystem.gd")
+	asserts.is_equal(resolve.filesystem.resource_path, "res://addons/WAT/filesystem.gd")
 
 

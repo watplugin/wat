@@ -21,8 +21,8 @@ func _add_methods() -> void:
 func _ready() -> void:
 	case.title = Test.title()
 	case.path = Test.path()
-	Test.expect.connect("OUTPUT", case, "_add_expectation")
-	Test.expect.connect("CRASHED", self, "_crash")
+	Test.asserts.connect("OUTPUT", case, "_add_expectation")
+	Test.asserts.connect("CRASHED", self, "_crash")
 	Test.connect("described", case, "_add_method_context")
 	add_child(Yield)
 	add_child(Test)
@@ -36,7 +36,7 @@ func start() -> void:
 	_add_methods()
 	Test.start()
 	# We disconnect crashing here because it only matters in start up
-	Test.expect.disconnect("CRASHED", self, "_crash")
+	Test.asserts.disconnect("CRASHED", self, "_crash")
 	pre()
 
 func pre() -> void:
