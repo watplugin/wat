@@ -51,11 +51,14 @@ func _list(directory: String = "res://tests") -> void:
 	print(FILESYSTEM.file_list(directory))
 
 func display(caselist: Array) -> void:
-	var cases = {passed = 0, total = 0}
+	var cases = {passed = 0, total = 0, crashed = 0}
 	print("\n-------RESULTS-------")
 	for case in caselist:
 		cases.total += 1
-		if case.success:
+		if case.crashed:
+			display_crash(case)
+			cases.crashed += 1
+		elif case.success:
 			cases.passed += 1
 		else:
 			display_failures(case)
@@ -73,7 +76,12 @@ func display_failures(case) -> void:
 
 func display_summary(cases: Dictionary) -> void:
 	print("\nTook %s ms" % str(OS.get_ticks_msec() - start_time))
+	print("%s Tests Crashed" % cases.crashed)
 	print("%s / %s Tests Passed" % [cases.passed, cases.total])
 	print("-------RESULTS-------")
-	print(PASSED) if cases.total > 0 and cases.total == cases.passed else print(FAILED)
+	print(PASSED) if cases.total > 0 and cases.total == cases.passed and cases.crashed == 0 else print(FAILED)
+	
+func display_crash(case):
+	print("CRASHED: %s (%s)" % [case.title, case.path])
+	print("\n  (EXPECTED: %s) | (RESULT: %s)" % [case.crashdata.expected, case.crashdata.result])
 
