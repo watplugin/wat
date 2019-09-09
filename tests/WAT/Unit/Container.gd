@@ -1,5 +1,16 @@
 extends WATTest
 
+# Keynote: Container exists to satisfy constructor dependecies. We don't actually intend on
+# using the constructor dependecies. However sometimes they may call new but that's probably
+# a bad idea and goes against DI (instancing objects outside of other objs that require them
+# and then passing them in). We don't have the ability to rewrite constructors entirely though
+# so this needs to be part of the style guide/documentation
+
+# Following on from this, we have two type of dependecies, object and primitive. Object dependecies are
+# other objects we register for auto-instantiation whereas primitive is anything from int to Script which are
+# put in directly. This way if we want just purely a non-instanced object (ie a script) we simply add "Script" to
+# the dependecies and voila
+
 func title():
 	return "Container"
 
@@ -53,7 +64,7 @@ func test_we_can_double_classes_with_nested_dependecies():
 	var Author = library.Author
 
 	container.register(library, [])
-	container.register(Book, [Author, "Horror", 7])
+	container.register(Book, [Author, "Horror", 7, Script])
 	container.register(Author, ["Stephen King", 50, "America"])
 	var director = direct.script(library.resource_path, "Book", [], container)
 	var object = director.double()
