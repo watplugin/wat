@@ -6,12 +6,12 @@ const YIELD: String = "finished"
 const CRASH_IF_TEST_FAILS: bool = true
 const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
 const WATCHER = preload("res://addons/WAT/runner/watcher.gd")
-const CONTAINER = preload("res://addons/WAT/double/container.gd")
+const INJECTOR = preload("res://addons/WAT/double/container.gd")
 const DOUBLE = preload("res://addons/WAT/double/factory.gd")
 const PARAMETERS = preload("res://addons/WAT/runner/parameters.gd")
 var asserts: EXPECTATIONS
 var watcher: WATCHER
-var container: CONTAINER
+var injector: INJECTOR
 var direct: DOUBLE
 var parameters: PARAMETERS
 var Yield: Timer # Set by parent adapter for time being
@@ -23,7 +23,7 @@ signal clear
 func _init() -> void:
 	self.asserts = EXPECTATIONS.new()
 	self.watcher = WATCHER.new()
-	self.container = CONTAINER.new()
+	self.injector = INJECTOR.new()
 	self.direct = DOUBLE.new()
 	self.parameters = PARAMETERS.new()
 	self.p = self.parameters.parameters
