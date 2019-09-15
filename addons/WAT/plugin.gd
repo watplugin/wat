@@ -35,5 +35,5 @@ func _create_test_folder() -> void:
 		var property_info: Dictionary = {"name": title, "type": TYPE_STRING, "hint_string": "Store your WATTests here"}
 		ProjectSettings.set(title, "res://tests")
 		ProjectSettings.add_property_info(property_info)
-		push_warning("Set Test Directory to 'res://'. You can change this in Project -> Project Settings -> General -> WAT")
+		push_warning("Set Test Directory to 'res://tests'. You can change this in Project -> Project Settings -> General -> WAT")
 		return
