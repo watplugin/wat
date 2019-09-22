@@ -63,7 +63,6 @@ custom_constants/separation = 10
 script = ExtResource( 4 )
 
 [node name="VBox" type="VBoxContainer" parent="Runner/Options"]
-editor/display_folded = true
 margin_right = 245.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
@@ -77,11 +76,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Run All Tests"
 
-[node name="Expand" type="Button" parent="Runner/Options/VBox"]
+[node name="PrintStrayNodes" type="Button" parent="Runner/Options/VBox"]
 margin_top = 20.0
 margin_right = 245.0
 margin_bottom = 40.0
-text = "Collapse All Results"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Print Stray Nodes"
 
 [node name="Folder" type="VBoxContainer" parent="Runner/Options"]
 editor/display_folded = true
@@ -140,7 +141,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 align = 1
 
-[node name="Debug" type="VBoxContainer" parent="Runner/Options"]
+[node name="FormatResults" type="VBoxContainer" parent="Runner/Options"]
 margin_left = 765.0
 margin_right = 1010.0
 margin_bottom = 40.0
@@ -148,9 +149,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
-[node name="PrintStrayNodes" type="Button" parent="Runner/Options/Debug"]
+[node name="Expand" type="Button" parent="Runner/Options/FormatResults"]
+margin_right = 245.0
+margin_bottom = 20.0
+text = "Expand All Results"
+
+[node name="Collapse" type="Button" parent="Runner/Options/FormatResults"]
+margin_top = 20.0
 margin_right = 245.0
 margin_bottom = 40.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Print Stray Nodes"
+text = "Collapse All Results"

@@ -89,6 +89,10 @@ func crash(data) -> void:
 	print("Crash Not Implemented")
 	print("Crash Data Should Not Reach Results?")
 
-func collapse_all(collapse):
+func expand_all():
 	for item in cache:
-		item.collapsed = collapse
+		item.collapsed = false
+		
+func collapse_all():
+	for item in cache:
+		item.collapsed = true

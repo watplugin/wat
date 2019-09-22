@@ -36,9 +36,10 @@ func clear() -> void:
 
 var collapsed: bool = false
 
-func _collapse_all(button) -> void:
-	collapsed = !collapsed
-	button.text = "Expand All Results" if collapsed else "Collapse All Results"
+func _expand_all() -> void:
 	for i in self.get_tab_count():
-		get_tab_control(i).collapse_all(collapsed)
-
+		get_tab_control(i).expand_all()
+		
+func _collapse_all() -> void:
+	for i in self.get_tab_count():
+		get_tab_control(i).collapse_all()

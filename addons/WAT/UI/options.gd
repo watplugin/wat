@@ -8,7 +8,7 @@ onready var ScriptSelect: OptionButton = $TestScript/Select
 onready var RunAll: Button = $VBox/RunAll
 onready var RunFolder: Button = $Folder/Run
 onready var RunScript: Button = $TestScript/Run
-onready var PrintStrayNodes: Button = $Debug/PrintStrayNodes
+onready var PrintStrayNodes: Button = $VBox/PrintStrayNodes
 signal RUN
 
 func _default_directory() -> String:

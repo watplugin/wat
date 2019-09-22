@@ -13,14 +13,16 @@ func _ready() -> void:
 	Runner = RUNNER.new(FILESYSTEM)
 	Runner.connect("ended", Results, "display")
 	add_child(Runner)
-#	Runner.output = $Runner/Details/TextEdit
 	Runner.name = Runner.MAIN
 	get_node("Runner/Options").connect("RUN", self, "_run")
 	Runner.connect("ended", $Runner/Details/Timer, "_stop")
-
-	# Need to refactor this to be a lot less odd?
-	var Expand = get_node("Runner/Options/VBox/Expand")
-	Expand.connect("pressed", Results, "_collapse_all", [Expand])
+	set_up_expand_and_collapse()
+	
+func set_up_expand_and_collapse():
+	var expand = get_node("Runner/Options/FormatResults/Expand")
+	var collapse = get_node("Runner/Options/FormatResults/Collapse")
+	expand.connect("pressed", Results, "_expand_all")
+	collapse.connect("pressed", Results, "_collapse_all")
 
 func _run(path: String) -> void:
 	Results.clear()
