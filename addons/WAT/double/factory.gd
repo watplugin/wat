@@ -6,12 +6,10 @@ const _INVALID: String = ""
 var _cache: Array = []
 var _count: int = 0
 
-func script(path, inner_class: String = "", dependecies: Array = [], container: Reference = null) -> Resource:
+func script(path, inner_class: String = "", dependecies: Array = []) -> Resource:
 	path = path if path is String else path.resource_path
 	var script_director: Resource = _create_save_and_load_director(path, inner_class, dependecies)
 	var base: Object = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
-	if container != null:
-		script_director.dependecies = container.get_constructor(base)
 	base = base.callv("new", script_director.dependecies)
 	_cache.append(base)
 	for m in base.get_method_list():
