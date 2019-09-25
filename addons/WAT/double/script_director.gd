@@ -46,10 +46,6 @@ func found_matching_call(method, expected_args: Array):
 func add_call(method: String, args: Array = []) -> void:
 	methods[method].add_call(args)
 
-func call_super(method: String, args: Array = [], keyword: String = "") -> void:
-	var m = method(method, keyword)
-	m.call_super(args)
-
 func add_inner_class(klass: Resource, name: String) -> void:
 	klasses.append({"director": klass, "name": name})
 

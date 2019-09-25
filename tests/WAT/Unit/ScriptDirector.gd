@@ -167,7 +167,7 @@ func test_when_we_stub_a_method_to_call_its_parent_implementation_as_the_default
 	describe("When we stub a method to call its parent implementation as the default it will call its parent implementation unless a specific argument pattern was passed in")
 
 	var director = direct.script("res://Examples/Scripts/calculator.gd")
-	director.call_super("add")
+	director.method("add").call_super()
 	director.method("add").stub(9999, [10, 10])
 	var object = director.double()
 	var expected_sut = 10
