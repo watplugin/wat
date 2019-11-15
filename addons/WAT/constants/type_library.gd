@@ -1,6 +1,6 @@
 extends Reference
 
-static func to_string(property_id: int) -> String:
+static func show_as_string(property_id: int) -> String:
 	match property_id:
 		TYPE_NIL:
 			return tNIL
