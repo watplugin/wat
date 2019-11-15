@@ -11,10 +11,16 @@ var caselist: Array = []
 signal errored
 signal ended
 
+func _create_temp() -> void:
+	var d = Directory.new()
+	if not d.dir_exists("user://WATemp"):
+		d.make_dir("user://WATemp")
+
 func _init(filesystem: Reference) -> void:
 	self.filesystem = filesystem
 
 func run(path: String) -> void:
+	_create_temp()
 	caselist = []
 	tests = []
 	if not _valid_path(path):
