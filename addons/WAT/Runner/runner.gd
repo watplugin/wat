@@ -13,8 +13,13 @@ signal ended
 
 func _init(filesystem: Reference) -> void:
 	self.filesystem = filesystem
+	
+func _create_temp():
+	if not Directory.new().dir_exists("user://WATemp"):
+		Directory.new().make_dir("user://WATemp")
 
 func run(path: String) -> void:
+	_create_temp()
 	caselist = []
 	tests = []
 	if not _valid_path(path):
