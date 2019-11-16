@@ -79,7 +79,7 @@ func display_summary(cases: Dictionary) -> void:
 	print("%s Tests Crashed" % cases.crashed)
 	print("%s / %s Tests Passed" % [cases.passed, cases.total])
 	print("-------RESULTS-------")
-	print(PASSED) if cases.total > 0 and cases.total == cases.passed and cases.crashed == 0 else print(FAILED)
+	OS.exit_code = PASSED if cases.total > 0 and cases.total == cases.passed and cases.crashed == 0 else FAILED
 	
 func display_crash(case):
 	print("CRASHED: %s (%s)" % [case.title, case.path])
