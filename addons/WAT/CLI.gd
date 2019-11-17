@@ -16,7 +16,6 @@ var start_time: float
 
 func _init():
 	execute(arguments())
-	quit()
 
 func _default_directory() -> String:
 	return ProjectSettings.get("WAT/Test_Directory")
@@ -63,6 +62,8 @@ func display(caselist: Array) -> void:
 		else:
 			display_failures(case)
 	display_summary(cases)
+	quit()
+
 
 func display_failures(case) -> void:
 	# Need to format paths to be accurate
@@ -80,7 +81,7 @@ func display_summary(cases: Dictionary) -> void:
 	print("%s / %s Tests Passed" % [cases.passed, cases.total])
 	print("-------RESULTS-------")
 	OS.exit_code = PASSED if cases.total > 0 and cases.total == cases.passed and cases.crashed == 0 else FAILED
-	
+
 func display_crash(case):
 	print("CRASHED: %s (%s)" % [case.title, case.path])
 	print("\n  (EXPECTED: %s) | (RESULT: %s)" % [case.crashdata.expected, case.crashdata.result])
