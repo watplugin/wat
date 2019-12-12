@@ -39,7 +39,7 @@ var collapsed: bool = false
 func _expand_all() -> void:
 	for i in self.get_tab_count():
 		get_tab_control(i).expand_all()
-		
+
 func _collapse_all() -> void:
 	for i in self.get_tab_count():
 		get_tab_control(i).collapse_all()
