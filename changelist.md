@@ -25,3 +25,12 @@ WAT Version 5.0.0
     The CLI's init function was to run and then to quit. This caused issues
     when we yielded because we kept going back to quit before finishing. We've
     moved quit to execute after we handle results.
+    
+# 14th December 2019
+
+- Merged https://github.com/CodeDarigan/WAT/pull/47
+    
+    Change UI Screen
+    
+    UI Panel moved to the bottom panel to help prevent unnecessary context switching.
+    (Basically you can see the immediate code you're testing)
