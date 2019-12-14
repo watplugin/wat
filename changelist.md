@@ -26,7 +26,7 @@ WAT Version 5.0.0
     when we yielded because we kept going back to quit before finishing. We've
     moved quit to execute after we handle results.
     
-# 14th December 2019
+## 14th December 2019
 
 - Merged https://github.com/CodeDarigan/WAT/pull/47
     
