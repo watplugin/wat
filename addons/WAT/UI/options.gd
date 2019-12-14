@@ -1,14 +1,10 @@
-extends HBoxContainer
 tool
-
+extends HBoxContainer
 
 const FILESYSTEM = preload("res://addons/WAT/filesystem.gd")
-onready var FolderSelect: OptionButton = $Folder/Select
-onready var ScriptSelect: OptionButton = $TestScript/Select
-onready var RunAll: Button = $VBox/RunAll
-onready var RunFolder: Button = $Folder/Run
-onready var RunScript: Button = $TestScript/Run
-onready var PrintStrayNodes: Button = $VBox/PrintStrayNodes
+onready var Run: PopupMenu = $Run.get_popup()
+onready var FolderSelect: OptionButton = $SelectDir
+onready var ScriptSelect: OptionButton = $SelectScript
 signal RUN
 
 func _default_directory() -> String:
@@ -31,18 +27,22 @@ func _ready() -> void:
 	_connect()
 
 func _connect():
-	PrintStrayNodes.connect("pressed", self, "print_stray_nodes")
+	Run.connect("id_pressed", self, "call_run_methods")
 	FolderSelect.connect("pressed", self, "_select_folder")
 	ScriptSelect.connect("pressed", self, "_select_script")
-	RunAll.connect("pressed", self, "_run", [], CONNECT_DEFERRED)
-	RunFolder.connect("pressed", self, "_run_folder")
-	RunScript.connect("pressed", self, "_run_script")
-	# We trigger these once before opening them so our popup menu
-	# actually pops up, and doesn't get cut off anymore.
-	# However this also means they appear on first instance
-	# so we need to auto-hide them to look nice
 	ScriptSelect.get_popup().hide()
 	FolderSelect.get_popup().hide()
+
+func call_run_methods(run_id):
+	match run_id:
+		0:
+			_run()
+		1:
+			_run_folder()
+		2:
+			_run_script()
+		4:
+			print_stray_nodes()
 
 func _select_folder(path: String = _default_directory()) -> void:
 	if not Directory.new().dir_exists(path):
