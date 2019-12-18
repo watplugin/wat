@@ -36,6 +36,11 @@ func _add_tests(files: Array) -> void:
 		var test: Script = load(file.path)
 		if test.get("IS_WAT_TEST") and test.IS_WAT_TEST:
 			tests.append(test)
+		elif test.get("IS_WAT_SUITE") and test.IS_WAT_SUITE:
+			var t = test.new()
+			var inner_tests: Array = t.subtests()
+			for inner in inner_tests:
+				tests.append(inner)
 
 func _no_tests_to_execute() -> bool:
 	return tests.empty() and caselist.empty()
