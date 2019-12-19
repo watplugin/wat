@@ -1,4 +1,4 @@
-extends WATTest
+extends WAT.Test
 tool
 
 func title():

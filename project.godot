@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Examples/Scripts/login.gd"
 }, {
+"base": "Reference",
+"class": "WAT",
+"language": "GDScript",
+"path": "res://addons/WAT/Runner/namespace.gd"
+}, {
 "base": "Node",
 "class": "WATTest",
 "language": "GDScript",
@@ -33,6 +38,7 @@ _global_script_class_icons={
 "BaseLogin": "",
 "Calculator": "",
 "Login": "",
+"WAT": "",
 "WATTest": ""
 }
 
@@ -42,8 +48,6 @@ Test_Directory="res://tests"
 
 [application]
 
-config/name="WAT"
-run/main_scene="res://addons/WAT/WAT.tscn"
 config/icon="res://icon.png"
 
 [debug]
