@@ -12,9 +12,18 @@ func script(path, inner_class: String = "", dependecies: Array = []) -> Resource
 	var base: Object = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
 	base = base.callv("new", script_director.dependecies)
 	_cache.append(base)
-	for m in base.get_method_list():
-		script_director.base_methods[m.name] = "a,b,c,d,e,f,g,h,i,j,".substr(0, m.args.size() * 2 - 1)
+	script_director = _collect_methods(script_director, base) 
 	return script_director
+	
+func _collect_methods(director, base):
+	var params: String = "abcdefghij"
+	for m in base.get_method_list():
+		var arguments: String = ""
+		for i in m.args.size():
+			arguments = arguments + params[i] + ", "
+		arguments = arguments.rstrip(", ")
+		director.base_methods[m.name] = arguments
+	return director
 
 func scene(scenepath) -> Resource:
 	# Must be String.tscn or PackedScene

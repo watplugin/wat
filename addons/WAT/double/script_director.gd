@@ -55,10 +55,10 @@ func save() -> String:
 		klass.director.save()
 	script.source_code = SCRIPT_WRITER.new().write(self)
 	var save_path = "user://WATemp/S%s.gd" % index
-	ResourceSaver.save(save_path, script)
+	ResourceSaver.save(save_path, script, 4)
 	return save_path
 
-func double(show_error = true) -> Object:
+func double(show_error = true):
 	if _created:
 		# Can only create unique instances
 		if show_error:
@@ -66,6 +66,7 @@ func double(show_error = true) -> Object:
 		return null
 	_created = true
 	var save_path = save()
-	var object = load(save_path).callv("new", self.dependecies)
+	var script = load(save_path)
+	var object = script.callv("new", dependecies)
 	cache.append(object)
 	return object

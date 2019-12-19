@@ -9,15 +9,23 @@ func write(double) -> String:
 	else:
 		source = 'extends "%s"\n' % double.base_script
 		source += "\nconst BASE = preload('%s')\n\n" % double.base_script
-	var constructor_params =  "a,b,c,d,e,f,g,h,i,j,".substr(0, double.dependecies.size() * 2 - 1)
-	source += "\nfunc _init(%s).(%s):\n\tpass\n" % [constructor_params, constructor_params]
+	
+	if double.base_methods.has("_init"):
+		source += _constructor_to_string(double.base_methods["_init"])
 
 	for name in double.methods:
 		var m = double.methods[name]
 		source += _method_to_string(double.resource_path, m.keyword, m.name, m.args, m.calls_super, m.spying, m.stubbed)
 	for klass in double.klasses:
 		source += _inner_class(klass)
+	source = source.replace(",)", ")")
 	return source
+	
+func _constructor_to_string(parameters: String) -> String:
+	var constructor: String = ""
+	constructor += "\nfunc _init(%s).(%s):" % [parameters, parameters]
+	constructor += "\n\tpass\n"
+	return constructor
 
 func _method_to_string(director, keyword: String, name: String, args: String, calls_super: bool, spying: bool, stubbed: bool) -> String:
 	var text: String
