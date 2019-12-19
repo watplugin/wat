@@ -33,23 +33,13 @@ _global_script_classes=[ {
 "class": "WATTest",
 "language": "GDScript",
 "path": "res://addons/WAT/Runner/test.gd"
-}, {
-"base": "Reference",
-"class": "WAT_TEST_SUITE",
-"language": "GDScript",
-"path": "res://addons/WAT/Runner/multi.gd"
 } ]
 _global_script_class_icons={
 "BaseLogin": "",
 "Calculator": "",
 "Login": "",
-<<<<<<< HEAD
 "WAT": "",
 "WATTest": ""
-=======
-"WATTest": "",
-"WAT_TEST_SUITE": ""
->>>>>>> 625d0812342520325ca796e7e6164a2d4929b664
 }
 
 [WAT]
