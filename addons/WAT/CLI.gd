@@ -34,8 +34,10 @@ func execute(arguments: Array) -> void:
 			_run(arguments.pop_front())
 		LIST_ALL:
 			_list()
+			quit()
 		LIST_DIR:
 			_list(arguments.pop_front())
+			quit()
 
 func _run(directory: String) -> void:
 	start_time = OS.get_ticks_msec()

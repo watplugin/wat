@@ -11,7 +11,7 @@ func test_yield_with_cli():
 	# If we removed the yield it works fine
 	# We're not resuming or skipping past this function in runner?
 	yield(until_timeout(1.0), YIELD) # Yielding is the issue? 
-	asserts.is_equal(2 + 2, 6)
+	asserts.is_equal(2 + 4, 6)
 	
 func test_control():
 	describe("this should go in and out of working")
