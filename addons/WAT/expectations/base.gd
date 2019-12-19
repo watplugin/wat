@@ -11,4 +11,4 @@ var context
 #	return self.expected
 
 func type2str(value):
-	return TYPES.to_string(typeof(value))
+	return TYPES.get_type_string(typeof(value))
