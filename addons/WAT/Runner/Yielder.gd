@@ -10,13 +10,13 @@ var count: int = 0
 
 func until_signal(time_limit: float, emitter: Object, event: String) -> Timer:
 	paused = true
-	emitter.connect(event, self, "resume")
+	emitter.connect(event, self, "resume", [], CONNECT_DEFERRED)
 	self.emitter = emitter
 	self.emitter_signal = event
 	return until_timeout(time_limit)
 
 func until_timeout(time_limit: float) -> Timer:
-	connect("timeout", self, "resume")
+	connect("timeout", self, "resume", [], CONNECT_DEFERRED)
 	count += TIMER
 	paused = true
 	wait_time = time_limit
