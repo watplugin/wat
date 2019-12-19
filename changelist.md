@@ -37,6 +37,21 @@ WAT Version 5.0.0
 
 ## 19th Decemeber
 
+### Functionality
+
+- Introducing TestSuites (commit c424c56ce5bde8067510a53a8d0850be68b10de6)
+
+    Created TestSuite which allows you to create inner-class WATTests. To use this
+    extend WAT.TestSuite and then create inner classes that extend WATTest / WAT.Test
+
+- Introducing WAT namespace (commit commit 4af35f304d1fff34e735fc3373f230f0a20d6216)
+
+    This allows us to define a central place for tests you
+    extend from. Basically you can now "extends WAT.Test"
+    rather than "extends WATTest".
+
+    We encourage users to WAT.Test as WATTest will be deprecated
+    come version 5.0
 
 ### 3.2 Compatability Fixes
 
