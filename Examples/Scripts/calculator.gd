@@ -26,6 +26,9 @@ remote func math_fight():
 	return null
 
 class Algebra:
+	
+	static func get_tau() -> float:
+		return TAU
 
 	static func create_vector():
 		return Vector2(10, 10)
