@@ -9,6 +9,9 @@ func title():
 func pre():
 	director = direct.script("res://Examples/Scripts/calculator.gd")
 
+func post():
+	director = null
+
 func test_When_we_call_an_add_method_that_we_have_not_directed():
 	describe("When we call an add(x, y) method that we haven't directed")
 	
@@ -70,6 +73,7 @@ func test_When_we_call_a_method_that_was_stubbed_with_an_argument_pattern_that_i
 	director.method("add").stub(9999, [0, non_primitive_object])
 	
 	asserts.is_equal(9999, director.double().add(0, non_primitive_object), "Then it returns the corresponding value when the pattern matches")
+	non_primitive_object.free()
 
 func test_When_we_call_a_method_that_was_stubbed_with_a_partial_argument_pattern():
 	describe("When we call a method that was stubbed with a partial (ie using any()) argument pattern")
