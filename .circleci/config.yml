@@ -11,7 +11,7 @@ jobs:
             command: godot -s addons/WAT/CLI.gd -run_dir=res://tests/Bootstrapping/Unit
         - run:
             name: "Run Script Director"
-            command: godot -s addons/WAT/CLI.gd -run_script=res://rests/Bootstrapping/Integration/script_director.test.gd
+            command: godot -s addons/WAT/CLI.gd -run_script=res://tests/Bootstrapping/Integration/script_director.test.gd
         - run:
             name: "Run Scene Director"
             command: godot -s addons/WAT/CLI.gd -run_script=res://tests/Bootstrapping/Integration/scene_director.test.gd
