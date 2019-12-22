@@ -3,8 +3,11 @@ extends HBoxContainer
 
 const FILESYSTEM = preload("res://addons/WAT/filesystem.gd")
 onready var Run: PopupMenu = $Run.get_popup()
+onready var More: PopupMenu = $More.get_popup()
 onready var FolderSelect: OptionButton = $SelectDir
 onready var ScriptSelect: OptionButton = $SelectScript
+var wat_templates_dir: = "res://addons/WAT/script_templates/"
+var script_templates_dir: String
 signal RUN
 
 func _default_directory() -> String:
@@ -28,6 +31,7 @@ func _ready() -> void:
 
 func _connect():
 	Run.connect("id_pressed", self, "call_run_methods")
+	More.connect("id_pressed", self, "more_menu_options")
 	FolderSelect.connect("pressed", self, "_select_folder")
 	ScriptSelect.connect("pressed", self, "_select_script")
 	ScriptSelect.get_popup().hide()
@@ -41,8 +45,40 @@ func call_run_methods(run_id):
 			_run_folder()
 		2:
 			_run_script()
-		4:
+
+func more_menu_options(menu_id):
+	match menu_id:
+		0:
+			prepare_script_templates()
+		1:
 			print_stray_nodes()
+
+func prepare_script_templates():
+	script_templates_dir = ProjectSettings.get_setting("editor/script_templates_search_path")
+	var _dir = Directory.new()
+	if not _dir.dir_exists(script_templates_dir):
+		_dir.make_dir_recursive(script_templates_dir)
+
+	var wat_templates = FILESYSTEM._list(wat_templates_dir, 1, false)
+	var script_templates = FILESYSTEM._list(script_templates_dir, 1, false)
+
+	var templates_exist: = false
+	for i in wat_templates:
+		for j in script_templates:
+			if i.name == j.name:
+				templates_exist = true
+				break
+
+		if templates_exist:
+			$More/Overwrite.popup_centered()
+			# If Ok selected, signal calls `copy_script_templates`
+			break
+
+	if not templates_exist:
+		copy_script_templates()
+
+func copy_script_templates():
+	print_debug("TODO")
 
 func _select_folder(path: String = _default_directory()) -> void:
 	if not Directory.new().dir_exists(path):
