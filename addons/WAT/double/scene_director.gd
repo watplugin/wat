@@ -1,4 +1,4 @@
-extends Object
+extends Reference
 # We don't seem to need tool here yet but I'm keeping this comment JIC
 
 var nodes: Dictionary = {}
@@ -13,17 +13,17 @@ func _init(nodes: Dictionary = {}) -> void:
 func get_node(path: String):
 	return nodes[path]
 
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_PREDELETE:
-		print("Being Deleted")
-		for item in cache:
-			print("Checking if item %s is freeable" % item)
-			if item is Object and not item is Reference and is_instance_valid(item):
-				print("is Object? %s" % item is Object)
-				print("is not Reference? %s" % (not item is Reference))
-				print("is valid instance? %s" % is_instance_valid(item))
-				print("Freeing %s item" % item)
-				item.queue_free()
+# func _notification(what: int) -> void:
+# 	if what == NOTIFICATION_PREDELETE:
+# 		print("Being Deleted")
+# 		for item in cache:
+# 			print("Checking if item %s is freeable" % item)
+# 			if item is Object and not item is Reference and is_instance_valid(item):
+# 				print("is Object? %s" % item is Object)
+# 				print("is not Reference? %s" % (not item is Reference))
+# 				print("is valid instance? %s" % is_instance_valid(item))
+# 				print("Freeing %s item" % item)
+# 				item.queue_free()
 
 func double():
 	if _created:
@@ -43,7 +43,7 @@ func double():
 		elif path.size() > 1:
 			_add_grandchild(path, nodepath, root)
 	print("adding root to cache")
-	cache.append(root)
+	# cache.append(root)
 	print("added root to cache")
 	return root
 
@@ -52,6 +52,7 @@ func _add_child(path, nodepath, root):
 	var node: Node = nodes[nodepath].double()
 	node.name = path[0]
 	root.add_child(node)
+	cache.append(node)
 	print("added child")
 
 func _add_grandchild(path, nodepath, root):
@@ -64,6 +65,8 @@ func _add_grandchild(path, nodepath, root):
 		parent += "%s/" % element
 	parent = parent.rstrip("/")
 	var grandparent = root.get_node(parent)
+	grandparent.add_child(node)
+	cache.append(grandparent)
 	print("added granchild")
 
 func clear():

@@ -6,14 +6,15 @@ const _INVALID: String = ""
 var _cache: Array = []
 var _count: int = 0
 
-func script(path, inner_class: String = "", dependecies: Array = []) -> Resource:
+func script(path, inner_class: String = "", dependecies: Array = []):
 	path = path if path is String else path.resource_path
 	var script_director: Resource = _create_save_and_load_director(path, inner_class, dependecies)
 	var base: Object = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
 	base = base.callv("new", script_director.dependecies)
 	_cache.append(base)
-	script_director = _collect_methods(script_director, base) 
+	script_director = _collect_methods(script_director, base)
 	return script_director
+	# return null
 	
 func _collect_methods(director, base):
 	var params: String = "abcdefghij"
@@ -25,20 +26,25 @@ func _collect_methods(director, base):
 		director.base_methods[m.name] = arguments
 	return director
 
-func scene(scenepath) -> Resource:
+func scene(scenepath):
 	# Must be String.tscn or PackedScene
 	scenepath = scenepath if scenepath is String else scenepath.resource_path
 	var nodes: Dictionary = {}
 	var instance: Node = load(scenepath).instance()
+	# var instance = Node.new()
 	var frontier: Array = []
 	frontier.append(instance)
 	while not frontier.empty():
 		var next: Node = frontier.pop_front()
 		frontier += next.get_children()
 		var path: String = instance.get_path_to(next)
-		nodes[path] = script(next.get_script().resource_path)
+		var new_script = next.get_script()
+		if new_script != null:
+			nodes[path] = script(new_script.resource_path)
 	var scene_director = _SCENE_DIRECTOR.new(nodes)
-	_cache.append(scene_director)
+	# _cache.append(scene_director)
+	instance.free()
+	# return null
 	return scene_director
 
 func _create_save_and_load_director(path, inner: String, dependecies: Array) -> Resource:
