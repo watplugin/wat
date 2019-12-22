@@ -48,6 +48,7 @@ Test_Directory="res://tests"
 
 [application]
 
+config/name="WaitingAndTesting"
 config/icon="res://icon.png"
 
 [debug]

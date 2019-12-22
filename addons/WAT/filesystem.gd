@@ -40,7 +40,7 @@ static func _list(path: String, searching_for: int, include_subdirectories: bool
 	directory.list_dir_end()
 	return results
 
-static func clear_temporary_files(main_directory: String = "user://WATemp", delete_subdirectories: bool = true) -> void:
+static func clear_temporary_files(main_directory: String = "%s/WATemp" % OS.get_user_data_dir(), delete_subdirectories: bool = true) -> void:
 	var directory: Directory = Directory.new()
 	for file in file_list(main_directory):
 		directory.remove(file.path)

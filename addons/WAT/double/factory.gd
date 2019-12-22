@@ -30,7 +30,8 @@ func scene(scenepath) -> Resource:
 	scenepath = scenepath if scenepath is String else scenepath.resource_path
 	var nodes: Dictionary = {}
 	var instance: Node = load(scenepath).instance()
-	var frontier: Array = [instance]
+	var frontier: Array = []
+	frontier.append(instance)
 	while not frontier.empty():
 		var next: Node = frontier.pop_front()
 		frontier += next.get_children()
@@ -38,14 +39,13 @@ func scene(scenepath) -> Resource:
 		nodes[path] = script(next.get_script().resource_path)
 	var scene_director = _SCENE_DIRECTOR.new(nodes)
 	_cache.append(scene_director)
-	instance.queue_free()
 	return scene_director
 
 func _create_save_and_load_director(path, inner: String, dependecies: Array) -> Resource:
 	var script_director = _SCRIPT_DIRECTOR.new()
 	_count += 1
 	var index: String = _count as String
-	var savepath: String = "user://WATemp/R%s.tres" % index
+	var savepath: String = "%s/WATemp/R%s.tres" % [OS.get_user_data_dir(), index]
 	script_director.base_script = path
 	script_director.inner = inner
 	script_director.index = index

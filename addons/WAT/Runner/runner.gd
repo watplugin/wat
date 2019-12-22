@@ -15,14 +15,16 @@ func _init(filesystem: Reference) -> void:
 	self.filesystem = filesystem
 	
 func _create_temp():
-	if not Directory.new().dir_exists("user://WATemp"):
-		Directory.new().make_dir("user://WATemp")
+	if not Directory.new().dir_exists("%s/WATemp" % OS.get_user_data_dir()):
+		Directory.new().make_dir("%s/WATemp" % OS.get_user_data_dir())
 
 func run(path: String) -> void:
+	print("printing path: " + path)
 	_create_temp()
 	caselist = []
 	tests = []
 	if not _valid_path(path):
+		print(path + " is invalid")
 		emit_signal("ended", caselist)
 		return
 	if name == MAIN:

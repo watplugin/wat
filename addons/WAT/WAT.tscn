@@ -68,7 +68,7 @@ custom_constants/hseparation = 20
 button_mask = 3
 text = "res://tests"
 align = 1
-items = [ "res://tests", null, false, -1, null, "res://tests/FailExamples", null, false, -1, null, "res://tests/WAT", null, false, -1, null, "res://tests/WAT/Bootstrap", null, false, -1, null, "res://tests/WAT/Unit", null, false, -1, null ]
+items = [ "res://tests", null, false, -1, null, "res://tests/Bootstrapping", null, false, -1, null, "res://tests/Bootstrapping/End2End", null, false, -1, null, "res://tests/Bootstrapping/Unit", null, false, -1, null, "res://tests/Bootstrapping/Integration", null, false, -1, null ]
 selected = 0
 
 [node name="VSeparator2" type="VSeparator" parent="Runner/Options"]
@@ -91,10 +91,7 @@ margin_bottom = 20.0
 hint_tooltip = "Select a single test script to run (your choices depend on which folder is selected)."
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "res://tests/yield_example.gd"
 align = 1
-items = [ "res://tests/yield_example.gd", null, false, -1, null ]
-selected = 0
 
 [node name="Results" type="TabContainer" parent="Runner"]
 margin_top = 24.0
@@ -109,7 +106,6 @@ drag_to_rearrange_enabled = true
 script = ExtResource( 3 )
 
 [node name="Details" type="HBoxContainer" parent="Runner"]
-editor/display_folded = true
 margin_top = 556.0
 margin_right = 1010.0
 margin_bottom = 586.0
@@ -138,3 +134,4 @@ margin_top = 8.0
 margin_right = 1010.0
 margin_bottom = 22.0
 text = "Ran Tests: 0 Times"
+
