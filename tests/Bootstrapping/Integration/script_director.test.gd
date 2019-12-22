@@ -19,8 +19,14 @@ func test_When_we_create_a_test_double_from_it():
 	describe("When we create a Test Double from it")
 	
 	var actual: String = director.double().get_script().resource_path
+<<<<<<< HEAD
 	asserts.string_begins_with("user://WATemp", actual, \
 		"Then the doubled object's script is saved in user://WATemp")
+=======
+	var expected: String = "%s/WATemp" % OS.get_user_data_dir()
+	asserts.string_begins_with(expected, actual, \
+		"Then the doubled object's script is saved in the <user data directory>/WATemp")
+>>>>>>> 0901654ec840a0c31636efb3ed75b4a9fd0b6c8c
 	
 func test_When_we_create_two_of_it_for_the_same_script():
 	describe("When we create two of it for the same script")
