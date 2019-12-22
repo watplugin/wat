@@ -48,11 +48,7 @@ Test_Directory="res://tests"
 
 [application]
 
-<<<<<<< HEAD
-config/name="WAT"
-=======
 config/name="WaitingAndTesting"
->>>>>>> 0901654ec840a0c31636efb3ed75b4a9fd0b6c8c
 config/icon="res://icon.png"
 
 [debug]
