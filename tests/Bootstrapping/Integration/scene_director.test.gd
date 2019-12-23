@@ -15,7 +15,6 @@ func test_When_we_create_a_test_double_from_it():
 	
 	print("Testing When we create a test double from it")
 	var double = director.double()
-	assert double is Node
 	var actual: String = double.get_script().resource_path
 	var expected: String = "%s/WATemp" % OS.get_user_data_dir()
 	asserts.string_begins_with(expected, actual, \
