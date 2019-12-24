@@ -11,7 +11,7 @@ func _init(nodes: Dictionary = {}) -> void:
 	self.nodes = nodes
 
 func fetch_node(path: String):
-#	print("fetching: %s?" % path)
+	print("fetching: %s?" % path)
 	return nodes[path]
 
 # func _notification(what: int) -> void:
