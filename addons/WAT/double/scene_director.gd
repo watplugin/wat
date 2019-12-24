@@ -61,11 +61,7 @@ func _add_child(path, nodepath, root):
 	var node: Node = nodes[nodepath].double()
 	node.name = path[0]
 	root.add_child(node)
-<<<<<<< HEAD
-	cache.append(node)
-=======
 #	cache.append(node)
->>>>>>> troubleshooting
 	print("added child")
 
 func _add_grandchild(path, nodepath, root):
@@ -79,11 +75,7 @@ func _add_grandchild(path, nodepath, root):
 	parent = parent.rstrip("/")
 	var grandparent = root.get_node(parent)
 	grandparent.add_child(node)
-<<<<<<< HEAD
-	cache.append(grandparent)
-=======
 #	cache.append(grandparent)
->>>>>>> troubleshooting
 	print("added granchild")
 
 func clear():

@@ -47,25 +47,16 @@ func scene(scenepath):
 			nodes[path] = script(new_script.resource_path)
 	var scene_director = _SCENE_DIRECTOR.new(nodes)
 	# _cache.append(scene_director)
-<<<<<<< HEAD
-	instance.free()
-	# return null
-=======
 	print("trying to free instance")
 	instance.free()
 	# return null
 	print("freed instance")
->>>>>>> troubleshooting
 	return scene_director
 
 func _create_save_and_load_director(path, inner: String, dependecies: Array) -> Resource:
 	var script_director = _SCRIPT_DIRECTOR.new()
 	_count += 1
 	var index: String = _count as String
-<<<<<<< HEAD
-	var savepath: String = "%s/WATemp/R%s.tres" % [OS.get_user_data_dir(), index]
-=======
->>>>>>> troubleshooting
 	script_director.base_script = path
 	script_director.inner = inner
 	script_director.index = index
