@@ -1,4 +1,4 @@
-extends Resource
+extends Object
 tool
 
 const STATIC: String = "static "

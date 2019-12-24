@@ -79,7 +79,7 @@ func test_When_we_run_a_hundred_passing_tests():
 	
 	cases = []
 	clear_temp()
-	var directory: String = "user://WATemp"
+	var directory: String = "%s/WATemp" % OS.get_user_data_dir()
 	Directory.new().make_dir(directory)
 	var test = load("res://Examples/Bootstrap/passing_test.gd")
 	for i in 100:

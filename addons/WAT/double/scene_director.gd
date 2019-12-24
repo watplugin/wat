@@ -1,4 +1,5 @@
 extends Reference
+tool
 # We don't seem to need tool here yet but I'm keeping this comment JIC
 
 var nodes: Dictionary = {}
@@ -9,6 +10,7 @@ func _init(nodes: Dictionary = {}) -> void:
 	print("Creating Scene Director with ID: %s" % get_instance_id() as String)
 	print("Adding Nodes of Size %s (%s)" % [nodes.size(), nodes])
 	self.nodes = nodes
+	print(self.nodes.size(), "is size of our nodes")
 
 # This method was previousl called get_node (as well as fetch_x, seek_x, grab_x where x == node)
 # For whatever reason the inclusion of the word "node" seemed to make WAT take a big memory dump on linux 
@@ -32,6 +34,7 @@ func grab(path: String):
 # 				item.queue_free()
 
 func double():
+	print("Doubling Instance")
 	if _created:
 		push_warning("Already Created")
 	_created = true
@@ -46,19 +49,19 @@ func double():
 			# Node is a child of root
 		elif path.size() == 1:
 			_add_child(path, nodepath, root)
-		elif path.size() > 1:
-			_add_grandchild(path, nodepath, root)
+#		elif path.size() > 1:
+#			_add_grandchild(path, nodepath, root)
 	print("adding root to cache")
 	# cache.append(root)
 	print("added root to cache")
-	return root
+	return null
 
 func _add_child(path, nodepath, root):
 	print("adding child")
 	var node: Node = nodes[nodepath].double()
 	node.name = path[0]
 	root.add_child(node)
-	cache.append(node)
+#	cache.append(node)
 	print("added child")
 
 func _add_grandchild(path, nodepath, root):
@@ -72,7 +75,7 @@ func _add_grandchild(path, nodepath, root):
 	parent = parent.rstrip("/")
 	var grandparent = root.get_node(parent)
 	grandparent.add_child(node)
-	cache.append(grandparent)
+#	cache.append(grandparent)
 	print("added granchild")
 
 func clear():
