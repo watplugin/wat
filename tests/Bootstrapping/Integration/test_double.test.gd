@@ -93,13 +93,14 @@ func test_When_we_call_a_method_that_we_stubbed_to_call_its_super_implementation
 	asserts.is_equal(9999, double.add(10, 10), \
 		"Then it does not call its super implementation when arguments patterns match a different return value")
 
-#func test_When_we_add_a_doubled_inner_class_to_it():
-#	describe("When we add an doubled inner class to it")
-#
-#	var inner = direct.script("res://Examples/Scripts/calculator.gd", "Algebra")
-#	director.add_inner_class(inner, "Algebra")
-#
-#	asserts.is_equal(TAU, director.double().Algebra.get_tau(), "Then we can call the static methods of that inner double")
+func test_When_we_add_a_doubled_inner_class_to_it():
+	describe("When we add an doubled inner class to it")
+
+	var inner = direct.script("res://Examples/Scripts/calculator.gd", "Algebra")
+	print(inner != null)
+	director.add_inner_class(inner, "Algebra")
+
+	asserts.is_equal(TAU, director.double().Algebra.get_tau(), "Then we can call the static methods of that inner double")
 
 func test_When_we_stubbed_a_keyword_method_by_passing_in_the_correct_keyword():
 	describe("When we stubbed a keyworded method by passing in the correct keyword")
