@@ -52,6 +52,8 @@ func add_inner_class(klass: Resource, name: String) -> void:
 func save() -> String:
 	var script = GDScript.new()
 	for klass in klasses:
+		print(klass.name)
+		print(klass.director != null)
 		klass.director.save()
 	script.source_code = SCRIPT_WRITER.new().write(self)
 	var save_path: String = "%s/WATemp/S%s.gd" % [OS.get_user_data_dir(), index]
@@ -68,5 +70,8 @@ func double(show_error = true):
 	var save_path = save()
 	var script = load(save_path)
 	var object = script.callv("new", dependecies)
+	# This is a nasty abuse of const collections not being strongly-typed
+	# We're mainly doing this for easy use of static methods
+	object._double_data_struct.append(self)
 	cache.append(object)
 	return object

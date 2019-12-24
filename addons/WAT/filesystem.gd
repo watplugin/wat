@@ -41,14 +41,12 @@ static func _list(path: String, searching_for: int, include_subdirectories: bool
 	return results
 
 static func clear_temporary_files(main_directory: String = "%s/WATemp" % OS.get_user_data_dir(), delete_subdirectories: bool = true) -> void:
-	print("clearing files NOT")
-	return
-#	var directory: Directory = Directory.new()
-#	for file in file_list(main_directory):
-#		directory.remove(file.path)
-#	for folder in directory_list(main_directory):
-#		directory.remove(folder)
-#	print("cleared files")
+	var directory: Directory = Directory.new()
+	for file in file_list(main_directory):
+		directory.remove(file.path)
+	for folder in directory_list(main_directory):
+		directory.remove(folder)
+	print("cleared files")
 
 static func _directory_exists(path: String) -> bool:
 	return Directory.new().dir_exists(path)

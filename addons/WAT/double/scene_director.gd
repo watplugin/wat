@@ -49,12 +49,12 @@ func double():
 			# Node is a child of root
 		elif path.size() == 1:
 			_add_child(path, nodepath, root)
-#		elif path.size() > 1:
-#			_add_grandchild(path, nodepath, root)
+		elif path.size() > 1:
+			_add_grandchild(path, nodepath, root)
 	print("adding root to cache")
 	# cache.append(root)
 	print("added root to cache")
-	return null
+	return root
 
 func _add_child(path, nodepath, root):
 	print("adding child")
