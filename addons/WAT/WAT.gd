@@ -8,6 +8,7 @@ var Runner: Node
 var Results: Node
 var Options: Node
 var run_count: int = 0
+var options_view_popup: Node
 
 func _ready() -> void:
 	Options = $Runner/Options
@@ -18,7 +19,7 @@ func _ready() -> void:
 	Runner.name = Runner.MAIN
 	Options.connect("RUN", self, "_run")
 	Runner.connect("ended", $Runner/Details/Timer, "_stop")
-	var options_view_popup: Node = $Runner/Options/View.get_popup()
+	options_view_popup = $Runner/Options/View.get_popup()
 	options_view_popup.connect("id_pressed", self, "set_up_expand_and_collapse")
 
 func set_up_expand_and_collapse(option_id):

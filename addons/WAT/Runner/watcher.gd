@@ -17,3 +17,9 @@ func _add_emit(a = null, b = null, c = null, d = null, e = null, f = null, g = n
 	var obj: String = arguments.pop_back()
 	watching[event].emit_count += 1
 	watching[event].calls.append({emitter = obj, args = arguments})
+
+func unwatch(emitter, event: String) -> void:
+	if emitter.is_connected(event, self, "_add_emit"):
+		emitter.disconnect(event, self, "_add_emit")
+		watching.erase(event)
+		emitter.set_meta("watcher", null)

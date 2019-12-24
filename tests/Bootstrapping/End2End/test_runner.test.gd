@@ -9,7 +9,7 @@ var filesystem
 var runner
 
 func title():
-	return "TestRunner"
+	return "Given A Test Runner"
 	
 func start():
 	filesystem = load("res://addons/WAT/filesystem.gd")
@@ -25,75 +25,72 @@ func end():
 	filesystem = null
 	remove_child(runner)
 	runner.queue_free()
-	push_warning("%s: This Script's CLI output gets blocked if using invalid path or empty directories\nSo we've put them on hold" % get_script().resource_path)
 		
-func x_Runner_with_invalid_path():
-	describe("Runs using an invalid path")
+func test_When_we_run_tests_using_an_invalid_path():
+	describe("When we run tests using an invalid path")
 
 	runner.run("")
 	yield(until_signal(runner, "ended", 1.0), YIELD)
 
-	asserts.is_true(cases.empty(), "Creates 0 TestCases")
+	asserts.is_true(cases.empty(), "Then no test cases are created")
 	
-func x_Runner_with_no_tests():
-	describe("Runs using an empty directory")
+func test_When_we_run_a_directory_with_no_test_scripts():
+	describe("When we run a directory with no test scripts")
 
 	# Act
 	runner.run("res://Examples/Bootstrap/Empty")
 	yield(until_signal(runner, "ended", 2.0), YIELD)
 
 	# Assert
-	asserts.is_true(cases.empty(), "Creates 0 TestCases")
+	asserts.is_true(cases.empty(), "Then no test cases are created")
 
-func test_Runner_with_one_test_that_has_no_test_methods():
-	describe("Runs one test that has no test methods")
+func test_When_we_run_one_test_script_with_no_test_methods():
+	describe("When we run one test script with no test methods")
 	
 	runner.run("res://Examples/Bootstrap/empty_test.gd")
 	yield(until_signal(runner, "ended", 2.0), YIELD)
 	
-	asserts.is_equal(cases.size(), 1, "Creates 1 TestCase")
-	asserts.is_false(cases[0].success, "Fails TestCase")
+	asserts.is_equal(cases.size(), 1, "Then one test case is created")
+	asserts.is_false(cases[0].success, "And it fails")
 	
-func test_Runner_with_one_test_that_has_one_test_method_with_no_asserts():
-	describe("Runs one test that has a method without asserts")
-	
+func test_When_we_run_one_test_method_with_no_assertions():
+	describe("When we run one test method with no assertions")
+
 	runner.run("res://Examples/Bootstrap/one_test_method_no_asserts.gd")
 	yield(until_signal(runner, "ended", 2.0), YIELD)
+
+	asserts.is_equal(cases.size(), 1, "Then one test case is created")
+	asserts.is_false(cases[0].success, "And it fails")
 	
-	asserts.is_equal(cases.size(), 1, "Creates 1 TestCase")
-	asserts.is_false(cases[0].success, "Fails TestCase")
-	
-func test_Runner_with_one_failing_test():
-	describe("Runs one failing test")
+func test_When_we_run_one_failing_test():
+	describe("When we run one failing test")
 	
 	runner.run("res://Examples/Bootstrap/failing_test.gd")
 	yield(until_signal(runner, "ended", 2.0), YIELD)
-	
-	asserts.is_equal(cases.size(), 1, "Creates 1 TestCase")
-	asserts.is_false(cases[0].success, "Fails TestCase")
 
-func test_Runner_with_XXXX_passing_tests():
+	asserts.is_equal(cases.size(), 1, "Then one test is created")
+	asserts.is_false(cases[0].success, "And it fails")
+#
+#func test_Runner_with_XXXX_passing_tests():
 	# Tested with 1000, seems fine but slow. Might want to work
 	# on slow tests seperately
-	parameters([["count"], [1], [100]])
-	describe("Runs %s passing tests" % p.count as String)
+func test_When_we_run_a_hundred_passing_tests():
+	describe("When we run a hundred passing tests")
+	
 	cases = []
 	clear_temp()
 	var directory: String = "user://WATemp"
 	Directory.new().make_dir(directory)
 	var test = load("res://Examples/Bootstrap/passing_test.gd")
-	for i in p.count:
+	for i in 100:
 #		yield(until_timeout(0.0001), YIELD) # Helps but slow
 		ResourceSaver.save("%s/%s.gd" % [directory, i as String], test)
 
 	runner.run(directory)
 	yield(until_signal(runner, "ended", 5.0), YIELD)
-	
-	asserts.is_equal(cases.size(), p.count, "Creates %s TestCases" % p.count as String)
-	asserts.is_true(all_testcases_pass_in_range(p.count), "Passes all TestCases")
-	
-	# Cleanup
-	clear_temp()
+
+	asserts.is_equal(cases.size(), 100, "Then a hundred test cases are created")
+	asserts.is_true(all_testcases_pass_in_range(100), "And all a hundred test cases pass")
 
 
 func display(cases):

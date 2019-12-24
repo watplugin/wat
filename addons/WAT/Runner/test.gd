@@ -54,6 +54,9 @@ func title() -> String:
 
 func watch(emitter, event: String) -> void:
 	watcher.watch(emitter, event)
+	
+func unwatch(emitter, event: String) -> void:
+	watcher.unwatch(emitter, event)
 
 func clear_temp():
 	emit_signal("clear")

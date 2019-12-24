@@ -54,7 +54,7 @@ func save() -> String:
 	for klass in klasses:
 		klass.director.save()
 	script.source_code = SCRIPT_WRITER.new().write(self)
-	var save_path = "user://WATemp/S%s.gd" % index
+	var save_path: String = "%s/WATemp/S%s.gd" % [OS.get_user_data_dir(), index]
 	ResourceSaver.save(save_path, script, 4)
 	return save_path
 
