@@ -12,7 +12,7 @@ func _init(nodes: Dictionary = {}) -> void:
 
 func get_node(path: String):
 	print("fetching: %s?" % path)
-	return nodes[path]
+#	return nodes[path]
 
 # func _notification(what: int) -> void:
 # 	if what == NOTIFICATION_PREDELETE:
