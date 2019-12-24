@@ -1,18 +1,22 @@
 extends Reference
 
-const _SCRIPT_DIRECTOR: Resource = preload("res://addons/WAT/double/script_director.gd")
+const _SCRIPT_DIRECTOR: Object= preload("res://addons/WAT/double/script_director.gd")
 const _SCENE_DIRECTOR: Resource = preload("res://addons/WAT/double/scene_director.gd")
 const _INVALID: String = ""
 var _cache: Array = []
 var _count: int = 0
 
+func _init():
+	load("res://addons/WAT/filesystem.gd").clear_temporary_files()
+
 func script(path, inner_class: String = "", dependecies: Array = []):
 	path = path if path is String else path.resource_path
-	var script_director: Resource = _create_save_and_load_director(path, inner_class, dependecies)
+	var script_director: Object = _create_save_and_load_director(path, inner_class, dependecies)
 	var base: Object = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
 	base = base.callv("new", script_director.dependecies)
 	_cache.append(base)
 	script_director = _collect_methods(script_director, base)
+	_cache.append(script_director)
 	return script_director
 	# return null
 	
@@ -43,23 +47,31 @@ func scene(scenepath):
 			nodes[path] = script(new_script.resource_path)
 	var scene_director = _SCENE_DIRECTOR.new(nodes)
 	# _cache.append(scene_director)
+<<<<<<< HEAD
 	instance.free()
 	# return null
+=======
+	print("trying to free instance")
+	instance.free()
+	# return null
+	print("freed instance")
+>>>>>>> troubleshooting
 	return scene_director
 
 func _create_save_and_load_director(path, inner: String, dependecies: Array) -> Resource:
 	var script_director = _SCRIPT_DIRECTOR.new()
 	_count += 1
 	var index: String = _count as String
+<<<<<<< HEAD
 	var savepath: String = "%s/WATemp/R%s.tres" % [OS.get_user_data_dir(), index]
+=======
+>>>>>>> troubleshooting
 	script_director.base_script = path
 	script_director.inner = inner
 	script_director.index = index
 	script_director.dependecies = dependecies
-	ResourceSaver.save(savepath, script_director)
-	var acting_director = load(savepath)
-	return acting_director
-
+	return script_director
+	
 func _load_nested_class(path, inner: String) -> Script:
 	var expression = Expression.new()
 	var script = load(path)
