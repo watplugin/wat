@@ -10,7 +10,7 @@ func _init(nodes: Dictionary = {}) -> void:
 	print("Adding Nodes of Size %s (%s)" % [nodes.size(), nodes])
 	self.nodes = nodes
 
-func grab_node(path: String):
+func fetch(path: String):
 	print("fetching: %s?" % path)
 	return nodes[path]
 
