@@ -7,10 +7,6 @@ func title():
 	
 func pre():
 	director = direct.script("res://Examples/Scripts/calculator.gd")
-
-func test_x():
-	describe("")
-	asserts.is_true(true, "true true")
 	
 func test_When_we_create_it():
 	describe("When we create it")

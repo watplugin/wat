@@ -18,8 +18,6 @@ func end():
 	
 func test_When_we_create_a_test_double_from_it():
 	describe("When we create a test double from it")
-	
-	asserts.is_true(true, "ture ture")
 #
 	print("Testing When we create a test double from it")
 	var double = director.double()
