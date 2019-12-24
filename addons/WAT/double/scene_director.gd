@@ -10,6 +10,11 @@ func _init(nodes: Dictionary = {}) -> void:
 	print("Adding Nodes of Size %s (%s)" % [nodes.size(), nodes])
 	self.nodes = nodes
 
+# This method was previousl called get_node (as well as fetch_x, seek_x, grab_x where x == node)
+# For whatever reason the inclusion of the word "node" seemed to make WAT take a big memory dump on linux 
+# while bootstrap testing  (specifically res://tests/bootstrapping/integration/scene_director.tests.gd)
+# AND only when you were accessing child nodes of the scene (the root was fine)
+# I don't know how else to fix this but it seems to work now
 func grab(path: String):
 	print("fetching: %s?" % path)
 	return nodes[path]
