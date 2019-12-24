@@ -44,11 +44,11 @@ func test_When_we_call_a_method_from_a_child_node_that_we_stubbed():
 
 	asserts.is_equal(999, director.double().get_node("A").execute(), "Then we get the stubbed return value")
 
-#func test_When_we_call_a_method_from_a_grandchild_node_that_we_stubbed():
-#	describe("When we call a method from a grandchild node that we stubbed")
-#
-#	print("Testing When we call a method from a grandchild node that we stubbed")
-#	director.fetch_node("C/D").method("wowsers").stub(99)
-#
-#	asserts.is_equal(99, director.double().get_node("C/D").wowsers(), "Then we get the stubbed return value")
+func test_When_we_call_a_method_from_a_grandchild_node_that_we_stubbed():
+	describe("When we call a method from a grandchild node that we stubbed")
+
+	print("Testing When we call a method from a grandchild node that we stubbed")
+	director.fetch_node("C/D").method("wowsers").stub(99)
+
+	asserts.is_equal(99, director.double().get_node("C/D").wowsers(), "Then we get the stubbed return value")
 
