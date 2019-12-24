@@ -11,8 +11,8 @@ func _init(nodes: Dictionary = {}) -> void:
 	self.nodes = nodes
 
 func get_x(path: String):
-	print("fetching: %s?" % path)
-#	return nodes[path]
+#	print("fetching: %s?" % path)
+	return nodes[path]
 
 # func _notification(what: int) -> void:
 # 	if what == NOTIFICATION_PREDELETE:
