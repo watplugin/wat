@@ -49,7 +49,7 @@ func test_When_we_call_a_method_from_a_grandchild_node_that_we_stubbed():
 	describe("When we call a method from a grandchild node that we stubbed")
 
 	print("Testing When we call a method from a grandchild node that we stubbed")
-	director.get_node("C/D").method("wowsers").stub(99)
+	director.get_x("C/D").method("wowsers").stub(99)
 
-	asserts.is_equal(99, director.double().get_x("C/D").wowsers(), "Then we get the stubbed return value")
+	asserts.is_equal(99, director.double().get_node("C/D").wowsers(), "Then we get the stubbed return value")
 
