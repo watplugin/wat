@@ -60,3 +60,16 @@ WAT Version 5.0.0
 - Fix Double Writer
 
 - until_signal/timeout now use the CONNECT_DEFERRED flag to avoid locks
+
+# 24th December (Working on Xmas Eve! You better appriciate this!)
+
+- Fix Occassional Linux Crash (commit 0a0e35c54247319a708db975db1b934e1d8ee3d9)
+
+    Quite frankly, screw this whole damned thing. WAT would sometimes crash, as
+    in segfault with a core memory dump, on Linux when using test double mechanisims.
+
+    This was largely in part due to how we were handling static data by saving the containers
+    as a resource. It seems creating multiple of these caused criss-cross memory issues.
+
+    So now instead we append the container to a const collection on the test double instead. This
+    is valid for now but we may have to update it come 4.0 but for now it is okay.
