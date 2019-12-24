@@ -36,13 +36,13 @@ func test_When_we_call_a_method_from_the_root_node_that_we_stubbed():
 
 	asserts.is_equal(9999, director.double().get_node(".").test(), "Then we get the stubbed return value")
 
-#func test_When_we_call_a_method_from_a_child_node_that_we_stubbed():
-#	describe("When we call a method from a child node that we stubbed")
-#
-#	print("Testing When we call a method from a chidl node that we stubbed")
-#	director.get_node("A").method("execute").stub(999)
-#
-#	asserts.is_equal(999, director.double().get_node("A").execute(), "Then we get the stubbed return value")
+func test_When_we_call_a_method_from_a_child_node_that_we_stubbed():
+	describe("When we call a method from a child node that we stubbed")
+
+	print("Testing When we call a method from a chidl node that we stubbed")
+	director.get_node("A").method("execute").stub(999)
+
+	asserts.is_equal(999, director.double().get_node("A").execute(), "Then we get the stubbed return value")
 
 #func test_When_we_call_a_method_from_a_grandchild_node_that_we_stubbed():
 #	describe("When we call a method from a grandchild node that we stubbed")
