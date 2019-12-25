@@ -7,25 +7,14 @@ jobs:
     steps:
         - checkout
         - run: 
-            name: "Run All"
-            command: RunAllTests
+            name: "Run All Tests"
+            command: godot -s addons/AT/CLI.gd -run_all
         - run:
             name: "Run Unit Tests"
             command: godot -s addons/WAT/CLI.gd -run_dir=res://tests/Bootstrapping/Unit
         - run:
-            name: "Run Script Director"
-            command: godot -s addons/WAT/CLI.gd -run_script=res://tests/Bootstrapping/Integration/script_director.test.gd
-        - run:
-            name: "Run Scene Director"
-            command: godot -s addons/WAT/CLI.gd -run_script=res://tests/Bootstrapping/Integration/scene_director.test.gd
-        - run:
-            name: "Run Test Doubles"
-            command: godot -s addons/WAT/CLI.gd -run_script=res://tests/Bootstrapping/Integration/test_double.test.gd
+            name: "Run Integration Tests"
+            command: godot -s addons/WAT/CLI.gd -run_dir=res://tests/Bootstrapping/Integration
         - run:
             name: "Run End-To-End Tests"
             command: godot -s addons/WAT/CLI.gd -run_dir=res://tests/Bootstrapping/End2End
-
-commands:
-    RunAllTests:
-        steps: 
-          - run: -godot -s addons/WAT/CLI.gd -run_all
