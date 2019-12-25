@@ -6,6 +6,7 @@ jobs:
 
     steps:
         - checkout
+        - RunAllTests
         - run:
             name: "Run Unit Tests"
             command: godot -s addons/WAT/CLI.gd -run_dir=res://tests/Bootstrapping/Unit
@@ -21,3 +22,8 @@ jobs:
         - run:
             name: "Run End-To-End Tests"
             command: godot -s addons/WAT/CLI.gd -run_dir=res://tests/Bootstrapping/End2End
+
+commands:
+    RunAllTests:
+        steps: 
+          - run: -godot -s addons/WAT/CLI.gd -run_all
