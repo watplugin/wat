@@ -10,12 +10,6 @@ func pre():
 	print("pre() of scene_director.test.gd called")
 	director = direct.scene("res://Examples/Scene/Main.tscn")
 	
-func end():
-	print("reached temp")
-	director = null
-	clear_temp()
-	print("cleared temp")
-	
 func test_When_we_create_a_test_double_from_it():
 	describe("When we create a test double from it")
 #

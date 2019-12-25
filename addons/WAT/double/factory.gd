@@ -18,7 +18,6 @@ func script(path, inner_class: String = "", dependecies: Array = []):
 	script_director = _collect_methods(script_director, base)
 	_cache.append(script_director)
 	return script_director
-	# return null
 	
 func _collect_methods(director, base):
 	var params: String = "abcdefghij"
@@ -47,10 +46,7 @@ func scene(scenepath):
 			nodes[path] = script(new_script.resource_path)
 	var scene_director = _SCENE_DIRECTOR.new(nodes)
 	# _cache.append(scene_director)
-	print("trying to free instance")
-	instance.free()
-	# return null
-	print("freed instance")
+	_cache.append(instance)
 	return scene_director
 
 func _create_save_and_load_director(path, inner: String, dependecies: Array) -> Resource:

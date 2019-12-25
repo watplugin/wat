@@ -12,60 +12,31 @@ func _init(nodes: Dictionary = {}) -> void:
 	self.nodes = nodes
 	print(self.nodes.size(), "is size of our nodes")
 
-# This method was previousl called get_node (as well as fetch_x, seek_x, grab_x where x == node)
-# For whatever reason the inclusion of the word "node" seemed to make WAT take a big memory dump on linux 
-# while bootstrap testing  (specifically res://tests/bootstrapping/integration/scene_director.tests.gd)
-# AND only when you were accessing child nodes of the scene (the root was fine)
-# I don't know how else to fix this but it seems to work now
 func grab(path: String):
 	print("fetching: %s?" % path)
 	return nodes[path]
 
-# func _notification(what: int) -> void:
-# 	if what == NOTIFICATION_PREDELETE:
-# 		print("Being Deleted")
-# 		for item in cache:
-# 			print("Checking if item %s is freeable" % item)
-# 			if item is Object and not item is Reference and is_instance_valid(item):
-# 				print("is Object? %s" % item is Object)
-# 				print("is not Reference? %s" % (not item is Reference))
-# 				print("is valid instance? %s" % is_instance_valid(item))
-# 				print("Freeing %s item" % item)
-# 				item.queue_free()
-
 func double():
-	print("Doubling Instance")
 	if _created:
-		push_warning("Already Created")
-	_created = true
-	print("Creating Double")
+		_created = true
 	var root: Node = nodes["."].double()
 	for nodepath in nodes:
 		var path = nodepath.split("/")
 		if nodepath == ".":
-			print("Skipping Root")
 			# Skip if root node since already defined
 			continue
-			# Node is a child of root
 		elif path.size() == 1:
 			_add_child(path, nodepath, root)
 		elif path.size() > 1:
 			_add_grandchild(path, nodepath, root)
-	print("adding root to cache")
-	# cache.append(root)
-	print("added root to cache")
 	return root
 
 func _add_child(path, nodepath, root):
-	print("adding child")
 	var node: Node = nodes[nodepath].double()
 	node.name = path[0]
 	root.add_child(node)
-#	cache.append(node)
-	print("added child")
 
 func _add_grandchild(path, nodepath, root):
-	print("adding grandchild")
 	var node: Node = nodes[nodepath].double()
 	var p = Array(path)
 	node.name = p.pop_back()
@@ -75,8 +46,6 @@ func _add_grandchild(path, nodepath, root):
 	parent = parent.rstrip("/")
 	var grandparent = root.get_node(parent)
 	grandparent.add_child(node)
-#	cache.append(grandparent)
-	print("added granchild")
 
 func clear():
 	nodes = {}
