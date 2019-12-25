@@ -6,9 +6,6 @@ const _INVALID: String = ""
 var _cache: Array = []
 var _count: int = 0
 
-func _init():
-	load("res://addons/WAT/filesystem.gd").clear_temporary_files()
-
 func script(path, inner_class: String = "", dependecies: Array = []):
 	path = path if path is String else path.resource_path
 	var script_director: Object = _create_save_and_load_director(path, inner_class, dependecies)

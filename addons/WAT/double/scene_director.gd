@@ -7,13 +7,9 @@ var _created: bool = false
 var cache: Array = []
 
 func _init(nodes: Dictionary = {}) -> void:
-	print("Creating Scene Director with ID: %s" % get_instance_id() as String)
-	print("Adding Nodes of Size %s (%s)" % [nodes.size(), nodes])
 	self.nodes = nodes
-	print(self.nodes.size(), "is size of our nodes")
 
 func grab(path: String):
-	print("fetching: %s?" % path)
 	return nodes[path]
 
 func double():

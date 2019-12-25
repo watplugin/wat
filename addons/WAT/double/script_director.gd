@@ -1,4 +1,4 @@
-extends Object
+ extends Object
 #tool
 
 const STATIC: String = "static "
@@ -19,6 +19,7 @@ var is_scene: bool = false # Requires some updating post our scene version
 var klasses: Array = []
 var base_methods: Dictionary = {}
 var dependecies: Array = []
+var object
 
 func method(name: String, keyword: String = "") -> Method:
 	if not methods.has(name):
@@ -52,15 +53,11 @@ func add_inner_class(klass: Object, name: String) -> void:
 func save() -> String:
 	var script = GDScript.new()
 	for klass in klasses:
-		print(klass.name)
-		print(klass.director != null)
 		klass.director.save()
 	script.source_code = SCRIPT_WRITER.new().write(self)
 	var save_path: String = "%s/WATemp/S%s.gd" % [OS.get_user_data_dir(), index]
 	ResourceSaver.save(save_path, script, 4)
 	return save_path
-	
-var object
 
 func double(show_error = true):
 	if _created:

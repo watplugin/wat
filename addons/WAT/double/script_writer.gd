@@ -36,8 +36,6 @@ func _method_to_string(keyword: String, name: String, args: String, calls_super:
 	var text: String
 	text += "%sfunc %s(%s):" % [keyword, name, args]
 	text += "\n\tvar args = [%s]" % args
-#	text += "\n\tvar method = load('%s').methods['%s']" % [director, name]
-	# This conflicts with static methods. Maybe just add a textfile somewhere instead?
 	text += "\n\tvar method = _double_data_struct[0].methods['%s']" % name
 	if spying:
 		text += "\n\tmethod.add_call(args)"
@@ -50,6 +48,4 @@ func _method_to_string(keyword: String, name: String, args: String, calls_super:
 	return text
 
 func _inner_class(klass: Dictionary) -> String:
-	var x = "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.director.index]
-	print(x)
-	return x
+	return "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.director.index]

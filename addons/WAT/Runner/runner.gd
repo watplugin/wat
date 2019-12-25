@@ -19,12 +19,11 @@ func _create_temp():
 		Directory.new().make_dir("%s/WATemp" % OS.get_user_data_dir())
 
 func run(path: String) -> void:
-	print("printing path: " + path)
 	_create_temp()
 	caselist = []
 	tests = []
 	if not _valid_path(path):
-		print(path + " is invalid")
+		push_warning("%s is invalid" % path)
 		emit_signal("ended", caselist)
 		return
 	if name == MAIN:

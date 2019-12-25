@@ -46,7 +46,6 @@ static func clear_temporary_files(main_directory: String = "%s/WATemp" % OS.get_
 		directory.remove(file.path)
 	for folder in directory_list(main_directory):
 		directory.remove(folder)
-	print("cleared files")
 
 static func _directory_exists(path: String) -> bool:
 	return Directory.new().dir_exists(path)

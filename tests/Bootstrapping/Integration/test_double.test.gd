@@ -97,7 +97,6 @@ func test_When_we_add_a_doubled_inner_class_to_it():
 	describe("When we add an doubled inner class to it")
 
 	var inner = direct.script("res://Examples/Scripts/calculator.gd", "Algebra")
-	print(inner != null)
 	director.add_inner_class(inner, "Algebra")
 
 	asserts.is_equal(TAU, director.double().Algebra.get_tau(), "Then we can call the static methods of that inner double")
