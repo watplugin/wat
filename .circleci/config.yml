@@ -6,7 +6,9 @@ jobs:
 
     steps:
         - checkout
-        - RunAllTests
+        - run: 
+            name: "Run All"
+            command: RunAllTests
         - run:
             name: "Run Unit Tests"
             command: godot -s addons/WAT/CLI.gd -run_dir=res://tests/Bootstrapping/Unit
