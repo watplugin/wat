@@ -4,7 +4,7 @@ tool
 const MAIN: String = "Main"
 const TEST_ADAPTER = preload("res://addons/WAT/Runner/test_adapter.gd")
 const CASE = preload("res://addons/WAT/Runner/case.gd")
-const YIELD = preload("res://addons/WAT/Runner/Yielder.gd")
+const YIELD = preload("res://addons/WAT/Runner/yielder.gd")
 var filesystem: Reference
 var tests: Array = []
 var caselist: Array = []

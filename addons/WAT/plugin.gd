@@ -1,7 +1,7 @@
 tool
 extends EditorPlugin
 
-const UI: PackedScene = preload("WAT.tscn")
+const UI: PackedScene = preload("Wat.tscn")
 var interface: PanelContainer
 
 func _enter_tree() -> void:
@@ -13,7 +13,6 @@ func _enter_tree() -> void:
 func _exit_tree() -> void:
 	remove_control_from_bottom_panel(interface)
 	interface.free()
-	print_stray_nodes()
 
 func get_plugin_name() -> String:
    return "WAT"

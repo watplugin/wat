@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/failed.png-69ad3635b61c2aeb8c1b6362163d8fa9.stex"
+path="res://.import/failed.png-e4994f0d94cd9b0b99f9a4805c813a9c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/WAT/UI/icons/failed.png"
-dest_files=[ "res://.import/failed.png-69ad3635b61c2aeb8c1b6362163d8fa9.stex" ]
+source_file="res://addons/WAT/ui/icons/failed.png"
+dest_files=[ "res://.import/failed.png-e4994f0d94cd9b0b99f9a4805c813a9c.stex" ]
 
 [params]
 

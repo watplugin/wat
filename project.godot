@@ -27,12 +27,12 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "WAT",
 "language": "GDScript",
-"path": "res://addons/WAT/Runner/namespace.gd"
+"path": "res://addons/WAT/runner/namespace.gd"
 }, {
 "base": "Node",
 "class": "WATTest",
 "language": "GDScript",
-"path": "res://addons/WAT/Runner/test.gd"
+"path": "res://addons/WAT/runner/test.gd"
 } ]
 _global_script_class_icons={
 "BaseLogin": "",
