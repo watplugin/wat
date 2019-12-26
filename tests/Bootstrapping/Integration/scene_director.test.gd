@@ -27,21 +27,21 @@ func test_When_we_create_two_of_it_for_the_same_scene():
 func test_When_we_call_a_method_from_the_root_node_that_we_stubbed():
 	describe("When we call a method from the root node that we stubbed")
 
-	director.grab(".").method("test").stub(9999)
+	director.get_node(".").method("test").stub(9999)
 
 	asserts.is_equal(9999, director.double().get_node(".").test(), "Then we get the stubbed return value")
 #
 func test_When_we_call_a_method_from_a_child_node_that_we_stubbed():
 	describe("When we call a method from a child node that we stubbed")
 
-	director.grab("A").method("execute").stub(999)
+	director.get_node("A").method("execute").stub(999)
 
 	asserts.is_equal(999, director.double().get_node("A").execute(), "Then we get the stubbed return value")
 
 func test_When_we_call_a_method_from_a_grandchild_node_that_we_stubbed():
 	describe("When we call a method from a grandchild node that we stubbed")
 
-	director.grab("C/D").method("wowsers").stub(99)
+	director.get_node("C/D").method("wowsers").stub(99)
 
 	asserts.is_equal(99, director.double().get_node("C/D").wowsers(), "Then we get the stubbed return value")
 

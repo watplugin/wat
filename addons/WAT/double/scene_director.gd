@@ -9,7 +9,7 @@ var cache: Array = []
 func _init(nodes: Dictionary = {}) -> void:
 	self.nodes = nodes
 
-func grab(path: String):
+func get_node(path: String):
 	return nodes[path]
 
 func double():
