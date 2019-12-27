@@ -61,7 +61,7 @@ WAT Version 5.0.0
 
 - until_signal/timeout now use the CONNECT_DEFERRED flag to avoid locks
 
-# 24th December (Working on Xmas Eve! You better appriciate this!)
+## 24th December (Working on Xmas Eve! You better appriciate this!)
 
 - Fix Occassional Linux Crash (commit 0a0e35c54247319a708db975db1b934e1d8ee3d9)
 
@@ -73,3 +73,11 @@ WAT Version 5.0.0
 
     So now instead we append the container to a const collection on the test double instead. This
     is valid for now but we may have to update it come 4.0 but for now it is okay.
+
+## 27th December
+
+- Add Script Template Generator (commit  219bcb3)
+
+    You can define your own templates in Godot 3.2. WAT now includes a button that will add
+    a WAT Template to your script_templates folder (if it isn't already created, WAT will
+    create it)
