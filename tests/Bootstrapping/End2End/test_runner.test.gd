@@ -13,7 +13,7 @@ func title():
 	
 func start():
 	filesystem = load("res://addons/WAT/filesystem.gd")
-	runner = load("res://addons/WAT/Runner/runner.gd").new(filesystem)
+	runner = load("res://addons/WAT/runner/runner.gd").new(filesystem)
 	runner.connect("ended", self, "display")
 	runner.name = "NotM"
 	add_child(runner)

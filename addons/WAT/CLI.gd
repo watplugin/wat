@@ -3,7 +3,7 @@ extends SceneTree
 # You can only call this from root. On Windows, write
 # godot -s addons/WAT/CLI.gd -run_all
 # to run all of the scripts
-const RUNNER = preload("res://addons/WAT/Runner/runner.gd")
+const RUNNER = preload("res://addons/WAT/runner/runner.gd")
 const FILESYSTEM: Script = preload("res://addons/WAT/filesystem.gd")
 const RUN_ALL: String = "-run_all"
 const RUN_DIRECTORY: String = "-run_dir"
