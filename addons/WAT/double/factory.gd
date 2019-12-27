@@ -62,7 +62,7 @@ func _load_nested_class(path, inner: String) -> Script:
 	return expression.execute([], script, true)
 
 func clear() -> void:
-	for item in _cache:
+	while not _cache.empty():
+		var item = _cache.pop_back()
 		if item is Object and not item is Reference and is_instance_valid(item):
 			item.free()
-	_cache.clear()
