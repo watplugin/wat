@@ -7,6 +7,7 @@ onready var More: PopupMenu = $More.get_popup()
 onready var FolderSelect: OptionButton = $SelectDir
 onready var ScriptSelect: OptionButton = $SelectScript
 var wat_templates_dir: = "res://addons/WAT/script_templates/"
+var wat_templates
 var script_templates_dir: String
 signal RUN
 
@@ -59,7 +60,7 @@ func prepare_script_templates():
 	if not _dir.dir_exists(script_templates_dir):
 		_dir.make_dir_recursive(script_templates_dir)
 
-	var wat_templates = FILESYSTEM._list(wat_templates_dir, 1, false)
+	wat_templates = FILESYSTEM._list(wat_templates_dir, 1, false)
 	var script_templates = FILESYSTEM._list(script_templates_dir, 1, false)
 
 	var templates_exist: = false
@@ -78,7 +79,9 @@ func prepare_script_templates():
 		copy_script_templates()
 
 func copy_script_templates():
-	print_debug("TODO")
+	for i in wat_templates:
+		var _file = load(wat_templates_dir + i.name)
+		ResourceSaver.save(script_templates_dir + "/" + i.name, _file)
 
 func _select_folder(path: String = _default_directory()) -> void:
 	if not Directory.new().dir_exists(path):
