@@ -2,7 +2,7 @@ tool
 extends PanelContainer
 
 # DEFAULTS
-const RUNNER: Script = preload("res://addons/WAT/Runner/runner.gd")
+const RUNNER: Script = preload("res://addons/WAT/runner/runner.gd")
 const FILESYSTEM: Script = preload("res://addons/WAT/filesystem.gd")
 var Runner: Node
 var Results: Node

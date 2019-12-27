@@ -5,9 +5,9 @@ const IS_WAT_TEST: bool = true
 const YIELD: String = "finished"
 const CRASH_IF_TEST_FAILS: bool = true
 const EXPECTATIONS = preload("res://addons/WAT/expectations/0_index.gd")
-const WATCHER = preload("res://addons/WAT/Runner/watcher.gd")
+const WATCHER = preload("res://addons/WAT/runner/watcher.gd")
 const DOUBLE = preload("res://addons/WAT/double/factory.gd")
-const PARAMETERS = preload("res://addons/WAT/Runner/parameters.gd")
+const PARAMETERS = preload("res://addons/WAT/runner/parameters.gd")
 var asserts: EXPECTATIONS
 var watcher: WATCHER
 var direct: DOUBLE
@@ -26,7 +26,7 @@ func _init() -> void:
 	self.p = self.parameters.parameters
 
 func any():
-	return load("res://addons/WAT/Runner/any.gd").new()
+	return load("res://addons/WAT/runner/any.gd").new()
 
 func describe(message: String) -> void:
 	emit_signal("described", message)
