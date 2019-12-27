@@ -10,6 +10,7 @@ func script(path, inner_class: String = "", dependecies: Array = []):
 	path = path if path is String else path.resource_path
 	var script_director: Object = _create_save_and_load_director(path, inner_class, dependecies)
 	var base: Object = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
+	_cache.append(base)
 	base = base.callv("new", script_director.dependecies)
 	_cache.append(base)
 	script_director = _collect_methods(script_director, base)
@@ -31,7 +32,6 @@ func scene(scenepath):
 	scenepath = scenepath if scenepath is String else scenepath.resource_path
 	var nodes: Dictionary = {}
 	var instance: Node = load(scenepath).instance()
-	# var instance = Node.new()
 	var frontier: Array = []
 	frontier.append(instance)
 	while not frontier.empty():
@@ -42,8 +42,7 @@ func scene(scenepath):
 		if new_script != null:
 			nodes[path] = script(new_script.resource_path)
 	var scene_director = _SCENE_DIRECTOR.new(nodes)
-	# _cache.append(scene_director)
-	_cache.append(instance)
+	instance.free()
 	return scene_director
 
 func _create_save_and_load_director(path, inner: String, dependecies: Array) -> Resource:
@@ -63,7 +62,9 @@ func _load_nested_class(path, inner: String) -> Script:
 	return expression.execute([], script, true)
 
 func clear() -> void:
+	breakpoint
 	for item in _cache:
 		if item is Object and not item is Reference and is_instance_valid(item):
 			item.free()
 	_cache.clear()
+	breakpoint

@@ -81,7 +81,7 @@ func until_timeout(time_limit: float) -> Node:
 	return Yield.until_timeout(time_limit)
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_PREDELETE or NOTIFICATION_EXIT_TREE:
+	if what == NOTIFICATION_EXIT_TREE:
 		# This is apparently necessary?
 		direct.clear()
 		clear_temp()

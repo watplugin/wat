@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://addons/WAT/WAT.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/wat.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/UI/options.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=3]
 [ext_resource path="res://addons/WAT/Runner/timer.gd" type="Script" id=4]
@@ -68,7 +68,7 @@ custom_constants/hseparation = 20
 button_mask = 3
 text = "res://tests"
 align = 1
-items = [ "res://tests", null, false, -1, null, "res://tests/Bootstrapping", null, false, -1, null, "res://tests/Bootstrapping/End2End", null, false, -1, null, "res://tests/Bootstrapping/Unit", null, false, -1, null, "res://tests/Bootstrapping/Integration", null, false, -1, null ]
+items = [ "res://tests", null, false, -1, null, "res://tests/Bootstrapping", null, false, -1, null, "res://tests/Bootstrapping/End2End", null, false, -1, null, "res://tests/Bootstrapping/Integration", null, false, -1, null, "res://tests/Bootstrapping/Unit", null, false, -1, null ]
 selected = 0
 
 [node name="VSeparator2" type="VSeparator" parent="Runner/Options"]
@@ -134,4 +134,3 @@ margin_top = 8.0
 margin_right = 1010.0
 margin_bottom = 22.0
 text = "Ran Tests: 0 Times"
-
