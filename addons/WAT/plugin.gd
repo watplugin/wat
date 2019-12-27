@@ -1,7 +1,7 @@
 tool
 extends EditorPlugin
 
-const UI: PackedScene = preload("Wat.tscn")
+const UI: PackedScene = preload("res://addons/WAT/Wat.tscn")
 var interface: PanelContainer
 
 func _enter_tree() -> void:
