@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/WAT/wat.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/UI/options.gd" type="Script" id=2]
-[ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=3]
-[ext_resource path="res://addons/WAT/Runner/timer.gd" type="Script" id=4]
+[ext_resource path="res://addons/WAT/UI/icons/more_button.svg" type="Texture" id=3]
+[ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=4]
+[ext_resource path="res://addons/WAT/Runner/timer.gd" type="Script" id=5]
 
 [node name="WAT" type="PanelContainer"]
 margin_right = 1024.0
@@ -11,6 +12,9 @@ margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Runner" type="VBoxContainer" parent="."]
 margin_left = 7.0
@@ -22,22 +26,22 @@ size_flags_vertical = 3
 
 [node name="Options" type="HBoxContainer" parent="Runner"]
 margin_right = 1010.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
 script = ExtResource( 2 )
 
 [node name="Run" type="MenuButton" parent="Runner/Options"]
 margin_right = 36.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 text = "Run"
-items = [ "Run All Tests", null, 0, false, false, 0, 0, null, "", false, "Run Selected Directory", null, 0, false, false, 1, 0, null, "", false, "Run Selected Script", null, 0, false, false, 2, 0, null, "", false, "", null, 0, false, false, 3, 0, null, "", true, "Print Stray Nodes", null, 0, false, false, 4, 0, null, "", false ]
+items = [ "Run All Tests", null, 0, false, false, 0, 0, null, "", false, "Run Selected Directory", null, 0, false, false, 1, 0, null, "", false, "Run Selected Script", null, 0, false, false, 2, 0, null, "", false ]
 switch_on_hover = true
 
 [node name="View" type="MenuButton" parent="Runner/Options"]
 margin_left = 46.0
 margin_right = 88.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 text = "View"
 items = [ "Expand All Results", null, 0, false, false, 0, 0, null, "", false, "Collapse All Results", null, 0, false, false, 1, 0, null, "", false ]
 switch_on_hover = true
@@ -45,20 +49,20 @@ switch_on_hover = true
 [node name="VSeparator" type="VSeparator" parent="Runner/Options"]
 margin_left = 98.0
 margin_right = 102.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 
 [node name="DirLabel" type="Label" parent="Runner/Options"]
 margin_left = 112.0
-margin_top = 3.0
+margin_top = 4.0
 margin_right = 175.0
-margin_bottom = 17.0
+margin_bottom = 18.0
 text = "Directory:"
 align = 1
 
 [node name="SelectDir" type="OptionButton" parent="Runner/Options"]
 margin_left = 185.0
-margin_right = 560.0
-margin_bottom = 20.0
+margin_right = 516.0
+margin_bottom = 22.0
 grow_horizontal = 0
 grow_vertical = 0
 hint_tooltip = "Select A Folder to run tests only from that folder."
@@ -68,33 +72,63 @@ custom_constants/hseparation = 20
 button_mask = 3
 text = "res://tests"
 align = 1
+<<<<<<< HEAD:addons/WAT/Wat.tscn
 items = [ "res://tests", null, false, -1, null, "res://tests/Bootstrapping", null, false, -1, null, "res://tests/Bootstrapping/End2End", null, false, -1, null, "res://tests/Bootstrapping/Integration", null, false, -1, null, "res://tests/Bootstrapping/Unit", null, false, -1, null ]
+=======
+items = [ "res://tests", null, false, 0, null, "res://tests/FailExamples", null, false, 1, null, "res://tests/multix", null, false, 2, null, "res://tests/WAT", null, false, 3, null, "res://tests/WAT/Bootstrap", null, false, 4, null, "res://tests/WAT/Unit", null, false, 5, null ]
+>>>>>>> 219bcb35c7d86c2a06999e1bce9eeae4d3e464f8:addons/WAT/WAT.tscn
 selected = 0
 
 [node name="VSeparator2" type="VSeparator" parent="Runner/Options"]
-margin_left = 570.0
-margin_right = 574.0
-margin_bottom = 20.0
+margin_left = 526.0
+margin_right = 530.0
+margin_bottom = 22.0
 
 [node name="ScriptLabel" type="Label" parent="Runner/Options"]
-margin_left = 584.0
-margin_top = 3.0
-margin_right = 624.0
-margin_bottom = 17.0
+margin_left = 540.0
+margin_top = 4.0
+margin_right = 580.0
+margin_bottom = 18.0
 text = "Script:"
 align = 1
 
 [node name="SelectScript" type="OptionButton" parent="Runner/Options"]
-margin_left = 634.0
-margin_right = 1010.0
-margin_bottom = 20.0
+margin_left = 590.0
+margin_right = 921.0
+margin_bottom = 22.0
 hint_tooltip = "Select a single test script to run (your choices depend on which folder is selected)."
 size_flags_horizontal = 3
 size_flags_vertical = 3
 align = 1
+<<<<<<< HEAD:addons/WAT/Wat.tscn
+=======
+items = [ "res://tests/yield_example.gd", null, false, 0, null ]
+selected = 0
+>>>>>>> 219bcb35c7d86c2a06999e1bce9eeae4d3e464f8:addons/WAT/WAT.tscn
+
+[node name="VSeparator3" type="VSeparator" parent="Runner/Options"]
+margin_left = 931.0
+margin_right = 935.0
+margin_bottom = 22.0
+
+[node name="More" type="MenuButton" parent="Runner/Options"]
+margin_left = 945.0
+margin_right = 1009.0
+margin_bottom = 22.0
+text = "More"
+icon = ExtResource( 3 )
+items = [ "Add Script Templates", null, 0, false, false, 0, 0, null, "", false, "Print Stray Nodes", null, 0, false, false, 1, 0, null, "", false ]
+
+[node name="Overwrite" type="ConfirmationDialog" parent="Runner/Options/More"]
+margin_right = 200.0
+margin_bottom = 70.0
+popup_exclusive = true
+window_title = "Templates Exist"
+resizable = true
+dialog_text = "Templates already exist. Do you want to overwrite them?"
 
 [node name="Results" type="TabContainer" parent="Runner"]
-margin_top = 24.0
+margin_top = 26.0
 margin_right = 1010.0
 margin_bottom = 552.0
 size_flags_horizontal = 3
@@ -103,7 +137,7 @@ custom_constants/top_margin = 0
 custom_constants/side_margin = 0
 tab_align = 0
 drag_to_rearrange_enabled = true
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
 [node name="Details" type="HBoxContainer" parent="Runner"]
 margin_top = 556.0
@@ -121,7 +155,7 @@ margin_right = 786.0
 margin_bottom = 22.0
 text = "Not Running"
 align = 2
-script = ExtResource( 4 )
+script = ExtResource( 5 )
 
 [node name="VSeparator" type="VSeparator" parent="Runner/Details"]
 margin_left = 836.0
@@ -134,3 +168,4 @@ margin_top = 8.0
 margin_right = 1010.0
 margin_bottom = 22.0
 text = "Ran Tests: 0 Times"
+[connection signal="confirmed" from="Runner/Options/More/Overwrite" to="Runner/Options" method="copy_script_templates"]
