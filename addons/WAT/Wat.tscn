@@ -1,10 +1,14 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/WAT/wat.gd" type="Script" id=1]
-[ext_resource path="res://addons/WAT/UI/options.gd" type="Script" id=2]
-[ext_resource path="res://addons/WAT/UI/icons/more_button.svg" type="Texture" id=3]
-[ext_resource path="res://addons/WAT/UI/results.gd" type="Script" id=4]
-[ext_resource path="res://addons/WAT/Runner/timer.gd" type="Script" id=5]
+[ext_resource path="res://addons/WAT/ui/options.gd" type="Script" id=2]
+[ext_resource path="res://addons/WAT/ui/icons/more_button.svg" type="Texture" id=3]
+[ext_resource path="res://addons/WAT/ui/results.gd" type="Script" id=4]
+[ext_resource path="res://addons/WAT/runner/timer.gd" type="Script" id=5]
+
+
+
+
 
 [node name="WAT" type="PanelContainer"]
 margin_right = 1024.0
