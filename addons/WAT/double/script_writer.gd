@@ -48,4 +48,4 @@ func _method_to_string(keyword: String, name: String, args: String, calls_super:
 	return text
 
 func _inner_class(klass: Dictionary) -> String:
-	return "\nclass %s extends 'S%s.gd':\n\tconst PLACEHOLDER = 0" % [klass.name, klass.director.index]
+	return "\nclass %s extends '%s'.%s:\n\tconst PLACEHOLDER = 0" % [klass.name, klass.director.base_script, klass.name]

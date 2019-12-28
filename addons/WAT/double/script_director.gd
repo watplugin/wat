@@ -6,16 +6,14 @@ const REMOTE: String = "remote "
 const REMOTESYNC: String = "remotesync "
 const MASTER: String = "master "
 const PUPPET: String = "puppet "
-const FILESYSTEM = preload("res://addons/WAT/filesystem.gd")
 const SCRIPT_WRITER = preload("res://addons/WAT/double/script_writer.gd")
 const Method = preload("res://addons/WAT/double/method.gd")
 export (String) var index
 export(String) var base_script: String
 export(String) var inner: String
-var cache: Array = []
 var methods: Dictionary = {}
 var _created: bool = false
-var is_scene: bool = false # Requires some updating post our scene version
+var is_scene: bool = false
 var klasses: Array = []
 var base_methods: Dictionary = {}
 var dependecies: Array = []
@@ -28,9 +26,9 @@ func method(name: String, keyword: String = "") -> Method:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
-		for item in cache:
-			if item is Object and not item is Reference and is_instance_valid(item):
-				item.free()
+		if object is Object and not object is Reference and is_instance_valid(object):
+			object.free()
+	object = null
 
 func call_count(method: String) -> int:
 	return methods[method].calls.size()
@@ -50,14 +48,13 @@ func add_call(method: String, args: Array = []) -> void:
 func add_inner_class(klass: Object, name: String) -> void:
 	klasses.append({"director": klass, "name": name})
 
-func save() -> String:
+func script():
 	var script = GDScript.new()
 	for klass in klasses:
-		klass.director.save()
+		klass.director.script()
 	script.source_code = SCRIPT_WRITER.new().write(self)
-	var save_path: String = "%s/WATemp/S%s.gd" % [OS.get_user_data_dir(), index]
-	ResourceSaver.save(save_path, script, 4)
-	return save_path
+	script.reload() # Necessary to load source code into memory
+	return script
 
 func double(show_error = true):
 	if _created:
@@ -66,15 +63,8 @@ func double(show_error = true):
 			push_error("WAT: You can only create one instance of a double. Create a new doubler Object for new Test Doubles")
 		return null
 	_created = true
-	var save_path = save()
-	var script = load(save_path)
-	object = script.callv("new", dependecies)
+	object = script().callv("new", dependecies)
 	# This is a nasty abuse of const collections not being strongly-typed
 	# We're mainly doing this for easy use of static methods
 	object._double_data_struct.append(self)
-	cache.append(object)
 	return object
-	
-#func _notification(what):
-#	if what == NOTIFICATION_PREDELETE:
-#		object.free()
