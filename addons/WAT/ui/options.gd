@@ -6,7 +6,7 @@ onready var Run: PopupMenu = $Run.get_popup()
 onready var More: PopupMenu = $More.get_popup()
 onready var FolderSelect: OptionButton = $SelectDir
 onready var ScriptSelect: OptionButton = $SelectScript
-var wat_templates_dir: = "res://addons/WAT/script_templates/"
+var wat_templates_dir: = "res://addons/WAT/script_templates"
 var wat_templates
 var script_templates_dir: String
 signal RUN
@@ -80,7 +80,7 @@ func prepare_script_templates():
 
 func copy_script_templates():
 	for i in wat_templates:
-		var _file = load(wat_templates_dir + i.name)
+		var _file = load(wat_templates_dir + "/" + i.name)
 		ResourceSaver.save(script_templates_dir + "/" + i.name, _file)
 
 func _select_folder(path: String = _default_directory()) -> void:
