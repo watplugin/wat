@@ -1,4 +1,4 @@
-extends WATTest
+extends WAT.Test
 
 func title():
 	return "TEST GROUP NAME"
