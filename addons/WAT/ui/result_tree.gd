@@ -7,13 +7,13 @@ const COLOR_FAILED: Color = Color(1, 1, 1, 1)
 const COLOR_CRASHED: Color = Color(1, 1, 0, 1)
 
 func success() -> Resource:
-	return load("res://addons/WAT/UI/icons/success.png")
+	return load("res://addons/WAT/ui/icons/success.png")
 
 func failed() -> Resource:
-	return load("res://addons/WAT/UI/icons/failed.png")
+	return load("res://addons/WAT/ui/icons/failed.png")
 
 func crash_icon() -> Resource:
-	return load("res://addons/WAT/UI/icons/crash_warning.png")
+	return load("res://addons/WAT/ui/icons/crash_warning.png")
 
 var cache: Array = []
 var success: bool = false

@@ -25,7 +25,6 @@ static func _list(path: String, searching_for: int, include_subdirectories: bool
 	var name: String = directory.get_next()
 	while name != "":
 		var absolute_path: String = "%s/%s" % [path, name]
-
 		if searching_for == FILE:
 			if name.ends_with(".gd") or name.ends_with(".tres"):
 				results.append({path = absolute_path, "name": name})
