@@ -81,3 +81,12 @@ WAT Version 5.0.0
     You can define your own templates in Godot 3.2. WAT now includes a button that will add
     a WAT Template to your script_templates folder (if it isn't already created, WAT will
     create it)
+
+## 28th December
+
+- Refactor Test Doubles to be created in memory instead of saved in the filesystem (commit 266bbd)
+
+    After writing the test double script implementation we now use script.reload() to
+    have the implementation loaded into memory. From here we can instance it. So we
+    no longer have to rely on the filesystem to create test doubles. This should
+    significantly improve performance if you were heavy on test doubles beforehand.
