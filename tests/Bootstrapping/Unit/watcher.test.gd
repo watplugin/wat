@@ -27,7 +27,7 @@ func post():
 func test_When_we_watch_a_signal_from_an_object_with_no_bound_variables():
 	describe("When we watch a signal from an object with no bound variables")
 
-	emit_signal("example", 1, 20, 5)
+#	emit_signal("example", 1, 20, 5)
 	asserts.signal_was_emitted_with_arguments(self, "example", [1, 20, 5], \
 	"Then it captures any arguments that where passed when the signal was emitted")
 	

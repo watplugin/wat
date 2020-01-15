@@ -43,3 +43,7 @@ func _expand_all() -> void:
 func _collapse_all() -> void:
 	for i in self.get_tab_count():
 		get_tab_control(i).collapse_all()
+
+func _expand_failures() -> void:
+	for i in self.get_tab_count():
+		get_tab_control(i).show_failures()

@@ -21,6 +21,7 @@ var crashed: bool = false
 var passed: int = 0
 var total: int = 0
 var icon: Texture
+var subcache: Array = []
 
 func display(cases: Array) -> void:
 	var tree: Tree = $Display
@@ -76,6 +77,7 @@ func _add_method_data(method: TreeItem, data: Dictionary) -> void:
 	method.set_icon(0, success() if data.success else failed())
 	method.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	method.set_tooltip(0, "Source: %s" % data.title)
+	subcache.append(method)
 
 func _add_expectation_data(expectation: TreeItem, expect: TreeItem, result: TreeItem, data) -> void:
 	expectation.collapsed = true
@@ -84,6 +86,7 @@ func _add_expectation_data(expectation: TreeItem, expect: TreeItem, result: Tree
 	expectation.set_custom_color(0, COLOR_SUCCESS if data.success else COLOR_FAILED)
 	expect.set_text(0, "Expect: %s" % data.expected)
 	result.set_text(0, "Result: %s" % data.result)
+	subcache.append(expectation)
 
 func crash(data) -> void:
 	print("Crash Not Implemented")
@@ -96,3 +99,12 @@ func expand_all():
 func collapse_all():
 	for item in cache:
 		item.collapsed = true
+
+func show_failures():
+	for item in cache:
+		# Quick hack to check failures via icons
+		if item.get_icon(0) == failed():
+			item.collapsed = false
+	for item in subcache:
+		if item.get_icon(0) == failed():
+			item.collapsed = false

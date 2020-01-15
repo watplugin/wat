@@ -21,13 +21,16 @@ func _ready() -> void:
 	Runner.connect("ended", $Runner/Details/Timer, "_stop")
 	options_view_popup = $Runner/Options/View.get_popup()
 	options_view_popup.connect("id_pressed", self, "set_up_expand_and_collapse")
-
+	options_view_popup.add_item("Expand Failures Only", 2)
+	
 func set_up_expand_and_collapse(option_id):
 	match option_id:
 		0:
 			Results._expand_all()
 		1:
 			Results._collapse_all()
+		2:
+			Results._expand_failures()
 
 func _run(path: String) -> void:
 	Results.clear()
