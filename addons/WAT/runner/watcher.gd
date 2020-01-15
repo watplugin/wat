@@ -14,7 +14,7 @@ func _add_emit(a = null, b = null, c = null, d = null, e = null, f = null, g = n
 	var event
 	while not event:
 		event = arguments.pop_back()
-	var obj: String = arguments.pop_back()
+	var obj = arguments.pop_back()
 	watching[event].emit_count += 1
 	watching[event].calls.append({emitter = obj, args = arguments})
 
