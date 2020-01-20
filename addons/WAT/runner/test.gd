@@ -26,6 +26,9 @@ func methods() -> PoolStringArray:
 		if method.name.begins_with("test"):
 			output.append(method.name)
 	return output
+	
+func set_name(title: String) -> void:
+	name = "Test"
 
 func initialize(assertions, yielder) -> void:
 	self.asserts = assertions
@@ -57,8 +60,9 @@ func end():
 	pass
 
 func path() -> String:
-	return self.get_script().get_path().replace("res://", "").replace("_", "?").capitalize().replace("?", "_").replace(" ", "")
-
+	var path = get_script().get_path()
+	return path if path != "" else get_script().get_meta("path")
+	
 func title() -> String:
 	return "placeholder title"
 

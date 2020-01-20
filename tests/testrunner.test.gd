@@ -84,6 +84,7 @@ func test_when_we_pass_in_one_passing_test_and_one_failing_test() -> void:
 class DummyPassingTest extends WAT.Test:
 	
 	func _init() -> void:
+		get_script().set_meta("path", "%s.%s" % [get_script().get_path(), name])
 		name = "Dummy Passing Test"
 
 	func title():
@@ -97,6 +98,7 @@ class DummyPassingTest extends WAT.Test:
 class DummyFailingTest extends WAT.Test:
 	
 	func _init() -> void:
+		get_script().set_meta("path", "%s.%s" % [get_script().get_path(), name])
 		name = "Dummy Failing Test"
 	
 	func title():

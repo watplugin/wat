@@ -15,8 +15,13 @@ func withdraw() -> Array:
 		if test.get("TEST") != null:
 			tests.append(test)
 		if test.get("IS_WAT_SUITE"):
-			for subtest in test.new().subtests():
-				tests.append(subtest)
+			for constant in test.get_script_constant_map():
+				var expression: Expression = Expression.new()
+				expression.parse(constant)
+				var subtest = expression.execute([], test)
+				if subtest.get("TEST") != null:
+					subtest.set_meta("path", "%s.%s" % [path, constant])
+					tests.append(subtest)
 	_tests = []
 	ResourceSaver.save(resource_path, self)
 	return tests

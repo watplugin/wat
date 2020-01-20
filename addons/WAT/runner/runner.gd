@@ -12,14 +12,13 @@ var config: Resource
 signal ended
 
 func _ready() -> void:
-	if name == MAIN:
-		print("Starting WAT Test Runner")
 	if not configured:
 		configure(WAT.DefaultConfig)
+	if name == MAIN:
+		print("Starting WAT Test Runner")
 	_tests = _test_loader.withdraw()
-#	add_child(_exit)
 	call_deferred("_run")
-	
+
 func configure(config: Resource) -> void:
 	configured = true
 	_test_loader = config.test_loader
@@ -41,8 +40,7 @@ func _run() -> void:
 	
 func _setup_test():
 	var test = _tests.pop_front().new()
-	if test.name == "":
-		test.name = "Test"
+#	test.set_name("Test")
 	var yielder = WAT.Yielder.new()
 	var assertions = WAT.Asserts.new()
 	var testcase = WAT.TestCase.new()
@@ -53,7 +51,7 @@ func _setup_test():
 	adapter.connect("finish", self, "_on_test_finished", [adapter, testcase, test])
 	adapter.connect("finish", self, "_run", [], CONNECT_DEFERRED)
 	testcase.title = test.title()
-	testcase.path = test.get_script().get_path()
+	testcase.path = test.path()
 	test.initialize(assertions, yielder)
 	adapter.initialize(test, yielder, testcase, test.methods() as Array)
 	adapter.add_child(yielder)
