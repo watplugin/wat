@@ -10,14 +10,12 @@ func write(double) -> String:
 		source = 'extends "%s"\n' % double.base_script
 		source += "\nconst BASE = preload('%s')\n\n" % double.base_script
 	
-	source += "\nconst _double_data_struct = []\n"
-	
 	if double.base_methods.has("_init"):
 		source += _constructor_to_string(double.base_methods["_init"])
 
 	for name in double.methods:
 		var m = double.methods[name]
-		source += _method_to_string(m.keyword, m.name, m.args, m.calls_super, m.spying, m.stubbed)
+		source += _method_to_string(double.instance_id, m.keyword, m.name, m.args, m.calls_super, m.spying, m.stubbed)
 	for klass in double.klasses:
 		source += _inner_class(klass)
 	source = source.replace(",)", ")")
@@ -32,11 +30,13 @@ func _constructor_to_string(parameters: String) -> String:
 	constructor += "\n\tpass\n"
 	return constructor
 
-func _method_to_string(keyword: String, name: String, args: String, calls_super: bool, spying: bool, stubbed: bool) -> String:
+func _method_to_string(id: int, keyword: String, name: String, args: String, calls_super: bool, spying: bool, stubbed: bool) -> String:
 	var text: String
 	text += "%sfunc %s(%s):" % [keyword, name, args]
 	text += "\n\tvar args = [%s]" % args
-	text += "\n\tvar method = _double_data_struct[0].methods['%s']" % name
+#	ProjectSettings.get_setting("WAT/TestDouble").method(%s, '%s')
+	text += "\n\tvar method = ProjectSettings.get_setting('WAT/TestDouble').method(%s, '%s')" % [id, name]
+#	text += "\n\tvar method = _double_data_struct[0].methods['%s']" % name
 	if spying:
 		text += "\n\tmethod.add_call(args)"
 	if calls_super:

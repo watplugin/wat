@@ -13,4 +13,6 @@ class Icon:
 	const FAILED = preload("res://addons/WAT/icons/failed.png")
 
 static func clear():
-	push_warning("Not Implemented")
+	if ProjectSettings.has_setting("WAT/TestDouble"):
+		ProjectSettings.get_setting("WAT/TestDouble").clear()
+#	push_warning("Not Implemented")

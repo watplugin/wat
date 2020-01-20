@@ -17,8 +17,18 @@ var is_scene: bool = false
 var klasses: Array = []
 var base_methods: Dictionary = {}
 var dependecies: Array = []
+var instance_id: int
 var object
 
+func _init() -> void:
+	_initialize()
+
+func _initialize() -> void:
+	if not ProjectSettings.has_setting("WAT/TestDouble"):
+		var registry = load("res://addons/WAT/double/registry.gd")
+		ProjectSettings.set_setting("WAT/TestDouble", registry.new())
+	ProjectSettings.get_setting("WAT/TestDouble").register(self)
+	
 func method(name: String, keyword: String = "") -> Method:
 	if not methods.has(name):
 		methods[name] = Method.new(name, keyword, base_methods[name])
@@ -66,5 +76,4 @@ func double(show_error = true):
 	object = script().callv("new", dependecies)
 	# This is a nasty abuse of const collections not being strongly-typed
 	# We're mainly doing this for easy use of static methods
-	object._double_data_struct.append(self)
 	return object
