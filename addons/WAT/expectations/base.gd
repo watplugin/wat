@@ -12,3 +12,11 @@ var context
 
 func type2str(value):
 	return TYPES.get_type_string(typeof(value))
+	
+func to_dictionary() -> Dictionary:
+	return { 
+			 "success": success, 
+			 "expected": expected, 
+			 "actual": result, 
+			 "context": context
+			}

@@ -1,67 +1,78 @@
 extends Node
 
-signal ENDED
-var Test: Node
-var Yield: Timer
-var case: Reference
-var methods: Array = []
-var active_method: String
-var rerun_method: bool
-
-func _init(Test: Node, Yield: Timer, case: Reference) -> void:
-	self.Test = Test
-	self.case = case
-	self.Yield = Yield
-
-func _add_methods() -> void:
-	for method in Test.get_method_list():
-		if method.name.begins_with("test"):
-			methods.append(method.name)
-
-func _ready() -> void:
-	case.title = Test.title()
-	case.path = Test.path()
-	Test.asserts.connect("OUTPUT", case, "_add_expectation")
-	Test.asserts.connect("CRASHED", self, "_crash")
-	Test.connect("described", case, "_add_method_context")
-	add_child(Yield)
-	add_child(Test)
-	Test.Yield = Yield
+class State:
+	const START: String = "start"
+	const PRE: String = "pre"
+	const EXECUTE: String = "execute"
+	const POST: String = "post"
+	const END: String = "end"
 	
-func _crash(data) -> void:
-	case.add_crash_data(data)
-	print("crashing")
+var _state: String # start, pre, execute, post, end
+var _test: WAT.Test
+var _yielder: WAT.Yielder # = load("res://addons/WAT/runner/_yielder.gd").new()
+var _testcase: WAT.TestCase
+var _methods: Array = []
+signal finish
 
-func start() -> void:
-	_add_methods()
-	Test.start()
-	# We disconnect crashing here because it only matters in start up
-	Test.asserts.disconnect("CRASHED", self, "_crash")
-	pre()
+func _init() -> void:
+	name = "Test Adapter"
 
-func pre() -> void:
-	if not methods.empty() or Test.rerun_method:
-		active_method = active_method if Test.rerun_method else methods.pop_front()
-		Test.pre()
-		execute()
-	else:
-		end()
+func initialize(test: WAT.Test, yielder, testcase, methods: Array) -> void:
+	# This is already a deferred call so likely don't need to have it connect deferred
+	_testcase = testcase
+	_yielder = yielder
+	_test = test
+	_methods = methods
 
-func execute() -> void:
-	case.add_method(active_method)
-	Test.call(active_method)
-	if Yield.active():
-		if not Yield.is_connected("resume", self, "post"):
-			Yield.connect("resume", self, "post")
+func _next():
+	# When yielding until signals or timeouts, this gets called on resume
+	# We call defer here to give the __testcase method time to reach either the end
+	# or an extra yield at which point we're able to check the _state of the yield and
+	# see if we stay paused or can continue
+	call_deferred("_change_state")
+	
+func _change_state() -> void:
+	if _yielder.is_active():
 		return
-	post()
-
-func post() -> void:
-	Test.post()
-	pre()
-
-func end() -> void:
-	Test.end()
-	remove_child(Test)
-	Test.free()
-	emit_signal("ENDED", case)
+	match _state:
+		State.START:
+			pre()
+		State.PRE:
+			execute()
+		State.EXECUTE:
+			post()
+		State.POST:
+			pre()
+		State.END:
+			end()
+	
+func start():
+	_state = State.START
+	_test.start()
+	_next()
+	
+func pre():
+	if _methods.empty():
+		_state = State.END
+		_next()
+		return
+	_state = State.PRE
+	_test.pre()
+	_next()
+	
+func execute():
+	_state = State.EXECUTE
+	var test_method: String = _methods.pop_back()
+	_test.call(test_method)
+	_next()
+	
+func post():
+	_state = State.POST
+	_test.post()
+	_next()
+	
+func end():
+	_state = State.END
+	_test.end()
+	_testcase.calculate()
+	emit_signal("finish")

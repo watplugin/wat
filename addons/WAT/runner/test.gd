@@ -1,6 +1,7 @@
 extends Node
 class_name WATTest
 
+const TEST: String = "Test"
 const IS_WAT_TEST: bool = true
 const YIELD: String = "finished"
 const CRASH_IF_TEST_FAILS: bool = true
@@ -17,9 +18,18 @@ var p: Dictionary
 var rerun_method: bool = false
 signal described
 signal clear
+var _yielder
 
-func _init() -> void:
-	self.asserts = EXPECTATIONS.new()
+func methods() -> PoolStringArray:
+	var output: PoolStringArray = []
+	for method in get_method_list():
+		if method.name.begins_with("test"):
+			output.append(method.name)
+	return output
+
+func initialize(assertions, yielder) -> void:
+	self.asserts = assertions
+	_yielder = yielder
 	self.watcher = WATCHER.new()
 	self.direct = DOUBLE.new()
 	self.parameters = PARAMETERS.new()
@@ -75,10 +85,10 @@ func simulate(obj, times, delta):
 
 func until_signal(emitter: Object, event: String, time_limit: float) -> Node:
 	watch(emitter, event)
-	return Yield.until_signal(time_limit, emitter, event)
+	return _yielder.until_signal(time_limit, emitter, event)
 
 func until_timeout(time_limit: float) -> Node:
-	return Yield.until_timeout(time_limit)
+	return _yielder.until_timeout(time_limit)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_EXIT_TREE:

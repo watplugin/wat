@@ -1,40 +1,41 @@
 extends Timer
-tool
 
-const TIMER = 1
-signal resume
 signal finished
-var emitter_signal: String
-var emitter: Object
-var count: int = 0
+var _emitter: Object
+var _event: String
 
-func until_signal(time_limit: float, emitter: Object, event: String) -> Timer:
+func _init() -> void:
 	paused = true
-	emitter.connect(event, self, "resume", [], CONNECT_DEFERRED)
-	self.emitter = emitter
-	self.emitter_signal = event
-	return until_timeout(time_limit)
-
-func until_timeout(time_limit: float) -> Timer:
-	connect("timeout", self, "resume", [], CONNECT_DEFERRED)
-	count += TIMER
-	paused = true
-	wait_time = time_limit
 	one_shot = true
+
+func until_timeout(time: float) -> Timer:
+	# Oneshot doesn't disconnect properly without also being deferred
+	connect("timeout", self, "_on_resume", [], CONNECT_DEFERRED)
+	wait_time = time
+	paused = false
+	start()
+	return self
+	
+func until_signal(time: float, emitter: Object, event: String) -> Timer:
+	_emitter = emitter
+	_event = event
+	_emitter.connect(event, self, "_on_resume", [], CONNECT_DEFERRED)
+	connect("timeout", self, "_on_resume", [], CONNECT_DEFERRED)
+	wait_time = time
 	paused = false
 	start()
 	return self
 
-func resume(a = null, b = null, c = null, d = null, e = null, f = null, h = null, i = null, j = null) -> void:
-	count -= TIMER
-	disconnect("timeout", self, "resume")
-	if emitter != null:
-		emitter.disconnect(emitter_signal, self, "resume")
-		emitter = null
-		emitter_signal = ""
+func _on_resume(a = null, b = null, c = null, d = null, e = null, f = null) -> void:
+	paused = true
+	disconnect("timeout", self, "_on_resume")
+	if _emitter != null and _emitter.is_connected(_event, self, "_on_resume"):
+		_emitter.disconnect(_event, self, "_on_resume")
+	# Our adapter is connected to this. When this is emitted our adapter
+	# ..will call "_next" which call defers _change_state. Since it is a deferred
+	# ..call the test will resume first. Therefore if a new yield gets constructed
+	# ..in the interim we will be able to check if we have restarted the yield clock
 	emit_signal("finished")
-	if count <= 0:
-		emit_signal("resume")
 
-func active() -> bool:
-	return count > 0
+func is_active() -> bool:
+	return not paused and time_left > 0

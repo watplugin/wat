@@ -1,50 +1,69 @@
 extends Reference
 
-enum { DIRECTORY, FILE }
+# This is an assumption until we have a better interface
+const TEST_FOLDER: String = "res://tests"
+const DIR_EXISTS: String = "dir_exists"
+const FILE_EXISTS: String = "file_exists"
+const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
+const BLANK: String = ""
 
-static func file_list(path: String, searching_for: int = FILE, include_subdirectories: bool = true) -> Array:
-	if path.ends_with(".gd"):
-		return [{"path": path, "name": Array(path.split("/")).back()}]
-	if not _directory_exists(path):
-		push_error("WAT: Directory %s does not exist" % path)
-		return []
-	return _list(path, searching_for, include_subdirectories)
-
-static func directory_list(path: String = "res://tests", searching_for: int = DIRECTORY, include_subdirectories: bool = true) -> Array:
-	if not _directory_exists(path):
-		push_error("WAT: Directory %s does not exist" % path)
-		return []
-	return _list(path, searching_for, include_subdirectories)
-
-static func _list(path: String, searching_for: int, include_subdirectories: bool) -> Array:
-	var results: Array = []
-
+static func scripts(path: String = TEST_FOLDER) -> PoolStringArray:
+	return _parse_for_tests(FILE_EXISTS, _list_dir(path))
+	
+static func directories(path: String = TEST_FOLDER) -> PoolStringArray:
+	return _parse_for(DIR_EXISTS, _list_dir(path))
+	
+static func _list_dir(path: String) -> PoolStringArray:
+	var list: PoolStringArray = []
+	var subdirectories: PoolStringArray = []
+	
 	var directory: Directory = Directory.new()
 	directory.open(path)
-	directory.list_dir_begin(true)
+	directory.list_dir_begin(DO_NOT_SEARCH_PARENT_DIRECTORIES)
 	var name: String = directory.get_next()
-	while name != "":
+	while name != BLANK:
+		
 		var absolute_path: String = "%s/%s" % [path, name]
-		if searching_for == FILE:
-			if name.ends_with(".gd") or name.ends_with(".tres"):
-				results.append({path = absolute_path, "name": name})
-			elif directory.current_is_dir() and include_subdirectories:
-				results += _list(absolute_path, searching_for, include_subdirectories)
-
-		elif searching_for == DIRECTORY and directory.current_is_dir():
-			results.append(absolute_path)
-			results += _list(absolute_path, searching_for, include_subdirectories)
-
+		if directory.dir_exists(absolute_path):
+			subdirectories.append(absolute_path)
+		list.append(absolute_path)
 		name = directory.get_next()
 	directory.list_dir_end()
-	return results
-
-static func clear_temporary_files(main_directory: String = "%s/WATemp" % OS.get_user_data_dir(), delete_subdirectories: bool = true) -> void:
+	
+	for subdirectory in subdirectories:
+		list += _list_dir(subdirectory)
+		
+	return list
+	
+static func _parse_for(what_exists: String, list: PoolStringArray) -> PoolStringArray:
+	var output: PoolStringArray = []
 	var directory: Directory = Directory.new()
-	for file in file_list(main_directory):
-		directory.remove(file.path)
-	for folder in directory_list(main_directory):
-		directory.remove(folder)
+	for path in list:
+		if directory.call(what_exists, path):
+			output.append(path)
+	return output
 
-static func _directory_exists(path: String) -> bool:
-	return Directory.new().dir_exists(path)
+static func _parse_for_tests(what_exists: String, list: PoolStringArray) -> PoolStringArray:
+	var output: PoolStringArray = []
+	var directory: Directory = Directory.new()
+	for path in list:
+		if directory.call(what_exists, path):
+			if path.ends_with(".gd"):
+				output.append(path)
+	return output
+
+static func templates():
+	var template_directory: String = ProjectSettings.get_setting("editor/script_templates_search_path")
+	var dir: Directory = Directory.new()
+	if not dir.dir_exists(template_directory):
+		dir.make_dir_recursive(template_directory)
+	var test_template: String = "WATTemplate.gd"
+	var scripts: Array = scripts(template_directory)
+	var template_exist = false
+	for script in scripts:
+		var title = script.substr(script.find_last("/") + 1, -1)
+		if title == test_template:
+			template_exist = true
+			print("template exists")
+			break
+	return {savepath = template_directory, exists = template_exist}

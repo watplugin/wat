@@ -1,106 +1,62 @@
 extends Node
-tool
 
-const MAIN: String = "Main"
-const TEST_ADAPTER = preload("res://addons/WAT/runner/test_adapter.gd")
-const CASE = preload("res://addons/WAT/runner/case.gd")
-const YIELD = preload("res://addons/WAT/runner/yielder.gd")
-var filesystem: Reference
-var tests: Array = []
-var caselist: Array = []
-signal errored
+const MAIN: String = "TestRunner"
+const TestAdapter: Script = preload("res://addons/WAT/runner/test_adapter.gd")
+var _test_loader: Resource
+var _test_results: Resource
+var _exit: Node
+var _tests: Array = []
+var _cases: Array = []
+var configured: bool = false
+var config: Resource
 signal ended
 
-func _init(filesystem: Reference) -> void:
-	self.filesystem = filesystem
+func _ready() -> void:
+	if not configured:
+		configure(WAT.DefaultConfig)
+	_tests = _test_loader.withdraw()
+#	add_child(_exit)
+	call_deferred("_run")
 	
-func _create_temp():
-	if not Directory.new().dir_exists("%s/WATemp" % OS.get_user_data_dir()):
-		Directory.new().make_dir("%s/WATemp" % OS.get_user_data_dir())
+func configure(config: Resource) -> void:
+	configured = true
+	_test_loader = config.test_loader
+	_test_results = config.test_results
+	_exit = config.exit.new()
 
-func run(path: String) -> void:
-	_create_temp()
-	caselist = []
-	tests = []
-	if not _valid_path(path):
-		push_warning("%s is invalid" % path)
-		emit_signal("ended", caselist)
+func _run() -> void:
+	if _tests.empty():
+		_test_results.deposit(_cases)
+		WAT.clear()
+		emit_signal("ended")
+		add_child(_exit)
+		_exit.execute()
 		return
-	if name == MAIN:
-		print("WAT: Starting Test Runner")
-	_add_tests(filesystem.file_list(path))
-	_start()
-
-func _add_tests(files: Array) -> void:
-	# Testnote: Input tests path into runner, compare against results to see if all valid
-	for file in files:
-		var test: Script = load(file.path)
-		if test.get("IS_WAT_TEST") and test.IS_WAT_TEST:
-			tests.append(test)
-		elif test.get("IS_WAT_SUITE") and test.IS_WAT_SUITE:
-			var t = test.new()
-			var inner_tests: Array = t.subtests()
-			for inner in inner_tests:
-				tests.append(inner)
-
-func _no_tests_to_execute() -> bool:
-	return tests.empty() and caselist.empty()
-
-func _all_tests_executed() -> bool:
-	return tests.empty() and not caselist.empty()
-
-func _start() -> void:
-	if _no_tests_to_execute():
-		if name == MAIN:
-			push_warning("WAT: No Scripts to Test")
-		emit_signal("ended", caselist)
-		return
-	elif _all_tests_executed():
-		if name == MAIN:
-			print("WAT: Ending Test Runner")
-		for case in caselist:
-			case.calculate()
-		emit_signal("ended", caselist)
-		return
-	else:
-		_execute_next_test()
-
-func _execute_next_test() -> void:
-	var test: WATTest = tests.pop_front().new()
-	var adapter: TEST_ADAPTER = TEST_ADAPTER.new(test, YIELD.new(), CASE.new())
-	add_child(adapter)
-	adapter.connect("ENDED", self, "_end")
-	test.connect("clear", filesystem, "clear_temporary_files")
+	var adapter = _setup_test()
 	adapter.start()
-
-func _end(case: CASE) -> void:
-	caselist.append(case)
-	filesystem.clear_temporary_files()
-	call_deferred("_start")
-
-func _valid_path(path: String) -> bool:
-	if _path_is_empty(path):
-		emit_signal("errored")
-		if name == MAIN:
-			push_warning("WAT: TestPath %s is empty" % path)
-		return false
-	if _directory_does_not_exist(path):
-		emit_signal("errored")
-		if name == MAIN:
-			push_warning("WAT: Directory %s does not exist" % path)
-		return false
-	elif _script_does_not_exist(path):
-		emit_signal("errored")
-		if name == MAIN:
-			push_warning("WAT: Script %s does not exist" % path)
-		return false
-	return true
 	
-func _path_is_empty(path: String) -> bool:
-	return path == ""
+func _setup_test():
+	var test = _tests.pop_front().new()
+	var yielder = WAT.Yielder.new()
+	var assertions = WAT.Asserts.new()
+	var testcase = WAT.TestCase.new()
+	var adapter = TestAdapter.new()
+	assertions.connect("asserted", testcase, "_on_asserted")
+	test.connect("described", testcase, "_on_test_method_described")
+	yielder.connect("finished", adapter, "_next")
+	adapter.connect("finish", self, "_on_test_finished", [adapter, testcase, test])
+	adapter.connect("finish", self, "_run", [], CONNECT_DEFERRED)
+	testcase.title = test.title()
+	testcase.path = test.get_script().get_path()
+	test.initialize(assertions, yielder)
+	adapter.initialize(test, yielder, testcase, test.methods() as Array)
+	adapter.add_child(yielder)
+	adapter.add_child(test)
+	add_child(adapter)
+	return adapter
 
-func _script_does_not_exist(path: String) -> bool:
-	return path.ends_with(".gd") and not Directory.new().file_exists(path)
-
-func _directory_does_not_exist(path: String) -> bool:
-	return not path.ends_with(".gd") and not Directory.new().dir_exists(path)
+func _on_test_finished(adapter, testcase, test) -> void:
+	_cases.append(testcase.to_dictionary())
+	remove_child(adapter)
+	test.free()
+	adapter.queue_free()

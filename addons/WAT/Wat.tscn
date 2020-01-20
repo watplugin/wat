@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/WAT/wat.gd" type="Script" id=1]
-[ext_resource path="res://addons/WAT/ui/options.gd" type="Script" id=2]
-[ext_resource path="res://addons/WAT/ui/icons/more_button.svg" type="Texture" id=3]
-[ext_resource path="res://addons/WAT/ui/results.gd" type="Script" id=4]
+[ext_resource path="res://addons/WAT/view.gd" type="Script" id=2]
+[ext_resource path="res://addons/WAT/icons/more_button.svg" type="Texture" id=3]
+[ext_resource path="res://addons/WAT/results/ResultsForest.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/WAT/runner/timer.gd" type="Script" id=5]
 
 [node name="WAT" type="PanelContainer"]
@@ -17,42 +17,42 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Runner" type="VBoxContainer" parent="."]
+[node name="GUI" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
 margin_bottom = 593.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource( 2 )
 
-[node name="Options" type="HBoxContainer" parent="Runner"]
+[node name="Options" type="HBoxContainer" parent="GUI"]
 margin_right = 1010.0
 margin_bottom = 22.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
-script = ExtResource( 2 )
 
-[node name="Run" type="MenuButton" parent="Runner/Options"]
+[node name="Run" type="MenuButton" parent="GUI/Options"]
 margin_right = 36.0
 margin_bottom = 22.0
 text = "Run"
 items = [ "Run All Tests", null, 0, false, false, 0, 0, null, "", false, "Run Selected Directory", null, 0, false, false, 1, 0, null, "", false, "Run Selected Script", null, 0, false, false, 2, 0, null, "", false ]
 switch_on_hover = true
 
-[node name="View" type="MenuButton" parent="Runner/Options"]
+[node name="View" type="MenuButton" parent="GUI/Options"]
 margin_left = 46.0
 margin_right = 88.0
 margin_bottom = 22.0
 text = "View"
-items = [ "Expand All Results", null, 0, false, false, 0, 0, null, "", false, "Collapse All Results", null, 0, false, false, 1, 0, null, "", false, "Expand Failures Only", null, 0, false, false, 2, 0, null, "", false ]
+items = [ "Expand All Results", null, 0, false, false, 0, 0, null, "", false, "Collapse All Results", null, 0, false, false, 1, 0, null, "", false ]
 switch_on_hover = true
 
-[node name="VSeparator" type="VSeparator" parent="Runner/Options"]
+[node name="VSeparator" type="VSeparator" parent="GUI/Options"]
 margin_left = 98.0
 margin_right = 102.0
 margin_bottom = 22.0
 
-[node name="DirLabel" type="Label" parent="Runner/Options"]
+[node name="DirLabel" type="Label" parent="GUI/Options"]
 margin_left = 112.0
 margin_top = 4.0
 margin_right = 175.0
@@ -60,7 +60,7 @@ margin_bottom = 18.0
 text = "Directory:"
 align = 1
 
-[node name="SelectDir" type="OptionButton" parent="Runner/Options"]
+[node name="DirectorySelector" type="OptionButton" parent="GUI/Options"]
 margin_left = 185.0
 margin_right = 516.0
 margin_bottom = 22.0
@@ -76,12 +76,12 @@ align = 1
 items = [ "res://tests", null, false, 0, null, "res://tests/Bootstrapping", null, false, 1, null, "res://tests/Bootstrapping/End2End", null, false, 2, null, "res://tests/Bootstrapping/Integration", null, false, 3, null, "res://tests/Bootstrapping/Unit", null, false, 4, null ]
 selected = 0
 
-[node name="VSeparator2" type="VSeparator" parent="Runner/Options"]
+[node name="VSeparator2" type="VSeparator" parent="GUI/Options"]
 margin_left = 526.0
 margin_right = 530.0
 margin_bottom = 22.0
 
-[node name="ScriptLabel" type="Label" parent="Runner/Options"]
+[node name="ScriptLabel" type="Label" parent="GUI/Options"]
 margin_left = 540.0
 margin_top = 4.0
 margin_right = 580.0
@@ -89,7 +89,7 @@ margin_bottom = 18.0
 text = "Script:"
 align = 1
 
-[node name="SelectScript" type="OptionButton" parent="Runner/Options"]
+[node name="ScriptSelector" type="OptionButton" parent="GUI/Options"]
 margin_left = 590.0
 margin_right = 921.0
 margin_bottom = 22.0
@@ -98,12 +98,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 align = 1
 
-[node name="VSeparator3" type="VSeparator" parent="Runner/Options"]
+[node name="VSeparator3" type="VSeparator" parent="GUI/Options"]
 margin_left = 931.0
 margin_right = 935.0
 margin_bottom = 22.0
 
-[node name="More" type="MenuButton" parent="Runner/Options"]
+[node name="More" type="MenuButton" parent="GUI/Options"]
 margin_left = 945.0
 margin_right = 1009.0
 margin_bottom = 22.0
@@ -111,7 +111,7 @@ text = "More"
 icon = ExtResource( 3 )
 items = [ "Add Script Templates", null, 0, false, false, 0, 0, null, "", false, "Print Stray Nodes", null, 0, false, false, 1, 0, null, "", false ]
 
-[node name="Overwrite" type="ConfirmationDialog" parent="Runner/Options/More"]
+[node name="Overwrite" type="ConfirmationDialog" parent="GUI/Options/More"]
 margin_right = 200.0
 margin_bottom = 70.0
 popup_exclusive = true
@@ -119,19 +119,10 @@ window_title = "Templates Exist"
 resizable = true
 dialog_text = "Templates already exist. Do you want to overwrite them?"
 
-[node name="Results" type="TabContainer" parent="Runner"]
-margin_top = 26.0
-margin_right = 1010.0
+[node name="Results" parent="GUI" instance=ExtResource( 4 )]
 margin_bottom = 552.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/top_margin = 0
-custom_constants/side_margin = 0
-tab_align = 0
-drag_to_rearrange_enabled = true
-script = ExtResource( 4 )
 
-[node name="Details" type="HBoxContainer" parent="Runner"]
+[node name="Info" type="HBoxContainer" parent="GUI"]
 margin_top = 556.0
 margin_right = 1010.0
 margin_bottom = 586.0
@@ -140,7 +131,7 @@ size_flags_horizontal = 3
 custom_constants/separation = 50
 alignment = 2
 
-[node name="Timer" type="Label" parent="Runner/Details"]
+[node name="Timer" type="Label" parent="GUI/Info"]
 margin_left = 708.0
 margin_top = 8.0
 margin_right = 786.0
@@ -149,15 +140,15 @@ text = "Not Running"
 align = 2
 script = ExtResource( 5 )
 
-[node name="VSeparator" type="VSeparator" parent="Runner/Details"]
+[node name="VSeparator" type="VSeparator" parent="GUI/Info"]
 margin_left = 836.0
 margin_right = 840.0
 margin_bottom = 30.0
 
-[node name="RunCount" type="Label" parent="Runner/Details"]
+[node name="RunCount" type="Label" parent="GUI/Info"]
 margin_left = 890.0
 margin_top = 8.0
 margin_right = 1010.0
 margin_bottom = 22.0
 text = "Ran Tests: 0 Times"
-[connection signal="confirmed" from="Runner/Options/More/Overwrite" to="Runner/Options" method="copy_script_templates"]
+[connection signal="confirmed" from="GUI/Options/More/Overwrite" to="GUI/Options" method="copy_script_templates"]
