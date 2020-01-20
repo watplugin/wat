@@ -90,3 +90,44 @@ WAT Version 5.0.0
     have the implementation loaded into memory. From here we can instance it. So we
     no longer have to rely on the filesystem to create test doubles. This should
     significantly improve performance if you were heavy on test doubles beforehand.
+
+# 20th January
+
+The Holidays are over but friends do I have a gift for you!
+
+- WAT now runs in the scene context!
+
+    Don't worry! As a user you will still be using WAT through the Editor Interface but I did some trickery behind
+    the scenes which means when you click run WAT will now run in the Scene context (as if it were a game) instead of
+    the Editor context. This is important for two HUGE reasons;
+
+        1. Autoloads do not exist for the editor. Only for the games in Godot! This change now allows the use of autoloads
+        within tests. I'll leave it up to you to decide if that's good or not!
+
+        2. You can now debug your tests! If a test is giving you trouble, you can set two breakpoints between the start and end of it
+        to thoroughly debug it! Similar to Autoloads previously, you couldn't access debugging features in the tests (you also couldn't
+        use methods like get_stack(), print_stack() or print_debug() but you can now). I can't express to you just how excited I am
+        about how much more useful this makes WAT.
+
+- Command Line Interface is now a Scene
+
+    With the changes made to WAT on the visual end to run as a scene. I wanted the same ability for the CLI. So I've changed
+    it to a scene. You still use it in the exact same way except no need for the prefixed -s and of course .gd becomes .tscn.
+
+    You can debug command line tests by adding in -d option
+
+        .e.g godot -d addons/WAT/cli.tscn -run_script="res://test/unit/mario.jump.test.gd"
+
+- Added an "Expand Failures" option
+
+    This expands all failure-based methods (right down to their base details) while collpsing all 100% passed tests, so you
+    can get straight to the heart of the problem immediatly!
+
+- Renamed TestSuite to TestSuiteOfSuites
+
+    I've been reading a lot of xUnit Test Patterns by Gerard Mezaros. I'm trying to round out WAT's lexicon to be similair so
+    this is something of a start. If Godot ever gets namespaces, it would be a lot easier!
+
+- Give ResultsView a Minimum Height
+
+    Mainly so you don't have to keep dragging it up every time you open it.
