@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/more_button.svg-71bd61a04ab9b0efdc9f37b77b42c2e6.stex"
+path="res://.import/failed.png-d1ba3df6b3c60f11760e4698aa27915c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/WAT/ui/icons/more_button.svg"
-dest_files=[ "res://.import/more_button.svg-71bd61a04ab9b0efdc9f37b77b42c2e6.stex" ]
+source_file="res://addons/WAT/icons/failed.png"
+dest_files=[ "res://.import/failed.png-d1ba3df6b3c60f11760e4698aa27915c.stex" ]
 
 [params]
 
