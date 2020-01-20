@@ -118,6 +118,12 @@ The Holidays are over but friends do I have a gift for you!
 
         .e.g godot -d addons/WAT/cli.tscn -run_script="res://test/unit/mario.jump.test.gd"
 
+- Yields can now be used in all of the virtual methods in test
+
+    The test controller has been reworked into something of a state machine that can be influenced by the yielder. Essentially
+    this means you can now yield in start(), pre(), post() and end() as well as test methods. You can also yield as many times
+    as you like without issue!
+
 - Added an "Expand Failures" option
 
     This expands all failure-based methods (right down to their base details) while collpsing all 100% passed tests, so you
