@@ -65,3 +65,7 @@ func expand_all():
 func collapse_all():
 	for results in get_children():
 		results.collapse_all()
+		
+func expand_failures():
+	for results in get_children():
+		results.expand_failures()

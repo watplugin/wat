@@ -1,7 +1,7 @@
 tool
 extends VBoxContainer
 
-enum RESULTS { EXPAND_ALL, COLLAPSE_ALL }
+enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
 const NOTHING_SELECTED: int = -1
 const INVALID_PATH: String = ""
 onready var RunOptions: MenuButton = $Options/Run.get_popup()
@@ -25,6 +25,7 @@ func _ready() -> void:
 	RunOptions.add_item("Run Selected Script")
 	ViewOptions.add_item("Expand All Results")
 	ViewOptions.add_item("Collapse All Results")
+	ViewOptions.add_item("Expand All Failures")
 	MoreOptions.add_item("Add Script Templates")
 	MoreOptions.add_item("Print Stray Nodes")
 	DirectorySelector.connect("pressed", self, "_on_directory_selector_pressed")
@@ -54,3 +55,5 @@ func _on_view_pressed(id: int) -> void:
 			Results.expand_all()
 		RESULTS.COLLAPSE_ALL:
 			Results.collapse_all()
+		RESULTS.EXPAND_FAILURES:
+			Results.expand_failures()
