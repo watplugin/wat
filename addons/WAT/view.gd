@@ -50,7 +50,6 @@ func _on_script_selector_pressed() -> void:
 			if load(script).get("TEST") != null:
 				ScriptSelector.add_item(script)
 			if load(script).get("IS_WAT_SUITE"):
-				push_warning("script added: %s" % script)
 				ScriptSelector.add_item(script)
 			
 func _on_view_pressed(id: int) -> void:
