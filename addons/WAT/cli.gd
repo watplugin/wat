@@ -1,18 +1,55 @@
 extends Node
 
+const RUN_ALL: String = "-run_all"
+const RUN_DIRECTORY: String = "-run_dir"
+const RUN_SCRIPT: String = "-run_script"
+const LIST_ALL: String = "-list_all"
+const LIST_DIR: String = "-list_dir"
 const PASSED: int = 0
 const FAILED: int = 1
 const TestRunner: PackedScene = preload("res://addons/WAT/runner/TestRunner.tscn")
 const FileSystem: Reference = preload("res://addons/WAT/filesystem.gd")
-var _runner: Node = TestRunner.instance()
+var _runner: Node
 var _start_time: float
 
-func _init() -> void:
-	WAT.DefaultConfig.test_loader.deposit(FileSystem.scripts("res://tests"))
+func _ready() -> void:
+	parse(arguments())
+	
+func arguments() -> Array:
+	return Array(OS.get_cmdline_args()).pop_back().split("=") as Array
+	
+func parse(arguments) -> void:
+	var command: String = arguments.pop_front()
+	match command:
+		RUN_ALL:
+			_run(_default_directory())
+		RUN_DIRECTORY:
+			_run(arguments.pop_front())
+		RUN_SCRIPT:
+			_run(arguments.pop_front())
+		LIST_ALL:
+			_list()
+			get_tree().quit()
+		LIST_DIR:
+			_list(arguments.pop_front())
+			get_tree().quit()
+		_:
+			push_error("Invalid Argument")
+			get_tree().quit()
+			
+func _default_directory() -> String:
+	return ProjectSettings.get("WAT/Test_Directory")
+			
+func _list(path: String = _default_directory()):
+	print()
+	print(FileSystem.scripts(path))
+
+func _run(path) -> void:
+	_runner = TestRunner.instance()
+	WAT.DefaultConfig.test_loader.deposit(FileSystem.scripts(path))
 	_runner.connect("ended", self, "_on_testrunner_ended", [])
 	_start_time = OS.get_ticks_msec()
 	add_child(_runner)
-	print("Running WAT CLI!")
 
 func _on_testrunner_ended() -> void:
 	_runner.queue_free()
