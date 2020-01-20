@@ -72,8 +72,8 @@ func watch(emitter, event: String) -> void:
 func unwatch(emitter, event: String) -> void:
 	watcher.unwatch(emitter, event)
 
-func clear_temp():
-	emit_signal("clear")
+#func clear_temp():
+#	emit_signal("clear")
 
 ## Untested
 ## Thanks to bitwes @ https://github.com/bitwes/Gut/
@@ -98,4 +98,3 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_EXIT_TREE:
 		# This is apparently necessary?
 		direct.clear()
-		clear_temp()
