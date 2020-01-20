@@ -2,7 +2,7 @@ extends Reference
 class_name WAT
 
 const Test = preload("test.gd")
-const TestSuite = preload("suite.gd")
+const TestSuiteOfSuites = preload("suite.gd")
 const Yielder = preload("yielder.gd")
 const Asserts = preload("res://addons/WAT/expectations/0_index.gd")
 const TestCase = preload("case.gd")

@@ -14,6 +14,9 @@ func withdraw() -> Array:
 		var test = load(path) if path is String else path
 		if test.get("TEST") != null:
 			tests.append(test)
+		if test.get("IS_WAT_SUITE"):
+			for subtest in test.new().subtests():
+				tests.append(subtest)
 	_tests = []
 	ResourceSaver.save(resource_path, self)
 	return tests

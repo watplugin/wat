@@ -4,12 +4,9 @@ const IS_WAT_SUITE: bool = true
 
 func subtests() -> Array:
 	var tests: Array = []
-	var source = get_script().source_code
-	for l in source.split("\n"):
-		if l.begins_with("class"):
-			var classname = l.split(" ")[1]
-			var expr = Expression.new()
-			expr.parse(classname)
-			var t = expr.execute([], self)
-			tests.append(t)
+	for constant in get_script().get_script_constant_map():
+		var expression: Expression = Expression.new()
+		expression.parse(constant)
+		var test = expression.execute([], self)
+		tests.append(test)
 	return tests
