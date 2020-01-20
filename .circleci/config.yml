@@ -9,13 +9,13 @@ jobs:
         - checkout
         - run:
             name: "Run All Tests"
-            command: godot -s addons/WAT/cli.gd -run_all
+            command: godot addons/WAT/cli.tscn -run_all
         - run:
             name: "Run Unit Tests"
-            command: godot -s addons/WAT/cli.gd -run_dir=res://tests/Bootstrapping/Unit
+            command: godot addons/WAT/cli.tscn -run_dir=res://tests/Bootstrapping/Unit
         - run:
             name: "Run Integration Tests"
-            command: godot -s addons/WAT/cli.gd -run_dir=res://tests/Bootstrapping/Integration
+            command: godot addons/WAT/cli.tscn -run_dir=res://tests/Bootstrapping/Integration
         - run:
             name: "Run End-To-End Tests"
-            command: godot -s addons/WAT/cli.gd -run_dir=res://tests/Bootstrapping/End2End
+            command: godot addons/WAT/cli.tscn -run_dir=res://tests/Bootstrapping/End2End
