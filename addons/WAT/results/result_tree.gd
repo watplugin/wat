@@ -1,7 +1,4 @@
-[gd_scene load_steps=2 format=2]
-
-[sub_resource type="GDScript" id=1]
-script/source = "tool
+tool
 extends Tree
 
 const PASSED: Color = Color(0, 1, 0, 1)
@@ -20,14 +17,14 @@ func display(cases: Array) -> void:
 	for c in cases:
 		passed += c.success as int
 		var script = create_item(root)
-		script.set_text(0, \"(%s/%s) %s\" % [c.passed, c.total, c.context])
+		script.set_text(0, "(%s/%s) %s" % [c.passed, c.total, c.context])
 		script.set_custom_color(0, _color(c.success))
 		script.set_icon(0, _icon(c.success))
 		_cache.append(script)
 		
 		for m in c.methods:
 			var method = create_item(script)
-			method.set_text(0, \"%s\" % m.context)
+			method.set_text(0, "%s" % m.context)
 			method.set_custom_color(0, _color(m.success))
 			method.set_icon(0, _icon(m.success))
 			_cache.append(method)
@@ -41,15 +38,15 @@ func display(cases: Array) -> void:
 				
 				var expected = create_item(assertion)
 				var actual = create_item(assertion)
-				expected.set_text(0, \"EXPECTED: %s\" % a.expected)
-				actual.set_text(0, \"RESULTED: %s\" % a.actual)
+				expected.set_text(0, "EXPECTED: %s" % a.expected)
+				actual.set_text(0, "RESULTED: %s" % a.actual)
 				
 	var success = total > 0 and total == passed
-	root.set_text(0, \"%s/%s\" % [passed, total])
+	root.set_text(0, "%s/%s" % [passed, total])
 	root.set_custom_color(0, _color(success))
 	root.set_icon(0, _icon(success))
-#	name = \"(%s|%s)\" % [passed, total]
-	emit_signal(\"calculated\", self, passed, total, success)
+#	name = "(%s|%s)" % [passed, total]
+	emit_signal("calculated", self, passed, total, success)
 
 func _color(success: bool) -> Color:
 	return PASSED if success else FAILED
@@ -64,22 +61,3 @@ func expand_all() -> void:
 func collapse_all() -> void:
 	for item in _cache:
 		item.collapsed = true
-"
-
-[node name="Tests" type="PanelContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = SubResource( 1 )
-
-[node name="Display" type="Tree" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1009.0
-margin_bottom = 557.0
-hide_root = true

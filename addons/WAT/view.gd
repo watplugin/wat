@@ -1,5 +1,5 @@
 tool
-extends HBoxContainer
+extends VBoxContainer
 
 enum RESULTS { EXPAND_ALL, COLLAPSE_ALL }
 const NOTHING_SELECTED: int = -1
