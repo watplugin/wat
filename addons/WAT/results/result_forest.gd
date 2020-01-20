@@ -41,7 +41,7 @@ func sort(results: Array) -> Dictionary:
 	var sorted: Dictionary = {}
 	for result in results:
 		var end: int = result.path.find_last("/")
-		var path: String = result.path.substr(0, end).replace("res://tests/", "").replace("/", " ").capitalize()
+		var path: String = result.path.substr(0, end).replace("res://", "").replace("tests/", "").replace("/", " ").capitalize()
 		if sorted.has(path):
 			sorted[path].append(result)
 		else:
