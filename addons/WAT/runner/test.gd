@@ -72,9 +72,6 @@ func watch(emitter, event: String) -> void:
 func unwatch(emitter, event: String) -> void:
 	watcher.unwatch(emitter, event)
 
-#func clear_temp():
-#	emit_signal("clear")
-
 ## Untested
 ## Thanks to bitwes @ https://github.com/bitwes/Gut/
 func simulate(obj, times, delta):
@@ -93,8 +90,3 @@ func until_signal(emitter: Object, event: String, time_limit: float) -> Node:
 
 func until_timeout(time_limit: float) -> Node:
 	return _yielder.until_timeout(time_limit)
-
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_EXIT_TREE:
-		# This is apparently necessary?
-		direct.clear()

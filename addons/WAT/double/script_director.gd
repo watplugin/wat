@@ -1,5 +1,4 @@
- extends Object
-#tool
+extends Reference
 
 const STATIC: String = "static "
 const REMOTE: String = "remote "
@@ -34,10 +33,9 @@ func method(name: String, keyword: String = "") -> Method:
 		methods[name] = Method.new(name, keyword, base_methods[name])
 	return methods[name]
 
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_PREDELETE:
-		if object is Object and not object is Reference and is_instance_valid(object):
-			object.free()
+func clear():
+	if object is Object and not object is Reference and is_instance_valid(object):
+		object.free()
 	object = null
 
 func call_count(method: String) -> int:

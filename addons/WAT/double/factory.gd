@@ -8,13 +8,11 @@ var _count: int = 0
 
 func script(path, inner_class: String = "", dependecies: Array = []):
 	path = path if path is String else path.resource_path
-	var script_director: Object = _create_save_and_load_director(path, inner_class, dependecies)
-	var base: Object = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
-	_cache.append(base)
+	var script_director: Reference = _create_save_and_load_director(path, inner_class, dependecies)
+	var base = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
 	base = base.callv("new", script_director.dependecies)
-	_cache.append(base)
 	script_director = _collect_methods(script_director, base)
-	_cache.append(script_director)
+	if not base is Reference: base.free()
 	return script_director
 	
 func _collect_methods(director, base):
@@ -60,9 +58,3 @@ func _load_nested_class(path, inner: String) -> Script:
 	var script = load(path)
 	expression.parse("%s" % [inner])
 	return expression.execute([], script, true)
-
-func clear() -> void:
-	while not _cache.empty():
-		var item = _cache.pop_back()
-		if item is Object and not item is Reference and is_instance_valid(item):
-			item.free()

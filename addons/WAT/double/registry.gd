@@ -14,10 +14,8 @@ func method(instance_id: int, method: String) -> Object:
 	return test_directors[instance_id].methods[method]
 	
 func clear():
-	pass
-#	var directors = test_directors.values()
-#	while not directors.empty():
-#		var director = directors.pop_back()
-##		if is_instance_valid(director):
-#		director.clear()
-##	queue_free()
+	var directors = test_directors.values()
+	while not directors.empty():
+		var director = directors.pop_back()
+		director.clear()
+	queue_free()
