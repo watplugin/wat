@@ -6,9 +6,10 @@ jobs:
       - image: codedarigan/wat_godot_3.2rc2
 
     steps:
-        - sudo apt-get update
-        - sudo apt-get install libc6
         - checkout
+        - command: |
+          - sudo apt-get update
+          - sudo apt-get install libc6
         - run:
             name: "Run Unit Tests"
             command: godot addons/WAT/cli.tscn -run_dir=res://tests/Bootstrapping/Unit
