@@ -28,7 +28,7 @@ func configure(config: Resource) -> void:
 func _run() -> void:
 	if _tests.empty():
 		_test_results.deposit(_cases)
-		clear()
+		WAT.clear()
 		emit_signal("ended")
 		add_child(_exit)
 		if name == MAIN:
@@ -37,12 +37,6 @@ func _run() -> void:
 		return
 	var adapter = _setup_test()
 	adapter.start()
-
-func clear():
-	# Using WAT causes problems!
-	if ProjectSettings.has_setting("WAT/TestDouble"):
-		ProjectSettings.get_setting("WAT/TestDouble").clear()
-		ProjectSettings.get_setting("WAT/TestDouble").free()
 	
 func _setup_test():
 	var test = _tests.pop_front().new()
