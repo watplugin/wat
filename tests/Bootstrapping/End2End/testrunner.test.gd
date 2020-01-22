@@ -1,9 +1,7 @@
 extends WAT.Test
 
-# Scene
-# Loader
-# Results
-# CreationMethod
+# This Test doesn't work in Godot 3.1 because Arrays are shared
+# between different instances of resources so end up mixing our results
 const TestRunner = preload("res://addons/WAT/runner/TestRunner.tscn")
 const FakeConfig: Resource = preload("res://tests/mocks/fake_config.tres")
 var _runner: Node
