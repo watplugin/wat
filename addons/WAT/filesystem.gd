@@ -1,16 +1,19 @@
 extends Reference
 
 # This is an assumption until we have a better interface
-const TEST_FOLDER: String = "res://tests"
+#const test_folder(): String = "res://tests"
 const DIR_EXISTS: String = "dir_exists"
 const FILE_EXISTS: String = "file_exists"
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 const BLANK: String = ""
 
-static func scripts(path: String = TEST_FOLDER) -> PoolStringArray:
+static func test_folder():
+	return ProjectSettings.get_setting("WAT/Test_Directory")
+
+static func scripts(path: String = test_folder()) -> PoolStringArray:
 	return _parse_for_tests(FILE_EXISTS, _list_dir(path))
 	
-static func directories(path: String = TEST_FOLDER) -> PoolStringArray:
+static func directories(path: String = test_folder()) -> PoolStringArray:
 	return _parse_for(DIR_EXISTS, _list_dir(path))
 	
 static func _list_dir(path: String) -> PoolStringArray:

@@ -20,7 +20,7 @@ func _ready() -> void:
 func _on_run_pressed(option: int) -> void:
 	match option:
 		RUN.ALL:
-			_run("res://tests")
+			_run(ProjectSettings.get_setting("WAT/Test_Directory"))
 		RUN.DIRECTORY:
 			_run(GUI.selected(GUI.DirectorySelector))
 		RUN.SCRIPT:
