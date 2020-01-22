@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: codedarigan/godot32
+      - image: codedarigan/wat_godot_3.2rc2
 
     steps:
         - checkout
