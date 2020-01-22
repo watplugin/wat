@@ -6,7 +6,8 @@ jobs:
       - image: codedarigan/wat_godot_3.2rc2
 
     steps:
-        - apt-get install libc6
+        - sudo apt-get update
+        - sudo apt-get install libc6
         - checkout
         - run:
             name: "Run Unit Tests"
