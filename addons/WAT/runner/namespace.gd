@@ -16,4 +16,3 @@ static func clear():
 	if ProjectSettings.has_setting("WAT/TestDouble"):
 		ProjectSettings.get_setting("WAT/TestDouble").clear()
 		ProjectSettings.get_setting("WAT/TestDouble").free()
-#	push_warning("Not Implemented")
