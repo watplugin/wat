@@ -4,7 +4,7 @@ var total: int = 0
 var passed: int = 0
 var title: String
 var path: String
-var methods: Array
+var methods: Array = []
 var success: bool = false
 
 func _on_test_method_described(description: String) -> void:
