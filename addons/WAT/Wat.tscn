@@ -44,7 +44,7 @@ margin_left = 46.0
 margin_right = 88.0
 margin_bottom = 22.0
 text = "View"
-items = [ "Expand All Results", null, 0, false, false, 0, 0, null, "", false, "Collapse All Results", null, 0, false, false, 1, 0, null, "", false ]
+items = [ "Expand All Results", null, 0, false, false, 0, 0, null, "", false, "Collapse All Results", null, 0, false, false, 1, 0, null, "", false, "Expand All Failures", null, 0, false, false, 2, 0, null, "", false ]
 switch_on_hover = true
 
 [node name="VSeparator" type="VSeparator" parent="GUI/Options"]

@@ -20,6 +20,7 @@ func _ready() -> void:
 	RunOptions.clear()
 	ViewOptions.clear()
 	MoreOptions.clear()
+	RunOptions.connect("id_pressed", self, "_add_run_count")
 	RunOptions.add_item("Run All Tests")
 	RunOptions.add_item("Run Selected Directory")
 	RunOptions.add_item("Run Selected Script")
@@ -51,6 +52,11 @@ func _on_script_selector_pressed() -> void:
 				ScriptSelector.add_item(script)
 			if load(script).get("IS_WAT_SUITE"):
 				ScriptSelector.add_item(script)
+
+var _run_count: int = 0
+func _add_run_count(id):
+	_run_count += 1
+	$Info/RunCount.text = "Ran Tests: %s times" % _run_count as String
 			
 func _on_view_pressed(id: int) -> void:
 	match id:
