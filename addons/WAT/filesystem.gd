@@ -11,7 +11,11 @@ static func test_folder():
 	return ProjectSettings.get_setting("WAT/Test_Directory")
 
 static func scripts(path: String = test_folder()) -> PoolStringArray:
-	return _parse_for_tests(FILE_EXISTS, _list_dir(path))
+	if path.ends_with(".gd"):
+		var list: PoolStringArray = [path]
+		return list
+	else:
+		return _parse_for_tests(FILE_EXISTS, _list_dir(path))
 	
 static func directories(path: String = test_folder()) -> PoolStringArray:
 	return _parse_for(DIR_EXISTS, _list_dir(path))
