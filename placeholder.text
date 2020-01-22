@@ -1,0 +1,65 @@
+# Changelist
+
+- WAT now runs in game context (not editor context)
+
+Users will still use WAT from the sleek editor interface but when "run" is clicked, WAT will start the testrunner scene as if it were a game. This allows us access to a number of things not present in previous versions:
+
+  - Debugging Tests
+
+![image](https://user-images.githubusercontent.com/47497501/72807569-9bab5000-3c4f-11ea-844b-d382f3484472.png)
+
+The Editor can debug games. It cannot debug itself. Previously WAT ran in the editor context so it didn't have access to this. Now that it runs (specifically the testrunner scene itself) as a game it can. Between a comprehensive collection of tests and access to this when you're having trouble, bugs won't have anywhere to hide.
+
+In addition to the above you can now also use print_debug(), print_stack() and get_stack() and Autoloads
+to work inside tests.
+
+- Command Line Interface is now a scene
+
+In trying to keep up with the the above change. The command line interface is now a scene. So you no longer
+require the -s prefix and should change .gd to tscn.
+
+godot -s addons/WAT/cli.gd becomes godot addons/WAT/cli.tscn
+
+(You can run this in debug mode as well with godot -d addons/WAT/cli.tscn)
+
+- Updated UI
+
+![image](https://user-images.githubusercontent.com/47497501/72805780-8fbd8f00-3c4b-11ea-83ad-36847b53a24e.png)
+
+    UI Panel moved to the bottom panel to help prevent unnecessary context switching.
+    (Basically you can see the immediate code you're testing)
+
+- Added TestSuiteOfSuites
+
+![image](https://user-images.githubusercontent.com/47497501/72806648-7fa6af00-3c4d-11ea-8d37-2d8955d37741.png)
+
+You can now contain multiple test classes in one script by extending the parent script from WAT.TestSuiteOfSuites. This only works in 3.2 thanks to the introduction of get_script_constant_map() that doesn't exist in 3.1
+
+- Test Doubles now only exist in memory
+
+Test Doubles previously required a helper resource to be saved in the temporary folder. No longer. They now exist purely in memory. If you used many test doubles before, this will absolutely speed up your tests.
+
+- You can now yield in all virtual test methods (start, pre, post, end as well as any test_METHOD)
+
+- Script Templates
+
+![image](https://user-images.githubusercontent.com/47497501/72806281-c47e1600-3c4c-11ea-8e67-dd68a1d6a5d9.png)
+
+Godot 3.2 introduces a script template feature that allows you to generate base scripts. WAT has implemented one for its base WATTest/WAT.Test script
+
+- Added Expand All Failures option
+
+![image](https://user-images.githubusercontent.com/47497501/72807219-cea11400-3c4e-11ea-9823-01c80a09dc81.png)
+
+You can use this to expand all tests that contain any failures right down to the details. Any tests that passed 100% and any passing assertions will be collapsed as well clearing the way. (In future this might hide all passing tests from view for an even better picture).
+
+# Fixes
+
+- CLI now sets actual exit codes instead of just printing strings. Great for anyone who wants to use CI/CD platforms.
+
+- Fix name conflict with Godot's new _to_string method
+
+- Fix segfault on Linux
+
+- Fix CLI quitting too early when yielding on tests (we were quitting immediately, it now waits until the runner 
+ends)
