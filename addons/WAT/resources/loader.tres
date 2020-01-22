@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource( 1 )
-_tests = [ "res://tests/Bootstrapping/End2End/testrunner.test.gd", "res://tests/Bootstrapping/Integration/scene_director.test.gd", "res://tests/Bootstrapping/Integration/script_director.test.gd", "res://tests/Bootstrapping/Integration/test_double.test.gd", "res://tests/Bootstrapping/Unit/suite.test.gd", "res://tests/Bootstrapping/Unit/watcher.test.gd", "res://tests/Bootstrapping/Unit/yield.test.gd", "res://tests/mocks/exit.gd" ]
+_tests = [  ]

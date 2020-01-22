@@ -2,11 +2,13 @@ tool
 extends EditorPlugin
 
 const TITLE: String = "Tests"
-const RUN_CURRENT_SCENE: int = 39
+const RUN_CURRENT_SCENE_GODOT_3_2: int = 39
+const RUN_CURRENT_SCENE_GODOT_3_1: int = 33
 const UI: PackedScene = preload("res://addons/WAT/Wat.tscn")
 var interface: PanelContainer
 
 func _enter_tree() -> void:
+	print(Engine.get_version_info())
 	_create_test_folder()
 	_create_temp_folder()
 	interface = UI.instance()
@@ -35,4 +37,9 @@ func _create_test_folder() -> void:
 
 func _on_test_runner_started(test_runner_path: String) -> void:
 	get_editor_interface().open_scene_from_path(test_runner_path)
-	get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE)
+	var version = Engine.get_version_info()
+	if version.major == 3 and version.minor == 1:
+		get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_1)
+	elif version.major == 3 and version.minor == 2:
+		get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_2)
+		
