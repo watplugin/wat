@@ -13,9 +13,10 @@ func register(director) -> void:
 func method(instance_id: int, method: String) -> Object:
 	return test_directors[instance_id].methods[method]
 	
-func clear():
-	var directors = test_directors.values()
-	while not directors.empty():
-		var director = directors.pop_back()
-		director.clear()
-	queue_free()
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		var directors = test_directors.values()
+		while not directors.empty():
+			var director = directors.pop_back()
+			director.clear()
+		queue_free()
