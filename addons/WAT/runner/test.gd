@@ -90,3 +90,7 @@ func until_signal(emitter: Object, event: String, time_limit: float) -> Node:
 
 func until_timeout(time_limit: float) -> Node:
 	return _yielder.until_timeout(time_limit)
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		direct.clear()

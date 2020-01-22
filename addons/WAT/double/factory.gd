@@ -12,7 +12,7 @@ func script(path, inner_class: String = "", dependecies: Array = []):
 	var base = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
 	base = base.callv("new", script_director.dependecies)
 	script_director = _collect_methods(script_director, base)
-	if not base is Reference: base.free()
+	_cache.append(base)
 	return script_director
 	
 func _collect_methods(director, base):
@@ -58,3 +58,9 @@ func _load_nested_class(path, inner: String) -> Script:
 	var script = load(path)
 	expression.parse("%s" % [inner])
 	return expression.execute([], script, true)
+	
+func clear():
+	while not _cache.empty():
+		var item = _cache.pop_back()
+		if item is Object and not item is Reference and is_instance_valid(item):
+			item.free()
