@@ -14,7 +14,7 @@ func withdraw() -> Array:
 		var test = load(path) if path is String else path
 		if test.get("TEST") != null:
 			tests.append(test)
-		if test.get("IS_WAT_SUITE"):
+		elif test.get("IS_WAT_SUITE") and Engine.get_version_info().minor == 2:
 			for constant in test.get_script_constant_map():
 				var expression: Expression = Expression.new()
 				expression.parse(constant)
@@ -22,6 +22,8 @@ func withdraw() -> Array:
 				if subtest.get("TEST") != null:
 					subtest.set_meta("path", "%s.%s" % [path, constant])
 					tests.append(subtest)
+		elif Engine.get_version_info().minor == 1:
+			push_warning("WAT.TestSuiteOfSuite only works in Godot 3.2 or higher")
 	_tests = []
 	ResourceSaver.save(resource_path, self)
 	return tests

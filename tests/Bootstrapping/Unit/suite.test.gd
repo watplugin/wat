@@ -1,9 +1,6 @@
 extends WAT.TestSuiteOfSuites
 
 class DummyOne extends WAT.Test:
-	
-	func suite():
-		return 
 
 	func title():
 		return "Dummy Passing Test"

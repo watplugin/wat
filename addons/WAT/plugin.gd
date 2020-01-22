@@ -8,7 +8,6 @@ const UI: PackedScene = preload("res://addons/WAT/Wat.tscn")
 var interface: PanelContainer
 
 func _enter_tree() -> void:
-	print(Engine.get_version_info())
 	_create_test_folder()
 	_create_temp_folder()
 	interface = UI.instance()
