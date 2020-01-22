@@ -28,7 +28,7 @@ func _on_run_pressed(option: int) -> void:
 
 func _run(path: String) -> void:
 	var testpaths: PoolStringArray = [path] if path.ends_with(".gd") else FileSystem.scripts(path)
-	if testpaths.empty():
+	if Array(testpaths).empty():
 		push_warning("No Scripts To Test")
 		return
 	WAT.DefaultConfig.test_loader.deposit(testpaths) # Eliminate Invalid Files (maybe in save?)
