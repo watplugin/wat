@@ -29,9 +29,15 @@ func _ready() -> void:
 	ViewOptions.add_item("Expand All Failures")
 	MoreOptions.add_item("Add Script Templates")
 	MoreOptions.add_item("Print Stray Nodes")
+	connect("draw", self, "_show_dir")
 	DirectorySelector.connect("pressed", self, "_on_directory_selector_pressed")
 	ScriptSelector.connect("pressed", self, "_on_script_selector_pressed")
 	ViewOptions.connect("id_pressed", self, "_on_view_pressed")
+	
+func _show_dir():
+	DirectorySelector.clear()
+	DirectorySelector.add_item(ProjectSettings.get_setting("WAT/Test_Directory"))
+	update()
 	
 func selected(selector: OptionButton) -> String:
 	if selector.selected == NOTHING_SELECTED:
@@ -41,6 +47,7 @@ func selected(selector: OptionButton) -> String:
 	
 func _on_directory_selector_pressed() -> void:
 	DirectorySelector.clear()
+	DirectorySelector.add_item(ProjectSettings.get_setting("WAT/Test_Directory"))
 	for directory in filesystem.directories():
 		DirectorySelector.add_item(directory)
 		
