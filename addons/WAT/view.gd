@@ -13,6 +13,7 @@ onready var ScriptSelector: OptionButton = $Options/ScriptSelector
 onready var Results: TabContainer = $Results
 onready var Info: HBoxContainer = $Info
 var filesystem
+var current_main_dir = ProjectSettings.get_setting("WAT/Test_Directory")
 
 func _ready() -> void:
 	name = "GUI"
@@ -33,6 +34,11 @@ func _ready() -> void:
 	DirectorySelector.connect("pressed", self, "_on_directory_selector_pressed")
 	ScriptSelector.connect("pressed", self, "_on_script_selector_pressed")
 	ViewOptions.connect("id_pressed", self, "_on_view_pressed")
+	
+func _process(delta: float) -> void:
+	if ProjectSettings.get_setting("WAT/Test_Directory") != current_main_dir:
+		current_main_dir = ProjectSettings.get_setting("WAT/Test_Directory")
+		_show_dir()
 	
 func _show_dir():
 	DirectorySelector.clear()
