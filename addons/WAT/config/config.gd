@@ -1,5 +1,4 @@
 extends Resource
-class_name Config
 
 #export(String, FILE) var test_loader = "res://addons/WAT/runner/loader.gd"
 export(Resource) var test_loader = preload("res://addons/WAT/resources/loader.tres")
