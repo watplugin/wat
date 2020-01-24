@@ -27,21 +27,18 @@ func configure(config: Resource) -> void:
 
 func begin() -> void:
 	if _tests.empty():
-		_test_results.deposit(_cases)
-		WAT.clear()
 		end()
 		return
-	var test = _setup_test()
-	add_child(test)
+	run()
+
 	
-func _setup_test():
-	var test = _tests.pop_front().new()
+func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	var testcase = WAT.TestCase.new(test.title(), test.path())
 	test.connect("finish", self, "_on_test_finished", [test, testcase])
 	test.connect("finish", self, "begin", [], CONNECT_DEFERRED)
 	test.setup(WAT.Asserts.new(), WAT.Yielder.new(), testcase, WAT.TestDoubleFactory.new(), \
 					 WAT.SignalWatcher.new(), WAT.Parameters.new())
-	return test
+	add_child(test)
 	
 func _on_test_finished(adapter, testcase) -> void:
 	testcase.calculate()
@@ -51,6 +48,8 @@ func _on_test_finished(adapter, testcase) -> void:
 	
 func end() -> void:
 	if name == MAIN: print("Ending WAT Test Runner")
+	_test_results.deposit(_cases)
 	emit_signal("ended")
 	add_child(_exit)
+	WAT.clear()
 	_exit.execute()
