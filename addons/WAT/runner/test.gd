@@ -1,4 +1,4 @@
-extends Node
+extends "base_test.gd"
 class_name WATTest
 
 const TEST: String = "Test"
@@ -18,7 +18,7 @@ var p: Dictionary
 var rerun_method: bool = false
 signal described
 signal clear
-var _yielder
+#var _yielder
 var _testcase
 
 func methods() -> PoolStringArray:

@@ -8,21 +8,26 @@ class State:
 	const END: String = "end"
 	
 var _state: String # start, pre, execute, post, end
-var _test: WAT.Test
-var _yielder: WAT.Yielder # = load("res://addons/WAT/runner/_yielder.gd").new()
+#var _test: WA
+var _yielder # = load("res://addons/WAT/runner/_yielder.gd").new()
 var _methods: Array = []
 signal finish
 
-func _init(test: WAT.Test, yielder: WAT.Yielder) -> void:
-	name = "Test Adapter"
-	_test = test
-	_yielder = yielder
+#func _init(test: WAT.Test, yielder: WAT.Yielder) -> void:
+#	name = "Test Adapter"
+#	_test = test
+#	_yielder = yielder
+
+func methods() -> PoolStringArray:
+	var retval: PoolStringArray = []
+	return retval
 
 func _ready() -> void:
-	_methods = _test.methods() as Array
+	_methods = methods() as Array
 	_yielder.connect("finished", self, "_next")
-	add_child(_test)
+#	add_child(_test)
 	add_child(_yielder)
+	_start()
 
 func _next():
 	# When yielding until signals or timeouts, this gets called on resume
@@ -36,46 +41,58 @@ func _change_state() -> void:
 		return
 	match _state:
 		State.START:
-			pre()
+			_pre()
 		State.PRE:
-			execute()
+			_execute()
 		State.EXECUTE:
-			post()
+			_post()
 		State.POST:
-			pre()
+			_pre()
 		State.END:
-			end()
+			_end()
 	
-func start():
+func _start():
 	_state = State.START
-	_test.start()
+	start()
 	_next()
 	
-func pre():
+func _pre():
 	if _methods.empty():
 		_state = State.END
 		_next()
 		return
 	_state = State.PRE
-	_test.pre()
+	pre()
 	_next()
 	
-func execute():
+func _execute():
 	_state = State.EXECUTE
 	var test_method: String = _methods.pop_back()
-	_test.call(test_method)
+	call(test_method)
 	_next()
 	
-func post():
+func _post():
 	_state = State.POST
-	_test.post()
+	post()
 	_next()
 	
-func end():
+func _end():
 	_state = State.END
-	_test.end()
+	end()
 	emit_signal("finish")
 	
 func _exit_tree() -> void:
-	_test.free()
+#	_test.free()
 	queue_free()
+	
+func start():
+	pass
+	
+func pre():
+	pass
+	
+func post():
+	pass
+	
+func end():
+	pass

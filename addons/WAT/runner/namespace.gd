@@ -1,6 +1,7 @@
 extends Reference
 class_name WAT
 
+const BaseTest: Script = preload("base_test.gd")
 const Test = preload("test.gd")
 const TestSuiteOfSuites = preload("suite.gd")
 const Yielder = preload("yielder.gd")

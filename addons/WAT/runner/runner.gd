@@ -1,7 +1,7 @@
 extends Node
 
 const MAIN: String = "TestRunner"
-const TestAdapter: Script = preload("res://addons/WAT/runner/test_adapter.gd")
+#const TestAdapter: Script = preload("res://addons/WAT/runner/test_adapter.gd")
 var _test_loader: Resource
 var _test_results: Resource
 var _exit: Node
@@ -35,19 +35,17 @@ func _run() -> void:
 			print("Ending WAT Test Runner")
 		_exit.execute()
 		return
-	var adapter = _setup_test()
-	adapter.start()
+	var test = _setup_test()
+	add_child(test)
 	
 func _setup_test():
 	var test = _tests.pop_front().new()
 	var yielder = WAT.Yielder.new()
 	var testcase = WAT.TestCase.new(test.title(), test.path())
-	var adapter = TestAdapter.new(test, yielder)
-	adapter.connect("finish", self, "_on_test_finished", [adapter, testcase])
-	adapter.connect("finish", self, "_run", [], CONNECT_DEFERRED)
+	test.connect("finish", self, "_on_test_finished", [test, testcase])
+	test.connect("finish", self, "_run", [], CONNECT_DEFERRED)
 	test.initialize(WAT.Asserts.new(), yielder, testcase)
-	add_child(adapter)
-	return adapter
+	return test
 	
 func _on_test_finished(adapter, testcase) -> void:
 	testcase.calculate()

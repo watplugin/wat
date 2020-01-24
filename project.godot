@@ -29,7 +29,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/WAT/runner/namespace.gd"
 }, {
-"base": "Node",
+"base": "",
 "class": "WATTest",
 "language": "GDScript",
 "path": "res://addons/WAT/runner/test.gd"
