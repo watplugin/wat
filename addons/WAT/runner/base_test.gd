@@ -1,98 +1,79 @@
 extends Node
 
-class State:
-	const START: String = "start"
-	const PRE: String = "pre"
-	const EXECUTE: String = "execute"
-	const POST: String = "post"
-	const END: String = "end"
-	
-var _state: String # start, pre, execute, post, end
-#var _test: WA
-var _yielder # = load("res://addons/WAT/runner/_yielder.gd").new()
-var _methods: Array = []
-signal finish
-
-#func _init(test: WAT.Test, yielder: WAT.Yielder) -> void:
-#	name = "Test Adapter"
-#	_test = test
-#	_yielder = yielder
+const TEST: String = "Test"
+const IS_WAT_TEST: bool = true
+const YIELD: String = "finished"
+const CRASH_IF_TEST_FAILS: bool = true
+var asserts: Reference
+var watcher: Reference
+var direct: Reference
+var parameters: Reference
+var _yielder: Timer
+var _testcase: Reference
+var p: Dictionary # Could probably delegate this to the parameter object?
+var rerun_method: bool = false
+signal described
+signal clear
 
 func methods() -> PoolStringArray:
-	var retval: PoolStringArray = []
-	return retval
+	var output: PoolStringArray = []
+	for method in get_method_list():
+		if method.name.begins_with("test"):
+			output.append(method.name)
+	return output
+	
+func initialize(assertions, yielder, testcase):
+	asserts = assertions
+	_testcase = testcase
+	_yielder = yielder
+	self.watcher = load("res://addons/WAT/runner/watcher.gd").new()
+	self.direct = load("res://addons/WAT/double/factory.gd").new()
+	self.parameters = load("res://addons/WAT/runner/parameters.gd").new()
+	self.p = self.parameters.parameters
+	asserts.connect("asserted", testcase, "_on_asserted")
+	connect("described", testcase, "_on_test_method_described")
 
-func _ready() -> void:
-	_methods = methods() as Array
-	_yielder.connect("finished", self, "_next")
-#	add_child(_test)
-	add_child(_yielder)
-	_start()
+func any():
+	return load("res://addons/WAT/runner/any.gd").new()
 
-func _next():
-	# When yielding until signals or timeouts, this gets called on resume
-	# We call defer here to give the __testcase method time to reach either the end
-	# or an extra yield at which point we're able to check the _state of the yield and
-	# see if we stay paused or can continue
-	call_deferred("_change_state")
+func describe(message: String) -> void:
+	emit_signal("described", message)
+
+func parameters(list: Array) -> void:
+	rerun_method = parameters.parameters(list)
+
+func path() -> String:
+	var path = get_script().get_path()
+	return path if path != "" else get_script().get_meta("path")
 	
-func _change_state() -> void:
-	if _yielder.is_active():
-		return
-	match _state:
-		State.START:
-			_pre()
-		State.PRE:
-			_execute()
-		State.EXECUTE:
-			_post()
-		State.POST:
-			_pre()
-		State.END:
-			_end()
+func title() -> String:
+	return "placeholder title"
+
+func watch(emitter, event: String) -> void:
+	watcher.watch(emitter, event)
 	
-func _start():
-	_state = State.START
-	start()
-	_next()
-	
-func _pre():
-	if _methods.empty():
-		_state = State.END
-		_next()
-		return
-	_state = State.PRE
-	pre()
-	_next()
-	
-func _execute():
-	_state = State.EXECUTE
-	var test_method: String = _methods.pop_back()
-	call(test_method)
-	_next()
-	
-func _post():
-	_state = State.POST
-	post()
-	_next()
-	
-func _end():
-	_state = State.END
-	end()
-	emit_signal("finish")
-	
-func _exit_tree() -> void:
-#	_test.free()
-	queue_free()
-	
-func start():
-	pass
-	
-func pre():
-	pass
-	
-func post():
-	pass
-	
-func end():
-	pass
+func unwatch(emitter, event: String) -> void:
+	watcher.unwatch(emitter, event)
+
+## Untested
+## Thanks to bitwes @ https://github.com/bitwes/Gut/
+func simulate(obj, times, delta):
+	for i in range(times):
+		if(obj.has_method("_process")):
+			obj._process(delta)
+		if(obj.has_method("_physics_process")):
+			obj._physics_process(delta)
+
+		for kid in obj.get_children():
+			simulate(kid, 1, delta)
+
+func until_signal(emitter: Object, event: String, time_limit: float) -> Node:
+	watch(emitter, event)
+	return _yielder.until_signal(time_limit, emitter, event)
+
+func until_timeout(time_limit: float) -> Node:
+	return _yielder.until_timeout(time_limit)
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		direct.clear()

@@ -1,8 +1,8 @@
 extends Reference
 class_name WAT
 
-const BaseTest: Script = preload("base_test.gd")
-const Test = preload("test.gd")
+const BaseTest = preload("base_test.gd")
+const Test: Script = preload("test.gd")
 const TestSuiteOfSuites = preload("suite.gd")
 const Yielder = preload("yielder.gd")
 const Asserts = preload("res://addons/WAT/expectations/0_index.gd")
