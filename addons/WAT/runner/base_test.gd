@@ -4,16 +4,21 @@ const TEST: String = "Test"
 const IS_WAT_TEST: bool = true
 const YIELD: String = "finished"
 const CRASH_IF_TEST_FAILS: bool = true
+
 var asserts: Reference
-var watcher: Reference
 var direct: Reference
-var parameters: Reference
+var rerun_method: bool = false
+
+# This is used to access variable data with the user test
+# e.g assert.is_equal(p.augend + p.addend, p.result, etc;
+var p: Dictionary
+ 
+var _watcher: Reference
+var _parameters: Reference
 var _yielder: Timer
 var _testcase: Reference
-var p: Dictionary # Could probably delegate this to the parameter object?
-var rerun_method: bool = false
+
 signal described
-signal clear
 
 func methods() -> PoolStringArray:
 	var output: PoolStringArray = []
@@ -24,14 +29,16 @@ func methods() -> PoolStringArray:
 	
 func initialize(assertions, yielder, testcase):
 	asserts = assertions
+	direct = load("res://addons/WAT/double/factory.gd").new()
 	_testcase = testcase
 	_yielder = yielder
-	self.watcher = load("res://addons/WAT/runner/watcher.gd").new()
-	self.direct = load("res://addons/WAT/double/factory.gd").new()
-	self.parameters = load("res://addons/WAT/runner/parameters.gd").new()
-	self.p = self.parameters.parameters
-	asserts.connect("asserted", testcase, "_on_asserted")
-	connect("described", testcase, "_on_test_method_described")
+	_watcher = load("res://addons/WAT/runner/watcher.gd").new()
+	_parameters = load("res://addons/WAT/runner/parameters.gd").new()
+	
+func _ready() -> void:
+	p = _parameters.parameters
+	asserts.connect("asserted", _testcase, "_on_asserted")
+	connect("described", _testcase, "_on_test_method_described")
 
 func any():
 	return load("res://addons/WAT/runner/any.gd").new()
@@ -40,7 +47,7 @@ func describe(message: String) -> void:
 	emit_signal("described", message)
 
 func parameters(list: Array) -> void:
-	rerun_method = parameters.parameters(list)
+	rerun_method = _parameters.parameters(list)
 
 func path() -> String:
 	var path = get_script().get_path()
@@ -50,10 +57,10 @@ func title() -> String:
 	return "placeholder title"
 
 func watch(emitter, event: String) -> void:
-	watcher.watch(emitter, event)
+	_watcher.watch(emitter, event)
 	
 func unwatch(emitter, event: String) -> void:
-	watcher.unwatch(emitter, event)
+	_watcher.unwatch(emitter, event)
 
 ## Untested
 ## Thanks to bitwes @ https://github.com/bitwes/Gut/
