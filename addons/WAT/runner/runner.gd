@@ -17,7 +17,7 @@ func _ready() -> void:
 	if name == MAIN:
 		print("Starting WAT Test Runner")
 	_tests = _test_loader.withdraw()
-	call_deferred("_run")
+	begin()
 
 func configure(config: Resource) -> void:
 	configured = true
@@ -25,26 +25,22 @@ func configure(config: Resource) -> void:
 	_test_results = config.test_results
 	_exit = config.exit.new()
 
-func _run() -> void:
+func begin() -> void:
 	if _tests.empty():
 		_test_results.deposit(_cases)
 		WAT.clear()
-		emit_signal("ended")
-		add_child(_exit)
-		if name == MAIN:
-			print("Ending WAT Test Runner")
-		_exit.execute()
+		end()
 		return
 	var test = _setup_test()
 	add_child(test)
 	
 func _setup_test():
 	var test = _tests.pop_front().new()
-	var yielder = WAT.Yielder.new()
 	var testcase = WAT.TestCase.new(test.title(), test.path())
 	test.connect("finish", self, "_on_test_finished", [test, testcase])
-	test.connect("finish", self, "_run", [], CONNECT_DEFERRED)
-	test.initialize(WAT.Asserts.new(), yielder, testcase)
+	test.connect("finish", self, "begin", [], CONNECT_DEFERRED)
+	test.setup(WAT.Asserts.new(), WAT.Yielder.new(), testcase, WAT.TestDoubleFactory.new(), \
+					 WAT.SignalWatcher.new(), WAT.Parameters.new())
 	return test
 	
 func _on_test_finished(adapter, testcase) -> void:
@@ -52,3 +48,9 @@ func _on_test_finished(adapter, testcase) -> void:
 	_cases.append(testcase.to_dictionary())
 	remove_child(adapter)
 	adapter.queue_free()
+	
+func end() -> void:
+	if name == MAIN: print("Ending WAT Test Runner")
+	emit_signal("ended")
+	add_child(_exit)
+	_exit.execute()

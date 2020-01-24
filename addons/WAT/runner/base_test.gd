@@ -27,13 +27,13 @@ func methods() -> PoolStringArray:
 			output.append(method.name)
 	return output
 	
-func initialize(assertions, yielder, testcase):
+func setup(assertions, yielder, testcase, director, signal_watcher, parameters):
 	asserts = assertions
-	direct = load("res://addons/WAT/double/factory.gd").new()
+	direct = director
 	_testcase = testcase
 	_yielder = yielder
-	_watcher = load("res://addons/WAT/runner/watcher.gd").new()
-	_parameters = load("res://addons/WAT/runner/parameters.gd").new()
+	_watcher = signal_watcher
+	_parameters = parameters
 	
 func _ready() -> void:
 	p = _parameters.parameters
