@@ -41,21 +41,16 @@ func _run() -> void:
 func _setup_test():
 	var test = _tests.pop_front().new()
 	var yielder = WAT.Yielder.new()
-	var assertions = WAT.Asserts.new()
-	var testcase = WAT.TestCase.new()
-	var adapter = TestAdapter.new(test, testcase, yielder)
-	assertions.connect("asserted", testcase, "_on_asserted")
-	test.connect("described", testcase, "_on_test_method_described")
-	yielder.connect("finished", adapter, "_next")
+	var testcase = WAT.TestCase.new(test.title(), test.path())
+	var adapter = TestAdapter.new(test, yielder)
 	adapter.connect("finish", self, "_on_test_finished", [adapter, testcase])
 	adapter.connect("finish", self, "_run", [], CONNECT_DEFERRED)
-	testcase.title = test.title()
-	testcase.path = test.path()
-	test.initialize(assertions, yielder)
+	test.initialize(WAT.Asserts.new(), yielder, testcase)
 	add_child(adapter)
 	return adapter
-
+	
 func _on_test_finished(adapter, testcase) -> void:
+	testcase.calculate()
 	_cases.append(testcase.to_dictionary())
 	remove_child(adapter)
 	adapter.queue_free()

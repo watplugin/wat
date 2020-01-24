@@ -7,6 +7,10 @@ var path: String
 var methods: Array = []
 var success: bool = false
 
+func _init(test_title: String, test_path: String) -> void:
+	title = test_title
+	path = test_path
+
 func _on_test_method_described(description: String) -> void:
 	methods.append({context = description, assertions = [], total = 0, passed = 0, success = false})
 	

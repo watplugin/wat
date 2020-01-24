@@ -10,18 +10,17 @@ class State:
 var _state: String # start, pre, execute, post, end
 var _test: WAT.Test
 var _yielder: WAT.Yielder # = load("res://addons/WAT/runner/_yielder.gd").new()
-var _testcase: WAT.TestCase
 var _methods: Array = []
 signal finish
 
-func _init(test: WAT.Test, testcase: WAT.TestCase, yielder: WAT.Yielder) -> void:
+func _init(test: WAT.Test, yielder: WAT.Yielder) -> void:
 	name = "Test Adapter"
 	_test = test
-	_testcase = testcase
 	_yielder = yielder
 
 func _ready() -> void:
 	_methods = _test.methods() as Array
+	_yielder.connect("finished", self, "_next")
 	add_child(_test)
 	add_child(_yielder)
 
@@ -75,7 +74,6 @@ func post():
 func end():
 	_state = State.END
 	_test.end()
-	_testcase.calculate()
 	emit_signal("finish")
 	
 func _exit_tree() -> void:

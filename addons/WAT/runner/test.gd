@@ -19,6 +19,7 @@ var rerun_method: bool = false
 signal described
 signal clear
 var _yielder
+var _testcase
 
 func methods() -> PoolStringArray:
 	var output: PoolStringArray = []
@@ -29,14 +30,17 @@ func methods() -> PoolStringArray:
 	
 func set_name(title: String) -> void:
 	name = "Test"
-
-func initialize(assertions, yielder) -> void:
+	
+func initialize(assertions, yielder, testcase):
+	_testcase = testcase
 	self.asserts = assertions
 	_yielder = yielder
 	self.watcher = WATCHER.new()
 	self.direct = DOUBLE.new()
 	self.parameters = PARAMETERS.new()
 	self.p = self.parameters.parameters
+	asserts.connect("asserted", testcase, "_on_asserted")
+	connect("described", testcase, "_on_test_method_described")
 
 func any():
 	return load("res://addons/WAT/runner/any.gd").new()
