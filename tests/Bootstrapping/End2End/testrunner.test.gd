@@ -15,7 +15,7 @@ func pre():
 	_runner = TestRunner.instance()
 	_results = FakeConfig.test_results
 	_test_loader = FakeConfig.test_loader
-	_runner.name = "NotMainTestRunner"
+	_runner.primary = false
 	_runner.configure(FakeConfig)
 
 func post():

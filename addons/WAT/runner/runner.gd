@@ -1,7 +1,6 @@
 extends Node
 
-const MAIN: String = "TestRunner"
-#const TestAdapter: Script = preload("res://addons/WAT/runner/test_adapter.gd")
+var primary: bool = true
 var _test_loader: Resource
 var _test_results: Resource
 var _exit: Node
@@ -14,7 +13,7 @@ signal ended
 func _ready() -> void:
 	if not configured:
 		configure(WAT.DefaultConfig)
-	if name == MAIN:
+	if primary:
 		print("Starting WAT Test Runner")
 	_tests = _test_loader.withdraw()
 	begin()
@@ -47,7 +46,7 @@ func _on_test_finished(adapter, testcase) -> void:
 	adapter.queue_free()
 	
 func end() -> void:
-	if name == MAIN: print("Ending WAT Test Runner")
+	if primary: print("Ending WAT Test Runner")
 	_test_results.deposit(_cases)
 	emit_signal("ended")
 	add_child(_exit)
