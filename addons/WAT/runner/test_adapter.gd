@@ -14,15 +14,16 @@ var _testcase: WAT.TestCase
 var _methods: Array = []
 signal finish
 
-func _init() -> void:
+func _init(test: WAT.Test, testcase: WAT.TestCase, yielder: WAT.Yielder) -> void:
 	name = "Test Adapter"
-
-func initialize(test: WAT.Test, yielder, testcase, methods: Array) -> void:
-	# This is already a deferred call so likely don't need to have it connect deferred
+	_test = test
 	_testcase = testcase
 	_yielder = yielder
-	_test = test
-	_methods = methods
+
+func _ready() -> void:
+	_methods = _test.methods() as Array
+	add_child(_test)
+	add_child(_yielder)
 
 func _next():
 	# When yielding until signals or timeouts, this gets called on resume
@@ -76,3 +77,7 @@ func end():
 	_test.end()
 	_testcase.calculate()
 	emit_signal("finish")
+	
+func _exit_tree() -> void:
+	_test.free()
+	queue_free()
