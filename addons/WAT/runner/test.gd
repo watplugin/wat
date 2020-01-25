@@ -10,7 +10,7 @@ class State:
 	
 var _state: String
 var _methods: Array = []
-signal finish
+signal completed
 
 func _ready() -> void:
 	_methods = methods() as Array
@@ -68,7 +68,7 @@ func _post():
 func _end():
 	_state = State.END
 	end()
-	emit_signal("finish")
+	emit_signal("completed")
 	
 func _exit_tree() -> void:
 	queue_free()

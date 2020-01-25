@@ -1,5 +1,6 @@
 extends Node
 
+const COMPLETED: String = "completed"
 var primary: bool = true
 var _test_loader: Resource
 var _test_results: Resource
@@ -16,7 +17,14 @@ func _ready() -> void:
 	if primary:
 		print("Starting WAT Test Runner")
 	_tests = _test_loader.withdraw()
-	begin()
+	call_deferred("_run_tests")
+	
+func _run_tests() -> void:
+	if _tests.empty():
+		end()
+	else:
+		yield(run(), COMPLETED)
+		call_deferred("_run_tests")
 
 func configure(config: Resource) -> void:
 	configured = true
@@ -24,22 +32,15 @@ func configure(config: Resource) -> void:
 	_test_results = config.test_results
 	_exit = config.exit.new()
 
-func begin() -> void:
-	if _tests.empty():
-		end()
-		return
-	run()
-
 func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	var testcase = WAT.TestCase.new(test.title(), test.path())
 	test.setup(WAT.Asserts.new(), WAT.Yielder.new(), testcase, \
 		WAT.TestDoubleFactory.new(), WAT.SignalWatcher.new(), WAT.Parameters.new())
 	add_child(test)
-	yield(test, "finish")
+	yield(test, COMPLETED)
 	testcase.calculate()
 	_cases.append(testcase.to_dictionary())
 	remove_child(test)
-	call_deferred("begin")
 	
 func end() -> void:
 	if primary: print("Ending WAT Test Runner")
