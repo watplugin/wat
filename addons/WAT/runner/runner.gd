@@ -30,19 +30,16 @@ func begin() -> void:
 		return
 	run()
 
-	
 func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	var testcase = WAT.TestCase.new(test.title(), test.path())
-	test.connect("finish", self, "_on_test_finished", [test, testcase])
-	test.connect("finish", self, "begin", [], CONNECT_DEFERRED)
-	test.setup(WAT.Asserts.new(), WAT.Yielder.new(), testcase, WAT.TestDoubleFactory.new(), \
-					 WAT.SignalWatcher.new(), WAT.Parameters.new())
+	test.setup(WAT.Asserts.new(), WAT.Yielder.new(), testcase, \
+		WAT.TestDoubleFactory.new(), WAT.SignalWatcher.new(), WAT.Parameters.new())
 	add_child(test)
-	
-func _on_test_finished(adapter, testcase) -> void:
+	yield(test, "finish")
 	testcase.calculate()
 	_cases.append(testcase.to_dictionary())
-	remove_child(adapter)
+	remove_child(test)
+	call_deferred("begin")
 	
 func end() -> void:
 	if primary: print("Ending WAT Test Runner")
