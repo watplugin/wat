@@ -28,7 +28,7 @@ func test_when_we_pass_in_one_passing_test() -> void:
 	add_child(_runner)
 	yield(until_signal(_runner, "ended", 1.0), YIELD)
 	var results: Array = _results.withdraw()
-	asserts.is_true(results.size() == 1, "Then we get one testcase result")
+	asserts.is_equal(results.size(), 1, "Then we get one testcase result")
 	asserts.is_true(results[0].success, "And it passes")
 	remove_child(_runner)
 
@@ -40,7 +40,7 @@ func test_when_we_pass_in_two_passing_tests() -> void:
 	yield(until_signal(_runner, "ended", 1.0), YIELD)
 	var results: Array = _results.withdraw()
 	var both_pass: bool = results[0].success and results[1].success
-	asserts.is_true(results.size() == 2, "Then we get two testcase results")
+	asserts.is_equal(results.size(), 2, "Then we get two testcase results")
 	asserts.is_true(both_pass, "And both pass")
 	remove_child(_runner)
 
@@ -51,7 +51,7 @@ func test_when_we_pass_in_one_failing_tests() -> void:
 	add_child(_runner)
 	yield(until_signal(_runner, "ended", 1.0), YIELD)
 	var results: Array = _results.withdraw()
-	asserts.is_true(results.size() == 1, "Then we get one testcase result")
+	asserts.is_equal(results.size(), 1, "Then we get one testcase result")
 	asserts.is_true(not results[0].success, "And it fails")
 	remove_child(_runner)
 
@@ -63,7 +63,7 @@ func test_when_we_pass_in_two_failing_tests() -> void:
 	yield(until_signal(_runner, "ended", 1.0), YIELD)
 	var results: Array = _results.withdraw()
 	var both_fail: bool = not results[0].success and not results[1].success
-	asserts.is_true(results.size() == 2, "Then we get two testcase results")
+	asserts.is_equal(results.size(), 2, "Then we get two testcase results")
 	asserts.is_true(both_fail, "And both fail")
 	remove_child(_runner)
 
@@ -74,7 +74,7 @@ func test_when_we_pass_in_one_passing_test_and_one_failing_test() -> void:
 	add_child(_runner)
 	yield(until_signal(_runner, "ended", 1.0), YIELD)
 	var results: Array = _results.withdraw()
-	asserts.is_true(results.size() == 2, "Then we get two testcase results")
+	asserts.is_equal(results.size(), 2, "Then we get two testcase results")
 	asserts.is_true(results[0].success, "And one test passes")
 	asserts.is_true(not results[1].success, "And one test fails")
 	remove_child(_runner)
