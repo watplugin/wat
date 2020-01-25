@@ -27,7 +27,7 @@ func _on_run_pressed(option: int) -> void:
 			_run(GUI.selected(GUI.ScriptSelector))
 
 func _run(path: String) -> void:
-	var testpaths: PoolStringArray = [path] if path.ends_with(".gd") else FileSystem.scripts(path)
+	var testpaths: PoolStringArray = FileSystem.scripts(path)
 	if Array(testpaths).empty():
 		push_warning("No Scripts To Test")
 		return
