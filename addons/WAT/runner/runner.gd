@@ -9,6 +9,7 @@ var _tests: Array = []
 var _cases: Array = []
 var configured: bool = false
 var config: Resource
+var running: bool = false
 signal ended
 
 func _ready() -> void:
@@ -17,14 +18,6 @@ func _ready() -> void:
 	if primary:
 		print("Starting WAT Test Runner")
 	_tests = _test_loader.withdraw()
-	call_deferred("_run_tests")
-	
-func _run_tests() -> void:
-	if _tests.empty():
-		end()
-	else:
-		yield(run(), COMPLETED)
-		call_deferred("_run_tests")
 
 func configure(config: Resource) -> void:
 	configured = true
@@ -32,7 +25,16 @@ func configure(config: Resource) -> void:
 	_test_results = config.test_results
 	_exit = config.exit.new()
 
-func run(test: WAT.Test = _tests.pop_front().new()) -> void:
+func _process(delta: float) -> void:
+	if running:
+		return
+	elif _tests.empty():
+		end()
+	else:
+		run(_tests.pop_front().new())
+
+func run(test: WAT.Test) -> void:
+	running = true
 	var testcase = WAT.TestCase.new(test.title(), test.path())
 	test.setup(WAT.Asserts.new(), WAT.Yielder.new(), testcase, \
 		WAT.TestDoubleFactory.new(), WAT.SignalWatcher.new(), WAT.Parameters.new())
@@ -41,6 +43,7 @@ func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	testcase.calculate()
 	_cases.append(testcase.to_dictionary())
 	remove_child(test)
+	running = false
 	
 func end() -> void:
 	if primary: print("Ending WAT Test Runner")
