@@ -43,7 +43,6 @@ func _on_test_finished(adapter, testcase) -> void:
 	testcase.calculate()
 	_cases.append(testcase.to_dictionary())
 	remove_child(adapter)
-	adapter.queue_free()
 	
 func end() -> void:
 	if primary: print("Ending WAT Test Runner")

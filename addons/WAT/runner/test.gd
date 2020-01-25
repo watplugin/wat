@@ -71,7 +71,6 @@ func _end():
 	emit_signal("finish")
 	
 func _exit_tree() -> void:
-#	_test.free()
 	queue_free()
 	
 func start():
