@@ -3,86 +3,57 @@ extends Reference
 static func get_type_string(property_id: int) -> String:
 	match property_id:
 		TYPE_NIL:
-			return tNIL
+			return "null"
 		TYPE_BOOL:
-			return tBOOL
+			return "bool"
 		TYPE_INT:
-			return tINT
+			return "int"
 		TYPE_REAL:
-			return tFLOAT
+			return "float"
 		TYPE_STRING:
-			return tSTRING
+			return "String"
 		TYPE_VECTOR2:
-			return tVECTOR2
+			return "Vector2"
 		TYPE_RECT2:
-			return tRECT2
+			return "Rect2"
 		TYPE_VECTOR3:
-			return tVECTOR3
+			return "Vector3"
 		TYPE_TRANSFORM2D:
-			return tTRANSFORM2D
+			return "Transform2D"
 		TYPE_PLANE:
-			return tPLANE
+			return "Plane"
 		TYPE_QUAT:
-			return tQUAT
+			return "Quat"
 		TYPE_AABB:
-			return tAABB
+			return "AABB"
 		TYPE_BASIS:
-			return tBASIS
+			return "Basis"
 		TYPE_TRANSFORM:
-			return tTRANSFORM
+			return "Transform"
 		TYPE_COLOR:
-			return tCOLOR
+			return "Color"
 		TYPE_NODE_PATH:
-			return tNODE_PATH
+			return "NodePath"
 		TYPE_RID:
-			return tRID
+			return "RID"
 		TYPE_OBJECT:
-			return tOBJECT
+			return "Object"
 		TYPE_DICTIONARY:
-			return tDICTIONARY
+			return "Dictionary"
 		TYPE_ARRAY:
-			return tARRAY
+			return "Array"
 		TYPE_RAW_ARRAY:
-			return tRAW_ARRAY
+			return "PoolByteArray"
 		TYPE_INT_ARRAY:
-			return tINT_ARRAY
+			return "PoolIntArray"
 		TYPE_REAL_ARRAY:
-			return tREAL_ARRAY
+			return "PoolRealArray"
 		TYPE_STRING_ARRAY:
-			return tSTRING_ARRAY
+			return "PoolStringArray"
 		TYPE_VECTOR2_ARRAY:
-			return tVECTOR2_ARRAY
+			return "PoolVector2Array"
 		TYPE_VECTOR3_ARRAY:
-			return tVECTOR3_ARRAY
+			return "PoolVector3Array"
 		TYPE_COLOR_ARRAY:
-			return tCOLOR_ARRAY
-	return MAX
-
-const tNIL = "null"
-const tBOOL = "bool"
-const tINT = "int"
-const tFLOAT = "float"
-const tSTRING = "String"
-const tVECTOR2 = "Vector2"
-const tRECT2 = "Rect2"
-const tVECTOR3 = "Vector3"
-const tTRANSFORM2D = "Transform2D"
-const tPLANE = "Plane"
-const tQUAT = "Quat"
-const tAABB = "AABB"
-const tBASIS = "Basis"
-const tTRANSFORM = "Transform"
-const tCOLOR = "Color"
-const tNODE_PATH = "NodePath"
-const tRID = "RID"
-const tOBJECT = "Object"
-const tDICTIONARY = "Dictionary"
-const tARRAY = "Array"
-const tRAW_ARRAY = "PoolByteArray"
-const tINT_ARRAY = "PoolIntArray"
-const tREAL_ARRAY = "PoolRealArray"
-const tSTRING_ARRAY = "PoolStringArray"
-const tVECTOR2_ARRAY = "PoolVector2Array"
-const tVECTOR3_ARRAY = "PoolVector3Array"
-const tCOLOR_ARRAY = "PoolColorArray"
-const MAX = "OutOfBounds"
+			return "PoolColorArray"
+	return "OutOfBounds"
