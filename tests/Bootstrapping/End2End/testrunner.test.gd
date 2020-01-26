@@ -11,6 +11,7 @@ func title():
 func start():
 	# Turn it off for the duration of this test
 	ProjectSettings.set_setting("AutoQuit", false)
+	ProjectSettings.set_setting("WAT/ActiveRunPath", "")
 	
 func pre():
 	_runner = TestRunner.instance()

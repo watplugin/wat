@@ -7,14 +7,11 @@ var _test_results: Resource
 var _tests: Array = []
 var _cases: Array = []
 var _setup: bool = false
-var running: bool = false
 signal ended
 
 func _ready() -> void:
 	if not _setup:
 		setup()
-		var filesystem = load("res://addons/WAT/filesystem.gd")
-		_test_loader.deposit(filesystem.scripts(ProjectSettings.get("WAT/ActiveRunPath")))
 	if primary:
 		print("Starting WAT Test Runner")
 	_tests = _test_loader.withdraw()

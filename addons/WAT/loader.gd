@@ -1,12 +1,14 @@
 extends Reference
 
+const FileSystem: Script = preload("res://addons/WAT/filesystem.gd")
 var _tests: Array = []
 
 func deposit(tests: Array) -> void:
 	_tests = tests
-#	ResourceSaver.save(resource_path, self)
 
-func withdraw() -> Array:
+func withdraw(path: String = ProjectSettings.get("WAT/ActiveRunPath")) -> Array:
+	if not path.empty():
+		deposit(FileSystem.scripts(path))
 	var tests: Array = []
 	for path in _tests:
 		# Can't load WAT.Test here for whatever reason
