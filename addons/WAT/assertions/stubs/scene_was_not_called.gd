@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "../base.gd"
 
 func _init(double, nodepath: String, method: String, context: String) -> void:
 	var passed: String = "%s was not called from %s" % [method, nodepath]
