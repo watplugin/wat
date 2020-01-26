@@ -22,7 +22,7 @@ func _ready() -> void:
 	_tests = _test_loader.withdraw()
 	if _tests.empty():
 		push_warning("No Scripts To Test")
-	_run_tests()
+	call_deferred("_run_tests")
 
 func configure(config: Resource) -> void:
 	configured = true
