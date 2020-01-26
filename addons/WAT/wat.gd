@@ -27,7 +27,8 @@ func _on_run_pressed(option: int) -> void:
 			_run(GUI.selected(GUI.ScriptSelector))
 
 func _run(path: String) -> void:
-	ProjectSettings.set_setting("AutoQuit", true)
+#	ProjectSettings.set_setting("AutoQuit", true)
+	WAT.Settings.enable_autoquit()
 	ProjectSettings.set_setting("WAT/ActiveRunPath", path)
 	GUI.Results.begin_searching_for_new_results(WAT.Results)
 	emit_signal("test_runner_started", TestRunner)

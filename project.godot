@@ -47,6 +47,7 @@ AutoQuit=true
 
 Test_Directory="res://tests"
 ActiveRunPath="res://tests"
+AutoQuit=true
 
 [application]
 

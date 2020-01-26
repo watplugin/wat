@@ -44,5 +44,5 @@ func end() -> void:
 	_test_results.deposit(_cases)
 	emit_signal("ended")
 	WAT.clear()
-	if ProjectSettings.get_setting("AutoQuit"):
+	if WAT.Settings.autoquit_is_enabled():
 		get_tree().quit()
