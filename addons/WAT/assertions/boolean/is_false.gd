@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "../base.gd"
 
 func _init(value, context: String) -> void:
 	var type = type2str(value)
