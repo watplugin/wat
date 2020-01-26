@@ -22,15 +22,17 @@ func _ready() -> void:
 	_tests = _test_loader.withdraw()
 	if _tests.empty():
 		push_warning("No Scripts To Test")
+	_run_tests()
 
 func configure(config: Resource) -> void:
 	configured = true
-#	_test_loader = config.test_loader
 	_test_results = config.test_results
 	_exit = config.exit.new()
 
-func _process(delta: float) -> void:
-	end() if _tests.empty() else run()
+func _run_tests() -> void:
+	while not _tests.empty():
+		yield(run(), COMPLETED)
+	end()
 
 func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	set_process(false)
