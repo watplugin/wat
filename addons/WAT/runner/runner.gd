@@ -35,7 +35,6 @@ func _run_tests() -> void:
 	end()
 
 func run(test: WAT.Test = _tests.pop_front().new()) -> void:
-	set_process(false)
 	var testcase = WAT.TestCase.new(test.title(), test.path())
 	test.setup(WAT.Asserts.new(), WAT.Yielder.new(), testcase, \
 		WAT.TestDoubleFactory.new(), WAT.SignalWatcher.new(), WAT.Parameters.new())
@@ -44,7 +43,6 @@ func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	testcase.calculate()
 	_cases.append(testcase.to_dictionary())
 	remove_child(test)
-	set_process(true)
 	
 func end() -> void:
 	if primary: print("Ending WAT Test Runner")
