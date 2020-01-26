@@ -40,7 +40,7 @@ func _ready() -> void:
 	connect("described", _testcase, "_on_test_method_described")
 
 func any():
-	return load("res://addons/WAT/runner/any.gd").new()
+	return load("res://addons/WAT/test/any.gd").new()
 
 func describe(message: String) -> void:
 	emit_signal("described", message)

@@ -1,6 +1,6 @@
 extends WAT.Test
 
-const TestRunner = preload("res://addons/WAT/runner/TestRunner.tscn")
+const TestRunner = preload("res://addons/WAT/test_runner/TestRunner.tscn")
 var _runner: Node
 var _results: Resource
 var _test_loader: Reference

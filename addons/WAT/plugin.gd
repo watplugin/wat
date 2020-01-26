@@ -35,6 +35,7 @@ func _create_test_folder() -> void:
 		return
 
 func _on_test_runner_started(test_runner_path: String) -> void:
+	print(test_runner_path)
 	get_editor_interface().open_scene_from_path(test_runner_path)
 	var version = Engine.get_version_info()
 	if version.major == 3 and version.minor == 1:

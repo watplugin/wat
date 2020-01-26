@@ -4,7 +4,7 @@ extends PanelContainer
 enum RUN { ALL, DIRECTORY, SCRIPT }
 enum OPTION { ADD_SCRIPT_TEMPLATE, PRINT_STRAY_NODES }
 const FileSystem: Reference = preload("res://addons/WAT/filesystem.gd")
-const TestRunner: String = "res://addons/WAT/runner/TestRunner.tscn"
+const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 signal test_runner_started
 signal results_displayed
 onready var GUI: VBoxContainer = $GUI

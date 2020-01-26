@@ -7,7 +7,7 @@ const LIST_ALL: String = "-list_all"
 const LIST_DIR: String = "-list_dir"
 const PASSED: int = 0
 const FAILED: int = 1
-const TestRunner: PackedScene = preload("res://addons/WAT/runner/TestRunner.tscn")
+const TestRunner: PackedScene = preload("res://addons/WAT/test_runner/TestRunner.tscn")
 const FileSystem: Reference = preload("res://addons/WAT/filesystem.gd")
 var _runner: Node
 var _start_time: float

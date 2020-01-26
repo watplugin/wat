@@ -27,12 +27,12 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "WAT",
 "language": "GDScript",
-"path": "res://addons/WAT/runner/namespace.gd"
+"path": "res://addons/WAT/test/namespace.gd"
 }, {
 "base": "",
 "class": "WATTest",
 "language": "GDScript",
-"path": "res://addons/WAT/runner/test.gd"
+"path": "res://addons/WAT/test/test.gd"
 } ]
 _global_script_class_icons={
 "BaseLogin": "",
@@ -46,7 +46,7 @@ AutoQuit=true
 [WAT]
 
 Test_Directory="res://tests"
-ActiveRunPath="res://tests"
+ActiveRunPath="res://tests/Bootstrapping/Unit/suite.test.gd"
 AutoQuit=true
 
 [application]
