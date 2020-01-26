@@ -1,5 +1,10 @@
 extends Reference
 
+const Boolean: Script = preload("boolean/namespace.gd")
+const Double: Script = preload("double/namespace.gd")
+const Equality: Script = preload("equality/namespace.gd")
+const Signal: Script = preload("signal/namespace.gd")
+const _String: Script = preload("string/namespace.gd")
 const EXPECT = preload("res://addons/WAT/assertions/constants/expectation_list.gd")
 const CRASH_IF_TEST_FAILS: bool = true
 signal OUTPUT
@@ -18,28 +23,28 @@ func loop(method: String, data: Array) -> void:
 		callv(method, set)
 
 func is_true(condition: bool, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_TRUE.new(condition, context), crash_on_failure)
+	output(Boolean.IsTrue.new(condition, context), crash_on_failure)
 
 func is_false(condition: bool, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_FALSE.new(condition, context), crash_on_failure)
+	output(Boolean.IsFalse.new(condition, context), crash_on_failure)
 
 func is_equal(a, b, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_EQUAL.new(a, b, context), crash_on_failure)
+	output(Equality.IsEqual.new(a, b, context), crash_on_failure)
 
 func is_not_equal(a, b, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_NOT_EQUAL.new(a, b, context), crash_on_failure)
+	output(Equality.IsNotEqual.new(a, b, context), crash_on_failure)
 
 func is_greater_than(a, b, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_GREATER_THAN.new(a, b, context), crash_on_failure)
+	output(Equality.IsGreaterThan.new(a, b, context), crash_on_failure)
 
 func is_less_than(a, b, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_LESS_THAN.new(a, b, context), crash_on_failure)
+	output(Equality.IsLessThan.new(a, b, context), crash_on_failure)
 
 func is_equal_or_greater_than(a, b, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_EQUAL_OR_GREATER_THAN.new(a, b, context), crash_on_failure)
+	output(Equality.IsEqualOrGreaterThan.new(a, b, context), crash_on_failure)
 
 func is_equal_or_less_than(a, b, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_EQUAL_OR_LESS_THAN.new(a, b, context), crash_on_failure)
+	output(Equality.IsEqualOrLessThan.new(a, b, context), crash_on_failure)
 
 func is_in_range(value, low, high, context: String = "", crash_on_failure: bool = false) -> void:
 	output(EXPECT.IS_IN_RANGE.new(value, low, high, context), crash_on_failure)
@@ -73,40 +78,40 @@ func is_not_null(value, context: String = "", crash_on_failure: bool = false) ->
 	output(EXPECT.IS_NOT_NULL.new(value, context), crash_on_failure)
 
 func string_contains(value, string: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.STRING_CONTAINS.new(value, string, context), crash_on_failure)
+	output(_String.Contains.new(value, string, context), crash_on_failure)
 
 func string_does_not_contain(value, string: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.STRING_DOES_NOT_CONTAIN.new(value, string, context), crash_on_failure)
+	output(_String.DoesNotContain.new(value, string, context), crash_on_failure)
 
 func string_begins_with(value, string: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.STRING_BEGINS_WITH.new(value, string, context), crash_on_failure)
+	output(_String.BeginsWith.new(value, string, context), crash_on_failure)
 
 func string_does_not_begin_with(value, string: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.STRING_DOES_NOT_BEGIN_WITH.new(value, string, context), crash_on_failure)
+	output(_String.DoesNotBeginWith.new(value, string, context), crash_on_failure)
 
 func string_ends_with(value, string: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.STRING_ENDS_WITH.new(value, string, context), crash_on_failure)
+	output(_String.EndsWith.new(value, string, context), crash_on_failure)
 
 func string_does_not_end_with(value, string: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.STRING_DOES_NOT_END_WITH.new(value, string, context), crash_on_failure)
+	output(_String.DoesNotEndWith.new(value, string, context), crash_on_failure)
 
 func was_called(double, method: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.SCRIPT_WAS_CALLED.new(double, method, context), crash_on_failure)
+	output(Double.WasCalled.new(double, method, context), crash_on_failure)
 
 func was_not_called(double, method: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.SCRIPT_WAS_NOT_CALLED.new(double, method, context), crash_on_failure)
+	output(Double.WasNotCalled.new(double, method, context), crash_on_failure)
 
 func was_called_with_arguments(double, method: String, arguments: Array, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.CALLED_WITH_ARGUMENTS.new(double, method, arguments, context), crash_on_failure)
+	output(Double.WasCalledWithArguments.new(double, method, arguments, context), crash_on_failure)
 
 func signal_was_emitted(emitter, _signal, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.SIGNAL_WAS_EMITTED.new(emitter, _signal, context), crash_on_failure)
+	output(Signal.WasEmitted.new(emitter, _signal, context), crash_on_failure)
 
 func signal_was_not_emitted(emitter, _signal: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.SIGNAL_WAS_NOT_EMITTED.new(emitter, _signal, context), crash_on_failure)
+	output(Signal.WasNotEmitted.new(emitter, _signal, context), crash_on_failure)
 
 func signal_was_emitted_with_arguments(emitter, _signal, arguments: Array, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.SIGNAL_WAS_EMITTED_WITH_ARGUMENTS.new(emitter, _signal, arguments, context), crash_on_failure)
+	output(Signal.WasEmittedWithArguments.new(emitter, _signal, arguments, context), crash_on_failure)
 
 func file_exists(path: String, context: String = "", crash_on_failure: bool = false) -> void:
 	output(EXPECT.FILE_EXISTS.new(path, context), crash_on_failure)
