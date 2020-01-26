@@ -30,9 +30,9 @@ func configure(config: Resource) -> void:
 	_exit = config.exit.new()
 
 func _process(delta: float) -> void:
-	end() if _tests.empty() else run(_tests.pop_front().new())
+	end() if _tests.empty() else run()
 
-func run(test: WAT.Test) -> void:
+func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	set_process(false)
 	var testcase = WAT.TestCase.new(test.title(), test.path())
 	test.setup(WAT.Asserts.new(), WAT.Yielder.new(), testcase, \
