@@ -27,12 +27,7 @@ func _on_run_pressed(option: int) -> void:
 			_run(GUI.selected(GUI.ScriptSelector))
 
 func _run(path: String) -> void:
-#	var testpaths: PoolStringArray = FileSystem.scripts(path)
-#	if Array(testpaths).empty():
-#		push_warning("No Scripts To Test")
-#		return
 	ProjectSettings.set_setting("WAT/ActiveRunPath", path)
-#	WAT.DefaultConfig.test_loader.deposit(testpaths) # Eliminate Invalid Files (maybe in save?)
 	GUI.Results.begin_searching_for_new_results(WAT.DefaultConfig.test_results)
 	emit_signal("test_runner_started", TestRunner)
 
@@ -53,7 +48,6 @@ func add_templates():
 		_save_templates()
 		
 func _save_templates() -> void:
-	print("saving templates")
 	var path = ProjectSettings.get_setting("editor/script_templates_search_path")
 	var wat_template = load("res://addons/WAT/script_templates/WATTemplate.gd")
 	var savepath: String = "%s/WATTemplate.gd" % path
