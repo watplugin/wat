@@ -1,4 +1,4 @@
-extends "../base.gd"
+extends "base.gd"
 
 func _init(value, low, high, context: String) -> void:
 	var passed: String = "%s is not in range(%s, %s)" % [value, low, high]
