@@ -17,7 +17,3 @@ const Settings = preload("res://addons/WAT/settings.gd")
 class Icon:
 	const SUCCESS = preload("res://addons/WAT/icons/success.png")
 	const FAILED = preload("res://addons/WAT/icons/failed.png")
-
-static func clear():
-	if ProjectSettings.has_setting("WAT/TestDouble"):
-		ProjectSettings.get_setting("WAT/TestDouble").queue_free()

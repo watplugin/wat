@@ -20,7 +20,7 @@ func _ready() -> void:
 func _on_run_pressed(option: int) -> void:
 	match option:
 		RUN.ALL:
-			_run(ProjectSettings.get_setting("WAT/Test_Directory"))
+			_run(WAT.Settings.test_directory())
 		RUN.DIRECTORY:
 			_run(GUI.selected(GUI.DirectorySelector))
 		RUN.SCRIPT:
@@ -29,6 +29,7 @@ func _on_run_pressed(option: int) -> void:
 func _run(path: String) -> void:
 #	ProjectSettings.set_setting("AutoQuit", true)
 	WAT.Settings.enable_autoquit()
+#	WAT.Settings.set_run_path(path)
 	ProjectSettings.set_setting("WAT/ActiveRunPath", path)
 	GUI.Results.begin_searching_for_new_results(WAT.Results)
 	emit_signal("test_runner_started", TestRunner)

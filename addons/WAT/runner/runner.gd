@@ -43,6 +43,6 @@ func end() -> void:
 	if primary: print("Ending WAT Test Runner")
 	_test_results.deposit(_cases)
 	emit_signal("ended")
-	WAT.clear()
+	WAT.Settings.clear()
 	if WAT.Settings.autoquit_is_enabled():
 		get_tree().quit()
