@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "../base.gd"
 
 func _init(emitter, event: String, context: String) -> void:
 	var passed: String = "signal: %s was emitted from %s" % [event, emitter]
