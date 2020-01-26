@@ -5,7 +5,7 @@ var _tests: Array = []
 func deposit(tests: Array) -> void:
 	_tests = tests
 #	ResourceSaver.save(resource_path, self)
-	
+
 func withdraw() -> Array:
 	var tests: Array = []
 	for path in _tests:

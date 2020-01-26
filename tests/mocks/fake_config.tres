@@ -1,8 +1,0 @@
-[gd_resource type="Resource" load_steps=3 format=2]
-
-[ext_resource path="res://addons/WAT/config/config.gd" type="Script" id=2]
-[ext_resource path="res://tests/mocks/results.tres" type="Resource" id=4]
-
-[resource]
-script = ExtResource( 2 )
-test_results = ExtResource( 4 )

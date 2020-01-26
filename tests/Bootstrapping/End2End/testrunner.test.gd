@@ -1,9 +1,6 @@
 extends WAT.Test
 
-# This Test doesn't work in Godot 3.1 because Arrays are shared
-# between different instances of resources so end up mixing our results
 const TestRunner = preload("res://addons/WAT/runner/TestRunner.tscn")
-const FakeConfig: Resource = preload("res://tests/mocks/fake_config.tres")
 var _runner: Node
 var _results: Resource
 var _test_loader: Reference
@@ -17,11 +14,10 @@ func start():
 	
 func pre():
 	_runner = TestRunner.instance()
-	_results = FakeConfig.test_results
-	_test_loader = preload("res://addons/WAT/loader.gd").new()
-	_runner._test_loader = _test_loader # Not fond of this
+	_test_loader = WAT.TestLoader.new()
+	_results = preload("res://tests/mocks/results.tres")
+	_runner.setup(_test_loader, _results)
 	_runner.primary = false
-	_runner.configure(FakeConfig)
 
 func post():
 	_runner.free()

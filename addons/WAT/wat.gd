@@ -29,7 +29,7 @@ func _on_run_pressed(option: int) -> void:
 func _run(path: String) -> void:
 	ProjectSettings.set_setting("AutoQuit", true)
 	ProjectSettings.set_setting("WAT/ActiveRunPath", path)
-	GUI.Results.begin_searching_for_new_results(WAT.DefaultConfig.test_results)
+	GUI.Results.begin_searching_for_new_results(WAT.Results)
 	emit_signal("test_runner_started", TestRunner)
 
 func _on_more_options_pressed(id: int) -> void:
