@@ -1,6 +1,6 @@
 extends Reference
 
-const EXPECT = preload("res://addons/WAT/constants/expectation_list.gd")
+const EXPECT = preload("res://addons/WAT/assertions/constants/expectation_list.gd")
 const CRASH_IF_TEST_FAILS: bool = true
 signal OUTPUT
 signal CRASHED

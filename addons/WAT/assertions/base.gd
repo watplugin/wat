@@ -1,6 +1,6 @@
 extends Reference
 
-const TYPES = preload("res://addons/WAT/constants/type_library.gd")
+const TYPES = preload("res://addons/WAT/assertions/constants/type_library.gd")
 var success: bool
 var expected: String = "NULL"
 var result: String
