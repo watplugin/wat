@@ -30,15 +30,10 @@ func configure(config: Resource) -> void:
 	_exit = config.exit.new()
 
 func _process(delta: float) -> void:
-	if running:
-		return
-	elif _tests.empty():
-		end()
-	else:
-		run(_tests.pop_front().new())
+	end() if _tests.empty() else run(_tests.pop_front().new())
 
 func run(test: WAT.Test) -> void:
-	running = true
+	set_process(false)
 	var testcase = WAT.TestCase.new(test.title(), test.path())
 	test.setup(WAT.Asserts.new(), WAT.Yielder.new(), testcase, \
 		WAT.TestDoubleFactory.new(), WAT.SignalWatcher.new(), WAT.Parameters.new())
@@ -47,7 +42,7 @@ func run(test: WAT.Test) -> void:
 	testcase.calculate()
 	_cases.append(testcase.to_dictionary())
 	remove_child(test)
-	running = false
+	set_process(true)
 	
 func end() -> void:
 	if primary: print("Ending WAT Test Runner")
