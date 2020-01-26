@@ -17,7 +17,6 @@ var current_main_dir = ProjectSettings.get_setting("WAT/Test_Directory")
 
 func _ready() -> void:
 	name = "GUI"
-	print("Hello World From GUI!!!!")
 	RunOptions.clear()
 	ViewOptions.clear()
 	MoreOptions.clear()
@@ -30,7 +29,6 @@ func _ready() -> void:
 	ViewOptions.add_item("Expand All Failures")
 	MoreOptions.add_item("Add Script Templates")
 	MoreOptions.add_item("Print Stray Nodes")
-	connect("draw", self, "_show_dir")
 	DirectorySelector.connect("pressed", self, "_on_directory_selector_pressed")
 	ScriptSelector.connect("pressed", self, "_on_script_selector_pressed")
 	ViewOptions.connect("id_pressed", self, "_on_view_pressed")
