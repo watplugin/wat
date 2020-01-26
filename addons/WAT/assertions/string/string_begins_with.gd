@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "../base.gd"
 
 func _init(value: String, string: String, context: String) -> void:
 	var passed: String = "%s begins with %s" % [string, value]

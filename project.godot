@@ -46,7 +46,7 @@ AutoQuit=true
 [WAT]
 
 Test_Directory="res://tests"
-ActiveRunPath="res://tests/Bootstrapping/Integration"
+ActiveRunPath="res://tests"
 AutoQuit=true
 
 [application]
