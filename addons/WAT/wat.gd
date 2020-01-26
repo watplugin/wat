@@ -57,6 +57,6 @@ func add_templates():
 		
 func _save_templates() -> void:
 	var path = ProjectSettings.get_setting("editor/script_templates_search_path")
-	var wat_template = load("res://addons/WAT/script_templates/WATTemplate.gd")
-	var savepath: String = "%s/WATTemplate.gd" % path
+	var wat_template = load("res://addons/WAT/test/template.gd")
+	var savepath: String = "%s/wat.test.gd" % path
 	ResourceSaver.save(savepath, wat_template)

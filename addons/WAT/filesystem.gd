@@ -59,7 +59,7 @@ static func templates():
 	var dir: Directory = Directory.new()
 	if not dir.dir_exists(template_directory):
 		dir.make_dir_recursive(template_directory)
-	var test_template: String = "WATTemplate.gd"
+	var test_template: String = "wat.test.gd"
 	var scripts: Array = scripts(template_directory)
 	var template_exist = false
 	for script in scripts:
