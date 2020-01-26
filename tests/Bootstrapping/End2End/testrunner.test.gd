@@ -10,9 +10,7 @@ func title():
 	
 func start():
 	# Turn it off for the duration of this test
-#	ProjectSettings.set_setting("AutoQuit", false)
 	WAT.Settings.disable_autoquit()
-#	print(ProjectSettings.get_setting("AutoQuit"))
 	ProjectSettings.set_setting("WAT/ActiveRunPath", "")
 	
 func pre():
@@ -26,9 +24,8 @@ func post():
 	_runner.free()
 	
 func end():
-#	# Turn it back on for the real runner
+#	Turn it back on for the real runner
 	WAT.Settings.enable_autoquit()
-#	ProjectSettings.set_setting("AutoQuit", true)
 
 func test_when_we_pass_in_one_passing_test() -> void:
 	describe("When we pass in one passing test")

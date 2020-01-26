@@ -22,7 +22,7 @@ func parse(arguments) -> void:
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
-			_run(_default_directory())
+			_run(WAT.Settings.test_directory())
 		RUN_DIRECTORY:
 			_run(arguments.pop_front())
 		RUN_SCRIPT:
@@ -36,18 +36,15 @@ func parse(arguments) -> void:
 		_:
 			push_error("Invalid Argument")
 			get_tree().quit()
-			
-func _default_directory() -> String:
-	return ProjectSettings.get("WAT/Test_Directory")
-			
-func _list(path: String = _default_directory()):
+
+func _list(path: String = WAT.Settings.test_directory()):
 	print()
 	print(FileSystem.scripts(path))
 
 func _run(path) -> void:
 	_runner = TestRunner.instance()
-	ProjectSettings.set_setting("AutoQuit", true)
-	ProjectSettings.set_setting("WAT/ActiveRunPath", path)
+	WAT.Settings.enable_autoquit()
+	WAT.Settings.set_run_path(path)
 	_runner.connect("ended", self, "_on_testrunner_ended", [])
 	_start_time = OS.get_ticks_msec()
 	add_child(_runner)
@@ -56,7 +53,6 @@ func _on_testrunner_ended() -> void:
 	_runner.queue_free()
 	var caselist: Array = WAT.Results.withdraw()
 	var cases = {passed = 0, total = 0, crashed = 0}
-	print("\n-------RESULTS-------")
 	for case in caselist:
 		cases.total += 1
 		if case.success:
@@ -64,6 +60,7 @@ func _on_testrunner_ended() -> void:
 		else:
 			display_failures(case)
 	display_summary(cases)
+	set_exit_code(cases)
 
 func display_failures(case) -> void:
 	print("%s (%s)" % [case.context, case.path])
@@ -74,10 +71,17 @@ func display_failures(case) -> void:
 				if not assertion.success:
 					print("\t%s" % assertion.context, "\n\t  (EXPECTED: %s) | (RESULTED: %s)" % [assertion.expected, assertion.actual])
 
+
 func display_summary(cases: Dictionary) -> void:
-	var seconds: float = (OS.get_ticks_msec() - _start_time) / 1000
-	print("\nTook %s seconds" % str(seconds))
-	print("%s Tests Crashed" % cases.crashed)
-	print("%s / %s Tests Passed" % [cases.passed, cases.total])
-	print("-------RESULTS-------")
+	cases.seconds = (OS.get_ticks_msec() - _start_time) / 1000
+	var output: String = ""
+	output += "\n-------RESULTS-------"
+	output += "\nTook {seconds} seconds"
+	output += "\n{crashed} Tests Crashed"
+	output += "\n{passed} / {total} Tests Passed"
+	output += "\n-------RESULTS-------"
+	output = output.format(cases)
+	print(output)
+	
+func set_exit_code(cases: Dictionary) -> void:
 	OS.exit_code = PASSED if cases.total > 0 and cases.total == cases.passed and cases.crashed == 0 else FAILED
