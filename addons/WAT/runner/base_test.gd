@@ -1,7 +1,6 @@
 extends Node
 
-const TEST: String = "Test"
-const IS_WAT_TEST: bool = true
+const TEST: bool = true
 const YIELD: String = "finished"
 const CRASH_IF_TEST_FAILS: bool = true
 
