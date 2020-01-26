@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "WAT",
 "language": "GDScript",
-"path": "res://addons/WAT/test/namespace.gd"
+"path": "res://addons/WAT/namespace.gd"
 }, {
 "base": "",
 "class": "WATTest",
