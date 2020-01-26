@@ -11,6 +11,10 @@ var _test_loader: Reference
 func title():
 	return "Given A TestRunner"
 	
+func start():
+	# Turn it off for the duration of this test
+	ProjectSettings.set_setting("AutoQuit", false)
+	
 func pre():
 	_runner = TestRunner.instance()
 	_results = FakeConfig.test_results
@@ -21,6 +25,10 @@ func pre():
 
 func post():
 	_runner.free()
+	
+func end():
+	# Turn it back on for the real runner
+	ProjectSettings.set_setting("AutoQuit", true)
 
 func test_when_we_pass_in_one_passing_test() -> void:
 	describe("When we pass in one passing test")

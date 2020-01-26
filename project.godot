@@ -41,6 +41,7 @@ _global_script_class_icons={
 "WAT": "",
 "WATTest": ""
 }
+AutoQuit=true
 
 [WAT]
 

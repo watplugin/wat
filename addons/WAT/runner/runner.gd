@@ -4,7 +4,6 @@ const COMPLETED: String = "completed"
 var primary: bool = true
 var _test_loader: WAT.TestLoader = WAT.TestLoader.new()
 var _test_results: Resource
-var _exit: Node
 var _tests: Array = []
 var _cases: Array = []
 var configured: bool = false
@@ -27,7 +26,6 @@ func _ready() -> void:
 func configure(config: Resource) -> void:
 	configured = true
 	_test_results = config.test_results
-	_exit = config.exit.new()
 
 func _run_tests() -> void:
 	while not _tests.empty():
@@ -48,6 +46,6 @@ func end() -> void:
 	if primary: print("Ending WAT Test Runner")
 	_test_results.deposit(_cases)
 	emit_signal("ended")
-	add_child(_exit)
 	WAT.clear()
-	_exit.execute()
+	if ProjectSettings.get_setting("AutoQuit"):
+		get_tree().quit()

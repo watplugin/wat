@@ -46,6 +46,7 @@ func _list(path: String = _default_directory()):
 
 func _run(path) -> void:
 	_runner = TestRunner.instance()
+	ProjectSettings.set_setting("AutoQuit", true)
 	ProjectSettings.set_setting("WAT/ActiveRunPath", path)
 	_runner.connect("ended", self, "_on_testrunner_ended", [])
 	_start_time = OS.get_ticks_msec()
