@@ -46,8 +46,7 @@ func _list(path: String = _default_directory()):
 
 func _run(path) -> void:
 	_runner = TestRunner.instance()
-	var tests = FileSystem.scripts(path)
-	WAT.DefaultConfig.test_loader.deposit(tests)
+	ProjectSettings.set_setting("WAT/ActiveRunPath", path)
 	_runner.connect("ended", self, "_on_testrunner_ended", [])
 	_start_time = OS.get_ticks_msec()
 	add_child(_runner)

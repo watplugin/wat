@@ -1,11 +1,10 @@
-tool
-extends Resource
+extends Reference
 
-export(Array) var _tests: Array = []
+var _tests: Array = []
 
 func deposit(tests: Array) -> void:
 	_tests = tests
-	ResourceSaver.save(resource_path, self)
+#	ResourceSaver.save(resource_path, self)
 	
 func withdraw() -> Array:
 	var tests: Array = []
@@ -19,7 +18,6 @@ func withdraw() -> Array:
 		elif test.get("IS_WAT_SUITE") and Engine.get_version_info().minor == 1:
 			tests += _suite_of_suites_3p1(test)
 	_tests = []
-	ResourceSaver.save(resource_path, self)
 	return tests
 
 func _suite_of_suites_3p2(suite_of_suites) -> Array:

@@ -45,6 +45,7 @@ _global_script_class_icons={
 [WAT]
 
 Test_Directory="res://tests"
+ActiveRunPath="res://tests"
 
 [application]
 

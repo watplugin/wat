@@ -27,11 +27,12 @@ func _on_run_pressed(option: int) -> void:
 			_run(GUI.selected(GUI.ScriptSelector))
 
 func _run(path: String) -> void:
-	var testpaths: PoolStringArray = FileSystem.scripts(path)
-	if Array(testpaths).empty():
-		push_warning("No Scripts To Test")
-		return
-	WAT.DefaultConfig.test_loader.deposit(testpaths) # Eliminate Invalid Files (maybe in save?)
+#	var testpaths: PoolStringArray = FileSystem.scripts(path)
+#	if Array(testpaths).empty():
+#		push_warning("No Scripts To Test")
+#		return
+	ProjectSettings.set_setting("WAT/ActiveRunPath", path)
+#	WAT.DefaultConfig.test_loader.deposit(testpaths) # Eliminate Invalid Files (maybe in save?)
 	GUI.Results.begin_searching_for_new_results(WAT.DefaultConfig.test_results)
 	emit_signal("test_runner_started", TestRunner)
 

@@ -6,7 +6,7 @@ const TestRunner = preload("res://addons/WAT/runner/TestRunner.tscn")
 const FakeConfig: Resource = preload("res://tests/mocks/fake_config.tres")
 var _runner: Node
 var _results: Resource
-var _test_loader: Resource
+var _test_loader: Reference
 
 func title():
 	return "Given A TestRunner"
@@ -14,7 +14,8 @@ func title():
 func pre():
 	_runner = TestRunner.instance()
 	_results = FakeConfig.test_results
-	_test_loader = FakeConfig.test_loader
+	_test_loader = preload("res://addons/WAT/resources/base/loader.gd").new()
+	_runner._test_loader = _test_loader # Not fond of this
 	_runner.primary = false
 	_runner.configure(FakeConfig)
 

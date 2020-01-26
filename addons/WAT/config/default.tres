@@ -1,12 +1,10 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://addons/WAT/exit.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/config/config.gd" type="Script" id=2]
-[ext_resource path="res://addons/WAT/resources/loader.tres" type="Resource" id=3]
 [ext_resource path="res://addons/WAT/resources/results.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 2 )
-test_loader = ExtResource( 3 )
 exit = ExtResource( 1 )
 test_results = ExtResource( 4 )

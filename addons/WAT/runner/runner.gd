@@ -2,7 +2,7 @@ extends Node
 
 const COMPLETED: String = "completed"
 var primary: bool = true
-var _test_loader: Resource
+var _test_loader: WAT.TestLoader = WAT.TestLoader.new()
 var _test_results: Resource
 var _exit: Node
 var _tests: Array = []
@@ -15,13 +15,17 @@ signal ended
 func _ready() -> void:
 	if not configured:
 		configure(WAT.DefaultConfig)
+		var filesystem = load("res://addons/WAT/filesystem.gd")
+		_test_loader.deposit(filesystem.scripts(ProjectSettings.get("WAT/ActiveRunPath")))
 	if primary:
 		print("Starting WAT Test Runner")
 	_tests = _test_loader.withdraw()
+	if _tests.empty():
+		push_warning("No Scripts To Test")
 
 func configure(config: Resource) -> void:
 	configured = true
-	_test_loader = config.test_loader
+#	_test_loader = config.test_loader
 	_test_results = config.test_results
 	_exit = config.exit.new()
 
