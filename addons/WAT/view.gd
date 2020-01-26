@@ -3,7 +3,7 @@ extends VBoxContainer
 
 enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
 const NOTHING_SELECTED: int = -1
-const INVALID_PATH: String = ""
+#const INVALID_PATH: String = ""
 onready var RunOptions: MenuButton = $Options/Run.get_popup()
 onready var ViewOptions: MenuButton = $Options/View.get_popup()
 onready var MoreOptions: OptionButton = $Options/More.get_popup()
@@ -43,11 +43,11 @@ func _show_dir():
 	DirectorySelector.add_item(ProjectSettings.get_setting("WAT/Test_Directory"))
 	update()
 	
-func selected(selector: OptionButton) -> String:
-	if selector.selected == NOTHING_SELECTED:
-		push_warning("Nothing Selected")
-		return INVALID_PATH
-	return selector.get_item_text(selector.selected)
+#func selected(selector: OptionButton) -> String:
+#	if selector.selected == NOTHING_SELECTED:
+#		push_warning("Nothing Selected")
+#		return INVALID_PATH
+#	return selector.get_item_text(selector.selected)
 	
 func _on_directory_selector_pressed() -> void:
 	DirectorySelector.clear()

@@ -22,15 +22,22 @@ func _on_run_pressed(option: int) -> void:
 		RUN.ALL:
 			_run(WAT.Settings.test_directory())
 		RUN.DIRECTORY:
-			_run(GUI.selected(GUI.DirectorySelector))
+			_run(selected(GUI.DirectorySelector))
 		RUN.SCRIPT:
-			_run(GUI.selected(GUI.ScriptSelector))
+			_run(selected(GUI.ScriptSelector))
 
 func _run(path: String) -> void:
 	WAT.Settings.enable_autoquit()
 	WAT.Settings.set_run_path(path)
 	GUI.Results.begin_searching_for_new_results(WAT.Results)
 	emit_signal("test_runner_started", TestRunner)
+
+const NOTHING_SELECTED: int = -1
+const INVALID_PATH: String = ""
+func selected(selector: OptionButton) -> String:
+	if selector.selected == NOTHING_SELECTED:
+		push_warning("Nothing Selected")
+	return selector.get_item_text(selector.selected)
 
 func _on_more_options_pressed(id: int) -> void:
 	match id:
