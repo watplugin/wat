@@ -54,7 +54,7 @@ func _run(path) -> void:
 
 func _on_testrunner_ended() -> void:
 	_runner.queue_free()
-	var caselist: Array = WAT.DefaultConfig.test_results.withdraw()
+	var caselist: Array = WAT.Results.withdraw()
 	var cases = {passed = 0, total = 0, crashed = 0}
 	print("\n-------RESULTS-------")
 	for case in caselist:
