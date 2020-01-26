@@ -14,7 +14,7 @@ func title():
 func pre():
 	_runner = TestRunner.instance()
 	_results = FakeConfig.test_results
-	_test_loader = preload("res://addons/WAT/resources/base/loader.gd").new()
+	_test_loader = preload("res://addons/WAT/loader.gd").new()
 	_runner._test_loader = _test_loader # Not fond of this
 	_runner.primary = false
 	_runner.configure(FakeConfig)
