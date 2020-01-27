@@ -63,7 +63,8 @@ func _on_testrunner_ended() -> void:
 	set_exit_code(cases)
 
 func display_failures(case) -> void:
-	print("%s (%s)" % [case.context, case.path])
+	var suite: Array = [case.context, case.path]
+	print("%s (%s)" % )
 	for method in case.methods:
 		if not method.success:
 			print("\n  %s" % method.context)
