@@ -18,7 +18,7 @@ func _ready() -> void:
 func arguments() -> Array:
 	return Array(OS.get_cmdline_args()).pop_back().split("=") as Array
 	
-func parse(arguments) -> void:
+func parse(arguments: Array) -> void:
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
@@ -45,7 +45,7 @@ func _run(path) -> void:
 	_runner = TestRunner.instance()
 	WAT.Settings.enable_autoquit()
 	WAT.Settings.set_run_path(path)
-	_runner.connect("ended", self, "_on_testrunner_ended", [])
+	_runner.connect("ended", self, "_on_testrunner_ended")
 	_start_time = OS.get_ticks_msec()
 	add_child(_runner)
 
