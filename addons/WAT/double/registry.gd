@@ -19,4 +19,3 @@ func _notification(what: int) -> void:
 		while not directors.empty():
 			var director = directors.pop_back()
 			director.clear()
-		queue_free()
