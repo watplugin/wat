@@ -1,3 +1,5 @@
+extends "../base.gd"
+
 func _init(value, context: String) -> void:
 	var passed: String = "%s is not builtin: PoolRealArray" % value
 	var failed: String = "%s is builtin: PoolRealArray" % value

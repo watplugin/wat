@@ -3,7 +3,7 @@ extends WAT.Test
 
 
 func title():
-	return "Given an Is (instance of class/type) Assertion"
+	return "Given an Is Instance of class/type Assertion"
 	
 func test_when_calling_is_AABB():
 	describe("When calling asserts.is_AABB(AABB())")
@@ -81,7 +81,7 @@ func test_when_calling_is_PoolRealArray():
 
 	asserts.is_PoolRealArray(PoolRealArray(), "Then it passes")
 	
-func tes_when_calling_is_PoolStringArray():
+func test_when_calling_is_PoolStringArray():
 	describe("When calling is asserts.is_PoolStringArray")
 	
 	asserts.is_PoolStringArray(PoolStringArray(), "Then it passes")
