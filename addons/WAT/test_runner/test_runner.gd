@@ -17,7 +17,7 @@ func _ready() -> void:
 	_tests = _test_loader.withdraw()
 	if _tests.empty():
 		push_warning("No Scripts To Test")
-	call_deferred("_run_tests")
+	_run_tests()
 	
 func setup(loader: WAT.TestLoader = WAT.TestLoader.new(), results: Resource = WAT.Results):
 	_setup = true
