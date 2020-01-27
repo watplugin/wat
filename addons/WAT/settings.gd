@@ -21,7 +21,7 @@ static func clear():
 	print("21 clear")
 	if ProjectSettings.has_setting("WAT/TestDouble"):
 		print("23 clear")
-		print(ProjectSettings.get_setting("WAT/TestDouble"))
+		print(ProjectSettings.get("WAT/TestDouble"))
 		print("25 clear")
 		print(is_instance_valid(ProjectSettings.get_setting("WAT/TestDouble")))
 		print("27 clear")
