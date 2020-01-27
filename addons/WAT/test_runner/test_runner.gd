@@ -10,6 +10,7 @@ var _setup: bool = false
 signal ended
 
 func _ready() -> void:
+	WAT.Settings.create() # bad name fix soon
 	if not _setup:
 		setup()
 	if primary:
@@ -45,7 +46,7 @@ func end() -> void:
 	print(45, primary)
 	_test_results.deposit(_cases)
 	print(47, primary)
-	WAT.Settings.clear()
+	WAT.Settings.clear(primary)
 	print(49, primary)
 	emit_signal("ended")
 	print(51, primary)

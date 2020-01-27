@@ -17,13 +17,21 @@ static func set_run_path(path: String) -> void:
 static func test_directory() -> String:
 	return ProjectSettings.get_setting("WAT/Test_Directory")
 
-static func clear():
-	print("21 clear")
+static func clear(primary: bool = false):
+	# pass
+# 	print("21 clear")
 	if ProjectSettings.has_setting("WAT/TestDouble"):
-		print("23 clear")
-		print(ProjectSettings.get_setting("WAT/TestDouble"))
-		print("25 clear")
-		print(is_instance_valid(ProjectSettings.get_setting("WAT/TestDouble")))
-		print("27 clear")
-		ProjectSettings.get_setting("WAT/TestDouble").free()
-		print("28 clear")
+# 		print("23 clear")
+# 		print(ProjectSettings.get_setting("WAT/TestDouble"))
+# 		print("25 clear")
+# 		print(is_instance_valid(ProjectSettings.get_setting("WAT/TestDouble")))
+# 		print("27 clear")
+		ProjectSettings.get_setting("WAT/TestDouble").clear()
+		if primary:
+			ProjectSettings.get_setting("WAT/TestDouble").free()
+# 		print("28 clear")
+
+static func create():
+	if not ProjectSettings.has_setting("WAT/TestDouble"):
+		var registry = load("res://addons/WAT/double/registry.gd")
+		ProjectSettings.set_setting("WAT/TestDouble", registry.new())
