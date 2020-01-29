@@ -107,3 +107,26 @@ func test_When_we_stubbed_a_keyword_method_by_passing_in_the_correct_keyword():
 	director.method("pi", director.STATIC).stub(true, [])
 
 	asserts.is_equal(director.double().pi(), true, "Then we can call it")
+	
+func test_When_we_pass_a_funcref_as_a_subcall():
+	describe("When we pass a funcref as a subcall")
+	
+	var director = direct.script(load("res://Examples/Scripts/calculator.gd"))
+	var callable: FuncRef = funcref(self, "set_sum")
+	director.method("add").subcall(callable)
+	var double = director.double()
+	double.add(10, 5)
+	asserts.is_equal(double.sum, 99, "Then it affects the state of the double")
+	
+func test_When_we_pass_a_funcref_as_a_subcall_that_returns_a_value():
+	describe("When we pass a funcref as a subcall that returns")
+	
+	var director = direct.script(load("res://Examples/Scripts/calculator.gd"))
+	var callable: FuncRef = funcref(self, "set_sum")
+	var returns_value: bool = true
+	director.method("add").subcall(callable, returns_value)
+	asserts.is_equal(director.double().add(10, 5), 99, "Then it returns a value")
+	
+func set_sum(object, args: Array = []) -> int:
+	object.sum = 99
+	return object.sum

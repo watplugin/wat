@@ -1,6 +1,8 @@
 extends Node
 class_name Calculator
 
+var sum: int = 0
+
 func add(a, b):
 	return a + b
 

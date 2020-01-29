@@ -15,7 +15,7 @@ func write(double) -> String:
 
 	for name in double.methods:
 		var m = double.methods[name]
-		source += _method_to_string(double.instance_id, m.keyword, m.name, m.args, m.calls_super, m.spying, m.stubbed)
+		source += _method_to_string(double.instance_id, m.keyword, m.name, m.args, m.calls_super, m.spying, m.stubbed, m.subcalls)
 	for klass in double.klasses:
 		source += _inner_class(klass)
 	source = source.replace(",)", ")")
@@ -30,13 +30,11 @@ func _constructor_to_string(parameters: String) -> String:
 	constructor += "\n\tpass\n"
 	return constructor
 
-func _method_to_string(id: int, keyword: String, name: String, args: String, calls_super: bool, spying: bool, stubbed: bool) -> String:
+func _method_to_string(id: int, keyword: String, name: String, args: String, calls_super: bool, spying: bool, stubbed: bool, calls: Array) -> String:
 	var text: String
 	text += "%sfunc %s(%s):" % [keyword, name, args]
 	text += "\n\tvar args = [%s]" % args
-#	ProjectSettings.get_setting("WAT/TestDouble").method(%s, '%s')
 	text += "\n\tvar method = ProjectSettings.get_setting('WAT/TestDouble').method(%s, '%s')" % [id, name]
-#	text += "\n\tvar method = _double_data_struct[0].methods['%s']" % name
 	if spying:
 		text += "\n\tmethod.add_call(args)"
 	if calls_super:
@@ -45,6 +43,12 @@ func _method_to_string(id: int, keyword: String, name: String, args: String, cal
 	if stubbed:
 		text += "\n\tvar retval = method.get_stub(args)"
 		text += "\n\treturn retval"
+	if calls.size() > 0:
+		for call in calls.size():
+			text += "\n\tvar result{call} = method.subcalls[{call}].call.call_func(self, args)".format({"call": call as String})
+			if calls[call].returns:
+				text.replace("\n\treturn retval", "")
+				text += "\n\treturn result%s" % call as String
 	return text
 
 func _inner_class(klass: Dictionary) -> String:

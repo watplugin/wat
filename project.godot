@@ -46,7 +46,7 @@ AutoQuit=true
 [WAT]
 
 Test_Directory="res://tests"
-ActiveRunPath="res://tests"
+ActiveRunPath="res://tests/integration/test_double.test.gd"
 AutoQuit=true
 
 [application]

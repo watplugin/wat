@@ -29,3 +29,5 @@ func test_When_we_double_an_inner_class():
 	var director = direct.script("res://Examples/Scripts/calculator.gd", "Algebra")
 
 	asserts.is_class_instance(director.double(), Algebra, "Then we get that inner class back")
+	
+

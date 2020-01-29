@@ -9,6 +9,7 @@ var keyword: String = ""
 var calls: Array = []
 var stubs: Array = []
 var supers: Array = []
+var subcalls: Array = []
 var default
 
 func _init(name: String, keyword: String, args: String) -> void:
@@ -35,6 +36,9 @@ func stub(return_value, arguments: Array = []):
 
 func add_call(args: Array = []) -> void:
 	calls.append(args)
+	
+func subcall(function: FuncRef, returns: bool = false) -> void:
+	subcalls.append({"call": function, "returns": returns})
 
 func get_stub(args: Array = []):
 	for stub in stubs:
