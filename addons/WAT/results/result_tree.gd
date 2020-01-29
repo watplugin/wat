@@ -7,6 +7,18 @@ signal calculated
 var _cache: Array = []
 var _mega_cache: Array = []
 
+func _ready():
+	connect("button_pressed", self, "_on_button_pressed")
+#	set_column_expand(0, true)
+#	set_column_expand(1, false)
+	
+func test():
+	print("hello")
+	print(get_selected())
+	
+func _on_button_pressed(item, column, id):
+	ProjectSettings.get_setting("WAT/Goto_Test_Method").call_func(item.get_meta("path"), item.get_meta("context"))
+
 func display(cases: Array) -> void:
 	var total = cases.size()
 	var passed = 0
@@ -28,7 +40,11 @@ func display(cases: Array) -> void:
 			method.set_icon(0, _icon(m.success))
 			_cache.append(method)
 			_mega_cache.append(method)
-			
+			method.add_button(0, load("res://addons/WAT/icons/function.svg"))
+			method.set_tooltip(0, "Click icon to show test method in editor")
+			method.set_meta("path", c.path)
+			method.set_meta("context", m.context)
+
 			for a in m.assertions:
 				var assertion = create_item(method)
 				assertion.set_text(0, a.context)
@@ -48,6 +64,8 @@ func display(cases: Array) -> void:
 	root.set_icon(0, _icon(success))
 #	name = "(%s|%s)" % [passed, total]
 	emit_signal("calculated", self, passed, total, success)
+	
+
 
 func _color(success: bool) -> Color:
 	return PASSED if success else FAILED

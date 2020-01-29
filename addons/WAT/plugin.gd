@@ -14,6 +14,16 @@ func _enter_tree() -> void:
 	interface.connect("test_runner_started", self, "_on_test_runner_started")
 	interface.connect("results_displayed", self, "make_bottom_panel_item_visible", [interface])
 	add_control_to_bottom_panel(interface, "Tests")
+	ProjectSettings.set_setting("WAT/Goto_Test_Method", funcref(self, "goto_function"))
+	
+func goto_function(path: String, function: String) -> void:
+	var script: Script = load(path)
+	get_editor_interface().edit_resource(script)
+	var source: PoolStringArray = script.source_code.split("\n")
+	for i in source.size():
+		if function in source[i] and "describe" in source[i]:
+			get_editor_interface().get_script_editor().goto_line(i)
+			return
 
 func _exit_tree() -> void:
 	remove_control_from_bottom_panel(interface)

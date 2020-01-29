@@ -42,12 +42,16 @@ _global_script_class_icons={
 "WATTest": ""
 }
 AutoQuit=true
+quick_access=Object(FuncRef,"script":null)
+
 
 [WAT]
 
 Test_Directory="res://tests"
-ActiveRunPath="res://tests/end_to_end/testrunner.test.gd"
+ActiveRunPath="res://tests"
 AutoQuit=true
+Goto_Test_Method=Object(FuncRef,"script":null)
+
 
 [application]
 
