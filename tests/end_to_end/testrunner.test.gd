@@ -9,23 +9,20 @@ func title():
 	return "Given A TestRunner"
 	
 func start():
-	# Turn it off for the duration of this test
-	WAT.Settings.disable_autoquit()
-	ProjectSettings.set_setting("WAT/ActiveRunPath", "")
+	ProjectSettings.set_setting("WAT/ActiveRunPath", "") #...
 	
 func pre():
-	_runner = TestRunner.instance()
+	var director = direct.script("res://addons/WAT/test_runner/test_runner.gd")
+	director.method("end").subcall(funcref(self, "me"))
+	_runner = director.double()
 	_test_loader = WAT.TestLoader.new()
 	_results = preload("res://tests/mocks/results.tres")
 	_runner.setup(_test_loader, _results)
 	_runner.primary = false
-
-func post():
-	_runner.free()
 	
-func end():
-#	Turn it back on for the real runner
-	WAT.Settings.enable_autoquit()
+func me(object, arguments: Array = []):
+	object._test_results.deposit(object._cases)
+	object.emit_signal("ended")
 
 func test_when_we_pass_in_one_passing_test() -> void:
 	describe("When we pass in one passing test")

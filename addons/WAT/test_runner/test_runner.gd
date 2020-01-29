@@ -41,10 +41,8 @@ func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	remove_child(test)
 	
 func end() -> void:
-	if primary: print("Ending WAT Test Runner")
+	print("Ending WAT Test Runner")
 	_test_results.deposit(_cases)
 	emit_signal("ended")
 	WAT.Settings.clear(primary)
-	if WAT.Settings.autoquit_is_enabled():
-		get_tree().quit()
-	print(55, primary)
+	get_tree().quit()
