@@ -10,6 +10,7 @@ class State:
 	
 var _state: String
 var _methods: Array = []
+var _method: String
 signal completed
 
 func _ready() -> void:
@@ -46,7 +47,7 @@ func _start():
 	_next()
 	
 func _pre():
-	if _methods.empty():
+	if _methods.empty() and not rerun_method:
 		_state = State.END
 		_next()
 		return
@@ -56,8 +57,8 @@ func _pre():
 	
 func _execute():
 	_state = State.EXECUTE
-	var test_method: String = _methods.pop_back()
-	call(test_method)
+	_method = _method if rerun_method else _methods.pop_back()
+	call(_method)
 	_next()
 	
 func _post():
