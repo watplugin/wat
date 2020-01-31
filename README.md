@@ -1,7 +1,11 @@
-[Read The Docs: WAT](https://wat.readthedocs.io/en/latest/index.html)
 
-You can find me on twitter [@AlexAndDraw](https://twitter.com/AlexAndDraw)
 
-You can email me at code@darigan.ie
+# WAT
 
-You can support me (and therefore WAT) by buying me [coffee](https://ko-fi.com/alexanddraw)
+[Documentation](https://wat.readthedocs.io/en/latest/index.html)
+
+[Twitter](https://twitter.com/AlexAndDraw)
+
+[Email](code@darigan.ie)
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q51D9K5)
