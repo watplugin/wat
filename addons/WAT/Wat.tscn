@@ -6,8 +6,6 @@
 [ext_resource path="res://addons/WAT/results/ResultsForest.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/WAT/test/timer.gd" type="Script" id=5]
 
-
-
 [node name="WAT" type="PanelContainer"]
 margin_right = 1024.0
 margin_bottom = 600.0
@@ -29,7 +27,6 @@ size_flags_vertical = 3
 script = ExtResource( 2 )
 
 [node name="Options" type="HBoxContainer" parent="GUI"]
-editor/display_folded = true
 margin_right = 1010.0
 margin_bottom = 22.0
 size_flags_horizontal = 3
@@ -76,7 +73,7 @@ custom_constants/hseparation = 20
 button_mask = 3
 text = "res://tests"
 align = 1
-items = [ "res://tests", null, false, 0, null, "res://tests/Bootstrapping", null, false, 1, null, "res://tests/Bootstrapping/End2End", null, false, 2, null, "res://tests/Bootstrapping/Integration", null, false, 3, null, "res://tests/Bootstrapping/Unit", null, false, 4, null ]
+items = [ "res://tests", null, false, 0, null ]
 selected = 0
 
 [node name="VSeparator2" type="VSeparator" parent="GUI/Options"]
@@ -131,27 +128,80 @@ margin_right = 1010.0
 margin_bottom = 586.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
-custom_constants/separation = 50
-alignment = 2
+custom_constants/separation = 0
+alignment = 1
 
-[node name="Timer" type="Label" parent="GUI/Info"]
-margin_left = 708.0
-margin_top = 8.0
-margin_right = 786.0
-margin_bottom = 22.0
-text = "Not Running"
-align = 2
-script = ExtResource( 5 )
+[node name="Issue" type="Button" parent="GUI/Info"]
+margin_right = 198.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+shortcut_in_tooltip = false
+action_mode = 0
+text = "Report An Issue"
+flat = true
 
 [node name="VSeparator" type="VSeparator" parent="GUI/Info"]
-margin_left = 836.0
-margin_right = 840.0
+margin_left = 198.0
+margin_right = 202.0
 margin_bottom = 30.0
 
+[node name="RequestDocs" type="Button" parent="GUI/Info"]
+margin_left = 202.0
+margin_right = 400.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+text = "Request Docs"
+flat = true
+
+[node name="VSeparator2" type="VSeparator" parent="GUI/Info"]
+margin_left = 400.0
+margin_right = 404.0
+margin_bottom = 30.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OnlineDocs" type="Button" parent="GUI/Info"]
+margin_left = 404.0
+margin_right = 602.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+text = "Online Docs"
+flat = true
+
+[node name="VSeparator3" type="VSeparator" parent="GUI/Info"]
+margin_left = 602.0
+margin_right = 606.0
+margin_bottom = 30.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Label" parent="GUI/Info"]
+margin_left = 606.0
+margin_right = 804.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Not Running"
+align = 1
+script = ExtResource( 5 )
+
+[node name="VSeparator4" type="VSeparator" parent="GUI/Info"]
+margin_left = 804.0
+margin_right = 808.0
+margin_bottom = 30.0
+size_flags_vertical = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="RunCount" type="Label" parent="GUI/Info"]
-margin_left = 890.0
-margin_top = 8.0
+margin_left = 808.0
 margin_right = 1010.0
-margin_bottom = 22.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
 text = "Ran Tests: 0 Times"
+align = 1
 [connection signal="confirmed" from="GUI/Options/More/Overwrite" to="GUI/Options" method="copy_script_templates"]
