@@ -17,3 +17,4 @@ const Settings = preload("res://addons/WAT/settings.gd")
 class Icon:
 	const SUCCESS = preload("res://addons/WAT/icons/success.png")
 	const FAILED = preload("res://addons/WAT/icons/failed.png")
+	const SUPPORT = preload("res://addons/WAT/icons/kofi.png")

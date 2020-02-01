@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/WAT/wat.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/view.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/icons/more_button.svg" type="Texture" id=3]
 [ext_resource path="res://addons/WAT/results/ResultsForest.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/WAT/test/timer.gd" type="Script" id=5]
+[ext_resource path="res://addons/WAT/icons/kofi.png" type="Texture" id=6]
 
 [node name="WAT" type="PanelContainer"]
 margin_right = 1024.0
@@ -131,8 +132,30 @@ size_flags_horizontal = 3
 custom_constants/separation = 0
 alignment = 1
 
+[node name="Support" type="Button" parent="GUI/Info"]
+margin_right = 165.0
+margin_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 30, 30 )
+hint_tooltip = "Support WAT on Kofi"
+focus_mode = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+enabled_focus_mode = 1
+text = "  Support WAT   "
+icon = ExtResource( 6 )
+flat = true
+expand_icon = true
+
+[node name="VSeparator" type="VSeparator" parent="GUI/Info"]
+margin_left = 165.0
+margin_right = 169.0
+margin_bottom = 30.0
+
 [node name="Issue" type="Button" parent="GUI/Info"]
-margin_right = 198.0
+margin_left = 169.0
+margin_right = 334.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 shortcut_in_tooltip = false
@@ -140,46 +163,50 @@ action_mode = 0
 text = "Report An Issue"
 flat = true
 
-[node name="VSeparator" type="VSeparator" parent="GUI/Info"]
-margin_left = 198.0
-margin_right = 202.0
+[node name="VSeparator2" type="VSeparator" parent="GUI/Info"]
+margin_left = 334.0
+margin_right = 338.0
 margin_bottom = 30.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="RequestDocs" type="Button" parent="GUI/Info"]
-margin_left = 202.0
-margin_right = 400.0
+margin_left = 338.0
+margin_right = 503.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 text = "Request Docs"
 flat = true
 
-[node name="VSeparator2" type="VSeparator" parent="GUI/Info"]
-margin_left = 400.0
-margin_right = 404.0
+[node name="VSeparator3" type="VSeparator" parent="GUI/Info"]
+margin_left = 503.0
+margin_right = 507.0
 margin_bottom = 30.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="OnlineDocs" type="Button" parent="GUI/Info"]
-margin_left = 404.0
-margin_right = 602.0
+margin_left = 507.0
+margin_right = 672.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 text = "Online Docs"
 flat = true
 
-[node name="VSeparator3" type="VSeparator" parent="GUI/Info"]
-margin_left = 602.0
-margin_right = 606.0
+[node name="VSeparator4" type="VSeparator" parent="GUI/Info"]
+margin_left = 672.0
+margin_right = 676.0
 margin_bottom = 30.0
+size_flags_vertical = 7
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Timer" type="Label" parent="GUI/Info"]
-margin_left = 606.0
-margin_right = 804.0
+margin_left = 676.0
+margin_right = 841.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -187,9 +214,9 @@ text = "Not Running"
 align = 1
 script = ExtResource( 5 )
 
-[node name="VSeparator4" type="VSeparator" parent="GUI/Info"]
-margin_left = 804.0
-margin_right = 808.0
+[node name="VSeparator5" type="VSeparator" parent="GUI/Info"]
+margin_left = 841.0
+margin_right = 845.0
 margin_bottom = 30.0
 size_flags_vertical = 7
 __meta__ = {
@@ -197,7 +224,7 @@ __meta__ = {
 }
 
 [node name="RunCount" type="Label" parent="GUI/Info"]
-margin_left = 808.0
+margin_left = 845.0
 margin_right = 1010.0
 margin_bottom = 30.0
 size_flags_horizontal = 3

@@ -29,10 +29,10 @@ func _ready() -> void:
 	DirectorySelector.connect("pressed", self, "_on_directory_selector_pressed")
 	ScriptSelector.connect("pressed", self, "_on_script_selector_pressed")
 	ViewOptions.connect("id_pressed", self, "_on_view_pressed")
-	Info.get_node("Issue").connect("pressed", OS, "shell_open", ["https://github.com/CodeDarigan/WAT/issues/new"])
-	Info.get_node("RequestDocs").connect("pressed", OS, "shell_open", ["https://github.com/CodeDarigan/WAT-docs/issues/new"])
-	Info.get_node("OnlineDocs").connect("pressed", OS, "shell_open", ["https://wat.readthedocs.io/en/latest/index.html"])
-	
+	Info.get_node("Issue").connect("pressed", OS, "shell_open", ["https://github.com/CodeDarigan/WAT/issues/new"], CONNECT_DEFERRED)
+	Info.get_node("RequestDocs").connect("pressed", OS, "shell_open", ["https://github.com/CodeDarigan/WAT-docs/issues/new"], CONNECT_DEFERRED)
+	Info.get_node("OnlineDocs").connect("pressed", OS, "shell_open", ["https://wat.readthedocs.io/en/latest/index.html"], CONNECT_DEFERRED)
+	Info.get_node("Support").connect("pressed", OS, "shell_open", ["https://www.ko-fi.com/alexanddraw"], CONNECT_DEFERRED)
 func _process(delta: float) -> void:
 	if WAT.Settings.test_directory() != current_main_dir:
 		current_main_dir = ProjectSettings.get_setting("WAT/Test_Directory")
