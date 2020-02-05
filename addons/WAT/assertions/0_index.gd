@@ -282,3 +282,6 @@ func is_PoolColorArray(value, context: String = "", crash_on_failure: bool = fal
 
 func is_not_PoolColorArray(value, context: String = "", crash_on_failure: bool = false) -> void:
 		output(IsNot.IsNotPoolColorArray.new(value, context), crash_on_failure)
+		
+func fail(context: String = "Unimplemented Test") -> void:
+		output(EXPECT.Fail.new(context))
