@@ -8,6 +8,7 @@ const UI: PackedScene = preload("res://addons/WAT/Wat.tscn")
 var interface: PanelContainer
 
 func _enter_tree() -> void:
+	_set_tags()
 	_create_test_folder()
 	_create_temp_folder()
 	interface = UI.instance()
@@ -15,6 +16,19 @@ func _enter_tree() -> void:
 	interface.connect("results_displayed", self, "make_bottom_panel_item_visible", [interface])
 	add_control_to_bottom_panel(interface, "Tests")
 	ProjectSettings.set_setting("WAT/Goto_Test_Method", funcref(self, "goto_function"))
+	
+func _set_tags() -> void:
+	if ProjectSettings.has_setting("WAT/Tags"):
+		return
+	var tags: PoolStringArray = []
+	var property_info: Dictionary = {
+		"name": "WAT/Tags",
+		"type": TYPE_STRING_ARRAY,
+		"hint_string": "Defines Tags to group Tests"
+	}
+	ProjectSettings.set("WAT/Tags", tags)
+	ProjectSettings.add_property_info(property_info)
+	
 	
 func goto_function(path: String, function: String) -> void:
 	var script: Script = load(path)

@@ -7,10 +7,12 @@ onready var ViewOptions: MenuButton = $Options/View.get_popup()
 onready var MoreOptions: OptionButton = $Options/More.get_popup()
 onready var DirectorySelector: OptionButton = $Options/DirectorySelector
 onready var ScriptSelector: OptionButton = $Options/ScriptSelector
+onready var TagSelector: OptionButton = $Options/TagSelector
 onready var Results: TabContainer = $Results
 onready var Info: HBoxContainer = $Info
 var filesystem
 var current_main_dir
+var tags
 
 func _ready() -> void:
 	name = "GUI"
@@ -28,11 +30,13 @@ func _ready() -> void:
 	MoreOptions.add_item("Print Stray Nodes")
 	DirectorySelector.connect("pressed", self, "_on_directory_selector_pressed")
 	ScriptSelector.connect("pressed", self, "_on_script_selector_pressed")
+	TagSelector.connect("pressed", self, "_on_tag_selector_pressed")
 	ViewOptions.connect("id_pressed", self, "_on_view_pressed")
 	Info.get_node("Issue").connect("pressed", OS, "shell_open", ["https://github.com/CodeDarigan/WAT/issues/new"], CONNECT_DEFERRED)
 	Info.get_node("RequestDocs").connect("pressed", OS, "shell_open", ["https://github.com/CodeDarigan/WAT-docs/issues/new"], CONNECT_DEFERRED)
 	Info.get_node("OnlineDocs").connect("pressed", OS, "shell_open", ["https://wat.readthedocs.io/en/latest/index.html"], CONNECT_DEFERRED)
 	Info.get_node("Support").connect("pressed", OS, "shell_open", ["https://www.ko-fi.com/alexanddraw"], CONNECT_DEFERRED)
+
 func _process(delta: float) -> void:
 	if WAT.Settings.test_directory() != current_main_dir:
 		current_main_dir = ProjectSettings.get_setting("WAT/Test_Directory")
@@ -57,6 +61,11 @@ func _on_script_selector_pressed() -> void:
 				ScriptSelector.add_item(script)
 			if load(script).get("IS_WAT_SUITE"):
 				ScriptSelector.add_item(script)
+				
+func _on_tag_selector_pressed() -> void:
+	TagSelector.clear()
+	for tag in ProjectSettings.get_setting("WAT/Tags"):
+		TagSelector.add_item(tag)
 
 var _run_count: int = 0
 func _add_run_count(id):
