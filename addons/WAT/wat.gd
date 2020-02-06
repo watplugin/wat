@@ -26,9 +26,10 @@ func _on_run_pressed(option: int) -> void:
 		RUN.SCRIPT:
 			_run(selected(GUI.ScriptSelector))
 		RUN.TAGGED:
-			_run(selected(GUI.TagSelector))
+			_run("Tag." + selected(GUI.TagSelector))
 
 func _run(path: String) -> void:
+	print(path)
 	WAT.Settings.enable_autoquit()
 	WAT.Settings.set_run_path(path)
 	GUI.Results.begin_searching_for_new_results(WAT.Results)

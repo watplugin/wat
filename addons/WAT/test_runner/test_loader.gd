@@ -1,12 +1,20 @@
 extends Reference
 
 const FileSystem: Script = preload("res://addons/WAT/filesystem.gd")
+const Index: Resource = preload("res://addons/WAT/ui/metadata/index.tres")
 var _tests: Array = []
 
 func deposit(tests: Array) -> void:
 	_tests = tests
 
 func withdraw(path: String = ProjectSettings.get("WAT/ActiveRunPath")) -> Array:
+	if path.begins_with("Tag."):
+#		print(path.replace("Tag.", ""))
+		var tagged: Array = []
+		var tag = path.replace("Tag.", "")
+		for i in Index.scripts.size():
+			if Index.tags[i].has(tag):
+				tagged.append(Index.scripts[i].resource_path)
 	if not path.empty():
 		deposit(FileSystem.scripts(path))
 	var tests: Array = []
