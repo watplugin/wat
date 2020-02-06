@@ -19,7 +19,7 @@ func _ready() -> void:
 	add_child(_yielder)
 	_start()
 
-func _next():
+func _next(vargs = null):
 	# When yielding until signals or timeouts, this gets called on resume
 	# We call defer here to give the __testcase method time to reach either the end
 	# or an extra yield at which point we're able to check the _state of the yield and

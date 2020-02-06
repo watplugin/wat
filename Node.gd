@@ -1,17 +1,20 @@
 extends Node
 
+func value():
+	var x = 100
+	yield(get_tree().create_timer(1.0), "timeout")
+	return x
+	
+func execute() -> void:
+	var b = value()
+	b.connect("completed", self, "_check")
+	var x = yield(value(), "completed")
+#	print(x == 100)
+	
+func _ready():
+	print([null, null, null])
+	call_deferred("execute")
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	check(null)
-
-func check(i):
-	print(i is Object)
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
+func _check(value = 5):
+	print(value)
+	print("checking?")
