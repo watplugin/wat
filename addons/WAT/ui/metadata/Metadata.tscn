@@ -1,92 +1,75 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/WAT/ui/metadata/metadata.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/icons/down.png" type="Texture" id=2]
+[ext_resource path="res://addons/WAT/icons/replace.png" type="Texture" id=3]
 
-[node name="Metadata" type="PanelContainer"]
-margin_right = 1024.0
-margin_bottom = 52.0
+[node name="Main" type="VBoxContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 83.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Main" type="VBoxContainer" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1017.0
-margin_bottom = 69.0
+[node name="Data" type="HBoxContainer" parent="."]
+margin_right = 1010.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/separation = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Title" type="Label" parent="Main"]
-margin_right = 1010.0
-margin_bottom = 20.0
+[node name="Title" type="Label" parent="Data"]
+margin_right = 978.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Test Metadata"
 align = 1
 
-[node name="HSeparator" type="HSeparator" parent="Main"]
-margin_top = 20.0
+[node name="ClearAll" type="Button" parent="Data"]
+margin_left = 982.0
 margin_right = 1010.0
-margin_bottom = 40.0
+margin_bottom = 22.0
+icon = ExtResource( 3 )
+
+[node name="HSeparator" type="HSeparator" parent="."]
+margin_top = 22.0
+margin_right = 1010.0
+margin_bottom = 38.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_vertical = 3
 
-[node name="Options" type="GridContainer" parent="Main"]
-margin_top = 40.0
-margin_right = 1010.0
-margin_bottom = 62.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/vseparation = 0
-custom_constants/hseparation = 0
-columns = 2
-
-[node name="Tag" type="Label" parent="Main/Options"]
-margin_right = 505.0
-margin_bottom = 22.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Tags"
-
-[node name="Button" type="Button" parent="Main/Options"]
-margin_left = 505.0
-margin_right = 1010.0
-margin_bottom = 22.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Array ( Size 0 )"
-
-[node name="TagArray" type="GridContainer" parent="Main"]
-visible = false
+[node name="TagList" type="VBoxContainer" parent="."]
 margin_top = 38.0
 margin_right = 1010.0
-margin_bottom = 82.0
+margin_bottom = 54.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/vseparation = 0
-custom_constants/hseparation = 0
-columns = 2
+custom_constants/separation = 0
 
-[node name="Size" type="Label" parent="Main/TagArray"]
-margin_right = 505.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Size:"
-
-[node name="SpinBox" type="SpinBox" parent="Main/TagArray"]
-margin_left = 505.0
+[node name="Tags" type="HBoxContainer" parent="."]
+margin_top = 54.0
 margin_right = 1010.0
-margin_bottom = 24.0
+margin_bottom = 76.0
+
+[node name="Select" type="MenuButton" parent="Tags"]
+margin_right = 978.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-align = 1
+text = "Add New Tag"
+switch_on_hover = true
+
+[node name="TextureRect" type="Button" parent="Tags"]
+margin_left = 982.0
+margin_right = 1010.0
+margin_bottom = 22.0
+size_flags_vertical = 3
+icon = ExtResource( 2 )
+flat = true
