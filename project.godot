@@ -52,7 +52,7 @@ ActiveRunPath="res://tests/unit/boolean.test.gd"
 AutoQuit=true
 Goto_Test_Method=Object(FuncRef,"script":null)
 
-Tags=PoolStringArray( "32", "64" )
+Tags=PoolStringArray( "32", "64", "Linux" )
 
 [application]
 
