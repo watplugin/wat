@@ -15,7 +15,8 @@ func withdraw(path: String = ProjectSettings.get("WAT/ActiveRunPath")) -> Array:
 		for i in Index.scripts.size():
 			if Index.tags[i].has(tag):
 				tagged.append(Index.scripts[i].resource_path)
-	if not path.empty():
+		deposit(tagged)
+	elif not path.empty():
 		deposit(FileSystem.scripts(path))
 	var tests: Array = []
 	for path in _tests:

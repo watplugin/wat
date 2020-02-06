@@ -1,11 +1,6 @@
 tool
 extends Control
 
-# Check Tags
-# Add Tag (Only if not already)
-# Delete Tag
-# ON LOAD DISPLAY ALL RELEVANT TAGS
-# CLEAR OUT ALL TAGS
 var test: Resource
 const Index: Resource = preload("index.tres")
 const Tag: PackedScene = preload("Tag.tscn")
@@ -66,10 +61,10 @@ func delete(tag: Control) -> void:
 	print("deleting")
 	TagList.remove_child(tag)
 	tag.queue_free()
-#	print(Index.tags[id()].has(tag.Name.))
 	Index.tags[id()].erase(tag.Name.text as String)
 	save()
-#
+
 func save() -> void:
 	var err = ResourceSaver.save(Index.resource_path, Index)
-	push_warning(err as String)
+	if err != OK:
+		push_warning(err as String)
