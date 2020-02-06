@@ -4,12 +4,4 @@
 
 [resource]
 script = ExtResource( 1 )
-_list = [ {
-
-}, {
-
-}, {
-
-}, {
-
-} ]
+_list = [  ]
