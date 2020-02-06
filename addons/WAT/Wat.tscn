@@ -3,9 +3,10 @@
 [ext_resource path="res://addons/WAT/ui/gui/wat.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/ui/gui/gui.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/icons/more_button.svg" type="Texture" id=3]
-[ext_resource path="res://addons/WAT/results/ResultsForest.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/WAT/ui/results/ResultsForest.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/WAT/test/timer.gd" type="Script" id=5]
 [ext_resource path="res://addons/WAT/icons/kofi.png" type="Texture" id=6]
+
 
 
 
