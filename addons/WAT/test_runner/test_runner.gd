@@ -2,7 +2,7 @@ extends Node
 
 const COMPLETED: String = "completed"
 var primary: bool = true
-var _test_loader: WAT.TestLoader
+var _test_loader
 var _test_results: Resource
 var _tests: Array = []
 var _cases: Array = []
@@ -20,7 +20,7 @@ func _ready() -> void:
 		push_warning("No Scripts To Test")
 	_run_tests()
 	
-func setup(loader: WAT.TestLoader = WAT.TestLoader.new(), results: Resource = WAT.Results):
+func setup(loader = preload("test_loader.gd").new(), results: Resource = WAT.Results):
 	_setup = true
 	_test_loader = loader
 	_test_results = results

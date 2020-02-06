@@ -48,10 +48,11 @@ quick_access=Object(FuncRef,"script":null)
 [WAT]
 
 Test_Directory="res://tests"
-ActiveRunPath="res://tests/unit/boolean.test.gd"
+ActiveRunPath="Tag.32"
 AutoQuit=true
 Goto_Test_Method=Object(FuncRef,"script":null)
 
+Tags=PoolStringArray( "32", "64", "Linux" )
 
 [application]
 

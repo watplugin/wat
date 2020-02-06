@@ -1,7 +1,5 @@
 extends WAT.Test
 
-
-
 func title():
 	return "Given an Is Instance of class/type Assertion"
 	

@@ -3,6 +3,7 @@ extends Node
 const RUN_ALL: String = "-run_all"
 const RUN_DIRECTORY: String = "-run_dir"
 const RUN_SCRIPT: String = "-run_script"
+const RUN_TAG: String = "-run_tag"
 const LIST_ALL: String = "-list_all"
 const LIST_DIR: String = "-list_dir"
 const PASSED: int = 0
@@ -27,6 +28,8 @@ func parse(arguments: Array) -> void:
 			_run(arguments.pop_front())
 		RUN_SCRIPT:
 			_run(arguments.pop_front())
+		RUN_TAG:
+			_run("Tag." + arguments.pop_front())
 		LIST_ALL:
 			_list()
 			get_tree().quit()

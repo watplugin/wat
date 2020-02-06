@@ -63,7 +63,7 @@ align = 1
 
 [node name="DirectorySelector" type="OptionButton" parent="GUI/Options"]
 margin_left = 185.0
-margin_right = 516.0
+margin_right = 386.0
 margin_bottom = 22.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -78,21 +78,21 @@ items = [ "res://tests", null, false, 0, null ]
 selected = 0
 
 [node name="VSeparator2" type="VSeparator" parent="GUI/Options"]
-margin_left = 526.0
-margin_right = 530.0
+margin_left = 396.0
+margin_right = 400.0
 margin_bottom = 22.0
 
 [node name="ScriptLabel" type="Label" parent="GUI/Options"]
-margin_left = 540.0
+margin_left = 410.0
 margin_top = 4.0
-margin_right = 580.0
+margin_right = 450.0
 margin_bottom = 18.0
 text = "Script:"
 align = 1
 
 [node name="ScriptSelector" type="OptionButton" parent="GUI/Options"]
-margin_left = 590.0
-margin_right = 921.0
+margin_left = 460.0
+margin_right = 661.0
 margin_bottom = 22.0
 hint_tooltip = "Select a single test script to run (your choices depend on which folder is selected)."
 size_flags_horizontal = 3
@@ -100,6 +100,25 @@ size_flags_vertical = 3
 align = 1
 
 [node name="VSeparator3" type="VSeparator" parent="GUI/Options"]
+margin_left = 671.0
+margin_right = 675.0
+margin_bottom = 22.0
+
+[node name="TagLabel" type="Label" parent="GUI/Options"]
+margin_left = 685.0
+margin_top = 4.0
+margin_right = 710.0
+margin_bottom = 18.0
+text = "Tag:"
+align = 1
+
+[node name="TagSelector" type="OptionButton" parent="GUI/Options"]
+margin_left = 720.0
+margin_right = 921.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+
+[node name="VSeparator4" type="VSeparator" parent="GUI/Options"]
 margin_left = 931.0
 margin_right = 935.0
 margin_bottom = 22.0

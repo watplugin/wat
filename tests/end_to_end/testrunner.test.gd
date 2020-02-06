@@ -1,6 +1,6 @@
 extends WAT.Test
 
-const TestRunner = preload("res://addons/WAT/test_runner/TestRunner.tscn")
+var TestRunner = load("res://addons/WAT/test_runner/TestRunner.tscn")
 var _runner: Node
 var _results: Resource
 var _test_loader: Reference
@@ -15,7 +15,7 @@ func pre():
 	var director = direct.script("res://addons/WAT/test_runner/test_runner.gd")
 	director.method("end").subcall(funcref(self, "me"))
 	_runner = director.double()
-	_test_loader = WAT.TestLoader.new()
+	_test_loader = load("res://addons/WAT/test_runner/test_loader.gd").new()
 	_results = preload("res://tests/mocks/results.tres")
 	_runner.setup(_test_loader, _results)
 	_runner.primary = false
