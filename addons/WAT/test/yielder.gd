@@ -35,7 +35,7 @@ func _on_resume(a = null, b = null, c = null, d = null, e = null, f = null) -> v
 	# ..will call "_next" which call defers _change_state. Since it is a deferred
 	# ..call the test will resume first. Therefore if a new yield gets constructed
 	# ..in the interim we will be able to check if we have restarted the yield clock
-	emit_signal("finished")
+	emit_signal("finished", [a, b, c, d, e, f])
 
 func is_active() -> bool:
 	return not paused and time_left > 0
