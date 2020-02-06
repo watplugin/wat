@@ -48,7 +48,7 @@ quick_access=Object(FuncRef,"script":null)
 [WAT]
 
 Test_Directory="res://tests"
-ActiveRunPath="Tag.32"
+ActiveRunPath="res://tests"
 AutoQuit=true
 Goto_Test_Method=Object(FuncRef,"script":null)
 

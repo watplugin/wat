@@ -2,17 +2,17 @@ extends Reference
 class_name WAT
 
 const TestDoubleFactory = preload("res://addons/WAT/double/factory.gd")
-const BaseTest = preload("test/base_test.gd")
-const Test: Script = preload("test/test.gd")
+const BaseTest = preload("res://addons/WAT/test/base_test.gd")
+const Test: Script = preload("res://addons/WAT/test/test.gd")
 #const TestLoader = preload("res://addons/WAT/test_runner/test_loader.gd")
 const Results: Resource = preload("res://addons/WAT/resources/results.tres")
-const TestSuiteOfSuites = preload("test/suite.gd")
+const TestSuiteOfSuites = preload("res://addons/WAT/test/suite.gd")
 const SignalWatcher = preload("res://addons/WAT/test/watcher.gd")
 const Parameters = preload("res://addons/WAT/test/parameters.gd")
-const Yielder = preload("test/yielder.gd")
+const Yielder = preload("res://addons/WAT/test/yielder.gd")
 const Asserts = preload("res://addons/WAT/assertions/0_index.gd")
-const TestCase = preload("test/case.gd")
-const Settings = preload("res://addons/WAT/settings.gd")
+const TestCase = preload("res://addons/WAT/test/case.gd")
+const Settings = preload("res://addons/WAT/system/settings.gd")
 
 class Icon:
 	const SUCCESS = preload("res://addons/WAT/icons/success.png")

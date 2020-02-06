@@ -1,6 +1,6 @@
 extends Reference
 
-const FileSystem: Script = preload("res://addons/WAT/filesystem.gd")
+const FileSystem: Script = preload("res://addons/WAT/system/filesystem.gd")
 const Index: Resource = preload("res://addons/WAT/ui/metadata/index.tres")
 var _tests: Array = []
 
