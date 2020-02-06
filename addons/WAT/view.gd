@@ -23,6 +23,7 @@ func _ready() -> void:
 	RunOptions.add_item("Run All Tests")
 	RunOptions.add_item("Run Selected Directory")
 	RunOptions.add_item("Run Selected Script")
+	RunOptions.add_item("Run Tagged")
 	ViewOptions.add_item("Expand All Results")
 	ViewOptions.add_item("Collapse All Results")
 	ViewOptions.add_item("Expand All Failures")

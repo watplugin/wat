@@ -1,7 +1,7 @@
 tool
 extends PanelContainer
 
-enum RUN { ALL, DIRECTORY, SCRIPT }
+enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED }
 enum OPTION { ADD_SCRIPT_TEMPLATE, PRINT_STRAY_NODES }
 const FileSystem: Reference = preload("res://addons/WAT/filesystem.gd")
 const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
@@ -25,6 +25,8 @@ func _on_run_pressed(option: int) -> void:
 			_run(selected(GUI.DirectorySelector))
 		RUN.SCRIPT:
 			_run(selected(GUI.ScriptSelector))
+		RUN.TAGGED:
+			_run(selected(GUI.TagSelector))
 
 func _run(path: String) -> void:
 	WAT.Settings.enable_autoquit()
