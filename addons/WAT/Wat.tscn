@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/WAT/ui/gui/wat.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/ui/gui/gui.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://addons/WAT/ui/results/ResultsForest.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/WAT/test/timer.gd" type="Script" id=5]
 [ext_resource path="res://addons/WAT/icons/kofi.png" type="Texture" id=6]
+[ext_resource path="res://addons/WAT/icons/play.svg" type="Texture" id=7]
 
 [node name="Tests" type="PanelContainer"]
 margin_right = 1024.0
@@ -33,37 +34,50 @@ margin_bottom = 22.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
 
+[node name="QuickPlay" type="Button" parent="GUI/Options"]
+margin_right = 28.0
+margin_bottom = 22.0
+hint_tooltip = "Run All Tests"
+icon = ExtResource( 7 )
+flat = true
+
+[node name="VSeparator" type="VSeparator" parent="GUI/Options"]
+margin_left = 38.0
+margin_right = 42.0
+margin_bottom = 22.0
+
 [node name="Run" type="MenuButton" parent="GUI/Options"]
-margin_right = 36.0
+margin_left = 52.0
+margin_right = 88.0
 margin_bottom = 22.0
 text = "Run"
 items = [ "Run All Tests", null, 0, false, false, 0, 0, null, "", false, "Run Selected Directory", null, 0, false, false, 1, 0, null, "", false, "Run Selected Script", null, 0, false, false, 2, 0, null, "", false, "Run Tagged", null, 0, false, false, 3, 0, null, "", false ]
 switch_on_hover = true
 
 [node name="View" type="MenuButton" parent="GUI/Options"]
-margin_left = 46.0
-margin_right = 88.0
+margin_left = 98.0
+margin_right = 140.0
 margin_bottom = 22.0
 text = "View"
 items = [ "Expand All Results", null, 0, false, false, 0, 0, null, "", false, "Collapse All Results", null, 0, false, false, 1, 0, null, "", false, "Expand All Failures", null, 0, false, false, 2, 0, null, "", false ]
 switch_on_hover = true
 
-[node name="VSeparator" type="VSeparator" parent="GUI/Options"]
-margin_left = 98.0
-margin_right = 102.0
-margin_bottom = 22.0
-
 [node name="DirLabel" type="Label" parent="GUI/Options"]
-margin_left = 112.0
+margin_left = 150.0
 margin_top = 4.0
-margin_right = 175.0
+margin_right = 213.0
 margin_bottom = 18.0
 text = "Directory:"
 align = 1
 
+[node name="VSeparator2" type="VSeparator" parent="GUI/Options"]
+margin_left = 223.0
+margin_right = 227.0
+margin_bottom = 22.0
+
 [node name="DirectorySelector" type="OptionButton" parent="GUI/Options"]
-margin_left = 185.0
-margin_right = 386.0
+margin_left = 237.0
+margin_right = 430.0
 margin_bottom = 22.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -77,43 +91,33 @@ align = 1
 items = [ "res://tests", null, false, 0, null ]
 selected = 0
 
-[node name="VSeparator2" type="VSeparator" parent="GUI/Options"]
-margin_left = 396.0
-margin_right = 400.0
-margin_bottom = 22.0
-
 [node name="ScriptLabel" type="Label" parent="GUI/Options"]
-margin_left = 410.0
+margin_left = 440.0
 margin_top = 4.0
-margin_right = 450.0
+margin_right = 480.0
 margin_bottom = 18.0
 text = "Script:"
 align = 1
 
 [node name="ScriptSelector" type="OptionButton" parent="GUI/Options"]
-margin_left = 460.0
-margin_right = 661.0
+margin_left = 490.0
+margin_right = 683.0
 margin_bottom = 22.0
 hint_tooltip = "Select a single test script to run (your choices depend on which folder is selected)."
 size_flags_horizontal = 3
 size_flags_vertical = 3
 align = 1
 
-[node name="VSeparator3" type="VSeparator" parent="GUI/Options"]
-margin_left = 671.0
-margin_right = 675.0
-margin_bottom = 22.0
-
 [node name="TagLabel" type="Label" parent="GUI/Options"]
-margin_left = 685.0
+margin_left = 693.0
 margin_top = 4.0
-margin_right = 710.0
+margin_right = 718.0
 margin_bottom = 18.0
 text = "Tag:"
 align = 1
 
 [node name="TagSelector" type="OptionButton" parent="GUI/Options"]
-margin_left = 720.0
+margin_left = 728.0
 margin_right = 921.0
 margin_bottom = 22.0
 size_flags_horizontal = 3

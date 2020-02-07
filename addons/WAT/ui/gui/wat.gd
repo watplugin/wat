@@ -11,6 +11,7 @@ onready var GUI: VBoxContainer = $GUI
 
 func _ready() -> void:
 	set_process(false)
+	GUI.QuickPlay.connect("pressed", self, "_on_run_pressed", [RUN.ALL])
 	GUI.RunOptions.connect("id_pressed", self, "_on_run_pressed")
 	GUI.Results.connect("displayed", self, "emit_signal", ["results_displayed"])
 	GUI.filesystem = FileSystem
