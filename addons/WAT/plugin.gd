@@ -1,8 +1,6 @@
 tool
 extends EditorPlugin
 
-# 10 Different States
-# Abstract Initialization To Cover Basis
 # Add Ability To Refresh/Update (May Not Need To Remove Plugin)
 var displays: Dictionary = {
 	0: "Left.UL Dock",
@@ -14,7 +12,6 @@ var displays: Dictionary = {
 	6: "Right.UR Dock",
 	7: "Right.BR Dock",
 	8: "Bottom Panel",
-	9: "Out Of Bounds"
 }
 
 enum {
@@ -31,7 +28,7 @@ enum {
 	OUT_OF_BOUNDS
 }
 
-
+var state: int
 const TITLE: String = "Tests"
 const RUN_CURRENT_SCENE_GODOT_3_2: int = 39
 const RUN_CURRENT_SCENE_GODOT_3_1: int = 33
@@ -44,32 +41,39 @@ func get_plugin_name() -> String:
    return "WAT"
 
 func _enter_tree() -> void:
+	state = _get_state()
 	interface = UI.instance()
 	exports = EXPORTS.new()
-	if state() == BOTTOM_PANEL:
+	if state == BOTTOM_PANEL:
 		_show_as_bottom_panel()
-	elif state() < BOTTOM_PANEL:
-		_show_as_dock(state())
+	elif state < BOTTOM_PANEL:
+		_show_as_dock(state)
 	else:
-		print("oob for the moment")
+		push_warning("Display Option Is Out Of Bounds")
 	connect_signals()
-	_update_display_options()
 	add_inspector_plugin(exports)
 	_set_tags()
+	_create_test_folder()
 	create_goto_function()
 	
 func _exit_tree() -> void:
-	if state() == BOTTOM_PANEL:
+	if _get_state() == BOTTOM_PANEL:
 		_remove_as_bottom_panel()
-	elif state() < BOTTOM_PANEL:
+	elif _get_state() < BOTTOM_PANEL:
 		_remove_as_dock()
 	interface.free()
 	remove_inspector_plugin(exports)
-	
-func state() -> int:
+
+func _get_state() -> int:
 	if not ProjectSettings.has_setting("WAT/Display"):
 		ProjectSettings.set_setting("WAT/Display", BOTTOM_PANEL)
-		### add property info here
+	var property = {}
+	property.name = "WAT/Display"
+	property.type = TYPE_INT
+	property.hint = PROPERTY_HINT_ENUM
+	property.hint_string = PoolStringArray(displays.values()).join(",")
+	ProjectSettings.add_property_info(property)
+	ProjectSettings.save()
 	return ProjectSettings.get_setting("WAT/Display")
 	
 func _show_as_bottom_panel() -> void:
@@ -88,43 +92,33 @@ func _remove_as_dock() -> void:
 func connect_signals() -> void:
 	_connect(interface, "test_runner_started", self, "_on_test_runner_started")
 	_connect(interface, "results_displayed", self, "make_bottom_panel_item_visible", [interface])
-	_connect(interface.GUI.MoveDisplay.get_popup(), "id_pressed", self, "_change")
-	_update_display_options()
-	
-func _update_display_options() -> void:
-	interface.GUI.MoveDisplay.get_popup().clear()
-	for index in OUT_OF_BOUNDS:
-		if index == state():
-			continue
-		interface.GUI.MoveDisplay.get_popup().add_item(displays[index], index)
 
 func _connect(emitter, event, target, method, binds = []):
 	if not emitter.is_connected(event, target, method):
 		emitter.connect(event, target, method, binds)
 	
-func set_project_state() -> void:
-	pass
-	
-func _change(id: int) -> void:
-	var previous_state: int = state()
-	var new_state: int = id
-	print("prev state: %s, new_state: %s" % [previous_state, new_state])
+func _change(new_state: int) -> void:
+	var previous_state: int = state
 	
 	# Clear Old State
 	if previous_state == BOTTOM_PANEL:
 		_remove_as_bottom_panel()
-	elif previous_state in range(LEFT_UPPER_LEFT, OUT_OF_BOUNDS):
+	elif previous_state < BOTTOM_PANEL:
 		_remove_as_dock()
-	
+
 	# Create New State
 	if new_state == BOTTOM_PANEL:
 		_show_as_bottom_panel()
-	elif new_state in range(LEFT_UPPER_LEFT, OUT_OF_BOUNDS):
+	elif new_state < BOTTOM_PANEL:
 		_show_as_dock(new_state)
-	
+
+	state = new_state
 	ProjectSettings.set_setting("WAT/Display", new_state)
-		
-	_update_display_options()
+	ProjectSettings.save()
+	
+func _process(delta):
+	if state != _get_state():
+		_change(_get_state())
 	
 func _set_tags() -> void:
 	if ProjectSettings.has_setting("WAT/Tags"):
@@ -141,7 +135,6 @@ func _set_tags() -> void:
 func create_goto_function() -> void:
 	if not ProjectSettings.has_setting("WAT/Goto_Test_Method"):
 		ProjectSettings.set_setting("WAT/Goto_Test_Method", funcref(self, "goto_functions"))
-	print(ProjectSettings.has_setting("WAT/Goto_Test_Method"))
 	
 func goto_function(path: String, function: String) -> void:
 	var script: Script = load(path)
@@ -151,7 +144,6 @@ func goto_function(path: String, function: String) -> void:
 		if function in source[i] and "describe" in source[i]:
 			get_editor_interface().get_script_editor().goto_line(i)
 			return
-
 
 func _create_test_folder() -> void:
 	var title: String = "WAT/Test_Directory"

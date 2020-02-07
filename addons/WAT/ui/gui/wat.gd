@@ -8,10 +8,8 @@ const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 signal test_runner_started
 signal results_displayed
 onready var GUI: VBoxContainer = $GUI
-onready var MoveDisplay: OptionButton = $GUI/Info/MoveDisplay
 
 func _ready() -> void:
-	name = "Tests"
 	set_process(false)
 	GUI.RunOptions.connect("id_pressed", self, "_on_run_pressed")
 	GUI.Results.connect("displayed", self, "emit_signal", ["results_displayed"])
