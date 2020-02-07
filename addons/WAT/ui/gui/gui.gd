@@ -16,6 +16,7 @@ var tags
 
 func _ready() -> void:
 	name = "GUI"
+	$Info/Settings.connect("pressed", self, "_open_settings")
 	RunOptions.clear()
 	ViewOptions.clear()
 	MoreOptions.clear()
@@ -37,6 +38,9 @@ func _ready() -> void:
 	Info.get_node("RequestDocs").connect("pressed", OS, "shell_open", ["https://github.com/CodeDarigan/WAT-docs/issues/new"], CONNECT_DEFERRED)
 	Info.get_node("OnlineDocs").connect("pressed", OS, "shell_open", ["https://wat.readthedocs.io/en/latest/index.html"], CONNECT_DEFERRED)
 	Info.get_node("Support").connect("pressed", OS, "shell_open", ["https://www.ko-fi.com/alexanddraw"], CONNECT_DEFERRED)
+
+func _open_settings() -> void:
+	push_warning("Open Setting Not Implemented")
 
 func _process(delta: float) -> void:
 	if WAT.Settings.test_directory() != current_main_dir:
