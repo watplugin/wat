@@ -10,6 +10,7 @@ onready var ScriptSelector: OptionButton = $Options/ScriptSelector
 onready var TagSelector: OptionButton = $Options/TagSelector
 onready var Results: TabContainer = $Results
 onready var Info: HBoxContainer = $Info
+onready var MoveDisplay: MenuButton = $Info/MoveDisplay
 var filesystem
 var current_main_dir
 var tags

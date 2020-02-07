@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/WAT/ui/gui/wat.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/ui/gui/gui.gd" type="Script" id=2]
@@ -6,10 +6,7 @@
 [ext_resource path="res://addons/WAT/ui/results/ResultsForest.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/WAT/test/timer.gd" type="Script" id=5]
 [ext_resource path="res://addons/WAT/icons/kofi.png" type="Texture" id=6]
-
-
-
-
+[ext_resource path="res://addons/WAT/icons/down.png" type="Texture" id=7]
 
 [node name="WAT" type="PanelContainer"]
 margin_right = 1024.0
@@ -41,7 +38,7 @@ custom_constants/separation = 10
 margin_right = 36.0
 margin_bottom = 22.0
 text = "Run"
-items = [ "Run All Tests", null, 0, false, false, 0, 0, null, "", false, "Run Selected Directory", null, 0, false, false, 1, 0, null, "", false, "Run Selected Script", null, 0, false, false, 2, 0, null, "", false ]
+items = [ "Run All Tests", null, 0, false, false, 0, 0, null, "", false, "Run Selected Directory", null, 0, false, false, 1, 0, null, "", false, "Run Selected Script", null, 0, false, false, 2, 0, null, "", false, "Run Tagged", null, 0, false, false, 3, 0, null, "", false ]
 switch_on_hover = true
 
 [node name="View" type="MenuButton" parent="GUI/Options"]
@@ -144,19 +141,19 @@ resizable = true
 dialog_text = "Templates already exist. Do you want to overwrite them?"
 
 [node name="Results" parent="GUI" instance=ExtResource( 4 )]
-margin_bottom = 552.0
+margin_bottom = 544.0
 
 [node name="Info" type="HBoxContainer" parent="GUI"]
-margin_top = 556.0
+margin_top = 548.0
 margin_right = 1010.0
-margin_bottom = 586.0
+margin_bottom = 578.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 custom_constants/separation = 0
 alignment = 1
 
 [node name="Support" type="Button" parent="GUI/Info"]
-margin_right = 165.0
+margin_right = 147.0
 margin_bottom = 30.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -172,13 +169,13 @@ flat = true
 expand_icon = true
 
 [node name="VSeparator" type="VSeparator" parent="GUI/Info"]
-margin_left = 165.0
-margin_right = 169.0
+margin_left = 147.0
+margin_right = 151.0
 margin_bottom = 30.0
 
 [node name="Issue" type="Button" parent="GUI/Info"]
-margin_left = 169.0
-margin_right = 334.0
+margin_left = 151.0
+margin_right = 298.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 shortcut_in_tooltip = false
@@ -187,40 +184,41 @@ text = "Report An Issue"
 flat = true
 
 [node name="VSeparator2" type="VSeparator" parent="GUI/Info"]
-margin_left = 334.0
-margin_right = 338.0
+margin_left = 298.0
+margin_right = 302.0
 margin_bottom = 30.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="RequestDocs" type="Button" parent="GUI/Info"]
-margin_left = 338.0
-margin_right = 503.0
+margin_left = 302.0
+margin_right = 449.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 text = "Request Docs"
 flat = true
 
 [node name="VSeparator3" type="VSeparator" parent="GUI/Info"]
-margin_left = 503.0
-margin_right = 507.0
+margin_left = 449.0
+margin_right = 453.0
 margin_bottom = 30.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="OnlineDocs" type="Button" parent="GUI/Info"]
-margin_left = 507.0
-margin_right = 672.0
+margin_left = 453.0
+margin_right = 600.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Online Docs"
 flat = true
 
 [node name="VSeparator4" type="VSeparator" parent="GUI/Info"]
-margin_left = 672.0
-margin_right = 676.0
+margin_left = 600.0
+margin_right = 604.0
 margin_bottom = 30.0
 size_flags_vertical = 7
 __meta__ = {
@@ -228,8 +226,8 @@ __meta__ = {
 }
 
 [node name="Timer" type="Label" parent="GUI/Info"]
-margin_left = 676.0
-margin_right = 841.0
+margin_left = 604.0
+margin_right = 751.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -238,8 +236,8 @@ align = 1
 script = ExtResource( 5 )
 
 [node name="VSeparator5" type="VSeparator" parent="GUI/Info"]
-margin_left = 841.0
-margin_right = 845.0
+margin_left = 751.0
+margin_right = 755.0
 margin_bottom = 30.0
 size_flags_vertical = 7
 __meta__ = {
@@ -247,11 +245,35 @@ __meta__ = {
 }
 
 [node name="RunCount" type="Label" parent="GUI/Info"]
-margin_left = 845.0
-margin_right = 1010.0
+margin_left = 755.0
+margin_right = 902.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 text = "Ran Tests: 0 Times"
 align = 1
+
+[node name="VSeparator6" type="VSeparator" parent="GUI/Info"]
+margin_left = 902.0
+margin_right = 906.0
+margin_bottom = 30.0
+size_flags_vertical = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoveDisplay" type="MenuButton" parent="GUI/Info"]
+margin_left = 906.0
+margin_right = 1008.0
+margin_bottom = 30.0
+size_flags_vertical = 3
+text = "Set Display"
+icon = ExtResource( 7 )
+flat = false
+
+[node name="HSeparator" type="HSeparator" parent="GUI"]
+margin_top = 582.0
+margin_right = 1010.0
+margin_bottom = 586.0
+size_flags_horizontal = 3
 [connection signal="confirmed" from="GUI/Options/More/Overwrite" to="GUI/Options" method="copy_script_templates"]
