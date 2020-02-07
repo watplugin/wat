@@ -2,10 +2,27 @@ tool
 extends Control
 
 var test: Resource
-const Index: Resource = preload("index.tres")
 const Tag: PackedScene = preload("Tag.tscn")
 onready var TagSelector: Control = $Tags/Select.get_popup()
 onready var TagList: Control = $TagList
+var metadata
+
+func _initalize() -> void:
+	var testdir: String = ProjectSettings.get_setting("WAT/Test_Directory")
+	var dir: Directory = Directory.new()
+	var config: String = "%s/.test" % testdir
+	if not dir.dir_exists(config):
+		dir.make_dir(config)
+	var savepath: String = "%s/metadata.tres" % config
+	if not dir.file_exists(savepath):
+		var res: Resource = load("res://addons/WAT/ui/metadata/index.gd").new()
+		ResourceSaver.save(savepath, res)
+		
+func set_metadata() -> void:
+	_initalize()
+	var test_dir: String = ProjectSettings.get_setting("WAT/Test_Directory")
+	var savepath: String = "%s/.test/metadata.tres" % test_dir
+	metadata = load(savepath)
 
 func global_tags() -> Array:
 	# Add this to settings?
@@ -13,20 +30,20 @@ func global_tags() -> Array:
 
 func tags() -> Array:
 	# May need to add error handling here
-	return Index.tags[id()]
+	return metadata.tags[id()]
 	
 func id() -> int:
 	# returns position in scripts array
-	return Index.scripts.find(test)
+	return metadata.scripts.find(test)
 	
 func _ready() -> void:
+	set_metadata()
 	$Data/ClearAll.connect("pressed", self, "_delete_all")
 	test = load(test.resource_path) # I think this gives us the binary path?
-	if not Index.scripts.has(test):
-		Index.scripts.append(test)
-		Index.tags.append([])
+	if not metadata.scripts.has(test):
+		metadata.scripts.append(test)
+		metadata.tags.append([])
 		save()
-	populate()
 	TagSelector.connect("about_to_show", self, "_update_selectable_tags")
 	TagSelector.connect("id_pressed", self, "_add_tag")
 	
@@ -54,17 +71,17 @@ func _add_tag(id: int) -> void:
 	TagList.add_child(tag)
 	tag.Name.text = tagtext
 	tag.Delete.connect("pressed", self, "delete", [tag])
-	Index.tags[id()].append(tagtext as String)
+	metadata.tags[id()].append(tagtext as String)
 	save()
 	
 func delete(tag: Control) -> void:
 	print("deleting")
 	TagList.remove_child(tag)
 	tag.queue_free()
-	Index.tags[id()].erase(tag.Name.text as String)
+	metadata.tags[id()].erase(tag.Name.text as String)
 	save()
 
 func save() -> void:
-	var err = ResourceSaver.save(Index.resource_path, Index)
+	var err = ResourceSaver.save(metadata.resource_path, metadata)
 	if err != OK:
 		push_warning(err as String)
