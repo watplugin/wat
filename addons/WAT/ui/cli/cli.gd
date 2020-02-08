@@ -77,14 +77,13 @@ func display_failures(case) -> void:
 
 func display_summary(cases: Dictionary) -> void:
 	cases.seconds = (OS.get_ticks_msec() - _start_time) / 1000
-	var output: String = ""
-	output += "\n-------RESULTS-------"
-	output += "\nTook {seconds} seconds"
-	output += "\n{crashed} Tests Crashed"
-	output += "\n{passed} / {total} Tests Passed"
-	output += "\n-------RESULTS-------"
-	output = output.format(cases)
-	print(output)
+	print("""
+	-------RESULTS-------
+	Took {seconds} seconds
+	{crashed} Tests Crashed
+	{passed} / {total} Tests Passed
+	-------RESULTS-------
+	""".format(cases).dedent())
 	
 func set_exit_code(cases: Dictionary) -> void:
 	OS.exit_code = PASSED if cases.total > 0 and cases.total == cases.passed and cases.crashed == 0 else FAILED
