@@ -37,7 +37,7 @@ func stub(return_value, arguments: Array = []):
 func add_call(args: Array = []) -> void:
 	calls.append(args)
 	
-func subcall(function: FuncRef, returns: bool = false) -> void:
+func subcall(function: Object, returns: bool = false) -> void:
 	subcalls.append({"call": function, "returns": returns})
 
 func get_stub(args: Array = []):

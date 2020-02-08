@@ -127,6 +127,22 @@ func test_When_we_pass_a_funcref_as_a_subcall_that_returns_a_value():
 	director.method("add").subcall(callable, returns_value)
 	asserts.is_equal(director.double().add(10, 5), 99, "Then it returns a value")
 	
+func test_When_we_pass_an_object_with_callfunc_method_as_a_subcall():
+	describe("When we pass an Object with a call_func function")
+	
+	var director = direct.script(load("res://Examples/Scripts/calculator.gd"))
+	var callable: Object = Callable.new()
+	var returns_value: bool = true
+	director.method("add").subcall(callable, returns_value)
+	asserts.is_equal([10, 5], director.double().add(10, 5), "Then it returns a value")
+	
+class Callable:
+	var arguments: Array = []
+	
+	func call_func(object: Object, args: Array):
+		arguments = args
+		return args
+	
 func set_sum(object, args: Array = []) -> int:
 	object.sum = 99
 	return object.sum

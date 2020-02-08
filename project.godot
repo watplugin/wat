@@ -48,7 +48,7 @@ quick_access=Object(FuncRef,"script":null)
 [WAT]
 
 Test_Directory="res://tests"
-ActiveRunPath="Tag.64"
+ActiveRunPath="res://tests/integration/test_double.test.gd"
 AutoQuit=true
 Goto_Test_Method=Object(FuncRef,"script":null)
 
