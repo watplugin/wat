@@ -2,15 +2,6 @@ extends Reference
 
 const AUTO_QUIT: String = "WAT/AutoQuit"
 
-static func enable_autoquit() -> void:
-	ProjectSettings.set_setting(AUTO_QUIT, true)
-	
-static func disable_autoquit() -> void:
-	ProjectSettings.set_setting(AUTO_QUIT, false)
-	
-static func autoquit_is_enabled() -> bool:
-	return ProjectSettings.get_setting(AUTO_QUIT)
-
 static func set_run_path(path: String) -> void:
 	ProjectSettings.set("WAT/ActiveRunPath", path)
 	
