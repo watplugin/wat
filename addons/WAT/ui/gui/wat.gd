@@ -24,11 +24,11 @@ func _on_run_pressed(option: int) -> void:
 		RUN.ALL:
 			_run(WAT.Settings.test_directory())
 		RUN.DIRECTORY:
-			_run(selected(GUI.DirectorySelector))
+			_run(selected(GUI.Select.DirectorySelector))
 		RUN.SCRIPT:
-			_run(selected(GUI.ScriptSelector))
+			_run(selected(GUI.Select.ScriptSelector))
 		RUN.TAGGED:
-			_run("Tag." + selected(GUI.TagSelector))
+			_run("Tag." + selected(GUI.Select.TagSelector))
 
 func _run(path: String) -> void:
 	GUI.Summary.start_time()
