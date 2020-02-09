@@ -46,7 +46,7 @@ func _list(path: String = WAT.Settings.test_directory()):
 
 func _run(path) -> void:
 	_runner = TestRunner.instance()
-	WAT.Settings.enable_autoquit()
+#	WAT.Settings.enable_autoquit()
 	WAT.Settings.set_run_path(path)
 	_runner.connect("ended", self, "_on_testrunner_ended")
 	_start_time = OS.get_ticks_msec()

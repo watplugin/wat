@@ -17,11 +17,12 @@ func pre():
 	_runner = director.double()
 	_test_loader = load("res://addons/WAT/test_runner/test_loader.gd").new()
 	_results = preload("res://tests/mocks/results.tres")
-	_runner.setup(_test_loader, _results)
+	_runner.test_loader = _test_loader
+	_runner.test_results = _results
 	_runner.primary = false
 	
 func me(object, arguments: Array = []):
-	object._test_results.deposit(object._cases)
+	object.test_results.deposit(object._cases)
 	object.emit_signal("ended")
 
 func test_when_we_pass_in_one_passing_test() -> void:

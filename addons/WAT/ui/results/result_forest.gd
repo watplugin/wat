@@ -5,24 +5,11 @@ const ResultTree: PackedScene = preload("res://addons/WAT/ui/results/ResultTree.
 signal displayed
 var _results: Resource
 var _tabs: Dictionary
-
-func _ready() -> void:
-	set_process(false)
-
-func begin_searching_for_new_results(results: Resource) -> void:
-	_clear_stale_results()
-	_results = results
-	set_process(true)
-	
-func _process(delta: float) -> void:
-	if _results.exist():
-		set_process(false)
-		_display()
 		
-func _display():
-	_add_result_tree(_results.withdraw())
-	emit_signal("displayed")
-	_results = null
+func display(results: Array):
+	_clear()
+	_add_result_tree(results)
+	emit_signal("displayed") # plugin,
 		
 func _add_result_tree(results: Array) -> void:
 	_tabs = {}
@@ -52,7 +39,7 @@ func _on_tree_results_calculated(tree: Tree, passed: int, total: int, success: b
 	tree.name += " (%s|%s)" % [passed, total]
 	set_tab_icon(_tabs[tree], WAT.Icon.SUCCESS if success else WAT.Icon.FAILED)
 
-func _clear_stale_results() -> void:
+func _clear() -> void:
 	var children: Array = get_children()
 	while not children.empty():
 		var child: Tree = children.pop_back()

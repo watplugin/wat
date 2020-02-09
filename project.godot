@@ -48,8 +48,7 @@ quick_access=Object(FuncRef,"script":null)
 [WAT]
 
 Test_Directory="res://tests"
-ActiveRunPath="res://tests/integration/test_double.test.gd"
-AutoQuit=true
+ActiveRunPath="res://tests"
 Goto_Test_Method=Object(FuncRef,"script":null)
 
 Tags=PoolStringArray( "32", "64", "Linux" )

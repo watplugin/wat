@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/WAT/ui/gui/select.gd" type="Script" id=1]
+
+[node name="Select" type="HBoxContainer"]
+margin_left = 152.0
+margin_right = 922.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+
+[node name="Directory" type="OptionButton" parent="."]
+margin_right = 254.0
+margin_bottom = 22.0
+grow_horizontal = 0
+grow_vertical = 0
+hint_tooltip = "select a directory of tests to run"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/hseparation = 20
+button_mask = 3
+text = "res://tests"
+align = 1
+items = [ "res://tests", null, false, 0, null ]
+selected = 0
+
+[node name="Script" type="OptionButton" parent="."]
+margin_left = 258.0
+margin_right = 512.0
+margin_bottom = 22.0
+hint_tooltip = "Select a single test script to run (your choices depend on which folder is selected)."
+size_flags_horizontal = 3
+size_flags_vertical = 3
+align = 1
+__meta__ = {
+"_editor_description_": "select a test script to run"
+}
+
+[node name="Tag" type="OptionButton" parent="."]
+margin_left = 516.0
+margin_right = 770.0
+margin_bottom = 22.0
+hint_tooltip = "select a tag and then run all tests that have that tag"
+size_flags_horizontal = 3
+align = 1
