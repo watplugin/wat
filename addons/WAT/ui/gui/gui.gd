@@ -2,7 +2,7 @@ tool
 extends VBoxContainer
 
 enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
-onready var RunInput: HBoxContainer = $RunInput
+onready var Interact: HBoxContainer = $Interact
 onready var Summary: Label = $Summary
 onready var Results: TabContainer = $Results
 var filesystem
@@ -15,9 +15,9 @@ func _process(delta: float) -> void:
 		_show_dir()
 	
 func _show_dir():
-	RunInput.DirectorySelector.clear()
-	RunInput.DirectorySelector.add_item(ProjectSettings.get_setting("WAT/Test_Directory"))
-	RunInput.update()
+	Interact.DirectorySelector.clear()
+	Interact.DirectorySelector.add_item(ProjectSettings.get_setting("WAT/Test_Directory"))
+	Interact.update()
 	
 func _on_view_pressed(id: int) -> void:
 	match id:

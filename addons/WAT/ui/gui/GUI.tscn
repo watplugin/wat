@@ -2,7 +2,7 @@
 
 [ext_resource path="res://addons/WAT/ui/results/ResultsForest.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/WAT/ui/gui/Links.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/WAT/ui/gui/RunInput.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/WAT/ui/gui/Interact.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/WAT/ui/gui/Summary.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/WAT/ui/gui/gui.gd" type="Script" id=7]
 
@@ -18,7 +18,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RunInput" parent="." instance=ExtResource( 3 )]
+[node name="Interact" parent="." instance=ExtResource( 3 )]
 
 [node name="Results" parent="." instance=ExtResource( 1 )]
 margin_bottom = 518.0

@@ -9,9 +9,8 @@ tool
 
 enum OPTION { ADD_SCRIPT_TEMPLATE, PRINT_STRAY_NODES }
 const filesystem = preload("res://addons/WAT/system/filesystem.gd")
-onready var QuickPlay: Button = $QuickPlay
 
-onready var RunMenu: MenuButton = $Run.get_popup()
+onready var Run: HBoxContainer = $Run
 onready var ViewMenu: MenuButton = $View.get_popup()
 onready var MoreMenu: MenuButton = $More.get_popup()
 onready var Overwrite: ConfirmationDialog = $More/Overwrite
@@ -21,13 +20,8 @@ onready var ScriptSelector: OptionButton = $ScriptSelector
 onready var TagSelector: OptionButton = $TagSelector
 
 func _ready():
-	RunMenu.clear()
 	ViewMenu.clear()
 	MoreMenu.clear()
-	RunMenu.add_item("Run All Tests")
-	RunMenu.add_item("Run Selected Directory")
-	RunMenu.add_item("Run Selected Script")
-	RunMenu.add_item("Run Tagged")
 	ViewMenu.add_item("Expand All Results")
 	ViewMenu.add_item("Collapse All Results")
 	ViewMenu.add_item("Expand All Failures")

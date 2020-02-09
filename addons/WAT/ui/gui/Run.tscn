@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/WAT/icons/play.svg" type="Texture" id=1]
+[ext_resource path="res://addons/WAT/ui/gui/run.gd" type="Script" id=2]
+
+[node name="Run" type="HBoxContainer"]
+margin_right = 76.0
+margin_bottom = 22.0
+script = ExtResource( 2 )
+
+[node name="QuickStart" type="Button" parent="."]
+margin_right = 28.0
+margin_bottom = 22.0
+hint_tooltip = "Run All Tests"
+icon = ExtResource( 1 )
+flat = true
+
+[node name="VSeparator" type="VSeparator" parent="."]
+margin_left = 32.0
+margin_right = 36.0
+margin_bottom = 22.0
+
+[node name="Menu" type="MenuButton" parent="."]
+margin_left = 40.0
+margin_right = 76.0
+margin_bottom = 22.0
+text = "Run"
+items = [ "Run All Tests", null, 0, false, false, 0, 0, null, "", false, "Run Selected Directory", null, 0, false, false, 1, 0, null, "", false, "Run Selected Script", null, 0, false, false, 2, 0, null, "", false, "Run Tagged", null, 0, false, false, 3, 0, null, "", false ]
+switch_on_hover = true
