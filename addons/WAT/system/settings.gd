@@ -11,8 +11,7 @@ static func test_directory() -> String:
 static func clear(primary: bool = false):
 	if ProjectSettings.has_setting("WAT/TestDouble"):
 		ProjectSettings.get_setting("WAT/TestDouble").clear()
-		if primary:
-			ProjectSettings.get_setting("WAT/TestDouble").free()
+		ProjectSettings.get_setting("WAT/TestDouble").free()
 
 static func create():
 	if not ProjectSettings.has_setting("WAT/TestDouble"):
