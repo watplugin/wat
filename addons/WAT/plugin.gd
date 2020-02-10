@@ -41,13 +41,14 @@ func get_plugin_name() -> String:
    return "WAT"
 
 func _enter_tree() -> void:
+	ProjectSettings.set_setting("WAT/Goto_Test_Method", funcref(self, "goto_function"))
 	state = _get_state()
 	interface = UI.instance()
 	exports = EXPORTS.new()
 	if state == BOTTOM_PANEL:
-		_show_as_bottom_panel()
+		add_control_to_bottom_panel(interface, "Tests")
 	elif state < BOTTOM_PANEL:
-		_show_as_dock(state)
+		add_control_to_dock(state, interface)
 	else:
 		push_warning("Display Option Is Out Of Bounds")
 	connect_signals()
@@ -58,9 +59,9 @@ func _enter_tree() -> void:
 	
 func _exit_tree() -> void:
 	if _get_state() == BOTTOM_PANEL:
-		_remove_as_bottom_panel()
+		remove_control_from_bottom_panel(interface)
 	elif _get_state() < BOTTOM_PANEL:
-		_remove_as_dock()
+		remove_control_from_docks(interface)
 	interface.free()
 	remove_inspector_plugin(exports)
 
@@ -76,19 +77,6 @@ func _get_state() -> int:
 	ProjectSettings.save()
 	return ProjectSettings.get_setting("WAT/Display")
 	
-func _show_as_bottom_panel() -> void:
-	add_control_to_bottom_panel(interface, "Tests")
-	ProjectSettings.set_setting("WAT/Goto_Test_Method", funcref(self, "goto_function"))
-	
-func _show_as_dock(slot: int) -> void:
-	add_control_to_dock(slot, interface)
-	
-func _remove_as_bottom_panel() -> void:
-	remove_control_from_bottom_panel(interface)
-	
-func _remove_as_dock() -> void:
-	remove_control_from_docks(interface)
-	
 func connect_signals() -> void:
 	_connect(interface, "test_runner_started", self, "_on_test_runner_started")
 	_connect(interface, "results_displayed", self, "make_bottom_panel_item_visible", [interface])
@@ -102,15 +90,20 @@ func _change(new_state: int) -> void:
 	
 	# Clear Old State
 	if previous_state == BOTTOM_PANEL:
-		_remove_as_bottom_panel()
+#		_remove_as_bottom_panel()
+		remove_control_from_bottom_panel(interface)
 	elif previous_state < BOTTOM_PANEL:
-		_remove_as_dock()
+		remove_control_from_docks(interface)
+#		_remove_as_dock()
 
 	# Create New State
 	if new_state == BOTTOM_PANEL:
-		_show_as_bottom_panel()
+#		_show_as_bottom_panel()
+		add_control_to_bottom_panel(interface, "Tests")
+	
 	elif new_state < BOTTOM_PANEL:
-		_show_as_dock(new_state)
+		add_control_to_dock(new_state, interface)
+#		_show_as_dock(new_state)
 
 	state = new_state
 	ProjectSettings.set_setting("WAT/Display", new_state)
@@ -158,7 +151,7 @@ func _on_test_runner_started(test_runner_path: String) -> void:
 	print(test_runner_path)
 	get_editor_interface().open_scene_from_path(test_runner_path)
 	var version = Engine.get_version_info()
-	if version.major == 3 and version.minor == 1:
+	if version.minor == 1:
 		get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_1)
-	elif version.major == 3 and version.minor == 2:
+	elif version.minor == 2:
 		get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_2)
