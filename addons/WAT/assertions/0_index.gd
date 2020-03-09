@@ -108,6 +108,9 @@ func was_called_with_arguments(double, method: String, arguments: Array, context
 
 func signal_was_emitted(emitter, _signal, context: String = "", crash_on_failure: bool = false) -> void:
 	output(Signal.WasEmitted.new(emitter, _signal, context), crash_on_failure)
+	
+func signal_was_emitted_x_times(emitter, _signal, times: int, context: String = "", crash_on_failure: bool = false) -> void:
+	output(Signal.WasEmittedXTimes.new(emitter, _signal, times, context))
 
 func signal_was_not_emitted(emitter, _signal: String, context: String = "", crash_on_failure: bool = false) -> void:
 	output(Signal.WasNotEmitted.new(emitter, _signal, context), crash_on_failure)

@@ -42,6 +42,17 @@ func test_When_we_watch_and_do_not_emit_a_signal():
 	
 	asserts.signal_was_not_emitted(self, "example", "Then it does not capture the non-emitted signal")
 	
+func test_When_we_watch_a_signal_and_emit_it_multiple_times() -> void:
+	describe("When we watch and signal and emit it multiple times")
+	
+	add_user_signal("multiple")
+	watch(self, "multiple")
+	emit_signal("multiple")
+	emit_signal("multiple")
+	
+	var emit_count: int = 2
+	asserts.signal_was_emitted_x_times(self, "multiple", emit_count, "Then we can track how many times we emitted it")
+	
 ### These tests aren't possible in their current form ###
 ### We have to update the watcher to allow them properly (if even possible) ###
 # When we watch a signal from an object with bound arguments

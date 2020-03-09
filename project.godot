@@ -48,7 +48,7 @@ quick_access=Object(FuncRef,"script":null)
 [WAT]
 
 Test_Directory="res://tests"
-ActiveRunPath="res://tests"
+ActiveRunPath="res://tests/unit/watcher.test.gd"
 Goto_Test_Method=Object(FuncRef,"script":null)
 
 Tags=PoolStringArray( "32", "64", "Linux" )
