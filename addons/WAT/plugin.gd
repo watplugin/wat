@@ -42,7 +42,7 @@ func get_plugin_name() -> String:
 
 func _enter_tree() -> void:
 	ProjectSettings.set_setting("WAT/Goto_Test_Method", funcref(self, "goto_function"))
-	state = _get_state()
+	state = _get_state(true)
 	interface = UI.instance()
 	exports = EXPORTS.new()
 	if state == BOTTOM_PANEL:
@@ -65,16 +65,24 @@ func _exit_tree() -> void:
 	interface.free()
 	remove_inspector_plugin(exports)
 
-func _get_state() -> int:
+func _get_state(first: bool = false) -> int:
 	if not ProjectSettings.has_setting("WAT/Display"):
 		ProjectSettings.set_setting("WAT/Display", BOTTOM_PANEL)
-	var property = {}
-	property.name = "WAT/Display"
-	property.type = TYPE_INT
-	property.hint = PROPERTY_HINT_ENUM
-	property.hint_string = PoolStringArray(displays.values()).join(",")
-	ProjectSettings.add_property_info(property)
-	ProjectSettings.save()
+		var property = {}
+		property.name = "WAT/Display"
+		property.type = TYPE_INT
+		property.hint = PROPERTY_HINT_ENUM
+		property.hint_string = PoolStringArray(displays.values()).join(",")
+		ProjectSettings.add_property_info(property)
+		ProjectSettings.save()
+	elif first:
+		var property = {}
+		property.name = "WAT/Display"
+		property.type = TYPE_INT
+		property.hint = PROPERTY_HINT_ENUM
+		property.hint_string = PoolStringArray(displays.values()).join(",")
+		ProjectSettings.add_property_info(property)
+		ProjectSettings.save()
 	return ProjectSettings.get_setting("WAT/Display")
 	
 func connect_signals() -> void:
