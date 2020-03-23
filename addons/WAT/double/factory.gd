@@ -7,18 +7,22 @@ var _cache: Array = []
 var _count: int = 0
 
 func script(path, inner_class: String = "", dependecies: Array = []):
-	if path is String:
+	if path is String and not ClassDB.class_exists(path):
 		path = path
+	elif path is String and ClassDB.class_exists(path):
+		# We're builtin
+		var script = GDScript.new()
+		script.source_code = "extends %s" % path
+		script.reload()
+		path = script
 	elif path is GDScript:
 		# User-defined script
 		path = path.resource_path
-	else:
-		# Is builtin script
-		pass
 	var script_director: Reference = _create_save_and_load_director(path, inner_class, dependecies)
 	var base
 	if not path is String and not path is GDScript:
-		# Builtin Script
+		base = path.new()
+	elif path is GDScript:
 		base = path.new()
 	else:
 		base = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
@@ -51,6 +55,8 @@ func scene(scenepath):
 		var new_script = next.get_script()
 		if new_script != null:
 			nodes[path] = script(new_script.resource_path)
+		elif ClassDB.class_exists(next.get_class()):
+			nodes[path] = script(next.get_class())
 	var scene_director = _SCENE_DIRECTOR.new(nodes)
 	instance.free()
 	return scene_director
