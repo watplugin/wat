@@ -18,6 +18,7 @@ var base_methods: Dictionary = {}
 var dependecies: Array = []
 var instance_id: int
 var object
+var is_built_in: bool = false
 
 func _init() -> void:
 	_initialize()
@@ -58,6 +59,7 @@ func script():
 	for klass in klasses:
 		klass.director.script()
 	script.source_code = SCRIPT_WRITER.new().write(self)
+#	print(script.source_code)
 	script.reload() # Necessary to load source code into memory
 	return script
 

@@ -7,10 +7,22 @@ var _cache: Array = []
 var _count: int = 0
 
 func script(path, inner_class: String = "", dependecies: Array = []):
-	path = path if path is String else path.resource_path
+	if path is String:
+		path = path
+	elif path is GDScript:
+		# User-defined script
+		path = path.resource_path
+	else:
+		# Is builtin script
+		pass
 	var script_director: Reference = _create_save_and_load_director(path, inner_class, dependecies)
-	var base = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
-	base = base.callv("new", script_director.dependecies)
+	var base
+	if not path is String and not path is GDScript:
+		# Builtin Script
+		base = path.new()
+	else:
+		base = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
+		base = base.callv("new", script_director.dependecies)
 	script_director = _collect_methods(script_director, base)
 	_cache.append(base)
 	return script_director
@@ -47,6 +59,11 @@ func _create_save_and_load_director(path, inner: String, dependecies: Array) -> 
 	var script_director = _SCRIPT_DIRECTOR.new()
 	_count += 1
 	var index: String = _count as String
+	if not path is String:
+		var obj = path.new()
+		path = obj.get_class()
+		obj.free()
+		script_director.is_built_in = true
 	script_director.base_script = path
 	script_director.inner = inner
 	script_director.index = index

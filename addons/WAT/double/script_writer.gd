@@ -3,7 +3,9 @@ extends Reference
 
 func write(double) -> String:
 	var source: String = ""
-	if double.inner != "":
+	if double.is_built_in:
+		source = 'extends %s' % double.base_script
+	elif double.inner != "":
 		source = 'extends "%s".%s\n' % [double.base_script, double.inner]
 		source += "\nconst BASE = preload('%s').%s\n\n" % [double.base_script, double.inner]
 	else:
