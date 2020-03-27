@@ -17,3 +17,7 @@ static func create():
 	if not ProjectSettings.has_setting("WAT/TestDouble"):
 		var registry = load("res://addons/WAT/double/registry.gd")
 		ProjectSettings.set_setting("WAT/TestDouble", registry.new())
+		
+static func handle_window():
+	if ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests"):
+		OS.window_minimized = true

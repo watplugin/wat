@@ -56,6 +56,16 @@ func _enter_tree() -> void:
 	_set_tags()
 	_create_test_folder()
 	create_goto_function()
+	set_minimize_on_load()
+	
+func set_minimize_on_load() -> void:
+	if not ProjectSettings.has_setting("WAT/Minimize_Window_When_Running_Tests"):
+		ProjectSettings.set_setting("WAT/Minimize_Window_When_Running_Tests", false)
+		var property = {}
+		property.name = "WAT/Minimize_Window_When_Running_Tests"
+		property.type = TYPE_BOOL
+		ProjectSettings.add_property_info(property)
+		ProjectSettings.save()
 	
 func _exit_tree() -> void:
 	if _get_state() == BOTTOM_PANEL:

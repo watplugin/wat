@@ -12,6 +12,7 @@ var _cases: Array = []
 signal ended
 
 func _ready() -> void:
+	WAT.Settings.handle_window()
 	WAT.Settings.create() # bad name fix soon
 	if primary:
 		print("Starting WAT Test Runner")
@@ -41,6 +42,7 @@ func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	
 func end() -> void:
 	print("Ending WAT Test Runner")
+	OS.window_minimized = false
 	test_results.deposit(_cases)
 	emit_signal("ended")
 	WAT.Settings.clear()
