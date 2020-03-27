@@ -156,10 +156,12 @@ func _create_test_folder() -> void:
 		return
 
 func _on_test_runner_started(test_runner_path: String) -> void:
-	print(test_runner_path)
 	get_editor_interface().open_scene_from_path(test_runner_path)
+	var previous_resource = get_editor_interface().get_script_editor().get_current_script()
 	var version = Engine.get_version_info()
 	if version.minor == 1:
 		get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_1)
 	elif version.minor == 2:
 		get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_2)
+	if previous_resource:
+		get_editor_interface().edit_resource(previous_resource)
