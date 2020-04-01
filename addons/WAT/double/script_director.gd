@@ -32,7 +32,7 @@ func method(name: String, keyword: String = "") -> Method:
 	return methods[name]
 
 func clear():
-	if object is Object and not object is Reference and is_instance_valid(object):
+	if is_instance_valid(object) and object is Object and not object is Reference:
 		object.free()
 	object = null
 
