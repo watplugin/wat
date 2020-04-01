@@ -50,6 +50,9 @@ func scene(scenepath):
 	frontier.append(instance)
 	while not frontier.empty():
 		var next: Node = frontier.pop_front()
+		if next.name.begins_with("@@"):
+			# Don't double engine-generated classes (usually begin with @@)
+			continue
 		frontier += next.get_children()
 		var path: String = instance.get_path_to(next)
 		var new_script = next.get_script()
