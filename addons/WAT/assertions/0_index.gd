@@ -8,6 +8,7 @@ const Signal: Script = preload("signal/namespace.gd")
 const _String: Script = preload("string/namespace.gd")
 const _Is: Script = preload("is/namespace.gd")
 const IsNot: Script = preload("is_not/namespace.gd")
+const Null: Script = preload("null/namespace.gd")
 const EXPECT = preload("res://addons/WAT/assertions/constants/expectation_list.gd")
 const CRASH_IF_TEST_FAILS: bool = true
 signal OUTPUT
@@ -75,10 +76,10 @@ func is_not_built_in_type(value, type: int, context: String = "", crash_on_failu
 	output(IsNot.IsNotBuiltInType.new(value, type, context), crash_on_failure)
 
 func is_null(value, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_NULL.new(value, context), crash_on_failure)
+	output(Null.IsNull.new(value, context), crash_on_failure)
 
 func is_not_null(value, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_NOT_NULL.new(value, context), crash_on_failure)
+	output(Null.IsNotNull.new(value, context), crash_on_failure)
 
 func string_contains(value, string: String, context: String = "", crash_on_failure: bool = false) -> void:
 	output(_String.Contains.new(value, string, context), crash_on_failure)
