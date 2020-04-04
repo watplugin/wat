@@ -34,3 +34,13 @@ func test_when_calling_does_not_have_meta_real_key_null_value_pair() -> void:
 	
 	set_meta("confusing", null)
 	asserts.object_does_not_have_meta(self, "confusing", "Then it passes")
+	
+func test_when_calling_has_method_title() -> void:
+	describe("When calling has_method('title')")
+	
+	asserts.object_has_method(self, "title", "Then it passes")
+	
+func when_calling_does_not_have_method() -> void:
+	describe("When calling does_not_have_method('false_method')")
+	
+	asserts.object_does_not_have_method(self, "false_method", "Then it passes")
