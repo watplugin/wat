@@ -44,3 +44,22 @@ func when_calling_does_not_have_method() -> void:
 	describe("When calling does_not_have_method('false_method')")
 	
 	asserts.object_does_not_have_method(self, "false_method", "Then it passes")
+	
+func test_when_calling_has_user_signal_after_adding_a_signal() -> void:
+	describe("When calling obj_has_user_signal after adding a signal")
+	
+	add_user_signal("dummy_signal")
+	asserts.object_has_user_signal(self, "dummy_signal", "Then it passes")
+	
+func test_when_calling_does_not_have_user_signal() -> void:
+	describe("When calling obj_does_not_have_user_signal with fake signal")
+	
+	asserts.object_does_not_have_user_signal(self, "false_signal", 
+												"Then it passes")
+
+signal builtin_dummy
+func test_when_calling_does_not_have_user_signal_with_class_signal_constant() -> void:
+	describe("When calling does not have user signal with class signal")
+	
+	asserts.object_does_not_have_user_signal(self, "builtin_dummy", 
+	                                          "Then it passes")
