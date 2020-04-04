@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=14 format=2]
+[gd_resource type="Resource" load_steps=16 format=2]
 
 [ext_resource path="res://addons/WAT/ui/metadata/index.gd" type="Script" id=1]
 [ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=2]
@@ -13,8 +13,10 @@
 [ext_resource path="res://tests/unit/on_floor.test.gd" type="Script" id=11]
 [ext_resource path="res://tests/unit/range.test.gd" type="Script" id=12]
 [ext_resource path="res://tests/unit/null.test.gd" type="Script" id=13]
+[ext_resource path="res://tests/unit/object.test.gd" type="Script" id=14]
+[ext_resource path="res://tests/unit/file.test.gd" type="Script" id=15]
 
 [resource]
 script = ExtResource( 1 )
-scripts = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ]
-tags = [ [  ], [ "64", "Linux" ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ] ]
+scripts = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ) ]
+tags = [ [  ], [ "64", "Linux" ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ] ]

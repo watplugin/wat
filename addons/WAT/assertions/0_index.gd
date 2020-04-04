@@ -3,9 +3,11 @@ extends Reference
 const Boolean: Script = preload("boolean/namespace.gd")
 const Double: Script = preload("double/namespace.gd")
 const Equality: Script = preload("equality/namespace.gd")
+const _File: Script = preload("class/file/namespace.gd")
 const _Range: Script = preload("range/namespace.gd")
 const Signal: Script = preload("signal/namespace.gd")
 const _String: Script = preload("string/namespace.gd")
+const _Object: Script = preload("class/object/namespace.gd")
 const _Is: Script = preload("is/namespace.gd")
 const IsNot: Script = preload("is_not/namespace.gd")
 const Null: Script = preload("null/namespace.gd")
@@ -121,16 +123,16 @@ func signal_was_emitted_with_arguments(emitter, _signal, arguments: Array, conte
 	output(Signal.WasEmittedWithArguments.new(emitter, _signal, arguments, context), crash_on_failure)
 
 func file_exists(path: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.FILE_EXISTS.new(path, context), crash_on_failure)
+	output(_File.Exists.new(path, context), crash_on_failure)
 
 func file_does_not_exist(path: String, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.FILE_DOES_NOT_EXIST.new(path, context), crash_on_failure)
+	output(_File.DoesNotExist.new(path, context), crash_on_failure)
 
 func is_freed(obj, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_FREED.new(obj, context), crash_on_failure)
+	output(_Object.IsFreed.new(obj, context), crash_on_failure)
 
 func is_not_freed(obj, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_NOT_FREED.new(obj, context), crash_on_failure)
+	output(_Object.IsNotFreed.new(obj, context), crash_on_failure)
 
 func is_bool(value, context: String = "", crash_on_failure: bool = false) -> void:
 		output(_Is.IsBool.new(value, context), crash_on_failure)

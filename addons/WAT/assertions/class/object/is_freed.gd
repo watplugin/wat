@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "../../base.gd"
 
 func _init(object: Object, context: String) -> void:
 	var passed: String = "%s is freed from memory" % object

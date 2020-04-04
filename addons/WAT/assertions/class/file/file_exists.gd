@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "../../base.gd"
 
 
 func _init(path: String, context: String) -> void:
