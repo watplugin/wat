@@ -3,7 +3,7 @@ extends Reference
 const IsFreed: Script = preload("is_freed.gd")
 const IsNotFreed: Script = preload("is_not_freed.gd")
 const HasMeta: Script = preload("has_meta.gd")
-const DoesNotHaveMeta: Script = preload("does_not_have_method.gd")
+const DoesNotHaveMeta: Script = preload("does_not_have_meta.gd")
 const HasMethod: Script = preload("has_method.gd")
 const DoesNotHaveMethod: Script = preload("does_not_have_method.gd")
 const HasUserSignal: Script = preload("has_user_signal.gd")

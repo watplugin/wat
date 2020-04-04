@@ -133,6 +133,12 @@ func file_exists(path: String, context: String = "", crash_on_failure: bool = fa
 func file_does_not_exist(path: String, context: String = "", crash_on_failure: bool = false) -> void:
 	output(_File.DoesNotExist.new(path, context), crash_on_failure)
 
+func object_has_meta(obj, meta: String, context: String, crash_on_failure: bool = false) -> void:
+	output(_Object.HasMeta.new(obj, meta, context), crash_on_failure)
+	
+func object_does_not_have_meta(obj, meta: String, context: String, crash_on_failure: bool = false) -> void:
+	output(_Object.DoesNotHaveMeta.new(obj, meta, context), crash_on_failure)
+	
 func is_freed(obj, context: String = "", crash_on_failure: bool = false) -> void:
 	output(_Object.IsFreed.new(obj, context), crash_on_failure)
 
