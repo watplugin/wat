@@ -3,6 +3,7 @@ extends Reference
 const Boolean: Script = preload("boolean/namespace.gd")
 const Double: Script = preload("double/namespace.gd")
 const Equality: Script = preload("equality/namespace.gd")
+const _Range: Script = preload("range/namespace.gd")
 const Signal: Script = preload("signal/namespace.gd")
 const _String: Script = preload("string/namespace.gd")
 const _Is: Script = preload("is/namespace.gd")
@@ -49,10 +50,10 @@ func is_equal_or_less_than(a, b, context: String = "", crash_on_failure: bool = 
 	output(Equality.IsEqualOrLessThan.new(a, b, context), crash_on_failure)
 
 func is_in_range(value, low, high, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_IN_RANGE.new(value, low, high, context), crash_on_failure)
+	output(_Range.IsInRange.new(value, low, high, context), crash_on_failure)
 
 func is_not_in_range(value, low, high, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.IS_NOT_IN_RANGE.new(value, low, high, context), crash_on_failure)
+	output(_Range.IsNotInRange.new(value, low, high, context), crash_on_failure)
 
 func has(value, container, context: String = "", crash_on_failure: bool = false) -> void:
 	output(EXPECT.HAS.new(value, container, context), crash_on_failure)
