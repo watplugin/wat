@@ -11,7 +11,12 @@ const _Object: Script = preload("class/object/namespace.gd")
 const _Is: Script = preload("is/namespace.gd")
 const IsNot: Script = preload("is_not/namespace.gd")
 const Null: Script = preload("null/namespace.gd")
-const EXPECT = preload("res://addons/WAT/assertions/constants/expectation_list.gd")
+
+# Not in any namespace
+const DoesNotHave: Script = preload("does_not_have.gd")
+const Has: Script = preload("has.gd")
+const Fail: Script = preload("fail.gd")
+#const EXPECT = preload("res://addons/WAT/assertions/constants/expectation_list.gd")
 const CRASH_IF_TEST_FAILS: bool = true
 signal OUTPUT
 signal CRASHED
@@ -59,10 +64,10 @@ func is_not_in_range(value, low, high, context: String = "", crash_on_failure: b
 	output(_Range.IsNotInRange.new(value, low, high, context), crash_on_failure)
 
 func has(value, container, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.HAS.new(value, container, context), crash_on_failure)
+	output(Has.new(value, container, context), crash_on_failure)
 
 func does_not_have(value, container, context: String = "", crash_on_failure: bool = false) -> void:
-	output(EXPECT.DOES_NOT_HAVE.new(value, container, context), crash_on_failure)
+	output(DoesNotHave.new(value, container, context), crash_on_failure)
 
 func is_class_instance(instance, type, context: String = "", crash_on_failure: bool = false) -> void:
 	output(_Is.IsClassInstance.new(instance, type, context), crash_on_failure)
@@ -291,4 +296,4 @@ func is_not_PoolColorArray(value, context: String = "", crash_on_failure: bool =
 		output(IsNot.IsNotPoolColorArray.new(value, context), crash_on_failure)
 		
 func fail(context: String = "Unimplemented Test") -> void:
-		output(EXPECT.Fail.new(context))
+		output(Fail.new(context))
