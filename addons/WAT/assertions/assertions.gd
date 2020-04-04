@@ -157,6 +157,12 @@ func object_is_connected(sender: Object, _signal: String, receiver: Object, meth
 func object_is_not_connected(sender: Object, _signal: String, receiver: Object, method: String, context: String, crash_on_failure: bool = false) -> void:
 	output(_Object.IsNotConnected.new(sender, _signal, receiver, method, context), crash_on_failure)
 	
+func object_is_blocking_signals(obj, context: String, crash_on_failure: bool = false) -> void:
+	output(_Object.IsBlockingSignals.new(obj, context), crash_on_failure)
+	
+func object_is_not_blocking_signals(obj, context: String, crash_on_failure: bool = false) -> void:
+	output(_Object.IsNotBlockingSignals.new(obj, context), crash_on_failure)
+	
 func object_has_user_signal(obj, _signal: String, context: String, crash_on_failure: bool = false) -> void:
 	output(_Object.HasUserSignal.new(obj, _signal, context), crash_on_failure)
 	

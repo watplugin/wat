@@ -89,3 +89,19 @@ func test_when_calling_obj_is_not_connected_with_an_invalid_connection() -> void
 	describe("When calling asserts object is not connected with an invalid connection")
 	
 	asserts.object_is_not_connected(self, "builtin_dummy", self, "title", "Then it passes")
+	
+func test_is_blocking_signals() -> void:
+	describe("When calling is blocking signals while blocking signals")
+	
+	var node = Node.new()
+	node.set_block_signals(true)
+	asserts.object_is_blocking_signals(node, "Then it passes")
+	node.free()
+	
+func test_is_not_blocking_signals() -> void:
+	describe("When calling is not blocking signals while not blocking signals")
+	
+	var node = Node.new()
+	node.set_block_signals(false)
+	asserts.object_is_not_blocking_signals(node, "Then it passes")
+	node.free()
