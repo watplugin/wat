@@ -1,16 +1,8 @@
-extends Node
+extends "../../base.gd"
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _init(sender: Object, _signal: String, receiver: Object, method: String, context: String) -> void:
+	var passed: String = "%s.%s is connected to %s.%s" % [sender, _signal, receiver, method]
+	var failed: String = "%s.%s is not connected to %s.%s" % [sender, _signal, receiver, method]
+	self.context = context
+	self.success = sender.is_connected(_signal, receiver, method)
+	self.result = passed if self.success else failed

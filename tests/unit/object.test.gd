@@ -77,3 +77,15 @@ func test_when_calling_obj_is_not_for_queued_deletion_after_not_calling_queue_fr
 	var node: Node = Node.new()
 	asserts.object_is_not_queued_for_deletion(node, "Then it passes")
 	node.free()
+	
+func test_when_calling_obj_is_connected_with_a_real_connection() -> void:
+	describe("When calling asserts object is connected with a valid connection")
+
+	connect("builtin_dummy", self, "title")
+	asserts.object_is_connected(self, "builtin_dummy", self, "title", "Then it passes")
+	disconnect("builtin_dummy", self, "title")
+	
+func test_when_calling_obj_is_not_connected_with_an_invalid_connection() -> void:
+	describe("When calling asserts object is not connected with an invalid connection")
+	
+	asserts.object_is_not_connected(self, "builtin_dummy", self, "title", "Then it passes")
