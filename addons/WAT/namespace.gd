@@ -10,7 +10,7 @@ const TestSuiteOfSuites = preload("res://addons/WAT/test/suite.gd")
 const SignalWatcher = preload("res://addons/WAT/test/watcher.gd")
 const Parameters = preload("res://addons/WAT/test/parameters.gd")
 const Yielder = preload("res://addons/WAT/test/yielder.gd")
-const Asserts = preload("res://addons/WAT/assertions/0_index.gd")
+const Asserts = preload("res://addons/WAT/assertions/assertions.gd")
 const TestCase = preload("res://addons/WAT/test/case.gd")
 const Settings = preload("res://addons/WAT/system/settings.gd")
 

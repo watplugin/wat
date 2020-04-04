@@ -16,7 +16,7 @@ const Null: Script = preload("null/namespace.gd")
 const DoesNotHave: Script = preload("does_not_have.gd")
 const Has: Script = preload("has.gd")
 const Fail: Script = preload("fail.gd")
-#const EXPECT = preload("res://addons/WAT/assertions/constants/expectation_list.gd")
+
 const CRASH_IF_TEST_FAILS: bool = true
 signal OUTPUT
 signal CRASHED
