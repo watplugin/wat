@@ -8,6 +8,7 @@ const HasMethod: Script = preload("has_method.gd")
 const DoesNotHaveMethod: Script = preload("does_not_have_method.gd")
 const HasUserSignal: Script = preload("has_user_signal.gd")
 const DoesNotHaveUserSignal: Script = preload("does_not_have_user_signal.gd")
+
 const IsQueuedForDeletion: Script = preload("is_queued_for_deletion.gd")
 const IsNotQueuedForDeletion: Script = preload("is_not_queued_for_deletion.gd")
 const IsBlockingSignals: Script = preload("is_blocking_signals.gd")
