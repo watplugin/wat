@@ -12,7 +12,6 @@ func save(results, time: float = 0.0) -> void:
 	for result in results:
 		output += '\n<testsuite failures="%s" name="%s" tests="%s" time="%s">' % [result.total - result.passed, result.context, result.total, result.time_taken]
 		for case in result.methods:
-			if not case.success:
 				output += '\n<testcase name="%s" time="%s">' % [case.context, case.time]
 				for assertion in case.assertions:
 					if not assertion.success:
