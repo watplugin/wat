@@ -17,8 +17,6 @@ func save(results) -> void:
 		output += "\n<testsuite>"
 	output += '\n</testsuites>'
 	var XML = File.new()
-	XML.open("Results.XML", File.WRITE)
+	XML.open("res://tests/results/results.xml", File.WRITE)
 	XML.store_string(output)
 	XML.close()
-
-#	methods.append({context = description, assertions = [], total = 0, passed = 0, success = false})
