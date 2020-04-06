@@ -1,7 +1,9 @@
 extends Reference
 
 func save(results, time: float = 0.0) -> void:
-	var path = ProjectSettings.get_setting("WAT/Test_Directory") + "/results/WAT"
+	if not ProjectSettings.has_setting("WAT/Results_Directory"):
+		return
+	var path = ProjectSettings.get_setting("WAT/Results_Directory")
 	if not Directory.new().dir_exists(path):
 		Directory.new().make_dir_recursive(path)
 	var tests: int = results.size()

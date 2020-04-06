@@ -55,6 +55,7 @@ func _enter_tree() -> void:
 	add_inspector_plugin(exports)
 	_set_tags()
 	_create_test_folder()
+	_create_results_folder()
 	create_goto_function()
 	set_minimize_on_load()
 	
@@ -163,6 +164,15 @@ func _create_test_folder() -> void:
 		ProjectSettings.set(title, "res://tests")
 		ProjectSettings.add_property_info(property_info)
 		push_warning("Set Test Directory to 'res://tests'. You can change this in Project -> Project Settings -> General -> WAT")
+		return
+		
+func _create_results_folder() -> void:
+	var title: String = "WAT/Results_Directory"
+	if not ProjectSettings.has_setting(title):
+		var property_info: Dictionary = {"name": title, "type": TYPE_STRING, "hint_string": "You can save JUnit XML Results Here"}
+		ProjectSettings.set(title, "res://tests/results/WAT")
+		ProjectSettings.add_property_info(property_info)
+		push_warning("Set Result Directory to 'res://tests/results/WAT'. You can change this in Project -> Project Settings -> General -> WAT")
 		return
 
 func _on_test_runner_started(test_runner_path: String) -> void:
