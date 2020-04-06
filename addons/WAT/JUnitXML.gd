@@ -14,7 +14,7 @@ func save(results) -> void:
 		for case in result.methods:
 			output += '\n<testcase name="%s" time="1">' % case.context
 			output += '\n</testcase>' 
-		output += "\n<testsuite>"
+		output += "\n</testsuite>"
 	output += '\n</testsuites>'
 	var XML = File.new()
 	XML.open("res://tests/results/results.xml", File.WRITE)
