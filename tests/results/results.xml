@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<testsuites failures="1" name="TestXML" tests="19" time="0.992">
+<testsuites failures="1" name="TestXML" tests="19" time="0.971">
 <testsuite failures="0" name="Given A TestRunner" tests="5" time="0.002">
 </testsuite>
 <testsuite failures="0" name="Given a Scene Director" tests="4" time="0.002">
@@ -10,12 +10,9 @@
 </testsuite>
 <testsuite failures="0" name="Given a Boolean Assertion" tests="2" time="0.002">
 </testsuite>
-<testsuite failures="2" name="Given an Equality Assertion" tests="7" time="0.002">
+<testsuite failures="1" name="Given an Equality Assertion" tests="7" time="0.003">
 <testcase name="When calling asserts.is_equal_or_greater_than(1, 2)" time="0">
-<failure>"EXPECTED: |int| 2 >= |int| 5 but GOT |int| 2 < |int| 5"</failure>
-</testcase>
-<testcase name="When calling asserts.is_greater_than(2, 1)" time="0">
-<failure>"EXPECTED: |int| 2 > |int| 6 but GOT |int| 2 <= |int| 6"</failure>
+<failure message="EXPECTED: |int| 1 is equal or greater |int| 2 but GOT |int| 1 is less than |int| 2"></failure>
 </testcase>
 </testsuite>
 <testsuite failures="0" name="Given A File Assertion" tests="3" time="0.002">
@@ -24,23 +21,23 @@
 </testsuite>
 <testsuite failures="0" name="Given an Is Not Instance of class/type Assertion" tests="26" time="0.002">
 </testsuite>
-<testsuite failures="0" name="Given a Null Assertion" tests="3" time="0.001">
+<testsuite failures="0" name="Given a Null Assertion" tests="3" time="0.002">
 </testsuite>
 <testsuite failures="0" name="Given an Object Assertion" tests="15" time="0.002">
 </testsuite>
-<testsuite failures="0" name="Given is_on_floor" tests="3" time="0.002">
+<testsuite failures="0" name="Given is_on_floor" tests="3" time="0.001">
 </testsuite>
 <testsuite failures="0" name="Given the Addition Operator" tests="3" time="0.002">
 </testsuite>
-<testsuite failures="0" name="Given A Range Assertion" tests="2" time="0.002">
+<testsuite failures="0" name="Given A Range Assertion" tests="2" time="0.001">
 </testsuite>
-<testsuite failures="0" name="Given a String Assertion" tests="6" time="0.002">
+<testsuite failures="0" name="Given a String Assertion" tests="6" time="0.001">
 </testsuite>
 <testsuite failures="0" name="Dummy Passing Test" tests="1" time="0.002">
 </testsuite>
-<testsuite failures="0" name="Dummy Test 2" tests="1" time="0.001">
+<testsuite failures="0" name="Dummy Test 2" tests="1" time="0.002">
 </testsuite>
-<testsuite failures="0" name="Given a Signal Watcher" tests="4" time="0.001">
+<testsuite failures="0" name="Given a Signal Watcher" tests="4" time="0.002">
 </testsuite>
 <testsuite failures="0" name="Given a Yield" tests="11" time="0.002">
 </testsuite>

@@ -19,9 +19,9 @@ func test_when_calling_is_less_than():
 	asserts.is_less_than(1, 2, "Then it passes")
 	
 func test_when_calling_is_equal_or_greater_than():
-	describe("When calling asserts.is_equal_or_greater_than(1, 2)")
+	describe("When calling asserts.is_equal_or_greater_than(2, 1)")
 	
-	asserts.is_equal_or_greater_than(1, 2, "Then it passes")
+	asserts.is_equal_or_greater_than(2, 1, "Then it passes")
 	
 func test_when_calling_is_equal_or_greater_than_with_equal_values():
 	describe("When calling asserts.is_equal_or_greater_than(1, 1)")
