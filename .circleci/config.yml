@@ -21,4 +21,6 @@ jobs:
             command: godot addons/WAT/cli.tscn -run_all
         - store_test_results:
             path: tests/results
+        - store_artifacts:
+          path: tests/results
 
