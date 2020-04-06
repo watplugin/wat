@@ -11,7 +11,7 @@ class State:
 var _state: String
 var _methods: Array = []
 var _method: String
-var time: float
+var time: float = 0.0
 signal completed
 
 func _ready() -> void:
