@@ -1,6 +1,9 @@
 extends Reference
 
 func save(results, time: float = 0.0) -> void:
+	var path = ProjectSettings.get_setting("WAT/Test_Directory") + "/results"
+	if not Directory.new().dir_exists(path):
+		Directory.new().make_dir(path)
 	var tests: int = results.size()
 	var failures: int = 0
 	for i in results:
@@ -20,6 +23,6 @@ func save(results, time: float = 0.0) -> void:
 		output += "\n</testsuite>"
 	output += '\n</testsuites>'
 	var XML = File.new()
-	XML.open("res://tests/results/results.xml", File.WRITE)
+	XML.open("%s/results.xml" % path, File.WRITE)
 	XML.store_string(output)
 	XML.close()
