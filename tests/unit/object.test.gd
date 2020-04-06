@@ -22,6 +22,7 @@ func test_when_calling_has_meta_after_adding_metadata() -> void:
 	
 	set_meta("dummy", 1)
 	asserts.object_has_meta(self, "dummy", "Then it passes")
+	asserts.that(self, "has_meta", ["dummy"], "Then it passes", "%s has meta: %s", "%s does not have meta %s")
 	remove_meta("dummy")
 	
 func test_when_calling_does_not_have_meta() -> void:

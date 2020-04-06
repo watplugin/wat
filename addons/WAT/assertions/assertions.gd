@@ -1,5 +1,6 @@
 extends Reference
 
+const That: Script = preload("that.gd")
 const Boolean: Script = preload("boolean/namespace.gd")
 const Double: Script = preload("double/namespace.gd")
 const Equality: Script = preload("equality/namespace.gd")
@@ -132,7 +133,10 @@ func file_exists(path: String, context: String = "", crash_on_failure: bool = fa
 
 func file_does_not_exist(path: String, context: String = "", crash_on_failure: bool = false) -> void:
 	output(_File.DoesNotExist.new(path, context), crash_on_failure)
-
+	
+func that(obj, method: String, arguments: Array = [], context: String = "", passed: String = "", failed: String = "", crash_on_failure: bool = false) -> void:
+	output(That.new(obj, method, arguments, context, passed, failed), crash_on_failure)
+	 
 func object_has_meta(obj, meta: String, context: String, crash_on_failure: bool = false) -> void:
 	output(_Object.HasMeta.new(obj, meta, context), crash_on_failure)
 	
