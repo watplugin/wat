@@ -16,7 +16,7 @@ func save(results, time: float = 0.0) -> void:
 				output += '\n<testcase name="%s" time="%s">' % [case.context, case.time]
 				for assertion in case.assertions:
 					if not assertion.success:
-						output += '\n<failure>"EXPECTED: %s but GOT %s"</failure>' % [assertion.expected, assertion.actual]
+						output += '\n<failure message="EXPECTED: %s but GOT %s"></failure>' % [assertion.expected, assertion.actual]
 				output += '\n</testcase>' 
 		output += "\n</testsuite>"
 	output += '\n</testsuites>'
