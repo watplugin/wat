@@ -14,7 +14,7 @@ func test_when_calling_string_begins_with():
 func test_when_calling_string_does_not_begin_with():
 	describe("When calling asserts.string_does_not_begin_with('lorem', 'impsum')")
 	
-	var prefix: String = "lorem"
+	var prefix: String = "bleh lorem"
 	var string: String = "impsum"
 	
 	asserts.string_does_not_begin_with(prefix, string, "Then it passes")
@@ -30,7 +30,7 @@ func test_when_calling_string_contains():
 func test_when_calling_string_does_not_contain():
 	describe("When calling asserts.string_does_not_contain('em im', 'impsum')")
 	
-	var contents: String = "em im"
+	var contents: String = "beem im"
 	var string: String = "impsum"
 	
 	asserts.string_does_not_contain(contents, string, "Then it passes")
