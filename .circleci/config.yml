@@ -19,4 +19,6 @@ jobs:
         - run:
             name: "Run All Tests"
             command: godot addons/WAT/cli.tscn -run_all
+        - store_test_results:
+            path: tests/results
 
