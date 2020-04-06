@@ -1,6 +1,6 @@
 extends Reference
 
-func save(results) -> void:
+func save(results, time: float = 0.0) -> void:
 	var tests: int = results.size()
 	var failures: int = 0
 	for i in results:
@@ -8,11 +8,11 @@ func save(results) -> void:
 			failures += 1
 	var output: String = ""
 	output += '<?xml version="1.0" ?>'
-	output += '\n<testsuites failures="%s" name="TestXML" tests="%s" time="1">' % [failures, tests]
+	output += '\n<testsuites failures="%s" name="TestXML" tests="%s" time="%s">' % [failures, tests, time]
 	for result in results:
-		output += '\n<testsuite failures="%s" name="%s" tests="%s" time= "1">' % [result.total - result.passed, result.context, result.total]
+		output += '\n<testsuite failures="%s" name="%s" tests="%s" time= "%s">' % [result.total - result.passed, result.context, result.total, result.time_taken]
 		for case in result.methods:
-			output += '\n<testcase name="%s" time="1">' % case.context
+			output += '\n<testcase name="%s" time="%s">' % [case.context, case.time]
 			output += '\n</testcase>' 
 		output += "\n</testsuite>"
 	output += '\n</testsuites>'

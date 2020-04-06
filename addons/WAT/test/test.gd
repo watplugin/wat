@@ -11,6 +11,7 @@ class State:
 var _state: String
 var _methods: Array = []
 var _method: String
+var time: float
 signal completed
 
 func _ready() -> void:
@@ -47,6 +48,7 @@ func _start():
 	_next()
 	
 func _pre():
+	time = OS.get_ticks_msec()
 	if _methods.empty() and not rerun_method:
 		_state = State.END
 		_next()
@@ -62,6 +64,7 @@ func _execute():
 	_next()
 	
 func _post():
+	_testcase.methods.back().time = (OS.get_ticks_msec() - time) / 1000.0
 	_state = State.POST
 	post()
 	_next()

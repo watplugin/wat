@@ -6,16 +6,16 @@ var title: String
 var path: String
 var methods: Array = []
 var success: bool = false
+var time_taken: float = 0.0
 
 func _init(test_title: String, test_path: String) -> void:
 	title = test_title
 	path = test_path
 
 func _on_test_method_described(description: String) -> void:
-	methods.append({context = description, assertions = [], total = 0, passed = 0, success = false})
+	methods.append({context = description, assertions = [], total = 0, passed = 0, success = false, time = 0.0})
 	
 func _on_asserted(assertion: Object) -> void:
-	# keys: success, context, details
 	methods.back().assertions.append(assertion.to_dictionary())
 	
 func calculate() -> void:
@@ -34,5 +34,6 @@ func to_dictionary() -> Dictionary:
 			 "context": title, 
 			 "methods": methods, 
 			 "success": success,
-			 "path": path
+			 "path": path,
+			 "time_taken": time_taken
 			}
