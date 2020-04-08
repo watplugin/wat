@@ -115,7 +115,6 @@ func test_When_we_double_an_inner_class() -> void:
 	
 	var inner = direct.script("res://Examples/Scripts/calculator.gd", "Algebra")
 	var double = inner.double()
-	print(double is Calculator.Algebra)
 	asserts.is_Vector2(double.scale(Vector2(1, 1), 1), "Then we can call methods on it")
 
 func test_When_we_stubbed_a_keyword_method_by_passing_in_the_correct_keyword():

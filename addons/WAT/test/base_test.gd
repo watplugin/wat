@@ -82,5 +82,4 @@ func until_timeout(time_limit: float) -> Node:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
-		direct.clear()
 		_watcher.clear()

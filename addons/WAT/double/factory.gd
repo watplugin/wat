@@ -68,6 +68,3 @@ func _create_save_and_load_director(path, inner: String, dependecies: Array) -> 
 	script_director.index = index
 	script_director.dependecies = dependecies
 	return script_director
-	
-func clear():
-	print_debug("delete me")
