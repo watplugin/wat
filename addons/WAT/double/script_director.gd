@@ -91,13 +91,15 @@ func script():
 	script.reload() # Necessary to load source code into memory
 	return script
 
-func double(show_error = true):
+func double(deps: Array = [], show_error = true):
 	if _created:
 		# Can only create unique instances
 		if show_error:
 			push_error("WAT: You can only create one instance of a double. Create a new doubler Object for new Test Doubles")
 		return null
 	_created = true
+	if not deps.empty() and dependecies.empty():
+		dependecies = deps
 	object = script().callv("new", dependecies)
 	# This is a nasty abuse of const collections not being strongly-typed
 	# We're mainly doing this for easy use of static methods

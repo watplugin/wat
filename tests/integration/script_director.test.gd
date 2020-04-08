@@ -20,7 +20,7 @@ func test_When_we_call_double_a_second_time_on():
 
 	var silence_error: bool = false
 	director.double()
-	asserts.is_null(director.double(silence_error), "Then we get null back")
+	asserts.is_null(director.double([], silence_error), "Then we get null back")
 
 func test_When_we_double_an_inner_class():
 	describe("When we double an inner class")

@@ -124,6 +124,22 @@ func test_When_we_stubbed_a_keyword_method_by_passing_in_the_correct_keyword():
 
 	asserts.is_equal(director.double().pi(), true, "Then we can call it")
 	
+func test_When_we_pass_in_deps_on_double() -> void:
+	describe("When we pass in dependecies on double")
+
+	director = direct.script("res://Examples/Scripts/user.gd")
+	var double = director.double(["Jackie"])
+
+	asserts.is_equal(double.username, "Jackie", "Then we can double the object successfully")
+	
+func test_When_we_pass_in_deps_on_direct() -> void:
+	describe("When we pass in dependecies on direct")
+	
+	director = direct.script("res://Examples/Scripts/user.gd", "", ["Jackie"])
+	var double = director.double()
+	
+	asserts.is_equal(double.username, "Jackie", "Then we can double the object successfully")
+	
 func test_When_we_pass_a_funcref_as_a_subcall():
 	describe("When we pass a funcref as a subcall")
 	
