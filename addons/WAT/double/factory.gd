@@ -3,7 +3,6 @@ extends Reference
 const _SCRIPT_DIRECTOR: Object= preload("res://addons/WAT/double/script_director.gd")
 const _SCENE_DIRECTOR: Resource = preload("res://addons/WAT/double/scene_director.gd")
 const _INVALID: String = ""
-var _cache: Array = []
 var _count: int = 0
 
 func script(path, inner_class: String = "", dependecies: Array = []):
@@ -19,21 +18,12 @@ func script(path, inner_class: String = "", dependecies: Array = []):
 		# User-defined script
 		path = path.resource_path
 	var script_director: Reference = _create_save_and_load_director(path, inner_class, dependecies)
-	var base
-	if not path is String and not path is GDScript:
-		base = path.new()
-	elif path is GDScript:
-		base = path.new()
-	else:
-		base = load(path) if inner_class == _INVALID else _load_nested_class(path, inner_class)
-		base = base.callv("new", script_director.dependecies)
-	script_director = _collect_methods(script_director, base)
-	_cache.append(base)
+	script_director = _collect_methods(script_director)
 	return script_director
 	
-func _collect_methods(director, base):
+func _collect_methods(director):
 	var params: String = "abcdefghij"
-	for m in base.get_method_list():
+	for m in director.method_list():
 		var arguments: String = ""
 		for i in m.args.size():
 			arguments = arguments + params[i] + ", "
@@ -79,14 +69,5 @@ func _create_save_and_load_director(path, inner: String, dependecies: Array) -> 
 	script_director.dependecies = dependecies
 	return script_director
 	
-func _load_nested_class(path, inner: String) -> Script:
-	var expression = Expression.new()
-	var script = load(path)
-	expression.parse("%s" % [inner])
-	return expression.execute([], script, true)
-	
 func clear():
-	while not _cache.empty():
-		var item = _cache.pop_back()
-		if item is Object and not item is Reference and is_instance_valid(item):
-			item.free()
+	print_debug("delete me")

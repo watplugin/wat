@@ -96,10 +96,27 @@ func test_When_we_call_a_method_that_we_stubbed_to_call_its_super_implementation
 func test_When_we_add_a_doubled_inner_class_to_it():
 	describe("When we add an doubled inner class to it")
 
-	var inner = direct.script("res://Examples/Scripts/calculator.gd", "Algebra")
+	var inner = direct.script("res://Examples/Scripts/calculator.gd")
 	director.add_inner_class(inner, "Algebra")
 
 	asserts.is_equal(TAU, director.double().Algebra.get_tau(), "Then we can call the static methods of that inner double")
+
+# TODO
+func test_When_we_stub_a_method_of_a_double_inner_class():
+	describe("When we stub a method of a doubled inner class")
+
+	director = direct.script("res://Examples/Scripts/calculator.gd", "Algebra")
+	director.method("scale").dummy()
+
+	asserts.is_null(director.double().scale(0, 0), "Then we get the stubbed value back")
+	
+func test_When_we_double_an_inner_class() -> void:
+	describe("When we double an inner class")
+	
+	var inner = direct.script("res://Examples/Scripts/calculator.gd", "Algebra")
+	var double = inner.double()
+	print(double is Calculator.Algebra)
+	asserts.is_Vector2(double.scale(Vector2(1, 1), 1), "Then we can call methods on it")
 
 func test_When_we_stubbed_a_keyword_method_by_passing_in_the_correct_keyword():
 	describe("When we stubbed a keyworded method by passing in the correct keyword")
