@@ -7,10 +7,8 @@ func write(double) -> String:
 		source = 'extends %s' % double.klass
 	elif double.inner_klass != "":
 		source = 'extends "%s".%s\n' % [double.klass, double.inner_klass]
-		source += "\nconst BASE = preload('%s').%s\n\n" % [double.klass, double.inner_klass]
 	else:
 		source = 'extends "%s"\n' % double.klass
-		source += "\nconst BASE = preload('%s')\n\n" % double.klass
 	
 	if double.base_methods.has("_init"):
 		source += _constructor_to_string(double.base_methods["_init"])
