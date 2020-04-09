@@ -49,7 +49,12 @@ func _load_nested_class(p, i) -> Script:
 	expression.parse("%s" % [i])
 	return expression.execute([], script, true)
 
-func _init() -> void:
+func _init(i: String, path: String, inner_klass: String, deps: Array = [], builtin: bool = false) -> void:
+	index = i
+	base_script = path
+	inner = inner_klass
+	dependecies = deps
+	is_built_in = builtin
 	_initialize()
 
 func _initialize() -> void:

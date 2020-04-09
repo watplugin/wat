@@ -12,7 +12,10 @@ func script(path, inner_class: String = "", dependecies: Array = []):
 	if ClassDB.class_exists(path):
 		builtin = true
 	# Should be a Constructor
-	var script_director: Reference = _create_save_and_load_director(path, inner_class, dependecies, builtin)
+#	var script_director: Reference = _create_save_and_load_director(path, inner_class, dependecies, builtin)
+	_count += 1
+	var index: String = _count as String
+	var script_director = _SCRIPT_DIRECTOR.new(index, path, inner_class, dependecies, builtin)
 	script_director = _collect_methods(script_director)
 	return script_director
 	
@@ -48,15 +51,3 @@ func scene(scenepath):
 	var scene_director = _SCENE_DIRECTOR.new(nodes)
 	instance.free()
 	return scene_director
-
-func _create_save_and_load_director(path, inner: String, dependecies: Array, builtin: bool = false) -> Resource:
-	# Refactor Into A Constructor
-	var script_director = _SCRIPT_DIRECTOR.new()
-	_count += 1
-	var index: String = _count as String
-	script_director.is_built_in = builtin
-	script_director.base_script = path
-	script_director.inner = inner
-	script_director.index = index
-	script_director.dependecies = dependecies
-	return script_director
