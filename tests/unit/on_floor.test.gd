@@ -11,12 +11,11 @@ func test_stubbing_is_on_floor_method_from_user_defined_class() -> void:
 	var bodydouble = bodydirector.double()
 
 	asserts.is_true(bodydouble.is_on_floor(), "Then it can be stubbed")
+	
+func test_stubbing_is_on_floor_method_from_builtin_class2() -> void:
+	describe("From a built-in KinematicBody2D2")
 
-
-func test_stubbing_is_on_floor_method_from_builtin_class() -> void:
-	describe("From a built-in KinematicBody2D")
-
-	var bodydirector = direct.script(KinematicBody2D)
+	var bodydirector = direct.script("KinematicBody2D")
 	bodydirector.method("is_on_floor").stub(true)
 	var bodydouble = bodydirector.double()
 

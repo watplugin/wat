@@ -6,18 +6,13 @@ const _INVALID: String = ""
 var _count: int = 0
 
 func script(path, inner_class: String = "", dependecies: Array = []):
-	if path is String and not ClassDB.class_exists(path):
-		path = path
-	elif path is String and ClassDB.class_exists(path):
-		# We're builtin
-		var script = GDScript.new()
-		script.source_code = "extends %s" % path
-		script.reload()
-		path = script
-	elif path is GDScript:
-		# User-defined script
+	var builtin = false
+	if path is GDScript:
 		path = path.resource_path
-	var script_director: Reference = _create_save_and_load_director(path, inner_class, dependecies)
+	if ClassDB.class_exists(path):
+		builtin = true
+	# Should be a Constructor
+	var script_director: Reference = _create_save_and_load_director(path, inner_class, dependecies, builtin)
 	script_director = _collect_methods(script_director)
 	return script_director
 	
@@ -54,15 +49,12 @@ func scene(scenepath):
 	instance.free()
 	return scene_director
 
-func _create_save_and_load_director(path, inner: String, dependecies: Array) -> Resource:
+func _create_save_and_load_director(path, inner: String, dependecies: Array, builtin: bool = false) -> Resource:
+	# Refactor Into A Constructor
 	var script_director = _SCRIPT_DIRECTOR.new()
 	_count += 1
 	var index: String = _count as String
-	if not path is String:
-		var obj = path.new()
-		path = obj.get_class()
-		obj.free()
-		script_director.is_built_in = true
+	script_director.is_built_in = builtin
 	script_director.base_script = path
 	script_director.inner = inner
 	script_director.index = index
