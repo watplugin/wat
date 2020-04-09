@@ -11,8 +11,6 @@ func script(path, inner_class: String = "", dependecies: Array = []):
 		path = path.resource_path
 	if ClassDB.class_exists(path):
 		builtin = true
-	# Should be a Constructor
-#	var script_director: Reference = _create_save_and_load_director(path, inner_class, dependecies, builtin)
 	_count += 1
 	var index: String = _count as String
 	var script_director = _SCRIPT_DIRECTOR.new(index, path, inner_class, dependecies, builtin)

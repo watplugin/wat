@@ -7,9 +7,9 @@ const MASTER: String = "master "
 const PUPPET: String = "puppet "
 const SCRIPT_WRITER = preload("res://addons/WAT/double/script_writer.gd")
 const Method = preload("res://addons/WAT/double/method.gd")
-export (String) var index
-export(String) var base_script: String
-export(String) var inner: String = ""
+var index: String
+var base_script: String
+var inner: String = ""
 var methods: Dictionary = {}
 var _created: bool = false
 var is_scene: bool = false
@@ -20,34 +20,7 @@ var instance_id: int
 var is_built_in: bool = false
 var object
 
-func method_list() -> Array:
-	if is_built_in:
-		return ClassDB.class_get_method_list(base_script)
-	if inner == "":
-		var s = load(base_script)
-		var list = s.get_script_method_list()
-		list += ClassDB.class_get_method_list(s.get_instance_base_type())
-		var filtered = {}
-		for m in list:
-			if m.name in filtered:
-				continue
-			filtered[m.name] = m
-		return filtered.values()
-	var s = _load_nested_class(base_script, inner)
-	var list = s.get_script_method_list()
-	list += ClassDB.class_get_method_list(s.get_instance_base_type())
-	var filtered = {}
-	for m in list:
-		if m.name in filtered:
-			continue
-		filtered[m.name] = m
-	return filtered.values()
 
-func _load_nested_class(p, i) -> Script:
-	var expression = Expression.new()
-	var script = load(p)
-	expression.parse("%s" % [i])
-	return expression.execute([], script, true)
 
 func _init(i: String, path: String, inner_klass: String, deps: Array = [], builtin: bool = false) -> void:
 	index = i
@@ -109,3 +82,32 @@ func double(deps: Array = [], show_error = true):
 	# This is a nasty abuse of const collections not being strongly-typed
 	# We're mainly doing this for easy use of static methods
 	return object
+
+func method_list() -> Array:
+	if is_built_in:
+		return ClassDB.class_get_method_list(base_script)
+	if inner == "":
+		var s = load(base_script)
+		var list = s.get_script_method_list()
+		list += ClassDB.class_get_method_list(s.get_instance_base_type())
+		var filtered = {}
+		for m in list:
+			if m.name in filtered:
+				continue
+			filtered[m.name] = m
+		return filtered.values()
+	var s = _load_nested_class(base_script, inner)
+	var list = s.get_script_method_list()
+	list += ClassDB.class_get_method_list(s.get_instance_base_type())
+	var filtered = {}
+	for m in list:
+		if m.name in filtered:
+			continue
+		filtered[m.name] = m
+	return filtered.values()
+
+func _load_nested_class(p, i) -> Script:
+	var expression = Expression.new()
+	var script = load(p)
+	expression.parse("%s" % [i])
+	return expression.execute([], script, true)
