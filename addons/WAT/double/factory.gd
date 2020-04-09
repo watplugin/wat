@@ -14,18 +14,12 @@ func script(path, inner_class: String = "", dependecies: Array = []):
 	_count += 1
 	var index: String = _count as String
 	var script_director = _SCRIPT_DIRECTOR.new(index, path, inner_class, dependecies, builtin)
-	script_director = _collect_methods(script_director)
+#	script_director = _collect_methods(script_director)
+	script_director.set_methods()
 	return script_director
-	
-func _collect_methods(director):
-	var params: String = "abcdefghij"
-	for m in director.method_list():
-		var arguments: String = ""
-		for i in m.args.size():
-			arguments = arguments + params[i] + ", "
-		arguments = arguments.rstrip(", ")
-		director.base_methods[m.name] = arguments
-	return director
+
+
+#	return director
 
 func scene(scenepath):
 	# Must be String.tscn or PackedScene

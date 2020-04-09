@@ -38,6 +38,7 @@ func _method_to_string(id: int, keyword: String, name: String, args: String, cal
 	if spying:
 		text += "\n\tmethod.add_call(args)"
 	if calls_super:
+		# We could probably implement the super call directly? As a sub-part of stubbing.
 		text += "\n\tif method.executes(args):"
 		text += "\n\t\treturn .%s(%s)" % [name, args]
 	if stubbed:

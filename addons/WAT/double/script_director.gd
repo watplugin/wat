@@ -20,8 +20,6 @@ var instance_id: int
 var is_built_in: bool = false
 var object
 
-
-
 func _init(i: String, _klass: String, _inner_klass: String, _dependecies: Array = [], _is_built_in: bool = false) -> void:
 	index = i
 	klass = _klass
@@ -82,23 +80,25 @@ func double(deps: Array = [], show_error = true):
 	# This is a nasty abuse of const collections not being strongly-typed
 	# We're mainly doing this for easy use of static methods
 	return object
+	
+func set_methods() -> void:
+	var params: String = "abcdefghij"
+	for m in method_list():
+		var arguments: String = ""
+		for i in m.args.size():
+			arguments = arguments + params[i] + ", "
+		arguments = arguments.rstrip(", ")
+		base_methods[m.name] = arguments
 
 func method_list() -> Array:
+	var list: Array = []
 	if is_built_in:
 		return ClassDB.class_get_method_list(klass)
-	if inner_klass == "":
-		var s = load(klass)
-		var list = s.get_script_method_list()
-		list += ClassDB.class_get_method_list(s.get_instance_base_type())
-		var filtered = {}
-		for m in list:
-			if m.name in filtered:
-				continue
-			filtered[m.name] = m
-		return filtered.values()
-	var s = _load_nested_class(klass, inner_klass)
-	var list = s.get_script_method_list()
-	list += ClassDB.class_get_method_list(s.get_instance_base_type())
+	var script = load(klass) if inner_klass == "" else _load_nested_class()
+	# We get our script methods first in case there is a custom constructor
+	# This way we don't end up reading the empty base constructors of Object
+	list += script.get_script_method_list()
+	list += ClassDB.class_get_method_list(script.get_instance_base_type())
 	var filtered = {}
 	for m in list:
 		if m.name in filtered:
@@ -106,8 +106,8 @@ func method_list() -> Array:
 		filtered[m.name] = m
 	return filtered.values()
 
-func _load_nested_class(p, i) -> Script:
+func _load_nested_class() -> Script:
 	var expression = Expression.new()
-	var script = load(p)
-	expression.parse("%s" % [i])
+	var script = load(klass)
+	expression.parse("%s" % [inner_klass])
 	return expression.execute([], script, true)
