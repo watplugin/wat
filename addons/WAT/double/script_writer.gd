@@ -4,13 +4,13 @@ extends Reference
 func write(double) -> String:
 	var source: String = ""
 	if double.is_built_in:
-		source = 'extends %s' % double.base_script
-	elif double.inner != "":
-		source = 'extends "%s".%s\n' % [double.base_script, double.inner]
-		source += "\nconst BASE = preload('%s').%s\n\n" % [double.base_script, double.inner]
+		source = 'extends %s' % double.klass
+	elif double.inner_klass != "":
+		source = 'extends "%s".%s\n' % [double.klass, double.inner_klass]
+		source += "\nconst BASE = preload('%s').%s\n\n" % [double.klass, double.inner_klass]
 	else:
-		source = 'extends "%s"\n' % double.base_script
-		source += "\nconst BASE = preload('%s')\n\n" % double.base_script
+		source = 'extends "%s"\n' % double.klass
+		source += "\nconst BASE = preload('%s')\n\n" % double.klass
 	
 	if double.base_methods.has("_init"):
 		source += _constructor_to_string(double.base_methods["_init"])
@@ -54,4 +54,4 @@ func _method_to_string(id: int, keyword: String, name: String, args: String, cal
 	return text
 
 func _inner_class(klass: Dictionary) -> String:
-	return "\nclass %s extends '%s'.%s:\n\tconst PLACEHOLDER = 0" % [klass.name, klass.director.base_script, klass.name]
+	return "\nclass %s extends '%s'.%s:\n\tconst PLACEHOLDER = 0" % [klass.name, klass.director.klass, klass.name]

@@ -8,8 +8,8 @@ const PUPPET: String = "puppet "
 const SCRIPT_WRITER = preload("res://addons/WAT/double/script_writer.gd")
 const Method = preload("res://addons/WAT/double/method.gd")
 var index: String
-var base_script: String
-var inner: String = ""
+var klass: String
+var inner_klass: String = ""
 var methods: Dictionary = {}
 var _created: bool = false
 var is_scene: bool = false
@@ -22,12 +22,12 @@ var object
 
 
 
-func _init(i: String, path: String, inner_klass: String, deps: Array = [], builtin: bool = false) -> void:
+func _init(i: String, _klass: String, _inner_klass: String, _dependecies: Array = [], _is_built_in: bool = false) -> void:
 	index = i
-	base_script = path
-	inner = inner_klass
-	dependecies = deps
-	is_built_in = builtin
+	klass = _klass
+	inner_klass = _inner_klass
+	dependecies = _dependecies
+	is_built_in = _is_built_in
 	_initialize()
 
 func _initialize() -> void:
@@ -85,9 +85,9 @@ func double(deps: Array = [], show_error = true):
 
 func method_list() -> Array:
 	if is_built_in:
-		return ClassDB.class_get_method_list(base_script)
-	if inner == "":
-		var s = load(base_script)
+		return ClassDB.class_get_method_list(klass)
+	if inner_klass == "":
+		var s = load(klass)
 		var list = s.get_script_method_list()
 		list += ClassDB.class_get_method_list(s.get_instance_base_type())
 		var filtered = {}
@@ -96,7 +96,7 @@ func method_list() -> Array:
 				continue
 			filtered[m.name] = m
 		return filtered.values()
-	var s = _load_nested_class(base_script, inner)
+	var s = _load_nested_class(klass, inner_klass)
 	var list = s.get_script_method_list()
 	list += ClassDB.class_get_method_list(s.get_instance_base_type())
 	var filtered = {}
