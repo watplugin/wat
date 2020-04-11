@@ -15,7 +15,7 @@ func write(double) -> String:
 
 	for name in double.methods:
 		var m = double.methods[name]
-		source += _method_to_string(double.get_instance_id(), m.keyword, m.name, m.args, m.calls_super, m.spying, m.stubbed, m.callables)
+		source += _method_to_string(double.get_instance_id(), m.keyword, m.name, m.args)
 	for klass in double.klasses:
 		source += _inner_class(klass)
 	source = source.replace(",)", ")")
@@ -30,17 +30,15 @@ func _constructor_to_string(parameters: String) -> String:
 	constructor += "\n\tpass\n"
 	return constructor
 
-func _method_to_string(id: int, keyword: String, name: String, args: String, calls_super: bool, spying: bool, stubbed: bool, calls: Array) -> String:
+func _method_to_string(id: int, keyword: String, name: String, args: String) -> String:
 	var text: String
 	text += "%sfunc %s(%s):" % [keyword, name, args]
 	text += "\n\tvar args = [%s]" % args
 	text += "\n\tvar method = ProjectSettings.get_setting('WAT/TestDouble').method(%s, '%s')" % [id, name]
 	text += "\n\tmethod.add_call(args)"
-	if calls_super:
-		text += "\n\tif method.executes(args):"
-		text += "\n\t\treturn .%s(%s)" % [name, args]
-	if stubbed or calls.size() > 0:
-		text += "\n\treturn method.primary(args)"
+	text += "\n\tif method.executes(args):"
+	text += "\n\t\treturn .%s(%s)" % [name, args] # We may want to add a retval check here
+	text += "\n\treturn method.primary(args)"
 	return text
 
 func _inner_class(klass: Dictionary) -> String:
