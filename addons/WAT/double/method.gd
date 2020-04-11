@@ -23,6 +23,7 @@ func dummy() -> Reference:
 	return self
 
 func spy() -> Reference:
+	push_warning("Deprecated. Spying on Methods is now Automatic. Please Remove")
 	spying = true
 	return self
 
@@ -33,6 +34,9 @@ func stub(return_value, arguments: Array = []):
 	else:
 		stubs.append({args = arguments, "return_value": return_value})
 	return self
+	
+func primary(args: Array):
+	pass
 
 func add_call(args: Array = []) -> void:
 	calls.append(args)
@@ -48,10 +52,10 @@ func get_stub(args: Array = []):
 
 func executes(args: Array) -> bool:
 	for s in supers:
-		if self._pattern_matched(s, args):
+		if _pattern_matched(s, args):
 			return true
 	for s in stubs:
-		if self._pattern_matched(s.args, args):
+		if _pattern_matched(s.args, args):
 			return false
 	if supers.has([]):
 		return true

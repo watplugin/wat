@@ -3,12 +3,14 @@ extends Node
 var test_directors: Dictionary = {}
 
 func register(director) -> void:
-#	var id: int = director.get_instance_id()
+	# This probably doesn't need to exist as a singleton?
+	# We could likely store a cache within each test
+	# This way we can isolate it from other caches
+	# (We could even probably store it directly within the factory)
 	if director.get_instance_id() in test_directors:
 		push_warning("Director Object is already registered")
 		return
 	test_directors[director.get_instance_id()] = director
-#	director.instance_id = id
 	
 func method(instance_id: int, method: String) -> Object:
 	return test_directors[instance_id].methods[method]

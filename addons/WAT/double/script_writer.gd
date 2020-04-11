@@ -35,8 +35,7 @@ func _method_to_string(id: int, keyword: String, name: String, args: String, cal
 	text += "%sfunc %s(%s):" % [keyword, name, args]
 	text += "\n\tvar args = [%s]" % args
 	text += "\n\tvar method = ProjectSettings.get_setting('WAT/TestDouble').method(%s, '%s')" % [id, name]
-	if spying:
-		text += "\n\tmethod.add_call(args)"
+	text += "\n\tmethod.add_call(args)"
 	if calls_super:
 		# We could probably implement the super call directly? As a sub-part of stubbing.
 		text += "\n\tif method.executes(args):"
