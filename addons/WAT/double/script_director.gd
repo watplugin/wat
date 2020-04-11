@@ -99,6 +99,8 @@ func double(deps: Array = [], show_error = true):
 	if not deps.empty() and dependecies.empty():
 		dependecies = deps
 	object = script().callv("new", dependecies)
+	for m in methods.values():
+		m.double = object
 	# This is a nasty abuse of const collections not being strongly-typed
 	# We're mainly doing this for easy use of static methods
 	return object

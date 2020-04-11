@@ -15,7 +15,7 @@ func write(double) -> String:
 
 	for name in double.methods:
 		var m = double.methods[name]
-		source += _method_to_string(double.get_instance_id(), m.keyword, m.name, m.args, m.calls_super, m.spying, m.stubbed, m.subcalls)
+		source += _method_to_string(double.get_instance_id(), m.keyword, m.name, m.args, m.calls_super, m.spying, m.stubbed, m.callables)
 	for klass in double.klasses:
 		source += _inner_class(klass)
 	source = source.replace(",)", ")")
@@ -37,18 +37,10 @@ func _method_to_string(id: int, keyword: String, name: String, args: String, cal
 	text += "\n\tvar method = ProjectSettings.get_setting('WAT/TestDouble').method(%s, '%s')" % [id, name]
 	text += "\n\tmethod.add_call(args)"
 	if calls_super:
-		# We could probably implement the super call directly? As a sub-part of stubbing.
 		text += "\n\tif method.executes(args):"
 		text += "\n\t\treturn .%s(%s)" % [name, args]
-	if stubbed:
-		text += "\n\tvar retval = method.get_stub(args)"
-		text += "\n\treturn retval"
-	if calls.size() > 0:
-		for call in calls.size():
-			text += "\n\tvar result{call} = method.subcalls[{call}].call.call_func(self, args)".format({"call": call as String})
-			if calls[call].returns:
-				text.replace("\n\treturn retval", "")
-				text += "\n\treturn result%s" % call as String
+	if stubbed or calls.size() > 0:
+		text += "\n\treturn method.primary(args)"
 	return text
 
 func _inner_class(klass: Dictionary) -> String:

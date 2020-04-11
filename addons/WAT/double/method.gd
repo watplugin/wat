@@ -9,8 +9,9 @@ var keyword: String = ""
 var calls: Array = []
 var stubs: Array = []
 var supers: Array = []
-var subcalls: Array = []
+var callables: Array = []
 var default
+var double
 
 func _init(name: String, keyword: String, args: String) -> void:
 	self.name = name
@@ -36,13 +37,21 @@ func stub(return_value, arguments: Array = []):
 	return self
 	
 func primary(args: Array):
-	pass
+	if stubbed:
+		return get_stub(args)
+	elif calls.size() > 0:
+		for call in callables:
+			return call.call_func(double, args)
+	else:
+		return null
 
 func add_call(args: Array = []) -> void:
 	calls.append(args)
 	
-func subcall(function: Object, returns: bool = false) -> void:
-	subcalls.append({"call": function, "returns": returns})
+func subcall(function: Object, deprecated_var = null) -> void:
+	if deprecated_var != null:
+		push_warning("Users no longer need to pass in the return boolean")
+	callables.append(function)
 
 func get_stub(args: Array = []):
 	for stub in stubs:
