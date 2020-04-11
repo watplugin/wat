@@ -7,7 +7,6 @@ const MASTER: String = "master "
 const PUPPET: String = "puppet "
 const SCRIPT_WRITER = preload("res://addons/WAT/double/script_writer.gd")
 const Method = preload("res://addons/WAT/double/method.gd")
-var index: String
 var klass: String
 var inner_klass: String = ""
 var methods: Dictionary = {}
@@ -16,20 +15,16 @@ var is_scene: bool = false
 var klasses: Array = []
 var base_methods: Dictionary = {}
 var dependecies: Array = []
-var instance_id: int
 var is_built_in: bool = false
 var object
 
-func _init(i: String, _klass: String, _inner_klass: String, _dependecies: Array = [], _is_built_in: bool = false) -> void:
-	index = i
+func _init(_klass: String, _inner_klass: String, deps: Array = []) -> void:
 	klass = _klass
 	inner_klass = _inner_klass
-	dependecies = _dependecies
-	is_built_in = _is_built_in
-	_initialize()
-
-func _initialize() -> void:
+	dependecies = deps
+	is_built_in = ClassDB.class_exists(_klass)
 	ProjectSettings.get_setting("WAT/TestDouble").register(self)
+	set_methods()
 	
 func method(name: String, keyword: String = "") -> Method:
 	if not methods.has(name):
@@ -41,6 +36,7 @@ func clear():
 		object.free()
 	object = null
 
+## BEGIN METHOD CLASS
 func call_count(method: String) -> int:
 	return methods[method].calls.size()
 
@@ -55,6 +51,32 @@ func found_matching_call(method, expected_args: Array):
 
 func add_call(method: String, args: Array = []) -> void:
 	methods[method].add_call(args)
+	
+func set_methods() -> void:
+	var params: String = "abcdefghij"
+	for m in method_list():
+		var arguments: String = ""
+		for i in m.args.size():
+			arguments = arguments + params[i] + ", "
+		arguments = arguments.rstrip(", ")
+		base_methods[m.name] = arguments
+
+func method_list() -> Array:
+	var list: Array = []
+	if is_built_in:
+		return ClassDB.class_get_method_list(klass)
+	var script = load(klass) if inner_klass == "" else _load_nested_class()
+	# We get our script methods first in case there is a custom constructor
+	# This way we don't end up reading the empty base constructors of Object
+	list += script.get_script_method_list()
+	list += ClassDB.class_get_method_list(script.get_instance_base_type())
+	var filtered = {}
+	for m in list:
+		if m.name in filtered:
+			continue
+		filtered[m.name] = m
+	return filtered.values()	
+## END METHOD CLASS
 
 func add_inner_class(klass: Object, name: String) -> void:
 	klasses.append({"director": klass, "name": name})
@@ -81,30 +103,7 @@ func double(deps: Array = [], show_error = true):
 	# We're mainly doing this for easy use of static methods
 	return object
 	
-func set_methods() -> void:
-	var params: String = "abcdefghij"
-	for m in method_list():
-		var arguments: String = ""
-		for i in m.args.size():
-			arguments = arguments + params[i] + ", "
-		arguments = arguments.rstrip(", ")
-		base_methods[m.name] = arguments
 
-func method_list() -> Array:
-	var list: Array = []
-	if is_built_in:
-		return ClassDB.class_get_method_list(klass)
-	var script = load(klass) if inner_klass == "" else _load_nested_class()
-	# We get our script methods first in case there is a custom constructor
-	# This way we don't end up reading the empty base constructors of Object
-	list += script.get_script_method_list()
-	list += ClassDB.class_get_method_list(script.get_instance_base_type())
-	var filtered = {}
-	for m in list:
-		if m.name in filtered:
-			continue
-		filtered[m.name] = m
-	return filtered.values()
 
 func _load_nested_class() -> Script:
 	var expression = Expression.new()

@@ -15,7 +15,7 @@ func write(double) -> String:
 
 	for name in double.methods:
 		var m = double.methods[name]
-		source += _method_to_string(double.instance_id, m.keyword, m.name, m.args, m.calls_super, m.spying, m.stubbed, m.subcalls)
+		source += _method_to_string(double.get_instance_id(), m.keyword, m.name, m.args, m.calls_super, m.spying, m.stubbed, m.subcalls)
 	for klass in double.klasses:
 		source += _inner_class(klass)
 	source = source.replace(",)", ")")

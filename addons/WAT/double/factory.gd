@@ -2,18 +2,10 @@ extends Reference
 
 const ScriptDirector: Object= preload("res://addons/WAT/double/script_director.gd")
 const SceneDirector: Resource = preload("res://addons/WAT/double/scene_director.gd")
-var _count: int = 0
 
 func script(path, inner: String = "", deps: Array = []) -> ScriptDirector:
-	var builtin = false
-	if path is GDScript:
-		path = path.resource_path
-	if ClassDB.class_exists(path):
-		builtin = true
-	_count += 1
-	var i: String = _count as String
-	var script_director = ScriptDirector.new(i, path, inner, deps, builtin)
-	script_director.set_methods()
+	if path is GDScript: path = path.resource_path
+	var script_director = ScriptDirector.new(path, inner, deps)
 	return script_director
 
 func scene(tscn) -> SceneDirector:
