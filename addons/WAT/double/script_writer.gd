@@ -3,12 +3,7 @@ extends Reference
 
 func write(double) -> String:
 	var source: String = ""
-	if double.is_built_in:
-		source = 'extends %s' % double.klass
-	elif double.inner_klass != "":
-		source = 'extends "%s".%s\n' % [double.klass, double.inner_klass]
-	else:
-		source = 'extends "%s"\n' % double.klass
+	source += _extension_to_string(double)
 	
 	if double.base_methods.has("_init"):
 		source += _constructor_to_string(double.base_methods["_init"])
@@ -21,17 +16,20 @@ func write(double) -> String:
 	source = source.replace(",)", ")")
 	return source
 	
+func _extension_to_string(double) -> String:
+	if double.is_built_in:
+		return 'extends %s' % double.klass
+	if double.inner_klass != "":
+		return 'extends "%s".%s\n' % [double.klass, double.inner_klass]
+	return 'extends "%s"\n' % double.klass
+	
 func _constructor_to_string(parameters: String) -> String:
 	var constructor: String = ""
-	if parameters.length() > 0:
-		constructor += "\nfunc _init(%s).(%s):" % [parameters, parameters]
-	else:
-		constructor += "\nfunc _init():"
+	constructor += "\nfunc _init(%s).(%s):" % [parameters, parameters]
 	constructor += "\n\tpass\n"
 	return constructor
 
 func _method_to_string(id: int, method: Object) -> String:
-	var m: Dictionary = {"id": id, "keyword": method.keyword, "name": method.name, "args": method.args}
 	var text: String
 	text += "{keyword}func {name}({args}):"
 	text += "\n\tvar args = [{args}]"
@@ -40,7 +38,8 @@ func _method_to_string(id: int, method: Object) -> String:
 	text += "\n\tif method.executes(args):"
 	text += "\n\t\treturn .{name}({args})"  # We may want to add a retval check here
 	text += "\n\treturn method.primary(args)"
-	text = text.format(m)
+	text = text.format({"id": id, "keyword": method.keyword, 
+	                    "name": method.name, "args": method.args})
 	return text
 
 func _inner_class(klass: Dictionary) -> String:
