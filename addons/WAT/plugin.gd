@@ -54,19 +54,10 @@ func _enter_tree() -> void:
 	connect_signals()
 	add_inspector_plugin(exports)
 	_set_tags()
-	_create_test_folder()
-	_create_results_folder()
+	WAT.Settings.create_test_folder()
+	WAT.Settings.create_results_folder()	
+	WAT.Settings.set_minimize_on_load()
 	create_goto_function()
-	set_minimize_on_load()
-	
-func set_minimize_on_load() -> void:
-	if not ProjectSettings.has_setting("WAT/Minimize_Window_When_Running_Tests"):
-		ProjectSettings.set_setting("WAT/Minimize_Window_When_Running_Tests", false)
-		var property = {}
-		property.name = "WAT/Minimize_Window_When_Running_Tests"
-		property.type = TYPE_BOOL
-		ProjectSettings.add_property_info(property)
-		ProjectSettings.save()
 	
 func _exit_tree() -> void:
 	if _get_state() == BOTTOM_PANEL:
@@ -156,24 +147,6 @@ func goto_function(path: String, function: String) -> void:
 		if function in source[i] and "describe" in source[i]:
 			get_editor_interface().get_script_editor().goto_line(i)
 			return
-
-func _create_test_folder() -> void:
-	var title: String = "WAT/Test_Directory"
-	if not ProjectSettings.has_setting(title):
-		var property_info: Dictionary = {"name": title, "type": TYPE_STRING, "hint_string": "Store your WATTests here"}
-		ProjectSettings.set(title, "res://tests")
-		ProjectSettings.add_property_info(property_info)
-		push_warning("Set Test Directory to 'res://tests'. You can change this in Project -> Project Settings -> General -> WAT")
-		return
-		
-func _create_results_folder() -> void:
-	var title: String = "WAT/Results_Directory"
-	if not ProjectSettings.has_setting(title):
-		var property_info: Dictionary = {"name": title, "type": TYPE_STRING, "hint_string": "You can save JUnit XML Results Here"}
-		ProjectSettings.set(title, "res://tests/results/WAT")
-		ProjectSettings.add_property_info(property_info)
-		push_warning("Set Result Directory to 'res://tests/results/WAT'. You can change this in Project -> Project Settings -> General -> WAT")
-		return
 
 func _on_test_runner_started(test_runner_path: String) -> void:
 	get_editor_interface().open_scene_from_path(test_runner_path)
