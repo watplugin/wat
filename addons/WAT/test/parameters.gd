@@ -7,7 +7,7 @@ var _values: Array = []
 var parameters: Dictionary = {}
 #parameters([["a", "b", "expected"], [2, 2, 4], [5, 5, 10], [7, 7, 14]])
 func parameters(list: Array) -> bool:
-	if _keys.empty():
+	if _keys.empty() or _values.empty():
 		# Keys aren't empty, so we'll be updating this implicilty every time a call is made instead
 		_keys = list.pop_front()
 		_values = list
