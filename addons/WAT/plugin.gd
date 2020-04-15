@@ -45,12 +45,7 @@ func _enter_tree() -> void:
 	state = _get_state(true)
 	interface = UI.instance()
 	exports = EXPORTS.new()
-	if state == BOTTOM_PANEL:
-		add_control_to_bottom_panel(interface, "Tests")
-	elif state < BOTTOM_PANEL:
-		add_control_to_dock(state, interface)
-	else:
-		push_warning("Display Option Is Out Of Bounds")
+	WAT.Settings.initialize_window(self, interface)
 	connect_signals()
 	add_inspector_plugin(exports)
 	_set_tags()
@@ -59,11 +54,22 @@ func _enter_tree() -> void:
 	WAT.Settings.set_minimize_on_load()
 	create_goto_function()
 	
+#func initialize_window(plugin = self, scene = self.interface):
+#	if plugin.state == BOTTOM_PANEL:
+#		plugin.add_control_to_bottom_panel(scene, "Tests")
+#	elif plugin.state < BOTTOM_PANEL:
+#		plugin.add_control_to_dock(plugin.state, scene)
+#	else:
+#		push_warning("Display Option Is Out Of Bounds")
+#
+#func destroy_window(plugin = self, scene = self.interface):
+#	if plugin.state == BOTTOM_PANEL:
+#		plugin.remove_control_from_bottom_panel(scene)
+#	elif plugin.state < BOTTOM_PANEL:
+#		plugin.remove_control_from_docks(scene)
+	
 func _exit_tree() -> void:
-	if _get_state() == BOTTOM_PANEL:
-		remove_control_from_bottom_panel(interface)
-	elif _get_state() < BOTTOM_PANEL:
-		remove_control_from_docks(interface)
+	WAT.Settings.destroy_window(self, interface)
 	interface.free()
 	remove_inspector_plugin(exports)
 
@@ -95,7 +101,7 @@ func _connect(emitter, event, target, method, binds = []):
 	if not emitter.is_connected(event, target, method):
 		emitter.connect(event, target, method, binds)
 	
-func _change(plugin = self) -> void:
+func _change(plugin = self, scene = self.interface) -> void:
 	var new_state = _get_state()
 	if new_state == plugin.state:
 		return
@@ -104,18 +110,18 @@ func _change(plugin = self) -> void:
 	# Clear Old State
 	if previous_state == BOTTOM_PANEL:
 #		_remove_as_bottom_panel()
-		remove_control_from_bottom_panel(interface)
+		remove_control_from_bottom_panel(scene)
 	elif previous_state < BOTTOM_PANEL:
-		remove_control_from_docks(interface)
+		remove_control_from_docks(scene)
 #		_remove_as_dock()
 
 	# Create New State
 	if new_state == BOTTOM_PANEL:
 #		_show_as_bottom_panel()
-		add_control_to_bottom_panel(interface, "Tests")
+		add_control_to_bottom_panel(scene, "Tests")
 	
 	elif new_state < BOTTOM_PANEL:
-		add_control_to_dock(new_state, interface)
+		add_control_to_dock(new_state, scene)
 #		_show_as_dock(new_state)
 
 	plugin.state = new_state
