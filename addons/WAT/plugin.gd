@@ -9,16 +9,17 @@ const UI: PackedScene = preload("res://addons/WAT/Wat.tscn")
 const EXPORTS: Script = preload("res://addons/WAT/ui/metadata/exports.gd")
 var interface: PanelContainer
 var exports
+var Window: Reference
 
 func get_plugin_name() -> String:
    return "WAT"
 
 func _enter_tree() -> void:
 	ProjectSettings.set_setting("WAT/Goto_Test_Method", funcref(self, "goto_function"))
-	state = WAT.Settings.get_window_state(true)
 	interface = UI.instance()
+	Window = WAT.Settings.Window.new(self, interface)
+	Window.construct()
 	exports = EXPORTS.new()
-	WAT.Settings.initialize_window(self, interface)
 	connect_signals()
 	add_inspector_plugin(exports)
 	_set_tags()
@@ -28,7 +29,7 @@ func _enter_tree() -> void:
 	create_goto_function()
 	
 func _exit_tree() -> void:
-	WAT.Settings.destroy_window(self, interface)
+	Window.deconstruct()
 	interface.free()
 	remove_inspector_plugin(exports)
 
@@ -41,7 +42,7 @@ func _connect(emitter, event, target, method, binds = []):
 		emitter.connect(event, target, method, binds)
 
 func _process(delta):
-	WAT.Settings.change(self, interface)
+	Window.update()
 	
 func _set_tags() -> void:
 	if ProjectSettings.has_setting("WAT/Tags"):
