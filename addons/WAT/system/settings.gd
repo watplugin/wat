@@ -89,3 +89,44 @@ static func destroy_window(plugin, scene):
 		plugin.remove_control_from_bottom_panel(scene)
 	elif plugin.state < BOTTOM_PANEL:
 		plugin.remove_control_from_docks(scene)
+		
+static func get_window_state(first: bool = false) -> int:
+	if not ProjectSettings.has_setting("WAT/Display"):
+		ProjectSettings.set_setting("WAT/Display", BOTTOM_PANEL)
+		var property = {}
+		property.name = "WAT/Display"
+		property.type = TYPE_INT
+		property.hint = PROPERTY_HINT_ENUM
+		property.hint_string = PoolStringArray(displays.values()).join(",")
+		ProjectSettings.add_property_info(property)
+		ProjectSettings.save()
+	elif first:
+		var property = {}
+		property.name = "WAT/Display"
+		property.type = TYPE_INT
+		property.hint = PROPERTY_HINT_ENUM
+		property.hint_string = PoolStringArray(displays.values()).join(",")
+		ProjectSettings.add_property_info(property)
+		ProjectSettings.save()
+	return ProjectSettings.get_setting("WAT/Display")
+	
+static func change(plugin, scene) -> void:
+	var new_state = get_window_state()
+	if new_state == plugin.state:
+		return
+	var previous_state: int = plugin.state
+	
+	if previous_state == BOTTOM_PANEL:
+		plugin.remove_control_from_bottom_panel(scene)
+	elif previous_state < BOTTOM_PANEL:
+		plugin.remove_control_from_docks(scene)
+
+	if new_state == BOTTOM_PANEL:
+		plugin.add_control_to_bottom_panel(scene, "Tests")
+	
+	elif new_state < BOTTOM_PANEL:
+		plugin.add_control_to_dock(new_state, scene)
+
+	plugin.state = new_state
+	ProjectSettings.set_setting("WAT/Display", new_state)
+	ProjectSettings.save()
