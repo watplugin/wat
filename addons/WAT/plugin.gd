@@ -95,8 +95,11 @@ func _connect(emitter, event, target, method, binds = []):
 	if not emitter.is_connected(event, target, method):
 		emitter.connect(event, target, method, binds)
 	
-func _change(new_state: int) -> void:
-	var previous_state: int = state
+func _change(plugin = self) -> void:
+	var new_state = _get_state()
+	if new_state == plugin.state:
+		return
+	var previous_state: int = plugin.state
 	
 	# Clear Old State
 	if previous_state == BOTTOM_PANEL:
@@ -115,13 +118,12 @@ func _change(new_state: int) -> void:
 		add_control_to_dock(new_state, interface)
 #		_show_as_dock(new_state)
 
-	state = new_state
+	plugin.state = new_state
 	ProjectSettings.set_setting("WAT/Display", new_state)
 	ProjectSettings.save()
 	
 func _process(delta):
-	if state != _get_state():
-		_change(_get_state())
+	_change()
 	
 func _set_tags() -> void:
 	if ProjectSettings.has_setting("WAT/Tags"):
