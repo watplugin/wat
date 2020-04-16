@@ -6,9 +6,10 @@ const TITLE: String = "Tests"
 const RUN_CURRENT_SCENE_GODOT_3_2: int = 39
 const RUN_CURRENT_SCENE_GODOT_3_1: int = 33
 const UI: PackedScene = preload("res://addons/WAT/Wat.tscn")
-const EXPORTS: Script = preload("res://addons/WAT/ui/metadata/exports.gd")
+const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/exports.gd")
 var interface: PanelContainer
-var exports
+var Editor: EditorInterface
+var test_metadata_editor: EditorInspectorPlugin
 var Window: Reference
 
 func get_plugin_name() -> String:
@@ -16,12 +17,12 @@ func get_plugin_name() -> String:
 
 func _enter_tree() -> void:
 	interface = UI.instance()
+	Editor = get_editor_interface()
+	test_metadata_editor = TestMetadataEditor.new()
 	Window = WAT.Settings.Window.new(self, interface)
 	Window.construct()
-	exports = EXPORTS.new()
 	connect_signals()
-	add_inspector_plugin(exports)
-	_set_tags()
+	add_inspector_plugin(test_metadata_editor)
 	WAT.Settings.create_test_folder()
 	WAT.Settings.create_results_folder()	
 	WAT.Settings.set_minimize_on_load()
@@ -29,7 +30,7 @@ func _enter_tree() -> void:
 func _exit_tree() -> void:
 	Window.deconstruct()
 	interface.free()
-	remove_inspector_plugin(exports)
+	remove_inspector_plugin(test_metadata_editor)
 
 func connect_signals() -> void:
 	_connect(interface, "test_runner_started", self, "_on_test_runner_started")
@@ -41,18 +42,6 @@ func _connect(emitter, event, target, method, binds = []):
 
 func _process(delta):
 	Window.update()
-	
-func _set_tags() -> void:
-	if ProjectSettings.has_setting("WAT/Tags"):
-		return
-	var tags: PoolStringArray = []
-	var property_info: Dictionary = {
-		"name": "WAT/Tags",
-		"type": TYPE_STRING_ARRAY,
-		"hint_string": "Defines Tags to group Tests"
-	}
-	ProjectSettings.set("WAT/Tags", tags)
-	ProjectSettings.add_property_info(property_info)
 
 func _on_test_runner_started(test_runner_path: String) -> void:
 	get_editor_interface().open_scene_from_path(test_runner_path)
