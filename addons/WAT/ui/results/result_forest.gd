@@ -7,9 +7,7 @@ var _results: Resource
 var _tabs: Dictionary
 		
 func display(results: Array):
-	_clear()
 	_add_result_tree(results)
-	emit_signal("displayed") # plugin,
 		
 func _add_result_tree(results: Array) -> void:
 	_tabs = {}
@@ -39,7 +37,7 @@ func _on_tree_results_calculated(tree: Tree, passed: int, total: int, success: b
 	tree.name += " (%s|%s)" % [passed, total]
 	set_tab_icon(_tabs[tree], WAT.Icon.SUCCESS if success else WAT.Icon.FAILED)
 
-func _clear() -> void:
+func clear() -> void:
 	var children: Array = get_children()
 	while not children.empty():
 		var child: Tree = children.pop_back()
