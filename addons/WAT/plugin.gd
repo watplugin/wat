@@ -15,7 +15,6 @@ func get_plugin_name() -> String:
    return "WAT"
 
 func _enter_tree() -> void:
-	ProjectSettings.set_setting("WAT/Goto_Test_Method", funcref(self, "goto_function"))
 	interface = UI.instance()
 	Window = WAT.Settings.Window.new(self, interface)
 	Window.construct()
@@ -26,7 +25,6 @@ func _enter_tree() -> void:
 	WAT.Settings.create_test_folder()
 	WAT.Settings.create_results_folder()	
 	WAT.Settings.set_minimize_on_load()
-	create_goto_function()
 	
 func _exit_tree() -> void:
 	Window.deconstruct()
@@ -55,19 +53,6 @@ func _set_tags() -> void:
 	}
 	ProjectSettings.set("WAT/Tags", tags)
 	ProjectSettings.add_property_info(property_info)
-	
-func create_goto_function() -> void:
-	if not ProjectSettings.has_setting("WAT/Goto_Test_Method"):
-		ProjectSettings.set_setting("WAT/Goto_Test_Method", funcref(self, "goto_functions"))
-	
-func goto_function(path: String, function: String) -> void:
-	var script: Script = load(path)
-	get_editor_interface().edit_resource(script)
-	var source: PoolStringArray = script.source_code.split("\n")
-	for i in source.size():
-		if function in source[i] and "describe" in source[i]:
-			get_editor_interface().get_script_editor().goto_line(i)
-			return
 
 func _on_test_runner_started(test_runner_path: String) -> void:
 	get_editor_interface().open_scene_from_path(test_runner_path)
