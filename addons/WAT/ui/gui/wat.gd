@@ -10,6 +10,7 @@ const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 signal test_runner_started
 signal results_displayed
 onready var GUI: VBoxContainer = $GUI
+var execute = preload("res://addons/WAT/execute.gd").new()
 
 func _ready() -> void:
 	set_process(false)
@@ -33,7 +34,7 @@ func _on_run_pressed(option: int) -> void:
 func _run(path: String) -> void:
 	GUI.Summary.start_time()
 	WAT.Settings.set_run_path(path)
-	emit_signal("test_runner_started", TestRunner)
+	execute.run(TestRunner)
 	
 func _process(delta):
 	if WAT.Results.exist():
