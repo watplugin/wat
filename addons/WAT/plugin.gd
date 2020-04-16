@@ -9,6 +9,7 @@ const UI: PackedScene = preload("res://addons/WAT/Wat.tscn")
 const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/exports.gd")
 var interface: PanelContainer
 var Editor: EditorInterface
+var RunCommand: FuncRef
 var test_metadata_editor: EditorInspectorPlugin
 var Window: Reference
 
@@ -44,12 +45,15 @@ func _process(delta):
 	Window.update()
 
 func _on_test_runner_started(test_runner_path: String) -> void:
-	get_editor_interface().open_scene_from_path(test_runner_path)
+	Editor.open_scene_from_path(test_runner_path)
 	var previous_resource = get_editor_interface().get_script_editor().get_current_script()
 	var version = Engine.get_version_info()
 	if version.minor == 1:
-		get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_1)
+		_run(RUN_CURRENT_SCENE_GODOT_3_1)
 	elif version.minor == 2:
-		get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_2)
+		_run(RUN_CURRENT_SCENE_GODOT_3_2)
 	if previous_resource:
 		get_editor_interface().edit_resource(previous_resource)
+
+func _run(version: int) -> void:
+	Editor.get_parent()._menu_option(version)
