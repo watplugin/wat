@@ -16,7 +16,7 @@ func _ready() -> void:
 	set_process(false)
 	GUI.Interact.Run.QuickStart.connect("pressed", self, "_on_run_pressed", [RUN.ALL])
 	GUI.Interact.Run.Menu.connect("id_pressed", self, "_on_run_pressed")
-	GUI.Results.connect("displayed", self, "emit_signal", ["results_displayed"])
+	GUI.Results.connect("displayed", self, "display")
 	GUI.filesystem = FileSystem
 
 func _on_run_pressed(option: int) -> void:
@@ -47,5 +47,8 @@ func selected(selector: OptionButton) -> String:
 	if selector.selected == NOTHING_SELECTED:
 		push_warning("Nothing Selected")
 	return selector.get_item_text(selector.selected)
+	
+func display() -> void:
+	EditorPlugin.new().make_bottom_panel_item_visible(self)
 
 
