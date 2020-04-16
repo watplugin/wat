@@ -27,9 +27,5 @@ func _exit_tree() -> void:
 	interface.free()
 	remove_inspector_plugin(test_metadata_editor)
 
-func _connect(emitter, event, target, method, binds = []):
-	if not emitter.is_connected(event, target, method):
-		emitter.connect(event, target, method, binds)
-
 func _process(delta):
 	Window.update()
