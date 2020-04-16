@@ -1,12 +1,6 @@
 extends HBoxContainer
 tool
 
-# We could possibly split this into at least two subscenes
-# the first for our run options
-# the second for our selector options
-# the subsplit would also be good for naming (but we may still require the
-# hbox parent?
-
 enum OPTION { ADD_SCRIPT_TEMPLATE, PRINT_STRAY_NODES }
 const filesystem = preload("res://addons/WAT/system/filesystem.gd")
 
@@ -25,12 +19,10 @@ func _ready():
 	MoreMenu.add_item("Add Script Templates")
 	MoreMenu.add_item("Print Stray Nodes")
 	MoreMenu.connect("id_pressed", self, "_on_more_options_pressed")
-	ViewMenu.connect("id_pressed", self, "_on_view_pressed")
+#	ViewMenu.connect("id_pressed", self, "_on_view_pressed")
 	Overwrite.connect("confirmed", self, "_save_templates")
 
 
-
-# Could Refactor
 func _on_more_options_pressed(id: int) -> void:
 	match id:
 		OPTION.ADD_SCRIPT_TEMPLATE:

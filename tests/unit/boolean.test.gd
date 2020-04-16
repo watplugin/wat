@@ -13,4 +13,3 @@ func test_when_calling_asserts_is_false():
 	describe("When calling asserts.is_false(false)")
 	
 	asserts.is_false(false, "Then it passes")
-

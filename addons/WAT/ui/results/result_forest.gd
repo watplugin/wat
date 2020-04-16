@@ -42,6 +42,16 @@ func clear() -> void:
 		var child: Tree = children.pop_back()
 		child.free()
 		
+enum { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
+func _on_view_pressed(option: int) -> void:
+	match option:
+		EXPAND_ALL:
+			expand_all()
+		COLLAPSE_ALL:
+			collapse_all()
+		EXPAND_FAILURES:
+			expand_failures()
+		
 func expand_all():
 	for results in get_children():
 		results.expand_all()

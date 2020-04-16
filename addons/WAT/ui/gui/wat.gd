@@ -13,8 +13,9 @@ func _ready() -> void:
 	set_process(false)
 	GUI.Interact.Run.QuickStart.connect("pressed", self, "_on_run_pressed", [RUN.ALL])
 	GUI.Interact.Run.Menu.connect("id_pressed", self, "_on_run_pressed")
+	GUI.Interact.ViewMenu.connect("id_pressed", GUI.Results, "_on_view_pressed")
 	GUI.filesystem = FileSystem
-
+#	ViewMenu.connect("id_pressed", self, "_on_view_pressed")
 func _on_run_pressed(option: int) -> void:
 	set_process(true)
 	match option:
