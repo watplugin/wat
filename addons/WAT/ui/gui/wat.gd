@@ -19,7 +19,7 @@ func _on_run_pressed(option: int) -> void:
 	set_process(true)
 	match option:
 		RUN.ALL:
-			_run(WAT.Settings.test_directory())
+			_run(WAT.Settings.IO.test_directory())
 		RUN.DIRECTORY:
 			_run(selected(GUI.Interact.Select.DirectorySelector))
 		RUN.SCRIPT:
