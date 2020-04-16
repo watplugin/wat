@@ -3,9 +3,8 @@ extends PanelContainer
 
 enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED }
 enum OPTION { ADD_SCRIPT_TEMPLATE, PRINT_STRAY_NODES } # MoveToSelector
-const FileSystem: Reference = preload("res://addons/WAT/system/filesystem.gd")
 const NOTHING_SELECTED: int = -1
-const INVALID_PATH: String = ""
+const FileSystem: Reference = preload("res://addons/WAT/system/filesystem.gd")
 const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 onready var GUI: VBoxContainer = $GUI
 var execute = preload("res://addons/WAT/execute.gd").new()
