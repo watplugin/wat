@@ -9,8 +9,6 @@ var _mega_cache: Array = []
 
 func _ready():
 	connect("button_pressed", self, "_on_button_pressed")
-#	set_column_expand(0, true)
-#	set_column_expand(1, false)
 
 func goto_function(path: String, function: String) -> void:
 	var p = EditorPlugin.new()
@@ -22,13 +20,8 @@ func goto_function(path: String, function: String) -> void:
 			p.get_editor_interface().get_script_editor().goto_line(i)
 			return
 	
-func test():
-	print("hello")
-	print(get_selected())
-	
 func _on_button_pressed(item, column, id):
 	goto_function(item.get_meta("path"), item.get_meta("context"))
-#	ProjectSettings.get_setting("WAT/Goto_Test_Method").call_func(item.get_meta("path"), item.get_meta("context"))
 
 func display(cases: Array) -> void:
 	var total = cases.size()
@@ -73,11 +66,8 @@ func display(cases: Array) -> void:
 	root.set_text(0, "%s/%s" % [passed, total])
 	root.set_custom_color(0, _color(success))
 	root.set_icon(0, _icon(success))
-#	name = "(%s|%s)" % [passed, total]
 	emit_signal("calculated", self, passed, total, success)
 	
-
-
 func _color(success: bool) -> Color:
 	return PASSED if success else FAILED
 	

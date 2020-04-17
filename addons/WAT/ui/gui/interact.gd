@@ -19,7 +19,6 @@ func _ready():
 	MoreMenu.add_item("Add Script Templates")
 	MoreMenu.add_item("Print Stray Nodes")
 	MoreMenu.connect("id_pressed", self, "_on_more_options_pressed")
-#	ViewMenu.connect("id_pressed", self, "_on_view_pressed")
 	Overwrite.connect("confirmed", self, "_save_templates")
 
 

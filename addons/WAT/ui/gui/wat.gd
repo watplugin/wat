@@ -4,7 +4,7 @@ extends PanelContainer
 enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED }
 enum OPTION { ADD_SCRIPT_TEMPLATE, PRINT_STRAY_NODES } # MoveToSelector
 const NOTHING_SELECTED: int = -1
-const FileSystem: Reference = preload("res://addons/WAT/system/filesystem.gd")
+#const FileSystem: Reference = preload("res://addons/WAT/system/filesystem.gd")
 const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 onready var GUI: VBoxContainer = $GUI
 var execute = preload("res://addons/WAT/execute.gd").new()
@@ -14,8 +14,8 @@ func _ready() -> void:
 	GUI.Interact.Run.QuickStart.connect("pressed", self, "_on_run_pressed", [RUN.ALL])
 	GUI.Interact.Run.Menu.connect("id_pressed", self, "_on_run_pressed")
 	GUI.Interact.ViewMenu.connect("id_pressed", GUI.Results, "_on_view_pressed")
-	GUI.filesystem = FileSystem
-#	ViewMenu.connect("id_pressed", self, "_on_view_pressed")
+#	GUI.filesystem = FileSystem
+
 func _on_run_pressed(option: int) -> void:
 	set_process(true)
 	match option:
