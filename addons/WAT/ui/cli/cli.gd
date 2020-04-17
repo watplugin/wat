@@ -23,7 +23,7 @@ func parse(arguments: Array) -> void:
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
-			_run(WAT.Settings.test_directory())
+			_run(WAT.Settings.IO.test_directory())
 		RUN_DIRECTORY:
 			_run(arguments.pop_front())
 		RUN_SCRIPT:
@@ -40,7 +40,7 @@ func parse(arguments: Array) -> void:
 			push_error("Invalid Argument")
 			get_tree().quit()
 
-func _list(path: String = WAT.Settings.test_directory()):
+func _list(path: String = WAT.Settings.IO.test_directory()):
 	print()
 	print(FileSystem.scripts(path))
 
