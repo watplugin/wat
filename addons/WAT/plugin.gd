@@ -1,7 +1,6 @@
 tool
 extends EditorPlugin
 
-var state: int # Dock state, change names?
 const TITLE: String = "Tests"
 const UI: PackedScene = preload("res://addons/WAT/Wat.tscn")
 const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/exports.gd")
