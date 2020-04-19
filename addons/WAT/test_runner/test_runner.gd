@@ -20,8 +20,6 @@ func _ready() -> void:
 
 var time_taken: float
 func _run_tests() -> void:
-	print("hello"
-	+ "world")
 	var time = OS.get_ticks_msec()
 	while not _tests.empty():
 		yield(run(), COMPLETED)
