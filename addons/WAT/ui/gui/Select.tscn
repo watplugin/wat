@@ -20,9 +20,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/hseparation = 20
 button_mask = 3
-text = "res://tests"
+text = "Select Directory"
 align = 1
-items = [ "res://tests", null, false, 0, null ]
+items = [ "Select Directory", null, false, 0, null ]
 selected = 0
 
 [node name="Script" type="OptionButton" parent="."]
@@ -32,7 +32,10 @@ margin_bottom = 22.0
 hint_tooltip = "Select a single test script to run (your choices depend on which folder is selected)."
 size_flags_horizontal = 3
 size_flags_vertical = 3
+text = "Select Script"
 align = 1
+items = [ "Select Script", null, false, 0, null ]
+selected = 0
 __meta__ = {
 "_editor_description_": "select a test script to run"
 }
@@ -43,4 +46,7 @@ margin_right = 770.0
 margin_bottom = 22.0
 hint_tooltip = "select a tag and then run all tests that have that tag"
 size_flags_horizontal = 3
+text = "Select Tag"
 align = 1
+items = [ "Select Tag", null, false, 0, null ]
+selected = 0
