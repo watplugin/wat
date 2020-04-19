@@ -8,7 +8,6 @@ const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/exports
 var interface: PanelContainer
 var test_metadata_editor: EditorInspectorPlugin
 var Dock: Node
-var IO: Reference
 
 func get_plugin_name() -> String:
    return "WAT"
@@ -17,7 +16,6 @@ func _enter_tree() -> void:
 	interface = UI.instance()
 	test_metadata_editor = TestMetadataEditor.new()
 	WAT.Settings.add_templates()
-	IO = WAT.Settings.IO.new()
 	Dock = WAT.Settings.Dock.new(self, interface)
 	add_child(Dock)
 	add_inspector_plugin(test_metadata_editor)
