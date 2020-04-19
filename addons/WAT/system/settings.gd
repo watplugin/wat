@@ -29,3 +29,13 @@ static func set_minimize_on_load() -> void:
 		property.type = TYPE_BOOL
 		ProjectSettings.add_property_info(property)
 		ProjectSettings.save()
+
+static func add_templates():
+	var data = preload("res://addons/WAT/system/filesystem.gd").templates()
+	if data.exists:
+		return
+	var path = ProjectSettings.get_setting("editor/script_templates_search_path")
+	var wat_template = load("res://addons/WAT/test/template.gd")
+	var savepath: String = "%s/wat.test.gd" % path
+	ResourceSaver.save(savepath, wat_template)
+	push_warning("Added WAT Script Template to %s" % path)

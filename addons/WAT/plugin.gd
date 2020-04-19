@@ -16,6 +16,7 @@ func get_plugin_name() -> String:
 func _enter_tree() -> void:
 	interface = UI.instance()
 	test_metadata_editor = TestMetadataEditor.new()
+	WAT.Settings.add_templates()
 	IO = WAT.Settings.IO.new()
 	Window = WAT.Settings.Window.new(self, interface)
 	Window.construct()
