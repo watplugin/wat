@@ -89,12 +89,12 @@ func script():
 	script.reload() # Necessary to load source code into memory
 	return script
 
-func double(deps: Array = [], show_error = true):
+func double(deps: Array = [], show_error = true) -> Object:
 	if _created:
 		# Can only create unique instances
 		if show_error:
 			push_error("WAT: You can only create one instance of a double. Create a new doubler Object for new Test Doubles")
-		return null
+		return object
 	_created = true
 	if not deps.empty() and dependecies.empty():
 		dependecies = deps

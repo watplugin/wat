@@ -14,7 +14,10 @@ func get_node(path: String) -> Node:
 
 func double() -> Node:
 	if _created:
-		_created = true
+		push_error("WAT: You can only create one instance of a double"
+		+ "Create a new doubler Object for new Test Doubles")
+		return nodes["."]
+	_created = true
 	var root: Node = nodes["."].double()
 	for nodepath in nodes:
 		var path: PoolStringArray = nodepath.split("/")

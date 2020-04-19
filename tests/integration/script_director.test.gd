@@ -19,8 +19,9 @@ func test_When_we_call_double_a_second_time_on():
 	describe("When we call the double the second time")
 
 	var silence_error: bool = false
-	director.double()
-	asserts.is_null(director.double([], silence_error), "Then we get null back")
+	var double = director.double()
+	var double_again = director.double([], silence_error)
+	asserts.is_equal(double, double_again, "Then we get the same double back")
 
 func test_When_we_double_an_inner_class():
 	describe("When we double an inner class")
