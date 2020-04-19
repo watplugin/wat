@@ -5,8 +5,7 @@ const SceneDirector: Resource = preload("res://addons/WAT/double/scene_director.
 
 func script(path, inner: String = "", deps: Array = []) -> ScriptDirector:
 	if path is GDScript: path = path.resource_path
-	var script_director = ScriptDirector.new(path, inner, deps)
-	return script_director
+	return ScriptDirector.new(path, inner, deps)
 
 func scene(tscn) -> SceneDirector:
 	# Must be String.tscn or PackedScene
