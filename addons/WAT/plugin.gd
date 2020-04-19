@@ -1,13 +1,13 @@
 tool
 extends EditorPlugin
 
-var state: int # window state, change names?
+var state: int # Dock state, change names?
 const TITLE: String = "Tests"
 const UI: PackedScene = preload("res://addons/WAT/Wat.tscn")
 const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/exports.gd")
 var interface: PanelContainer
 var test_metadata_editor: EditorInspectorPlugin
-var Window: Reference
+var Dock: Node
 var IO: Reference
 
 func get_plugin_name() -> String:
@@ -18,15 +18,12 @@ func _enter_tree() -> void:
 	test_metadata_editor = TestMetadataEditor.new()
 	WAT.Settings.add_templates()
 	IO = WAT.Settings.IO.new()
-	Window = WAT.Settings.Window.new(self, interface)
-	Window.construct()
+	Dock = WAT.Settings.Dock.new(self, interface)
+	add_child(Dock)
 	add_inspector_plugin(test_metadata_editor)
 	WAT.Settings.set_minimize_on_load()
 	
 func _exit_tree() -> void:
-	Window.deconstruct()
+	Dock.free()
 	interface.free()
 	remove_inspector_plugin(test_metadata_editor)
-
-func _process(delta):
-	Window.update()

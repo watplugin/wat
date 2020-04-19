@@ -1,7 +1,7 @@
 extends Reference
 
 const AUTO_QUIT: String = "WAT/AutoQuit"
-const Window: Script = preload("window.gd")
+const Dock: Script = preload("dock.gd")
 const IO: Script = preload("io.gd")
 
 static func set_run_path(path: String) -> void:

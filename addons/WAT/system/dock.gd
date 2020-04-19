@@ -1,4 +1,4 @@
-extends Reference
+extends Node
 
 const displays: Dictionary = {
 	0: "Left.UL Dock", 1: "Left.BL Dock", 2: "Left.UR Dock",
@@ -19,6 +19,16 @@ var _state: int
 func _init(plugin: EditorPlugin, scene: Control) -> void:
 	_plugin = plugin
 	_scene = scene
+	
+func _ready() -> void:
+	construct()
+	
+func _process(delta: float) -> void:
+	update()
+	
+func _notification(what) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		deconstruct()
 
 func construct() -> void:
 	if not ProjectSettings.has_setting("WAT/Display"):
