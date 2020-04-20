@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "../base.gd"
 
 func _init(value, container, context: String) -> void:
 	var passed: String = "%s does not have %s" % [container, value]

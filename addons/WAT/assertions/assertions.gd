@@ -12,10 +12,9 @@ const _Object: Script = preload("class/object/namespace.gd")
 const _Is: Script = preload("is/namespace.gd")
 const IsNot: Script = preload("is_not/namespace.gd")
 const Null: Script = preload("null/namespace.gd")
+const Property: Script = preload("property/namespace.gd")
 
 # Not in any namespace
-const DoesNotHave: Script = preload("does_not_have.gd")
-const Has: Script = preload("has.gd")
 const Fail: Script = preload("fail.gd")
 
 const CRASH_IF_TEST_FAILS: bool = true
@@ -61,10 +60,10 @@ func is_not_in_range(value, low, high, context: String = "") -> void:
 	output(_Range.IsNotInRange.new(value, low, high, context))
 
 func has(value, container, context: String = "") -> void:
-	output(Has.new(value, container, context))
+	output(Property.Has.new(value, container, context))
 
 func does_not_have(value, container, context: String = "") -> void:
-	output(DoesNotHave.new(value, container, context))
+	output(Property.DoesNotHave.new(value, container, context))
 
 func is_class_instance(instance, type, context: String = "") -> void:
 	output(_Is.IsClassInstance.new(instance, type, context))
