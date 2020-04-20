@@ -1,12 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/WAT/ui/gui/wat.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/ui/results/ResultsForest.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/WAT/ui/gui/run.gd" type="Script" id=3]
-[ext_resource path="res://addons/WAT/ui/gui/interact.gd" type="Script" id=4]
 [ext_resource path="res://addons/WAT/ui/gui/summary.gd" type="Script" id=5]
-[ext_resource path="res://addons/WAT/ui/gui/select.gd" type="Script" id=6]
-[ext_resource path="res://addons/WAT/ui/gui/gui.gd" type="Script" id=7]
 [ext_resource path="res://addons/WAT/icons/play.svg" type="Texture" id=8]
 [ext_resource path="res://addons/WAT/icons/kofi.png" type="Texture" id=9]
 
@@ -41,7 +37,6 @@ margin_right = 1017.0
 margin_bottom = 593.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -51,7 +46,6 @@ margin_right = 1010.0
 margin_bottom = 22.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
-script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -59,7 +53,6 @@ __meta__ = {
 [node name="Run" type="HBoxContainer" parent="GUI/Interact"]
 margin_right = 76.0
 margin_bottom = 22.0
-script = ExtResource( 3 )
 
 [node name="QuickStart" type="Button" parent="GUI/Interact/Run"]
 margin_right = 28.0
@@ -96,14 +89,13 @@ margin_bottom = 22.0
 
 [node name="Select" type="HBoxContainer" parent="GUI/Interact"]
 margin_left = 152.0
-margin_right = 996.0
+margin_right = 1010.0
 margin_bottom = 22.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 6 )
 
 [node name="Directory" type="OptionButton" parent="GUI/Interact/Select"]
-margin_right = 278.0
+margin_right = 283.0
 margin_bottom = 22.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -118,8 +110,8 @@ items = [ "Select Directory", null, false, 0, null ]
 selected = 0
 
 [node name="Script" type="OptionButton" parent="GUI/Interact/Select"]
-margin_left = 282.0
-margin_right = 560.0
+margin_left = 287.0
+margin_right = 570.0
 margin_bottom = 22.0
 hint_tooltip = "Select a single test script to run (your choices depend on which folder is selected)."
 size_flags_horizontal = 3
@@ -133,8 +125,8 @@ __meta__ = {
 }
 
 [node name="Tag" type="OptionButton" parent="GUI/Interact/Select"]
-margin_left = 564.0
-margin_right = 844.0
+margin_left = 574.0
+margin_right = 858.0
 margin_bottom = 22.0
 hint_tooltip = "select a tag and then run all tests that have that tag"
 size_flags_horizontal = 3
@@ -142,11 +134,6 @@ text = "Select Tag"
 align = 1
 items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null ]
 selected = 0
-
-[node name="VSeparator1" type="VSeparator" parent="GUI/Interact"]
-margin_left = 1006.0
-margin_right = 1010.0
-margin_bottom = 22.0
 
 [node name="Results" parent="GUI" instance=ExtResource( 2 )]
 margin_bottom = 518.0
@@ -163,7 +150,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HSeparator" type="HSeparator" parent="GUI"]
+[node name="TopSeperator" type="HSeparator" parent="GUI"]
 margin_top = 540.0
 margin_right = 1010.0
 margin_bottom = 544.0
@@ -246,7 +233,7 @@ size_flags_vertical = 3
 text = "Online Docs"
 flat = true
 
-[node name="HSeparator2" type="HSeparator" parent="GUI"]
+[node name="BottomSeperator" type="HSeparator" parent="GUI"]
 margin_top = 582.0
 margin_right = 1010.0
 margin_bottom = 586.0
