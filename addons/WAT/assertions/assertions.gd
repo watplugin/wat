@@ -16,10 +16,7 @@ const Property: Script = preload("property/namespace.gd")
 
 # Not in any namespace
 const Fail: Script = preload("fail.gd")
-
-const CRASH_IF_TEST_FAILS: bool = true
 signal OUTPUT
-signal CRASHED
 signal asserted
 
 func output(data) -> void:
