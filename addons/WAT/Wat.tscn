@@ -1,23 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/WAT/ui/gui/wat.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/ui/results/ResultsForest.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/WAT/ui/gui/summary.gd" type="Script" id=5]
 [ext_resource path="res://addons/WAT/icons/play.svg" type="Texture" id=8]
 [ext_resource path="res://addons/WAT/icons/kofi.png" type="Texture" id=9]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends HBoxContainer
-tool
-
-func _ready() -> void:
-	_link($Issue, \"https://github.com/CodeDarigan/WAT/issues/new\")
-	_link($RequestDocs, \"https://github.com/CodeDarigan/WAT-docs/issues/new\")
-	_link($OnlineDocs, \"https://wat.readthedocs.io/en/latest/index.html\")
-	_link($Support, \"https://www.ko-fi.com/alexanddraw\")
-	
-func _link(button: Button, link: String):
-	button.connect(\"pressed\", OS, \"shell_open\", [link], CONNECT_DEFERRED)"
 
 [node name="Tests" type="PanelContainer"]
 margin_right = 1024.0
@@ -164,7 +151,6 @@ rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 custom_constants/separation = 0
 alignment = 1
-script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

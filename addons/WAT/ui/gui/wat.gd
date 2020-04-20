@@ -31,6 +31,10 @@ func _on_view_pressed(id: int) -> void:
 
 func _ready() -> void:
 	set_process(false)
+	_link($GUI/Links/Issue, "https://github.com/CodeDarigan/WAT/issues/new")
+	_link($GUI/Links/RequestDocs, "https://github.com/CodeDarigan/WAT-docs/issues/new")
+	_link($GUI/Links/OnlineDocs, "https://wat.readthedocs.io/en/latest/index.html")
+	_link($GUI/Links/Support, "https://www.ko-fi.com/alexanddraw")
 	Menu.clear()
 	Menu.add_item("Run All Tests")
 	Menu.add_item("Run Selected Directory")
@@ -101,3 +105,6 @@ func _on_tag_selector_pressed() -> void:
 	TagSelector.clear()
 	for tag in ProjectSettings.get_setting("WAT/Tags"):
 		TagSelector.add_item(tag)
+
+func _link(button: Button, link: String):
+	button.connect("pressed", OS, "shell_open", [link], CONNECT_DEFERRED)
