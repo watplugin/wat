@@ -1,7 +1,27 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://addons/WAT/ui/gui/wat.gd" type="Script" id=1]
-[ext_resource path="res://addons/WAT/ui/gui/GUI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/WAT/ui/results/ResultsForest.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/WAT/ui/gui/run.gd" type="Script" id=3]
+[ext_resource path="res://addons/WAT/ui/gui/interact.gd" type="Script" id=4]
+[ext_resource path="res://addons/WAT/ui/gui/summary.gd" type="Script" id=5]
+[ext_resource path="res://addons/WAT/ui/gui/select.gd" type="Script" id=6]
+[ext_resource path="res://addons/WAT/ui/gui/gui.gd" type="Script" id=7]
+[ext_resource path="res://addons/WAT/icons/play.svg" type="Texture" id=8]
+[ext_resource path="res://addons/WAT/icons/kofi.png" type="Texture" id=9]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends HBoxContainer
+tool
+
+func _ready() -> void:
+	_link($Issue, \"https://github.com/CodeDarigan/WAT/issues/new\")
+	_link($RequestDocs, \"https://github.com/CodeDarigan/WAT-docs/issues/new\")
+	_link($OnlineDocs, \"https://wat.readthedocs.io/en/latest/index.html\")
+	_link($Support, \"https://www.ko-fi.com/alexanddraw\")
+	
+func _link(button: Button, link: String):
+	button.connect(\"pressed\", OS, \"shell_open\", [link], CONNECT_DEFERRED)"
 
 [node name="Tests" type="PanelContainer"]
 margin_right = 1024.0
@@ -14,4 +34,219 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GUI" parent="." instance=ExtResource( 2 )]
+[node name="GUI" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Interact" type="HBoxContainer" parent="GUI"]
+margin_right = 1010.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+custom_constants/separation = 10
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Run" type="HBoxContainer" parent="GUI/Interact"]
+margin_right = 76.0
+margin_bottom = 22.0
+script = ExtResource( 3 )
+
+[node name="QuickStart" type="Button" parent="GUI/Interact/Run"]
+margin_right = 28.0
+margin_bottom = 22.0
+hint_tooltip = "Run All Tests"
+icon = ExtResource( 8 )
+flat = true
+
+[node name="VSeparator" type="VSeparator" parent="GUI/Interact/Run"]
+margin_left = 32.0
+margin_right = 36.0
+margin_bottom = 22.0
+
+[node name="Menu" type="MenuButton" parent="GUI/Interact/Run"]
+margin_left = 40.0
+margin_right = 76.0
+margin_bottom = 22.0
+text = "Run"
+items = [ "Run All Tests", null, 0, false, false, 0, 0, null, "", false, "Run Selected Directory", null, 0, false, false, 1, 0, null, "", false, "Run Selected Script", null, 0, false, false, 2, 0, null, "", false, "Run Tagged", null, 0, false, false, 3, 0, null, "", false ]
+switch_on_hover = true
+
+[node name="View" type="MenuButton" parent="GUI/Interact"]
+margin_left = 86.0
+margin_right = 128.0
+margin_bottom = 22.0
+text = "View"
+items = [ "Expand All Results", null, 0, false, false, 0, 0, null, "", false, "Collapse All Results", null, 0, false, false, 1, 0, null, "", false, "Expand All Failures", null, 0, false, false, 2, 0, null, "", false ]
+switch_on_hover = true
+
+[node name="VSeparator" type="VSeparator" parent="GUI/Interact"]
+margin_left = 138.0
+margin_right = 142.0
+margin_bottom = 22.0
+
+[node name="Select" type="HBoxContainer" parent="GUI/Interact"]
+margin_left = 152.0
+margin_right = 996.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 6 )
+
+[node name="Directory" type="OptionButton" parent="GUI/Interact/Select"]
+margin_right = 278.0
+margin_bottom = 22.0
+grow_horizontal = 0
+grow_vertical = 0
+hint_tooltip = "select a directory of tests to run"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/hseparation = 20
+button_mask = 3
+text = "Select Directory"
+align = 1
+items = [ "Select Directory", null, false, 0, null ]
+selected = 0
+
+[node name="Script" type="OptionButton" parent="GUI/Interact/Select"]
+margin_left = 282.0
+margin_right = 560.0
+margin_bottom = 22.0
+hint_tooltip = "Select a single test script to run (your choices depend on which folder is selected)."
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Select Script"
+align = 1
+items = [ "Select Script", null, false, 0, null, "Select Script", null, false, 1, null ]
+selected = 0
+__meta__ = {
+"_editor_description_": "select a test script to run"
+}
+
+[node name="Tag" type="OptionButton" parent="GUI/Interact/Select"]
+margin_left = 564.0
+margin_right = 844.0
+margin_bottom = 22.0
+hint_tooltip = "select a tag and then run all tests that have that tag"
+size_flags_horizontal = 3
+text = "Select Tag"
+align = 1
+items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null ]
+selected = 0
+
+[node name="VSeparator1" type="VSeparator" parent="GUI/Interact"]
+margin_left = 1006.0
+margin_right = 1010.0
+margin_bottom = 22.0
+
+[node name="Results" parent="GUI" instance=ExtResource( 2 )]
+margin_bottom = 518.0
+
+[node name="Summary" type="Label" parent="GUI"]
+margin_top = 522.0
+margin_right = 1010.0
+margin_bottom = 536.0
+size_flags_vertical = 1
+text = "Time Taken: 0.00 | Ran 0 Tests | 0 Tests Passed | 0 Tests Failed | Ran Tests 0 Times"
+valign = 1
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator" type="HSeparator" parent="GUI"]
+margin_top = 540.0
+margin_right = 1010.0
+margin_bottom = 544.0
+size_flags_horizontal = 3
+
+[node name="Links" type="HBoxContainer" parent="GUI"]
+margin_top = 548.0
+margin_right = 1010.0
+margin_bottom = 578.0
+rect_min_size = Vector2( 0, 30 )
+size_flags_horizontal = 3
+custom_constants/separation = 0
+alignment = 1
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Support" type="Button" parent="GUI/Links"]
+margin_right = 249.0
+margin_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 30, 30 )
+hint_tooltip = "Support WAT on Kofi"
+focus_mode = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+enabled_focus_mode = 1
+text = "  Support WAT   "
+icon = ExtResource( 9 )
+flat = true
+expand_icon = true
+
+[node name="VSeparator" type="VSeparator" parent="GUI/Links"]
+margin_left = 249.0
+margin_right = 253.0
+margin_bottom = 30.0
+
+[node name="Issue" type="Button" parent="GUI/Links"]
+margin_left = 253.0
+margin_right = 502.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+shortcut_in_tooltip = false
+action_mode = 0
+text = "Report An Issue"
+flat = true
+
+[node name="VSeparator2" type="VSeparator" parent="GUI/Links"]
+margin_left = 502.0
+margin_right = 506.0
+margin_bottom = 30.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RequestDocs" type="Button" parent="GUI/Links"]
+margin_left = 506.0
+margin_right = 755.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+text = "Request Docs"
+flat = true
+
+[node name="VSeparator3" type="VSeparator" parent="GUI/Links"]
+margin_left = 755.0
+margin_right = 759.0
+margin_bottom = 30.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OnlineDocs" type="Button" parent="GUI/Links"]
+margin_left = 759.0
+margin_right = 1010.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Online Docs"
+flat = true
+
+[node name="HSeparator2" type="HSeparator" parent="GUI"]
+margin_top = 582.0
+margin_right = 1010.0
+margin_bottom = 586.0
