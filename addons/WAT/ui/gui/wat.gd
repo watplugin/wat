@@ -64,8 +64,8 @@ func _on_run_pressed(option: int) -> void:
 			_run("Tag." + selected(GUI.Interact.Select.TagSelector))
 
 func _run(path: String) -> void:
-	GUI.Summary.start_time()
-	GUI.Results.clear()
+	Summary.start_time()
+	Results.clear()
 	WAT.Settings.set_run_path(path)
 	execute.run(TestRunner)
 	EditorPlugin.new().make_bottom_panel_item_visible(self)
@@ -73,8 +73,8 @@ func _run(path: String) -> void:
 func _process(delta):
 	if WAT.Results.exist():
 		var results = WAT.Results.withdraw()
-		GUI.Summary.summarize(results)
-		GUI.Results.display(results)
+		Summary.summarize(results)
+		Results.display(results)
 		set_process(false)
 
 func selected(selector: OptionButton) -> String:
