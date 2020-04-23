@@ -59,7 +59,7 @@ func _on_run_pressed(option: int) -> void:
 	set_process(true)
 	match option:
 		RUN.ALL:
-			_run(WAT.Settings.IO.test_directory())
+			_run(test_directory())
 		RUN.DIRECTORY:
 			_run(selected(GUI.Interact.Select.DirectorySelector))
 		RUN.SCRIPT:
@@ -108,3 +108,6 @@ func _on_tag_selector_pressed() -> void:
 
 func _link(button: Button, link: String):
 	button.connect("pressed", OS, "shell_open", [link], CONNECT_DEFERRED)
+	
+func test_directory() -> String:
+	return ProjectSettings.get_setting("WAT/Test_Directory")

@@ -1,7 +1,6 @@
 extends Reference
 
 const AUTO_QUIT: String = "WAT/AutoQuit"
-const IO: Script = preload("io.gd")
 
 static func set_run_path(path: String) -> void:
 	ProjectSettings.set("WAT/ActiveRunPath", path)

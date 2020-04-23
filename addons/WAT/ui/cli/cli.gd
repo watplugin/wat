@@ -8,7 +8,7 @@ const LIST_ALL: String = "-list_all"
 const LIST_DIR: String = "-list_dir"
 const PASSED: int = 0
 const FAILED: int = 1
-const TestRunner: PackedScene = preload("res://addons/WAT/test_runner/TestRunner.tscn")
+const TestRunner: PackedScene = preload("res://addons/WAT/core/test_runner/TestRunner.tscn")
 const FileSystem: Reference = preload("res://addons/WAT/system/filesystem.gd")
 var _runner: Node
 var _start_time: float
@@ -23,7 +23,7 @@ func parse(arguments: Array) -> void:
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
-			_run(WAT.Settings.IO.test_directory())
+			_run(test_directory())
 		RUN_DIRECTORY:
 			_run(arguments.pop_front())
 		RUN_SCRIPT:
@@ -39,8 +39,11 @@ func parse(arguments: Array) -> void:
 		_:
 			push_error("Invalid Argument")
 			get_tree().quit()
+			
+func test_directory() -> String:
+	return ProjectSettings.get_setting("WAT/Test_Directory")
 
-func _list(path: String = WAT.Settings.IO.test_directory()):
+func _list(path: String = test_directory()):
 	print()
 	print(FileSystem.scripts(path))
 
