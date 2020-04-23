@@ -10,7 +10,7 @@ signal ended
 
 func _ready() -> void:
 	WAT.Settings.handle_window()
-	WAT.Settings.create()
+	_create_test_double_registry()
 	if primary:
 		print("Starting WAT Test Runner")
 	_tests = test_loader.withdraw()
@@ -48,3 +48,8 @@ func end() -> void:
 	emit_signal("ended")
 	WAT.Settings.clear()
 	get_tree().quit()
+
+func _create_test_double_registry() -> void:
+	if not ProjectSettings.has_setting("WAT/TestDouble"):
+		var registry = load("res://addons/WAT/core/double/registry.gd")
+		ProjectSettings.set_setting("WAT/TestDouble", registry.new())

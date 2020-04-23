@@ -12,10 +12,6 @@ static func clear(primary: bool = false):
 		ProjectSettings.get_setting("WAT/TestDouble").clear()
 		ProjectSettings.get_setting("WAT/TestDouble").free()
 
-static func create():
-	if not ProjectSettings.has_setting("WAT/TestDouble"):
-		var registry = load("res://addons/WAT/core/double/registry.gd")
-		ProjectSettings.set_setting("WAT/TestDouble", registry.new())
 		
 static func handle_window():
 	if ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests"):
