@@ -4,7 +4,6 @@
 [ext_resource path="res://addons/WAT/assets/down.png" type="Texture" id=2]
 [ext_resource path="res://addons/WAT/assets/replace.png" type="Texture" id=3]
 
-
 [node name="Main" type="VBoxContainer"]
 margin_left = 7.0
 margin_top = 7.0
