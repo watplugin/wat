@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=20 format=2]
+[gd_resource type="Resource" load_steps=21 format=2]
 
 [ext_resource path="res://addons/WAT/ui/metadata/index.gd" type="Script" id=1]
 [ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=2]
@@ -19,8 +19,9 @@
 [ext_resource path="res://tests/integration/script_director.test.gd" type="Script" id=17]
 [ext_resource path="res://tests/integration/scene_director.test.gd" type="Script" id=18]
 [ext_resource path="res://addons/WAT/core/test/test.gd" type="Script" id=19]
+[ext_resource path="res://script_templates/wat.test.gd" type="Script" id=20]
 
 [resource]
 script = ExtResource( 1 )
-scripts = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), null, ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), null, ExtResource( 17 ), ExtResource( 18 ), ExtResource( 5 ), ExtResource( 16 ), ExtResource( 19 ) ]
-tags = [ [  ], [ "64", "Linux" ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ] ]
+scripts = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), null, ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), null, ExtResource( 17 ), ExtResource( 18 ), ExtResource( 5 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 20 ) ]
+tags = [ [  ], [ "64", "Linux" ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ] ]
