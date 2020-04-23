@@ -5,7 +5,7 @@ enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
 enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED }
 const NOTHING_SELECTED: int = -1
 const filesystem = preload("res://addons/WAT/system/filesystem.gd")
-const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
+const TestRunner: String = "res://addons/WAT/core/test_runner/TestRunner.tscn"
 onready var GUI: VBoxContainer = $GUI
 onready var Interact: HBoxContainer = $GUI/Interact
 onready var Summary: Label = $GUI/Summary

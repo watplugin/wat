@@ -2,7 +2,7 @@ extends Node
 
 const COMPLETED: String = "completed"
 var primary: bool = true
-var test_loader: Reference = preload("res://addons/WAT/test_runner/test_loader.gd").new()
+var test_loader: Reference = preload("test_loader.gd").new()
 var test_results: Resource = WAT.Results
 var _tests: Array = []
 var _cases: Array = []
