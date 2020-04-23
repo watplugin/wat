@@ -9,7 +9,7 @@ var _cases: Array = []
 signal ended
 
 func _ready() -> void:
-	WAT.Settings.handle_window()
+	_set_window()
 	_create_test_double_registry()
 	if primary:
 		print("Starting WAT Test Runner")
@@ -53,3 +53,6 @@ func _create_test_double_registry() -> void:
 	if not ProjectSettings.has_setting("WAT/TestDouble"):
 		var registry = load("res://addons/WAT/core/double/registry.gd")
 		ProjectSettings.set_setting("WAT/TestDouble", registry.new())
+
+func _set_window() -> void:
+	OS.window_minimized = ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests")

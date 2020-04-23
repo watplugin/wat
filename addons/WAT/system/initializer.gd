@@ -4,6 +4,7 @@ func _init() -> void:
 	_create_test_folder()
 	_create_results_folder()
 	_add_script_templates()
+	_add_window_setting()
 
 func _create_test_folder() -> void:
 	var title: String = "WAT/Test_Directory"
@@ -32,3 +33,12 @@ func _add_script_templates() -> void:
 	var savepath: String = "%s/wat.test.gd" % path
 	ResourceSaver.save(savepath, wat_template)
 	push_warning("Added WAT Script Template to %s" % path)
+	
+func _add_window_setting() -> void:
+	if not ProjectSettings.has_setting("WAT/Minimize_Window_When_Running_Tests"):
+		ProjectSettings.set_setting("WAT/Minimize_Window_When_Running_Tests", false)
+		var property = {}
+		property.name = "WAT/Minimize_Window_When_Running_Tests"
+		property.type = TYPE_BOOL
+		ProjectSettings.add_property_info(property)
+		ProjectSettings.save()
