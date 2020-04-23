@@ -110,25 +110,25 @@ func file_exists(path: String, context: String = "") -> void:
 func file_does_not_exist(path: String, context: String = "") -> void:
 	output(FileDoesNotExist.new(path, context))
 	
-func that(obj, method: String, arguments: Array = [], context: String = "", passed: String = "", failed: String = "") -> void:
+func that(obj: Object, method: String, arguments: Array = [], context: String = "", passed: String = "", failed: String = "") -> void:
 	output(That.new(obj, method, arguments, context, passed, failed))
 	 
-func object_has_meta(obj, meta: String, context: String) -> void:
+func object_has_meta(obj: Object, meta: String, context: String) -> void:
 	output(ObjectHasMeta.new(obj, meta, context))
 	
-func object_does_not_have_meta(obj, meta: String, context: String) -> void:
+func object_does_not_have_meta(obj: Object, meta: String, context: String) -> void:
 	output(ObjectDoesNotHaveMeta.new(obj, meta, context))
 	
-func object_has_method(obj, method: String, context: String) -> void:
+func object_has_method(obj: Object, method: String, context: String) -> void:
 	output(ObjectHasMethod.new(obj, method, context))
 	
-func object_does_not_have_method(obj, method: String, context: String) -> void:
+func object_does_not_have_method(obj: Object, method: String, context: String) -> void:
 	output(ObjectDoesNotHaveMethod.new(obj, method, context))
 	
-func object_is_queued_for_deletion(obj, context: String) -> void:
+func object_is_queued_for_deletion(obj: Object, context: String) -> void:
 	output(ObjectIsQueuedForDeletion.new(obj, context))
 	
-func object_is_not_queued_for_deletion(obj, context: String) -> void:
+func object_is_not_queued_for_deletion(obj: Object, context: String) -> void:
 	output(ObjectIsNotQueuedForDeletion.new(obj, context))
 	
 func object_is_connected(sender: Object, _signal: String, receiver: Object, method: String, context: String) -> void:
@@ -137,22 +137,22 @@ func object_is_connected(sender: Object, _signal: String, receiver: Object, meth
 func object_is_not_connected(sender: Object, _signal: String, receiver: Object, method: String, context: String) -> void:
 	output(ObjectIsNotConnected.new(sender, _signal, receiver, method, context))
 	
-func object_is_blocking_signals(obj, context: String) -> void:
+func object_is_blocking_signals(obj: Object, context: String) -> void:
 	output(ObjectIsBlockingSignals.new(obj, context))
 	
-func object_is_not_blocking_signals(obj, context: String) -> void:
+func object_is_not_blocking_signals(obj: Object, context: String) -> void:
 	output(ObjectIsNotBlockingSignals.new(obj, context))
 	
-func object_has_user_signal(obj, _signal: String, context: String) -> void:
+func object_has_user_signal(obj: Object, _signal: String, context: String) -> void:
 	output(ObjectHasUserSignal.new(obj, _signal, context))
 	
-func object_does_not_have_user_signal(obj, _signal: String, context: String) -> void:
+func object_does_not_have_user_signal(obj: Object, _signal: String, context: String) -> void:
 	output(ObjectDoesNotHaveUserSignal.new(obj, _signal, context))
 	
-func is_freed(obj, context: String = "") -> void:
+func is_freed(obj: Object, context: String = "") -> void:
 	output(ObjectIsFreed.new(obj, context))
 
-func is_not_freed(obj, context: String = "") -> void:
+func is_not_freed(obj: Object, context: String = "") -> void:
 	output(ObjectIsNotFreed.new(obj, context))
 
 func is_bool(value, context: String = "") -> void:
