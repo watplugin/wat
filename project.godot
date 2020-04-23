@@ -49,8 +49,6 @@ quick_access=Object(FuncRef,"script":null)
 
 Test_Directory="res://tests"
 ActiveRunPath="res://tests"
-Goto_Test_Method=Object(FuncRef,"script":null)
-
 Tags=PoolStringArray( "32", "64", "Linux" )
 Display=8
 Minimize_Window_When_Running_Tests=false

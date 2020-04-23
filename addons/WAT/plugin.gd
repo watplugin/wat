@@ -22,9 +22,6 @@ func _enter_tree() -> void:
 	add_child(_DockController)
 	add_inspector_plugin(_TestMetadataEditor)
 	
-	# ???????
-	WAT.Settings.set_minimize_on_load()
-	
 func _exit_tree() -> void:
 	_DockController.free()
 	_ControlPanel.free()

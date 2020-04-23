@@ -46,13 +46,18 @@ func end() -> void:
 		preload("res://addons/WAT/resources/JUnitXML.gd").new().save(_cases, time_taken)
 	test_results.deposit(_cases)
 	emit_signal("ended")
-	WAT.Settings.clear()
+	clear()
 	get_tree().quit()
 
 func _create_test_double_registry() -> void:
 	if not ProjectSettings.has_setting("WAT/TestDouble"):
 		var registry = load("res://addons/WAT/core/double/registry.gd")
 		ProjectSettings.set_setting("WAT/TestDouble", registry.new())
+		
+func clear() -> void:
+	if ProjectSettings.has_setting("WAT/TestDouble"):
+		ProjectSettings.get_setting("WAT/TestDouble").clear()
+		ProjectSettings.get_setting("WAT/TestDouble").free()
 
 func _set_window() -> void:
 	OS.window_minimized = ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests")
