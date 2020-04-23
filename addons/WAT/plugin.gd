@@ -2,7 +2,7 @@ tool
 extends EditorPlugin
 
 const TITLE: String = "Tests"
-const ControlPanel: PackedScene = preload("res://addons/WAT/Wat.tscn")
+const ControlPanel: PackedScene = preload("res://addons/WAT/gui.tscn")
 const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/editor.gd")
 const DockController: Script = preload("ui/dock.gd")
 const SystemInitializer: Script = preload("system/initializer.gd")
