@@ -14,7 +14,7 @@ static func clear(primary: bool = false):
 
 static func create():
 	if not ProjectSettings.has_setting("WAT/TestDouble"):
-		var registry = load("res://addons/WAT/double/registry.gd")
+		var registry = load("res://addons/WAT/core/double/registry.gd")
 		ProjectSettings.set_setting("WAT/TestDouble", registry.new())
 		
 static func handle_window():

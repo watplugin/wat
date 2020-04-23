@@ -1,7 +1,7 @@
 extends Reference
 
-const ScriptDirector: Object= preload("res://addons/WAT/double/script_director.gd")
-const SceneDirector: Resource = preload("res://addons/WAT/double/scene_director.gd")
+const ScriptDirector = preload("script_director.gd")
+const SceneDirector = preload("scene_director.gd")
 
 func script(path, inner: String = "", deps: Array = []) -> ScriptDirector:
 	if path is GDScript: path = path.resource_path

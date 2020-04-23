@@ -5,8 +5,8 @@ const REMOTE: String = "remote "
 const REMOTESYNC: String = "remotesync "
 const MASTER: String = "master "
 const PUPPET: String = "puppet "
-const SCRIPT_WRITER = preload("res://addons/WAT/double/script_writer.gd")
-const Method = preload("res://addons/WAT/double/method.gd")
+const SCRIPT_WRITER = preload("script_writer.gd")
+const Method = preload("method.gd")
 var klass: String
 var inner_klass: String = ""
 var methods: Dictionary = {}
