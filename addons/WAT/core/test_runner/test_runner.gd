@@ -1,6 +1,7 @@
 extends Node
 
 const COMPLETED: String = "completed"
+var JunitXML = preload("res://addons/WAT/resources/JUnitXML.gd").new()
 var test_loader: Reference = preload("test_loader.gd").new()
 var test_results: Resource = WAT.Results
 var _tests: Array = []
@@ -8,9 +9,10 @@ var _cases: Array = []
 signal ended
 
 func _ready() -> void:
-	_set_window()
-	_create_test_double_registry()
 	print("Starting WAT Test Runner")
+	OS.window_minimized = ProjectSettings.get_setting(
+			"WAT/Minimize_Window_When_Running_Tests")
+	_create_test_double_registry()
 	_tests = test_loader.withdraw()
 	if _tests.empty():
 		push_warning("No Scripts To Test")
@@ -40,7 +42,7 @@ func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 func end() -> void:
 	print("Ending WAT Test Runner")
 	OS.window_minimized = false
-	preload("res://addons/WAT/resources/JUnitXML.gd").new().save(_cases, time_taken)
+	JunitXML.save(_cases, time_taken)
 	test_results.deposit(_cases)
 	emit_signal("ended")
 	clear()
@@ -56,5 +58,3 @@ func clear() -> void:
 		ProjectSettings.get_setting("WAT/TestDouble").clear()
 		ProjectSettings.get_setting("WAT/TestDouble").free()
 
-func _set_window() -> void:
-	OS.window_minimized = ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests")
