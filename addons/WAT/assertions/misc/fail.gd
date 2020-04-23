@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "../base.gd"
 
 func _init(context: String) -> void:
 	# Intentionally Fails Test

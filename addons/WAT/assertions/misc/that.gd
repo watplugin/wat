@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "../base.gd"
 
 func _init(obj, method: String, arguments: Array, context: String, passed: String, failed: String) -> void:
 	passed = passed % ([obj] + arguments)

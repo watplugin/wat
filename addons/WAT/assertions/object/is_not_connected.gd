@@ -1,4 +1,4 @@
-extends "../../base.gd"
+extends "../base.gd"
 
 func _init(sender: Object, _signal: String, receiver: Object, method: String, context: String) -> void:
 	var passed: String = "%s.%s is not connected to %s.%s" % [sender, _signal, receiver, method]

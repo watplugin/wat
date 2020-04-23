@@ -1,4 +1,4 @@
-extends "../../base.gd"
+extends "../base.gd"
 
 func _init(obj, context: String) -> void:
 	var passed: String = "%s is not blocking signals" % obj

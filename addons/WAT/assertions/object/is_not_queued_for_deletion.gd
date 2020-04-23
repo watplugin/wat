@@ -1,4 +1,4 @@
-extends "../../base.gd"
+extends "../base.gd"
 
 func _init(obj: Object, context: String) -> void:
 	var passed: String = "%s is not queued for deletion" % obj
