@@ -105,7 +105,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Select Script"
 align = 1
-items = [ "Select Script", null, false, 0, null, "Select Script", null, false, 1, null, "Select Script", null, false, 2, null, "Select Script", null, false, 3, null, "Select Script", null, false, 4, null, "Select Script", null, false, 5, null, "Select Script", null, false, 6, null, "Select Script", null, false, 7, null ]
+items = [ "Select Script", null, false, 0, null, "Select Script", null, false, 1, null, "Select Script", null, false, 2, null, "Select Script", null, false, 3, null, "Select Script", null, false, 4, null, "Select Script", null, false, 5, null, "Select Script", null, false, 6, null, "Select Script", null, false, 7, null, "Select Script", null, false, 8, null ]
 selected = 0
 __meta__ = {
 "_editor_description_": "select a test script to run"
@@ -119,7 +119,7 @@ hint_tooltip = "select a tag and then run all tests that have that tag"
 size_flags_horizontal = 3
 text = "Select Tag"
 align = 1
-items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null, "Select Tag", null, false, 2, null, "Select Tag", null, false, 3, null, "Select Tag", null, false, 4, null, "Select Tag", null, false, 5, null, "Select Tag", null, false, 6, null, "Select Tag", null, false, 7, null ]
+items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null, "Select Tag", null, false, 2, null, "Select Tag", null, false, 3, null, "Select Tag", null, false, 4, null, "Select Tag", null, false, 5, null, "Select Tag", null, false, 6, null, "Select Tag", null, false, 7, null, "Select Tag", null, false, 8, null ]
 selected = 0
 
 [node name="Results" parent="GUI" instance=ExtResource( 2 )]

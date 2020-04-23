@@ -61,11 +61,11 @@ func _on_run_pressed(option: int) -> void:
 		RUN.ALL:
 			_run(test_directory())
 		RUN.DIRECTORY:
-			_run(selected(GUI.Interact.Select.DirectorySelector))
+			_run(selected(directory()))
 		RUN.SCRIPT:
-			_run(selected(GUI.Interact.Select.ScriptSelector))
+			_run(selected(script()))
 		RUN.TAGGED:
-			_run("Tag." + selected(GUI.Interact.Select.TagSelector))
+			_run("Tag." + selected(tag()))
 
 func _run(path: String) -> void:
 	Summary.start_time()
@@ -114,3 +114,12 @@ func test_directory() -> String:
 	
 func set_run_path(path: String) -> void:
 	ProjectSettings.set("WAT/ActiveRunPath", path)
+	
+func directory() -> OptionButton:
+	return GUI.Interact.Select.DirectorySelector
+
+func script() -> OptionButton:
+	return GUI.Interact.Select.ScriptSelector
+	
+func tag() -> OptionButton:
+	return GUI.Interact.Select.TagSelector
