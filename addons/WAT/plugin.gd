@@ -4,7 +4,7 @@ extends EditorPlugin
 const TITLE: String = "Tests"
 const ControlPanel: PackedScene = preload("res://addons/WAT/Wat.tscn")
 const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/exports.gd")
-const DockController: Script = preload("system/dock.gd")
+const DockController: Script = preload("ui/dock.gd")
 const SystemInitializer: Script = preload("system/initializer.gd")
 
 var _ControlPanel: PanelContainer
