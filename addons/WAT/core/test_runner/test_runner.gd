@@ -43,7 +43,7 @@ func end() -> void:
 	print("Ending WAT Test Runner")
 	OS.window_minimized = false
 	if primary:
-		preload("res://addons/WAT/JUnitXML.gd").new().save(_cases, time_taken)
+		preload("res://addons/WAT/resources/JUnitXML.gd").new().save(_cases, time_taken)
 	test_results.deposit(_cases)
 	emit_signal("ended")
 	WAT.Settings.clear()
