@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/play.svg-5ff903f53a5a48ef879be29ba6628d49.stex"
+path="res://.import/play.svg-0b6b527de6d3691c6b38f55eee12b863.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/WAT/icons/play.svg"
-dest_files=[ "res://.import/play.svg-5ff903f53a5a48ef879be29ba6628d49.stex" ]
+source_file="res://addons/WAT/assets/play.svg"
+dest_files=[ "res://.import/play.svg-0b6b527de6d3691c6b38f55eee12b863.stex" ]
 
 [params]
 

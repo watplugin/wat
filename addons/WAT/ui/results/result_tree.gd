@@ -44,7 +44,7 @@ func display(cases: Array) -> void:
 			method.set_icon(0, _icon(m.success))
 			_cache.append(method)
 			_mega_cache.append(method)
-			method.add_button(0, load("res://addons/WAT/icons/function.svg"))
+			method.add_button(0, load("res://addons/WAT/assets/function.svg"))
 			method.set_tooltip(0, "Click icon to show test method in editor")
 			method.set_meta("path", c.path)
 			method.set_meta("context", m.context)

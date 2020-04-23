@@ -15,6 +15,6 @@ const TestCase = preload("res://addons/WAT/core/test/case.gd")
 const Settings = preload("res://addons/WAT/system/settings.gd")
 
 class Icon:
-	const SUCCESS = preload("res://addons/WAT/icons/success.png")
-	const FAILED = preload("res://addons/WAT/icons/failed.png")
-	const SUPPORT = preload("res://addons/WAT/icons/kofi.png")
+	const SUCCESS = preload("res://addons/WAT/assets/success.png")
+	const FAILED = preload("res://addons/WAT/assets/failed.png")
+	const SUPPORT = preload("res://addons/WAT/assets/kofi.png")

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/kofi.png-d73267ab160ff8fd3e4fc0f5ceaed9e4.stex"
+path="res://.import/function.svg-14e03c4a8904011639649cd74908f843.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/WAT/icons/kofi.png"
-dest_files=[ "res://.import/kofi.png-d73267ab160ff8fd3e4fc0f5ceaed9e4.stex" ]
+source_file="res://addons/WAT/assets/function.svg"
+dest_files=[ "res://.import/function.svg-14e03c4a8904011639649cd74908f843.stex" ]
 
 [params]
 
