@@ -70,7 +70,7 @@ func _on_run_pressed(option: int) -> void:
 func _run(path: String) -> void:
 	Summary.start_time()
 	Results.clear()
-	WAT.Settings.set_run_path(path)
+	set_run_path(path)
 	execute.run(TestRunner)
 	EditorPlugin.new().make_bottom_panel_item_visible(self)
 	
@@ -111,3 +111,6 @@ func _link(button: Button, link: String):
 	
 func test_directory() -> String:
 	return ProjectSettings.get_setting("WAT/Test_Directory")
+	
+func set_run_path(path: String) -> void:
+	ProjectSettings.set("WAT/ActiveRunPath", path)

@@ -49,11 +49,13 @@ func _list(path: String = test_directory()):
 
 func _run(path) -> void:
 	_runner = TestRunner.instance()
-#	WAT.Settings.enable_autoquit()
-	WAT.Settings.set_run_path(path)
+	set_run_path(path)
 	_runner.connect("ended", self, "_on_testrunner_ended")
 	_start_time = OS.get_ticks_msec()
 	add_child(_runner)
+	
+static func set_run_path(path: String) -> void:
+	ProjectSettings.set("WAT/ActiveRunPath", path)
 
 func _on_testrunner_ended() -> void:
 	_runner.queue_free()
