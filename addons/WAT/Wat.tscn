@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/WAT/ui/gui/wat.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/ui/results/ResultsForest.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/WAT/ui/gui/summary.gd" type="Script" id=5]
 [ext_resource path="res://addons/WAT/assets/play.svg" type="Texture" id=8]
 [ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=9]
 
@@ -105,7 +104,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Select Script"
 align = 1
-items = [ "Select Script", null, false, 0, null, "Select Script", null, false, 1, null, "Select Script", null, false, 2, null, "Select Script", null, false, 3, null, "Select Script", null, false, 4, null, "Select Script", null, false, 5, null, "Select Script", null, false, 6, null, "Select Script", null, false, 7, null, "Select Script", null, false, 8, null ]
+items = [ "Select Script", null, false, 0, null, "Select Script", null, false, 1, null, "Select Script", null, false, 2, null, "Select Script", null, false, 3, null, "Select Script", null, false, 4, null, "Select Script", null, false, 5, null, "Select Script", null, false, 6, null, "Select Script", null, false, 7, null, "Select Script", null, false, 8, null, "Select Script", null, false, 9, null ]
 selected = 0
 __meta__ = {
 "_editor_description_": "select a test script to run"
@@ -119,7 +118,7 @@ hint_tooltip = "select a tag and then run all tests that have that tag"
 size_flags_horizontal = 3
 text = "Select Tag"
 align = 1
-items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null, "Select Tag", null, false, 2, null, "Select Tag", null, false, 3, null, "Select Tag", null, false, 4, null, "Select Tag", null, false, 5, null, "Select Tag", null, false, 6, null, "Select Tag", null, false, 7, null, "Select Tag", null, false, 8, null ]
+items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null, "Select Tag", null, false, 2, null, "Select Tag", null, false, 3, null, "Select Tag", null, false, 4, null, "Select Tag", null, false, 5, null, "Select Tag", null, false, 6, null, "Select Tag", null, false, 7, null, "Select Tag", null, false, 8, null, "Select Tag", null, false, 9, null ]
 selected = 0
 
 [node name="Results" parent="GUI" instance=ExtResource( 2 )]
@@ -132,7 +131,6 @@ margin_bottom = 536.0
 size_flags_vertical = 1
 text = "Time Taken: 0.00 | Ran 0 Tests | 0 Tests Passed | 0 Tests Failed | Ran Tests 0 Times"
 valign = 1
-script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

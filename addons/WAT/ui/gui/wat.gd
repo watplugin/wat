@@ -68,7 +68,7 @@ func _on_run_pressed(option: int) -> void:
 			_run("Tag." + selected(tag()))
 
 func _run(path: String) -> void:
-	Summary.start_time()
+	start_time()
 	Results.clear()
 	set_run_path(path)
 	execute.run(TestRunner)
@@ -77,7 +77,7 @@ func _run(path: String) -> void:
 func _process(delta):
 	if WAT.Results.exist():
 		var results = WAT.Results.withdraw()
-		Summary.summarize(results)
+		summarize(results)
 		Results.display(results)
 		set_process(false)
 
@@ -123,3 +123,30 @@ func script() -> OptionButton:
 	
 func tag() -> OptionButton:
 	return GUI.Interact.Select.TagSelector
+
+const SUMMARY: String = \
+"Time Taken: {t} | Ran {r} Tests | {p} Tests Passed | {f} Tests Failed | Ran Tests {e} Times"
+
+var time: float = 0
+var passed: int = 0
+var failed: int = 0
+var total: int = 0
+var runcount: int = 0
+
+func start_time() -> void:
+	runcount += 1
+	time = OS.get_ticks_msec()
+
+func summarize(caselist: Array) -> void:
+	time = (OS.get_ticks_msec() - time) / 1000
+	passed = 0
+	failed = 0
+	total = 0
+	for case in caselist:
+		total += 1
+		if case.success:
+			passed += 1
+		else:
+			failed += 1
+	var summary = {t = time, r = total, p = passed, f = failed, e = runcount}
+	$GUI/Summary.text = SUMMARY.format(summary)
