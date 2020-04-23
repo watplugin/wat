@@ -9,7 +9,8 @@ var _cases: Array = []
 signal ended
 
 func _ready() -> void:
-	print("Starting WAT Test Runner")
+	if get_tree().root.get_child(0) == self:
+		print("Starting WAT Test Runner")
 	OS.window_minimized = ProjectSettings.get_setting(
 			"WAT/Minimize_Window_When_Running_Tests")
 	_create_test_double_registry()

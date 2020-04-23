@@ -49,7 +49,7 @@ quick_access=Object(FuncRef,"script":null)
 
 Test_Directory="res://tests"
 ActiveRunPath="res://tests"
-Tags=PoolStringArray( "32", "64", "Linux" )
+Tags=PoolStringArray( "32", "64", "Linux", "Beep" )
 Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
