@@ -18,7 +18,7 @@ onready var Menu: MenuButton = $GUI/Interact/Run/Menu.get_popup()
 onready var DirectorySelector: OptionButton = $GUI/Interact/Select/Directory
 onready var ScriptSelector: OptionButton = $GUI/Interact/Select/Script
 onready var TagSelector: OptionButton = $GUI/Interact/Select/Tag
-var execute = preload("res://addons/WAT/execute.gd").new()
+var execute = preload("res://addons/WAT/core/test_runner/execute.gd").new()
 
 func _on_view_pressed(id: int) -> void:
 	match id:
