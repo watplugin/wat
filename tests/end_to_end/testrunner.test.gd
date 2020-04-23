@@ -19,7 +19,6 @@ func pre():
 	_results = preload("res://tests/mocks/results.tres")
 	_runner.test_loader = _test_loader
 	_runner.test_results = _results
-	_runner.primary = false
 	
 func me(object, arguments: Array = []):
 	object.test_results.deposit(object._cases)
