@@ -17,6 +17,11 @@ func withdraw(path: String = ProjectSettings.get("WAT/ActiveRunPath")) -> Array:
 		deposit(_tag(path.replace("Tag.", "")))
 	elif not path.empty():
 		deposit(FileSystem.scripts(path))
+	var tests = _load_tests()
+	_tests = []
+	return tests
+	
+func _load_tests() -> Array:
 	var tests: Array = []
 	for path in _tests:
 		# Can't load WAT.Test here for whatever reason
@@ -27,7 +32,6 @@ func withdraw(path: String = ProjectSettings.get("WAT/ActiveRunPath")) -> Array:
 			tests += _suite_of_suites_3p2(test)
 		elif test.get("IS_WAT_SUITE") and Engine.get_version_info().minor == 1:
 			tests += _suite_of_suites_3p1(test)
-	_tests = []
 	return tests
 
 func _suite_of_suites_3p2(suite_of_suites) -> Array:
