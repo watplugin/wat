@@ -50,17 +50,25 @@ func display(cases: Array) -> void:
 			method.set_meta("context", m.context)
 
 			for a in m.assertions:
-				var assertion = create_item(method)
-				assertion.set_text(0, a.context)
-				assertion.set_custom_color(0, _color(a.success))
-				assertion.set_icon(0, _icon(a.success))
-				assertion.collapsed = true
-				_mega_cache.append(assertion)
-				
-				var expected = create_item(assertion)
-				var actual = create_item(assertion)
-				expected.set_text(0, "EXPECTED: %s" % a.expected)
-				actual.set_text(0, "RESULTED: %s" % a.actual)
+				if a.context != "":
+					method.collapsed = false
+					var assertion = create_item(method)
+					assertion.set_text(0, a.context)
+					assertion.set_custom_color(0, _color(a.success))
+					assertion.set_icon(0, _icon(a.success))
+					assertion.collapsed = true
+					_mega_cache.append(assertion)
+					
+					var expected = create_item(assertion)
+					var actual = create_item(assertion)
+					expected.set_text(0, "EXPECTED: %s" % a.expected)
+					actual.set_text(0, "RESULTED: %s" % a.actual)
+				else:
+					method.collapsed = true
+					var expected = create_item(method)
+					var actual = create_item(method)
+					expected.set_text(0, "EXPECTED: %s" % a.expected)
+					actual.set_text(0, "RESULTED: %s" % a.actual)
 				
 	var success = total > 0 and total == passed
 	root.set_text(0, "%s/%s" % [passed, total])
