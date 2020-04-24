@@ -137,3 +137,154 @@ The Holidays are over but friends do I have a gift for you!
 - Give ResultsView a Minimum Height
 
     Mainly so you don't have to keep dragging it up every time you open it.
+
+## UPCOMING RELEASE NOTES BELOW
+
+# 29th January
+
+- Add Go To Method In Results Display
+
+    On the right side of the results display after running a test, you can click a function (fn) icon symbol and it will open the script
+    editor to that method (approximately)
+
+- Added Subcall To Doubled Methods
+
+    You can pass in a FuncRef or an object with a call_func method that takes an object and an array of arguments and then pass that in to be subcalled
+    when a test doubled method is called. This can be useful if you want to get some indirect access to state or have a tighter control over where you
+    want the call branch to go.
+
+# Feb 1st
+
+- Add Links
+
+    Added four links, one that points to documentation (hopefully update), one to post an issue directly to github, another
+    to post a doc request to github and finally one to my Ko-Fi if you want to help me improve WAT (to make a living from this, one
+    can dream)
+
+# Feb 5th
+
+- Add assert.fail(context = "")
+
+    An assertion that always fail (along with an error message) for non implemented tests.
+
+# Feb 6th
+
+- Yielding now returns an array of six values
+
+    yield(until_signal()) or yield(until_timeout()) now returns an Array of up to 6 values. If you're expecting a single return
+    value it is element 0, if you're expecting an array or dictionary return value, it is nested. Any values you're not expecting should
+    be defaulted to null.
+
+# Feb 7th
+
+- Add QuickPlay Button
+
+    Add a QuickPlay Button to allow you to run all your tests very quickly
+
+- You can now change the dock position via a list of choices ProjectSettings/WAT/Display that updates in real time
+
+# March 9th 2020
+
+- Add Signal Was Emitted X Times
+
+
+# March 23 2020
+
+- Users can now double built in classes
+
+    You can now double a built in class by passing in a string of that class name to the first argument of the direct.script()
+    method. I don't know if you need this but WAT did for the change below so I got added.
+
+- Double All Nodes In A Scene
+
+    Previously when doubling a scene, I would only double the nodes with a script which caused problems internally when people
+    were trying to access methods like is_on_floor on a KinematicBody2D that store its functional code outside of it. Now I double
+    everything to make sure this doesn't happen.
+
+# 5th April 2020
+
+- Add Object Assertions
+
+    Add an assertion per boolean method (except can_translate()) in the object API. Likely won't be doing this for other classes.
+
+# 6th April
+
+- Add Assert.That
+
+    I was initially planning on wrapping every single boolean method in Godot but that is honestly just too much. So Instead I've created
+    assert that that takes an object, a string method of that object, any additional arguments and tries its best to make a custom assertion on
+    command. In addition to this you can add your own custom success and failure messages in it along with the usual context string.
+
+- Remove crash on failure
+
+    I don't think anybody knew this but in older versions of WAT you could intentionally crash scripts if a precondition failed.
+    I've removed this for now but it may come back later.
+
+# 7th April 2020
+
+- Added JUnit XML (for the continous integration afficnados)
+
+    Test Results are now saved as JUnit XML which is fairly standard for a number of other testing related software. It can
+    be especially useful when using Continous Integration to give a nicer view than WAT's output print.
+
+    You can edit where this is stored in ProjectSettings/WAT/Results_Directory
+
+# 8th April 2020
+
+- Dependencies can now be passed on double
+
+    Instead of passing dependecies when directing a script, you can now pass them in when calling double on a
+    director instead. This will only work if you didn't pass them in already.
+
+
+# 11th April 2020
+
+- Automate Spying On Test Double Methods
+
+    There wasn't any real reason for this to not exist. Users could simply choose to ignore it if they didn't need it
+    but it does no harm by existing (and on a personal note it has tidied up core code)
+
+# 15th April 2020
+
+- Fix Parameterized Testing Bug
+
+    Parameterized Tests were broken so that a script with one test didn't work. This has now been fixed.
+
+# 19th April 2020
+
+- Remove More Options From GUI
+
+    Print Stray Nodes wasn't working and we will be adding a WAT Template if it doesn't already exist on PluginLoad.
+
+- Scene/Script Directors now return the same double on call
+
+    Null is bad so this was our second best option. Directors will return the same double if they call double any time after
+    the first time they called double)
+
+- GUI now stays on Results Screen
+
+    When using the WAT GUI it now stays on the test results screen instead of being moved to the output panel. You can still move
+    out of this manually but it doesn't do it by default anymore
+
+# 24th April 2020
+
+- Add Recorder Object To Test Script
+
+    By passing the object you're tracking along with an array of properties on that Object as a String, you can now record their changes
+    once per process call. Obviously this isn't perfect and it can screw with reference or shallow objects (like dictionaries etc)
+
+- Describe Is Now Optional
+
+    Describe is now an optional choice. If you choose not to use it your test will use the method named (formatted to look pretty) instead (and now
+    if you forget describe your tests won't crash)
+
+- Assertion Context is Now Optional
+
+    Previously for the GUI to make visual sense you would have to have added a context String to your assertion. No longer. Now you can omit it entirely and assuming
+    all of your context strings are blanks for each assertion in that one test your test will be collapsed immediatly.
+
+- Add Tagged Tests
+
+    You can add tags to your tests. When you click on a WAT.Test Script, an inspector plugin should open with the dropdown to "add tag" which chooses from a list of tags
+    you've defined in WAT/Settings/Tag. You can run these tags via the tag selector afterwards. The system that uses this is smart so it should be able to track when you moved
+    a tagged test script to a different area of the test directory. Meaning that your tests no longer require an obvious filepath
