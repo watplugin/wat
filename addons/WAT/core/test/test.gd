@@ -60,6 +60,7 @@ func _pre():
 func _execute():
 	_state = State.EXECUTE
 	_method = _method if rerun_method else _methods.pop_back()
+	_testcase.add_method(_method)
 	call(_method)
 	_next()
 	

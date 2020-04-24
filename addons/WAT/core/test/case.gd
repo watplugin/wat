@@ -11,9 +11,13 @@ var time_taken: float = 0.0
 func _init(test_title: String, test_path: String) -> void:
 	title = test_title
 	path = test_path
+	
+func add_method(name: String) -> void:
+	name = name.replace("_", " ").lstrip("test")
+	methods.append({context = name, assertions = [], total = 0, passed = 0, success = false, time = 0.0})
 
 func _on_test_method_described(description: String) -> void:
-	methods.append({context = description, assertions = [], total = 0, passed = 0, success = false, time = 0.0})
+	methods.back().context = description
 	
 func _on_asserted(assertion: Object) -> void:
 	methods.back().assertions.append(assertion.to_dictionary())
