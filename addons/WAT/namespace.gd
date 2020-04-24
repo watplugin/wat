@@ -11,6 +11,7 @@ const Parameters = preload("res://addons/WAT/core/test/parameters.gd")
 const Yielder = preload("res://addons/WAT/core/test/yielder.gd")
 const Asserts = preload("res://addons/WAT/core/assertions/assertions.gd")
 const TestCase = preload("res://addons/WAT/core/test/case.gd")
+const Recorder = preload("res://addons/WAT/core/test/recorder.gd")
 
 class Icon:
 	const SUCCESS = preload("res://addons/WAT/assets/success.png")

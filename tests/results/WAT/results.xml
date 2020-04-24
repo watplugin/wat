@@ -1,9 +1,11 @@
 <?xml version="1.0" ?>
 <testsuites failures="0" name="TestXML" tests="1" time="0.985">
-<testsuite failures="0" name="Given a Test Script" tests="2" time="0.002">
-<testcase name=" when we omit context we can see expected and got under method" time="0">
-</testcase>
+<testsuite failures="0" name="Given a Test Script" tests="3" time="0.002">
 <testcase name=" we can omit describe" time="0">
+</testcase>
+<testcase name="When we record properties" time="0">
+</testcase>
+<testcase name=" when we omit context we can see expected and got under method" time="0">
 </testcase>
 </testsuite>
 </testsuites>

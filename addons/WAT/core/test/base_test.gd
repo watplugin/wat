@@ -16,6 +16,7 @@ var _watcher: Reference
 var _parameters: Reference
 var _yielder: Timer
 var _testcase: Reference
+var _recorder: Script
 
 signal described
 
@@ -26,13 +27,21 @@ func methods() -> PoolStringArray:
 			output.append(method.name)
 	return output
 	
-func setup(assertions, yielder, testcase, director, signal_watcher, parameters):
+func setup(assertions, yielder, testcase, director, 
+           signal_watcher, parameters, recorder):
 	asserts = assertions
 	direct = director
 	_testcase = testcase
 	_yielder = yielder
 	_watcher = signal_watcher
 	_parameters = parameters
+	_recorder = recorder
+	
+func record(who: Object, properties: Array) -> Node:
+	var record = _recorder.new()
+	record.record(who, properties)
+	add_child(record)
+	return record
 	
 func _ready() -> void:
 	p = _parameters.parameters
