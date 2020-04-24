@@ -18,7 +18,7 @@ func _ready() -> void:
 	_methods = methods() as Array
 	_yielder.connect("finished", self, "_next")
 	add_child(_yielder)
-	_start()
+#	_start()
 
 func _next(vargs = null):
 	# When yielding until signals or timeouts, this gets called on resume
