@@ -14,14 +14,7 @@ func deposit(tests: Array) -> void:
 
 func withdraw(path: String = ProjectSettings.get("WAT/ActiveRunPath")) -> Array:
 	if path.begins_with("Tag."):
-#		print(path.replace("Tag.", ""))
-		var tagged: Array = []
-		var tag = path.replace("Tag.", "")
-		var Index = metadata()
-		for i in Index.scripts.size():
-			if Index.tags[i].has(tag):
-				tagged.append(Index.scripts[i].resource_path)
-		deposit(tagged)
+		deposit(_tag(path.replace("Tag.", "")))
 	elif not path.empty():
 		deposit(FileSystem.scripts(path))
 	var tests: Array = []
@@ -61,3 +54,13 @@ func _suite_of_suites_3p1(suite_of_suites) -> Array:
 				subtest.set_meta("path", "%s.%s" % [suite_of_suites.get_path(), classname])
 				subtests.append(subtest)
 	return subtests
+
+func _tag(tag):
+	var tagged: Array = []
+	var path = ProjectSettings.get_setting("WAT/Test_Directory")
+	var loadpath: String = "%s/.test/metadata.tres" % path
+	var Index = load(loadpath)
+	for i in Index.scripts.size():
+		if Index.tags[i].has(tag):
+			tagged.append(Index.scripts[i].resource_path)
+	return tagged
