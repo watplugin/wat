@@ -34,6 +34,8 @@ func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 		WAT.Recorder)
 	var start_time = OS.get_ticks_msec()
 	add_child(test)
+	# Add Strategy Here?
+	test._methods = test.methods()
 	test._start()
 	var time = OS.get_ticks_msec() - start_time
 	testcase.time_taken = time / 1000.0
