@@ -54,16 +54,14 @@ Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
-"directory": "res://tests/unit",
-"script": "res://tests/end_to_end/testrunner.test.gd",
-"strategy": "RunAll",
-"tag": "64"
+
 }
 
 [application]
 
 config/name="WaitingAndTesting"
 config/icon="res://icon.png"
+config/windows_native_icon=""
 
 [debug]
 
@@ -71,6 +69,8 @@ gdscript/warnings/enable=false
 
 [display]
 
+window/size/width=1024
+window/size/height=600
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 

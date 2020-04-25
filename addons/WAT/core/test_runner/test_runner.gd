@@ -43,9 +43,11 @@ func get_tests() -> Array:
 			return test_loader.script(_strategy["script"])
 		"RunTag":
 			return test_loader.tag(_strategy["tag"])
-		"RunDeposited":
-			return test_loader.deposited()
-	return []
+		_:
+			return _tests
+#		"RunDeposited":
+#			return test_loader.deposited()
+#	return _tests
 			# This only really exists for our internal WAT Tests
 
 var time_taken: float

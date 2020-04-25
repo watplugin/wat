@@ -14,9 +14,6 @@ jobs:
             name: "Run Integration Tests"
             command: godot addons/WAT/cli.tscn -run_dir=res://tests/integration
         - run:
-            name: "Run End-To-End Tests"
-            command: godot addons/WAT/cli.tscn -run_dir=res://tests/end_to_end
-        - run:
             name: "Run All Tests"
             command: godot addons/WAT/cli.tscn -run_all
         - store_test_results:
