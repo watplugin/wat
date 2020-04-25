@@ -49,6 +49,8 @@ func get_tests() -> Array:
 			return test_loader.script(_strategy["script"])
 		"RunTag":
 			return test_loader.tag(_strategy["tag"])
+		"RunMethod":
+			return test_loader.script(_strategy["script"])
 		_:
 			return _tests
 
@@ -72,7 +74,10 @@ func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	var start_time = OS.get_ticks_msec()
 	add_child(test)
 	# Add Strategy Here?
-	test._methods = test.methods()
+	if _strategy.has("method"):
+		test._methods = [_strategy.method]
+	else:
+		test._methods = test.methods()
 	test._start()
 	var time = OS.get_ticks_msec() - start_time
 	testcase.time_taken = time / 1000.0
