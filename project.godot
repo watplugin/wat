@@ -54,7 +54,8 @@ Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
-
+"repeat": 1,
+"strategy": "RunAll"
 }
 
 [application]
@@ -62,7 +63,6 @@ TestStrategy={
 config/name="WaitingAndTesting"
 run/main_scene="res://addons/WAT/gui.tscn"
 config/icon="res://icon.png"
-config/windows_native_icon=""
 
 [debug]
 
@@ -70,8 +70,6 @@ gdscript/warnings/enable=false
 
 [display]
 
-window/size/width=1024
-window/size/height=600
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 

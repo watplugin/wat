@@ -66,6 +66,5 @@ static func templates():
 		var title = script.substr(script.find_last("/") + 1, -1)
 		if title == test_template:
 			template_exist = true
-			print("template exists")
 			break
 	return {savepath = template_directory, exists = template_exist}

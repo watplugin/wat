@@ -32,6 +32,8 @@ func _add_script_templates() -> void:
 	var path = ProjectSettings.get_setting("editor/script_templates_search_path")
 	var wat_template = load("res://addons/WAT/core/test/template.gd")
 	var savepath: String = "%s/wat.test.gd" % path
+	if load(savepath) != null:
+		return
 	ResourceSaver.save(savepath, wat_template)
 	push_warning("Added WAT Script Template to %s" % path)
 	
