@@ -288,3 +288,19 @@ The Holidays are over but friends do I have a gift for you!
     You can add tags to your tests. When you click on a WAT.Test Script, an inspector plugin should open with the dropdown to "add tag" which chooses from a list of tags
     you've defined in WAT/Settings/Tag. You can run these tags via the tag selector afterwards. The system that uses this is smart so it should be able to track when you moved
     a tagged test script to a different area of the test directory. Meaning that your tests no longer require an obvious filepath
+
+# 25th April
+
+- Tests can be repeated x times
+
+    In both the GUI & CLI you can now repeat the test x times. Everything will loop until done and the results will appear (duplicate tests
+    will have duplicate results)
+
+- You can now run single methods
+
+    Add a + option button to the GUI to show a test method selector you can use to now run seperate tests methods
+
+- You can rerun failures
+
+    This will always rerun the very last failures (even inbetween sessions)
+    
