@@ -11,6 +11,12 @@ func metadata() -> Resource:
 
 func deposit(tests: Array) -> void:
 	_tests = tests
+	
+func last_failed() -> Array:
+	_tests = load("res://addons/WAT/resources/results.tres").failures
+	var tests = _load_tests()
+	_tests = []
+	return tests
 
 func all() -> Array:
 	_tests = FileSystem.scripts(ProjectSettings.get_setting("WAT/Test_Directory"))
@@ -53,6 +59,9 @@ func _load_tests() -> Array:
 	var tests: Array = []
 	for path in _tests:
 		# Can't load WAT.Test here for whatever reason
+		if path is String and not path.ends_with(".gd"):
+			path = path.substr(0, path.find(".gd") + 3)
+			print(path)
 		var test = load(path) if path is String else path
 		if test.get("TEST") != null:
 			tests.append(test)

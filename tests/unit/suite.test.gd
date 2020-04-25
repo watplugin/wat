@@ -19,3 +19,7 @@ class DummyTwo extends WAT.Test:
 		describe("This method passes")
 
 		asserts.is_true(true, "Passing!")
+		
+	func test_fail():
+	
+		asserts.fail("cause i wanna again")

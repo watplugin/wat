@@ -10,7 +10,7 @@ script/source = "tool
 extends PanelContainer
 
 enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
-enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED, METHOD }
+enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED, METHOD, RERUN_FAILURES }
 const NOTHING_SELECTED: int = -1
 const filesystem = preload(\"res://addons/WAT/system/filesystem.gd\")
 const TestRunner: String = \"res://addons/WAT/core/test_runner/TestRunner.tscn\"
@@ -54,6 +54,7 @@ func _ready() -> void:
 	Menu.add_item(\"Run Selected Script\")
 	Menu.add_item(\"Run Tagged\")
 	Menu.add_item(\"Run Method\")
+	Menu.add_item(\"Rerun Failures\")
 	ViewMenu.clear()
 	ViewMenu.add_item(\"Expand All Results\")
 	ViewMenu.add_item(\"Collapse All Results\")
@@ -126,6 +127,13 @@ func _on_run_pressed(option: int) -> void:
 			strat[\"strategy\"] = \"RunMethod\"
 			strat[\"script\"] = selected(ScriptSelector)
 			strat[\"method\"] = selected(MethodSelector)
+			strat[\"repeat\"] = Repeater.value as int
+			ProjectSettings.set(\"WAT/TestStrategy\", strat)
+			ProjectSettings.save()
+			_run()
+		RUN.RERUN_FAILURES:
+			var strat = strategy()
+			strat[\"strategy\"] = \"RerunFailures\"
 			strat[\"repeat\"] = Repeater.value as int
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
 			ProjectSettings.save()
@@ -261,7 +269,7 @@ margin_left = 40.0
 margin_right = 76.0
 margin_bottom = 24.0
 text = "Run"
-items = [ "Run All Tests", null, 0, false, false, 0, 0, null, "", false, "Run Selected Directory", null, 0, false, false, 1, 0, null, "", false, "Run Selected Script", null, 0, false, false, 2, 0, null, "", false, "Run Tagged", null, 0, false, false, 3, 0, null, "", false, "Run Method", null, 0, false, false, 4, 0, null, "", false ]
+items = [ "Run All Tests", null, 0, false, false, 0, 0, null, "", false, "Run Selected Directory", null, 0, false, false, 1, 0, null, "", false, "Run Selected Script", null, 0, false, false, 2, 0, null, "", false, "Run Tagged", null, 0, false, false, 3, 0, null, "", false, "Run Method", null, 0, false, false, 4, 0, null, "", false, "Rerun Failures", null, 0, false, false, 5, 0, null, "", false ]
 switch_on_hover = true
 
 [node name="View" type="MenuButton" parent="GUI/Interact"]
@@ -308,7 +316,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Select Script"
 align = 1
-items = [ "Select Script", null, false, 0, null, "Select Script", null, false, 1, null, "Select Script", null, false, 2, null, "Select Script", null, false, 3, null, "Select Script", null, false, 4, null, "Select Script", null, false, 5, null, "Select Script", null, false, 6, null, "Select Script", null, false, 7, null, "Select Script", null, false, 8, null, "Select Script", null, false, 9, null, "Select Script", null, false, 10, null, "Select Script", null, false, 11, null, "Select Script", null, false, 12, null, "Select Script", null, false, 13, null, "Select Script", null, false, 14, null, "Select Script", null, false, 15, null, "Select Script", null, false, 16, null, "Select Script", null, false, 17, null, "Select Script", null, false, 18, null, "Select Script", null, false, 19, null, "Select Script", null, false, 20, null, "Select Script", null, false, 21, null, "Select Script", null, false, 22, null, "Select Script", null, false, 23, null ]
+items = [ "Select Script", null, false, 0, null, "Select Script", null, false, 1, null, "Select Script", null, false, 2, null, "Select Script", null, false, 3, null, "Select Script", null, false, 4, null, "Select Script", null, false, 5, null, "Select Script", null, false, 6, null, "Select Script", null, false, 7, null, "Select Script", null, false, 8, null, "Select Script", null, false, 9, null, "Select Script", null, false, 10, null, "Select Script", null, false, 11, null, "Select Script", null, false, 12, null, "Select Script", null, false, 13, null, "Select Script", null, false, 14, null, "Select Script", null, false, 15, null, "Select Script", null, false, 16, null, "Select Script", null, false, 17, null, "Select Script", null, false, 18, null, "Select Script", null, false, 19, null, "Select Script", null, false, 20, null, "Select Script", null, false, 21, null, "Select Script", null, false, 22, null, "Select Script", null, false, 23, null, "Select Script", null, false, 24, null, "Select Script", null, false, 25, null, "Select Script", null, false, 26, null ]
 selected = 0
 __meta__ = {
 "_editor_description_": "select a test script to run"
@@ -322,7 +330,7 @@ hint_tooltip = "select a tag and then run all tests that have that tag"
 size_flags_horizontal = 3
 text = "Select Tag"
 align = 1
-items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null, "Select Tag", null, false, 2, null, "Select Tag", null, false, 3, null, "Select Tag", null, false, 4, null, "Select Tag", null, false, 5, null, "Select Tag", null, false, 6, null, "Select Tag", null, false, 7, null, "Select Tag", null, false, 8, null, "Select Tag", null, false, 9, null, "Select Tag", null, false, 10, null, "Select Tag", null, false, 11, null, "Select Tag", null, false, 12, null, "Select Tag", null, false, 13, null, "Select Tag", null, false, 14, null, "Select Tag", null, false, 15, null, "Select Tag", null, false, 16, null, "Select Tag", null, false, 17, null, "Select Tag", null, false, 18, null, "Select Tag", null, false, 19, null, "Select Tag", null, false, 20, null, "Select Tag", null, false, 21, null, "Select Tag", null, false, 22, null, "Select Tag", null, false, 23, null ]
+items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null, "Select Tag", null, false, 2, null, "Select Tag", null, false, 3, null, "Select Tag", null, false, 4, null, "Select Tag", null, false, 5, null, "Select Tag", null, false, 6, null, "Select Tag", null, false, 7, null, "Select Tag", null, false, 8, null, "Select Tag", null, false, 9, null, "Select Tag", null, false, 10, null, "Select Tag", null, false, 11, null, "Select Tag", null, false, 12, null, "Select Tag", null, false, 13, null, "Select Tag", null, false, 14, null, "Select Tag", null, false, 15, null, "Select Tag", null, false, 16, null, "Select Tag", null, false, 17, null, "Select Tag", null, false, 18, null, "Select Tag", null, false, 19, null, "Select Tag", null, false, 20, null, "Select Tag", null, false, 21, null, "Select Tag", null, false, 22, null, "Select Tag", null, false, 23, null, "Select Tag", null, false, 24, null, "Select Tag", null, false, 25, null, "Select Tag", null, false, 26, null ]
 selected = 0
 
 [node name="VSeparator2" type="VSeparator" parent="GUI/Interact"]

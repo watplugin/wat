@@ -50,6 +50,8 @@ func get_tests() -> Array:
 			return test_loader.tag(_strategy["tag"])
 		"RunMethod":
 			return test_loader.script(_strategy["script"])
+		"RerunFailures":
+			return test_loader.last_failed()
 		_:
 			return _tests
 

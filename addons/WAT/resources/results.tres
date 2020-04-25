@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource( 1 )
+failures = [ "res://tests/unit/boolean.test.gd", "res://tests/unit/suite.test.gd.DummyTwo" ]
 _list = [  ]
