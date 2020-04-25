@@ -40,7 +40,6 @@ func parse(arguments: Array) -> void:
 			strat[\"strategy\"] = \"RunAll\"
 			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
-			ProjectSettings.save()
 			_run()
 		RUN_DIRECTORY:
 			var strat = strategy()
@@ -48,7 +47,6 @@ func parse(arguments: Array) -> void:
 			strat[\"directory\"] = arguments.front()
 			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
-			ProjectSettings.save()
 			_run()
 		RUN_SCRIPT:
 			var strat = strategy()
@@ -56,7 +54,6 @@ func parse(arguments: Array) -> void:
 			strat[\"script\"] = arguments.front()
 			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
-			ProjectSettings.save()
 			_run()
 		RUN_TAG:
 			var strat = strategy()
@@ -64,7 +61,6 @@ func parse(arguments: Array) -> void:
 			strat[\"tag\"] = arguments.front()
 			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
-			ProjectSettings.save()
 			_run()
 		RUN_METHOD:
 			var strat = strategy()
@@ -73,14 +69,12 @@ func parse(arguments: Array) -> void:
 			strat[\"method\"] = arguments[1]
 			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
-			ProjectSettings.save()
 			_run()
 		RUN_FAILURES:
 			var strat = strategy()
 			strat[\"strategy\"] = \"RerunFailures\"
 			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
-			ProjectSettings.save()
 			_run()
 		LIST_ALL:
 			_list()

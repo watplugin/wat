@@ -54,8 +54,10 @@ Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
+"method": "test_when_calling_null_is_null",
 "repeat": 1,
-"strategy": "RunAll"
+"script": "res://tests/unit/null.test.gd",
+"strategy": "RunMethod"
 }
 
 [application]
