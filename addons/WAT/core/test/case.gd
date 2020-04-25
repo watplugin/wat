@@ -11,7 +11,6 @@ var time_taken: float = 0.0
 func _init(test_title: String, test_path: String) -> void:
 	title = test_title
 	path = test_path
-	print(path)
 	
 func add_method(name: String) -> void:
 	name = name.replace("_", " ").lstrip("test")

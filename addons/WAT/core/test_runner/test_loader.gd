@@ -61,7 +61,6 @@ func _load_tests() -> Array:
 		# Can't load WAT.Test here for whatever reason
 		if path is String and not path.ends_with(".gd"):
 			path = path.substr(0, path.find(".gd") + 3)
-			print(path)
 		var test = load(path) if path is String else path
 		if test.get("TEST") != null:
 			tests.append(test)
