@@ -7,6 +7,7 @@ const RUN_ALL: String = \"-run_all\"
 const RUN_DIRECTORY: String = \"-run_dir\"
 const RUN_SCRIPT: String = \"-run_script\"
 const RUN_TAG: String = \"-run_tag\"
+const RUN_METHOD: String = \"-run_method\"
 const LIST_ALL: String = \"-list_all\"
 const LIST_DIR: String = \"-list_dir\"
 const PASSED: int = 0
@@ -29,6 +30,8 @@ func repeat(args) -> int:
 		return 1
 	
 func parse(arguments: Array) -> void:
+	ProjectSettings.set(\"WAT/TestStrategy\", {})
+	ProjectSettings.save()
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
@@ -58,6 +61,15 @@ func parse(arguments: Array) -> void:
 			var strat = strategy()
 			strat[\"strategy\"] = \"RunTag\"
 			strat[\"tag\"] = arguments.front()
+			strat[\"repeat\"] = repeat(arguments)
+			ProjectSettings.set(\"WAT/TestStrategy\", strat)
+			ProjectSettings.save()
+			_run()
+		RUN_METHOD:
+			var strat = strategy()
+			strat[\"strategy\"] = \"RunMethod\"
+			strat[\"script\"] = arguments[0]
+			strat[\"method\"] = arguments[1]
 			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
 			ProjectSettings.save()

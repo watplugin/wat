@@ -17,7 +17,6 @@ func strategy() -> Dictionary:
 		m_strategy[key] = strat[key]
 	ProjectSettings.set_setting("WAT/TestStrategy", {})
 	ProjectSettings.save()
-	print(m_strategy)
 	m_strategy["repeat"] = m_strategy["repeat"] as int
 	return m_strategy
 	
