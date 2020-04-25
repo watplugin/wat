@@ -22,12 +22,19 @@ func _ready() -> void:
 func arguments() -> Array:
 	return Array(OS.get_cmdline_args()).pop_back().split(\"=\") as Array
 	
+func repeat(args) -> int:
+	if not args.empty() and args.back().is_valid_integer():
+		return args.back() as int
+	else:
+		return 1
+	
 func parse(arguments: Array) -> void:
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
 			var strat = strategy()
 			strat[\"strategy\"] = \"RunAll\"
+			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
 			ProjectSettings.save()
 			_run()
@@ -35,6 +42,7 @@ func parse(arguments: Array) -> void:
 			var strat = strategy()
 			strat[\"strategy\"] = \"RunDirectory\"
 			strat[\"directory\"] = arguments.front()
+			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
 			ProjectSettings.save()
 			_run()
@@ -42,6 +50,7 @@ func parse(arguments: Array) -> void:
 			var strat = strategy()
 			strat[\"strategy\"] = \"RunScript\"
 			strat[\"script\"] = arguments.front()
+			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
 			ProjectSettings.save()
 			_run()
@@ -49,6 +58,7 @@ func parse(arguments: Array) -> void:
 			var strat = strategy()
 			strat[\"strategy\"] = \"RunTag\"
 			strat[\"tag\"] = arguments.front()
+			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
 			ProjectSettings.save()
 			_run()
