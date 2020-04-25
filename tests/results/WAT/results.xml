@@ -1,23 +1,23 @@
 <?xml version="1.0" ?>
-<testsuites failures="2" name="TestXML" tests="3" time="0.929">
-<testsuite failures="1" name="Given a Boolean Assertion" tests="3" time="0.003">
-<testcase name="When calling asserts.is_true(true)" time="0">
+<testsuites failures="2" name="TestXML" tests="3" time="0.927">
+<testsuite failures="1" name="Given a Boolean Assertion" tests="3" time="0.002">
+<testcase name="When calling asserts.is_false(false)" time="0">
+</testcase>
+<testcase name="When calling asserts.is_true(true)" time="0.001">
 </testcase>
 <testcase name=" fail" time="0">
 <failure message="EXPECTED: N/A but GOT N/A"></failure>
-</testcase>
-<testcase name="When calling asserts.is_false(false)" time="0">
 </testcase>
 </testsuite>
 <testsuite failures="0" name="Dummy Passing Test" tests="1" time="0.002">
 <testcase name="This method passes" time="0">
 </testcase>
 </testsuite>
-<testsuite failures="1" name="Dummy Test 2" tests="2" time="0.003">
-<testcase name="This method passes" time="0">
-</testcase>
+<testsuite failures="1" name="Dummy Test 2" tests="2" time="0.002">
 <testcase name=" fail" time="0">
 <failure message="EXPECTED: N/A but GOT N/A"></failure>
+</testcase>
+<testcase name="This method passes" time="0">
 </testcase>
 </testsuite>
 </testsuites>

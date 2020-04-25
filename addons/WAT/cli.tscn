@@ -8,6 +8,7 @@ const RUN_DIRECTORY: String = \"-run_dir\"
 const RUN_SCRIPT: String = \"-run_script\"
 const RUN_TAG: String = \"-run_tag\"
 const RUN_METHOD: String = \"-run_method\"
+const RUN_FAILURES: String = \"-rerun_failed\"
 const LIST_ALL: String = \"-list_all\"
 const LIST_DIR: String = \"-list_dir\"
 const PASSED: int = 0
@@ -70,6 +71,13 @@ func parse(arguments: Array) -> void:
 			strat[\"strategy\"] = \"RunMethod\"
 			strat[\"script\"] = arguments[0]
 			strat[\"method\"] = arguments[1]
+			strat[\"repeat\"] = repeat(arguments)
+			ProjectSettings.set(\"WAT/TestStrategy\", strat)
+			ProjectSettings.save()
+			_run()
+		RUN_FAILURES:
+			var strat = strategy()
+			strat[\"strategy\"] = \"RerunFailures\"
 			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
 			ProjectSettings.save()

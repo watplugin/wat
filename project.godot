@@ -54,8 +54,7 @@ Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
-"repeat": 1,
-"strategy": "RerunFailures"
+
 }
 
 [application]
