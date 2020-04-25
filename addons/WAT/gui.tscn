@@ -25,6 +25,7 @@ onready var Menu: MenuButton = $GUI/Interact/Run/Menu.get_popup()
 onready var DirectorySelector: OptionButton = $GUI/Interact/Select/Directory
 onready var ScriptSelector: OptionButton = $GUI/Interact/Select/Script
 onready var TagSelector: OptionButton = $GUI/Interact/Select/Tag
+onready var Repeater: SpinBox = $GUI/Interact/Repeat
 var execute = preload(\"res://addons/WAT/core/test_runner/execute.gd\").new()
 
 func _on_view_pressed(id: int) -> void:
@@ -68,6 +69,7 @@ func _on_run_pressed(option: int) -> void:
 		RUN.ALL:
 			var strat = strategy()
 			strat[\"strategy\"] = \"RunAll\"
+			strat[\"repeat\"] = Repeater.value as int
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
 			ProjectSettings.save()
 			_run()
@@ -75,6 +77,7 @@ func _on_run_pressed(option: int) -> void:
 			var strat = strategy()
 			strat[\"strategy\"] = \"RunDirectory\"
 			strat[\"directory\"] = selected(DirectorySelector)
+			strat[\"repeat\"] = Repeater.value as int
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
 			ProjectSettings.save()
 			_run()
@@ -82,6 +85,7 @@ func _on_run_pressed(option: int) -> void:
 			var strat = strategy()
 			strat[\"strategy\"] = \"RunScript\"
 			strat[\"script\"] = selected(ScriptSelector)
+			strat[\"repeat\"] = Repeater.value as int
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
 			ProjectSettings.save()
 			_run()
@@ -89,6 +93,7 @@ func _on_run_pressed(option: int) -> void:
 			var strat = strategy()
 			strat[\"strategy\"] = \"RunTag\"
 			strat[\"tag\"] = selected(TagSelector)
+			strat[\"repeat\"] = Repeater.value as int
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
 			ProjectSettings.save()
 			_run()
@@ -195,7 +200,7 @@ __meta__ = {
 
 [node name="Interact" type="HBoxContainer" parent="GUI"]
 margin_right = 1010.0
-margin_bottom = 22.0
+margin_bottom = 24.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
 __meta__ = {
@@ -204,11 +209,11 @@ __meta__ = {
 
 [node name="Run" type="HBoxContainer" parent="GUI/Interact"]
 margin_right = 76.0
-margin_bottom = 22.0
+margin_bottom = 24.0
 
 [node name="QuickStart" type="Button" parent="GUI/Interact/Run"]
 margin_right = 28.0
-margin_bottom = 22.0
+margin_bottom = 24.0
 hint_tooltip = "Run All Tests"
 icon = ExtResource( 8 )
 flat = true
@@ -216,12 +221,12 @@ flat = true
 [node name="VSeparator" type="VSeparator" parent="GUI/Interact/Run"]
 margin_left = 32.0
 margin_right = 36.0
-margin_bottom = 22.0
+margin_bottom = 24.0
 
 [node name="Menu" type="MenuButton" parent="GUI/Interact/Run"]
 margin_left = 40.0
 margin_right = 76.0
-margin_bottom = 22.0
+margin_bottom = 24.0
 text = "Run"
 items = [ "Run All Tests", null, 0, false, false, 0, 0, null, "", false, "Run Selected Directory", null, 0, false, false, 1, 0, null, "", false, "Run Selected Script", null, 0, false, false, 2, 0, null, "", false, "Run Tagged", null, 0, false, false, 3, 0, null, "", false ]
 switch_on_hover = true
@@ -229,7 +234,7 @@ switch_on_hover = true
 [node name="View" type="MenuButton" parent="GUI/Interact"]
 margin_left = 86.0
 margin_right = 128.0
-margin_bottom = 22.0
+margin_bottom = 24.0
 text = "View"
 items = [ "Expand All Results", null, 0, false, false, 0, 0, null, "", false, "Collapse All Results", null, 0, false, false, 1, 0, null, "", false, "Expand All Failures", null, 0, false, false, 2, 0, null, "", false ]
 switch_on_hover = true
@@ -237,18 +242,18 @@ switch_on_hover = true
 [node name="VSeparator" type="VSeparator" parent="GUI/Interact"]
 margin_left = 138.0
 margin_right = 142.0
-margin_bottom = 22.0
+margin_bottom = 24.0
 
 [node name="Select" type="HBoxContainer" parent="GUI/Interact"]
 margin_left = 152.0
-margin_right = 1010.0
-margin_bottom = 22.0
+margin_right = 856.0
+margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Directory" type="OptionButton" parent="GUI/Interact/Select"]
-margin_right = 283.0
-margin_bottom = 22.0
+margin_right = 232.0
+margin_bottom = 24.0
 grow_horizontal = 0
 grow_vertical = 0
 hint_tooltip = "select a directory of tests to run"
@@ -262,32 +267,51 @@ items = [ "Select Directory", null, false, 0, null ]
 selected = 0
 
 [node name="Script" type="OptionButton" parent="GUI/Interact/Select"]
-margin_left = 287.0
-margin_right = 570.0
-margin_bottom = 22.0
+margin_left = 236.0
+margin_right = 468.0
+margin_bottom = 24.0
 hint_tooltip = "Select a single test script to run (your choices depend on which folder is selected)."
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Select Script"
 align = 1
-items = [ "Select Script", null, false, 0, null, "Select Script", null, false, 1, null, "Select Script", null, false, 2, null, "Select Script", null, false, 3, null, "Select Script", null, false, 4, null, "Select Script", null, false, 5, null, "Select Script", null, false, 6, null, "Select Script", null, false, 7, null, "Select Script", null, false, 8, null, "Select Script", null, false, 9, null, "Select Script", null, false, 10, null, "Select Script", null, false, 11, null, "Select Script", null, false, 12, null, "Select Script", null, false, 13, null, "Select Script", null, false, 14, null, "Select Script", null, false, 15, null, "Select Script", null, false, 16, null, "Select Script", null, false, 17, null ]
+items = [ "Select Script", null, false, 0, null, "Select Script", null, false, 1, null, "Select Script", null, false, 2, null, "Select Script", null, false, 3, null, "Select Script", null, false, 4, null, "Select Script", null, false, 5, null, "Select Script", null, false, 6, null, "Select Script", null, false, 7, null, "Select Script", null, false, 8, null, "Select Script", null, false, 9, null, "Select Script", null, false, 10, null, "Select Script", null, false, 11, null, "Select Script", null, false, 12, null, "Select Script", null, false, 13, null, "Select Script", null, false, 14, null, "Select Script", null, false, 15, null, "Select Script", null, false, 16, null, "Select Script", null, false, 17, null, "Select Script", null, false, 18, null ]
 selected = 0
 __meta__ = {
 "_editor_description_": "select a test script to run"
 }
 
 [node name="Tag" type="OptionButton" parent="GUI/Interact/Select"]
-margin_left = 574.0
-margin_right = 858.0
-margin_bottom = 22.0
+margin_left = 472.0
+margin_right = 704.0
+margin_bottom = 24.0
 hint_tooltip = "select a tag and then run all tests that have that tag"
 size_flags_horizontal = 3
 text = "Select Tag"
 align = 1
-items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null, "Select Tag", null, false, 2, null, "Select Tag", null, false, 3, null, "Select Tag", null, false, 4, null, "Select Tag", null, false, 5, null, "Select Tag", null, false, 6, null, "Select Tag", null, false, 7, null, "Select Tag", null, false, 8, null, "Select Tag", null, false, 9, null, "Select Tag", null, false, 10, null, "Select Tag", null, false, 11, null, "Select Tag", null, false, 12, null, "Select Tag", null, false, 13, null, "Select Tag", null, false, 14, null, "Select Tag", null, false, 15, null, "Select Tag", null, false, 16, null, "Select Tag", null, false, 17, null ]
+items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null, "Select Tag", null, false, 2, null, "Select Tag", null, false, 3, null, "Select Tag", null, false, 4, null, "Select Tag", null, false, 5, null, "Select Tag", null, false, 6, null, "Select Tag", null, false, 7, null, "Select Tag", null, false, 8, null, "Select Tag", null, false, 9, null, "Select Tag", null, false, 10, null, "Select Tag", null, false, 11, null, "Select Tag", null, false, 12, null, "Select Tag", null, false, 13, null, "Select Tag", null, false, 14, null, "Select Tag", null, false, 15, null, "Select Tag", null, false, 16, null, "Select Tag", null, false, 17, null, "Select Tag", null, false, 18, null ]
 selected = 0
 
+[node name="VSeparator2" type="VSeparator" parent="GUI/Interact"]
+margin_left = 866.0
+margin_right = 870.0
+margin_bottom = 24.0
+
+[node name="Repeat" type="SpinBox" parent="GUI/Interact"]
+margin_left = 880.0
+margin_right = 1010.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 130, 0 )
+size_flags_horizontal = 0
+max_value = 10.0
+value = 1.0
+allow_greater = true
+allow_lesser = true
+prefix = "Repeat"
+suffix = "Times"
+
 [node name="Results" parent="GUI" instance=ExtResource( 2 )]
+margin_top = 28.0
 margin_bottom = 518.0
 
 [node name="Summary" type="Label" parent="GUI"]

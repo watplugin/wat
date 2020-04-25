@@ -17,16 +17,22 @@ func strategy() -> Dictionary:
 		m_strategy[key] = strat[key]
 	ProjectSettings.set_setting("WAT/TestStrategy", {})
 	ProjectSettings.save()
+	print(m_strategy)
+	m_strategy["repeat"] = m_strategy["repeat"] as int
 	return m_strategy
 	
+var _time: float
 func _ready() -> void:
+	_time = OS.get_ticks_msec()
 	_strategy = strategy()
 	if get_tree().root.get_child(0) == self:
 		print("Starting WAT Test Runner")
 	OS.window_minimized = ProjectSettings.get_setting(
 			"WAT/Minimize_Window_When_Running_Tests")
 	_create_test_double_registry()
+	_begin()
 	
+func _begin():
 	_tests = get_tests()
 	
 	if _tests.empty():
@@ -45,18 +51,18 @@ func get_tests() -> Array:
 			return test_loader.tag(_strategy["tag"])
 		_:
 			return _tests
-#		"RunDeposited":
-#			return test_loader.deposited()
-#	return _tests
-			# This only really exists for our internal WAT Tests
+
 
 var time_taken: float
 func _run_tests() -> void:
-	var time = OS.get_ticks_msec()
 	while not _tests.empty():
 		yield(run(), COMPLETED)
-	time_taken = time / 1000.0
-	end()
+	_strategy["repeat"] -= 1
+	if _strategy["repeat"] > 0:
+		call_deferred("_begin")
+	else:
+		time_taken = _time / 1000.0
+		end()
 
 func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	var testcase = WAT.TestCase.new(test.title(), test.path())
