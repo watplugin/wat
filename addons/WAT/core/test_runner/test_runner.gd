@@ -6,15 +6,36 @@ var test_loader: Reference = preload("test_loader.gd").new()
 var test_results: Resource = WAT.Results
 var _tests: Array = []
 var _cases: Array = []
+var _strategy: Dictionary = {}
 signal ended
 
+func strategy() -> Dictionary:
+	# We consume this so we can avoid worrying about mutatiosn
+	return ProjectSettings.get_setting("WAT/TestStrategy").duplicate()
+
 func _ready() -> void:
+	_strategy = strategy()
 	if get_tree().root.get_child(0) == self:
 		print("Starting WAT Test Runner")
 	OS.window_minimized = ProjectSettings.get_setting(
 			"WAT/Minimize_Window_When_Running_Tests")
 	_create_test_double_registry()
-	_tests = test_loader.withdraw()
+#	_tests = test_loader.withdraw()
+	
+	match _strategy["strategy"]:
+		"RunAll":
+			_tests = test_loader.all()
+		"RunDirectory":
+			_tests = test_loader.directory(_strategy["directory"])
+		"RunScript":
+			_tests = test_loader.script(_strategy["script"])
+		"RunTag":
+			_tests = test_loader.tag(_strategy["tag"])
+		"RunDeposited":
+			_tests = test_loader.deposited()
+			# This only really exists for our internal WAT Tests
+			pass
+	
 	if _tests.empty():
 		push_warning("No Scripts To Test")
 	_run_tests()

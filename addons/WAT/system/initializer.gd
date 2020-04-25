@@ -5,6 +5,7 @@ func _init() -> void:
 	_create_results_folder()
 	_add_script_templates()
 	_add_window_setting()
+	_add_test_strategy_setting()
 
 func _create_test_folder() -> void:
 	var title: String = "WAT/Test_Directory"
@@ -41,4 +42,12 @@ func _add_window_setting() -> void:
 		property.name = "WAT/Minimize_Window_When_Running_Tests"
 		property.type = TYPE_BOOL
 		ProjectSettings.add_property_info(property)
+		ProjectSettings.save()
+
+func _add_test_strategy_setting() -> void:
+	if not ProjectSettings.has_setting("WAT/TestStrategy"):
+		var property_info: Dictionary = {"name": "WAT/TestStrategy", "type": TYPE_DICTIONARY, 
+		"hint_string": "Used by WAT internally to determine how to run tests"}
+		ProjectSettings.set("WAT/TestStrategy", {})
+		ProjectSettings.add_property_info(property_info)
 		ProjectSettings.save()

@@ -53,6 +53,12 @@ Tags=PoolStringArray( "32", "64", "Linux", "Beep" )
 Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
+TestStrategy={
+"directory": "res://tests/unit",
+"script": "res://tests/unit/null.test.gd",
+"strategy": "RunAll",
+"tag": "64"
+}
 
 [application]
 

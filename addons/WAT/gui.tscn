@@ -66,18 +66,39 @@ func _on_run_pressed(option: int) -> void:
 	set_process(true)
 	match option:
 		RUN.ALL:
-			_run(test_directory())
+			var strat = strategy()
+			strat[\"strategy\"] = \"RunAll\"
+			ProjectSettings.set(\"WAT/TestStrategy\", strat)
+			ProjectSettings.save()
+			_run()
 		RUN.DIRECTORY:
-			_run(selected(DirectorySelector))
+			var strat = strategy()
+			strat[\"strategy\"] = \"RunDirectory\"
+			strat[\"directory\"] = selected(DirectorySelector)
+			ProjectSettings.set(\"WAT/TestStrategy\", strat)
+			ProjectSettings.save()
+			_run()
 		RUN.SCRIPT:
-			_run(selected(ScriptSelector))
+			var strat = strategy()
+			strat[\"strategy\"] = \"RunScript\"
+			strat[\"script\"] = selected(ScriptSelector)
+			ProjectSettings.set(\"WAT/TestStrategy\", strat)
+			ProjectSettings.save()
+			_run()
 		RUN.TAGGED:
-			_run(\"Tag.\" + selected(TagSelector))
+			var strat = strategy()
+			strat[\"strategy\"] = \"RunTag\"
+			strat[\"tag\"] = selected(TagSelector)
+			ProjectSettings.set(\"WAT/TestStrategy\", strat)
+			ProjectSettings.save()
+			_run()
+			
+func strategy() -> Dictionary:
+	return ProjectSettings.get_setting(\"WAT/TestStrategy\")
 
-func _run(path: String) -> void:
+func _run() -> void:
 	start_time()
 	Results.clear()
-	set_run_path(path)
 	execute.run(TestRunner)
 	EditorPlugin.new().make_bottom_panel_item_visible(self)
 	
@@ -249,7 +270,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Select Script"
 align = 1
-items = [ "Select Script", null, false, 0, null, "Select Script", null, false, 1, null, "Select Script", null, false, 2, null, "Select Script", null, false, 3, null, "Select Script", null, false, 4, null, "Select Script", null, false, 5, null, "Select Script", null, false, 6, null, "Select Script", null, false, 7, null, "Select Script", null, false, 8, null, "Select Script", null, false, 9, null, "Select Script", null, false, 10, null, "Select Script", null, false, 11, null, "Select Script", null, false, 12, null, "Select Script", null, false, 13, null, "Select Script", null, false, 14, null, "Select Script", null, false, 15, null ]
+items = [ "Select Script", null, false, 0, null, "Select Script", null, false, 1, null, "Select Script", null, false, 2, null, "Select Script", null, false, 3, null, "Select Script", null, false, 4, null, "Select Script", null, false, 5, null, "Select Script", null, false, 6, null, "Select Script", null, false, 7, null, "Select Script", null, false, 8, null, "Select Script", null, false, 9, null, "Select Script", null, false, 10, null, "Select Script", null, false, 11, null, "Select Script", null, false, 12, null, "Select Script", null, false, 13, null, "Select Script", null, false, 14, null, "Select Script", null, false, 15, null, "Select Script", null, false, 16, null, "Select Script", null, false, 17, null ]
 selected = 0
 __meta__ = {
 "_editor_description_": "select a test script to run"
@@ -263,7 +284,7 @@ hint_tooltip = "select a tag and then run all tests that have that tag"
 size_flags_horizontal = 3
 text = "Select Tag"
 align = 1
-items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null, "Select Tag", null, false, 2, null, "Select Tag", null, false, 3, null, "Select Tag", null, false, 4, null, "Select Tag", null, false, 5, null, "Select Tag", null, false, 6, null, "Select Tag", null, false, 7, null, "Select Tag", null, false, 8, null, "Select Tag", null, false, 9, null, "Select Tag", null, false, 10, null, "Select Tag", null, false, 11, null, "Select Tag", null, false, 12, null, "Select Tag", null, false, 13, null, "Select Tag", null, false, 14, null, "Select Tag", null, false, 15, null ]
+items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null, "Select Tag", null, false, 2, null, "Select Tag", null, false, 3, null, "Select Tag", null, false, 4, null, "Select Tag", null, false, 5, null, "Select Tag", null, false, 6, null, "Select Tag", null, false, 7, null, "Select Tag", null, false, 8, null, "Select Tag", null, false, 9, null, "Select Tag", null, false, 10, null, "Select Tag", null, false, 11, null, "Select Tag", null, false, 12, null, "Select Tag", null, false, 13, null, "Select Tag", null, false, 14, null, "Select Tag", null, false, 15, null, "Select Tag", null, false, 16, null, "Select Tag", null, false, 17, null ]
 selected = 0
 
 [node name="Results" parent="GUI" instance=ExtResource( 2 )]

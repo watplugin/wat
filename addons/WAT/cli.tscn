@@ -26,13 +26,32 @@ func parse(arguments: Array) -> void:
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
-			_run(test_directory())
+			var strat = strategy()
+			strat[\"strategy\"] = \"RunAll\"
+			ProjectSettings.set(\"WAT/TestStrategy\", strat)
+			ProjectSettings.save()
+			_run()
 		RUN_DIRECTORY:
-			_run(arguments.pop_front())
+			var strat = strategy()
+			strat[\"strategy\"] = \"RunDirectory\"
+			strat[\"directory\"] = arguments.front()
+			ProjectSettings.set(\"WAT/TestStrategy\", strat)
+			ProjectSettings.save()
+			_run()
 		RUN_SCRIPT:
-			_run(arguments.pop_front())
+			var strat = strategy()
+			strat[\"strategy\"] = \"RunScript\"
+			strat[\"script\"] = arguments.front()
+			ProjectSettings.set(\"WAT/TestStrategy\", strat)
+			ProjectSettings.save()
+			_run()
 		RUN_TAG:
-			_run(\"Tag.\" + arguments.pop_front())
+			var strat = strategy()
+			strat[\"strategy\"] = \"RunTag\"
+			strat[\"tag\"] = arguments.front()
+			ProjectSettings.set(\"WAT/TestStrategy\", strat)
+			ProjectSettings.save()
+			_run()
 		LIST_ALL:
 			_list()
 			get_tree().quit()
@@ -42,6 +61,9 @@ func parse(arguments: Array) -> void:
 		_:
 			push_error(\"Invalid Argument\")
 			get_tree().quit()
+
+func strategy() -> Dictionary:
+	return ProjectSettings.get_setting(\"WAT/TestStrategy\")
 			
 func test_directory() -> String:
 	return ProjectSettings.get_setting(\"WAT/Test_Directory\")
@@ -50,9 +72,8 @@ func _list(path: String = test_directory()):
 	print()
 	print(FileSystem.scripts(path))
 
-func _run(path) -> void:
+func _run() -> void:
 	_runner = TestRunner.instance()
-	set_run_path(path)
 	_runner.connect(\"ended\", self, \"_on_testrunner_ended\")
 	_start_time = OS.get_ticks_msec()
 	add_child(_runner)

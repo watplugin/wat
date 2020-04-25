@@ -12,11 +12,38 @@ func metadata() -> Resource:
 func deposit(tests: Array) -> void:
 	_tests = tests
 
-func withdraw(path: String = ProjectSettings.get("WAT/ActiveRunPath")) -> Array:
-	if path.begins_with("Tag."):
-		deposit(_tag(path.replace("Tag.", "")))
-	elif not path.empty():
-		deposit(FileSystem.scripts(path))
+func all() -> Array:
+	_tests = FileSystem.scripts(ProjectSettings.get_setting("WAT/Test_Directory"))
+	var tests = _load_tests()
+	_tests = []
+	return tests
+
+func directory(_directory: String) -> Array:
+	_tests = FileSystem.scripts(_directory)
+	var tests = _load_tests()
+	_tests = []
+	return tests
+	
+func script(_script: String) -> Array:
+	_tests = [_script]
+	var tests = _load_tests()
+	_tests = []
+	return tests
+	
+func tag(tag: String) -> Array:
+	var tagged: Array = []
+	var path = ProjectSettings.get_setting("WAT/Test_Directory")
+	var loadpath: String = "%s/.test/metadata.tres" % path
+	var Index = load(loadpath)
+	for i in Index.scripts.size():
+		if Index.tags[i].has(tag):
+			tagged.append(Index.scripts[i].resource_path)
+	_tests = tagged
+	var tests = _load_tests()
+	_tests = []
+	return tests
+	
+func deposited() -> Array:
 	var tests = _load_tests()
 	_tests = []
 	return tests
@@ -58,13 +85,3 @@ func _suite_of_suites_3p1(suite_of_suites) -> Array:
 				subtest.set_meta("path", "%s.%s" % [suite_of_suites.get_path(), classname])
 				subtests.append(subtest)
 	return subtests
-
-func _tag(tag):
-	var tagged: Array = []
-	var path = ProjectSettings.get_setting("WAT/Test_Directory")
-	var loadpath: String = "%s/.test/metadata.tres" % path
-	var Index = load(loadpath)
-	for i in Index.scripts.size():
-		if Index.tags[i].has(tag):
-			tagged.append(Index.scripts[i].resource_path)
-	return tagged
