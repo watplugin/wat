@@ -11,8 +11,14 @@ signal ended
 
 func strategy() -> Dictionary:
 	# We consume this so we can avoid worrying about mutatiosn
-	return ProjectSettings.get_setting("WAT/TestStrategy").duplicate()
-
+	var m_strategy = {}
+	var strat = ProjectSettings.get_setting("WAT/TestStrategy")
+	for key in strat:
+		m_strategy[key] = strat[key]
+	ProjectSettings.set_setting("WAT/TestStrategy", {})
+	ProjectSettings.save()
+	return m_strategy
+	
 func _ready() -> void:
 	_strategy = strategy()
 	if get_tree().root.get_child(0) == self:
@@ -20,25 +26,27 @@ func _ready() -> void:
 	OS.window_minimized = ProjectSettings.get_setting(
 			"WAT/Minimize_Window_When_Running_Tests")
 	_create_test_double_registry()
-#	_tests = test_loader.withdraw()
 	
-	match _strategy["strategy"]:
-		"RunAll":
-			_tests = test_loader.all()
-		"RunDirectory":
-			_tests = test_loader.directory(_strategy["directory"])
-		"RunScript":
-			_tests = test_loader.script(_strategy["script"])
-		"RunTag":
-			_tests = test_loader.tag(_strategy["tag"])
-		"RunDeposited":
-			_tests = test_loader.deposited()
-			# This only really exists for our internal WAT Tests
-			pass
+	_tests = get_tests()
 	
 	if _tests.empty():
 		push_warning("No Scripts To Test")
 	_run_tests()
+	
+func get_tests() -> Array:
+	match _strategy["strategy"]:
+		"RunAll":
+			return test_loader.all()
+		"RunDirectory":
+			return test_loader.directory(_strategy["directory"])
+		"RunScript":
+			return test_loader.script(_strategy["script"])
+		"RunTag":
+			return test_loader.tag(_strategy["tag"])
+		"RunDeposited":
+			return test_loader.deposited()
+	return []
+			# This only really exists for our internal WAT Tests
 
 var time_taken: float
 func _run_tests() -> void:

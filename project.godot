@@ -55,7 +55,7 @@ Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
 "directory": "res://tests/unit",
-"script": "res://tests/unit/null.test.gd",
+"script": "res://tests/end_to_end/testrunner.test.gd",
 "strategy": "RunAll",
 "tag": "64"
 }
