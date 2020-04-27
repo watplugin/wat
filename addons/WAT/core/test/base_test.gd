@@ -62,7 +62,10 @@ func path() -> String:
 	return path if path != "" else get_script().get_meta("path")
 	
 func title() -> String:
-	return "placeholder title"
+	var path: String = get_script().get_path()
+	var substr: String = path.substr(path.find_last("/") + 1, 
+	path.find(".test.gd")).replace(".test.gd", "").capitalize()
+	return substr
 
 func watch(emitter, event: String) -> void:
 	_watcher.watch(emitter, event)

@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0.937">
-<testsuite failures="0" name="Given a Null Assertion" tests="1" time="0">
-<testcase name="When calling asserts.is_null(null)" time="0">
+<testsuites failures="0" name="TestXML" tests="1" time="0.916">
+<testsuite failures="0" name="Blank" tests="1" time="0.002">
+<testcase name=" something not important" time="0">
 </testcase>
 </testsuite>
 </testsuites>
