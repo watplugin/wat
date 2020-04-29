@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0.916">
+<testsuites failures="0" name="TestXML" tests="1" time="0.969">
 <testsuite failures="0" name="Blank" tests="1" time="0.002">
 <testcase name=" something not important" time="0">
 </testcase>

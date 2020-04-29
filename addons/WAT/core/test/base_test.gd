@@ -64,7 +64,7 @@ func path() -> String:
 func title() -> String:
 	var path: String = get_script().get_path()
 	var substr: String = path.substr(path.find_last("/") + 1, 
-	path.find(".test.gd")).replace(".test.gd", "").capitalize()
+	path.find(".gd")).replace(".gd", "").replace("test", "").replace(".", " ").capitalize()
 	return substr
 
 func watch(emitter, event: String) -> void:
