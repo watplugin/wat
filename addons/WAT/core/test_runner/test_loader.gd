@@ -39,7 +39,7 @@ func script(_script: String) -> Array:
 func tag(tag: String) -> Array:
 	var tagged: Array = []
 	var path = ProjectSettings.get_setting("WAT/Test_Directory")
-	var loadpath: String = "%s/.test/metadata.tres" % path
+	var loadpath: String = "res://.test/metadata.tres"
 	var Index = load(loadpath)
 	for i in Index.scripts.size():
 		if Index.tags[i].has(tag):

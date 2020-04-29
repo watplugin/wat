@@ -10,10 +10,10 @@ var metadata
 func _initalize() -> void:
 	var testdir: String = ProjectSettings.get_setting("WAT/Test_Directory")
 	var dir: Directory = Directory.new()
-	var config: String = "%s/.test" % testdir
-	if not dir.dir_exists(config):
-		dir.make_dir(config)
-	var savepath: String = "%s/metadata.tres" % config
+#	var config: String = "%s/.test" % testdir
+#	if not dir.dir_exists(config):
+#		dir.make_dir(config)
+	var savepath: String = "res://.test/metadata.tres"
 	if not dir.file_exists(savepath):
 		var res: Resource = load("res://addons/WAT/ui/metadata/index.gd").new()
 		ResourceSaver.save(savepath, res)
@@ -21,7 +21,7 @@ func _initalize() -> void:
 func set_metadata() -> void:
 	_initalize()
 	var test_dir: String = ProjectSettings.get_setting("WAT/Test_Directory")
-	var savepath: String = "%s/.test/metadata.tres" % test_dir
+	var savepath: String = "res://.test/metadata.tres"
 	metadata = load(savepath)
 
 func global_tags() -> Array:

@@ -6,6 +6,13 @@ func _init() -> void:
 	_add_script_templates()
 	_add_window_setting()
 	_add_test_strategy_setting()
+	_add_test_metadata_folder()
+	
+func _add_test_metadata_folder() -> void:
+	if Directory.new().dir_exists("res://.test/"):
+		return
+	Directory.new().make_dir("res://.test/")
+	push_warning("Created hidden metadata folder at res://.test/")
 
 func _create_test_folder() -> void:
 	var title: String = "WAT/Test_Directory"

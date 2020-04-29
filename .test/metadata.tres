@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://addons/WAT/ui/metadata/index.gd" type="Script" id=1]
+[ext_resource path="res://tests/unit/blank.test.gd" type="Script" id=2]
+
+[resource]
+script = ExtResource( 1 )
+scripts = [ ExtResource( 2 ) ]
+tags = [ [ "32" ] ]
