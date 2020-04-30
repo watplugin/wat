@@ -7,6 +7,15 @@ func _init() -> void:
 	_add_window_setting()
 	_add_test_strategy_setting()
 	_add_test_metadata_folder()
+	_add_tag_setting()
+	
+func _add_tag_setting() -> void:
+	if ProjectSettings.has_setting("WAT/Tags"):
+		return
+	var property_info: Dictionary = {"name": "WAT/Tags",
+	"type": TYPE_STRING_ARRAY}
+	ProjectSettings.set("WAT/Tags", PoolStringArray())
+	ProjectSettings.add_property_info(property_info)
 	
 func _add_test_metadata_folder() -> void:
 	if Directory.new().dir_exists("res://.test/"):
