@@ -63,6 +63,8 @@ func _ready() -> void:
 	Menu.connect(\"id_pressed\", self, \"_on_run_pressed\")
 	ViewMenu.connect(\"id_pressed\", $GUI/Results, \"_on_view_pressed\")
 	DirectorySelector.clear()
+	ScriptSelector.clear()
+	TagSelector.clear()
 	DirectorySelector.add_item(\"Select Directory\")
 	ScriptSelector.add_item(\"Select Script\")
 	TagSelector.add_item(\"Select Tag\")
@@ -70,6 +72,8 @@ func _ready() -> void:
 	ScriptSelector.connect(\"pressed\", self, \"_on_script_selector_pressed\")
 	TagSelector.connect(\"pressed\", self, \"_on_tag_selector_pressed\")
 	MethodSelector.connect(\"pressed\", self, \"_on_method_selector_pressed\")
+	ScriptSelector.get_popup().hide()
+	TagSelector.get_popup().hide()
 	
 func _show_more() -> void:
 	MethodSelector.visible = not MethodSelector.visible
@@ -310,7 +314,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Select Script"
 align = 1
-items = [ "Select Script", null, false, 0, null, "Select Script", null, false, 1, null, "Select Script", null, false, 2, null, "Select Script", null, false, 3, null, "Select Script", null, false, 4, null, "Select Script", null, false, 5, null, "Select Script", null, false, 6, null, "Select Script", null, false, 7, null, "Select Script", null, false, 8, null, "Select Script", null, false, 9, null, "Select Script", null, false, 10, null, "Select Script", null, false, 11, null, "Select Script", null, false, 12, null, "Select Script", null, false, 13, null, "Select Script", null, false, 14, null, "Select Script", null, false, 15, null, "Select Script", null, false, 16, null, "Select Script", null, false, 17, null, "Select Script", null, false, 18, null, "Select Script", null, false, 19, null, "Select Script", null, false, 20, null, "Select Script", null, false, 21, null, "Select Script", null, false, 22, null, "Select Script", null, false, 23, null, "Select Script", null, false, 24, null, "Select Script", null, false, 25, null, "Select Script", null, false, 26, null, "Select Script", null, false, 27, null, "Select Script", null, false, 28, null, "Select Script", null, false, 29, null, "Select Script", null, false, 30, null, "Select Script", null, false, 31, null, "Select Script", null, false, 32, null, "Select Script", null, false, 33, null, "Select Script", null, false, 34, null, "Select Script", null, false, 35, null, "Select Script", null, false, 36, null, "Select Script", null, false, 37, null, "Select Script", null, false, 38, null, "Select Script", null, false, 39, null, "Select Script", null, false, 40, null, "Select Script", null, false, 41, null, "Select Script", null, false, 42, null ]
+items = [ "Select Script", null, false, 0, null ]
 selected = 0
 __meta__ = {
 "_editor_description_": "select a test script to run"
@@ -324,7 +328,7 @@ hint_tooltip = "select a tag and then run all tests that have that tag"
 size_flags_horizontal = 3
 text = "Select Tag"
 align = 1
-items = [ "Select Tag", null, false, 0, null, "Select Tag", null, false, 1, null, "Select Tag", null, false, 2, null, "Select Tag", null, false, 3, null, "Select Tag", null, false, 4, null, "Select Tag", null, false, 5, null, "Select Tag", null, false, 6, null, "Select Tag", null, false, 7, null, "Select Tag", null, false, 8, null, "Select Tag", null, false, 9, null, "Select Tag", null, false, 10, null, "Select Tag", null, false, 11, null, "Select Tag", null, false, 12, null, "Select Tag", null, false, 13, null, "Select Tag", null, false, 14, null, "Select Tag", null, false, 15, null, "Select Tag", null, false, 16, null, "Select Tag", null, false, 17, null, "Select Tag", null, false, 18, null, "Select Tag", null, false, 19, null, "Select Tag", null, false, 20, null, "Select Tag", null, false, 21, null, "Select Tag", null, false, 22, null, "Select Tag", null, false, 23, null, "Select Tag", null, false, 24, null, "Select Tag", null, false, 25, null, "Select Tag", null, false, 26, null, "Select Tag", null, false, 27, null, "Select Tag", null, false, 28, null, "Select Tag", null, false, 29, null, "Select Tag", null, false, 30, null, "Select Tag", null, false, 31, null, "Select Tag", null, false, 32, null, "Select Tag", null, false, 33, null, "Select Tag", null, false, 34, null, "Select Tag", null, false, 35, null, "Select Tag", null, false, 36, null, "Select Tag", null, false, 37, null, "Select Tag", null, false, 38, null, "Select Tag", null, false, 39, null, "Select Tag", null, false, 40, null, "Select Tag", null, false, 41, null, "Select Tag", null, false, 42, null ]
+items = [ "Select Tag", null, false, 0, null ]
 selected = 0
 
 [node name="VSeparator2" type="VSeparator" parent="GUI/Interact"]

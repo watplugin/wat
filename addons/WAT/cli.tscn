@@ -59,6 +59,7 @@ func parse(arguments: Array) -> void:
 			var strat = strategy()
 			strat[\"strategy\"] = \"RunTag\"
 			strat[\"tag\"] = arguments.front()
+			print(strat[\"tag\"])
 			strat[\"repeat\"] = repeat(arguments)
 			ProjectSettings.set(\"WAT/TestStrategy\", strat)
 			_run()
