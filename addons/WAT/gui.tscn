@@ -45,7 +45,7 @@ func _ready() -> void:
 	set_process(false)
 	More.connect(\"pressed\", self, \"_show_more\")
 	_link($GUI/Links/Issue, \"https://github.com/CodeDarigan/WAT/issues/new\")
-	_link($GUI/Links/RequestDocs, \"https://github.com/CodeDarigan/WAT-docs/issues/new\")
+	_link($GUI/Links/RequestDocs, \"https://github.com/CodeDarigan/WATDocs/issues/new\")
 	_link($GUI/Links/OnlineDocs, \"https://wat.readthedocs.io/en/latest/index.html\")
 	_link($GUI/Links/Support, \"https://www.ko-fi.com/alexanddraw\")
 	Menu.clear()
