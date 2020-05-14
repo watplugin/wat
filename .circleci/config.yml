@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: codedarigan/godot3.2:latest
+      - image: codedarigan/godot_headless_ci:latest
 
     steps:
         - checkout
