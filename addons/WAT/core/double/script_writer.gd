@@ -37,7 +37,7 @@ func _method_to_string(id: int, method: Object) -> String:
 	text += "\n\tmethod.add_call(args)"
 	text += "\n\tif method.executes(args):"
 	text += "\n\t\treturn .{name}({args})"  # We may want to add a retval check here
-	text += "\n\treturn method.primary(args)"
+	text += "\n\treturn method.primary(args)\n\n"
 	text = text.format({"id": id, "keyword": method.keyword, 
 	                    "name": method.name, "args": method.args})
 	return text
