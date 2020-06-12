@@ -1,0 +1,26 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: codedarigan/godot_headless_ci:latest
+
+    steps:
+        - checkout
+        - run:
+            name: "Delete .import files"
+            command: rm addons/WAT/assets/*.import
+        - run:
+            name: "Run Unit Tests"
+            command: godot addons/WAT/cli.tscn -run_dir=res://tests/unit
+        - run:
+            name: "Run Integration Tests"
+            command: godot addons/WAT/cli.tscn -run_dir=res://tests/integration
+        - run:
+            name: "Run All Tests"
+            command: godot addons/WAT/cli.tscn -run_all
+        - store_test_results:
+            path: tests/results
+        - store_artifacts:
+            path: tests/results
+
