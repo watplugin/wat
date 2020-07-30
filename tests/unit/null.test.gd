@@ -16,8 +16,10 @@ func test_when_calling_node_is_not_null() -> void:
 	node.free()
 	
 func test_when_calling_freed_object_is_not_null() -> void:
-	describe("When calling freed object is not null")
+	describe("When calling freed object is null")
 	
+	# Before Godot 3.2.2, deleted objects could point to a different object
+	# which means they wouldn't be null but they can be null now
 	var node = Node.new()
 	node.free()
-	asserts.is_not_null(node, "Then it passes")
+	asserts.is_null(node, "Then it passes")
