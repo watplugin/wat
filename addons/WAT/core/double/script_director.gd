@@ -28,7 +28,7 @@ func _init(_klass: String, _inner_klass: String, deps: Array = []) -> void:
 	
 func method(name: String, keyword: String = "") -> Method:
 	if not methods.has(name):
-		methods[name] = Method.new(name, keyword, base_methods[name])
+		methods[name] = Method.new(name, keyword, base_methods[name].arguments, base_methods[name].default_arguments)
 	return methods[name]
 
 func clear():
@@ -58,8 +58,31 @@ func set_methods() -> void:
 		var arguments: String = ""
 		for i in m.args.size():
 			arguments = arguments + params[i] + ", "
+		var sanitized = arguments.replace(", ", "")
 		arguments = arguments.rstrip(", ")
-		base_methods[m.name] = arguments
+		var default_args = arguments
+		if m.default_args.size() > 0:
+			default_args = get_args_with_default(sanitized, m.default_args)
+		base_methods[m.name] = {"arguments": arguments, "default_arguments": default_args}
+		
+func get_args_with_default(args: String, base_default_args: Array) -> String:
+	var retval_args: String
+	var substr_start = args.length() - base_default_args.size()
+	var length = args.length() # We're transforming in loop so we capture first
+	var arg_index = 0
+	for i in length:
+		if i < substr_start:
+			retval_args += "%s, " % args[i]
+			continue
+		var letter = args[i]
+		var arg = base_default_args[arg_index]
+		if arg is String:
+			retval_args += '%s = "%s", ' % [letter, str(arg)]
+		else:
+			retval_args += '%s = %s, ' % [letter, arg]
+		arg_index += 1
+	retval_args = retval_args.rstrip(", ")
+	return retval_args
 
 func method_list() -> Array:
 	var list: Array = []
@@ -101,8 +124,6 @@ func double(deps: Array = [], show_error = true) -> Object:
 	object = script().callv("new", dependecies)
 	for m in methods.values():
 		m.double = object
-	# This is a nasty abuse of const collections not being strongly-typed
-	# We're mainly doing this for easy use of static methods
 	return object
 	
 
