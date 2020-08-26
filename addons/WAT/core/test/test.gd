@@ -1,7 +1,7 @@
 extends "base_test.gd"
 class_name WATTest
 
-class State:
+class WATState:
 	const START: String = "start"
 	const PRE: String = "pre"
 	const EXECUTE: String = "execute"
@@ -29,34 +29,34 @@ func _change_state() -> void:
 	if _yielder.is_active():
 		return
 	match _state:
-		State.START:
+		WATState.START:
 			_pre()
-		State.PRE:
+		WATState.PRE:
 			_execute()
-		State.EXECUTE:
+		WATState.EXECUTE:
 			_post()
-		State.POST:
+		WATState.POST:
 			_pre()
-		State.END:
+		WATState.END:
 			_end()
 	
 func _start():
-	_state = State.START
+	_state = WATState.START
 	start()
 	_next()
 	
 func _pre():
 	time = OS.get_ticks_msec()
 	if _methods.empty() and not rerun_method:
-		_state = State.END
+		_state = WATState.END
 		_next()
 		return
-	_state = State.PRE
+	_state = WATState.PRE
 	pre()
 	_next()
 	
 func _execute():
-	_state = State.EXECUTE
+	_state = WATState.EXECUTE
 	_method = _method if rerun_method else _methods.pop_back()
 	_testcase.add_method(_method)
 	call(_method)
@@ -64,12 +64,12 @@ func _execute():
 	
 func _post():
 	_testcase.methods.back().time = (OS.get_ticks_msec() - time) / 1000.0
-	_state = State.POST
+	_state = WATState.POST
 	post()
 	_next()
 	
 func _end():
-	_state = State.END
+	_state = WATState.END
 	end()
 	emit_signal("completed")
 	
