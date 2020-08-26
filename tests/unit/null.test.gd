@@ -22,4 +22,8 @@ func test_when_calling_freed_object_is_not_null() -> void:
 	# which means they wouldn't be null but they can be null now
 	var node = Node.new()
 	node.free()
-	asserts.is_null(node, "Then it passes")
+	
+	if Engine.get_version_info().major == 3 and Engine.get_version_info().patch < 2:
+		asserts.is_not_null(node, "A Freed Node has a dangling variant in Engine 3.2.1 or less")
+	else:
+		asserts.is_null(node, "A Freed Node is null in Engine 3.2.2 or greater")
