@@ -28,7 +28,7 @@ func methods() -> PoolStringArray:
 	return output
 	
 func setup(assertions, yielder, testcase, director, 
-           signal_watcher, parameters, recorder):
+		   signal_watcher, parameters, recorder):
 	asserts = assertions
 	direct = director
 	_testcase = testcase

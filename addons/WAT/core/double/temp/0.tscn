@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends \"res://Examples/Scene/Main.gd\"
+
+func _init().():
+	pass
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends \"res://Examples/Scene/A.gd\"
+
+func _init().():
+	pass
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends \"res://Examples/Scene/B.gd\"
+
+func _init().():
+	pass
+"
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends \"res://Examples/Scene/C.gd\"
+
+func _init().():
+	pass
+"
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends \"res://Examples/Scene/D.gd\"
+
+func _init().():
+	pass
+"
+
+[node name="Node" type="Node"]
+script = SubResource( 1 )
+
+[node name="A" type="Node" parent="."]
+script = SubResource( 2 )
+
+[node name="B" type="Node" parent="A"]
+script = SubResource( 3 )
+
+[node name="C" type="Node" parent="."]
+script = SubResource( 4 )
+
+[node name="D" type="Node" parent="C"]
+script = SubResource( 5 )

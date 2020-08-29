@@ -8,6 +8,7 @@
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
+path = NodePath("A")
 
 [node name="A" type="Node" parent="."]
 script = ExtResource( 2 )
@@ -20,4 +21,3 @@ script = ExtResource( 4 )
 
 [node name="D" type="Node" parent="C"]
 script = ExtResource( 5 )
-

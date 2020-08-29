@@ -18,6 +18,10 @@ var dependecies: Array = []
 var is_built_in: bool = false
 var object
 
+# Used to handle exported nodepaths
+# <var name> <var value>
+var nodepaths: Dictionary = {}
+
 func _init(_klass: String, _inner_klass: String, deps: Array = []) -> void:
 	klass = _klass
 	inner_klass = _inner_klass
@@ -124,6 +128,8 @@ func double(deps: Array = [], show_error = true) -> Object:
 	object = script().callv("new", dependecies)
 	for m in methods.values():
 		m.double = object
+	for prop_name in nodepaths:
+		object.set(prop_name, nodepaths[prop_name])
 	return object
 	
 

@@ -6,6 +6,7 @@ var nodes: Dictionary = {}
 var _created: bool = false
 var cache: Array = []
 
+
 func _init(nodes: Dictionary = {}) -> void:
 	self.nodes = nodes
 
@@ -29,7 +30,7 @@ func double() -> Node:
 		elif path.size() > 1:
 			_add_grandchild(path, nodepath, root)
 	return root
-
+	
 func _add_child(path: PoolStringArray, nodepath: String, root: Node) -> void:
 	var node: Node = nodes[nodepath].double()
 	node.name = path[0]

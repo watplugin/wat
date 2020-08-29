@@ -36,3 +36,9 @@ func test_When_we_call_a_method_from_a_grandchild_node_that_we_stubbed():
 
 	asserts.is_equal(99, director.double().get_node("C/D").wowsers(), "Then we get the stubbed return value")
 
+func test_When_we_add_it_to_the_tree_it_runs():
+	describe("When we add it to the tree it runs")
+
+	var double = director.double()
+	asserts.is_equal(double.path, @"A", "We have the correct NodePath Set")
+	add_child(double)
