@@ -4,9 +4,7 @@ extends Reference
 const Boolean: Script = preload("boolean.gd")
 
 # Test Double Assertions
-const CalledWithArguments: Script = preload("double/called_with_arguments.gd")
-const ScriptWasCalled: Script = preload("double/script_was_called.gd")
-const ScriptWasNotCalled: Script = preload("double/script_was_not_called.gd")
+const Double: Script = preload("double.gd")
 
 # Equality Assertions
 const Equality: Script = preload("equality.gd")

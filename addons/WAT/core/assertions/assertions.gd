@@ -84,13 +84,13 @@ func string_does_not_end_with(value, string: String, context: String = "") -> vo
 	output(StringX.does_not_end_with(value, string, context))
 
 func was_called(double, method: String, context: String = "") -> void:
-	output(ScriptWasCalled.new(double, method, context))
+	output(Double.was_called(double, method, context))
 
 func was_not_called(double, method: String, context: String = "") -> void:
-	output(ScriptWasNotCalled.new(double, method, context))
+	output(Double.was_not_called(double, method, context))
 
 func was_called_with_arguments(double, method: String, arguments: Array, context: String = "") -> void:
-	output(CalledWithArguments.new(double, method, arguments, context))
+	output(Double.called_with_arguments(double, method, arguments, context))
 
 func signal_was_emitted(emitter, _signal, context: String = "") -> void:
 	output(Signal.was_emitted(emitter, _signal, context))
