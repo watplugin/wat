@@ -60,10 +60,10 @@ func is_not_built_in_type(value, type: int, context: String = "") -> void:
 	output(IsNotBuiltInType.new(value, type, context))
 
 func is_null(value, context: String = "") -> void:
-	output(IsNull.new(value, context))
+	output(Null.is_null(value, context))
 
 func is_not_null(value, context: String = "") -> void:
-	output(IsNotNull.new(value, context))
+	output(Null.is_not_null(value, context))
 
 func string_contains(value, string: String, context: String = "") -> void:
 	output(Contains.new(value, string, context))

@@ -76,8 +76,7 @@ const IsNotVector2: Script = preload("is_not/is_not_Vector2.gd")
 const IsNotVector3: Script = preload("is_not/is_not_Vector3.gd")
 
 # Null Assertions
-const IsNull: Script = preload("null/is_null.gd")
-const IsNotNull: Script = preload("null/is_not_null.gd")
+const Null: Script = preload("null.gd")
 
 # Object Assertions
 # Note: The elements this assertions act on exist throughout every object
