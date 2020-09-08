@@ -7,6 +7,7 @@ var test_results: Resource = WAT.Results
 var _tests: Array = []
 var _cases: Array = []
 var _strategy: Dictionary = {}
+var is_editor: bool = true
 signal ended
 
 func strategy() -> Dictionary:
@@ -94,7 +95,8 @@ func end() -> void:
 	test_results.deposit(_cases)
 	emit_signal("ended")
 	clear()
-	get_tree().quit()
+	if(is_editor):
+		get_tree().quit()
 
 func _create_test_double_registry() -> void:
 	if not ProjectSettings.has_setting("WAT/TestDouble"):

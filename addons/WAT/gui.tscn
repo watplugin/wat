@@ -143,8 +143,15 @@ func strategy() -> Dictionary:
 func _run() -> void:
 	start_time()
 	Results.clear()
-	execute.run(TestRunner)
-	EditorPlugin.new().make_bottom_panel_item_visible(self)
+	if(Engine.is_editor_hint()):
+		execute.run(TestRunner)
+		EditorPlugin.new().make_bottom_panel_item_visible(self)
+	else:
+		var n = load(TestRunner).instance()
+		n.is_editor = false
+		add_child(n)
+		print(\"run as child\")
+	#EditorPlugin.new().make_bottom_panel_item_visible(self)
 	
 func _process(delta):
 	if WAT.Results.exist():
