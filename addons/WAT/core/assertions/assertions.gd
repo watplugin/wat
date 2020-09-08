@@ -66,22 +66,22 @@ func is_not_null(value, context: String = "") -> void:
 	output(Null.is_not_null(value, context))
 
 func string_contains(value, string: String, context: String = "") -> void:
-	output(Contains.new(value, string, context))
+	output(StringX.contains(value, string, context))
 
 func string_does_not_contain(value, string: String, context: String = "") -> void:
-	output(DoesNotContain.new(value, string, context))
+	output(StringX.does_not_contain(value, string, context))
 
 func string_begins_with(value, string: String, context: String = "") -> void:
-	output(BeginsWith.new(value, string, context))
+	output(StringX.begins_with(value, string, context))
 
 func string_does_not_begin_with(value, string: String, context: String = "") -> void:
-	output(DoesNotBeginWith.new(value, string, context))
+	output(StringX.does_not_begin_with(value, string, context))
 
 func string_ends_with(value, string: String, context: String = "") -> void:
-	output(EndsWith.new(value, string, context))
+	output(StringX.ends_with(value, string, context))
 
 func string_does_not_end_with(value, string: String, context: String = "") -> void:
-	output(DoesNotEndWith.new(value, string, context))
+	output(StringX.does_not_end_with(value, string, context))
 
 func was_called(double, method: String, context: String = "") -> void:
 	output(ScriptWasCalled.new(double, method, context))

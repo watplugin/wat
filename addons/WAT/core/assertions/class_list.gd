@@ -110,12 +110,8 @@ const IsNotInRange: Script = preload("range/is_not_in_range.gd")
 const Signal: Script = preload("signal.gd")
 
 # String Assertions
-const BeginsWith: Script = preload("string/string_begins_with.gd")
-const Contains: Script = preload("string/string_contains.gd")
-const DoesNotBeginWith: Script = preload("string/string_does_not_begin_with.gd")
-const DoesNotContain: Script = preload("string/string_does_not_contain.gd")
-const DoesNotEndWith: Script = preload("string/string_does_not_end_with.gd")
-const EndsWith: Script = preload("string/string_ends_with.gd")
+const StringX: Script = preload("string.gd")
+
 
 # Misc Utility Assertions
 const That: Script = preload("misc/that.gd")

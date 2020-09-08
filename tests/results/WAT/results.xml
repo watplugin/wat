@@ -1,13 +1,17 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="1">
-<testsuite failures="0" name="Given a Signal Watcher" tests="4" time="0.003">
-<testcase name="When we watch and emit a signal" time="0">
+<testsuites failures="0" name="TestXML" tests="1" time="1.026">
+<testsuite failures="0" name="Given a String Assertion" tests="6" time="0.002">
+<testcase name="When calling asserts.string_ends_with('impsum', 'lorem impsum')" time="0">
 </testcase>
-<testcase name="When we watch and signal and emit it multiple times" time="0">
+<testcase name="When calling asserts.string_does_not_begin_with('lorem', 'impsum')" time="0">
 </testcase>
-<testcase name="When we watch and do not emit a signal" time="0">
+<testcase name="When calling asserts.string_does_not_end_with('lorem', 'impsum')" time="0">
 </testcase>
-<testcase name="When we watch a signal from an object with no bound variables" time="0">
+<testcase name="When calling asserts.string_contains('em im', 'lorem impsum')" time="0">
+</testcase>
+<testcase name="When calling asserts.string_does_not_contain('em im', 'impsum')" time="0">
+</testcase>
+<testcase name="When calling asserts.string_begins_with('lorem', 'lorem impsum')" time="0">
 </testcase>
 </testsuite>
 </testsuites>
