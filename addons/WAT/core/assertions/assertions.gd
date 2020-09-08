@@ -1,5 +1,17 @@
 extends "class_list.gd"
 
+const Boolean: Script = preload("boolean.gd")
+const Double: Script = preload("double.gd")
+const Equality: Script = preload("equality.gd")
+const FileX: Script = preload("file.gd")
+const Null: Script = preload("null.gd")
+const RangeX: Script = preload("range.gd")
+const Signal: Script = preload("signal.gd")
+const StringX: Script = preload("string.gd")
+const Utility: Script = preload("utility.gd")
+const Property: Script = preload("property.gd")
+const ObjectX: Script = preload("object.gd")
+
 signal OUTPUT
 signal asserted
 
