@@ -11,10 +11,10 @@ func loop(method: String, data: Array) -> void:
 		callv(method, set)
 
 func is_true(condition: bool, context: String = "") -> void:
-	output(IsTrue.is_true(condition, context))
+	output(Boolean.is_true(condition, context))
 
 func is_false(condition: bool, context: String = "") -> void:
-	output(IsFalse.is_false(condition, context))
+	output(Boolean.is_false(condition, context))
 
 func is_equal(a, b, context: String = "") -> void:
 	output(Equality.is_equal(a, b, context))

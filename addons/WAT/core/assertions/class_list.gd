@@ -1,8 +1,7 @@
 extends Reference
 
 # Boolean Assertions
-const IsFalse: Script = preload("boolean/is_false.gd")
-const IsTrue: Script = preload("boolean/is_true.gd")
+const Boolean: Script = preload("boolean.gd")
 
 # Test Double Assertions
 const CalledWithArguments: Script = preload("double/called_with_arguments.gd")
