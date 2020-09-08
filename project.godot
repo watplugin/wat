@@ -55,7 +55,8 @@ Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
 "repeat": 1,
-"strategy": "RunAll"
+"script": "res://tests/unit/watcher.test.gd",
+"strategy": "RunScript"
 }
 
 [application]

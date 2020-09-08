@@ -93,16 +93,16 @@ func was_called_with_arguments(double, method: String, arguments: Array, context
 	output(CalledWithArguments.new(double, method, arguments, context))
 
 func signal_was_emitted(emitter, _signal, context: String = "") -> void:
-	output(WasEmitted.new(emitter, _signal, context))
+	output(Signal.was_emitted(emitter, _signal, context))
 	
 func signal_was_emitted_x_times(emitter, _signal, times: int, context: String = "") -> void:
-	output(WasEmittedXTimes.new(emitter, _signal, times, context))
+	output(Signal.was_emitted_x_times(emitter, _signal, times, context))
 
 func signal_was_not_emitted(emitter, _signal: String, context: String = "") -> void:
-	output(WasNotEmitted.new(emitter, _signal, context))
+	output(Signal.was_not_emitted(emitter, _signal, context))
 
 func signal_was_emitted_with_arguments(emitter, _signal, arguments: Array, context: String = "") -> void:
-	output(WasEmittedWithArguments.new(emitter, _signal, arguments, context))
+	output(Signal.was_emitted_with_args(emitter, _signal, arguments, context))
 
 func file_exists(path: String, context: String = "") -> void:
 	output(FileExists.new(path, context))
