@@ -10,6 +10,7 @@ const Signal: Script = preload("signal.gd")
 const StringX: Script = preload("string.gd")
 const Utility: Script = preload("utility.gd")
 const Property: Script = preload("property.gd")
+const ObjectX: Script = preload("object.gd")
 
 ### BEGIN UNSORTED BELOW ###
 # Is <TYPE> Assertions
@@ -71,33 +72,3 @@ const IsNotTransform: Script = preload("is_not/is_not_Transform.gd")
 const IsNotTransform2D: Script = preload("is_not/is_not_Transform2D.gd")
 const IsNotVector2: Script = preload("is_not/is_not_Vector2.gd")
 const IsNotVector3: Script = preload("is_not/is_not_Vector3.gd")
-
-# Null Assertions
-
-
-# Object Assertions
-# Note: The elements this assertions act on exist throughout every object
-# ..in godot so it was necessary. For other class-specific assertions..
-# users should use assert.that
-const ObjectIsFreed: Script = preload("object/is_freed.gd")
-const ObjectIsNotFreed: Script = preload("object/is_not_freed.gd")
-const ObjectHasMeta: Script = preload("object/has_meta.gd")
-const ObjectDoesNotHaveMeta: Script = preload("object/does_not_have_meta.gd")
-const ObjectHasMethod: Script = preload("object/has_method.gd")
-const ObjectDoesNotHaveMethod: Script = preload("object/does_not_have_method.gd")
-const ObjectHasUserSignal: Script = preload("object/has_user_signal.gd")
-const ObjectDoesNotHaveUserSignal: Script = preload("object/does_not_have_user_signal.gd")
-
-const ObjectIsQueuedForDeletion: Script = preload("object/is_queued_for_deletion.gd")
-const ObjectIsNotQueuedForDeletion: Script = preload("object/is_not_queued_for_deletion.gd")
-const ObjectIsBlockingSignals: Script = preload("object/is_blocking_signals.gd")
-const ObjectIsNotBlockingSignals: Script = preload("object/is_not_blocking_signals.gd")
-const ObjectIsConnected: Script = preload("object/is_connected.gd")
-const ObjectIsNotConnected: Script = preload("object/is_not_connected.gd")
-
-# Property Assertions
-
-
-# Misc Utility Assertions
-
-

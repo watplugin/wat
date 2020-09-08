@@ -114,46 +114,46 @@ func that(obj: Object, method: String, arguments: Array = [], context: String = 
 	output(Utility.that(obj, method, arguments, context, passed, failed))
 	 
 func object_has_meta(obj: Object, meta: String, context: String) -> void:
-	output(ObjectHasMeta.new(obj, meta, context))
+	output(ObjectX.o_has_meta(obj, meta, context))
 	
 func object_does_not_have_meta(obj: Object, meta: String, context: String) -> void:
-	output(ObjectDoesNotHaveMeta.new(obj, meta, context))
+	output(ObjectX.does_not_have_meta(obj, meta, context))
 	
 func object_has_method(obj: Object, method: String, context: String) -> void:
-	output(ObjectHasMethod.new(obj, method, context))
+	output(ObjectX.o_has_method(obj, method, context))
 	
 func object_does_not_have_method(obj: Object, method: String, context: String) -> void:
-	output(ObjectDoesNotHaveMethod.new(obj, method, context))
+	output(ObjectX.does_not_have_method(obj, method, context))
 	
 func object_is_queued_for_deletion(obj: Object, context: String) -> void:
-	output(ObjectIsQueuedForDeletion.new(obj, context))
+	output(ObjectX.o_is_queued_for_deletion(obj, context))
 	
 func object_is_not_queued_for_deletion(obj: Object, context: String) -> void:
-	output(ObjectIsNotQueuedForDeletion.new(obj, context))
+	output(ObjectX.o_is_not_queued_for_deletion(obj, context))
 	
 func object_is_connected(sender: Object, _signal: String, receiver: Object, method: String, context: String) -> void:
-	output(ObjectIsConnected.new(sender, _signal, receiver, method, context))
+	output(ObjectX.o_is_connected(sender, _signal, receiver, method, context))
 	
 func object_is_not_connected(sender: Object, _signal: String, receiver: Object, method: String, context: String) -> void:
-	output(ObjectIsNotConnected.new(sender, _signal, receiver, method, context))
+	output(ObjectX.o_is_not_connected(sender, _signal, receiver, method, context))
 	
 func object_is_blocking_signals(obj: Object, context: String) -> void:
-	output(ObjectIsBlockingSignals.new(obj, context))
+	output(ObjectX.o_is_blocking_signals(obj, context))
 	
 func object_is_not_blocking_signals(obj: Object, context: String) -> void:
-	output(ObjectIsNotBlockingSignals.new(obj, context))
+	output(ObjectX.o_is_not_blocking_signals(obj, context))
 	
 func object_has_user_signal(obj: Object, _signal: String, context: String) -> void:
-	output(ObjectHasUserSignal.new(obj, _signal, context))
+	output(ObjectX.o_has_user_signal(obj, _signal, context))
 	
 func object_does_not_have_user_signal(obj: Object, _signal: String, context: String) -> void:
-	output(ObjectDoesNotHaveUserSignal.new(obj, _signal, context))
+	output(ObjectX.does_not_have_user_signal(obj, _signal, context))
 	
 func is_freed(obj: Object, context: String = "") -> void:
-	output(ObjectIsFreed.new(obj, context))
+	output(ObjectX.o_is_freed(obj, context))
 
 func is_not_freed(obj: Object, context: String = "") -> void:
-	output(ObjectIsNotFreed.new(obj, context))
+	output(ObjectX.o_is_not_freed(obj, context))
 
 func is_bool(value, context: String = "") -> void:
 		output(IsBool.new(value, context))
