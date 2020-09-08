@@ -111,7 +111,7 @@ func file_does_not_exist(path: String, context: String = "") -> void:
 	output(FileX.does_not_exist(path, context))
 	
 func that(obj: Object, method: String, arguments: Array = [], context: String = "", passed: String = "", failed: String = "") -> void:
-	output(That.new(obj, method, arguments, context, passed, failed))
+	output(Utility.that(obj, method, arguments, context, passed, failed))
 	 
 func object_has_meta(obj: Object, meta: String, context: String) -> void:
 	output(ObjectHasMeta.new(obj, meta, context))
@@ -312,4 +312,4 @@ func is_not_PoolColorArray(value, context: String = "") -> void:
 		output(IsNotPoolColorArray.new(value, context))
 		
 func fail(context: String = "Unimplemented Test") -> void:
-		output(Fail.new(context))
+		output(Utility.fail(context))

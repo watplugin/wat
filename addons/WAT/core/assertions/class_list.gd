@@ -8,6 +8,7 @@ const Null: Script = preload("null.gd")
 const RangeX: Script = preload("range.gd")
 const Signal: Script = preload("signal.gd")
 const StringX: Script = preload("string.gd")
+const Utility: Script = preload("Utility.gd")
 
 ### BEGIN UNSORTED BELOW ###
 # Is <TYPE> Assertions
@@ -98,5 +99,5 @@ const Has: Script = preload("property/has.gd")
 const DoesNotHave: Script = preload("property/does_not_have.gd")
 
 # Misc Utility Assertions
-const That: Script = preload("misc/that.gd")
-const Fail: Script = preload("misc/fail.gd")
+
+
