@@ -11,7 +11,7 @@ func loop(method: String, data: Array) -> void:
 		callv(method, set)
 
 func is_true(condition: bool, context: String = "") -> void:
-	output(IsTrue.new(condition, context))
+	output(IsTrue.is_true(condition, context))
 
 func is_false(condition: bool, context: String = "") -> void:
 	output(IsFalse.new(condition, context))
