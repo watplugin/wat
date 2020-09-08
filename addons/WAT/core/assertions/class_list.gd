@@ -8,7 +8,8 @@ const Null: Script = preload("null.gd")
 const RangeX: Script = preload("range.gd")
 const Signal: Script = preload("signal.gd")
 const StringX: Script = preload("string.gd")
-const Utility: Script = preload("Utility.gd")
+const Utility: Script = preload("utility.gd")
+const Property: Script = preload("property.gd")
 
 ### BEGIN UNSORTED BELOW ###
 # Is <TYPE> Assertions
@@ -95,8 +96,7 @@ const ObjectIsConnected: Script = preload("object/is_connected.gd")
 const ObjectIsNotConnected: Script = preload("object/is_not_connected.gd")
 
 # Property Assertions
-const Has: Script = preload("property/has.gd")
-const DoesNotHave: Script = preload("property/does_not_have.gd")
+
 
 # Misc Utility Assertions
 
