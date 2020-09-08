@@ -105,10 +105,10 @@ func signal_was_emitted_with_arguments(emitter, _signal, arguments: Array, conte
 	output(Signal.was_emitted_with_args(emitter, _signal, arguments, context))
 
 func file_exists(path: String, context: String = "") -> void:
-	output(FileExists.new(path, context))
+	output(FileX.exists(path, context))
 
 func file_does_not_exist(path: String, context: String = "") -> void:
-	output(FileDoesNotExist.new(path, context))
+	output(FileX.does_not_exist(path, context))
 	
 func that(obj: Object, method: String, arguments: Array = [], context: String = "", passed: String = "", failed: String = "") -> void:
 	output(That.new(obj, method, arguments, context, passed, failed))

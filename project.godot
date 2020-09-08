@@ -55,7 +55,7 @@ Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
 "repeat": 1,
-"script": "res://tests/integration/test_double.test.gd",
+"script": "res://tests/unit/file.test.gd",
 "strategy": "RunScript"
 }
 

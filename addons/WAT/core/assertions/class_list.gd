@@ -1,18 +1,15 @@
 extends Reference
 
-# Boolean Assertions
 const Boolean: Script = preload("boolean.gd")
-
-# Test Double Assertions
 const Double: Script = preload("double.gd")
-
-# Equality Assertions
 const Equality: Script = preload("equality.gd")
+const FileX: Script = preload("file.gd")
+const Null: Script = preload("null.gd")
+const RangeX: Script = preload("range.gd")
+const Signal: Script = preload("signal.gd")
+const StringX: Script = preload("string.gd")
 
-# File Assertions
-const FileDoesNotExist: Script = preload("file/file_does_not_exist.gd")
-const FileExists: Script = preload("file/file_exists.gd")
-
+### BEGIN UNSORTED BELOW ###
 # Is <TYPE> Assertions
 const IsAABB: Script = preload("is/is_AABB.gd")
 const IsArray: Script = preload("is/is_Array.gd")
@@ -74,7 +71,7 @@ const IsNotVector2: Script = preload("is_not/is_not_Vector2.gd")
 const IsNotVector3: Script = preload("is_not/is_not_Vector3.gd")
 
 # Null Assertions
-const Null: Script = preload("null.gd")
+
 
 # Object Assertions
 # Note: The elements this assertions act on exist throughout every object
@@ -99,16 +96,6 @@ const ObjectIsNotConnected: Script = preload("object/is_not_connected.gd")
 # Property Assertions
 const Has: Script = preload("property/has.gd")
 const DoesNotHave: Script = preload("property/does_not_have.gd")
-
-# Range Assertions
-const RangeX: Script = preload("range.gd")
-
-# Signal Assertions
-const Signal: Script = preload("signal.gd")
-
-# String Assertions
-const StringX: Script = preload("string.gd")
-
 
 # Misc Utility Assertions
 const That: Script = preload("misc/that.gd")
