@@ -35,10 +35,10 @@ func is_equal_or_less_than(a, b, context: String = "") -> void:
 	output(Equality.is_equal_or_less_than(a, b, context))
 
 func is_in_range(value, low, high, context: String = "") -> void:
-	output(IsInRange.new(value, low, high, context))
+	output(RangeX.is_in_range(value, low, high, context))
 
 func is_not_in_range(value, low, high, context: String = "") -> void:
-	output(IsNotInRange.new(value, low, high, context))
+	output(RangeX.is_not_in_range(value, low, high, context))
 
 func has(value, container, context: String = "") -> void:
 	output(Has.new(value, container, context))

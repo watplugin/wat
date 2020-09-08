@@ -103,8 +103,7 @@ const Has: Script = preload("property/has.gd")
 const DoesNotHave: Script = preload("property/does_not_have.gd")
 
 # Range Assertions
-const IsInRange: Script = preload("range/is_in_range.gd")
-const IsNotInRange: Script = preload("range/is_not_in_range.gd")
+const RangeX: Script = preload("range.gd")
 
 # Signal Assertions
 const Signal: Script = preload("signal.gd")
