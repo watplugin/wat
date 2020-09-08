@@ -10,12 +10,7 @@ const ScriptWasCalled: Script = preload("double/script_was_called.gd")
 const ScriptWasNotCalled: Script = preload("double/script_was_not_called.gd")
 
 # Equality Assertions
-const IsEqual: Script = preload("equality/is_equal.gd")
-const IsEqualOrGreaterThan: Script = preload("equality/is_equal_or_greater_than.gd")
-const IsEqualOrLessThan: Script = preload("equality/is_equal_or_less_than.gd")
-const IsGreaterThan: Script = preload("equality/is_greater_than.gd")
-const IsLessThan: Script = preload("equality/is_less_than.gd")
-const IsNotEqual: Script = preload("equality/is_not_equal.gd")
+const Equality: Script = preload("equality.gd")
 
 # File Assertions
 const FileDoesNotExist: Script = preload("file/file_does_not_exist.gd")

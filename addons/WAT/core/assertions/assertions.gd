@@ -14,25 +14,25 @@ func is_true(condition: bool, context: String = "") -> void:
 	output(IsTrue.is_true(condition, context))
 
 func is_false(condition: bool, context: String = "") -> void:
-	output(IsFalse.new(condition, context))
+	output(IsFalse.is_false(condition, context))
 
 func is_equal(a, b, context: String = "") -> void:
-	output(IsEqual.new(a, b, context))
+	output(Equality.is_equal(a, b, context))
 
 func is_not_equal(a, b, context: String = "") -> void:
-	output(IsNotEqual.new(a, b, context))
+	output(Equality.is_not_equal(a, b, context))
 
 func is_greater_than(a, b, context: String = "") -> void:
-	output(IsGreaterThan.new(a, b, context))
+	output(Equality.is_greater_than(a, b, context))
 
 func is_less_than(a, b, context: String = "") -> void:
-	output(IsLessThan.new(a, b, context))
+	output(Equality.is_less_than(a, b, context))
 
 func is_equal_or_greater_than(a, b, context: String = "") -> void:
-	output(IsEqualOrGreaterThan.new(a, b, context))
+	output(Equality.is_equal_or_greater_than(a, b, context))
 
 func is_equal_or_less_than(a, b, context: String = "") -> void:
-	output(IsEqualOrLessThan.new(a, b, context))
+	output(Equality.is_equal_or_less_than(a, b, context))
 
 func is_in_range(value, low, high, context: String = "") -> void:
 	output(IsInRange.new(value, low, high, context))

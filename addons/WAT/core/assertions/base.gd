@@ -7,7 +7,6 @@ var expected: String = "NULL"
 var result: String
 var notes: String = "No Notes"
 var context
-# var _assertion_result: AssertionResult
 
 static func type2str(value):
 	return TYPES.get_type_string(typeof(value))
@@ -23,5 +22,3 @@ func to_dictionary() -> Dictionary:
 			 "actual": result,
 			 "context": context
 			}
-
-

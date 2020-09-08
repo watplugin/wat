@@ -1,10 +1,10 @@
 extends "../base.gd"
 
-func _init(value, context: String) -> void:
+static func is_false(value, context: String) -> AssertionResult:
 	var type = type2str(value)
 	var passed: String = "|%s| %s == false" % [type, value]
 	var failed: String = "|%s| %s != false" % [type, value]
-	self.context = context
-	self.success = (value == false)
-	self.expected = passed
-	self.result = passed if self.success else failed
+	var success = (value == false)
+	var expected = passed
+	var result = passed if success else failed
+	return _result(success, expected, result, context)
