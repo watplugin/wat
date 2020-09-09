@@ -7,25 +7,13 @@ var test_loader: Reference = preload("test_loader.gd").new()
 var test_results: Resource = WAT.Results
 var _tests: Array = []
 var _cases: Array = []
-var _strategy: Dictionary = {}
 var is_editor: bool = true
 signal ended
-
-func strategy() -> Dictionary:
-	# We consume this so we can avoid worrying about mutatiosn
-	var m_strategy = {}
-	var strat = ProjectSettings.get_setting("WAT/TestStrategy")
-	for key in strat:
-		m_strategy[key] = strat[key]
-	ProjectSettings.set_setting("WAT/TestStrategy", {})
-	ProjectSettings.save()
-	m_strategy["repeat"] = m_strategy[Strategy.Repeat] as int
-	return m_strategy
-	
 var _time: float
+var _repeat: int = 1
+
 func _ready() -> void:
 	_time = OS.get_ticks_msec()
-	_strategy = strategy()
 	if get_tree().root.get_child(0) == self:
 		print("Starting WAT Test Runner")
 	OS.window_minimized = ProjectSettings.get_setting(
@@ -34,6 +22,7 @@ func _ready() -> void:
 	_begin()
 	
 func _begin():
+	_repeat = Strategy.repeat()
 	_tests = get_tests()
 	
 	if _tests.empty():
@@ -41,29 +30,28 @@ func _begin():
 	_run_tests()
 	
 func get_tests() -> Array:
-	match _strategy[Strategy.Strategy]:
+	match Strategy.get_current_strategy():
 		Strategy.RUN_ALL:
 			return test_loader.all()
 		Strategy.RUN_DIRECTORY:
-			return test_loader.directory(_strategy["directory"])
+			return test_loader.directory(Strategy.directory())
 		Strategy.RUN_SCRIPT:
-			return test_loader.script(_strategy["script"])
+			return test_loader.script(Strategy.script())
 		Strategy.RUN_TAG:
-			return test_loader.tag(_strategy["tag"])
+			return test_loader.tag(Strategy.tag())
 		Strategy.RUN_METHOD:
-			return test_loader.script(_strategy["script"])
+			return test_loader.script(Strategy.script())
 		Strategy.RERUN_FAILED:
 			return test_loader.last_failed()
 		_:
 			return _tests
 
-
 var time_taken: float
 func _run_tests() -> void:
 	while not _tests.empty():
 		yield(run(), COMPLETED)
-	_strategy["repeat"] -= 1
-	if _strategy["repeat"] > 0:
+	_repeat -= 1
+	if _repeat > 0:
 		call_deferred("_begin")
 	else:
 		time_taken = _time / 1000.0
@@ -77,8 +65,8 @@ func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	var start_time = OS.get_ticks_msec()
 	add_child(test)
 	# Add Strategy Here?
-	if _strategy.has("method"):
-		test._methods = [_strategy.method]
+	if not Strategy.method().empty():
+		test._methods = [Strategy.method()]
 	else:
 		test._methods = test.methods()
 	test._start()

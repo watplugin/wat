@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0.902">
+<testsuites failures="0" name="TestXML" tests="1" time="0.887">
 <testsuite failures="0" name="Given a Boolean Assertion" tests="1" time="0">
 <testcase name="When calling asserts.is_false(false)" time="0">
 </testcase>
