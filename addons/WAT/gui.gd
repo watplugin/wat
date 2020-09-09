@@ -1,6 +1,7 @@
 tool
 extends PanelContainer
 
+const Strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
 enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
 enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED, METHOD, RERUN_FAILURES }
 const NOTHING_SELECTED: int = -1
@@ -88,49 +89,18 @@ func _on_run_pressed(option: int) -> void:
 	ProjectSettings.save()
 	match option:
 		RUN.ALL:
-			var strat = strategy()
-			strat["strategy"] = "RunAll"
-			strat["repeat"] = Repeater.value as int
-			ProjectSettings.set("WAT/TestStrategy", strat)
-			_run()
+			Strategy.RunAll(Repeater.value as int)
 		RUN.DIRECTORY:
-			var strat = strategy()
-			strat["strategy"] = "RunDirectory"
-			strat["directory"] = selected(DirectorySelector)
-			strat["repeat"] = Repeater.value as int
-			ProjectSettings.set("WAT/TestStrategy", strat)
-			_run()
+			Strategy.RunDirectory(selected(DirectorySelector), Repeater.value as int)
 		RUN.SCRIPT:
-			var strat = strategy()
-			strat["strategy"] = "RunScript"
-			strat["script"] = selected(ScriptSelector)
-			strat["repeat"] = Repeater.value as int
-			ProjectSettings.set("WAT/TestStrategy", strat)
-			_run()
+			Strategy.RunScript(selected((ScriptSelector)), Repeater.value as int)
 		RUN.TAGGED:
-			var strat = strategy()
-			strat["strategy"] = "RunTag"
-			strat["tag"] = selected(TagSelector)
-			strat["repeat"] = Repeater.value as int
-			ProjectSettings.set("WAT/TestStrategy", strat)
-			_run()
+			Strategy.RunTag(selected(TagSelector), Repeater.value as int)
 		RUN.METHOD:
-			var strat = strategy()
-			strat["strategy"] = "RunMethod"
-			strat["script"] = selected(ScriptSelector)
-			strat["method"] = selected(MethodSelector)
-			strat["repeat"] = Repeater.value as int
-			ProjectSettings.set("WAT/TestStrategy", strat)
-			_run()
+			Strategy.RunMethod(selected(ScriptSelector), selected(MethodSelector), Repeater.value as int)
 		RUN.RERUN_FAILURES:
-			var strat = strategy()
-			strat["strategy"] = "RerunFailures"
-			strat["repeat"] = Repeater.value as int
-			ProjectSettings.set("WAT/TestStrategy", strat)
-			_run()
-			
-func strategy() -> Dictionary:
-	return ProjectSettings.get_setting("WAT/TestStrategy")
+			Strategy.RunFailures(Repeater.value as int)
+	_run()
 
 func _run() -> void:
 	start_time()
