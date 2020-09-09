@@ -1,7 +1,7 @@
 tool
 extends PanelContainer
 
-const Strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
+# const strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
 enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
 enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED, METHOD, RERUN_FAILURES }
 const NOTHING_SELECTED: int = -1
@@ -24,6 +24,7 @@ onready var HiddenBorder: Separator = $GUI/HiddenBorder
 onready var MethodSelector: OptionButton = $GUI/Method
 onready var More: Button = $GUI/Interact/More
 var execute = preload("res://addons/WAT/core/test_runner/execute.gd").new()
+var strategy: Reference = preload("res://addons/WAT/core/test_runner/strategy.gd").new()
 
 func _on_view_pressed(id: int) -> void:
 	match id:
@@ -87,17 +88,17 @@ func _on_run_pressed(option: int) -> void:
 	set_process(true)
 	match option:
 		RUN.ALL:
-			Strategy.RunAll(Repeater.value as int)
+			strategy.RunAll(Repeater.value as int)
 		RUN.DIRECTORY:
-			Strategy.RunDirectory(selected(DirectorySelector), Repeater.value as int)
+			strategy.RunDirectory(selected(DirectorySelector), Repeater.value as int)
 		RUN.SCRIPT:
-			Strategy.RunScript(selected((ScriptSelector)), Repeater.value as int)
+			strategy.RunScript(selected((ScriptSelector)), Repeater.value as int)
 		RUN.TAGGED:
-			Strategy.RunTag(selected(TagSelector), Repeater.value as int)
+			strategy.RunTag(selected(TagSelector), Repeater.value as int)
 		RUN.METHOD:
-			Strategy.RunMethod(selected(ScriptSelector), selected(MethodSelector), Repeater.value as int)
+			strategy.RunMethod(selected(ScriptSelector), selected(MethodSelector), Repeater.value as int)
 		RUN.RERUN_FAILURES:
-			Strategy.RunFailures(Repeater.value as int)
+			strategy.RunFailures(Repeater.value as int)
 	_run()
 
 func _run() -> void:

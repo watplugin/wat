@@ -1,6 +1,6 @@
 extends Node
 
-const Strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
+# const strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
 const COMPLETED: String = "completed"
 var JunitXML = preload("res://addons/WAT/resources/JUnitXML.gd").new()
 var test_loader: Reference = preload("test_loader.gd").new()
@@ -11,6 +11,7 @@ var is_editor: bool = true
 signal ended
 var _time: float
 var _repeat: int = 1
+var strategy: Reference = preload("res://addons/WAT/core/test_runner/strategy.gd").new()
 
 func _ready() -> void:
 	_time = OS.get_ticks_msec()
@@ -22,7 +23,7 @@ func _ready() -> void:
 	_begin()
 	
 func _begin():
-	_repeat = Strategy.repeat()
+	_repeat = strategy.repeat()
 	_tests = get_tests()
 	
 	if _tests.empty():
@@ -30,18 +31,18 @@ func _begin():
 	_run_tests()
 	
 func get_tests() -> Array:
-	match Strategy.get_current_strategy():
-		Strategy.RUN_ALL:
+	match strategy.get_current_strategy():
+		strategy.RUN_ALL:
 			return test_loader.all()
-		Strategy.RUN_DIRECTORY:
-			return test_loader.directory(Strategy.directory())
-		Strategy.RUN_SCRIPT:
-			return test_loader.script(Strategy.script())
-		Strategy.RUN_TAG:
-			return test_loader.tag(Strategy.tag())
-		Strategy.RUN_METHOD:
-			return test_loader.script(Strategy.script())
-		Strategy.RERUN_FAILED:
+		strategy.RUN_DIRECTORY:
+			return test_loader.directory(strategy.directory())
+		strategy.RUN_SCRIPT:
+			return test_loader.script(strategy.script())
+		strategy.RUN_TAG:
+			return test_loader.tag(strategy.tag())
+		strategy.RUN_METHOD:
+			return test_loader.script(strategy.script())
+		strategy.RERUN_FAILED:
 			return test_loader.last_failed()
 		_:
 			return _tests
@@ -64,9 +65,9 @@ func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 		WAT.Recorder)
 	var start_time = OS.get_ticks_msec()
 	add_child(test)
-	# Add Strategy Here?
-	if not Strategy.method().empty():
-		test._methods = [Strategy.method()]
+	# Add strategy Here?
+	if not strategy.method().empty():
+		test._methods = [strategy.method()]
 	else:
 		test._methods = test.methods()
 	test._start()

@@ -12,9 +12,10 @@ const LIST_DIR: String = "-list_dir"
 const PASSED: int = 0
 const FAILED: int = 1
 
-const Strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
+# const strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
 const TestRunner: PackedScene = preload("res://addons/WAT/core/test_runner/TestRunner.tscn")
 const FileSystem: Reference = preload("res://addons/WAT/system/filesystem.gd")
+var strategy: Reference = preload("res://addons/WAT/core/test_runner/strategy.gd").new()
 
 var _runner: Node
 var _start_time: float
@@ -35,22 +36,22 @@ func parse(arguments: Array) -> void:
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
-			Strategy.RunAll(repeat(arguments))
+			strategy.RunAll(repeat(arguments))
 			_run()
 		RUN_DIRECTORY:
-			Strategy.RunDirectory(arguments.front(), repeat(arguments))
+			strategy.RunDirectory(arguments.front(), repeat(arguments))
 			_run()
 		RUN_SCRIPT:
-			Strategy.RunScript(arguments.front(), repeat(arguments))
+			strategy.RunScript(arguments.front(), repeat(arguments))
 			_run()
 		RUN_TAG:
-			Strategy.RunTag(arguments.front(), repeat(arguments))
+			strategy.RunTag(arguments.front(), repeat(arguments))
 			_run()
 		RUN_METHOD:
-			Strategy.RunMethod(arguments[0], arguments[1], repeat(arguments))
+			strategy.RunMethod(arguments[0], arguments[1], repeat(arguments))
 			_run()
 		RUN_FAILURES:
-			Strategy.RunFailures(repeat(arguments))
+			strategy.RunFailures(repeat(arguments))
 			_run()
 		LIST_ALL:
 			_list()
