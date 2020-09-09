@@ -51,9 +51,6 @@ func tag(tag: String) -> Array:
 	
 func deposited() -> Array:
 	return _tests
-#	var tests = _tests.duplicate()
-#	_tests = []
-#	return tests
 	
 func _load_tests() -> Array:
 	var tests: Array = []
