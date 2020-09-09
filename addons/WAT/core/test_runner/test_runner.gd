@@ -1,5 +1,6 @@
 extends Node
 
+const Strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
 const COMPLETED: String = "completed"
 var JunitXML = preload("res://addons/WAT/resources/JUnitXML.gd").new()
 var test_loader: Reference = preload("test_loader.gd").new()
@@ -18,7 +19,7 @@ func strategy() -> Dictionary:
 		m_strategy[key] = strat[key]
 	ProjectSettings.set_setting("WAT/TestStrategy", {})
 	ProjectSettings.save()
-	m_strategy["repeat"] = m_strategy["repeat"] as int
+	m_strategy["repeat"] = m_strategy[Strategy.Repeat] as int
 	return m_strategy
 	
 var _time: float
@@ -40,18 +41,18 @@ func _begin():
 	_run_tests()
 	
 func get_tests() -> Array:
-	match _strategy["strategy"]:
-		"RunAll":
+	match _strategy[Strategy.Strategy]:
+		Strategy.RUN_ALL:
 			return test_loader.all()
-		"RunDirectory":
+		Strategy.RUN_DIRECTORY:
 			return test_loader.directory(_strategy["directory"])
-		"RunScript":
+		Strategy.RUN_SCRIPT:
 			return test_loader.script(_strategy["script"])
-		"RunTag":
+		Strategy.RUN_TAG:
 			return test_loader.tag(_strategy["tag"])
-		"RunMethod":
+		Strategy.RUN_METHOD:
 			return test_loader.script(_strategy["script"])
-		"RerunFailures":
+		Strategy.RERUN_FAILED:
 			return test_loader.last_failed()
 		_:
 			return _tests

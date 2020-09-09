@@ -54,9 +54,10 @@ Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
-"directory": "res://tests/unit",
-"repeat": 1,
-"strategy": "RunDirectory"
+0: 4,
+1: 1,
+"method": "test_when_calling_asserts_is_false",
+"script": "res://tests/unit/boolean.test.gd"
 }
 
 [application]

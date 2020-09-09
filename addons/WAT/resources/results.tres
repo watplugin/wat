@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource( 1 )
-failures = [ "res://tests/unit/blank.test.gd" ]
+failures = [  ]
 _list = [  ]
