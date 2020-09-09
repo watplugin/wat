@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "assertion.gd"
 
 static func called_with_arguments(double, method: String, args: Array, context: String) -> AssertionResult:
 	var passed: String = "method: %s was called with arguments: %s" % [method, args]

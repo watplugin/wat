@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "assertion.gd"
 
 static func does_not_have_meta(object: Object, meta: String, context: String) -> AssertionResult:
 	var passed: String = "%s does not have meta: %s" % [object, meta]

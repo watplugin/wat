@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "assertion.gd"
 
 static func exists(path: String, context: String) -> AssertionResult:
 	var passed: String = "%s exists" % path

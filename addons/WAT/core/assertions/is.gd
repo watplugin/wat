@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "assertion.gd"
 
 static func is_AABB(value, context: String) -> AssertionResult:
 	var passed: String = "%s is builtin: AABB" % value

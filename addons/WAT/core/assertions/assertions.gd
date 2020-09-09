@@ -181,7 +181,7 @@ func is_not_float(value, context: String = "") -> void:
 		output(IsNot.is_not_float(value, context))
 
 func is_String(value, context: String = "") -> void:
-		output(Is.is_not_String(value, context))
+		output(Is.is_String(value, context))
 
 func is_not_String(value, context: String = "") -> void:
 		output(IsNot.is_not_String(value, context))

@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "assertion.gd"
 
 static func fail(context: String = "Test Not Implemented") -> AssertionResult:
 	# Intentionally Fails Test

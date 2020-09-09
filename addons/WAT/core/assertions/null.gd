@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "assertion.gd"
 
 
 static func is_null(value, context: String) -> AssertionResult:

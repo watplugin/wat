@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "assertion.gd"
 
 static func has(value, container, context: String) -> AssertionResult:
 	var passed: String = "%s has %s" % [container, value]

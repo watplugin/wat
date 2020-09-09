@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "assertion.gd"
 
 static func is_true(value, context: String) -> AssertionResult:
 	var type = type2str(value)

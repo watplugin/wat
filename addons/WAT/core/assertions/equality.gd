@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "assertion.gd"
 
 static func is_equal(a, b, context: String) -> AssertionResult:
 	var typeofa = type2str(a)

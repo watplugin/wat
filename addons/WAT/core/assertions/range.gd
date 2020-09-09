@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "assertion.gd"
 
 static func is_in_range(value, low, high, context: String) -> AssertionResult:
 	var passed: String = "%s is in range(%s, %s)" % [value, low, high]

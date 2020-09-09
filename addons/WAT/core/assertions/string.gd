@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "assertion.gd"
 
 static func begins_with(value: String, string: String, context: String) -> AssertionResult:
 	var passed: String = "%s begins with %s" % [string, value]

@@ -1,4 +1,4 @@
-extends "base.gd"
+extends "assertion.gd"
 
 static func was_emitted(emitter, event: String, context: String) -> AssertionResult:
 	var passed: String = "signal: %s was emitted from %s" % [event, emitter]
