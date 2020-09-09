@@ -1,4 +1,4 @@
-extends "class_list.gd"
+extends Reference
 
 const Is: Script = preload("is.gd")
 const IsNot: Script = preload("is_not.gd")
