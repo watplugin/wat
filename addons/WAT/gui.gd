@@ -85,8 +85,6 @@ func _on_method_selector_pressed() -> void:
 
 func _on_run_pressed(option: int) -> void:
 	set_process(true)
-	ProjectSettings.set("WAT/TestStrategy", {})
-	ProjectSettings.save()
 	match option:
 		RUN.ALL:
 			Strategy.RunAll(Repeater.value as int)

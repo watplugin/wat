@@ -1,6 +1,6 @@
 extends Node
 
-const Strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
+
 const RUN_ALL: String = "-run_all"
 const RUN_DIRECTORY: String = "-run_dir"
 const RUN_SCRIPT: String = "-run_script"
@@ -11,8 +11,11 @@ const LIST_ALL: String = "-list_all"
 const LIST_DIR: String = "-list_dir"
 const PASSED: int = 0
 const FAILED: int = 1
+
+const Strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
 const TestRunner: PackedScene = preload("res://addons/WAT/core/test_runner/TestRunner.tscn")
 const FileSystem: Reference = preload("res://addons/WAT/system/filesystem.gd")
+
 var _runner: Node
 var _start_time: float
 
@@ -29,8 +32,6 @@ func repeat(args) -> int:
 		return 1
 	
 func parse(arguments: Array) -> void:
-	ProjectSettings.set("WAT/TestStrategy", {})
-	ProjectSettings.save()
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
@@ -60,9 +61,6 @@ func parse(arguments: Array) -> void:
 		_:
 			push_error("Invalid Argument")
 			get_tree().quit()
-
-func strategy() -> Dictionary:
-	return ProjectSettings.get_setting("WAT/TestStrategy")
 			
 func test_directory() -> String:
 	return ProjectSettings.get_setting("WAT/Test_Directory")

@@ -7,6 +7,8 @@ extends Reference
 enum Strategy { RUN_ALL, RUN_DIRECTORY, RUN_SCRIPT, RUN_TAG, RUN_METHOD }
 
 static func strategy() -> Dictionary:
+	ProjectSettings.set("WAT/TestStrategy", {})
+	ProjectSettings.save()
 	return ProjectSettings.get_setting("WAT/TestStrategy")
 
 static func RunAll(repeat: int = 1) -> void:
