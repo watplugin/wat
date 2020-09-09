@@ -1,5 +1,6 @@
 extends Node
 
+const Strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
 const RUN_ALL: String = "-run_all"
 const RUN_DIRECTORY: String = "-run_dir"
 const RUN_SCRIPT: String = "-run_script"
@@ -33,46 +34,22 @@ func parse(arguments: Array) -> void:
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
-			var strat = strategy()
-			strat["strategy"] = "RunAll"
-			strat["repeat"] = repeat(arguments)
-			ProjectSettings.set("WAT/TestStrategy", strat)
+			Strategy.RunAll(repeat(arguments))
 			_run()
 		RUN_DIRECTORY:
-			var strat = strategy()
-			strat["strategy"] = "RunDirectory"
-			strat["directory"] = arguments.front()
-			strat["repeat"] = repeat(arguments)
-			ProjectSettings.set("WAT/TestStrategy", strat)
+			Strategy.RunDirectory(arguments.front(), repeat(arguments))
 			_run()
 		RUN_SCRIPT:
-			var strat = strategy()
-			strat["strategy"] = "RunScript"
-			strat["script"] = arguments.front()
-			strat["repeat"] = repeat(arguments)
-			ProjectSettings.set("WAT/TestStrategy", strat)
+			Strategy.RunScript(arguments.front(), repeat(arguments))
 			_run()
 		RUN_TAG:
-			var strat = strategy()
-			strat["strategy"] = "RunTag"
-			strat["tag"] = arguments.front()
-			print(strat["tag"])
-			strat["repeat"] = repeat(arguments)
-			ProjectSettings.set("WAT/TestStrategy", strat)
+			Strategy.RunTag(arguments.front(), repeat(arguments))
 			_run()
 		RUN_METHOD:
-			var strat = strategy()
-			strat["strategy"] = "RunMethod"
-			strat["script"] = arguments[0]
-			strat["method"] = arguments[1]
-			strat["repeat"] = repeat(arguments)
-			ProjectSettings.set("WAT/TestStrategy", strat)
+			Strategy.RunMethod(arguments[0], arguments[1], repeat(arguments))
 			_run()
 		RUN_FAILURES:
-			var strat = strategy()
-			strat["strategy"] = "RerunFailures"
-			strat["repeat"] = repeat(arguments)
-			ProjectSettings.set("WAT/TestStrategy", strat)
+			Strategy.RunFailures(repeat(arguments))
 			_run()
 		LIST_ALL:
 			_list()
