@@ -1,35 +1,57 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0.998">
-<testsuite failures="0" name="Given an Object Assertion" tests="15" time="0.003">
-<testcase name="When calling asserts.is_not_freed(unfreed_object)" time="0">
+<testsuites failures="0" name="TestXML" tests="1" time="0.843">
+<testsuite failures="0" name="Given an Is Instance of class/type Assertion" tests="26" time="0.003">
+<testcase name="When calling asserts.is_Transform(transform2D: Transform2D)" time="0">
 </testcase>
-<testcase name="When calling asserts object is connected with a valid connection" time="0">
+<testcase name="When calling is asserts.is_PoolVector3Array(vec3s: PoolVector3Array)" time="0">
 </testcase>
-<testcase name="When calling asserts.is_freed(freed_object" time="0">
+<testcase name="When calling is asserts.is_PoolVector2Array(vec2s: PoolVector2Array)" time="0">
 </testcase>
-<testcase name="When calling is not blocking signals while not blocking signals" time="0">
+<testcase name="When calling is asserts.is_PoolStringArray(strs: PoolStringArray)" time="0">
 </testcase>
-<testcase name="When calling is blocking signals while blocking signals" time="0">
+<testcase name="When calling asserts.is_PoolColorArray(colors: PoolColorArray)" time="0">
 </testcase>
-<testcase name="When calling does not have user signal with class signal" time="0.001">
+<testcase name="When calling asserts.is_string(strs: String)" time="0">
 </testcase>
-<testcase name="When calling obj_has_user_signal after adding a signal" time="0">
+<testcase name="When calling asserts.is_Vector3(vec3: Vector3" time="0">
 </testcase>
-<testcase name="When calling asserts.object_has_meta with real key but null val" time="0">
+<testcase name="When calling is asserts.is_PoolRealArray(reals: PoolRealArray)" time="0">
 </testcase>
-<testcase name="When calling asserts object is not connected with an invalid connection" time="0">
+<testcase name="When calling asserts.is_Plane(plane: Plane())" time="0">
 </testcase>
-<testcase name="When calling asserts.object_is_not_for_queued_deletion after not calling queue free()" time="0">
+<testcase name="When calling asserts.is_PoolIntArray(ints: PoolIntArray)" time="0.001">
 </testcase>
-<testcase name="When calling obj_does_not_have_user_signal with fake signal" time="0">
+<testcase name="When calling asserts.is_Vector2(vec2)" time="0">
 </testcase>
-<testcase name="When calling has_method('title')" time="0">
+<testcase name="When calling asserts.is_Transform(transform: Transform)" time="0">
 </testcase>
-<testcase name="When calling asserts.object_does_not_have_meta()" time="0">
+<testcase name="When calling asserts.is_Rect2(rect2: Rect2)" time="0">
 </testcase>
-<testcase name="When calling asserts.object_has_meta() after adding metadata" time="0">
+<testcase name="When calling asserts.is_Quat(quat: Quat)" time="0">
 </testcase>
-<testcase name="When calling asserts.object_is_queued for deletion after calling queue_free" time="0">
+<testcase name="When calling asserts.is_PoolByteArray(bytes: PoolByteArray)" time="0">
+</testcase>
+<testcase name="When calling is asserts.object(node: Node)" time="0">
+</testcase>
+<testcase name="When calling asserts.is_RID(rid: RID)" time="0">
+</testcase>
+<testcase name="When calling asserts.is_NodePath(@'Parent/Child')" time="0">
+</testcase>
+<testcase name="When calling asserts.is_basis(basis: Basis" time="0">
+</testcase>
+<testcase name="When callign asserts.is_int(1)" time="0">
+</testcase>
+<testcase name="When calling asserts.is_float(1.0)" time="0">
+</testcase>
+<testcase name="When calling asserts.is_Dictionary({})" time="0">
+</testcase>
+<testcase name="When calling asserts.is_color(color: Color)" time="0">
+</testcase>
+<testcase name="When calling asserts.is_Array(array: Array)" time="0.001">
+</testcase>
+<testcase name="When calling asserts.is_AABB(aabb: AABB)" time="0">
+</testcase>
+<testcase name="When calling asserts.is_bool(true)" time="0">
 </testcase>
 </testsuite>
 </testsuites>

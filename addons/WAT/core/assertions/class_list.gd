@@ -1,38 +1,6 @@
 extends Reference
 
 
-
-### BEGIN UNSORTED BELOW ###
-# Is <TYPE> Assertions
-const IsAABB: Script = preload("is/is_AABB.gd")
-const IsArray: Script = preload("is/is_Array.gd")
-const IsBasis: Script = preload("is/is_Basis.gd")
-const IsBool: Script = preload("is/is_bool.gd")
-const IsBuiltInType: Script = preload("is/is_built_in_type.gd")
-const IsClassInstance: Script = preload("is/is_class_instance.gd")
-const IsColor: Script = preload("is/is_Color.gd")
-const IsDictionary: Script = preload("is/is_Dictionary.gd")
-const IsFloat: Script = preload("is/is_float.gd")
-const IsInt: Script = preload("is/is_int.gd")
-const IsNodePath: Script = preload("is/is_NodePath.gd")
-const IsObject: Script = preload("is/is_Object.gd")
-const IsPlane: Script = preload("is/is_Plane.gd")
-const IsPoolByteArray: Script = preload("is/is_PoolByteArray.gd")
-const IsPoolColorArray: Script = preload("is/is_PoolColorArray.gd")
-const IsPoolIntArray: Script = preload("is/is_PoolIntArray.gd")
-const IsPoolRealArray: Script = preload("is/is_PoolRealArray.gd")
-const IsPoolStringArray: Script = preload("is/is_PoolStringArray.gd")
-const IsPoolVector2Array: Script = preload("is/is_PoolVector2Array.gd")
-const IsPoolVector3Array: Script = preload("is/is_PoolVector3Array.gd")
-const IsQuat: Script = preload("is/is_Quat.gd")
-const IsRect2: Script = preload("is/is_Rect2.gd")
-const IsRID: Script = preload("is/is_RID.gd")
-const IsString: Script = preload("is/is_String.gd")
-const IsTransform: Script = preload("is/is_Transform.gd")
-const IsTransform2D: Script = preload("is/is_Transform2D.gd")
-const IsVector2: Script = preload("is/is_Vector2.gd")
-const IsVector3: Script = preload("is/is_Vector3.gd")
-
 # Is Not <TYPE> Assertions
 const IsNotAABB: Script = preload("is_not/is_not_AABB.gd")
 const IsNotArray: Script = preload("is_not/is_not_Array.gd")
