@@ -14,5 +14,8 @@ mono_crash.*.json
 
 # System/tool-specific ignores
 .directory
-.vscode
 *~
+
+# Config Ignores
+.vscode/
+
