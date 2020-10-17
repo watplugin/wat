@@ -110,7 +110,7 @@ func _run() -> void:
 func _process(delta):
 	if WAT.Results.exist():
 		var results = WAT.Results.withdraw()
-		Summary.display(results)
+		Summary.summarize(results)
 		Results.display(results)
 		set_process(false)
 
