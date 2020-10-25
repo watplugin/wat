@@ -37,8 +37,7 @@ func _create_results_folder() -> void:
 	if not ProjectSettings.has_setting(title):
 		var property_info: Dictionary = {"name": title, "type": TYPE_STRING, 
 		"hint_string": "You can save JUnit XML Results Here"}
-		##ProjectSettings.set(title, "res://tests/results/WAT")
-		ProjectSettings.set(title, "user://WAT/results")
+		ProjectSettings.set(title, "res://tests/results/WAT")
 		ProjectSettings.add_property_info(property_info)
 		push_warning("Set Result Directory to 'res://tests/results/WAT'. You can change this in Project -> Project Settings -> General -> WAT")
 
