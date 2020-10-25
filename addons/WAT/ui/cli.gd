@@ -13,9 +13,9 @@ const PASSED: int = 0
 const FAILED: int = 1
 
 # const strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
-const TestRunner: PackedScene = preload("res://addons/WAT/core/test_runner/TestRunner.tscn")
+const TestRunner: PackedScene = preload("res://addons/WAT/test_runner/TestRunner.tscn")
 const FileSystem: Reference = preload("res://addons/WAT/system/filesystem.gd")
-var strategy: Reference = preload("res://addons/WAT/core/test_runner/strategy.gd").new()
+var strategy: Reference = preload("res://addons/WAT/test_runner/strategy.gd").new()
 
 var _runner: Node
 var _start_time: float
