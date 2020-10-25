@@ -11,7 +11,7 @@ var is_editor: bool = true
 signal ended
 var _time: float
 var _repeat: int = 1
-var strategy: Reference = preload("res://addons/WAT/core/test_runner/strategy.gd").new()
+var strategy: Reference = preload("res://addons/WAT/test_runner/strategy.gd").new()
 
 func _ready() -> void:
 	_time = OS.get_ticks_msec()
@@ -90,7 +90,7 @@ func end() -> void:
 
 func _create_test_double_registry() -> void:
 	if not ProjectSettings.has_setting("WAT/TestDouble"):
-		var registry = load("res://addons/WAT/core/double/registry.gd")
+		var registry = load("res://addons/WAT/double/registry.gd")
 		ProjectSettings.set_setting("WAT/TestDouble", registry.new())
 		
 func clear() -> void:

@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "",
 "class": "WATTest",
 "language": "GDScript",
-"path": "res://addons/WAT/core/test/test.gd"
+"path": "res://addons/WAT/test/test.gd"
 } ]
 _global_script_class_icons={
 "BaseLogin": "",
@@ -54,9 +54,8 @@ Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
-0: 1,
-1: 0,
-"directory": "res://tests/unit"
+0: 0,
+1: 0
 }
 
 [application]

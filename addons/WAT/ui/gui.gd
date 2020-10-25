@@ -6,7 +6,7 @@ enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
 enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED, METHOD, RERUN_FAILURES }
 const NOTHING_SELECTED: int = -1
 const filesystem = preload("res://addons/WAT/system/filesystem.gd")
-const TestRunner: String = "res://addons/WAT/core/test_runner/TestRunner.tscn"
+const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 onready var GUI: VBoxContainer = $GUI
 onready var Interact: HBoxContainer = $GUI/Interact
 onready var Summary: Label = $GUI/Summary
@@ -29,8 +29,8 @@ var _repeat: int setget ,get_repeat
 func get_repeat() -> int:
 	return Repeater.value as int
 	
-var execute = preload("res://addons/WAT/core/test_runner/execute.gd").new()
-var strategy: Reference = preload("res://addons/WAT/core/test_runner/strategy.gd").new()
+var execute = preload("res://addons/WAT/test_runner/execute.gd").new()
+var strategy: Reference = preload("res://addons/WAT/test_runner/strategy.gd").new()
 
 export(PoolStringArray) var run_options: PoolStringArray
 export(PoolStringArray) var view_options: PoolStringArray
