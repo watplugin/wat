@@ -10,10 +10,23 @@ static func scripts(path: String = test_folder()) -> PoolStringArray:
 		var list: PoolStringArray = [path]
 		return list
 	else:
-		return _parse_for_tests("file_exists", _list_dir(path))
+		var list = _list_dir(path)
+		var output: PoolStringArray = []
+		var directory: Directory = Directory.new()
+		for path in list:
+			if directory.call("file_exists", path):
+				if path.ends_with(".gd"):
+					output.append(path)
+		return output
 	
 static func directories(path: String = test_folder()) -> PoolStringArray:
-	return _parse_for("dir_exists", _list_dir(path))
+	var list = _list_dir(path)
+	var output: PoolStringArray = []
+	var directory: Directory = Directory.new()
+	for path in list:
+		if directory.call("dir_exists", path):
+			output.append(path)
+	return output
 	
 static func _list_dir(path: String) -> PoolStringArray:
 	var list: PoolStringArray = []
@@ -36,23 +49,6 @@ static func _list_dir(path: String) -> PoolStringArray:
 		list += _list_dir(subdirectory)
 		
 	return list
-	
-static func _parse_for(what_exists: String, list: PoolStringArray) -> PoolStringArray:
-	var output: PoolStringArray = []
-	var directory: Directory = Directory.new()
-	for path in list:
-		if directory.call(what_exists, path):
-			output.append(path)
-	return output
-
-static func _parse_for_tests(what_exists: String, list: PoolStringArray) -> PoolStringArray:
-	var output: PoolStringArray = []
-	var directory: Directory = Directory.new()
-	for path in list:
-		if directory.call(what_exists, path):
-			if path.ends_with(".gd"):
-				output.append(path)
-	return output
 
 static func templates():
 	var template_directory: String = ProjectSettings.get_setting("editor/script_templates_search_path")
