@@ -2,10 +2,11 @@ extends Reference
 
 const ScriptDirector = preload("script_director.gd")
 const SceneDirector = preload("scene_director.gd")
+var registry
 
 func script(path, inner: String = "", deps: Array = []) -> ScriptDirector:
 	if path is GDScript: path = path.resource_path
-	return ScriptDirector.new(path, inner, deps)
+	return ScriptDirector.new(registry, path, inner, deps)
 
 func scene(tscn) -> SceneDirector:
 	# Must be String.tscn or PackedScene

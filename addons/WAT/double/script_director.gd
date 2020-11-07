@@ -17,17 +17,20 @@ var base_methods: Dictionary = {}
 var dependecies: Array = []
 var is_built_in: bool = false
 var object
+var registry
 
 # Used to handle exported nodepaths
 # <var name> <var value>
 var nodepaths: Dictionary = {}
 
-func _init(_klass: String, _inner_klass: String, deps: Array = []) -> void:
+func _init(_registry, _klass: String, _inner_klass: String, deps: Array = []) -> void:
 	klass = _klass
 	inner_klass = _inner_klass
 	dependecies = deps
 	is_built_in = ClassDB.class_exists(_klass)
-	ProjectSettings.get_setting("WAT/TestDouble").register(self)
+	#ProjectSettings.get_setting("WAT/TestDouble").register(self)
+	registry = _registry
+	registry.register(self)
 	set_methods()
 	
 func method(name: String, keyword: String = "") -> Method:
@@ -126,6 +129,7 @@ func double(deps: Array = [], show_error = true) -> Object:
 	if not deps.empty() and dependecies.empty():
 		dependecies = deps
 	object = script().callv("new", dependecies)
+	object.WATRegistry.append(registry)
 	for m in methods.values():
 		m.double = object
 	for prop_name in nodepaths:

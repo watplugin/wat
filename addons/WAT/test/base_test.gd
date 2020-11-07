@@ -28,14 +28,16 @@ func methods() -> PoolStringArray:
 	return output
 	
 func setup(assertions, yielder, testcase, director, 
-		   signal_watcher, parameters, recorder):
+		   signal_watcher, parameters, recorder, registry):
 	asserts = assertions
+	director.registry = registry
 	direct = director
 	_testcase = testcase
 	_yielder = yielder
 	_watcher = signal_watcher
 	_parameters = parameters
 	_recorder = recorder
+
 	
 func record(who: Object, properties: Array) -> Node:
 	var record = _recorder.new()

@@ -12,6 +12,7 @@ signal ended
 var _time: float
 var _repeat: int = 1
 var strategy: Reference = preload("res://addons/WAT/test_runner/strategy.gd").new()
+var test_double_registry: Node = preload("res://addons/WAT/double/registry.gd").new()
 
 func _ready() -> void:
 	_time = OS.get_ticks_msec()
@@ -19,7 +20,6 @@ func _ready() -> void:
 		print("Starting WAT Test Runner")
 	OS.window_minimized = ProjectSettings.get_setting(
 			"WAT/Minimize_Window_When_Running_Tests")
-	_create_test_double_registry()
 	_begin()
 	
 func _begin():
@@ -62,7 +62,7 @@ func run(test: WAT.Test = _tests.pop_front().new()) -> void:
 	var testcase = WAT.TestCase.new(test.title(), test.path())
 	test.setup(WAT.Asserts.new(), WAT.Yielder.new(), testcase, \
 		WAT.TestDoubleFactory.new(), WAT.SignalWatcher.new(), WAT.Parameters.new(),
-		WAT.Recorder)
+		WAT.Recorder, test_double_registry)
 	var start_time = OS.get_ticks_msec()
 	add_child(test)
 	# Add strategy Here?
@@ -84,17 +84,5 @@ func end() -> void:
 	JunitXML.save(_cases, time_taken)
 	test_results.deposit(_cases)
 	emit_signal("ended")
-	clear()
 	if(is_editor):
 		get_tree().quit()
-
-func _create_test_double_registry() -> void:
-	if not ProjectSettings.has_setting("WAT/TestDouble"):
-		var registry = load("res://addons/WAT/double/registry.gd")
-		ProjectSettings.set_setting("WAT/TestDouble", registry.new())
-		
-func clear() -> void:
-	if ProjectSettings.has_setting("WAT/TestDouble"):
-		ProjectSettings.get_setting("WAT/TestDouble").clear()
-		ProjectSettings.get_setting("WAT/TestDouble").free()
-
