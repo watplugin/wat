@@ -57,6 +57,7 @@ TestStrategy={
 0: 0,
 1: 0
 }
+Window_Size=Vector2( 1280, 720 )
 
 [application]
 

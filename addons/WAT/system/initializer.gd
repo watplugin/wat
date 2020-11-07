@@ -8,6 +8,7 @@ func _init() -> void:
 	_add_test_strategy_setting()
 	_add_test_metadata_folder()
 	_add_tag_setting()
+	_add_window_sizing()
 	
 func _add_tag_setting() -> void:
 	if ProjectSettings.has_setting("WAT/Tags"):
@@ -31,6 +32,15 @@ func _create_test_folder() -> void:
 		ProjectSettings.set(title, "res://tests")
 		ProjectSettings.add_property_info(property_info)
 		push_warning("Set Test Directory to 'res://tests'. You can change this in Project -> Project Settings -> General -> WAT")
+	
+func _add_window_sizing() -> void:
+	if not ProjectSettings.has_setting("WAT/Window_Size"):
+		ProjectSettings.set_setting("WAT/Window_Size", Vector2(1280, 720))
+		var property = {}
+		property.name = "WAT/Window_Size"
+		property.type = TYPE_VECTOR2
+		ProjectSettings.add_property_info(property)
+		ProjectSettings.save()
 	
 func _create_results_folder() -> void:
 	var title: String = "WAT/Results_Directory"
