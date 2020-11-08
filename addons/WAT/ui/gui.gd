@@ -24,7 +24,6 @@ onready var More: Button = $GUI/Interact/More
 var _directory: String
 var _script: String
 var _tag: String
-var _repeat: int setget ,get_repeat
 
 func get_repeat() -> int:
 	return Repeater.value as int
@@ -83,17 +82,17 @@ func _on_run_pressed(option: int) -> void:
 	set_process(true)
 	match option:
 		RUN.ALL:
-			strategy.RunAll(_repeat)
+			strategy.RunAll(get_repeat())
 		RUN.DIRECTORY:
-			strategy.RunDirectory(_directory, _repeat)
+			strategy.RunDirectory(_directory, get_repeat())
 		RUN.SCRIPT:
-			strategy.RunScript(_script, _repeat)
+			strategy.RunScript(_script, get_repeat())
 		RUN.TAGGED:
-			strategy.RunTag(_tag, _repeat)
+			strategy.RunTag(_tag, get_repeat())
 		RUN.METHOD:
-			strategy.RunMethod(_script, selected(MethodSelector), _repeat)
+			strategy.RunMethod(_script, selected(MethodSelector), get_repeat())
 		RUN.RERUN_FAILURES:
-			strategy.RunFailures(_repeat)
+			strategy.RunFailures(get_repeat())
 	_run()
 
 func _run() -> void:

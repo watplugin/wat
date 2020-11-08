@@ -54,8 +54,10 @@ Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
-0: 0,
-1: 0
+0: 4,
+1: 2,
+"method": "test_when_calling_has_method_title",
+"script": "res://tests/unit/object.test.gd"
 }
 Window_Size=Vector2( 1280, 720 )
 

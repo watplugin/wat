@@ -3,21 +3,22 @@ extends Reference
 const FileSystem: Script = preload("res://addons/WAT/system/filesystem.gd")
 
 func get_tests(strategy) -> Array:
+	var tests: Array = []
 	match strategy.get_current_strategy():
 		strategy.RUN_ALL:
-			return _get_all()
+			tests = _get_all()
 		strategy.RUN_DIRECTORY:
-			return _get_directory(strategy.directory())
+			tests = _get_directory(strategy.directory())
 		strategy.RUN_SCRIPT:
-			return _get_script(strategy.script())
+			tests = _get_script(strategy.script())
 		strategy.RUN_TAG:
-			return _get_tagged(strategy.tag())
+			tests = _get_tagged(strategy.tag())
 		strategy.RUN_METHOD:
-			return _get_script(strategy.script())
+			tests = _get_script(strategy.script())
 		strategy.RERUN_FAILED:
-			return _get_last_failed()
-		_:
-			return []
+			tests = _get_last_failed()
+	tests = _duplicate_per_repeat(tests, strategy.repeat())
+	return tests
 			
 func _get_all() -> Array:
 	return _load_tests(FileSystem.scripts(ProjectSettings.get_setting("WAT/Test_Directory")))
@@ -62,6 +63,12 @@ func _load_tests(_tests: Array) -> Array:
 		elif test.get("IS_WAT_SUITE") and Engine.get_version_info().minor == 1:
 			tests += _suite_of_suites_3p1(test)
 	return tests
+	
+func _duplicate_per_repeat(tests: Array, repeats: int):
+	var repeated: Array = tests
+	for repeat in repeats:
+		repeated += tests.duplicate(true)
+	return repeated
 
 func _suite_of_suites_3p2(suite_of_suites) -> Array:
 	var subtests: Array = []

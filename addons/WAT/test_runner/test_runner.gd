@@ -10,7 +10,6 @@ var _cases: Array = []
 var is_editor: bool = true
 signal ended
 var _time: float
-var _repeat: int = 1
 var strategy: Reference = preload("res://addons/WAT/test_runner/strategy.gd").new()
 var test_double_registry: Node = preload("res://addons/WAT/double/registry.gd").new()
 var time_taken: float
@@ -43,9 +42,7 @@ func _ready() -> void:
 	_begin()
 	
 func _begin():
-	_repeat = strategy.repeat()
 	_tests = get_tests()
-	
 	if _tests.empty():
 		push_warning("No Scripts To Test")
 	_run_tests()
@@ -56,14 +53,8 @@ func get_tests() -> Array:
 func _run_tests() -> void:
 	while not _tests.empty():
 		yield(run(create_test()), COMPLETED)
-		
-	# We can probably check this on_load and if loaded, we duplicate by repeat
-	_repeat -= 1
-	if _repeat > 0:
-		call_deferred("_begin")
-	else:
-		time_taken = _time / 1000.0
-		end()
+	time_taken = _time / 1000.0
+	end()
 		
 func create_test(test_script: WAT.Test = _tests.pop_front()) -> Node:
 	var test = test_script.new()
