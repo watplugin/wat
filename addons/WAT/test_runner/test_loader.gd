@@ -1,7 +1,6 @@
 extends Reference
 
 const FileSystem: Script = preload("res://addons/WAT/system/filesystem.gd")
-var _tests: Array = []
 
 func get_tests(strategy) -> Array:
 	match strategy.get_current_strategy():
@@ -18,25 +17,19 @@ func get_tests(strategy) -> Array:
 		strategy.RERUN_FAILED:
 			return _get_last_failed()
 		_:
-			return _tests
+			return []
 			
 func _get_all() -> Array:
-	_tests = FileSystem.scripts(ProjectSettings.get_setting("WAT/Test_Directory"))
-	var tests = _load_tests()
-	_tests = []
-	return tests
+	return _load_tests(FileSystem.scripts(ProjectSettings.get_setting("WAT/Test_Directory")))
 	
 func _get_directory(_directory: String) -> Array:
-	_tests = FileSystem.scripts(_directory)
-	var tests = _load_tests()
-	_tests = []
-	return tests
+	return _load_tests(FileSystem.scripts(_directory))
 	
 func _get_script(_script: String) -> Array:
-	_tests = [_script]
-	var tests = _load_tests()
-	_tests = []
-	return tests
+	return _load_tests([_script])
+	
+func _get_last_failed() -> Array:
+	return _load_tests(load("res://addons/WAT/resources/results.tres").failures)
 	
 func _get_tagged(tag: String) -> Array:
 	var tagged: Array = []
@@ -46,24 +39,16 @@ func _get_tagged(tag: String) -> Array:
 	for i in Index.scripts.size():
 		if Index.tags[i].has(tag):
 			tagged.append(Index.scripts[i].resource_path)
-	_tests = tagged
-	var tests = _load_tests()
-	_tests = []
+	var tests = _load_tests(tagged)
 	return tests
 	
-func _get_last_failed() -> Array:
-	_tests = load("res://addons/WAT/resources/results.tres").failures
-	var tests = _load_tests()
-	_tests = []
-	return tests
-
 func metadata() -> Resource:
 	var path = ProjectSettings.get_setting("WAT/Test_Directory")
 	var loadpath: String = "%s/.test/metadata.tres" % path
 	var object = load(loadpath)
 	return object
 
-func _load_tests() -> Array:
+func _load_tests(_tests: Array) -> Array:
 	var tests: Array = []
 	for path in _tests:
 		# Can't load WAT.Test here for whatever reason
