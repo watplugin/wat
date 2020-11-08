@@ -63,12 +63,6 @@ func metadata() -> Resource:
 	var object = load(loadpath)
 	return object
 
-func deposit(tests: Array) -> void:
-	_tests = tests
-	
-func deposited() -> Array:
-	return _tests
-	
 func _load_tests() -> Array:
 	var tests: Array = []
 	for path in _tests:
