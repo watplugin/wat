@@ -54,10 +54,8 @@ Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
-0: 4,
-1: 0,
-"method": "test_When_we_call_a_method_that_we_are_spying_on",
-"script": "res://tests/integration/test_double.test.gd"
+0: 0,
+1: 0
 }
 Window_Size=Vector2( 1280, 720 )
 

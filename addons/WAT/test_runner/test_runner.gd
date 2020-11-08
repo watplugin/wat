@@ -19,19 +19,19 @@ signal TestScriptCompleted;
 var EditorTalk: Node # Communication between game & Editor, delegates info via signals
 var TestLoader: Node # # Uses FileSystem to search and parse tests
 var TestStrategy: Node # Searchs and returns test strategy + related parameters
-var TestFactory: Node # Creates instance from script in loader (avoids construction inside test)
+# var TestFactory: Node # Creates instance from script in loader (avoids construction inside test)
 var Results: Node # Stores and Serializes Results
 
-func initialize_REFACTORED() -> void:
-	TestFactory.add_test_scripts(TestLoader.load_tests(TestStrategy))
-
-func run_REFACTORED() -> void:
-	while TestFactory.can_create_tests:
-		var test = TestFactory.create_test(TestLoader.next_script())
-		add_child(test)
-		yield(test.run(), "TestScriptCompleted")
-		Results.add(test)
-		remove_child(test)
+#func initialize_REFACTORED() -> void:
+#	TestFactory.add_test_scripts(TestLoader.load_tests(TestStrategy))
+#
+#func run_REFACTORED() -> void:
+#	while TestFactory.can_create_tests:
+#		var test = TestFactory.create_test(TestLoader.next_script())
+#		add_child(test)
+#		yield(test.run(), "TestScriptCompleted")
+#		Results.add(test)
+#		remove_child(test)
 	
 	
 func _ready() -> void:
@@ -55,26 +55,35 @@ func get_tests() -> Array:
 
 func _run_tests() -> void:
 	while not _tests.empty():
-		yield(run(), COMPLETED)
+		yield(run(create_test()), COMPLETED)
+		
+	# We can probably check this on_load and if loaded, we duplicate by repeat
 	_repeat -= 1
 	if _repeat > 0:
 		call_deferred("_begin")
 	else:
 		time_taken = _time / 1000.0
 		end()
-
-func run(test: WAT.Test = _tests.pop_front().new()) -> void:
+		
+func create_test(test_script: WAT.Test = _tests.pop_front()) -> Node:
+	var test = test_script.new()
 	var testcase = WAT.TestCase.new(test.title(), test.path())
 	test.setup(WAT.Asserts.new(), WAT.Yielder.new(), testcase, \
 		WAT.TestDoubleFactory.new(), WAT.SignalWatcher.new(), WAT.Parameters.new(),
 		WAT.Recorder, test_double_registry)
+	return test
+
+func run(test) -> void:
+	var testcase = test._testcase
 	var start_time = OS.get_ticks_msec()
 	add_child(test)
+	
 	# Add strategy Here?
 	if not strategy.method().empty():
 		test._methods = [strategy.method()]
 	else:
 		test._methods = test.methods()
+	
 	test._start()
 	var time = OS.get_ticks_msec() - start_time
 	testcase.time_taken = time / 1000.0
