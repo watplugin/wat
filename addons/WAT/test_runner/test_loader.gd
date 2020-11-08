@@ -3,6 +3,23 @@ extends Reference
 const FileSystem: Script = preload("res://addons/WAT/system/filesystem.gd")
 var _tests: Array = []
 
+func get_tests(strategy) -> Array:
+	match strategy.get_current_strategy():
+		strategy.RUN_ALL:
+			return all()
+		strategy.RUN_DIRECTORY:
+			return directory(strategy.directory())
+		strategy.RUN_SCRIPT:
+			return script(strategy.script())
+		strategy.RUN_TAG:
+			return tag(strategy.tag())
+		strategy.RUN_METHOD:
+			return script(strategy.script())
+		strategy.RERUN_FAILED:
+			return last_failed()
+		_:
+			return _tests
+
 func metadata() -> Resource:
 	var path = ProjectSettings.get_setting("WAT/Test_Directory")
 	var loadpath: String = "%s/.test/metadata.tres" % path
