@@ -6,54 +6,39 @@ var _tests: Array = []
 func get_tests(strategy) -> Array:
 	match strategy.get_current_strategy():
 		strategy.RUN_ALL:
-			return all()
+			return _get_all()
 		strategy.RUN_DIRECTORY:
-			return directory(strategy.directory())
+			return _get_directory(strategy.directory())
 		strategy.RUN_SCRIPT:
-			return script(strategy.script())
+			return _get_script(strategy.script())
 		strategy.RUN_TAG:
-			return tag(strategy.tag())
+			return _get_tagged(strategy.tag())
 		strategy.RUN_METHOD:
-			return script(strategy.script())
+			return _get_script(strategy.script())
 		strategy.RERUN_FAILED:
-			return last_failed()
+			return _get_last_failed()
 		_:
 			return _tests
-
-func metadata() -> Resource:
-	var path = ProjectSettings.get_setting("WAT/Test_Directory")
-	var loadpath: String = "%s/.test/metadata.tres" % path
-	var object = load(loadpath)
-	return object
-
-func deposit(tests: Array) -> void:
-	_tests = tests
-	
-func last_failed() -> Array:
-	_tests = load("res://addons/WAT/resources/results.tres").failures
-	var tests = _load_tests()
-	_tests = []
-	return tests
-
-func all() -> Array:
+			
+func _get_all() -> Array:
 	_tests = FileSystem.scripts(ProjectSettings.get_setting("WAT/Test_Directory"))
 	var tests = _load_tests()
 	_tests = []
 	return tests
-
-func directory(_directory: String) -> Array:
+	
+func _get_directory(_directory: String) -> Array:
 	_tests = FileSystem.scripts(_directory)
 	var tests = _load_tests()
 	_tests = []
 	return tests
 	
-func script(_script: String) -> Array:
+func _get_script(_script: String) -> Array:
 	_tests = [_script]
 	var tests = _load_tests()
 	_tests = []
 	return tests
 	
-func tag(tag: String) -> Array:
+func _get_tagged(tag: String) -> Array:
 	var tagged: Array = []
 	var path = ProjectSettings.get_setting("WAT/Test_Directory")
 	var loadpath: String = "res://.test/metadata.tres"
@@ -65,6 +50,21 @@ func tag(tag: String) -> Array:
 	var tests = _load_tests()
 	_tests = []
 	return tests
+	
+func _get_last_failed() -> Array:
+	_tests = load("res://addons/WAT/resources/results.tres").failures
+	var tests = _load_tests()
+	_tests = []
+	return tests
+
+func metadata() -> Resource:
+	var path = ProjectSettings.get_setting("WAT/Test_Directory")
+	var loadpath: String = "%s/.test/metadata.tres" % path
+	var object = load(loadpath)
+	return object
+
+func deposit(tests: Array) -> void:
+	_tests = tests
 	
 func deposited() -> Array:
 	return _tests
