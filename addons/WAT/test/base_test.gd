@@ -20,6 +20,11 @@ var _recorder: Script
 
 signal described
 
+func _ready() -> void:
+	p = _parameters.parameters
+	asserts.connect("asserted", _testcase, "_on_asserted")
+	connect("described", _testcase, "_on_test_method_described")
+
 func methods() -> PoolStringArray:
 	var output: PoolStringArray = []
 	for method in get_method_list():
@@ -44,11 +49,6 @@ func record(who: Object, properties: Array) -> Node:
 	record.record(who, properties)
 	add_child(record)
 	return record
-	
-func _ready() -> void:
-	p = _parameters.parameters
-	asserts.connect("asserted", _testcase, "_on_asserted")
-	connect("described", _testcase, "_on_test_method_described")
 
 func any():
 	return preload("any.gd").new()

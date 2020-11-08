@@ -49,13 +49,14 @@ quick_access=Object(FuncRef,"script":null)
 
 Test_Directory="res://tests"
 ActiveRunPath="res://tests"
-Tags=PoolStringArray( "32", "64", "Linux", "Beep" )
+Tags=PoolStringArray( "32", "64", "Linux", "Beep", "Hello" )
 Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
-0: 0,
-1: 1
+0: 3,
+1: 0,
+"tag": "Hello"
 }
 Window_Size=Vector2( 1280, 720 )
 

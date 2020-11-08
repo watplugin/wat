@@ -19,4 +19,4 @@
 [resource]
 script = ExtResource( 1 )
 scripts = [ null, ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), null, ExtResource( 13 ), ExtResource( 14 ), null, ExtResource( 16 ), ExtResource( 2 ), ExtResource( 12 ) ]
-tags = [ [ "32" ], [  ], [ "64", "Beep" ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ] ]
+tags = [ [ "32" ], [  ], [ "64", "Beep", "32", "Hello" ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ] ]

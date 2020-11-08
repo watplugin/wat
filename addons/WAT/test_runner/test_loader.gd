@@ -43,12 +43,6 @@ func _get_tagged(tag: String) -> Array:
 	var tests = _load_tests(tagged)
 	return tests
 	
-func metadata() -> Resource:
-	var path = ProjectSettings.get_setting("WAT/Test_Directory")
-	var loadpath: String = "%s/.test/metadata.tres" % path
-	var object = load(loadpath)
-	return object
-
 func _load_tests(_tests: Array) -> Array:
 	var tests: Array = []
 	for path in _tests:
