@@ -39,6 +39,9 @@ func _change_state() -> void:
 			_pre()
 		WATState.END:
 			_end()
+			
+func run() -> void:
+	_start()
 	
 func _start():
 	_state = WATState.START
