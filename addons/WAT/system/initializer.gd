@@ -8,6 +8,15 @@ func _init() -> void:
 	_add_test_metadata_folder()
 	_add_tag_setting()
 	_add_window_sizing()
+	_add_port_setting()
+	
+func _add_port_setting() -> void:
+	if ProjectSettings.has_setting("WAT/Port"):
+		return
+	var prop: Dictionary = {"name": "WAT/Tags", "type": TYPE_INT}
+	ProjectSettings.set("WAT/Port", 6000)
+	ProjectSettings.add_property_info(prop)
+	push_warning("Set WAT Port To 6000. You can change this in Project -> Project Settings -> General -> WAT")
 	
 func _add_tag_setting() -> void:
 	if ProjectSettings.has_setting("WAT/Tags"):

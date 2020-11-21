@@ -17,6 +17,7 @@ var _time: float
 var time_taken: float
 
 func _ready() -> void:
+	$Client.join()
 	_time = OS.get_ticks_msec()
 	if get_tree().root.get_child(0) == self:
 		# We don't want to start if we're being run as a scene directly rather..

@@ -44,6 +44,7 @@ func _on_view_pressed(id: int) -> void:
 			Results.expand_failures()
 
 func _ready() -> void:
+	$Host.host()
 	set_process(false)
 	More.connect("pressed", self, "_show_more")
 	Menu.clear()

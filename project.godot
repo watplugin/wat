@@ -54,11 +54,11 @@ Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
-0: 3,
-1: 0,
-"tag": "Hello"
+0: 0,
+1: 1
 }
 Window_Size=Vector2( 1280, 720 )
+Port=6000
 
 [application]
 
