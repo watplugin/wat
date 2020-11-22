@@ -11,18 +11,21 @@ var has_active_connection: bool = false
 
 func host() -> void:
 	server = TCP_Server.new()
-	server.listen(port, IP_ADDRESS)
+	var p: int = get_port()
+	print("host got port: " + p as String)
+	server.listen(p, IP_ADDRESS)
 	is_listening = true
 	
 func _process(delta: float) -> void:
-	if is_listening and server.is_connection_available():
+	#print("seeking")
+	if server != null and server.is_connection_available():
 			peer = server.take_connection()
 			is_listening = false
 			has_active_connection = true
 			print("Server has found client")
-	elif has_active_connection:
-		peer.put_utf8_string("Hello TestRunner") # Why 0?
-	
+	if peer != null and peer.get_available_bytes() > 0:
+		print(peer.get_utf8_string())
+			
 func get_port() -> int:
 	if ProjectSettings.has_setting("WAT/Port"):
 		return ProjectSettings.get_setting("WAT/Port")

@@ -73,5 +73,6 @@ func end() -> void:
 	JunitXML.save(_cases, time_taken)
 	test_results.deposit(_cases)
 	emit_signal("ended")
+	$Client.quit()
 	if(is_editor):
 		get_tree().quit()

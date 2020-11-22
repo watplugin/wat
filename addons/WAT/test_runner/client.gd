@@ -7,12 +7,14 @@ var client: StreamPeerTCP
 
 func join() -> void:
 	client = StreamPeerTCP.new()
-	client.connect_to_host(IP_ADDRESS, get_port())
+	var p: int = get_port()
+	print("client got port: " + p as String)
+	client.connect_to_host(IP_ADDRESS, p)
 	
 func _process(delta: float) -> void:
 	if client.is_connected_to_host():
-		print("Client is connected")
-		print(client.get_available_bytes())
+		client.put_utf8_string("Hello!")
+		
 	
 func get_port() -> int:
 	if ProjectSettings.has_setting("WAT/Port"):
