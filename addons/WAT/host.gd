@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 			is_listening = false
 			has_active_connection = true
 	if peer != null and peer.get_available_bytes() > 0:
-		_process_command(peer.get_var(true))
+		_process_command(peer.get_var(DO_NOT_ALLOW_FULL_OBJECTS))
 		
 func _process_command(cmd: Dictionary) -> void:
 	match cmd[COMMAND]:

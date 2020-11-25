@@ -56,7 +56,7 @@ Results_Directory="res://tests/results/WAT"
 TestStrategy={
 0: 2,
 1: 1,
-"script": "res://tests/unit/is_instance.test.gd"
+"script": "res://tests/unit/equality.test.gd"
 }
 Window_Size=Vector2( 1280, 720 )
 Port=6000
