@@ -112,14 +112,6 @@ func _run() -> void:
 		n.is_editor = false
 		add_child(n)
 
-func _process(delta):
-	pass
-#	if WAT.Results.exist():
-#		var results = WAT.Results.withdraw()
-#		Summary.summarize(results)
-#		Results.display(results)
-#		set_process(false)
-
 func selected(selector: OptionButton) -> String:
 	if selector.selected == NOTHING_SELECTED:
 		push_warning("Nothing Selected")

@@ -1,12 +1,11 @@
 extends Node
 
-# const strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
+
 const COMPLETED: String = "completed"
 signal ended
 
 var JunitXML = preload("res://addons/WAT/resources/JUnitXML.gd").new()
 var test_loader: Reference = preload("test_loader.gd").new()
-var test_results: Resource = WAT.Results
 var strategy: Reference = preload("res://addons/WAT/test_runner/strategy.gd").new()
 var test_double_registry: Node = preload("res://addons/WAT/double/registry.gd").new()
 
@@ -71,10 +70,8 @@ func end() -> void:
 	print("Ending WAT Test Runner")
 	OS.window_minimized = false
 	JunitXML.save(_cases, time_taken)
-	test_results.deposit(_cases)
 	emit_signal("ended")
 	$Client.send_results(_cases)
-	#yield(get_tree().create_timer(2), "timeout")
 	$Client.quit()
 	if(is_editor):
 		get_tree().quit()
