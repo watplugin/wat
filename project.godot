@@ -54,8 +54,9 @@ Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"
 TestStrategy={
-0: 0,
-1: 1
+0: 2,
+1: 1,
+"script": "res://tests/unit/parameters.test.gd"
 }
 Window_Size=Vector2( 1280, 720 )
 Port=6000

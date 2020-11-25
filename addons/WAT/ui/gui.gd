@@ -44,8 +44,9 @@ func _on_view_pressed(id: int) -> void:
 			Results.expand_failures()
 
 func _ready() -> void:
-	$Host.host()
+	
 	#set_process(false)
+	$Host.connect("ResultsReceived", self, "OnResultsReceived")
 	More.connect("pressed", self, "_show_more")
 	Menu.clear()
 	ViewMenu.clear()
@@ -64,6 +65,10 @@ func _ready() -> void:
 
 	MethodSelector.connect("pressed", self, "_on_method_selector_pressed")
 	
+func OnResultsReceived(results: Array) -> void:
+	Summary.summarize(results)
+	Results.display(results)
+	
 func _show_more() -> void:
 	MethodSelector.visible = not MethodSelector.visible
 	HiddenBorder.visible = MethodSelector.visible
@@ -80,7 +85,6 @@ func _on_method_selector_pressed() -> void:
 			MethodSelector.add_item(method.name)
 
 func _on_run_pressed(option: int) -> void:
-	set_process(true)
 	match option:
 		RUN.ALL:
 			strategy.RunAll(get_repeat())
@@ -97,6 +101,7 @@ func _on_run_pressed(option: int) -> void:
 	_run()
 
 func _run() -> void:
+	$Host.host()
 	Summary.start_time()
 	Results.clear()
 	if(Engine.is_editor_hint()):
@@ -108,11 +113,12 @@ func _run() -> void:
 		add_child(n)
 
 func _process(delta):
-	if WAT.Results.exist():
-		var results = WAT.Results.withdraw()
-		Summary.summarize(results)
-		Results.display(results)
-		set_process(false)
+	pass
+#	if WAT.Results.exist():
+#		var results = WAT.Results.withdraw()
+#		Summary.summarize(results)
+#		Results.display(results)
+#		set_process(false)
 
 func selected(selector: OptionButton) -> String:
 	if selector.selected == NOTHING_SELECTED:
