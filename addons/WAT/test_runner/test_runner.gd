@@ -4,7 +4,7 @@ extends Node
 const COMPLETED: String = "completed"
 signal ended
 
-var JunitXML = preload("res://addons/WAT/resources/JUnitXML.gd").new()
+var JunitXML = preload("res://addons/WAT/JUnitXML.gd").new()
 var test_loader: Reference = preload("test_loader.gd").new()
 var strategy: Reference = preload("res://addons/WAT/test_runner/strategy.gd").new()
 var test_double_registry: Node = preload("res://addons/WAT/double/registry.gd").new()
