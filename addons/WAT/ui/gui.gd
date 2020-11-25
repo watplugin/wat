@@ -85,22 +85,23 @@ func _on_method_selector_pressed() -> void:
 			MethodSelector.add_item(method.name)
 
 func _on_run_pressed(option: int) -> void:
+	var strat: Dictionary = {}
 	match option:
 		RUN.ALL:
-			strategy.RunAll(get_repeat())
+			strat = strategy.RunAll(get_repeat())
 		RUN.DIRECTORY:
-			strategy.RunDirectory(_directory, get_repeat())
+			strat = strategy.RunDirectory(_directory, get_repeat())
 		RUN.SCRIPT:
-			strategy.RunScript(_script, get_repeat())
+			strat = strategy.RunScript(_script, get_repeat())
 		RUN.TAGGED:
-			strategy.RunTag(_tag, get_repeat())
+			strat = strategy.RunTag(_tag, get_repeat())
 		RUN.METHOD:
-			strategy.RunMethod(_script, selected(MethodSelector), get_repeat())
+			strat = strategy.RunMethod(_script, selected(MethodSelector), get_repeat())
 		RUN.RERUN_FAILURES:
-			strategy.RunFailures(get_repeat())
-	_run()
+			strat = strategy.RunFailures(get_repeat())
+	_run(strat)
 
-func _run() -> void:
+func _run(strat) -> void:
 	$Host.host()
 	Summary.start_time()
 	Results.clear()
@@ -111,6 +112,8 @@ func _run() -> void:
 		var n = load(TestRunner).instance()
 		n.is_editor = false
 		add_child(n)
+	yield($Host, "ClientConnected")
+	$Host.send_strategy(strat)
 
 func selected(selector: OptionButton) -> String:
 	if selector.selected == NOTHING_SELECTED:

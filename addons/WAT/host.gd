@@ -40,6 +40,7 @@ func _process(delta: float) -> void:
 			peer = server.take_connection()
 			is_listening = false
 			has_active_connection = true
+			emit_signal("ClientConnected")
 	if peer != null and peer.get_available_bytes() > 0:
 		_process_command(peer.get_var(DO_NOT_ALLOW_FULL_OBJECTS))
 		
@@ -51,12 +52,16 @@ func _process_command(cmd: Dictionary) -> void:
 			_on_results_received(cmd["results"])
 		_:
 			pass # NoValidCommandFound (Error?)
-		
+				
 func _on_results_received(results: Array) -> void:
 	emit_signal("ResultsReceived", results)
 		
 func send_strategy(strategy: Dictionary = {0: 0}) -> void:
-	peer.put_var(strategy)
+	print("sending strategy")
+	if peer != null and peer.is_connected_to_host():
+		peer.put_var({COMMAND: STRATEGY, "strategy": strategy})
+	else:
+		push_warning("Not connected")
 			
 func get_port() -> int:
 	if ProjectSettings.has_setting("WAT/Port"):

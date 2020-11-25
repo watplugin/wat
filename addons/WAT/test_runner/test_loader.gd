@@ -1,23 +1,29 @@
 extends Reference
 
 const FileSystem: Script = preload("res://addons/WAT/system/filesystem.gd")
+enum { STRATEGY, REPEAT, TAG, } 
+enum strat { RUN_ALL, RUN_DIRECTORY, RUN_SCRIPT, RUN_TAG, RUN_METHOD, RERUN_FAILED }
 
 func get_tests(strategy) -> Array:
 	var tests: Array = []
-	match strategy.get_current_strategy():
-		strategy.RUN_ALL:
+	match strategy[STRATEGY]:
+		strat.RUN_ALL:
 			tests = _get_all()
-		strategy.RUN_DIRECTORY:
-			tests = _get_directory(strategy.directory())
-		strategy.RUN_SCRIPT:
-			tests = _get_script(strategy.script())
-		strategy.RUN_TAG:
-			tests = _get_tagged(strategy.tag())
-		strategy.RUN_METHOD:
-			tests = _get_script(strategy.script())
-		strategy.RERUN_FAILED:
-			tests = _get_last_failed()
-	tests = _duplicate_per_repeat(tests, strategy.repeat())
+		strat.RUN_DIRECTORY:
+			tests = _get_directory(strategy["directory"])
+		strat.RUN_SCRIPT:
+			tests = _get_script(strategy["script"])
+		strat.RUN_TAG:
+			tests = _get_tagged(strategy["tag"])
+		strat.RUN_METHOD:
+			# We don't know how to pass the method
+			push_warning("RUN METHOD DE-IMPLEMETNED")
+			#tests = _get_script(strategy.script())
+		strat.RERUN_FAILED:
+			# We need to store and retrieve the results somewhere
+			push_warning("RERUN FAILED DE-IMPLEMENTED")
+			#tests = _get_last_failed()
+	tests = _duplicate_per_repeat(tests, strategy[REPEAT])
 	return tests
 			
 func _get_all() -> Array:
@@ -30,6 +36,7 @@ func _get_script(_script: String) -> Array:
 	return _load_tests([_script])
 	
 func _get_last_failed() -> Array:
+	# We'll need to figure out a way to store these elsewhere
 	return _load_tests(load("res://addons/WAT/resources/results.tres").failures)
 	
 func _get_tagged(tag: String) -> Array:

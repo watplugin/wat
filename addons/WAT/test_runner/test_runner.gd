@@ -6,7 +6,6 @@ signal ended
 
 var JunitXML = preload("res://addons/WAT/JUnitXML.gd").new()
 var test_loader: Reference = preload("test_loader.gd").new()
-var strategy: Reference = preload("res://addons/WAT/test_runner/strategy.gd").new()
 var test_double_registry: Node = preload("res://addons/WAT/double/registry.gd").new()
 
 var _tests: Array = []
@@ -17,23 +16,25 @@ var time_taken: float
 
 func _ready() -> void:
 	$Client.join()
+	$Client.connect("StrategyReceived", self, "OnStrategyReceived")
 	_time = OS.get_ticks_msec()
 	if get_tree().root.get_child(0) == self:
 		# We don't want to start if we're being run as a scene directly rather..
 		# ..than via editor
 		# In future iterations we will handle this via TCP
 		print("Starting WAT Test Runner")
-	OS.window_minimized = ProjectSettings.get_setting(
-			"WAT/Minimize_Window_When_Running_Tests")
-	_begin()
+	OS.window_minimized = ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests")
 	
-func _begin():
-	_tests = get_tests()
+func OnStrategyReceived(strategy):
+	_begin(strategy)
+	
+func _begin(strategy):
+	_tests = get_tests(strategy)
 	if _tests.empty():
 		push_warning("No Scripts To Test")
 	_run_tests()
 	
-func get_tests() -> Array:
+func get_tests(strategy) -> Array:
 	return test_loader.get_tests(strategy)
 
 func _run_tests() -> void:
@@ -48,10 +49,12 @@ func create_test(test_script: WAT.Test = _tests.pop_front()) -> Node:
 	test.setup(WAT.Asserts.new(), WAT.Yielder.new(), testcase, \
 		WAT.TestDoubleFactory.new(), WAT.SignalWatcher.new(), WAT.Parameters.new(),
 		WAT.Recorder, test_double_registry)
-	if not strategy.method().empty():
-		test._methods = [strategy.method()]
-	else:
-		test._methods = test.methods()
+	### WARNING - Need To Slide The Method Getting Easily
+	#	if not strategy.method().empty():
+	#		test._methods = [strategy.method()]
+	#	else:
+		### WARNING
+	test._methods = test.methods()
 	return test
 
 func run(test) -> void:
