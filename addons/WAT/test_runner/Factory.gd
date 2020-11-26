@@ -32,11 +32,10 @@ func get_next_test() -> Node:
 	test.setup(asserts, yielder, doubles, watcher, parameters, Recorder, test_double_registry)
 	_cursor += 1
 	# We may need to add case to our controller
-	var test_controller = TestController.new(test, yielder)
+	var test_controller = TestController.new(test, yielder, testcase)
 	test.asserts.connect("asserted", testcase, "_on_asserted")
 	test.connect("described", testcase, "_on_test_method_described")
 	yielder.connect("finished", test_controller, "_next")
-	test_controller.connect("executing", testcase, "_add_method")
 	return test_controller
 	
 func is_done() -> bool:

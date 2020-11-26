@@ -1,26 +1,17 @@
 extends Node
 
-### RUN ORDER
-# Initialize Connections
-# Get Strategy From Editor
-#	-> Loader = _get_scripts(strategy) # can we add metadata to a script? Answer: YES
-#	-> Factory = _get_loaded_scripts() // Knows about strategy?
-#	-> Factory -> New Test
-#	-> Factory -> New TestController(test)
-#	-> Runner = _run()
-# Single Test Finished
-
 onready var Client: Node = get_node("Client")
 onready var Factory: Node = get_node("Factory")
 onready var Loader: Node = get_node("Loader")
 onready var Executor: Node = get_node("Executor")
 onready var Run: Node = get_node("Run")
+var results = []
 
 func _ready() -> void:
 	_initialize()
 
 func _initialize() -> void:
-	print("NEW TEST RUNNER READY")
+	print("Initializing TestRunner")
 	Client.connect("StrategyReceived", self, "_run")
 	Client.join()
 	
@@ -33,10 +24,11 @@ func _run(strategy: Dictionary) -> void:
 		test.run()
 		yield(test, "finished")
 		remove_child(test)
-		# run.add_results?
+		results.append(test.results)
+	Client.send_results(results)
 	_terminate()
 	
 func _terminate() -> void:
-	print("NEW TEST RUNNER QUITTING")
+	print("Terminating TestRunner")
 	Client.quit()
 	get_tree().quit()

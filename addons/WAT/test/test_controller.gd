@@ -2,17 +2,23 @@ extends Node
 
 enum { START, PRE, EXECUTE, POST, END }
 signal finished
-signal executing
 var _state = START
 var _yielder
 var _test
+var _case
 var _methods
 var _current_method
 var _cursor = 0
+var results setget ,_get_results
 
-func _init(test, yielder) -> void:
+func _get_results():
+	_case.calculate()
+	return _case.to_dictionary()
+
+func _init(test, yielder, case) -> void:
 	_test = test
 	_yielder = yielder
+	_case = case
 	_methods = _test.methods()
 	add_child(_yielder)
 	add_child(_test)
@@ -46,35 +52,29 @@ func _next(vargs = null):
 	call_deferred("_change_state")
 	
 func _start() -> void:
-	print("starting")
 	_state = START
 	_test.start()
 	_next()
 	
 func _pre() -> void:
-	# We're checking if the code ends here?
-	print("pre")
 	_state = PRE
 	_test.pre()
 	_next()
 	
 func _execute() -> void:
-	print("executing")
 	_state = EXECUTE
 	_current_method = _methods[_cursor]
-	emit_signal("executing", _current_method)
+	_case.add_method(_current_method)
 	_test.call(_current_method)
 	_cursor += 1
 	_next()
 	
 func _post() -> void:
-	print("post")
 	_state = POST if _is_done() else END
 	_test.post()
 	_next()
 	
 func _end() -> void:
-	print("end")
 	_state = END
 	_test.end()
 	_next()

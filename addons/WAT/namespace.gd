@@ -2,7 +2,6 @@ extends Reference
 class_name WAT
 
 const TestDoubleFactory = preload("res://addons/WAT/double/factory.gd")
-const BaseTest = preload("res://addons/WAT/test/base_test.gd")
 const Test: Script = preload("res://addons/WAT/test/test.gd")
 const TestSuiteOfSuites = preload("res://addons/WAT/test/suite.gd")
 const SignalWatcher = preload("res://addons/WAT/test/watcher.gd")
