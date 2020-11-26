@@ -1,5 +1,18 @@
 extends Node
 
+class strategy:
+	# Temp Class
+	static func RunScript(script: String, repeat: int = 1) -> void:
+		push_warning("Strategy Script Is Empty. Run from GUI; Not CLI")
+	
+	static func RunTag(tag: String, repeat: int = 1) -> void:
+		push_warning("Strategy Script Is Empty. Run from GUI; Not CLI")
+		
+	static func RunMethod(script: String, method: String, repeat: int = 1) -> void:
+		push_warning("Strategy Script Is Empty. Run from GUI; Not CLI")
+		
+	static func RunFailures(repeat: int = 1) -> void:
+		push_warning("Strategy Script Is Empty. Run from GUI; Not CLI")
 
 const RUN_ALL: String = "-run_all"
 const RUN_DIRECTORY: String = "-run_dir"
@@ -12,10 +25,8 @@ const LIST_DIR: String = "-list_dir"
 const PASSED: int = 0
 const FAILED: int = 1
 
-# const strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
 const TestRunner: PackedScene = preload("res://addons/WAT/test_runner/TestRunner.tscn")
 const FileSystem: Reference = preload("res://addons/WAT/system/filesystem.gd")
-var strategy: Reference = preload("res://addons/WAT/test_runner/strategy.gd").new()
 
 var _runner: Node
 var _start_time: float
@@ -31,7 +42,7 @@ func repeat(args) -> int:
 		return args.back() as int
 	else:
 		return 1
-	
+		
 func parse(arguments: Array) -> void:
 	var command: String = arguments.pop_front()
 	match command:

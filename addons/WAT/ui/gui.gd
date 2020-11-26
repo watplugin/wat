@@ -29,7 +29,6 @@ func get_repeat() -> int:
 	return Repeater.value as int
 	
 var execute = preload("res://addons/WAT/test_runner/execute.gd").new()
-var strategy: Reference = preload("res://addons/WAT/test_runner/strategy.gd").new()
 
 export(PoolStringArray) var run_options: PoolStringArray
 export(PoolStringArray) var view_options: PoolStringArray
@@ -84,21 +83,34 @@ func _on_method_selector_pressed() -> void:
 		if method.name.begins_with("test"):
 			MethodSelector.add_item(method.name)
 
+enum { Strategy, Repeat, Tag, } 
+enum { RUN_ALL, RUN_DIRECTORY, RUN_SCRIPT, RUN_TAG, RUN_METHOD, RERUN_FAILED }
 func _on_run_pressed(option: int) -> void:
 	var strat: Dictionary = {}
 	match option:
 		RUN.ALL:
-			strat = strategy.RunAll(get_repeat())
+			strat[Strategy] = RUN_ALL
+			strat[Repeat] = get_repeat()
 		RUN.DIRECTORY:
-			strat = strategy.RunDirectory(_directory, get_repeat())
+			strat[Strategy] = RUN_DIRECTORY
+			strat["directory"] = _directory
+			strat[Repeat] = get_repeat()
 		RUN.SCRIPT:
-			strat = strategy.RunScript(_script, get_repeat())
+			strat[Strategy] = RUN_SCRIPT
+			strat["script"] = _script
+			strat[Repeat] = get_repeat()
 		RUN.TAGGED:
-			strat = strategy.RunTag(_tag, get_repeat())
+			strat[Strategy] = RUN_TAG
+			strat["tag"] = _tag
+			strat[Repeat] = get_repeat()
 		RUN.METHOD:
-			strat = strategy.RunMethod(_script, selected(MethodSelector), get_repeat())
+			strat[Strategy] = RUN_METHOD
+			strat["script"] = _script
+			strat["method"] = selected(MethodSelector)
+			strat[Repeat] = get_repeat()
 		RUN.RERUN_FAILURES:
-			strat = strategy.RunFailures(get_repeat())
+			strat[Strategy] = RERUN_FAILED
+			strat[Repeat] = get_repeat()
 	_run(strat)
 
 func _run(strat) -> void:
