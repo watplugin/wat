@@ -3,15 +3,15 @@ extends Node
 enum { START, PRE, EXECUTE, POST, END }
 signal finished
 var _state = START
-var _yielder
-var _test
-var _case
-var _methods
-var _current_method
+var _yielder: WAT.Yielder
+var _test: WAT.Test
+var _case: WAT.TestCase
+var _methods: PoolStringArray = []
+var _current_method: String
 var _cursor = 0
-var results setget ,_get_results
+var results: Dictionary setget ,_get_results
 
-func _get_results():
+func _get_results() -> Dictionary:
 	_case.calculate()
 	return _case.to_dictionary()
 
@@ -70,6 +70,7 @@ func _execute() -> void:
 	_next()
 	
 func _post() -> void:
+	# This was at pre for a reason, we need to check against repeats or non-starter scripts
 	_state = POST if _is_done() else END
 	_test.post()
 	_next()
