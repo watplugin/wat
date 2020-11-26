@@ -6,10 +6,11 @@ var _test_scripts: Array = []
 func get_test_scripts(scripts: Array) -> void:
 	_test_scripts = scripts
 
-func get_next_test():
+func get_next_test() -> Node:
+	_created_test_count += 1
+	return Node.new()
 	# Create Test
 	# Create Controller (inserting test)
-	pass
 	
 func is_done() -> bool:
 	return true if _created_test_count == _test_scripts.size() else false

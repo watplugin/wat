@@ -28,10 +28,11 @@ func _run(strategy: Dictionary) -> void:
 	# In Threaded versions, we could replace this with a system in process using "isRunning" boolean
 	Factory.get_test_scripts(Loader.load_test_scripts(strategy))
 	while not Factory.is_done():
-		print("getting_next_test")
 		var test = Factory.get_next_test()
 		add_child(test)
-		yield(test, "completed")
+		#		yield(test, "completed")
+		push_warning("Yield goes here. Not implemented yet")
+		remove_child(test)
 		# run.add_results?
 	_terminate()
 	
