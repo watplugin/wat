@@ -2,17 +2,18 @@ extends Node
 
 enum { START, PRE, EXECUTE, POST, END }
 signal finished
+signal executing
 var _state = START
 var _yielder
 var _test
 var _methods
+var _current_method
 var _cursor = 0
 
 func _init(test, yielder) -> void:
 	_test = test
 	_yielder = yielder
 	_methods = _test.methods()
-	_yielder.connect("finished", self, "_next")
 	add_child(_yielder)
 	add_child(_test)
 	
@@ -45,29 +46,38 @@ func _next(vargs = null):
 	call_deferred("_change_state")
 	
 func _start() -> void:
+	print("starting")
 	_state = START
 	_test.start()
 	_next()
 	
 func _pre() -> void:
 	# We're checking if the code ends here?
+	print("pre")
 	_state = PRE
 	_test.pre()
+	_next()
 	
 func _execute() -> void:
+	print("executing")
 	_state = EXECUTE
-	_test.call(_methods[_cursor])
+	_current_method = _methods[_cursor]
+	emit_signal("executing", _current_method)
+	_test.call(_current_method)
 	_cursor += 1
 	_next()
 	
 func _post() -> void:
+	print("post")
 	_state = POST if _is_done() else END
 	_test.post()
 	_next()
 	
 func _end() -> void:
+	print("end")
 	_state = END
 	_test.end()
+	_next()
 	
 func _is_done() -> bool:
 	return _cursor == _methods.size()

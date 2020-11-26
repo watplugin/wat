@@ -22,8 +22,6 @@ signal described
 
 func _ready() -> void:
 	p = _parameters.parameters
-	asserts.connect("asserted", _testcase, "_on_asserted")
-	connect("described", _testcase, "_on_test_method_described")
 
 func methods() -> PoolStringArray:
 	var output: PoolStringArray = []
@@ -32,12 +30,11 @@ func methods() -> PoolStringArray:
 			output.append(method.name)
 	return output
 	
-func setup(assertions, yielder, testcase, director, 
+func setup(assertions, yielder, director, 
 		   signal_watcher, parameters, recorder, registry):
 	asserts = assertions
 	director.registry = registry
 	direct = director
-	_testcase = testcase
 	_yielder = yielder
 	_watcher = signal_watcher
 	_parameters = parameters

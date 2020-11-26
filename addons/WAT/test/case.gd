@@ -17,6 +17,7 @@ func add_method(name: String) -> void:
 	methods.append({context = name, assertions = [], total = 0, passed = 0, success = false, time = 0.0})
 
 func _on_test_method_described(description: String) -> void:
+	print_debug(description)
 	methods.back().context = description
 	
 func _on_asserted(assertion: Object) -> void:

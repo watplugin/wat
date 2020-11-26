@@ -29,9 +29,14 @@ func get_next_test() -> Node:
 	var watcher = SignalWatcher.new()
 	var parameters = Parameters.new()
 	# Maybe pull this up here
-	test.setup(asserts, yielder, testcase, doubles, watcher, parameters, Recorder, test_double_registry)
+	test.setup(asserts, yielder, doubles, watcher, parameters, Recorder, test_double_registry)
 	_cursor += 1
+	# We may need to add case to our controller
 	var test_controller = TestController.new(test, yielder)
+	test.asserts.connect("asserted", testcase, "_on_asserted")
+	test.connect("described", testcase, "_on_test_method_described")
+	yielder.connect("finished", test_controller, "_next")
+	test_controller.connect("executing", testcase, "_add_method")
 	return test_controller
 	
 func is_done() -> bool:
