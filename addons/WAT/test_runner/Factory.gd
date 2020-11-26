@@ -1,5 +1,6 @@
 extends Node
 
+export(Script) var TestController
 var _created_test_count: int = 0
 var _test_scripts: Array = []
 

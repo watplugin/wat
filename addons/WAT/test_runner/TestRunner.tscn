@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/WAT/test_runner/test_runner.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/test_runner/client.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/test_runner/Executor.gd" type="Script" id=3]
 [ext_resource path="res://addons/WAT/test_runner/Factory.gd" type="Script" id=4]
 [ext_resource path="res://addons/WAT/test_runner/Loader.gd" type="Script" id=5]
+[ext_resource path="res://addons/WAT/test/test_controller.gd" type="Script" id=6]
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 1 )
@@ -14,6 +15,7 @@ script = ExtResource( 2 )
 
 [node name="Factory" type="Node" parent="."]
 script = ExtResource( 4 )
+TestController = ExtResource( 6 )
 
 [node name="Loader" type="Node" parent="."]
 script = ExtResource( 5 )
