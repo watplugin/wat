@@ -20,13 +20,12 @@ var is_listening: bool = false
 var has_active_connection: bool = false
 
 func host() -> void:
-	pass
-#	close()
-#	server = TCP_Server.new()
-#	var p: int = get_port()
-#	print("host got port: " + p as String)
-#	server.listen(p, IP_ADDRESS)
-#	is_listening = true
+	close()
+	server = TCP_Server.new()
+	var p: int = get_port()
+	print("host got port: " + p as String)
+	server.listen(p, IP_ADDRESS)
+	is_listening = true
 	
 func close():
 	if peer != null and peer.is_connected_to_host():
@@ -58,7 +57,6 @@ func _on_results_received(results: Array) -> void:
 	emit_signal("ResultsReceived", results)
 		
 func send_strategy(strategy: Dictionary = {0: 0}) -> void:
-	print("sending strategy")
 	if peer != null and peer.is_connected_to_host():
 		peer.put_var({COMMAND: STRATEGY, "strategy": strategy})
 	else:
