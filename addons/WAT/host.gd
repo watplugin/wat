@@ -20,12 +20,13 @@ var is_listening: bool = false
 var has_active_connection: bool = false
 
 func host() -> void:
-	close()
-	server = TCP_Server.new()
-	var p: int = get_port()
-	print("host got port: " + p as String)
-	server.listen(p, IP_ADDRESS)
-	is_listening = true
+	pass
+#	close()
+#	server = TCP_Server.new()
+#	var p: int = get_port()
+#	print("host got port: " + p as String)
+#	server.listen(p, IP_ADDRESS)
+#	is_listening = true
 	
 func close():
 	if peer != null and peer.is_connected_to_host():
