@@ -83,7 +83,7 @@ func _on_method_selector_pressed() -> void:
 		if method.name.begins_with("test"):
 			MethodSelector.add_item(method.name)
 
-enum { Strategy, Repeat, Tag, } 
+enum { Strategy, Tag, } 
 enum { RUN_ALL, RUN_DIRECTORY, RUN_SCRIPT, RUN_TAG, RUN_METHOD, RERUN_FAILED }
 func _on_run_pressed(option: int) -> void:
 	var strat: Dictionary = {}
@@ -91,30 +91,30 @@ func _on_run_pressed(option: int) -> void:
 		RUN.ALL:
 			strat[Strategy] = RUN_ALL
 			strat["directory"] = ProjectSettings.get_setting("WAT/Test_Directory")
-			strat[Repeat] = get_repeat()
+			strat["repeat"] = get_repeat()
 			strat["paths"] = filesystem.scripts(strat["directory"])
 		RUN.DIRECTORY:
 			strat[Strategy] = RUN_DIRECTORY
 			strat["directory"] = _directory
-			strat[Repeat] = get_repeat()
+			strat["repeat"] = get_repeat()
 			strat["paths"] = filesystem.scripts(strat["directory"])
 		RUN.SCRIPT:
 			strat[Strategy] = RUN_SCRIPT
 			strat["script"] = _script
-			strat[Repeat] = get_repeat()
+			strat["repeat"] = get_repeat()
 			strat["paths"] = filesystem.scripts(strat["script"])
 		RUN.TAGGED:
 			strat[Strategy] = RUN_TAG
 			strat["tag"] = _tag
-			strat[Repeat] = get_repeat()
+			strat["repeat"] = get_repeat()
 		RUN.METHOD:
 			strat[Strategy] = RUN_METHOD
 			strat["script"] = _script
 			strat["method"] = selected(MethodSelector)
-			strat[Repeat] = get_repeat()
+			strat["repeat"] = get_repeat()
 		RUN.RERUN_FAILURES:
 			strat[Strategy] = RERUN_FAILED
-			strat[Repeat] = get_repeat()
+			strat["repeat"] = get_repeat()
 	_run(strat)
 
 func _run(strat) -> void:
