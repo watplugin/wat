@@ -124,6 +124,3 @@ func selected(selector: OptionButton) -> String:
 
 func test_directory() -> String:
 	return ProjectSettings.get_setting("WAT/Test_Directory")
-	
-func set_run_path(path: String) -> void:
-	ProjectSettings.set("WAT/ActiveRunPath", path)
