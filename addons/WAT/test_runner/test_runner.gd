@@ -30,7 +30,8 @@ func _run(strategy: Dictionary) -> void:
 	while not Factory.is_done():
 		var test = Factory.get_next_test()
 		add_child(test)
-		#		yield(test, "completed")
+#		test.run()
+#		yield(test, "finished")
 		push_warning("Yield goes here. Not implemented yet")
 		remove_child(test)
 		# run.add_results?

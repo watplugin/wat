@@ -1,17 +1,17 @@
 extends Node
 
+const Assertions: Script = preload("res://addons/WAT/assertions/assertions.gd")
 const TEST: bool = true
 const YIELD: String = "finished"
 const CRASH_IF_TEST_FAILS: bool = true
 
-var asserts: Reference
+var asserts: Assertions
 var direct: Reference
 var rerun_method: bool = false
 
 # This is used to access variable data with the user test
 # e.g assert.is_equal(p.augend + p.addend, p.result, etc;
 var p: Dictionary
- 
 var _watcher: Reference
 var _parameters: Reference
 var _yielder: Timer
