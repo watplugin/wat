@@ -21,7 +21,8 @@ func get_test_scripts(scripts: Array) -> void:
 	_test_scripts = scripts
 
 func get_next_test() -> Node:
-	var test = _test_scripts[_cursor].new()
+	var script = _test_scripts[_cursor]
+	var test = script.new()
 	var testcase = TestCase.new(test.title(), test.path())
 	var asserts = Assertions.new()
 	var yielder = Yielder.new()

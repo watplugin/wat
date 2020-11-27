@@ -105,7 +105,7 @@ func _on_run_pressed(option: int) -> void:
 		RUN.METHOD:
 			# This is our only unusual system, not sure how to handle it
 			#strat[Strategy] = RUN_METHOD
-			strat["script"] = _script
+			strat["paths"] = [_script]
 			strat["method"] = selected(MethodSelector)
 			strat["repeat"] = get_repeat()
 		RUN.RERUN_FAILURES:

@@ -33,11 +33,12 @@ func post():
 func end():
 	pass
 
-
 func _ready() -> void:
 	p = _parameters.parameters
 
 func methods() -> PoolStringArray:
+	if(get_script().has_meta("method")):
+		return [get_script().get_meta("method")] as PoolStringArray
 	var output: PoolStringArray = []
 	for method in get_method_list():
 		if method.name.begins_with("test"):

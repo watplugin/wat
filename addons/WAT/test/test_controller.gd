@@ -29,7 +29,7 @@ func run() -> void:
 func _change_state() -> void:
 	if _yielder.is_active():
 		return
-	if _state == END:
+	if _state == END or _is_done():
 		emit_signal("finished")
 		return
 	match _state:
@@ -71,7 +71,7 @@ func _execute() -> void:
 	
 func _post() -> void:
 	# This was at pre for a reason, we need to check against repeats or non-starter scripts
-	_state = POST if _is_done() else END
+	_state = POST #if _is_done() else END
 	_test.post()
 	_next()
 	
