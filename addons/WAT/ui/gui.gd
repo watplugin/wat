@@ -1,7 +1,6 @@
 tool
 extends PanelContainer
 
-# const strategy: Script = preload("res://addons/WAT/core/test_runner/strategy.gd")
 enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
 enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED, METHOD, RERUN_FAILURES }
 const NOTHING_SELECTED: int = -1
@@ -87,7 +86,7 @@ func _on_run_pressed(option: int) -> void:
 	var strat: Dictionary = {"repeat": get_repeat()}
 	match option:
 		RUN.ALL:
-			strat["paths"] = filesystem.scripts(ProjectSettings.get_setting("WAT/Test_Directory"))
+			strat["paths"] = filesystem.scripts(test_directory())
 		RUN.DIRECTORY:
 			strat["paths"] = filesystem.scripts(_directory)
 		RUN.SCRIPT:
