@@ -3,8 +3,6 @@ extends Node
 onready var Client: Node = get_node("Client")
 onready var Factory: Node = get_node("Factory")
 onready var Loader: Node = get_node("Loader")
-onready var Executor: Node = get_node("Executor")
-onready var Run: Node = get_node("Run")
 var results = []
 
 func _ready() -> void:

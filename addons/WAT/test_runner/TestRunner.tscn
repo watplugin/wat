@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://addons/WAT/test_runner/test_runner.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/test_runner/client.gd" type="Script" id=2]
-[ext_resource path="res://addons/WAT/test_runner/Executor.gd" type="Script" id=3]
 [ext_resource path="res://addons/WAT/test_runner/Factory.gd" type="Script" id=4]
 [ext_resource path="res://addons/WAT/test_runner/Loader.gd" type="Script" id=5]
 [ext_resource path="res://addons/WAT/test/test_controller.gd" type="Script" id=6]
@@ -35,8 +34,3 @@ TestDoubleRegistry = ExtResource( 14 )
 
 [node name="Loader" type="Node" parent="."]
 script = ExtResource( 5 )
-
-[node name="Executor" type="Node" parent="."]
-script = ExtResource( 3 )
-
-[node name="Run" type="Node" parent="."]
