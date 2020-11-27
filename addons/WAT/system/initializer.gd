@@ -22,7 +22,7 @@ func _add_tag_setting() -> void:
 	if ProjectSettings.has_setting("WAT/Tags"):
 		return
 	var property_info: Dictionary = {"name": "WAT/Tags",
-	"type": TYPE_STRING_ARRAY}
+	"type": TYPE_STRING_ARRAY, "hint_string": "Defines Tags to group Tests"}
 	ProjectSettings.set("WAT/Tags", PoolStringArray())
 	ProjectSettings.add_property_info(property_info)
 	
