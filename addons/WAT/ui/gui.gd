@@ -26,8 +26,6 @@ var _tag: String
 
 func get_repeat() -> int:
 	return Repeater.value as int
-	
-var execute = preload("res://addons/WAT/test_runner/execute.gd").new()
 
 export(PoolStringArray) var run_options: PoolStringArray
 export(PoolStringArray) var view_options: PoolStringArray
@@ -107,7 +105,7 @@ func _run(strat) -> void:
 	Summary.start_time()
 	Results.clear()
 	if(Engine.is_editor_hint()):
-		execute.run(TestRunner)
+		EditorPlugin.new().get_editor_interface().play_custom_scene(TestRunner)
 		EditorPlugin.new().make_bottom_panel_item_visible(self)
 	else:
 		var n = load(TestRunner).instance()
