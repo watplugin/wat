@@ -83,33 +83,23 @@ func _on_method_selector_pressed() -> void:
 		if method.name.begins_with("test"):
 			MethodSelector.add_item(method.name)
 
-enum { Strategy, Tag, } 
-enum { RUN_METHOD }
 func _on_run_pressed(option: int) -> void:
-	var strat: Dictionary = {}
+	var strat: Dictionary = {"repeat": get_repeat()}
 	match option:
 		RUN.ALL:
-			strat["repeat"] = get_repeat()
 			strat["paths"] = filesystem.scripts(ProjectSettings.get_setting("WAT/Test_Directory"))
 		RUN.DIRECTORY:
-			strat["repeat"] = get_repeat()
 			strat["paths"] = filesystem.scripts(_directory)
 		RUN.SCRIPT:
-			strat["repeat"] = get_repeat()
 			strat["paths"] = [_script]
 		RUN.TAGGED:
 			strat["tag"] = _tag
-			strat["repeat"] = get_repeat()
 			# IMPLEMENT THIS
 			# strat["paths"] = filesystem.tags(strat["tag"]) // TestCollector, not filesystem?
 		RUN.METHOD:
-			# This is our only unusual system, not sure how to handle it
-			#strat[Strategy] = RUN_METHOD
 			strat["paths"] = [_script]
 			strat["method"] = selected(MethodSelector)
-			strat["repeat"] = get_repeat()
 		RUN.RERUN_FAILURES:
-			strat["repeat"] = get_repeat()
 			strat["paths"] = Results.get_last_run_failures()
 	_run(strat)
 
