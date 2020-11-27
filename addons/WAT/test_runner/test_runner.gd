@@ -30,18 +30,3 @@ func _terminate() -> void:
 	print("Terminating TestRunner")
 	Client.quit()
 	get_tree().quit()
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

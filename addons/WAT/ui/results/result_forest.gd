@@ -2,10 +2,18 @@ tool
 extends TabContainer
 
 const ResultTree: PackedScene = preload("res://addons/WAT/ui/results/ResultTree.tscn")
-var _results: Resource
+var _results: Array
 var _tabs: Dictionary
-		
+
+func get_last_run_failures() -> Array:
+	var failures = []
+	for result in _results:
+		if not result.success:
+			failures.append(result.path)
+	return failures
+
 func display(results: Array):
+	_results = results
 	_add_result_tree(results)
 		
 func _add_result_tree(results: Array) -> void:

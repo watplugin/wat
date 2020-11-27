@@ -110,6 +110,7 @@ func _on_run_pressed(option: int) -> void:
 			strat["repeat"] = get_repeat()
 		RUN.RERUN_FAILURES:
 			strat["repeat"] = get_repeat()
+			strat["paths"] = Results.get_last_run_failures()
 	_run(strat)
 
 func _run(strat) -> void:
