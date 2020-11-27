@@ -141,7 +141,6 @@ margin_bottom = 24.0
 rect_min_size = Vector2( 130, 0 )
 size_flags_horizontal = 0
 max_value = 10.0
-value = 1.0
 allow_greater = true
 allow_lesser = true
 prefix = "Repeat"
