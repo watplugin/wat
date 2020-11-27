@@ -1,6 +1,16 @@
 extends Node
 
 func load_test_scripts(strategy: Dictionary) -> Array:
+#	match strategy.strategy:
+#		"directory", "script":
+#			pass
+#		"method":
+#			pass
+#
+#	#if(strategy.has("method")):
+#
+#	# check for method (if so, add method to meta)
+#	# check for suites (if so, do what?)
 	return _duplicate_per_repeat(_load(strategy.paths), strategy.repeat)
 
 func _load(paths: Array) -> Array:

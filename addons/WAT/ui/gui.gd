@@ -84,36 +84,31 @@ func _on_method_selector_pressed() -> void:
 			MethodSelector.add_item(method.name)
 
 enum { Strategy, Tag, } 
-enum { RUN_ALL, RUN_DIRECTORY, RUN_SCRIPT, RUN_TAG, RUN_METHOD, RERUN_FAILED }
+enum { RUN_METHOD }
 func _on_run_pressed(option: int) -> void:
 	var strat: Dictionary = {}
 	match option:
 		RUN.ALL:
-			strat[Strategy] = RUN_ALL
-			strat["directory"] = ProjectSettings.get_setting("WAT/Test_Directory")
 			strat["repeat"] = get_repeat()
-			strat["paths"] = filesystem.scripts(strat["directory"])
+			strat["paths"] = filesystem.scripts(strat[ProjectSettings.get_setting("WAT/Test_Directory")])
 		RUN.DIRECTORY:
-			strat[Strategy] = RUN_DIRECTORY
-			strat["directory"] = _directory
 			strat["repeat"] = get_repeat()
-			strat["paths"] = filesystem.scripts(strat["directory"])
+			strat["paths"] = filesystem.scripts(_directory)
 		RUN.SCRIPT:
-			strat[Strategy] = RUN_SCRIPT
-			strat["script"] = _script
 			strat["repeat"] = get_repeat()
-			strat["paths"] = filesystem.scripts(strat["script"])
+			strat["paths"] = [_script]
 		RUN.TAGGED:
-			strat[Strategy] = RUN_TAG
 			strat["tag"] = _tag
 			strat["repeat"] = get_repeat()
+			# IMPLEMENT THIS
+			# strat["paths"] = filesystem.tags(strat["tag"]) // TestCollector, not filesystem?
 		RUN.METHOD:
-			strat[Strategy] = RUN_METHOD
+			# This is our only unusual system, not sure how to handle it
+			#strat[Strategy] = RUN_METHOD
 			strat["script"] = _script
 			strat["method"] = selected(MethodSelector)
 			strat["repeat"] = get_repeat()
 		RUN.RERUN_FAILURES:
-			strat[Strategy] = RERUN_FAILED
 			strat["repeat"] = get_repeat()
 	_run(strat)
 
