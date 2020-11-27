@@ -90,7 +90,7 @@ func _on_run_pressed(option: int) -> void:
 	match option:
 		RUN.ALL:
 			strat["repeat"] = get_repeat()
-			strat["paths"] = filesystem.scripts(strat[ProjectSettings.get_setting("WAT/Test_Directory")])
+			strat["paths"] = filesystem.scripts(ProjectSettings.get_setting("WAT/Test_Directory"))
 		RUN.DIRECTORY:
 			strat["repeat"] = get_repeat()
 			strat["paths"] = filesystem.scripts(_directory)
