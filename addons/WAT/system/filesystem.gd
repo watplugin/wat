@@ -14,7 +14,7 @@ static func scripts(path: String = test_folder()) -> PoolStringArray:
 		var output: PoolStringArray = []
 		var directory: Directory = Directory.new()
 		for path in list:
-			if directory.call("file_exists", path):
+			if directory.file_exists(path):
 				if path.ends_with(".gd"):
 					output.append(path)
 		return output
@@ -24,7 +24,7 @@ static func directories(path: String = test_folder()) -> PoolStringArray:
 	var output: PoolStringArray = []
 	var directory: Directory = Directory.new()
 	for path in list:
-		if directory.call("dir_exists", path):
+		if directory.dir_exists(path):
 			output.append(path)
 	return output
 	
