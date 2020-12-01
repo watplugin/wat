@@ -49,18 +49,3 @@ static func _list_dir(path: String) -> PoolStringArray:
 		list += _list_dir(subdirectory)
 		
 	return list
-
-static func templates():
-	var template_directory: String = ProjectSettings.get_setting("editor/script_templates_search_path")
-	var dir: Directory = Directory.new()
-	if not dir.dir_exists(template_directory):
-		dir.make_dir_recursive(template_directory)
-	var test_template: String = "wat.test.gd"
-	var scripts: Array = scripts(template_directory)
-	var template_exist = false
-	for script in scripts:
-		var title = script.substr(script.find_last("/") + 1, -1)
-		if title == test_template:
-			template_exist = true
-			break
-	return {savepath = template_directory, exists = template_exist}
