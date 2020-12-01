@@ -2,17 +2,17 @@
 
 [ext_resource path="res://addons/WAT/test_runner/test_runner.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/test_runner/client.gd" type="Script" id=2]
-[ext_resource path="res://addons/WAT/test_runner/Factory.gd" type="Script" id=4]
-[ext_resource path="res://addons/WAT/test_runner/Loader.gd" type="Script" id=5]
-[ext_resource path="res://addons/WAT/test/test_controller.gd" type="Script" id=6]
-[ext_resource path="res://addons/WAT/double/factory.gd" type="Script" id=7]
+[ext_resource path="res://addons/WAT/test_runner/loader.gd" type="Script" id=3]
+[ext_resource path="res://addons/WAT/test_runner/factory.gd" type="Script" id=4]
+[ext_resource path="res://addons/WAT/double/factory.gd" type="Script" id=5]
+[ext_resource path="res://addons/WAT/assertions/assertions.gd" type="Script" id=6]
+[ext_resource path="res://addons/WAT/test/case.gd" type="Script" id=7]
 [ext_resource path="res://addons/WAT/test/parameters.gd" type="Script" id=8]
-[ext_resource path="res://addons/WAT/test/yielder.gd" type="Script" id=9]
-[ext_resource path="res://addons/WAT/test/watcher.gd" type="Script" id=10]
-[ext_resource path="res://addons/WAT/assertions/assertions.gd" type="Script" id=11]
-[ext_resource path="res://addons/WAT/test/case.gd" type="Script" id=12]
-[ext_resource path="res://addons/WAT/test/recorder.gd" type="Script" id=13]
-[ext_resource path="res://addons/WAT/double/registry.gd" type="Script" id=14]
+[ext_resource path="res://addons/WAT/test/watcher.gd" type="Script" id=9]
+[ext_resource path="res://addons/WAT/test/yielder.gd" type="Script" id=10]
+[ext_resource path="res://addons/WAT/test/recorder.gd" type="Script" id=11]
+[ext_resource path="res://addons/WAT/test/test_controller.gd" type="Script" id=12]
+[ext_resource path="res://addons/WAT/double/registry.gd" type="Script" id=13]
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 1 )
@@ -22,15 +22,15 @@ script = ExtResource( 2 )
 
 [node name="Factory" type="Node" parent="."]
 script = ExtResource( 4 )
-TestController = ExtResource( 6 )
-TestCase = ExtResource( 12 )
-Assertions = ExtResource( 11 )
-Yielder = ExtResource( 9 )
-Double = ExtResource( 7 )
-SignalWatcher = ExtResource( 10 )
+TestController = ExtResource( 12 )
+TestCase = ExtResource( 7 )
+Assertions = ExtResource( 6 )
+Yielder = ExtResource( 10 )
+Double = ExtResource( 5 )
+SignalWatcher = ExtResource( 9 )
 Parameters = ExtResource( 8 )
-Recorder = ExtResource( 13 )
-TestDoubleRegistry = ExtResource( 14 )
+Recorder = ExtResource( 11 )
+TestDoubleRegistry = ExtResource( 13 )
 
 [node name="Loader" type="Node" parent="."]
-script = ExtResource( 5 )
+script = ExtResource( 3 )
