@@ -24,19 +24,20 @@ func get_next_test() -> Node:
 	var script = _test_scripts[_cursor]
 	var test = script.new()
 	var testcase = TestCase.new(test.title(), test.path())
-	var asserts = Assertions.new()
 	var yielder = Yielder.new()
-	var doubles = Double.new()
-	var watcher = SignalWatcher.new()
-	var parameters = Parameters.new()
-	# Maybe pull this up here
-	test.setup(asserts, yielder, doubles, watcher, parameters, Recorder, test_double_registry)
-	_cursor += 1
-	# We may need to add case to our controller
+	var double = Double.new()
 	var test_controller = TestController.new(test, yielder, testcase)
+	double.registry = test_double_registry
+	test.yielder = yielder
+	test.asserts = Assertions.new()
+	test.direct = Double.new()
+	test.watcher = SignalWatcher.new()
+	test.parameters = Parameters.new()
+	test.recorder = Recorder
 	test.asserts.connect("asserted", testcase, "_on_asserted")
 	test.connect("described", testcase, "_on_test_method_described")
 	yielder.connect("finished", test_controller, "_next")
+	_cursor += 1
 	return test_controller
 	
 func is_done() -> bool:
