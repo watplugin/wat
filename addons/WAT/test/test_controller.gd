@@ -8,8 +8,10 @@ var _test: WAT.Test
 var _case: WAT.TestCase
 var _methods: PoolStringArray = []
 var _current_method: String
-var _cursor = 0
+var _cursor = -1
+var _repeat = 0
 var results: Dictionary setget ,_get_results
+
 
 func _get_results() -> Dictionary:
 	_case.calculate()
@@ -63,11 +65,16 @@ func _pre() -> void:
 	
 func _execute() -> void:
 	_state = EXECUTE
-	_current_method = _methods[_cursor]
+	_current_method = _next_test_method()
 	_case.add_method(_current_method)
 	_test.call(_current_method)
-	_cursor += 1
 	_next()
+	
+func _next_test_method() -> String:
+	if _test.rerun_method:
+		return _current_method
+	_cursor += 1
+	return _methods[_cursor]
 	
 func _post() -> void:
 	# This was at pre for a reason, we need to check against repeats or non-starter scripts
@@ -81,5 +88,5 @@ func _end() -> void:
 	_next()
 	
 func _is_done() -> bool:
-	return _cursor == _methods.size()
+	return _cursor == _methods.size() - 1 and not _test.rerun_method
 	

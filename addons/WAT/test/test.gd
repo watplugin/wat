@@ -18,7 +18,6 @@ var p: Dictionary
 
 var rerun_method: bool = false
 
-
 func start():
 	pass
 	
