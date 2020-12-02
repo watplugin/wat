@@ -2,10 +2,7 @@ tool
 extends PanelContainer
 
 enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
-enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED, METHOD, RERUN_FAILURES }
 const NOTHING_SELECTED: int = -1
-const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
-onready var GUI: VBoxContainer = $GUI
 onready var Summary: Label = $GUI/Summary
 onready var Results: TabContainer = $GUI/Results
 onready var Run: HBoxContainer = $GUI/Interact/Run
@@ -40,13 +37,13 @@ func _ready() -> void:
 	var TestRunnerLauncher = get_node("Controllers/TestRunnerLauncher")
 	TestRunnerLauncher.Server = $Host
 	TestRunnerLauncher.Root = self
-	QuickStart.connect("pressed", TestRunnerLauncher, "_on_run_pressed", [RUN.ALL])
+	QuickStart.connect("pressed", TestRunnerLauncher, "_on_run_pressed", [TestRunnerLauncher.RUN.ALL])
 	Menu.connect("id_pressed", TestRunnerLauncher, "_on_run_pressed")
 	TestRunnerLauncher.Selection = $GUI/Interact/Select
 	# End Mediator Refactor
 	
 	
-	$Host.connect("ResultsReceived", self, "OnResultsReceived")
+	$Host.connect("results_received", self, "OnResultsReceived")
 	More.connect("pressed", self, "_show_more")
 	Menu.clear()
 	ViewMenu.clear()
@@ -54,9 +51,6 @@ func _ready() -> void:
 		Menu.add_item(item)
 	for item in view_options:
 		ViewMenu.add_item(item)
-		
-	#QuickStart.connect("pressed", self, "_on_run_pressed", [RUN.ALL])
-	#Menu.connect("id_pressed", self, "_on_run_pressed")
 	ViewMenu.connect("id_pressed", $GUI/Results, "_on_view_pressed")
 
 	MethodSelector.connect("pressed", self, "_on_method_selector_pressed")
@@ -80,46 +74,9 @@ func _on_method_selector_pressed() -> void:
 		if method.name.begins_with("test"):
 			MethodSelector.add_item(method.name)
 
-func _on_run_pressed(option: int) -> void:
-	var strat: Dictionary = {"repeat": get_repeat()}
-	match option:
-		RUN.ALL:
-			strat["paths"] = Selection.get_all()
-		RUN.DIRECTORY:
-			strat["paths"] = Selection.get_directory()
-		RUN.SCRIPT:
-			strat["paths"] = Selection.get_script()
-		RUN.TAGGED:
-			strat["tag"] = Selection.get_tag()
-			# IMPLEMENT THIS
-			# strat["paths"] = filesystem.tags(strat["tag"]) // TestCollector, not filesystem?
-		RUN.METHOD:
-			strat["paths"] = Selection.get_script()
-			strat["method"] = selected(MethodSelector)
-		RUN.RERUN_FAILURES:
-			strat["paths"] = Results.get_last_run_failures()
-	_run(strat)
-
-func _run(strat) -> void:
-	$Host.host()
-	Summary.start_time()
-	Results.clear()
-	if(Engine.is_editor_hint()):
-		EditorPlugin.new().get_editor_interface().play_custom_scene(TestRunner)
-		EditorPlugin.new().make_bottom_panel_item_visible(self)
-	else:
-		var n = load(TestRunner).instance()
-		n.is_editor = false
-		add_child(n)
-	yield($Host, "ClientConnected")
-	$Host.send_strategy(strat)
-
 func selected(selector: OptionButton) -> String:
 	if selector.selected == NOTHING_SELECTED:
 		push_warning("Nothing Selected")
 	var text = selector.get_item_text(selector.selected)
 	print("selected ", text)
 	return text
-
-#func test_directory() -> String:
-#	return ProjectSettings.get_setting("WAT/Test_Directory")

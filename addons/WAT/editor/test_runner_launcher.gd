@@ -26,7 +26,7 @@ func _on_run_pressed(option: int) -> void:
 func run() -> void:
 	Server.host()
 	_run_as_editor() if Engine.is_editor_hint() else _run_as_game()
-	yield(Server, "ClientConnected")
+	yield(Server, "client_connected")
 	Server.send_strategy(Strategy)
 	
 func _run_as_editor() -> void:
