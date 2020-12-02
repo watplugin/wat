@@ -9,7 +9,6 @@ var Server: Node
 var Selection
 
 func _on_run_pressed(option: int) -> void:
-	print("run_pressed")
 	match option:
 		RUN.ALL:
 			Strategy["paths"] = Selection.get_all()
