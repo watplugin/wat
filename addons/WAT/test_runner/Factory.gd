@@ -14,10 +14,8 @@ var test_double_registry
 var _test_scripts: Array = []
 var _cursor: int = 0
 
-func _ready() -> void:
+func initialize(scripts: Array) -> void:
 	test_double_registry = TestDoubleRegistry.new()
-
-func get_test_scripts(scripts: Array) -> void:
 	_test_scripts = scripts
 
 func get_next_test() -> Node:
@@ -29,11 +27,11 @@ func get_next_test() -> Node:
 	var test_controller = TestController.new(test, yielder, testcase)
 	double.registry = test_double_registry
 	test.yielder = yielder
+	test.direct = double
+	test.recorder = Recorder
 	test.asserts = Assertions.new()
-	test.direct = Double.new()
 	test.watcher = SignalWatcher.new()
 	test.parameters = Parameters.new()
-	test.recorder = Recorder
 	test.asserts.connect("asserted", testcase, "_on_asserted")
 	test.connect("described", testcase, "_on_test_method_described")
 	yielder.connect("finished", test_controller, "_next")

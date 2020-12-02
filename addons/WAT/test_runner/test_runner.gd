@@ -15,7 +15,7 @@ func _initialize() -> void:
 	
 func _run(strategy: Dictionary) -> void:
 	# In Threaded versions, we could replace this with a system in process using "isRunning" boolean
-	Factory.get_test_scripts(Loader.load_test_scripts(strategy))
+	Factory.initialize(Loader.load_test_scripts(strategy))
 	while not Factory.is_done():
 		var test = Factory.get_next_test()
 		add_child(test)
