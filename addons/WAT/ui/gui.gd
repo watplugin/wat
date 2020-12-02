@@ -4,14 +4,11 @@ extends PanelContainer
 enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
 enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED, METHOD, RERUN_FAILURES }
 const NOTHING_SELECTED: int = -1
-const filesystem = preload("res://addons/WAT/system/filesystem.gd")
 const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 onready var GUI: VBoxContainer = $GUI
-onready var Interact: HBoxContainer = $GUI/Interact
 onready var Summary: Label = $GUI/Summary
 onready var Results: TabContainer = $GUI/Results
 onready var Run: HBoxContainer = $GUI/Interact/Run
-onready var Select: HBoxContainer = $GUI/Interact/Select
 onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
 onready var QuickStart: Button = $GUI/Interact/Run/QuickStart
 onready var Menu: PopupMenu = $GUI/Interact/Run/Menu.get_popup()
@@ -20,9 +17,8 @@ onready var HiddenBorder: Separator = $GUI/HiddenBorder
 onready var MethodSelector: OptionButton = $GUI/Method
 onready var More: Button = $GUI/Interact/More
 
-var _directory: String
-var _script: String
-var _tag: String
+# Refactored Variables
+onready var Selection: HBoxContainer = $GUI/Interact/Select
 
 func get_repeat() -> int:
 	return Repeater.value as int
@@ -40,8 +36,6 @@ func _on_view_pressed(id: int) -> void:
 			Results.expand_failures()
 
 func _ready() -> void:
-	
-	#set_process(false)
 	$Host.connect("ResultsReceived", self, "OnResultsReceived")
 	More.connect("pressed", self, "_show_more")
 	Menu.clear()
@@ -50,10 +44,6 @@ func _ready() -> void:
 		Menu.add_item(item)
 	for item in view_options:
 		ViewMenu.add_item(item)
-		
-	$GUI/Interact/Select.connect("directory_selected", self, "set")
-	$GUI/Interact/Select.connect("script_selected", self, "set")
-	$GUI/Interact/Select.connect("tag_selected", self, "set")
 		
 	QuickStart.connect("pressed", self, "_on_run_pressed", [RUN.ALL])
 	Menu.connect("id_pressed", self, "_on_run_pressed")
@@ -71,7 +61,7 @@ func _show_more() -> void:
 	
 func _on_method_selector_pressed() -> void:
 	MethodSelector.clear()
-	var path: String = _script
+	var path: String = $GUI/Interact/Select.get_script()[0]
 	if not path.ends_with(".gd"):
 		MethodSelector.add_item("Please Select A Script First")
 		return
@@ -84,17 +74,17 @@ func _on_run_pressed(option: int) -> void:
 	var strat: Dictionary = {"repeat": get_repeat()}
 	match option:
 		RUN.ALL:
-			strat["paths"] = filesystem.scripts(test_directory())
+			strat["paths"] = Selection.get_all()
 		RUN.DIRECTORY:
-			strat["paths"] = filesystem.scripts(_directory)
+			strat["paths"] = Selection.get_directory()
 		RUN.SCRIPT:
-			strat["paths"] = [_script]
+			strat["paths"] = Selection.get_script()
 		RUN.TAGGED:
-			strat["tag"] = _tag
+			strat["tag"] = Selection.get_tag()
 			# IMPLEMENT THIS
 			# strat["paths"] = filesystem.tags(strat["tag"]) // TestCollector, not filesystem?
 		RUN.METHOD:
-			strat["paths"] = [_script]
+			strat["paths"] = Selection.get_script()
 			strat["method"] = selected(MethodSelector)
 		RUN.RERUN_FAILURES:
 			strat["paths"] = Results.get_last_run_failures()
@@ -121,5 +111,5 @@ func selected(selector: OptionButton) -> String:
 	print("selected ", text)
 	return text
 
-func test_directory() -> String:
-	return ProjectSettings.get_setting("WAT/Test_Directory")
+#func test_directory() -> String:
+#	return ProjectSettings.get_setting("WAT/Test_Directory")
