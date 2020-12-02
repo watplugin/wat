@@ -36,6 +36,16 @@ func _on_view_pressed(id: int) -> void:
 			Results.expand_failures()
 
 func _ready() -> void:
+	# Begin Mediator Refactor
+	var TestRunnerLauncher = get_node("Controllers/TestRunnerLauncher")
+	TestRunnerLauncher.Server = $Host
+	TestRunnerLauncher.Root = self
+	QuickStart.connect("pressed", TestRunnerLauncher, "_on_run_pressed", [RUN.ALL])
+	Menu.connect("id_pressed", TestRunnerLauncher, "_on_run_pressed")
+	TestRunnerLauncher.Selection = $GUI/Interact/Select
+	# End Mediator Refactor
+	
+	
 	$Host.connect("ResultsReceived", self, "OnResultsReceived")
 	More.connect("pressed", self, "_show_more")
 	Menu.clear()
@@ -45,8 +55,8 @@ func _ready() -> void:
 	for item in view_options:
 		ViewMenu.add_item(item)
 		
-	QuickStart.connect("pressed", self, "_on_run_pressed", [RUN.ALL])
-	Menu.connect("id_pressed", self, "_on_run_pressed")
+	#QuickStart.connect("pressed", self, "_on_run_pressed", [RUN.ALL])
+	#Menu.connect("id_pressed", self, "_on_run_pressed")
 	ViewMenu.connect("id_pressed", $GUI/Results, "_on_view_pressed")
 
 	MethodSelector.connect("pressed", self, "_on_method_selector_pressed")
