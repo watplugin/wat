@@ -58,6 +58,7 @@ func _on_about_to_show_directories():
 	dirs.add_item("Run All Tests", RUN.ALL)
 	for item in dirlist:
 		dirs.add_submenu_item(item, "Scripts")
+	dirs.set_as_minsize()
 		
 func _on_about_to_show_scripts():
 	dir = _get_current_directory()
@@ -67,10 +68,12 @@ func _on_about_to_show_scripts():
 	scripts.add_item("Run All Tests In This Directory", RUN.DIRECTORY)
 	for item in scriptlist:
 		scripts.add_submenu_item(item, "Methods")
+	scripts.set_as_minsize()
 		
 func _on_about_to_show_methods():
 	scriptname = _get_current_script()
 	methods.clear()
+	#methods
 	# Runs This Test
 	methods.add_item("Run Test", RUN.SCRIPT)
 	var methodlist = []
@@ -79,6 +82,7 @@ func _on_about_to_show_methods():
 	for method in script.get_script_method_list():
 		if method.name.begins_with("test"):
 			methods.add_submenu_item(method.name, "RunMethod")
+	methods.set_as_minsize()
 			
 func _on_about_to_show_run() -> void:
 	method = _get_current_method()
