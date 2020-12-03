@@ -1,16 +1,14 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://addons/WAT/assets/icon_add.png" type="Texture" id=1]
 [ext_resource path="res://addons/WAT/ui/results/ResultsForest.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/WAT/ui/gui.gd" type="Script" id=3]
 [ext_resource path="res://addons/WAT/ui/links.gd" type="Script" id=4]
-[ext_resource path="res://addons/WAT/ui/Selectors.gd" type="Script" id=5]
 [ext_resource path="res://addons/WAT/ui/Summary.gd" type="Script" id=6]
 [ext_resource path="res://addons/WAT/host.gd" type="Script" id=7]
 [ext_resource path="res://addons/WAT/assets/play.svg" type="Texture" id=8]
 [ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=9]
 [ext_resource path="res://addons/WAT/editor/test_runner_launcher.gd" type="Script" id=10]
-[ext_resource path="res://addons/WAT/SelectRefactor.gd" type="Script" id=11]
+[ext_resource path="res://addons/WAT/editor/test_selector.gd" type="Script" id=11]
 
 [node name="Tests" type="PanelContainer"]
 margin_right = 1024.0
@@ -22,7 +20,6 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-run_options = PoolStringArray( "Run All Tests", "Run Selected Directory", "Run Selected Script", "Run Tagged", "Run Method", "Rerun Failures" )
 view_options = PoolStringArray( "Expand All Results", "Collapse All Results", "Expand All Failures" )
 
 [node name="GUI" type="VBoxContainer" parent="."]
@@ -36,119 +33,57 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MenuButton" type="MenuButton" parent="GUI"]
-margin_right = 300.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 300, 0 )
-focus_mode = 1
-size_flags_horizontal = 2
-text = "Select"
-script = ExtResource( 11 )
-
 [node name="Interact" type="HBoxContainer" parent="GUI"]
-margin_top = 24.0
 margin_right = 1010.0
-margin_bottom = 48.0
+margin_bottom = 24.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Run" type="HBoxContainer" parent="GUI/Interact"]
-margin_right = 76.0
-margin_bottom = 24.0
-
-[node name="QuickStart" type="Button" parent="GUI/Interact/Run"]
+[node name="QuickStart" type="Button" parent="GUI/Interact"]
 margin_right = 28.0
 margin_bottom = 24.0
 hint_tooltip = "Run All Tests"
 icon = ExtResource( 8 )
 flat = true
 
-[node name="VSeparator" type="VSeparator" parent="GUI/Interact/Run"]
-margin_left = 32.0
-margin_right = 36.0
+[node name="VSeparator3" type="VSeparator" parent="GUI/Interact"]
+margin_left = 38.0
+margin_right = 42.0
 margin_bottom = 24.0
 
-[node name="Menu" type="MenuButton" parent="GUI/Interact/Run"]
-margin_left = 40.0
-margin_right = 76.0
+[node name="MenuButton" type="MenuButton" parent="GUI/Interact"]
+margin_left = 52.0
+margin_right = 352.0
 margin_bottom = 24.0
-text = "Run"
-items = [ "Run All Tests", null, 0, false, false, 0, 0, null, "", false, "Run Selected Directory", null, 0, false, false, 1, 0, null, "", false, "Run Selected Script", null, 0, false, false, 2, 0, null, "", false, "Run Tagged", null, 0, false, false, 3, 0, null, "", false, "Run Method", null, 0, false, false, 4, 0, null, "", false, "Rerun Failures", null, 0, false, false, 5, 0, null, "", false ]
-switch_on_hover = true
+rect_min_size = Vector2( 300, 0 )
+size_flags_horizontal = 2
+text = "Select"
+script = ExtResource( 11 )
+
+[node name="VSeparator" type="VSeparator" parent="GUI/Interact"]
+margin_left = 800.0
+margin_right = 804.0
+margin_bottom = 24.0
 
 [node name="View" type="MenuButton" parent="GUI/Interact"]
-margin_left = 86.0
-margin_right = 128.0
+margin_left = 814.0
+margin_right = 856.0
 margin_bottom = 24.0
 text = "View"
 items = [ "Expand All Results", null, 0, false, false, 0, 0, null, "", false, "Collapse All Results", null, 0, false, false, 1, 0, null, "", false, "Expand All Failures", null, 0, false, false, 2, 0, null, "", false ]
 switch_on_hover = true
 
-[node name="VSeparator" type="VSeparator" parent="GUI/Interact"]
-margin_left = 138.0
-margin_right = 142.0
-margin_bottom = 24.0
-
-[node name="Select" type="HBoxContainer" parent="GUI/Interact"]
-margin_left = 152.0
-margin_right = 818.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource( 5 )
-
-[node name="Directory" type="OptionButton" parent="GUI/Interact/Select"]
-margin_right = 219.0
-margin_bottom = 24.0
-grow_horizontal = 0
-grow_vertical = 0
-hint_tooltip = "select a directory of tests to run"
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/hseparation = 20
-button_mask = 3
-text = "Select Directory"
-align = 1
-items = [ "Select Directory", null, false, 0, null ]
-selected = 0
-
-[node name="Script" type="OptionButton" parent="GUI/Interact/Select"]
-margin_left = 223.0
-margin_right = 442.0
-margin_bottom = 24.0
-hint_tooltip = "Select a single test script to run (your choices depend on which folder is selected)."
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Select Script"
-align = 1
-items = [ "Select Script", null, false, 0, null ]
-selected = 0
-__meta__ = {
-"_editor_description_": "select a test script to run"
-}
-
-[node name="Tag" type="OptionButton" parent="GUI/Interact/Select"]
-margin_left = 446.0
-margin_right = 666.0
-margin_bottom = 24.0
-hint_tooltip = "select a tag and then run all tests that have that tag"
-size_flags_horizontal = 3
-text = "Select Tag"
-align = 1
-items = [ "Select Tag", null, false, 0, null ]
-selected = 0
-
 [node name="VSeparator2" type="VSeparator" parent="GUI/Interact"]
-margin_left = 828.0
-margin_right = 832.0
+margin_left = 866.0
+margin_right = 870.0
 margin_bottom = 24.0
 
 [node name="Repeat" type="SpinBox" parent="GUI/Interact"]
-margin_left = 842.0
-margin_right = 972.0
+margin_left = 880.0
+margin_right = 1010.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 130, 0 )
 size_flags_horizontal = 0
@@ -158,31 +93,8 @@ allow_lesser = true
 prefix = "Repeat"
 suffix = "Times"
 
-[node name="More" type="Button" parent="GUI/Interact"]
-margin_left = 982.0
-margin_right = 1010.0
-margin_bottom = 24.0
-icon = ExtResource( 1 )
-flat = true
-
-[node name="HiddenBorder" type="HSeparator" parent="GUI"]
-visible = false
-margin_top = 28.0
-margin_right = 1010.0
-margin_bottom = 38.0
-rect_min_size = Vector2( 0, 10 )
-size_flags_horizontal = 3
-
-[node name="Method" type="OptionButton" parent="GUI"]
-visible = false
-margin_top = 28.0
-margin_right = 1010.0
-margin_bottom = 48.0
-text = "Run Test Method"
-align = 1
-
 [node name="Results" parent="GUI" instance=ExtResource( 2 )]
-margin_top = 52.0
+margin_top = 28.0
 margin_bottom = 518.0
 
 [node name="Summary" type="Label" parent="GUI"]

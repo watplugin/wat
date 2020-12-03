@@ -6,21 +6,6 @@ const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 var Strategy: Dictionary = {"repeat": 0}
 var Root: PanelContainer
 var Server: Node
-var Selection
-
-func _on_run_pressed(option: int) -> void:
-	match option:
-		RUN.ALL:
-			Strategy["paths"] = Selection.get_all()
-		RUN.DIRECTORY:
-			Strategy["paths"] = Selection.get_directory()
-		RUN.SCRIPT:
-			Strategy["paths"] = Selection.get_script()
-		RUN.TAGGED:
-			push_warning("Tag Run Not Implemented")
-		RUN.METHOD:
-			push_warning("Method Run Not Implemented")
-	run()
 
 func run(strat = null) -> void:
 	if strat != null:
