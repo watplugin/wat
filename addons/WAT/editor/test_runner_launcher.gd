@@ -22,7 +22,10 @@ func _on_run_pressed(option: int) -> void:
 			push_warning("Method Run Not Implemented")
 	run()
 
-func run() -> void:
+func run(strat = null) -> void:
+	if strat != null:
+		Strategy = strat
+		Strategy["repeat"] = 1
 	Server.host()
 	_run_as_editor() if Engine.is_editor_hint() else _run_as_game()
 	yield(Server, "client_connected")
@@ -35,7 +38,7 @@ func _run_as_editor() -> void:
 	
 func _run_as_game() -> void:
 	var instance = preload(TestRunner).instance()
-	instance.is_editor = false
+	#instance.is_editor = false
 	add_child(instance)
 	
 	

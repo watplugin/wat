@@ -40,6 +40,7 @@ func _ready() -> void:
 	QuickStart.connect("pressed", TestRunnerLauncher, "_on_run_pressed", [TestRunnerLauncher.RUN.ALL])
 	Menu.connect("id_pressed", TestRunnerLauncher, "_on_run_pressed")
 	TestRunnerLauncher.Selection = $GUI/Interact/Select
+	$GUI/MenuButton.connect("_test_path_selected", TestRunnerLauncher, "run")
 	# End Mediator Refactor
 	
 	

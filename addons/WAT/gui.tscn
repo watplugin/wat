@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://addons/WAT/assets/icon_add.png" type="Texture" id=1]
 [ext_resource path="res://addons/WAT/ui/results/ResultsForest.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://addons/WAT/assets/play.svg" type="Texture" id=8]
 [ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=9]
 [ext_resource path="res://addons/WAT/editor/test_runner_launcher.gd" type="Script" id=10]
+[ext_resource path="res://addons/WAT/SelectRefactor.gd" type="Script" id=11]
 
 [node name="Tests" type="PanelContainer"]
 margin_right = 1024.0
@@ -35,9 +36,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="MenuButton" type="MenuButton" parent="GUI"]
+margin_right = 300.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 300, 0 )
+focus_mode = 1
+size_flags_horizontal = 2
+text = "Select"
+script = ExtResource( 11 )
+
 [node name="Interact" type="HBoxContainer" parent="GUI"]
+margin_top = 24.0
 margin_right = 1010.0
-margin_bottom = 24.0
+margin_bottom = 48.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
 __meta__ = {
@@ -171,7 +182,7 @@ text = "Run Test Method"
 align = 1
 
 [node name="Results" parent="GUI" instance=ExtResource( 2 )]
-margin_top = 28.0
+margin_top = 52.0
 margin_bottom = 518.0
 
 [node name="Summary" type="Label" parent="GUI"]
