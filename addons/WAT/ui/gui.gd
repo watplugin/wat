@@ -2,7 +2,7 @@ tool
 extends PanelContainer
 
 enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
-onready var Summary: Label = $GUI/Summary
+onready var Summary: Label = $GUI/Interact/Summary
 onready var Results: TabContainer = $GUI/Results
 onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
 onready var QuickStart: Button = $GUI/Interact/QuickStart

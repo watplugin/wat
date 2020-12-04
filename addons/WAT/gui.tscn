@@ -49,41 +49,25 @@ hint_tooltip = "Run All Tests"
 icon = ExtResource( 8 )
 flat = true
 
-[node name="VSeparator3" type="VSeparator" parent="GUI/Interact"]
-margin_left = 38.0
-margin_right = 42.0
-margin_bottom = 24.0
-
 [node name="MenuButton" type="MenuButton" parent="GUI/Interact"]
-margin_left = 52.0
-margin_right = 352.0
+margin_left = 38.0
+margin_right = 120.0
 margin_bottom = 24.0
-rect_min_size = Vector2( 300, 0 )
-size_flags_horizontal = 2
-text = "Select"
+size_flags_horizontal = 0
+text = "Select Test"
 script = ExtResource( 11 )
 
-[node name="VSeparator" type="VSeparator" parent="GUI/Interact"]
-margin_left = 800.0
-margin_right = 804.0
-margin_bottom = 24.0
-
 [node name="View" type="MenuButton" parent="GUI/Interact"]
-margin_left = 814.0
-margin_right = 856.0
+margin_left = 130.0
+margin_right = 226.0
 margin_bottom = 24.0
-text = "View"
+text = "Filter Results"
 items = [ "Expand All Results", null, 0, false, false, 0, 0, null, "", false, "Collapse All Results", null, 0, false, false, 1, 0, null, "", false, "Expand All Failures", null, 0, false, false, 2, 0, null, "", false ]
 switch_on_hover = true
 
-[node name="VSeparator2" type="VSeparator" parent="GUI/Interact"]
-margin_left = 866.0
-margin_right = 870.0
-margin_bottom = 24.0
-
 [node name="Repeat" type="SpinBox" parent="GUI/Interact"]
-margin_left = 880.0
-margin_right = 1010.0
+margin_left = 236.0
+margin_right = 366.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 130, 0 )
 size_flags_horizontal = 0
@@ -93,32 +77,27 @@ allow_lesser = true
 prefix = "Repeat"
 suffix = "Times"
 
-[node name="Results" parent="GUI" instance=ExtResource( 2 )]
-margin_top = 28.0
-margin_bottom = 518.0
-
-[node name="Summary" type="Label" parent="GUI"]
-margin_top = 522.0
+[node name="Summary" type="Label" parent="GUI/Interact"]
+margin_left = 376.0
 margin_right = 1010.0
-margin_bottom = 536.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Time Taken: 0.00 | Ran 0 Tests | 0 Tests Passed | 0 Tests Failed | Ran Tests 0 Times"
-valign = 1
+align = 1
 script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TopSeperator" type="HSeparator" parent="GUI"]
-margin_top = 540.0
-margin_right = 1010.0
-margin_bottom = 544.0
-size_flags_horizontal = 3
+[node name="Results" parent="GUI" instance=ExtResource( 2 )]
+margin_top = 28.0
+margin_bottom = 552.0
 
 [node name="Links" type="HBoxContainer" parent="GUI"]
-margin_top = 548.0
+margin_top = 556.0
 margin_right = 1010.0
-margin_bottom = 578.0
+margin_bottom = 586.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 custom_constants/separation = 0
@@ -135,7 +114,7 @@ NodePath("OnlineDocs"): "https://wat.readthedocs.io/en/latest/index.html"
 }
 
 [node name="Support" type="Button" parent="GUI/Links"]
-margin_right = 249.0
+margin_right = 252.0
 margin_bottom = 30.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -150,14 +129,9 @@ icon = ExtResource( 9 )
 flat = true
 expand_icon = true
 
-[node name="VSeparator" type="VSeparator" parent="GUI/Links"]
-margin_left = 249.0
-margin_right = 253.0
-margin_bottom = 30.0
-
 [node name="Issue" type="Button" parent="GUI/Links"]
-margin_left = 253.0
-margin_right = 503.0
+margin_left = 252.0
+margin_right = 505.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 shortcut_in_tooltip = false
@@ -165,43 +139,22 @@ action_mode = 0
 text = "Report An Issue"
 flat = true
 
-[node name="VSeparator2" type="VSeparator" parent="GUI/Links"]
-margin_left = 503.0
-margin_right = 507.0
-margin_bottom = 30.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="RequestDocs" type="Button" parent="GUI/Links"]
-margin_left = 507.0
-margin_right = 756.0
+margin_left = 505.0
+margin_right = 757.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 text = "Request Docs"
 flat = true
 
-[node name="VSeparator3" type="VSeparator" parent="GUI/Links"]
-margin_left = 756.0
-margin_right = 760.0
-margin_bottom = 30.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="OnlineDocs" type="Button" parent="GUI/Links"]
-margin_left = 760.0
+margin_left = 757.0
 margin_right = 1010.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Online Docs"
 flat = true
-
-[node name="BottomSeperator" type="HSeparator" parent="GUI"]
-margin_top = 582.0
-margin_right = 1010.0
-margin_bottom = 586.0
 
 [node name="Host" type="Node" parent="."]
 script = ExtResource( 7 )
