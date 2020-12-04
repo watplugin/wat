@@ -51,7 +51,7 @@ func _on_run_option_pressed(option: int, strategy = {"paths": null}) -> void:
 	emit_signal("_test_path_selected", strategy)
 	
 func _on_about_to_show_directories():
-	dir = _get_root_test_directory()
+	dir = ProjectSettings.get_setting("WAT/Test_Directory")
 	dirs.clear()
 	var dirlist = FileSystem.directories()
 	# Runs All Tests In All Directories
@@ -61,9 +61,9 @@ func _on_about_to_show_directories():
 	dirs.set_as_minsize()
 		
 func _on_about_to_show_scripts():
-	dir = _get_current_directory()
+	dir = dirs.get_item_text(dirs.get_current_index())
 	scripts.clear()
-	var scriptlist = FileSystem.scripts(_get_current_directory())
+	var scriptlist = FileSystem.scripts(dir)
 	# Runs All Tests In Current Directory
 	scripts.add_item("Run All Tests In This Directory", RUN.DIRECTORY)
 	for item in scriptlist:
@@ -71,32 +71,19 @@ func _on_about_to_show_scripts():
 	scripts.set_as_minsize()
 		
 func _on_about_to_show_methods():
-	scriptname = _get_current_script()
+	scriptname = scripts.get_item_text(scripts.get_current_index())
 	methods.clear()
-	#methods
 	# Runs This Test
 	methods.add_item("Run Test", RUN.SCRIPT)
 	var methodlist = []
 	# Are we sure this is always a test script?
-	var script = load(_get_current_script())
+	var script = load(scriptname)
 	for method in script.get_script_method_list():
 		if method.name.begins_with("test"):
 			methods.add_submenu_item(method.name, "RunMethod")
 	methods.set_as_minsize()
 			
 func _on_about_to_show_run() -> void:
-	method = _get_current_method()
+	method = methods.get_item_text(scripts.get_current_index())
 	run_method.clear()
 	run_method.add_item("Run Method", RUN.METHOD)
-
-func _get_root_test_directory() -> String:
-	return ProjectSettings.get_setting("WAT/Test_Directory")
-	
-func _get_current_directory() -> String:
-	return dirs.get_item_text(dirs.get_current_index())
-	
-func _get_current_script() -> String:
-	return scripts.get_item_text(scripts.get_current_index())
-	
-func _get_current_method() -> String:
-	return methods.get_item_text(scripts.get_current_index())

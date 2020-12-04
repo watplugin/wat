@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://addons/WAT/ui/results/ResultsForest.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/ui/gui.gd" type="Script" id=3]
 [ext_resource path="res://addons/WAT/ui/links.gd" type="Script" id=4]
 [ext_resource path="res://addons/WAT/ui/Summary.gd" type="Script" id=6]
@@ -53,7 +53,9 @@ flat = true
 margin_left = 38.0
 margin_right = 120.0
 margin_bottom = 24.0
+focus_mode = 2
 size_flags_horizontal = 0
+enabled_focus_mode = 2
 text = "Select Test"
 script = ExtResource( 11 )
 
@@ -90,9 +92,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Results" parent="GUI" instance=ExtResource( 2 )]
+[node name="Results" type="TabContainer" parent="GUI"]
 margin_top = 28.0
+margin_right = 1010.0
 margin_bottom = 552.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tab_align = 0
+drag_to_rearrange_enabled = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Links" type="HBoxContainer" parent="GUI"]
 margin_top = 556.0
