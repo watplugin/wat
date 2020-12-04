@@ -51,28 +51,34 @@ func _on_run_option_pressed(option: int, strategy = {"paths": null}) -> void:
 	emit_signal("_test_path_selected", strategy)
 	
 func _on_about_to_show_directories():
+	# We'll have to preload everything here
 	dir = ProjectSettings.get_setting("WAT/Test_Directory")
 	dirs.clear()
+	dirs.set_as_minsize()
 	var dirlist = FileSystem.directories()
+	if dirlist.empty():
+		return
 	# Runs All Tests In All Directories
 	dirs.add_item("Run All Tests", RUN.ALL)
 	for item in dirlist:
 		dirs.add_submenu_item(item, "Scripts")
-	dirs.set_as_minsize()
 		
 func _on_about_to_show_scripts():
 	dir = dirs.get_item_text(dirs.get_current_index())
 	scripts.clear()
+	scripts.set_as_minsize()
 	var scriptlist = FileSystem.scripts(dir)
+	if scriptlist.empty():
+		return
 	# Runs All Tests In Current Directory
 	scripts.add_item("Run All Tests In This Directory", RUN.DIRECTORY)
 	for item in scriptlist:
 		scripts.add_submenu_item(item, "Methods")
-	scripts.set_as_minsize()
 		
 func _on_about_to_show_methods():
 	scriptname = scripts.get_item_text(scripts.get_current_index())
 	methods.clear()
+	methods.set_as_minsize()
 	# Runs This Test
 	methods.add_item("Run Test", RUN.SCRIPT)
 	var methodlist = []
@@ -81,7 +87,7 @@ func _on_about_to_show_methods():
 	for method in script.get_script_method_list():
 		if method.name.begins_with("test"):
 			methods.add_submenu_item(method.name, "RunMethod")
-	methods.set_as_minsize()
+
 			
 func _on_about_to_show_run() -> void:
 	method = methods.get_item_text(scripts.get_current_index())
