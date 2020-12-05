@@ -27,16 +27,9 @@ func _process_command(cmd: Dictionary) -> void:
 	match cmd[COMMAND]:
 		STRATEGY:
 			emit_signal("StrategyReceived", cmd["strategy"])
-		RESULTS:
-			pass
 		_:
 			pass # NoValidCommandFound (Error?)
-		
-func send_results(results: Array) -> void:
-	if client.is_connected_to_host():
-		var x = {COMMAND: RESULTS, "results": results}
-		client.put_var(x)
-		
+
 func get_port() -> int:
 	if ProjectSettings.has_setting("WAT/Port"):
 		return ProjectSettings.get_setting("WAT/Port")

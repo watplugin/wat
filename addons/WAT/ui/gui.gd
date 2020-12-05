@@ -7,6 +7,7 @@ onready var Results: TabContainer = $GUI/Results
 onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
 onready var QuickStart: Button = $GUI/Interact/QuickStart
 onready var Repeater: SpinBox = $GUI/Interact/Repeat
+var p = EditorPlugin.new().get_editor_interface()
 
 func get_repeat() -> int:
 	return Repeater.value as int
@@ -21,6 +22,11 @@ func _on_view_pressed(id: int) -> void:
 			Results.collapse_all()
 		RESULTS.EXPAND_FAILURES:
 			Results.expand_failures()
+			
+func _process(delta):
+	if not p.is_playing_scene() and $Controllers/TestRunnerLauncher.sceneWasLaunched:
+		$Controllers/TestRunnerLauncher.sceneWasLaunched = false
+		OnResultsReceived()
 
 func _ready() -> void:
 	# Begin Mediator Refactor
@@ -31,12 +37,12 @@ func _ready() -> void:
 	# QuickStart.connect("pressed", TestRunnerLauncher, "run", [TestRunnerLauncher.RUN.ALL])
 	$GUI/Interact/MenuButton.connect("_test_path_selected", TestRunnerLauncher, "run")
 	# End Mediator Refactor
-	$Host.connect("results_received", self, "OnResultsReceived")
 	ViewMenu.clear()
 	for item in view_options:
 		ViewMenu.add_item(item)
 	ViewMenu.connect("id_pressed", $GUI/Results, "_on_view_pressed")
 	
-func OnResultsReceived(results: Array) -> void:
-	Summary.summarize(results)
-	Results.display(results)
+func OnResultsReceived() -> void:
+	var _res = ResourceLoader.load("res://addons/WAT/system/Results.tres", "", true).retrieve()
+	Summary.summarize(_res)
+	Results.display(_res)

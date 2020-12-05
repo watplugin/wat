@@ -6,6 +6,7 @@ const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 var Strategy: Dictionary = {"repeat": 0}
 var Root: PanelContainer
 var Server: Node
+var sceneWasLaunched: bool = false
 
 func run(strat = null) -> void:
 	if strat != null:
@@ -15,6 +16,7 @@ func run(strat = null) -> void:
 	_run_as_editor() if Engine.is_editor_hint() else _run_as_game()
 	yield(Server, "client_connected")
 	Server.send_strategy(Strategy)
+	sceneWasLaunched = true
 	
 func _run_as_editor() -> void:
 	var plugin = EditorPlugin.new()

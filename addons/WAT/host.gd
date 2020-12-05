@@ -9,7 +9,6 @@ enum {
 }
 
 signal client_connected
-signal results_received
 const DO_NOT_ALLOW_FULL_OBJECTS: bool = false
 const DEFAULT_PORT = 6000
 const IP_ADDRESS: String = "127.0.0.1"
@@ -48,14 +47,9 @@ func _process_command(cmd: Dictionary) -> void:
 	match cmd[COMMAND]:
 		STRATEGY:
 			pass
-		RESULTS:
-			_on_results_received(cmd["results"])
 		_:
 			pass # NoValidCommandFound (Error?)
 				
-func _on_results_received(results: Array) -> void:
-	emit_signal("results_received", results)
-		
 func send_strategy(strategy: Dictionary = {0: 0}) -> void:
 	if peer != null and peer.is_connected_to_host():
 		peer.put_var({COMMAND: STRATEGY, "strategy": strategy})

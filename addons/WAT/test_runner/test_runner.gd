@@ -3,6 +3,7 @@ extends Node
 onready var Client: Node = get_node("Client")
 onready var Factory: Node = get_node("Factory")
 onready var Loader: Node = get_node("Loader")
+const Results: Resource = preload("res://addons/WAT/system/Results.tres")
 var results = []
 
 func _ready() -> void:
@@ -23,7 +24,7 @@ func _run(strategy: Dictionary) -> void:
 		yield(test, "finished")
 		remove_child(test)
 		results.append(test.results)
-	Client.send_results(results)
+	Results.save(results)
 	_terminate()
 	
 func _terminate() -> void:
