@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/ui/gui.gd" type="Script" id=3]
@@ -7,7 +7,6 @@
 [ext_resource path="res://addons/WAT/host.gd" type="Script" id=7]
 [ext_resource path="res://addons/WAT/assets/play.svg" type="Texture" id=8]
 [ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=9]
-[ext_resource path="res://addons/WAT/editor/test_runner_launcher.gd" type="Script" id=10]
 [ext_resource path="res://addons/WAT/editor/test_selector.gd" type="Script" id=11]
 
 [node name="Tests" type="PanelContainer"]
@@ -169,10 +168,3 @@ flat = true
 
 [node name="Host" type="Node" parent="."]
 script = ExtResource( 7 )
-
-[node name="Controllers" type="Node" parent="."]
-
-[node name="TestRunnerLauncher" type="Node" parent="Controllers"]
-script = ExtResource( 10 )
-
-[node name="Results" type="Node" parent="Controllers"]
