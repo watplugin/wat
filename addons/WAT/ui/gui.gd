@@ -1,12 +1,13 @@
 tool
 extends PanelContainer
 
-enum RESULTS { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
+enum { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
 onready var Summary: Label = $GUI/Interact/Summary
 onready var Results: TabContainer = $GUI/Results
 onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
 onready var QuickStart: Button = $GUI/Interact/QuickStart
 onready var Repeater: SpinBox = $GUI/Interact/Repeat
+const RESULTS = preload("res://addons/WAT/system/Results.tres")
 var p = EditorPlugin.new().get_editor_interface()
 
 func get_repeat() -> int:
@@ -16,17 +17,17 @@ export(PoolStringArray) var view_options: PoolStringArray
 
 func _on_view_pressed(id: int) -> void:
 	match id:
-		RESULTS.EXPAND_ALL:
+		EXPAND_ALL:
 			Results.expand_all()
-		RESULTS.COLLAPSE_ALL:
+		COLLAPSE_ALL:
 			Results.collapse_all()
-		RESULTS.EXPAND_FAILURES:
+		EXPAND_FAILURES:
 			Results.expand_failures()
 			
 func _process(delta):
 	if not p.is_playing_scene() and $Controllers/TestRunnerLauncher.sceneWasLaunched:
 		$Controllers/TestRunnerLauncher.sceneWasLaunched = false
-		OnResultsReceived()
+		_display_results()
 
 func _ready() -> void:
 	# Begin Mediator Refactor
@@ -42,7 +43,7 @@ func _ready() -> void:
 		ViewMenu.add_item(item)
 	ViewMenu.connect("id_pressed", $GUI/Results, "_on_view_pressed")
 	
-func OnResultsReceived() -> void:
-	var _res = ResourceLoader.load("res://addons/WAT/system/Results.tres", "", true).retrieve()
+func _display_results() -> void:
+	var _res = RESULTS.retrieve()
 	Summary.summarize(_res)
 	Results.display(_res)
