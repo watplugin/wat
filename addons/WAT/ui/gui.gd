@@ -1,21 +1,18 @@
 tool
 extends PanelContainer
 
-enum RUN { ALL, DIRECTORY, SCRIPT, TAGGED, METHOD, RERUN_FAILURES }
-const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
-var Strategy: Dictionary = {"repeat": 0}
-var Server: Node
-var sceneWasLaunched: bool = false
-
 enum { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
+const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
+const RESULTS = preload("res://addons/WAT/cache/Results.tres")
 onready var Summary: Label = $GUI/Interact/Summary
 onready var Results: TabContainer = $GUI/Results
 onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
 onready var QuickStart: Button = $GUI/Interact/QuickStart
 onready var Repeater: SpinBox = $GUI/Interact/Repeat
-const RESULTS = preload("res://addons/WAT/cache/Results.tres")
-var p = EditorPlugin.new().get_editor_interface()
 export(PoolStringArray) var view_options: PoolStringArray
+var sceneWasLaunched: bool = false
+var p = EditorPlugin.new().get_editor_interface()
+
 
 func _ready() -> void:
 	# Begin Mediator Refactor
