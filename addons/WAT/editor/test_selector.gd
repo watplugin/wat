@@ -35,21 +35,18 @@ func _on_run_option_pressed(option: int, strategy = {"paths": null}) -> void:
 	var tests: Array = []
 	match option:
 		RUN.ALL:
-			print("Selected All Option")
 			tests = FileCache.scripts(dir)
 		RUN.DIRECTORY:
-			print("Selected Directory Option")
 			tests = FileCache.scripts(dir)
 		RUN.SCRIPT:
-			print("Selected Script Option")
 			tests = FileCache.scripts(scriptname)
 		RUN.METHOD:
-			print("Selected Method Option")
 			tests = FileCache.scripts(scriptname)
 			tests[0].set_meta("method", method)
 		RUN.TAG:
 			push_warning("Tag Needs To Be Reimplemented")
 	Runnables.tests = tests
+	print(tests)
 	ResourceSaver.save(Runnables.resource_path, Runnables)
 	emit_signal("_test_path_selected")
 	

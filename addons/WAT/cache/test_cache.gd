@@ -12,7 +12,7 @@ func scripts(path: String) -> Array:
 	var tests: Array = []
 	for test in scripts:
 		if test.begins_with(path):
-			tests.append(test)
+			tests.append(scripts[test])
 	return tests
 	
 func paths(dir: String) -> Array:
@@ -26,7 +26,7 @@ func directory(path: String) -> Array:
 	var tests: Array = []
 	for test in scripts:
 		if test.begins_with(path):
-			tests.append(test)
+			tests.append(scripts[test])
 	return tests
 
 func refresh() -> void:
@@ -68,7 +68,6 @@ func _search(root: String):
 		name = d.get_next()
 	d.list_dir_end()
 	for dir in subdirs:
-		print("adding %s / %s as subdir" % [root, dir])
 		directories.append(root + "/" + dir)
 		_search(root + "/" + dir)
 

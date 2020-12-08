@@ -8,15 +8,12 @@ const Runnables: Resource = preload("res://addons/WAT/cache/runnables.tres")
 var results = []
 
 func _ready() -> void:
-	_initialize()
-
-func _initialize() -> void:
 	print("Initializing TestRunner")
-	Client.connect("StrategyReceived", self, "_run")
-	Client.join()
-	
-func _run(strategy: Dictionary) -> void:
+	_run()
+
+func _run() -> void:
 	# In Threaded versions, we could replace this with a system in process using "isRunning" boolean
+	print(Runnables.tests)
 	Factory.initialize(Runnables.tests)
 	while not Factory.is_done():
 		var test = Factory.get_next_test()
@@ -30,5 +27,5 @@ func _run(strategy: Dictionary) -> void:
 	
 func _terminate() -> void:
 	print("Terminating TestRunner")
-	Client.quit()
+	#Client.quit()
 	get_tree().quit()

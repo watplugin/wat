@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://addons/WAT/cache/runnables.gd" type="Script" id=1]
+[ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=2]
 
 [resource]
 script = ExtResource( 1 )
-tests = [ "res://tests/integration/default_args.test.gd", "res://tests/integration/scene_director.test.gd", "res://tests/integration/script_director.test.gd", "res://tests/integration/test_double.test.gd", "res://tests/unit/boolean.test.gd", "res://tests/unit/equality.test.gd", "res://tests/unit/file.test.gd", "res://tests/unit/is_instance.test.gd", "res://tests/unit/is_not_instance.test.gd", "res://tests/unit/null.test.gd", "res://tests/unit/object.test.gd", "res://tests/unit/on_floor.test.gd", "res://tests/unit/parameters.test.gd", "res://tests/unit/range.test.gd", "res://tests/unit/string.test.gd", "res://tests/unit/suite.test.gd.DummyTwo", "res://tests/unit/suite.test.gd.DummyOne", "res://tests/unit/test.test.gd", "res://tests/unit/watcher.test.gd", "res://tests/unit/yield.test.gd" ]
+tests = [ ExtResource( 2 ) ]

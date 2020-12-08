@@ -15,6 +15,7 @@ onready var QuickStart: Button = $GUI/Interact/QuickStart
 onready var Repeater: SpinBox = $GUI/Interact/Repeat
 const RESULTS = preload("res://addons/WAT/system/Results.tres")
 var p = EditorPlugin.new().get_editor_interface()
+export(PoolStringArray) var view_options: PoolStringArray
 
 func _ready() -> void:
 	# Begin Mediator Refactor
@@ -36,16 +37,8 @@ func _process(delta):
 func get_repeat() -> int:
 	return Repeater.value as int
 
-export(PoolStringArray) var view_options: PoolStringArray
-
-func run(strat = null) -> void:
-	#if strat != null:
-	#	Strategy = strat
-	#	Strategy["repeat"] = 1
-	#Server.host()
+func run() -> void:
 	_run_as_editor() if Engine.is_editor_hint() else _run_as_game()
-	#yield(Server, "client_connected")
-	#Server.send_strategy(Strategy)
 	sceneWasLaunched = true
 	
 func _run_as_editor() -> void:
