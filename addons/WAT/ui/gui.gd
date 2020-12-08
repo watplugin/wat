@@ -62,4 +62,5 @@ func _on_view_pressed(id: int) -> void:
 func _display_results() -> void:
 	var _res = RESULTS.retrieve()
 	Summary.summarize(_res)
+	Results.clear()
 	Results.display(_res)
