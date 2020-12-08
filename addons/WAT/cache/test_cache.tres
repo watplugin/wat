@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=22 format=2]
+[gd_resource type="Resource" load_steps=20 format=2]
 
 [ext_resource path="res://addons/WAT/cache/test_cache.gd" type="Script" id=1]
 [ext_resource path="res://tests/unit/is_instance.test.gd" type="Script" id=2]
@@ -20,16 +20,6 @@
 [ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=18]
 [ext_resource path="res://tests/integration/scene_director.test.gd" type="Script" id=19]
 
-[sub_resource type="GDScript" id=2]
-__meta__ = {
-"path": "res://tests/unit/suite.test.gd.DummyOne"
-}
-
-[sub_resource type="GDScript" id=1]
-__meta__ = {
-"path": "res://tests/unit/suite.test.gd.DummyTwo"
-}
-
 [resource]
 script = ExtResource( 1 )
 scripts = {
@@ -48,8 +38,6 @@ scripts = {
 "res://tests/unit/parameters.test.gd": ExtResource( 5 ),
 "res://tests/unit/range.test.gd": ExtResource( 12 ),
 "res://tests/unit/string.test.gd": ExtResource( 13 ),
-"res://tests/unit/suite.test.gd.DummyOne": SubResource( 2 ),
-"res://tests/unit/suite.test.gd.DummyTwo": SubResource( 1 ),
 "res://tests/unit/test.test.gd": ExtResource( 11 ),
 "res://tests/unit/watcher.test.gd": ExtResource( 14 ),
 "res://tests/unit/yield.test.gd": ExtResource( 10 )

@@ -58,9 +58,9 @@ func _search(root: String):
 				script_paths.append(title)
 				scripts[title] = script
 			elif script.get("IS_WAT_SUITE"):
-				for test in _load_suite(script):
-					scripts[test.get_meta("path")] = test
-				pass
+				#for test in _load_suite(script):
+				#	scripts[test.get_meta("path")] = test
+				push_warning("Test Suites DeImplemented")
 				
 		# add dir
 		if d.dir_exists(name):
