@@ -4,6 +4,7 @@ onready var Client: Node = get_node("Client")
 onready var Factory: Node = get_node("Factory")
 onready var Loader: Node = get_node("Loader")
 const Results: Resource = preload("res://addons/WAT/system/Results.tres")
+const Runnables: Resource = preload("res://addons/WAT/cache/runnables.tres")
 var results = []
 
 func _ready() -> void:
@@ -16,7 +17,7 @@ func _initialize() -> void:
 	
 func _run(strategy: Dictionary) -> void:
 	# In Threaded versions, we could replace this with a system in process using "isRunning" boolean
-	Factory.initialize(Loader.load_test_scripts(strategy))
+	Factory.initialize(Runnables.tests)
 	while not Factory.is_done():
 		var test = Factory.get_next_test()
 		add_child(test)

@@ -39,13 +39,13 @@ func get_repeat() -> int:
 export(PoolStringArray) var view_options: PoolStringArray
 
 func run(strat = null) -> void:
-	if strat != null:
-		Strategy = strat
-		Strategy["repeat"] = 1
-	Server.host()
+	#if strat != null:
+	#	Strategy = strat
+	#	Strategy["repeat"] = 1
+	#Server.host()
 	_run_as_editor() if Engine.is_editor_hint() else _run_as_game()
-	yield(Server, "client_connected")
-	Server.send_strategy(Strategy)
+	#yield(Server, "client_connected")
+	#Server.send_strategy(Strategy)
 	sceneWasLaunched = true
 	
 func _run_as_editor() -> void:

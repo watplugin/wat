@@ -2,7 +2,8 @@ extends MenuButton
 tool
 
 enum RUN { ALL, DIRECTORY, SCRIPT, METHOD, TAG }
-const FileSystem = preload("res://addons/WAT/system/filesystem.gd")
+const FileCache = preload("res://addons/WAT/cache/test_cache.tres")
+const Runnables = preload("res://addons/WAT/cache/runnables.tres")
 var dirs = get_popup()
 var scripts = PopupMenu.new()
 var methods = PopupMenu.new()
@@ -31,50 +32,55 @@ func _ready() -> void:
 	run_method.connect("id_pressed", self, "_on_run_option_pressed")
 	
 func _on_run_option_pressed(option: int, strategy = {"paths": null}) -> void:
+	var tests: Array = []
 	match option:
 		RUN.ALL:
 			print("Selected All Option")
-			strategy["paths"] = FileSystem.scripts(dir)
-			emit_signal("_test_path_selected", strategy)
+			tests = FileCache.scripts(dir)
 		RUN.DIRECTORY:
 			print("Selected Directory Option")
-			strategy["paths"] = FileSystem.scripts(dir)
+			tests = FileCache.scripts(dir)
 		RUN.SCRIPT:
 			print("Selected Script Option")
-			strategy["paths"] = FileSystem.scripts(scriptname)
+			tests = FileCache.scripts(scriptname)
 		RUN.METHOD:
 			print("Selected Method Option")
-			strategy["paths"] = FileSystem.scripts(scriptname)
-			strategy["method"] = method
+			tests = FileCache.scripts(scriptname)
+			tests[0].set_meta("method", method)
 		RUN.TAG:
 			push_warning("Tag Needs To Be Reimplemented")
-	emit_signal("_test_path_selected", strategy)
+	Runnables.tests = tests
+	ResourceSaver.save(Runnables.resource_path, Runnables)
+	emit_signal("_test_path_selected")
+	
 	
 func _on_about_to_show_directories():
 	# We'll have to preload everything here
 	dir = ProjectSettings.get_setting("WAT/Test_Directory")
 	dirs.clear()
 	dirs.set_as_minsize()
-	var dirlist = FileSystem.directories()
+	var dirlist = FileCache.directories
 	if dirlist.empty():
 		return
 	# Runs All Tests In All Directories
 	dirs.add_item("Run All Tests", RUN.ALL)
 	for item in dirlist:
-		dirs.add_submenu_item(item, "Scripts")
+		# We want to hide empty directories
+		if not FileCache.paths(item).empty():
+			dirs.add_submenu_item(item, "Scripts")
 		
 func _on_about_to_show_scripts():
 	dir = dirs.get_item_text(dirs.get_current_index())
 	scripts.clear()
 	scripts.set_as_minsize()
-	var scriptlist = FileSystem.scripts(dir)
+	var scriptlist = FileCache.paths(dir)
 	if scriptlist.empty():
 		return
 	# Runs All Tests In Current Directory
 	scripts.add_item("Run All Tests In This Directory", RUN.DIRECTORY)
 	for item in scriptlist:
 		scripts.add_submenu_item(item, "Methods")
-		
+#
 func _on_about_to_show_methods():
 	scriptname = scripts.get_item_text(scripts.get_current_index())
 	methods.clear()

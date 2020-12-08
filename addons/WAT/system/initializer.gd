@@ -9,6 +9,17 @@ func _init() -> void:
 	_add_tag_setting()
 	_add_window_sizing()
 	_add_port_setting()
+	add_test_cache()
+	
+func add_test_cache() -> void:
+	var x = load("res://addons/WAT/cache/test_cache.gd").new()
+	x.scripts = {}
+	x.directories = []
+	x.script_paths = []
+	ResourceSaver.save("res://addons/WAT/cache/test_cache.tres", x)
+	var y = load("res://addons/WAT/cache/test_cache.tres")
+	y.initialize()
+	y.refresh()
 	
 func _add_port_setting() -> void:
 	if ProjectSettings.has_setting("WAT/Port"):
