@@ -1,8 +1,11 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://addons/WAT/cache/runnables.gd" type="Script" id=1]
-[ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=2]
+[ext_resource path="res://tests/integration/script_director.test.gd" type="Script" id=5]
+[ext_resource path="res://tests/integration/test_double.test.gd" type="Script" id=6]
+[ext_resource path="res://tests/integration/scene_director.test.gd" type="Script" id=8]
+[ext_resource path="res://tests/integration/default_args.test.gd" type="Script" id=9]
 
 [resource]
 script = ExtResource( 1 )
-tests = [ ExtResource( 2 ) ]
+tests = [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 6 ) ]

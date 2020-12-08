@@ -1,9 +1,7 @@
 extends Node
 
-onready var Client: Node = get_node("Client")
 onready var Factory: Node = get_node("Factory")
-onready var Loader: Node = get_node("Loader")
-const Results: Resource = preload("res://addons/WAT/system/Results.tres")
+const Results: Resource = preload("res://addons/WAT/cache/Results.tres")
 const Runnables: Resource = preload("res://addons/WAT/cache/runnables.tres")
 var results = []
 

@@ -1,0 +1,385 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/WAT/cache/Results.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+_list = [ {
+"context": "Default Args",
+"methods": [ {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "If this method can be reached then we have doubled a script with default argument(s) properly!",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": " default arguments of interpolate property",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 1,
+"path": "res://tests/integration/default_args.test.gd",
+"success": true,
+"time_taken": 0.0,
+"total": 1
+}, {
+"context": "Given a Scene Director",
+"methods": [ {
+"assertions": [ {
+"actual": "|Dictionary| {.:[Reference:1395], A:[Reference:1396], A/B:[Reference:1398], C:[Reference:1397], C/D:[Reference:1399]} is not equal to |Dictionary| {.:[Reference:1409], A:[Reference:1410], A/B:[Reference:1412], C:[Reference:1411], C/D:[Reference:1413]}",
+"context": "Then they do not share resources",
+"expected": "|Dictionary| {.:[Reference:1395], A:[Reference:1396], A/B:[Reference:1398], C:[Reference:1397], C/D:[Reference:1399]} != |Dictionary| {.:[Reference:1409], A:[Reference:1410], A/B:[Reference:1412], C:[Reference:1411], C/D:[Reference:1413]}",
+"success": true
+} ],
+"context": "When we create two of it for the same scene",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 9999 is equal to |int| 9999",
+"context": "Then we get the stubbed return value",
+"expected": "|int| 9999 is equal to |int| 9999",
+"success": true
+} ],
+"context": "When we call a method from the root node that we stubbed",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 999 is equal to |int| 999",
+"context": "Then we get the stubbed return value",
+"expected": "|int| 999 is equal to |int| 999",
+"success": true
+} ],
+"context": "When we call a method from a child node that we stubbed",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|NodePath| A is equal to |NodePath| A",
+"context": "We have the correct NodePath Set",
+"expected": "|NodePath| A is equal to |NodePath| A",
+"success": true
+} ],
+"context": "When we add it to the tree it runs",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 99 is equal to |int| 99",
+"context": "Then we get the stubbed return value",
+"expected": "|int| 99 is equal to |int| 99",
+"success": true
+} ],
+"context": "When we call a method from a grandchild node that we stubbed",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 5,
+"path": "res://tests/integration/scene_director.test.gd",
+"success": true,
+"time_taken": 0.0,
+"total": 5
+}, {
+"context": "Given a Script Director",
+"methods": [ {
+"assertions": [ {
+"actual": "|Object| [Node:1555] is equal to |Object| [Node:1555]",
+"context": "Then we get the same double back",
+"expected": "|Object| [Node:1555] is equal to |Object| [Node:1555]",
+"success": true
+} ],
+"context": "When we call the double the second time",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|Dictionary| {_enter_tree:{arguments:, default_arguments:}, _exit_tree:{arguments:, default_arguments:}, _get:{arguments:a, default_arguments:a}, _get_configuration_warning:{arguments:, default_arguments:}, _get_editor_description:{arguments:, default_arguments:}, _get_import_path:{arguments:, default_arguments:}, _get_property_list:{arguments:, default_arguments:}, _init:{arguments:, default_arguments:}, _input:{arguments:a, default_arguments:a}, _notification:{arguments:a, default_arguments:a}, _physics_process:{arguments:a, default_arguments:a}, _process:{arguments:a, default_arguments:a}, _ready:{arguments:, default_arguments:}, _set:{arguments:a, b, default_arguments:a, b}, _set_editor_description:{arguments:a, default_arguments:a}, _set_import_path:{arguments:a, default_arguments:a}, _to_string:{arguments:, default_arguments:}, _unhandled_input:{arguments:a, default_arguments:a}, _unhandled_key_input:{arguments:a, default_arguments:a}, add:{arguments:a, b, default_arguments:a, b}, add_child:{arguments:a, b, default_arguments:a, b = False}, add_child_below_node:{arguments:a, b, c, default_arguments:a, b, c = False}, add_to_group:{arguments:a, b, default_arguments:a, b = False}, add_user_signal:{arguments:a, b, default_arguments:a, b = []}, call:{arguments:a, default_arguments:a}, call_deferred:{arguments:a, default_arguments:a}, callv:{arguments:a, b, default_arguments:a, b}, can_process:{arguments:, default_arguments:}, can_translate_messages:{arguments:, default_arguments:}, connect:{arguments:a, b, c, d, e, default_arguments:a, b, c, d = [], e = 0}, disconnect:{arguments:a, b, c, default_arguments:a, b, c}, divide:{arguments:a, b, default_arguments:a, b}, duplicate:{arguments:a, default_arguments:a = 15}, emit_signal:{arguments:a, default_arguments:a}, find_node:{arguments:a, b, c, default_arguments:a, b = True, c = True}, find_parent:{arguments:a, default_arguments:a}, free:{arguments:, default_arguments:}, get:{arguments:a, default_arguments:a}, get_child:{arguments:a, default_arguments:a}, get_child_count:{arguments:, default_arguments:}, get_children:{arguments:, default_arguments:}, get_class:{arguments:, default_arguments:}, get_custom_multiplayer:{arguments:, default_arguments:}, get_filename:{arguments:, default_arguments:}, get_groups:{arguments:, default_arguments:}, get_incoming_connections:{arguments:, default_arguments:}, get_index:{arguments:, default_arguments:}, get_indexed:{arguments:a, default_arguments:a}, get_instance_id:{arguments:, default_arguments:}, get_meta:{arguments:a, default_arguments:a}, get_meta_list:{arguments:, default_arguments:}, get_method_list:{arguments:, default_arguments:}, get_multiplayer:{arguments:, default_arguments:}, get_name:{arguments:, default_arguments:}, get_network_master:{arguments:, default_arguments:}, get_node:{arguments:a, default_arguments:a}, get_node_and_resource:{arguments:a, default_arguments:a}, get_node_or_null:{arguments:a, default_arguments:a}, get_owner:{arguments:, default_arguments:}, get_parent:{arguments:, default_arguments:}, get_path:{arguments:, default_arguments:}, get_path_to:{arguments:a, default_arguments:a}, get_pause_mode:{arguments:, default_arguments:}, get_physics_process_delta_time:{arguments:, default_arguments:}, get_position_in_parent:{arguments:, default_arguments:}, get_process_delta_time:{arguments:, default_arguments:}, get_process_priority:{arguments:, default_arguments:}, get_property_list:{arguments:, default_arguments:}, get_scene_instance_load_placeholder:{arguments:, default_arguments:}, get_script:{arguments:, default_arguments:}, get_signal_connection_list:{arguments:a, default_arguments:a}, get_signal_list:{arguments:, default_arguments:}, get_tree:{arguments:, default_arguments:}, get_viewport:{arguments:, default_arguments:}, has_meta:{arguments:a, default_arguments:a}, has_method:{arguments:a, default_arguments:a}, has_node:{arguments:a, default_arguments:a}, has_node_and_resource:{arguments:a, default_arguments:a}, has_signal:{arguments:a, default_arguments:a}, has_user_signal:{arguments:a, default_arguments:a}, is_a_parent_of:{arguments:a, default_arguments:a}, is_blocking_signals:{arguments:, default_arguments:}, is_class:{arguments:a, default_arguments:a}, is_connected:{arguments:a, b, c, default_arguments:a, b, c}, is_displayed_folded:{arguments:, default_arguments:}, is_greater_than:{arguments:a, default_arguments:a}, is_in_group:{arguments:a, default_arguments:a}, is_inside_tree:{arguments:, default_arguments:}, is_network_master:{arguments:, default_arguments:}, is_physics_processing:{arguments:, default_arguments:}, is_physics_processing_internal:{arguments:, default_arguments:}, is_processing:{arguments:, default_arguments:}, is_processing_input:{arguments:, default_arguments:}, is_processing_internal:{arguments:, default_arguments:}, is_processing_unhandled_input:{arguments:, default_arguments:}, is_processing_unhandled_key_input:{arguments:, default_arguments:}, is_queued_for_deletion:{arguments:, default_arguments:}, math_fight:{arguments:, default_arguments:}, move_child:{arguments:a, b, default_arguments:a, b}, multiply:{arguments:a, b, default_arguments:a, b}, notification:{arguments:a, b, default_arguments:a, b = False}, pi:{arguments:, default_arguments:}, print_stray_nodes:{arguments:, default_arguments:}, print_tree:{arguments:, default_arguments:}, print_tree_pretty:{arguments:, default_arguments:}, propagate_call:{arguments:a, b, c, default_arguments:a, b = [], c = False}, propagate_notification:{arguments:a, default_arguments:a}, property_list_changed_notify:{arguments:, default_arguments:}, queue_free:{arguments:, default_arguments:}, raise:{arguments:, default_arguments:}, remove_and_skip:{arguments:, default_arguments:}, remove_child:{arguments:a, default_arguments:a}, remove_from_group:{arguments:a, default_arguments:a}, remove_meta:{arguments:a, default_arguments:a}, replace_by:{arguments:a, b, default_arguments:a, b = False}, request_ready:{arguments:, default_arguments:}, rpc:{arguments:a, default_arguments:a}, rpc_config:{arguments:a, b, default_arguments:a, b}, rpc_id:{arguments:a, b, default_arguments:a, b}, rpc_unreliable:{arguments:a, default_arguments:a}, rpc_unreliable_id:{arguments:a, b, default_arguments:a, b}, rset:{arguments:a, b, default_arguments:a, b}, rset_config:{arguments:a, b, default_arguments:a, b}, rset_id:{arguments:a, b, c, default_arguments:a, b, c}, rset_unreliable:{arguments:a, b, default_arguments:a, b}, rset_unreliable_id:{arguments:a, b, c, default_arguments:a, b, c}, set:{arguments:a, b, default_arguments:a, b}, set_block_signals:{arguments:a, default_arguments:a}, set_custom_multiplayer:{arguments:a, default_arguments:a}, set_deferred:{arguments:a, b, default_arguments:a, b}, set_display_folded:{arguments:a, default_arguments:a}, set_filename:{arguments:a, default_arguments:a}, set_indexed:{arguments:a, b, default_arguments:a, b}, set_message_translation:{arguments:a, default_arguments:a}, set_meta:{arguments:a, b, default_arguments:a, b}, set_name:{arguments:a, default_arguments:a}, set_network_master:{arguments:a, b, default_arguments:a, b = True}, set_owner:{arguments:a, default_arguments:a}, set_pause_mode:{arguments:a, default_arguments:a}, set_physics_process:{arguments:a, default_arguments:a}, set_physics_process_internal:{arguments:a, default_arguments:a}, set_process:{arguments:a, default_arguments:a}, set_process_input:{arguments:a, default_arguments:a}, set_process_internal:{arguments:a, default_arguments:a}, set_process_priority:{arguments:a, default_arguments:a}, set_process_unhandled_input:{arguments:a, default_arguments:a}, set_process_unhandled_key_input:{arguments:a, default_arguments:a}, set_scene_instance_load_placeholder:{arguments:a, default_arguments:a}, set_script:{arguments:a, default_arguments:a}, subtract:{arguments:a, b, default_arguments:a, b}, sum:{arguments:a, default_arguments:a}, to_string:{arguments:, default_arguments:}, tr:{arguments:a, default_arguments:a}, update_configuration_warning:{arguments:, default_arguments:}} is not equal to |Dictionary| {_enter_tree:{arguments:, default_arguments:}, _exit_tree:{arguments:, default_arguments:}, _get:{arguments:a, default_arguments:a}, _get_configuration_warning:{arguments:, default_arguments:}, _get_editor_description:{arguments:, default_arguments:}, _get_import_path:{arguments:, default_arguments:}, _get_property_list:{arguments:, default_arguments:}, _init:{arguments:, default_arguments:}, _input:{arguments:a, default_arguments:a}, _notification:{arguments:a, default_arguments:a}, _physics_process:{arguments:a, default_arguments:a}, _process:{arguments:a, default_arguments:a}, _ready:{arguments:, default_arguments:}, _set:{arguments:a, b, default_arguments:a, b}, _set_editor_description:{arguments:a, default_arguments:a}, _set_import_path:{arguments:a, default_arguments:a}, _to_string:{arguments:, default_arguments:}, _unhandled_input:{arguments:a, default_arguments:a}, _unhandled_key_input:{arguments:a, default_arguments:a}, add:{arguments:a, b, default_arguments:a, b}, add_child:{arguments:a, b, default_arguments:a, b = False}, add_child_below_node:{arguments:a, b, c, default_arguments:a, b, c = False}, add_to_group:{arguments:a, b, default_arguments:a, b = False}, add_user_signal:{arguments:a, b, default_arguments:a, b = []}, call:{arguments:a, default_arguments:a}, call_deferred:{arguments:a, default_arguments:a}, callv:{arguments:a, b, default_arguments:a, b}, can_process:{arguments:, default_arguments:}, can_translate_messages:{arguments:, default_arguments:}, connect:{arguments:a, b, c, d, e, default_arguments:a, b, c, d = [], e = 0}, disconnect:{arguments:a, b, c, default_arguments:a, b, c}, divide:{arguments:a, b, default_arguments:a, b}, duplicate:{arguments:a, default_arguments:a = 15}, emit_signal:{arguments:a, default_arguments:a}, find_node:{arguments:a, b, c, default_arguments:a, b = True, c = True}, find_parent:{arguments:a, default_arguments:a}, free:{arguments:, default_arguments:}, get:{arguments:a, default_arguments:a}, get_child:{arguments:a, default_arguments:a}, get_child_count:{arguments:, default_arguments:}, get_children:{arguments:, default_arguments:}, get_class:{arguments:, default_arguments:}, get_custom_multiplayer:{arguments:, default_arguments:}, get_filename:{arguments:, default_arguments:}, get_groups:{arguments:, default_arguments:}, get_incoming_connections:{arguments:, default_arguments:}, get_index:{arguments:, default_arguments:}, get_indexed:{arguments:a, default_arguments:a}, get_instance_id:{arguments:, default_arguments:}, get_meta:{arguments:a, default_arguments:a}, get_meta_list:{arguments:, default_arguments:}, get_method_list:{arguments:, default_arguments:}, get_multiplayer:{arguments:, default_arguments:}, get_name:{arguments:, default_arguments:}, get_network_master:{arguments:, default_arguments:}, get_node:{arguments:a, default_arguments:a}, get_node_and_resource:{arguments:a, default_arguments:a}, get_node_or_null:{arguments:a, default_arguments:a}, get_owner:{arguments:, default_arguments:}, get_parent:{arguments:, default_arguments:}, get_path:{arguments:, default_arguments:}, get_path_to:{arguments:a, default_arguments:a}, get_pause_mode:{arguments:, default_arguments:}, get_physics_process_delta_time:{arguments:, default_arguments:}, get_position_in_parent:{arguments:, default_arguments:}, get_process_delta_time:{arguments:, default_arguments:}, get_process_priority:{arguments:, default_arguments:}, get_property_list:{arguments:, default_arguments:}, get_scene_instance_load_placeholder:{arguments:, default_arguments:}, get_script:{arguments:, default_arguments:}, get_signal_connection_list:{arguments:a, default_arguments:a}, get_signal_list:{arguments:, default_arguments:}, get_tree:{arguments:, default_arguments:}, get_viewport:{arguments:, default_arguments:}, has_meta:{arguments:a, default_arguments:a}, has_method:{arguments:a, default_arguments:a}, has_node:{arguments:a, default_arguments:a}, has_node_and_resource:{arguments:a, default_arguments:a}, has_signal:{arguments:a, default_arguments:a}, has_user_signal:{arguments:a, default_arguments:a}, is_a_parent_of:{arguments:a, default_arguments:a}, is_blocking_signals:{arguments:, default_arguments:}, is_class:{arguments:a, default_arguments:a}, is_connected:{arguments:a, b, c, default_arguments:a, b, c}, is_displayed_folded:{arguments:, default_arguments:}, is_greater_than:{arguments:a, default_arguments:a}, is_in_group:{arguments:a, default_arguments:a}, is_inside_tree:{arguments:, default_arguments:}, is_network_master:{arguments:, default_arguments:}, is_physics_processing:{arguments:, default_arguments:}, is_physics_processing_internal:{arguments:, default_arguments:}, is_processing:{arguments:, default_arguments:}, is_processing_input:{arguments:, default_arguments:}, is_processing_internal:{arguments:, default_arguments:}, is_processing_unhandled_input:{arguments:, default_arguments:}, is_processing_unhandled_key_input:{arguments:, default_arguments:}, is_queued_for_deletion:{arguments:, default_arguments:}, math_fight:{arguments:, default_arguments:}, move_child:{arguments:a, b, default_arguments:a, b}, multiply:{arguments:a, b, default_arguments:a, b}, notification:{arguments:a, b, default_arguments:a, b = False}, pi:{arguments:, default_arguments:}, print_stray_nodes:{arguments:, default_arguments:}, print_tree:{arguments:, default_arguments:}, print_tree_pretty:{arguments:, default_arguments:}, propagate_call:{arguments:a, b, c, default_arguments:a, b = [], c = False}, propagate_notification:{arguments:a, default_arguments:a}, property_list_changed_notify:{arguments:, default_arguments:}, queue_free:{arguments:, default_arguments:}, raise:{arguments:, default_arguments:}, remove_and_skip:{arguments:, default_arguments:}, remove_child:{arguments:a, default_arguments:a}, remove_from_group:{arguments:a, default_arguments:a}, remove_meta:{arguments:a, default_arguments:a}, replace_by:{arguments:a, b, default_arguments:a, b = False}, request_ready:{arguments:, default_arguments:}, rpc:{arguments:a, default_arguments:a}, rpc_config:{arguments:a, b, default_arguments:a, b}, rpc_id:{arguments:a, b, default_arguments:a, b}, rpc_unreliable:{arguments:a, default_arguments:a}, rpc_unreliable_id:{arguments:a, b, default_arguments:a, b}, rset:{arguments:a, b, default_arguments:a, b}, rset_config:{arguments:a, b, default_arguments:a, b}, rset_id:{arguments:a, b, c, default_arguments:a, b, c}, rset_unreliable:{arguments:a, b, default_arguments:a, b}, rset_unreliable_id:{arguments:a, b, c, default_arguments:a, b, c}, set:{arguments:a, b, default_arguments:a, b}, set_block_signals:{arguments:a, default_arguments:a}, set_custom_multiplayer:{arguments:a, default_arguments:a}, set_deferred:{arguments:a, b, default_arguments:a, b}, set_display_folded:{arguments:a, default_arguments:a}, set_filename:{arguments:a, default_arguments:a}, set_indexed:{arguments:a, b, default_arguments:a, b}, set_message_translation:{arguments:a, default_arguments:a}, set_meta:{arguments:a, b, default_arguments:a, b}, set_name:{arguments:a, default_arguments:a}, set_network_master:{arguments:a, b, default_arguments:a, b = True}, set_owner:{arguments:a, default_arguments:a}, set_pause_mode:{arguments:a, default_arguments:a}, set_physics_process:{arguments:a, default_arguments:a}, set_physics_process_internal:{arguments:a, default_arguments:a}, set_process:{arguments:a, default_arguments:a}, set_process_input:{arguments:a, default_arguments:a}, set_process_internal:{arguments:a, default_arguments:a}, set_process_priority:{arguments:a, default_arguments:a}, set_process_unhandled_input:{arguments:a, default_arguments:a}, set_process_unhandled_key_input:{arguments:a, default_arguments:a}, set_scene_instance_load_placeholder:{arguments:a, default_arguments:a}, set_script:{arguments:a, default_arguments:a}, subtract:{arguments:a, b, default_arguments:a, b}, sum:{arguments:a, default_arguments:a}, to_string:{arguments:, default_arguments:}, tr:{arguments:a, default_arguments:a}, update_configuration_warning:{arguments:, default_arguments:}}",
+"context": "Then they do not share resources",
+"expected": "|Dictionary| {_enter_tree:{arguments:, default_arguments:}, _exit_tree:{arguments:, default_arguments:}, _get:{arguments:a, default_arguments:a}, _get_configuration_warning:{arguments:, default_arguments:}, _get_editor_description:{arguments:, default_arguments:}, _get_import_path:{arguments:, default_arguments:}, _get_property_list:{arguments:, default_arguments:}, _init:{arguments:, default_arguments:}, _input:{arguments:a, default_arguments:a}, _notification:{arguments:a, default_arguments:a}, _physics_process:{arguments:a, default_arguments:a}, _process:{arguments:a, default_arguments:a}, _ready:{arguments:, default_arguments:}, _set:{arguments:a, b, default_arguments:a, b}, _set_editor_description:{arguments:a, default_arguments:a}, _set_import_path:{arguments:a, default_arguments:a}, _to_string:{arguments:, default_arguments:}, _unhandled_input:{arguments:a, default_arguments:a}, _unhandled_key_input:{arguments:a, default_arguments:a}, add:{arguments:a, b, default_arguments:a, b}, add_child:{arguments:a, b, default_arguments:a, b = False}, add_child_below_node:{arguments:a, b, c, default_arguments:a, b, c = False}, add_to_group:{arguments:a, b, default_arguments:a, b = False}, add_user_signal:{arguments:a, b, default_arguments:a, b = []}, call:{arguments:a, default_arguments:a}, call_deferred:{arguments:a, default_arguments:a}, callv:{arguments:a, b, default_arguments:a, b}, can_process:{arguments:, default_arguments:}, can_translate_messages:{arguments:, default_arguments:}, connect:{arguments:a, b, c, d, e, default_arguments:a, b, c, d = [], e = 0}, disconnect:{arguments:a, b, c, default_arguments:a, b, c}, divide:{arguments:a, b, default_arguments:a, b}, duplicate:{arguments:a, default_arguments:a = 15}, emit_signal:{arguments:a, default_arguments:a}, find_node:{arguments:a, b, c, default_arguments:a, b = True, c = True}, find_parent:{arguments:a, default_arguments:a}, free:{arguments:, default_arguments:}, get:{arguments:a, default_arguments:a}, get_child:{arguments:a, default_arguments:a}, get_child_count:{arguments:, default_arguments:}, get_children:{arguments:, default_arguments:}, get_class:{arguments:, default_arguments:}, get_custom_multiplayer:{arguments:, default_arguments:}, get_filename:{arguments:, default_arguments:}, get_groups:{arguments:, default_arguments:}, get_incoming_connections:{arguments:, default_arguments:}, get_index:{arguments:, default_arguments:}, get_indexed:{arguments:a, default_arguments:a}, get_instance_id:{arguments:, default_arguments:}, get_meta:{arguments:a, default_arguments:a}, get_meta_list:{arguments:, default_arguments:}, get_method_list:{arguments:, default_arguments:}, get_multiplayer:{arguments:, default_arguments:}, get_name:{arguments:, default_arguments:}, get_network_master:{arguments:, default_arguments:}, get_node:{arguments:a, default_arguments:a}, get_node_and_resource:{arguments:a, default_arguments:a}, get_node_or_null:{arguments:a, default_arguments:a}, get_owner:{arguments:, default_arguments:}, get_parent:{arguments:, default_arguments:}, get_path:{arguments:, default_arguments:}, get_path_to:{arguments:a, default_arguments:a}, get_pause_mode:{arguments:, default_arguments:}, get_physics_process_delta_time:{arguments:, default_arguments:}, get_position_in_parent:{arguments:, default_arguments:}, get_process_delta_time:{arguments:, default_arguments:}, get_process_priority:{arguments:, default_arguments:}, get_property_list:{arguments:, default_arguments:}, get_scene_instance_load_placeholder:{arguments:, default_arguments:}, get_script:{arguments:, default_arguments:}, get_signal_connection_list:{arguments:a, default_arguments:a}, get_signal_list:{arguments:, default_arguments:}, get_tree:{arguments:, default_arguments:}, get_viewport:{arguments:, default_arguments:}, has_meta:{arguments:a, default_arguments:a}, has_method:{arguments:a, default_arguments:a}, has_node:{arguments:a, default_arguments:a}, has_node_and_resource:{arguments:a, default_arguments:a}, has_signal:{arguments:a, default_arguments:a}, has_user_signal:{arguments:a, default_arguments:a}, is_a_parent_of:{arguments:a, default_arguments:a}, is_blocking_signals:{arguments:, default_arguments:}, is_class:{arguments:a, default_arguments:a}, is_connected:{arguments:a, b, c, default_arguments:a, b, c}, is_displayed_folded:{arguments:, default_arguments:}, is_greater_than:{arguments:a, default_arguments:a}, is_in_group:{arguments:a, default_arguments:a}, is_inside_tree:{arguments:, default_arguments:}, is_network_master:{arguments:, default_arguments:}, is_physics_processing:{arguments:, default_arguments:}, is_physics_processing_internal:{arguments:, default_arguments:}, is_processing:{arguments:, default_arguments:}, is_processing_input:{arguments:, default_arguments:}, is_processing_internal:{arguments:, default_arguments:}, is_processing_unhandled_input:{arguments:, default_arguments:}, is_processing_unhandled_key_input:{arguments:, default_arguments:}, is_queued_for_deletion:{arguments:, default_arguments:}, math_fight:{arguments:, default_arguments:}, move_child:{arguments:a, b, default_arguments:a, b}, multiply:{arguments:a, b, default_arguments:a, b}, notification:{arguments:a, b, default_arguments:a, b = False}, pi:{arguments:, default_arguments:}, print_stray_nodes:{arguments:, default_arguments:}, print_tree:{arguments:, default_arguments:}, print_tree_pretty:{arguments:, default_arguments:}, propagate_call:{arguments:a, b, c, default_arguments:a, b = [], c = False}, propagate_notification:{arguments:a, default_arguments:a}, property_list_changed_notify:{arguments:, default_arguments:}, queue_free:{arguments:, default_arguments:}, raise:{arguments:, default_arguments:}, remove_and_skip:{arguments:, default_arguments:}, remove_child:{arguments:a, default_arguments:a}, remove_from_group:{arguments:a, default_arguments:a}, remove_meta:{arguments:a, default_arguments:a}, replace_by:{arguments:a, b, default_arguments:a, b = False}, request_ready:{arguments:, default_arguments:}, rpc:{arguments:a, default_arguments:a}, rpc_config:{arguments:a, b, default_arguments:a, b}, rpc_id:{arguments:a, b, default_arguments:a, b}, rpc_unreliable:{arguments:a, default_arguments:a}, rpc_unreliable_id:{arguments:a, b, default_arguments:a, b}, rset:{arguments:a, b, default_arguments:a, b}, rset_config:{arguments:a, b, default_arguments:a, b}, rset_id:{arguments:a, b, c, default_arguments:a, b, c}, rset_unreliable:{arguments:a, b, default_arguments:a, b}, rset_unreliable_id:{arguments:a, b, c, default_arguments:a, b, c}, set:{arguments:a, b, default_arguments:a, b}, set_block_signals:{arguments:a, default_arguments:a}, set_custom_multiplayer:{arguments:a, default_arguments:a}, set_deferred:{arguments:a, b, default_arguments:a, b}, set_display_folded:{arguments:a, default_arguments:a}, set_filename:{arguments:a, default_arguments:a}, set_indexed:{arguments:a, b, default_arguments:a, b}, set_message_translation:{arguments:a, default_arguments:a}, set_meta:{arguments:a, b, default_arguments:a, b}, set_name:{arguments:a, default_arguments:a}, set_network_master:{arguments:a, b, default_arguments:a, b = True}, set_owner:{arguments:a, default_arguments:a}, set_pause_mode:{arguments:a, default_arguments:a}, set_physics_process:{arguments:a, default_arguments:a}, set_physics_process_internal:{arguments:a, default_arguments:a}, set_process:{arguments:a, default_arguments:a}, set_process_input:{arguments:a, default_arguments:a}, set_process_internal:{arguments:a, default_arguments:a}, set_process_priority:{arguments:a, default_arguments:a}, set_process_unhandled_input:{arguments:a, default_arguments:a}, set_process_unhandled_key_input:{arguments:a, default_arguments:a}, set_scene_instance_load_placeholder:{arguments:a, default_arguments:a}, set_script:{arguments:a, default_arguments:a}, subtract:{arguments:a, b, default_arguments:a, b}, sum:{arguments:a, default_arguments:a}, to_string:{arguments:, default_arguments:}, tr:{arguments:a, default_arguments:a}, update_configuration_warning:{arguments:, default_arguments:}} != |Dictionary| {_enter_tree:{arguments:, default_arguments:}, _exit_tree:{arguments:, default_arguments:}, _get:{arguments:a, default_arguments:a}, _get_configuration_warning:{arguments:, default_arguments:}, _get_editor_description:{arguments:, default_arguments:}, _get_import_path:{arguments:, default_arguments:}, _get_property_list:{arguments:, default_arguments:}, _init:{arguments:, default_arguments:}, _input:{arguments:a, default_arguments:a}, _notification:{arguments:a, default_arguments:a}, _physics_process:{arguments:a, default_arguments:a}, _process:{arguments:a, default_arguments:a}, _ready:{arguments:, default_arguments:}, _set:{arguments:a, b, default_arguments:a, b}, _set_editor_description:{arguments:a, default_arguments:a}, _set_import_path:{arguments:a, default_arguments:a}, _to_string:{arguments:, default_arguments:}, _unhandled_input:{arguments:a, default_arguments:a}, _unhandled_key_input:{arguments:a, default_arguments:a}, add:{arguments:a, b, default_arguments:a, b}, add_child:{arguments:a, b, default_arguments:a, b = False}, add_child_below_node:{arguments:a, b, c, default_arguments:a, b, c = False}, add_to_group:{arguments:a, b, default_arguments:a, b = False}, add_user_signal:{arguments:a, b, default_arguments:a, b = []}, call:{arguments:a, default_arguments:a}, call_deferred:{arguments:a, default_arguments:a}, callv:{arguments:a, b, default_arguments:a, b}, can_process:{arguments:, default_arguments:}, can_translate_messages:{arguments:, default_arguments:}, connect:{arguments:a, b, c, d, e, default_arguments:a, b, c, d = [], e = 0}, disconnect:{arguments:a, b, c, default_arguments:a, b, c}, divide:{arguments:a, b, default_arguments:a, b}, duplicate:{arguments:a, default_arguments:a = 15}, emit_signal:{arguments:a, default_arguments:a}, find_node:{arguments:a, b, c, default_arguments:a, b = True, c = True}, find_parent:{arguments:a, default_arguments:a}, free:{arguments:, default_arguments:}, get:{arguments:a, default_arguments:a}, get_child:{arguments:a, default_arguments:a}, get_child_count:{arguments:, default_arguments:}, get_children:{arguments:, default_arguments:}, get_class:{arguments:, default_arguments:}, get_custom_multiplayer:{arguments:, default_arguments:}, get_filename:{arguments:, default_arguments:}, get_groups:{arguments:, default_arguments:}, get_incoming_connections:{arguments:, default_arguments:}, get_index:{arguments:, default_arguments:}, get_indexed:{arguments:a, default_arguments:a}, get_instance_id:{arguments:, default_arguments:}, get_meta:{arguments:a, default_arguments:a}, get_meta_list:{arguments:, default_arguments:}, get_method_list:{arguments:, default_arguments:}, get_multiplayer:{arguments:, default_arguments:}, get_name:{arguments:, default_arguments:}, get_network_master:{arguments:, default_arguments:}, get_node:{arguments:a, default_arguments:a}, get_node_and_resource:{arguments:a, default_arguments:a}, get_node_or_null:{arguments:a, default_arguments:a}, get_owner:{arguments:, default_arguments:}, get_parent:{arguments:, default_arguments:}, get_path:{arguments:, default_arguments:}, get_path_to:{arguments:a, default_arguments:a}, get_pause_mode:{arguments:, default_arguments:}, get_physics_process_delta_time:{arguments:, default_arguments:}, get_position_in_parent:{arguments:, default_arguments:}, get_process_delta_time:{arguments:, default_arguments:}, get_process_priority:{arguments:, default_arguments:}, get_property_list:{arguments:, default_arguments:}, get_scene_instance_load_placeholder:{arguments:, default_arguments:}, get_script:{arguments:, default_arguments:}, get_signal_connection_list:{arguments:a, default_arguments:a}, get_signal_list:{arguments:, default_arguments:}, get_tree:{arguments:, default_arguments:}, get_viewport:{arguments:, default_arguments:}, has_meta:{arguments:a, default_arguments:a}, has_method:{arguments:a, default_arguments:a}, has_node:{arguments:a, default_arguments:a}, has_node_and_resource:{arguments:a, default_arguments:a}, has_signal:{arguments:a, default_arguments:a}, has_user_signal:{arguments:a, default_arguments:a}, is_a_parent_of:{arguments:a, default_arguments:a}, is_blocking_signals:{arguments:, default_arguments:}, is_class:{arguments:a, default_arguments:a}, is_connected:{arguments:a, b, c, default_arguments:a, b, c}, is_displayed_folded:{arguments:, default_arguments:}, is_greater_than:{arguments:a, default_arguments:a}, is_in_group:{arguments:a, default_arguments:a}, is_inside_tree:{arguments:, default_arguments:}, is_network_master:{arguments:, default_arguments:}, is_physics_processing:{arguments:, default_arguments:}, is_physics_processing_internal:{arguments:, default_arguments:}, is_processing:{arguments:, default_arguments:}, is_processing_input:{arguments:, default_arguments:}, is_processing_internal:{arguments:, default_arguments:}, is_processing_unhandled_input:{arguments:, default_arguments:}, is_processing_unhandled_key_input:{arguments:, default_arguments:}, is_queued_for_deletion:{arguments:, default_arguments:}, math_fight:{arguments:, default_arguments:}, move_child:{arguments:a, b, default_arguments:a, b}, multiply:{arguments:a, b, default_arguments:a, b}, notification:{arguments:a, b, default_arguments:a, b = False}, pi:{arguments:, default_arguments:}, print_stray_nodes:{arguments:, default_arguments:}, print_tree:{arguments:, default_arguments:}, print_tree_pretty:{arguments:, default_arguments:}, propagate_call:{arguments:a, b, c, default_arguments:a, b = [], c = False}, propagate_notification:{arguments:a, default_arguments:a}, property_list_changed_notify:{arguments:, default_arguments:}, queue_free:{arguments:, default_arguments:}, raise:{arguments:, default_arguments:}, remove_and_skip:{arguments:, default_arguments:}, remove_child:{arguments:a, default_arguments:a}, remove_from_group:{arguments:a, default_arguments:a}, remove_meta:{arguments:a, default_arguments:a}, replace_by:{arguments:a, b, default_arguments:a, b = False}, request_ready:{arguments:, default_arguments:}, rpc:{arguments:a, default_arguments:a}, rpc_config:{arguments:a, b, default_arguments:a, b}, rpc_id:{arguments:a, b, default_arguments:a, b}, rpc_unreliable:{arguments:a, default_arguments:a}, rpc_unreliable_id:{arguments:a, b, default_arguments:a, b}, rset:{arguments:a, b, default_arguments:a, b}, rset_config:{arguments:a, b, default_arguments:a, b}, rset_id:{arguments:a, b, c, default_arguments:a, b, c}, rset_unreliable:{arguments:a, b, default_arguments:a, b}, rset_unreliable_id:{arguments:a, b, c, default_arguments:a, b, c}, set:{arguments:a, b, default_arguments:a, b}, set_block_signals:{arguments:a, default_arguments:a}, set_custom_multiplayer:{arguments:a, default_arguments:a}, set_deferred:{arguments:a, b, default_arguments:a, b}, set_display_folded:{arguments:a, default_arguments:a}, set_filename:{arguments:a, default_arguments:a}, set_indexed:{arguments:a, b, default_arguments:a, b}, set_message_translation:{arguments:a, default_arguments:a}, set_meta:{arguments:a, b, default_arguments:a, b}, set_name:{arguments:a, default_arguments:a}, set_network_master:{arguments:a, b, default_arguments:a, b = True}, set_owner:{arguments:a, default_arguments:a}, set_pause_mode:{arguments:a, default_arguments:a}, set_physics_process:{arguments:a, default_arguments:a}, set_physics_process_internal:{arguments:a, default_arguments:a}, set_process:{arguments:a, default_arguments:a}, set_process_input:{arguments:a, default_arguments:a}, set_process_internal:{arguments:a, default_arguments:a}, set_process_priority:{arguments:a, default_arguments:a}, set_process_unhandled_input:{arguments:a, default_arguments:a}, set_process_unhandled_key_input:{arguments:a, default_arguments:a}, set_scene_instance_load_placeholder:{arguments:a, default_arguments:a}, set_script:{arguments:a, default_arguments:a}, subtract:{arguments:a, b, default_arguments:a, b}, sum:{arguments:a, default_arguments:a}, to_string:{arguments:, default_arguments:}, tr:{arguments:a, default_arguments:a}, update_configuration_warning:{arguments:, default_arguments:}}",
+"success": true
+} ],
+"context": "When we create two of it for the same script",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Reference:1565] is instance of class: [GDScript:1554]",
+"context": "Then we get that inner class back",
+"expected": "[Reference:1565] is instance of class: [GDScript:1554]",
+"success": true
+} ],
+"context": "When we double an inner class",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 3,
+"path": "res://tests/integration/script_director.test.gd",
+"success": true,
+"time_taken": 0.0,
+"total": 3
+}, {
+"context": "Given a Test Double",
+"methods": [ {
+"assertions": [ {
+"actual": "(1, 1) is builtin: Vector2",
+"context": "Then we can call methods on it",
+"expected": "(1, 1) is builtin: Vector2",
+"success": true
+} ],
+"context": "When we double an inner class",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|null| Null == null",
+"context": "Then we get null",
+"expected": "|null| Null == null",
+"success": true
+} ],
+"context": "When we call a method that we have dummied",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|Array| [10, 5] is equal to |Array| [10, 5]",
+"context": "Then it returns a value",
+"expected": "|Array| [10, 5] is equal to |Array| [10, 5]",
+"success": true
+} ],
+"context": "When we pass an Object with a call_func function",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "add was called",
+"context": "Then we can see that it was called at least once",
+"expected": "add was called",
+"success": true
+} ],
+"context": "When we call a method that we are spying on",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 9999 is equal to |int| 9999",
+"context": "Then it returns the corresponding value when the pattern matches",
+"expected": "|int| 9999 is equal to |int| 9999",
+"success": true
+} ],
+"context": "When we call a method that was stubbed with an argument pattern that includes a non-primitive object",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 4 is equal to |int| 4",
+"context": "Then it calls its super implementation by default",
+"expected": "|int| 4 is equal to |int| 4",
+"success": true
+}, {
+"actual": "|int| 9999 is equal to |int| 9999",
+"context": "Then it does not call its super implementation when arguments patterns match a different return value",
+"expected": "|int| 9999 is equal to |int| 9999",
+"success": true
+} ],
+"context": "When we call a method that we stubbed to call its super implementation by default",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|Object| [Node:1618] is equal to |Object| [Node:1618]",
+"context": "Then it returns that same node",
+"expected": "|Object| [Node:1618] is equal to |Object| [Node:1618]",
+"success": true
+} ],
+"context": "When we call a method that we have stubbed to return a node",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|float| 6.283185 is equal to |float| 6.283185",
+"context": "Then we can call the static methods of that inner double",
+"expected": "|float| 6.283185 is equal to |float| 6.283185",
+"success": true
+} ],
+"context": "When we add an doubled inner class to it",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then it returns true",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we call a method that we have stubbed to return true",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 99 is equal to |int| 99",
+"context": "Then it affects the state of the double",
+"expected": "|int| 99 is equal to |int| 99",
+"success": true
+} ],
+"context": "When we pass a funcref as a subcall",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 100 is equal to |int| 100",
+"context": "Then it returns the default stubbed value when the arguments don't match any pattern",
+"expected": "|int| 100 is equal to |int| 100",
+"success": true
+}, {
+"actual": "|int| 1000 is equal to |int| 1000",
+"context": "Then it returns the the corresponding value to the pattern the arguments matched",
+"expected": "|int| 1000 is equal to |int| 1000",
+"success": true
+} ],
+"context": "When we call a method that was stubbed to return different values based on argument patterns",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|null| Null == null",
+"context": "Then we get the stubbed value back",
+"expected": "|null| Null == null",
+"success": true
+} ],
+"context": "When we stub a method of a doubled inner class",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|String| Jackie is equal to |String| Jackie",
+"context": "Then we can double the object successfully",
+"expected": "|String| Jackie is equal to |String| Jackie",
+"success": true
+} ],
+"context": "When we pass in dependecies on direct",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 4 is equal to |int| 4",
+"context": "Then we get the correct result",
+"expected": "|int| 4 is equal to |int| 4",
+"success": true
+} ],
+"context": "When we call an add(x, y) method that we haven't directed",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True is equal to |bool| True",
+"context": "Then we can call it",
+"expected": "|bool| True is equal to |bool| True",
+"success": true
+} ],
+"context": "When we stubbed a keyworded method by passing in the correct keyword",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|String| Jackie is equal to |String| Jackie",
+"context": "Then we can double the object successfully",
+"expected": "|String| Jackie is equal to |String| Jackie",
+"success": true
+} ],
+"context": "When we pass in dependecies on double",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "method: add was called with arguments: [10, 10]",
+"context": "Then we can see that it was called with those arguments",
+"expected": "method: add was called with arguments: [10, 10]",
+"success": true
+} ],
+"context": "When we pass arguments to a method call that we are spying on",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 9999 is equal to |int| 9999",
+"context": "Then it returns the corresponding value when the partial pattern matches",
+"expected": "|int| 9999 is equal to |int| 9999",
+"success": true
+} ],
+"context": "When we call a method that was stubbed with a partial (ie using any()) argument pattern",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 99 is equal to |int| 99",
+"context": "Then it returns a value",
+"expected": "|int| 99 is equal to |int| 99",
+"success": true
+} ],
+"context": "When we pass a funcref as a subcall that returns",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 19,
+"path": "res://tests/integration/test_double.test.gd",
+"success": true,
+"time_taken": 0.0,
+"total": 19
+} ]

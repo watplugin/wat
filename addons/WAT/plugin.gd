@@ -5,7 +5,7 @@ const TITLE: String = "Tests"
 const ControlPanel: PackedScene = preload("res://addons/WAT/gui.tscn")
 const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/editor.gd")
 const DockController: Script = preload("ui/dock.gd")
-const SystemInitializer: Script = preload("system/initializer.gd")
+const SystemInitializer: Script = preload("initializer.gd")
 
 var _ControlPanel: PanelContainer
 var _TestMetadataEditor: EditorInspectorPlugin

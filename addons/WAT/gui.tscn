@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/ui/gui.gd" type="Script" id=3]
 [ext_resource path="res://addons/WAT/ui/links.gd" type="Script" id=4]
 [ext_resource path="res://addons/WAT/ui/Summary.gd" type="Script" id=6]
-[ext_resource path="res://addons/WAT/host.gd" type="Script" id=7]
 [ext_resource path="res://addons/WAT/assets/play.svg" type="Texture" id=8]
 [ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=9]
 [ext_resource path="res://addons/WAT/editor/test_selector.gd" type="Script" id=11]
@@ -165,6 +164,3 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Online Docs"
 flat = true
-
-[node name="Host" type="Node" parent="."]
-script = ExtResource( 7 )
