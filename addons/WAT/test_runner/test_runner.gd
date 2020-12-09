@@ -11,7 +11,6 @@ func _ready() -> void:
 
 func _run() -> void:
 	# In Threaded versions, we could replace this with a system in process using "isRunning" boolean
-	print(Runnables.tests)
 	Factory.initialize(Runnables.tests)
 	while not Factory.is_done():
 		var test = Factory.get_next_test()
@@ -25,5 +24,4 @@ func _run() -> void:
 	
 func _terminate() -> void:
 	print("Terminating TestRunner")
-	#Client.quit()
 	get_tree().quit()

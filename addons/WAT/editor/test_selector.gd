@@ -103,7 +103,6 @@ func _on_about_to_show_methods():
 			methods.add_submenu_item(method.name, "RunMethod")
 
 func _on_about_to_show_run() -> void:
-	print(scripts.get_current_index())
-	method = methods.get_item_text(scripts.get_current_index())
+	method = methods.get_item_text(methods.get_current_index())
 	run_method.clear()
 	run_method.add_item("Run Method", RUN.METHOD)

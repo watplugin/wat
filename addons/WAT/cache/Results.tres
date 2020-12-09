@@ -20,7 +20,7 @@ _list = [ {
 "total": 1
 } ],
 "passed": 1,
-"path": "res://addons/WAT/cache/.nested/1.gd",
+"path": "res://addons/WAT/cache/.nested/0.gd",
 "success": true,
 "time_taken": 0.0,
 "total": 1
