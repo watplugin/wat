@@ -7,8 +7,8 @@
 [resource]
 script = ExtResource( 1 )
 scripts = {
-"res://tests/unit/suite.test.gd.DummyOne.gd": ExtResource( 3 ),
-"res://tests/unit/suite.test.gd.DummyTwo.gd": ExtResource( 2 )
+"res://tests/unit/suite.test.gd.DummyOne": ExtResource( 2 ),
+"res://tests/unit/suite.test.gd.DummyTwo": ExtResource( 3 )
 }
 directories = [ "res://tests/integration", "res://tests/results", "res://tests/results/WAT", "res://tests/unit" ]
-script_paths = [ "res://tests/unit/suite.test.gd.DummyTwo.gd", "res://tests/unit/suite.test.gd.DummyOne.gd" ]
+script_paths = [ "res://tests/unit/suite.test.gd.DummyOne", "res://tests/unit/suite.test.gd.DummyTwo" ]

@@ -1,1 +1,1 @@
-extends "res://tests/unit/suite.test.gd".DummyOne
+extends "res://tests/unit/suite.test.gd".DummyTwo

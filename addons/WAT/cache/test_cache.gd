@@ -88,7 +88,7 @@ func _load_suite(suite: Script):
 			tempCopy.reload()
 			ResourceSaver.save("res://addons/WAT/cache/.nested/%s.gd" % _suite_count as String, tempCopy)
 			var loadedCopy = load("res://addons/WAT/cache/.nested/%s.gd" % _suite_count)
-			loadedCopy.set_meta("path", "%s.%s.gd" % [suite.get_path(), constant])
+			loadedCopy.set_meta("path", "%s.%s" % [suite.get_path(), constant])
 			_suite_count += 1
 			tests.append(loadedCopy)
 	return tests

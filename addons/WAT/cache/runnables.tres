@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://addons/WAT/cache/runnables.gd" type="Script" id=1]
-[ext_resource path="res://addons/WAT/cache/.nested/0.gd" type="Script" id=2]
+[ext_resource path="res://addons/WAT/cache/.nested/1.gd" type="Script" id=2]
 
 [resource]
 script = ExtResource( 1 )

@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 _list = [ {
-"context": "Dummy Test 2",
+"context": "Dummy Passing Test",
 "methods": [ {
 "assertions": [ {
 "actual": "|bool| True == true",
@@ -20,7 +20,7 @@ _list = [ {
 "total": 1
 } ],
 "passed": 1,
-"path": "res://addons/WAT/cache/.nested/0.gd",
+"path": "res://addons/WAT/cache/.nested/1.gd",
 "success": true,
 "time_taken": 0.0,
 "total": 1

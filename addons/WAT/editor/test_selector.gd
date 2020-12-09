@@ -86,13 +86,24 @@ func _on_about_to_show_methods():
 	methods.add_item("Run Test", RUN.SCRIPT)
 	var methodlist = []
 	# Are we sure this is always a test script?
-	var script = load(scriptname)
+	var script
+	if scriptname.ends_with(".gd"):
+		print(scriptname)
+		script = load(scriptname)
+	else:
+		# Display SuiteOfSuites
+		var sourcename = scriptname.substr(0, scriptname.find(".gd") + 3)
+		var nestedname = scriptname.substr(scriptname.find(".gd") + 4, scriptname.length())
+		var source = load(sourcename)
+		var expr: Expression = Expression.new()
+		expr.parse(nestedname)
+		script = expr.execute([], source)
 	for method in script.get_script_method_list():
 		if method.name.begins_with("test"):
 			methods.add_submenu_item(method.name, "RunMethod")
 
-			
 func _on_about_to_show_run() -> void:
+	print(scripts.get_current_index())
 	method = methods.get_item_text(scripts.get_current_index())
 	run_method.clear()
 	run_method.add_item("Run Method", RUN.METHOD)
