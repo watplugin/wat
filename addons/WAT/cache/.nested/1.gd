@@ -1,0 +1,1 @@
+extends "res://tests/unit/suite.test.gd".DummyOne

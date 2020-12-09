@@ -1,46 +1,14 @@
-[gd_resource type="Resource" load_steps=20 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://addons/WAT/cache/test_cache.gd" type="Script" id=1]
-[ext_resource path="res://tests/unit/is_instance.test.gd" type="Script" id=2]
-[ext_resource path="res://tests/unit/null.test.gd" type="Script" id=3]
-[ext_resource path="res://tests/unit/is_not_instance.test.gd" type="Script" id=4]
-[ext_resource path="res://tests/unit/parameters.test.gd" type="Script" id=5]
-[ext_resource path="res://tests/unit/object.test.gd" type="Script" id=6]
-[ext_resource path="res://tests/unit/equality.test.gd" type="Script" id=7]
-[ext_resource path="res://tests/unit/file.test.gd" type="Script" id=8]
-[ext_resource path="res://tests/unit/on_floor.test.gd" type="Script" id=9]
-[ext_resource path="res://tests/unit/yield.test.gd" type="Script" id=10]
-[ext_resource path="res://tests/unit/test.test.gd" type="Script" id=11]
-[ext_resource path="res://tests/unit/range.test.gd" type="Script" id=12]
-[ext_resource path="res://tests/unit/string.test.gd" type="Script" id=13]
-[ext_resource path="res://tests/unit/watcher.test.gd" type="Script" id=14]
-[ext_resource path="res://tests/integration/default_args.test.gd" type="Script" id=15]
-[ext_resource path="res://tests/integration/script_director.test.gd" type="Script" id=16]
-[ext_resource path="res://tests/integration/test_double.test.gd" type="Script" id=17]
-[ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=18]
-[ext_resource path="res://tests/integration/scene_director.test.gd" type="Script" id=19]
+[ext_resource path="res://addons/WAT/cache/.nested/0.gd" type="Script" id=2]
+[ext_resource path="res://addons/WAT/cache/.nested/1.gd" type="Script" id=3]
 
 [resource]
 script = ExtResource( 1 )
 scripts = {
-"res://tests/integration/default_args.test.gd": ExtResource( 15 ),
-"res://tests/integration/scene_director.test.gd": ExtResource( 19 ),
-"res://tests/integration/script_director.test.gd": ExtResource( 16 ),
-"res://tests/integration/test_double.test.gd": ExtResource( 17 ),
-"res://tests/unit/boolean.test.gd": ExtResource( 18 ),
-"res://tests/unit/equality.test.gd": ExtResource( 7 ),
-"res://tests/unit/file.test.gd": ExtResource( 8 ),
-"res://tests/unit/is_instance.test.gd": ExtResource( 2 ),
-"res://tests/unit/is_not_instance.test.gd": ExtResource( 4 ),
-"res://tests/unit/null.test.gd": ExtResource( 3 ),
-"res://tests/unit/object.test.gd": ExtResource( 6 ),
-"res://tests/unit/on_floor.test.gd": ExtResource( 9 ),
-"res://tests/unit/parameters.test.gd": ExtResource( 5 ),
-"res://tests/unit/range.test.gd": ExtResource( 12 ),
-"res://tests/unit/string.test.gd": ExtResource( 13 ),
-"res://tests/unit/test.test.gd": ExtResource( 11 ),
-"res://tests/unit/watcher.test.gd": ExtResource( 14 ),
-"res://tests/unit/yield.test.gd": ExtResource( 10 )
+"res://tests/unit/suite.test.gd.DummyOne.gd": ExtResource( 3 ),
+"res://tests/unit/suite.test.gd.DummyTwo.gd": ExtResource( 2 )
 }
 directories = [ "res://tests/integration", "res://tests/results", "res://tests/results/WAT", "res://tests/unit" ]
-script_paths = [ "res://tests/integration/default_args.test.gd", "res://tests/integration/scene_director.test.gd", "res://tests/integration/script_director.test.gd", "res://tests/integration/test_double.test.gd", "res://tests/unit/boolean.test.gd", "res://tests/unit/equality.test.gd", "res://tests/unit/file.test.gd", "res://tests/unit/is_instance.test.gd", "res://tests/unit/is_not_instance.test.gd", "res://tests/unit/null.test.gd", "res://tests/unit/object.test.gd", "res://tests/unit/on_floor.test.gd", "res://tests/unit/parameters.test.gd", "res://tests/unit/range.test.gd", "res://tests/unit/string.test.gd", "res://tests/unit/test.test.gd", "res://tests/unit/watcher.test.gd", "res://tests/unit/yield.test.gd" ]
+script_paths = [ "res://tests/unit/suite.test.gd.DummyTwo.gd", "res://tests/unit/suite.test.gd.DummyOne.gd" ]

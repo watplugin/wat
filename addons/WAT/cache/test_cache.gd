@@ -7,6 +7,7 @@ const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 export(Dictionary) var scripts = {}
 export(Array, String) var directories = []
 export(Array, String) var script_paths = []
+var _suite_count: int = 0
 
 func scripts(path: String) -> Array:
 	var tests: Array = []
@@ -38,6 +39,8 @@ func initialize() -> void:
 	scripts = {}
 	directories = []
 	script_paths = []
+	Directory.new().remove("res://addons/WAT/cache/.nested")
+	_suite_count = 0
 	var root = ProjectSettings.get_setting("WAT/Test_Directory")
 	_search(root)
 	ResourceSaver.save(resource_path, self)
@@ -55,12 +58,14 @@ func _search(root: String):
 		if name.ends_with(".gd"):
 			var script = load(title)
 			if script.get("TEST") != null:
-				script_paths.append(title)
-				scripts[title] = script
+				push_warning("Normal Tests Temp Deimplemented")
+				#script_paths.append(title)
+				#scripts[title] = script
 			elif script.get("IS_WAT_SUITE"):
-				#for test in _load_suite(script):
-				#	scripts[test.get_meta("path")] = test
-				push_warning("Test Suites DeImplemented")
+				for test in _load_suite(script):
+					scripts[test.get_meta("path")] = test
+					script_paths.append(test.get_meta("path"))
+				#push_warning("Test Suites DeImplemented")
 				
 		# add dir
 		if d.dir_exists(name):
@@ -78,6 +83,12 @@ func _load_suite(suite: Script):
 		expr.parse(constant)
 		var test = expr.execute([], suite)
 		if test.get("TEST") != null:
-			test.set_meta("path", "%s.%s" % [suite.get_path(), constant])
-			tests.append(test)
+			var tempCopy = GDScript.new()
+			tempCopy.source_code = 'extends "%s".%s' % [suite.get_path(), constant]
+			tempCopy.reload()
+			ResourceSaver.save("res://addons/WAT/cache/.nested/%s.gd" % _suite_count as String, tempCopy)
+			var loadedCopy = load("res://addons/WAT/cache/.nested/%s.gd" % _suite_count)
+			loadedCopy.set_meta("path", "%s.%s.gd" % [suite.get_path(), constant])
+			_suite_count += 1
+			tests.append(loadedCopy)
 	return tests
