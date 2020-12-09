@@ -58,14 +58,12 @@ func _search(root: String):
 		if name.ends_with(".gd"):
 			var script = load(title)
 			if script.get("TEST") != null:
-				push_warning("Normal Tests Temp Deimplemented")
-				#script_paths.append(title)
-				#scripts[title] = script
+				script_paths.append(title)
+				scripts[title] = script
 			elif script.get("IS_WAT_SUITE"):
 				for test in _load_suite(script):
 					scripts[test.get_meta("path")] = test
 					script_paths.append(test.get_meta("path"))
-				#push_warning("Test Suites DeImplemented")
 				
 		# add dir
 		if d.dir_exists(name):
