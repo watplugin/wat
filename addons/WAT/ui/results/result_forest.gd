@@ -33,7 +33,8 @@ func sort(results: Array) -> Dictionary:
 	var sorted: Dictionary = {}
 	for result in results:
 		var end: int = result.path.find_last("/")
-		var path: String = result.path.substr(0, end).replace("res://", "").replace("tests/", "").replace("/", " ").capitalize()
+		# Need to consider ProjectSettings Here
+		var path: String = result.path.substr(0, end).replace(ProjectSettings.get_setting("WAT/Test_Directory"), "").replace("/", " ").capitalize()
 		if sorted.has(path):
 			sorted[path].append(result)
 		else:

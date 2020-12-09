@@ -58,8 +58,11 @@ func parameters(list: Array) -> void:
 	rerun_method = parameters.parameters(list)
 
 func path() -> String:
+	var meta: String = ""
 	var path = get_script().get_path()
-	return path if path != "" else get_script().get_meta("path")
+	if get("custom_path") != null:
+		meta = get("custom_path")
+	return path if meta == "" else meta
 	
 func title() -> String:
 	var path: String = get_script().get_path()

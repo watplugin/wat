@@ -61,9 +61,10 @@ func _search(root: String):
 				script_paths.append(title)
 				scripts[title] = script
 			elif script.get("IS_WAT_SUITE"):
-				for test in _load_suite(script):
-					scripts[test.get_meta("path")] = test
-					script_paths.append(test.get_meta("path"))
+				_load_suite(script)
+#				for test in _load_suite(script):
+#					scripts[test.get_meta("path")] = test
+#					script_paths.append(test.get_meta("path"))
 				
 		# add dir
 		if d.dir_exists(name):
@@ -83,10 +84,12 @@ func _load_suite(suite: Script):
 		if test.get("TEST") != null:
 			var tempCopy = GDScript.new()
 			tempCopy.source_code = 'extends "%s".%s' % [suite.get_path(), constant]
+			tempCopy.source_code += "\nvar custom_path = '%s.%s'" % [suite.get_path(), constant]
 			tempCopy.reload()
 			ResourceSaver.save("res://addons/WAT/cache/.nested/%s.gd" % _suite_count as String, tempCopy)
 			var loadedCopy = load("res://addons/WAT/cache/.nested/%s.gd" % _suite_count)
-			loadedCopy.set_meta("path", "%s.%s" % [suite.get_path(), constant])
 			_suite_count += 1
 			tests.append(loadedCopy)
+			scripts['%s.%s' % [suite.get_path(), constant]] = loadedCopy
+			script_paths.append('%s.%s' % [suite.get_path(), constant])
 	return tests
