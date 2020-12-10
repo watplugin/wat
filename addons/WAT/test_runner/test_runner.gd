@@ -24,4 +24,5 @@ func _run() -> void:
 	
 func _terminate() -> void:
 	print("Terminating TestRunner")
+	Runnables.clear()
 	get_tree().quit()

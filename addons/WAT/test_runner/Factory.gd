@@ -20,6 +20,9 @@ func initialize(scripts: Array) -> void:
 
 func get_next_test() -> Node:
 	var script = _test_scripts[_cursor]
+	while not Directory.new().file_exists(script.resource_path):
+		_cursor += 1
+		script = _test_scripts[_cursor]
 	var test = script.new()
 	var testcase = TestCase.new(test.title(), test.path())
 	var yielder = Yielder.new()
