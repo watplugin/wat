@@ -15,7 +15,7 @@ func get_plugin_name() -> String:
    return "WAT"
 
 func _enter_tree() -> void:
-	SystemInitializer.new()
+	SystemInitializer.new(self)
 	_ControlPanel = ControlPanel.instance()
 	_TestMetadataEditor = TestMetadataEditor.new()
 	add_inspector_plugin(_TestMetadataEditor)
@@ -27,3 +27,4 @@ func _exit_tree() -> void:
 	_DockController.free()
 	_ControlPanel.free()
 	remove_inspector_plugin(_TestMetadataEditor)
+	

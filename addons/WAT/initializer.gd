@@ -1,6 +1,6 @@
 extends Reference
 
-func _init() -> void:
+func _init(plugin) -> void:
 	_create_test_folder()
 	_create_results_folder()
 	_add_window_setting()
@@ -9,9 +9,9 @@ func _init() -> void:
 	_add_tag_setting()
 	_add_window_sizing()
 	_add_port_setting()
-	add_test_cache()
+	add_test_cache(plugin)
 	
-func add_test_cache() -> void:
+func add_test_cache(plugin) -> void:
 	var x = load("res://addons/WAT/cache/test_cache.gd").new()
 	x.scripts = {}
 	x.directories = []
@@ -20,6 +20,11 @@ func add_test_cache() -> void:
 	var y = load("res://addons/WAT/cache/test_cache.tres")
 	y.initialize()
 	y.refresh()
+	var e = plugin.get_editor_interface().get_file_system_dock()
+	e.connect("files_moved", y, "_on_files_moved")
+	e.connect("file_removed", y, "_on_files_removed")
+	e.connect("folder_moved", y, "_on_folder_moved")
+	e.connect("folder_removed", y, "_on_folder_removed")
 	
 func _add_port_setting() -> void:
 	if ProjectSettings.has_setting("WAT/Port"):

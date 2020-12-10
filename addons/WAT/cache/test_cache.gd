@@ -93,3 +93,19 @@ func _load_suite(suite: Script):
 			scripts['%s.%s' % [suite.get_path(), constant]] = loadedCopy
 			script_paths.append('%s.%s' % [suite.get_path(), constant])
 	return tests
+	
+func _on_files_moved(old: String, new: String) -> void:
+	print("moved file %s to %s" % [old, new])
+	
+func _on_file_removed(removed: String):
+	# Should be on_file_removed
+	print("removed file ", removed)
+	
+func _on_folder_moved(old: String, new: String) -> void:
+	# Counts for renaming
+	print("moved folder %s to %s" % [old, new])
+	
+func _on_folder_removed(removed: String) -> void:
+	# Doesn't inform us about which files were in that folder
+	# We'll likely be able to do a remove all that begins with path
+	print("removed folder ", removed)

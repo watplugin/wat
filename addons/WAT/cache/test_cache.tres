@@ -40,11 +40,11 @@ scripts = {
 "res://tests/unit/parameters.test.gd": ExtResource( 17 ),
 "res://tests/unit/range.test.gd": ExtResource( 19 ),
 "res://tests/unit/string.test.gd": ExtResource( 16 ),
-"res://tests/unit/suite.test.gd.DummyOne": ExtResource( 3 ),
-"res://tests/unit/suite.test.gd.DummyTwo": ExtResource( 2 ),
+"res://tests/unit/suite.test.gd.DummyOne": ExtResource( 2 ),
+"res://tests/unit/suite.test.gd.DummyTwo": ExtResource( 3 ),
 "res://tests/unit/test.test.gd": ExtResource( 13 ),
 "res://tests/unit/watcher.test.gd": ExtResource( 21 ),
 "res://tests/unit/yield.test.gd": ExtResource( 14 )
 }
 directories = [ "res://tests/integration", "res://tests/results", "res://tests/results/WAT", "res://tests/unit" ]
-script_paths = [ "res://tests/integration/default_args.test.gd", "res://tests/integration/scene_director.test.gd", "res://tests/integration/script_director.test.gd", "res://tests/integration/test_double.test.gd", "res://tests/unit/boolean.test.gd", "res://tests/unit/equality.test.gd", "res://tests/unit/file.test.gd", "res://tests/unit/is_instance.test.gd", "res://tests/unit/is_not_instance.test.gd", "res://tests/unit/null.test.gd", "res://tests/unit/object.test.gd", "res://tests/unit/on_floor.test.gd", "res://tests/unit/parameters.test.gd", "res://tests/unit/range.test.gd", "res://tests/unit/string.test.gd", "res://tests/unit/suite.test.gd.DummyTwo", "res://tests/unit/suite.test.gd.DummyOne", "res://tests/unit/test.test.gd", "res://tests/unit/watcher.test.gd", "res://tests/unit/yield.test.gd" ]
+script_paths = [ "res://tests/integration/default_args.test.gd", "res://tests/integration/scene_director.test.gd", "res://tests/integration/script_director.test.gd", "res://tests/integration/test_double.test.gd", "res://tests/unit/boolean.test.gd", "res://tests/unit/equality.test.gd", "res://tests/unit/file.test.gd", "res://tests/unit/is_instance.test.gd", "res://tests/unit/is_not_instance.test.gd", "res://tests/unit/null.test.gd", "res://tests/unit/object.test.gd", "res://tests/unit/on_floor.test.gd", "res://tests/unit/parameters.test.gd", "res://tests/unit/range.test.gd", "res://tests/unit/string.test.gd", "res://tests/unit/suite.test.gd.DummyOne", "res://tests/unit/suite.test.gd.DummyTwo", "res://tests/unit/test.test.gd", "res://tests/unit/watcher.test.gd", "res://tests/unit/yield.test.gd" ]
