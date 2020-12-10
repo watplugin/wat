@@ -98,6 +98,8 @@ func _on_files_moved(old: String, new: String) -> void:
 	print("moved file %s to %s" % [old, new])
 	
 func _on_file_removed(removed: String):
+	scripts.erase(removed)
+	script_paths.remove(removed)
 	# Should be on_file_removed
 	print("removed file ", removed)
 	

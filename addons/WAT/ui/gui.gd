@@ -57,6 +57,7 @@ func _on_view_pressed(id: int) -> void:
 			Results.expand_failures()
 
 func _display_results() -> void:
+	load("res://addons/WAT/cache/runnables.tres").clear()
 	var _res = RESULTS.retrieve()
 	Summary.summarize(_res)
 	Results.clear()
