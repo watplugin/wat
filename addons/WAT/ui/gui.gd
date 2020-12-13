@@ -1,7 +1,6 @@
 tool
 extends PanelContainer
 
-enum { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
 const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 const RESULTS = preload("res://addons/WAT/cache/Results.tres")
 onready var Summary: Label = $GUI/Interact/Summary
@@ -46,15 +45,6 @@ func _run_as_game() -> void:
 	var instance = preload(TestRunner).instance()
 	#instance.is_editor = false
 	add_child(instance)
-
-func _on_view_pressed(id: int) -> void:
-	match id:
-		EXPAND_ALL:
-			Results.expand_all()
-		COLLAPSE_ALL:
-			Results.collapse_all()
-		EXPAND_FAILURES:
-			Results.expand_failures()
 
 func _display_results() -> void:
 	load("res://addons/WAT/cache/runnables.tres").clear()
