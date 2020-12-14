@@ -45,10 +45,10 @@ func _on_run_option_pressed(option: int, strategy = {"paths": null}) -> void:
 			tests[0].set_meta("method", method)
 		RUN.TAG:
 			push_warning("Tag Needs To Be Reimplemented")
-	Runnables.tests = tests
-	print(tests)
-	ResourceSaver.save(Runnables.resource_path, Runnables)
-	emit_signal("_test_path_selected")
+#	Runnables.tests = tests
+#	print(tests)
+#	ResourceSaver.save(Runnables.resource_path, Runnables)
+	emit_signal("_test_path_selected", tests)
 	
 	
 func _on_about_to_show_directories():

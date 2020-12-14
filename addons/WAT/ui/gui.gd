@@ -32,12 +32,18 @@ func _process(delta):
 func get_repeat() -> int:
 	return Repeater.value as int
 
-func run() -> void:
-	_run_as_editor() if Engine.is_editor_hint() else _run_as_game()
+func run(tests) -> void:
+	_run_as_editor(tests) if Engine.is_editor_hint() else _run_as_game()
 	sceneWasLaunched = true
 	
-func _run_as_editor() -> void:
+func _run_as_editor(tests) -> void:
+	var instance = load("res://addons/WAT/test_runner/TestRunner.tscn").instance()
+	instance.tests = tests
+	var scene = PackedScene.new()
+	scene.pack(instance)
+	ResourceSaver.save("res://addons/WAT/test_runner/TestRunner.tscn", scene)
 	var plugin = EditorPlugin.new()
+	plugin.get_editor_interface().reload_scene_from_path("res://addons/WAT/test_runner/TestRunner.tscn")
 	plugin.get_editor_interface().play_custom_scene(TestRunner)
 	plugin.make_bottom_panel_item_visible(self)
 	

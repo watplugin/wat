@@ -1,11 +1,12 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://addons/WAT/ui/metadata/index.gd" type="Script" id=1]
 [ext_resource path="res://tests/unit/string.test.gd" type="Script" id=2]
+[ext_resource path="res://addons/WAT/test/test.gd" type="Script" id=3]
 [ext_resource path="res://tests/unit/on_floor.test.gd" type="Script" id=5]
 [ext_resource path="res://tests/unit/null.test.gd" type="Script" id=10]
 
 [resource]
 script = ExtResource( 1 )
-scripts = [ ExtResource( 2 ), ExtResource( 10 ), ExtResource( 5 ) ]
-tags = [ [  ], [  ], [  ] ]
+scripts = [ ExtResource( 2 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 3 ) ]
+tags = [ [  ], [  ], [  ], [  ] ]
