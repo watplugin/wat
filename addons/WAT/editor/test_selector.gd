@@ -3,7 +3,6 @@ tool
 
 enum RUN { ALL, DIRECTORY, SCRIPT, METHOD, TAG }
 const FileCache = preload("res://addons/WAT/cache/test_cache.tres")
-const Runnables = preload("res://addons/WAT/cache/runnables.tres")
 var dirs = get_popup()
 var scripts = PopupMenu.new()
 var methods = PopupMenu.new()
@@ -45,9 +44,6 @@ func _on_run_option_pressed(option: int, strategy = {"paths": null}) -> void:
 			tests[0].set_meta("method", method)
 		RUN.TAG:
 			push_warning("Tag Needs To Be Reimplemented")
-#	Runnables.tests = tests
-#	print(tests)
-#	ResourceSaver.save(Runnables.resource_path, Runnables)
 	emit_signal("_test_path_selected", tests)
 	
 	

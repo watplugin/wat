@@ -53,7 +53,6 @@ func _run_as_game() -> void:
 	add_child(instance)
 
 func _display_results() -> void:
-	load("res://addons/WAT/cache/runnables.tres").clear()
 	var _res = RESULTS.retrieve()
 	Summary.summarize(_res)
 	Results.clear()

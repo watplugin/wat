@@ -10,7 +10,7 @@
 [ext_resource path="res://addons/WAT/test/recorder.gd" type="Script" id=8]
 [ext_resource path="res://addons/WAT/double/registry.gd" type="Script" id=9]
 [ext_resource path="res://addons/WAT/test/test_controller.gd" type="Script" id=10]
-[ext_resource path="res://tests/unit/file.test.gd" type="Script" id=11]
+[ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=11]
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 1 )

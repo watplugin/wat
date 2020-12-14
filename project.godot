@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Examples/Scripts/base_login.gd"
 }, {
-"base": "Resource",
-"class": "Cache",
-"language": "GDScript",
-"path": "res://new_script.gd"
-}, {
 "base": "Node",
 "class": "Calculator",
 "language": "GDScript",
@@ -41,7 +36,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "BaseLogin": "",
-"Cache": "",
 "Calculator": "",
 "Login": "",
 "WAT": "",
