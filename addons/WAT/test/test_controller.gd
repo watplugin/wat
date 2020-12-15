@@ -3,7 +3,12 @@ extends Node
 enum { START, PRE, EXECUTE, POST, END }
 signal finished
 var _state = START
-var _yielder: WAT.Yielder
+var _assertions = preload("res://addons/WAT/assertions/assertions.gd").new()
+var _yielder: WAT.Yielder = preload("res://addons/WAT/test/yielder.gd").new()
+var _parameters = preload("res://addons/WAT/test/parameters.gd").new()
+var _watcher = preload("res://addons/WAT/test/watcher.gd").new()
+var _director = preload("res://addons/WAT/double/factory.gd").new()
+var _recorder = preload("res://addons/WAT/test/recorder.gd")
 var _test: WAT.Test
 var _case: WAT.TestCase
 var _methods: PoolStringArray = []
@@ -12,20 +17,39 @@ var _cursor = -1
 var _repeat = 0
 var results: Dictionary setget ,_get_results
 
+#	test.recorder = Recorder
 
 func _get_results() -> Dictionary:
 	_case.calculate()
 	return _case.to_dictionary()
 
-func _init(test, yielder, case) -> void:
-	_test = test
-	_yielder = yielder
-	_case = case
-	_methods = _test.methods()
+func _init(test = null, yielder = null, case = null) -> void:
+	# We may need to recreate our yielders per test
 	add_child(_yielder)
+	_yielder.connect("finished", self, "_next")
+	_director.registry = preload("res://addons/WAT/double/registry.gd").new()
+	
+func _setup(test):
+	if is_instance_valid(_test):
+		remove_child(_test)
+		_assertions.disconnect("asserted", _case,"_on_asserted")
+		_test.free()
+	_test = test
+	_methods = _test.methods()
+	_case = preload("res://addons/WAT/test/case.gd").new(test.title(), test.path())
+	_test.yielder = _yielder
+	_test.direct = _director
+	_test.asserts = _assertions
+	_test.watcher = _watcher
+	_test.parameters = _parameters
+	_test.recorder = _recorder
+	_assertions.connect("asserted", _case, "_on_asserted")
+	_test.connect("described", _case, "_on_test_method_described")
 	add_child(_test)
 	
-func run() -> void:
+	
+func run(test) -> void:
+	_setup(test)
 	_start()
 	
 func _change_state() -> void:
@@ -54,6 +78,7 @@ func _next(vargs = null):
 	call_deferred("_change_state")
 	
 func _start() -> void:
+	_cursor = -1
 	_state = START
 	_test.start()
 	_next()
