@@ -1,8 +1,3 @@
-tool
-extends Resource
-
-const CREATE_NEW_COPY: bool = true
-const NO_TYPE_HINT: String = ""
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 export(Dictionary) var scripts = {}
 export(Array, String) var directories = []
@@ -30,10 +25,6 @@ func directory(path: String) -> Array:
 			tests.append(scripts[test])
 	return tests
 
-func refresh() -> void:
-	ResourceSaver.save(resource_path, self)
-	ResourceLoader.load(resource_path, NO_TYPE_HINT, CREATE_NEW_COPY)
-
 func initialize() -> void:
 	# Only to be Run on Plugin Load
 	scripts = {}
@@ -43,7 +34,6 @@ func initialize() -> void:
 	_suite_count = 0
 	var root = ProjectSettings.get_setting("WAT/Test_Directory")
 	_search(root)
-	ResourceSaver.save(resource_path, self)
 	
 func _search(root: String):
 	var subdirs = []
@@ -62,10 +52,6 @@ func _search(root: String):
 				scripts[title] = script
 			elif script.get("IS_WAT_SUITE"):
 				_load_suite(script)
-#				for test in _load_suite(script):
-#					scripts[test.get_meta("path")] = test
-#					script_paths.append(test.get_meta("path"))
-				
 		# add dir
 		if d.dir_exists(name):
 			subdirs.append(name)

@@ -2,7 +2,7 @@ extends MenuButton
 tool
 
 enum RUN { ALL, DIRECTORY, SCRIPT, METHOD, TAG }
-const FileCache = preload("res://addons/WAT/cache/test_cache.tres")
+var FileCache
 var dirs = get_popup()
 var scripts = PopupMenu.new()
 var methods = PopupMenu.new()

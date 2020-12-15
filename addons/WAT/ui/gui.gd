@@ -11,9 +11,21 @@ onready var Repeater: SpinBox = $GUI/Interact/Repeat
 export(PoolStringArray) var view_options: PoolStringArray
 var sceneWasLaunched: bool = false
 var p = EditorPlugin.new().get_editor_interface()
+var filecache = preload("res://addons/WAT/cache/test_cache.gd").new()
 
+func _init():
+	var e = EditorPlugin.new().get_editor_interface().get_file_system_dock()
+	filecache.scripts = {}
+	filecache.directories = []
+	filecache.script_paths = []
+	e.connect("files_moved", filecache, "_on_files_moved")
+	e.connect("file_removed", filecache, "_on_files_removed")
+	e.connect("folder_moved", filecache, "_on_folder_moved")
+	e.connect("folder_removed", filecache, "_on_folder_removed")
+	filecache.initialize()
 
 func _ready() -> void:
+	$GUI/Interact/MenuButton.FileCache = filecache
 	# Begin Mediator Refactor
 	# Temp Removal
 	# QuickStart.connect("pressed", TestRunnerLauncher, "run", [TestRunnerLauncher.RUN.ALL])
