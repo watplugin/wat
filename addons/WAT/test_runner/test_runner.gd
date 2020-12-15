@@ -18,21 +18,16 @@ func _ready() -> void:
 func _run() -> void:
 	# In Threaded versions, we could replace this with a system in process using "isRunning" boolean
 	while not is_done():
-		var test = get_next_test()
-		test_controller.run(test)
+		test_controller.run(get_next_test())
 		yield(test_controller, "finished")
 		results.append(test_controller.results)
 	Results.save(results)
 	_terminate()
 	
 func get_next_test() -> Node:
-	var script = tests[_cursor]
-	while not Directory.new().file_exists(script.resource_path):
-		_cursor += 1
-		script = tests[_cursor]
-	var test = script.new()
+	var script = tests[_cursor].new()
 	_cursor += 1
-	return test
+	return script
 	
 func is_done() -> bool:
 	return _cursor == tests.size()
