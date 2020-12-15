@@ -34,7 +34,7 @@ func _on_run_option_pressed(option: int, strategy = {"paths": null}) -> void:
 	var tests: Array = []
 	match option:
 		RUN.ALL:
-			tests = FileCache.scripts(dir)
+			tests = FileCache.scripts(ProjectSettings.get("WAT/Test_Directory"))
 		RUN.DIRECTORY:
 			tests = FileCache.scripts(dir)
 		RUN.SCRIPT:
