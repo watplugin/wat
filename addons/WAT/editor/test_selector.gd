@@ -85,7 +85,6 @@ func _on_about_to_show_methods():
 	# Are we sure this is always a test script?
 	var script
 	if scriptname.ends_with(".gd"):
-		print(scriptname)
 		script = load(scriptname)
 	else:
 		# Display SuiteOfSuites
