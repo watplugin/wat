@@ -1,8 +1,10 @@
 extends Node
 
+signal finished
 const Results: Resource = preload("res://addons/WAT/cache/Results.tres")
 export(Script) var TestController
 export(Array, Script) var tests = []
+var is_editor: bool = true
 var results = []
 var _cursor: int = 0
 # In Threaded Versions, we'll create a controller per thread
@@ -34,4 +36,4 @@ func is_done() -> bool:
 	
 func _terminate() -> void:
 	print("Terminating TestRunner")
-	get_tree().quit()
+	get_tree().quit() if is_editor else emit_signal("finished")

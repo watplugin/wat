@@ -1,25 +1,10 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/WAT/test_runner/test_runner.gd" type="Script" id=1]
-[ext_resource path="res://tests/unit/test.test.gd" type="Script" id=6]
-[ext_resource path="res://tests/unit/watcher.test.gd" type="Script" id=7]
-[ext_resource path="res://addons/WAT/cache/.nested/1.gd" type="Script" id=8]
-[ext_resource path="res://tests/unit/yield.test.gd" type="Script" id=9]
 [ext_resource path="res://addons/WAT/test/test_controller.gd" type="Script" id=10]
 [ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=11]
-[ext_resource path="res://addons/WAT/cache/.nested/0.gd" type="Script" id=12]
-[ext_resource path="res://tests/unit/range.test.gd" type="Script" id=13]
-[ext_resource path="res://tests/unit/is_instance.test.gd" type="Script" id=14]
-[ext_resource path="res://tests/unit/string.test.gd" type="Script" id=15]
-[ext_resource path="res://tests/unit/file.test.gd" type="Script" id=16]
-[ext_resource path="res://tests/unit/equality.test.gd" type="Script" id=17]
-[ext_resource path="res://tests/unit/object.test.gd" type="Script" id=18]
-[ext_resource path="res://tests/unit/is_not_instance.test.gd" type="Script" id=19]
-[ext_resource path="res://tests/unit/null.test.gd" type="Script" id=20]
-[ext_resource path="res://tests/unit/on_floor.test.gd" type="Script" id=21]
-[ext_resource path="res://tests/unit/parameters.test.gd" type="Script" id=22]
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 1 )
 TestController = ExtResource( 10 )
-tests = [ ExtResource( 11 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 13 ), ExtResource( 15 ), ExtResource( 12 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 9 ) ]
+tests = [ ExtResource( 11 ) ]
