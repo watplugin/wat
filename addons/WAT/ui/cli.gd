@@ -1,19 +1,5 @@
 extends Node
 
-class strategy:
-	# Temp Class
-	static func RunScript(script: String, repeat: int = 1) -> void:
-		push_warning("Strategy Script Is Empty. Run from GUI; Not CLI")
-	
-	static func RunTag(tag: String, repeat: int = 1) -> void:
-		push_warning("Strategy Script Is Empty. Run from GUI; Not CLI")
-		
-	static func RunMethod(script: String, method: String, repeat: int = 1) -> void:
-		push_warning("Strategy Script Is Empty. Run from GUI; Not CLI")
-		
-	static func RunFailures(repeat: int = 1) -> void:
-		push_warning("Strategy Script Is Empty. Run from GUI; Not CLI")
-
 const RUN_ALL: String = "-run_all"
 const RUN_DIRECTORY: String = "-run_dir"
 const RUN_SCRIPT: String = "-run_script"
@@ -26,12 +12,16 @@ const PASSED: int = 0
 const FAILED: int = 1
 
 const TestRunner: PackedScene = preload("res://addons/WAT/test_runner/TestRunner.tscn")
-const FileSystem: Reference = preload("res://addons/WAT/system/filesystem.gd")
-
+var filecache = preload("res://addons/WAT/cache/test_cache.gd").new()
+var Results = preload("res://addons/WAT/cache/Results.tres")
 var _runner: Node
 var _start_time: float
 
 func _ready() -> void:
+	filecache.scripts = {}
+	filecache.directories = []
+	filecache.script_paths = []
+	filecache.initialize()
 	parse(arguments())
 	
 func arguments() -> Array:
@@ -41,29 +31,30 @@ func repeat(args) -> int:
 	if not args.empty() and args.back().is_valid_integer():
 		return args.back() as int
 	else:
-		return 1
+		return 0
 		
 func parse(arguments: Array) -> void:
+	var tests: Array = []
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
-			strategy.RunAll(repeat(arguments))
-			_run()
+			tests = filecache.scripts(ProjectSettings.get("WAT/Test_Directory"))
 		RUN_DIRECTORY:
-			strategy.RunDirectory(arguments.front(), repeat(arguments))
-			_run()
+			tests = filecache.scripts(arguments.front())
 		RUN_SCRIPT:
-			strategy.RunScript(arguments.front(), repeat(arguments))
-			_run()
+			tests = filecache.scripts(arguments.front())
 		RUN_TAG:
-			strategy.RunTag(arguments.front(), repeat(arguments))
-			_run()
+			push_warning("Run Tag DeImplemented")
+			#strategy.RunTag(arguments.front(), repeat(arguments))
+			#_run()
 		RUN_METHOD:
-			strategy.RunMethod(arguments[0], arguments[1], repeat(arguments))
-			_run()
+			push_warning("Run Method DeImplemented")
+#			strategy.RunMethod(arguments[0], arguments[1], repeat(arguments))
+#			_run()
 		RUN_FAILURES:
-			strategy.RunFailures(repeat(arguments))
-			_run()
+			push_warning("Run Failures DeImplemented")
+#			strategy.RunFailures(repeat(arguments))
+#			_run()
 		LIST_ALL:
 			_list()
 			get_tree().quit()
@@ -73,26 +64,30 @@ func parse(arguments: Array) -> void:
 		_:
 			push_error("Invalid Argument")
 			get_tree().quit()
+#	var repeat = repeat(arguments)
+#	for iteration in repeat:
+#		tests += tests.duplicate(true)
+	_run(tests)
 			
 func test_directory() -> String:
 	return ProjectSettings.get_setting("WAT/Test_Directory")
 
 func _list(path: String = test_directory()):
 	print()
-	print(FileSystem.scripts(path))
+	#print(Filec.scripts(path))
+	push_warning("List All DeImplemented")
 
-func _run() -> void:
+func _run(tests) -> void:
 	_runner = TestRunner.instance()
-	_runner.connect("ended", self, "_on_testrunner_ended")
+	_runner.tests = tests
+	_runner.is_editor = false
+	_runner.connect("finished", self, "_on_testrunner_ended")
 	_start_time = OS.get_ticks_msec()
 	add_child(_runner)
 	
-static func set_run_path(path: String) -> void:
-	ProjectSettings.set("WAT/ActiveRunPath", path)
-
 func _on_testrunner_ended() -> void:
 	_runner.queue_free()
-	var caselist: Array = WAT.Results.withdraw()
+	var caselist: Array = Results.retrieve()
 	var cases = {passed = 0, total = 0, crashed = 0}
 	for case in caselist:
 		cases.total += 1
@@ -102,6 +97,7 @@ func _on_testrunner_ended() -> void:
 			display_failures(case)
 	display_summary(cases)
 	set_exit_code(cases)
+	get_tree().quit()
 
 func display_failures(case) -> void:
 	print("%s (%s)" % [case.context, case.path])
