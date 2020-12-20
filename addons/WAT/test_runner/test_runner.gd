@@ -3,7 +3,7 @@ extends Node
 signal finished
 const Results: Resource = preload("res://addons/WAT/cache/Results.tres")
 export(Script) var TestController
-export(Array, Script) var tests = []
+export(Array, Dictionary) var tests = []
 var is_editor: bool = true
 var results = []
 var _cursor: int = 0
@@ -27,7 +27,10 @@ func _run() -> void:
 	_terminate()
 	
 func get_next_test() -> Node:
-	var script = tests[_cursor].new()
+	# Handle Inside Test Controller?
+	# We also won't need to duplicate tests, just point to them again?
+	var script = tests[_cursor]["script"].new()
+	script.path = tests[_cursor]["path"]
 	_cursor += 1
 	return script
 	

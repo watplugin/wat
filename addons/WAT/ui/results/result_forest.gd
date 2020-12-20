@@ -21,6 +21,7 @@ func _add_result_tree(results: Array) -> void:
 	var tab_count: int = 0
 	var sorted = sort(results)
 	for path in sorted:
+		print("Sorted: ", path)
 		var result_tree = ResultTree.instance()
 		result_tree.connect("calculated", self, "_on_tree_results_calculated")
 		result_tree.name = path
@@ -35,6 +36,7 @@ func sort(results: Array) -> Dictionary:
 		var end: int = result.path.find_last("/")
 		# Need to consider ProjectSettings Here
 		var path: String = result.path.substr(0, end).replace(ProjectSettings.get_setting("WAT/Test_Directory"), "").replace("/", " ").capitalize()
+		print("path?", path)
 		if sorted.has(path):
 			sorted[path].append(result)
 		else:

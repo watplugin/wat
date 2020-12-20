@@ -8,6 +8,7 @@ const CRASH_IF_TEST_FAILS: bool = true
 signal described
 
 # Set By A Factory Script
+var path: String
 var asserts: Assertions
 var direct: Reference
 var watcher: Reference
@@ -58,11 +59,13 @@ func parameters(list: Array) -> void:
 	rerun_method = parameters.parameters(list)
 
 func path() -> String:
-	var meta: String = ""
-	var path = get_script().get_path()
-	if get("custom_path") != null:
-		meta = get("custom_path")
-	return path if meta == "" else meta
+	return path
+#	var meta: String = ""
+#	var path = get_script().get_path()
+#	if get("custom_path") != null:
+#		meta = get("custom_path")
+#		print("is meta: ", meta)
+#	return path if meta == "" else meta
 	
 func title() -> String:
 	var path: String = get_script().get_path()

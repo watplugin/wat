@@ -9,18 +9,6 @@ _list = [ {
 "context": "Given a Boolean Assertion",
 "methods": [ {
 "assertions": [ {
-"actual": "|bool| True != false",
-"context": "",
-"expected": "|bool| True == false",
-"success": false
-} ],
-"context": " intentional failure",
-"passed": 0,
-"success": false,
-"time": 0.0,
-"total": 1
-}, {
-"assertions": [ {
 "actual": "|bool| True == true",
 "context": "Then it passes",
 "expected": "|bool| True == true",
@@ -43,10 +31,25 @@ _list = [ {
 "success": true,
 "time": 0.0,
 "total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True != false",
+"context": "",
+"expected": "|bool| True == false",
+"success": false
+} ],
+"context": " intentional failure",
+"passed": 0,
+"success": false,
+"time": 0.0,
+"total": 1
 } ],
 "passed": 2,
 "path": "res://tests/unit/boolean.test.gd",
-"source": ExtResource( 2 ),
+"source": {
+"path": "res://tests/unit/boolean.test.gd",
+"script": ExtResource( 2 )
+},
 "success": false,
 "time_taken": 0.0,
 "total": 3

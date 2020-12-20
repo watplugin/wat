@@ -36,12 +36,19 @@ func _process(delta):
 		sceneWasLaunched = false
 		_display_results()
 
-func get_repeat() -> int:
-	return Repeater.value as int
+func duplicate_tests(tests: Array, repeat: int) -> Array:
+	var duplicates = []
+	for test in tests:
+		for i in repeat:
+			var dupe = {"path": test["path"], "script": test["script"]}
+			duplicates.append(dupe)
+	tests += duplicates
+	return tests
 
 func run(tests = [], run_failures = false) -> void:
 	if tests == [] and run_failures:
 		tests = RESULTS.failed()
+	tests = duplicate_tests(tests, Repeater.value as int)
 	_run_as_editor(tests) if Engine.is_editor_hint() else _run_as_game(tests)
 	sceneWasLaunched = true
 	

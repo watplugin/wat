@@ -7,4 +7,7 @@
 [node name="TestRunner" type="Node"]
 script = ExtResource( 1 )
 TestController = ExtResource( 10 )
-tests = [ ExtResource( 11 ) ]
+tests = [ {
+"path": "res://tests/unit/boolean.test.gd",
+"script": ExtResource( 11 )
+} ]

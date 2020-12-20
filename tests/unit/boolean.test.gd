@@ -2,6 +2,7 @@ extends WAT.Test
 #extends "res://addons/WAT/test/test.gd"
 
 func title():
+	print("mypath: ", get_script().get_path())
 	return "Given a Boolean Assertion"
 
 func test_when_calling_asserts_is_true():

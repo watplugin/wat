@@ -7,12 +7,12 @@ var path: String
 var methods: Array = []
 var success: bool = false
 var time_taken: float = 0.0
-var source: Script
+var source: Dictionary = {"path": null, "script": null}
 
 func _init(test_title: String, test_path: String, test_script: Script) -> void:
 	title = test_title
 	path = test_path
-	source = test_script
+	source = {"path": test_path, "script": test_script}
 	
 func add_method(name: String) -> void:
 	name = name.replace("_", " ").lstrip("test")

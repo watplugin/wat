@@ -49,7 +49,7 @@ func _search(root: String):
 			var script = load(title)
 			if script.get("TEST") != null:
 				script_paths.append(title)
-				scripts[title] = script
+				scripts[title] = {"path": title, "script": script}
 			elif script.get("IS_WAT_SUITE"):
 				_load_suite(script)
 		# add dir
@@ -76,8 +76,9 @@ func _load_suite(suite: Script):
 			var loadedCopy = load("res://addons/WAT/cache/.nested/%s.gd" % _suite_count)
 			_suite_count += 1
 			tests.append(loadedCopy)
-			scripts['%s.%s' % [suite.get_path(), constant]] = loadedCopy
-			script_paths.append('%s.%s' % [suite.get_path(), constant])
+			var path = "%s.%s" % [suite.get_path(), constant]
+			scripts[path] = {"path": path, "script": loadedCopy}
+			script_paths.append(path)
 	return tests
 	
 func _on_files_moved(old: String, new: String) -> void:
