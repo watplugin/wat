@@ -62,13 +62,16 @@ func _run_as_editor(tests) -> void:
 	plugin.get_editor_interface().reload_scene_from_path("res://addons/WAT/test_runner/TestRunner.tscn")
 	plugin.get_editor_interface().play_custom_scene(TestRunner)
 	plugin.make_bottom_panel_item_visible(self)
+	Summary.start_time()
 	
 func _run_as_game(tests) -> void:
 	var instance = preload(TestRunner).instance()
 	instance.is_editor = false
 	instance.tests = tests
 	instance.connect("finished", self, "_display_results")
+	Summary.start_time()
 	add_child(instance)
+
 
 func _display_results() -> void:
 	var _res = RESULTS.retrieve()

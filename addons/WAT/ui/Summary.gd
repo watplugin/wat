@@ -16,6 +16,7 @@ func start_time() -> void:
 
 func summarize(caselist: Array) -> void:
 	time = (OS.get_ticks_msec() - time) / 1000
+	print(time)
 	passed = 0
 	failed = 0
 	total = 0
@@ -27,3 +28,4 @@ func summarize(caselist: Array) -> void:
 			failed += 1
 	var summary = {t = time, r = total, p = passed, f = failed, e = runcount}
 	text = SUMMARY.format(summary)
+	

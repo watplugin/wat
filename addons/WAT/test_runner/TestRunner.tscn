@@ -1,23 +1,7 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/WAT/test_runner/test_runner.gd" type="Script" id=1]
-[ext_resource path="res://tests/unit/range.test.gd" type="Script" id=2]
-[ext_resource path="res://tests/unit/string.test.gd" type="Script" id=3]
-[ext_resource path="res://tests/unit/object.test.gd" type="Script" id=4]
-[ext_resource path="res://tests/unit/is_not_instance.test.gd" type="Script" id=5]
-[ext_resource path="res://tests/unit/on_floor.test.gd" type="Script" id=6]
-[ext_resource path="res://tests/unit/parameters.test.gd" type="Script" id=7]
-[ext_resource path="res://tests/unit/null.test.gd" type="Script" id=8]
-[ext_resource path="res://tests/unit/is_instance.test.gd" type="Script" id=9]
 [ext_resource path="res://addons/WAT/test/test_controller.gd" type="Script" id=10]
-[ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=11]
-[ext_resource path="res://tests/unit/equality.test.gd" type="Script" id=12]
-[ext_resource path="res://tests/unit/file.test.gd" type="Script" id=13]
-[ext_resource path="res://addons/WAT/cache/.nested/0.gd" type="Script" id=14]
-[ext_resource path="res://tests/unit/test.test.gd" type="Script" id=15]
-[ext_resource path="res://addons/WAT/cache/.nested/1.gd" type="Script" id=16]
-[ext_resource path="res://tests/unit/yield.test.gd" type="Script" id=17]
-[ext_resource path="res://tests/unit/watcher.test.gd" type="Script" id=18]
 [ext_resource path="res://tests/integration/script_director.test.gd" type="Script" id=19]
 [ext_resource path="res://tests/integration/default_args.test.gd" type="Script" id=20]
 [ext_resource path="res://tests/integration/test_double.test.gd" type="Script" id=21]
@@ -38,52 +22,4 @@ tests = [ {
 }, {
 "path": "res://tests/integration/test_double.test.gd",
 "script": ExtResource( 21 )
-}, {
-"path": "res://tests/unit/boolean.test.gd",
-"script": ExtResource( 11 )
-}, {
-"path": "res://tests/unit/equality.test.gd",
-"script": ExtResource( 12 )
-}, {
-"path": "res://tests/unit/file.test.gd",
-"script": ExtResource( 13 )
-}, {
-"path": "res://tests/unit/is_instance.test.gd",
-"script": ExtResource( 9 )
-}, {
-"path": "res://tests/unit/is_not_instance.test.gd",
-"script": ExtResource( 5 )
-}, {
-"path": "res://tests/unit/null.test.gd",
-"script": ExtResource( 8 )
-}, {
-"path": "res://tests/unit/object.test.gd",
-"script": ExtResource( 4 )
-}, {
-"path": "res://tests/unit/on_floor.test.gd",
-"script": ExtResource( 6 )
-}, {
-"path": "res://tests/unit/parameters.test.gd",
-"script": ExtResource( 7 )
-}, {
-"path": "res://tests/unit/range.test.gd",
-"script": ExtResource( 2 )
-}, {
-"path": "res://tests/unit/string.test.gd",
-"script": ExtResource( 3 )
-}, {
-"path": "res://tests/unit/suite.test.gd.DummyOne",
-"script": ExtResource( 14 )
-}, {
-"path": "res://tests/unit/suite.test.gd.DummyTwo",
-"script": ExtResource( 16 )
-}, {
-"path": "res://tests/unit/test.test.gd",
-"script": ExtResource( 15 )
-}, {
-"path": "res://tests/unit/watcher.test.gd",
-"script": ExtResource( 18 )
-}, {
-"path": "res://tests/unit/yield.test.gd",
-"script": ExtResource( 17 )
 } ]
