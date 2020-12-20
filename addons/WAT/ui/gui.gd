@@ -8,7 +8,6 @@ onready var Results: TabContainer = $GUI/Results
 onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
 onready var QuickStart: Button = $GUI/Interact/QuickStart
 onready var Repeater: SpinBox = $GUI/Interact/Repeat
-export(PoolStringArray) var view_options: PoolStringArray
 var sceneWasLaunched: bool = false
 var p
 var filecache = preload("res://addons/WAT/cache/test_cache.gd").new()
@@ -30,9 +29,6 @@ func _ready() -> void:
 	$GUI/Interact/MenuButton.FileCache = filecache
 	# QuickStart.connect("pressed", TestRunnerLauncher, "run", [TestRunnerLauncher.RUN.ALL])
 	$GUI/Interact/MenuButton.connect("_test_path_selected", self, "run")
-	ViewMenu.clear()
-	for item in view_options:
-		ViewMenu.add_item(item)
 	ViewMenu.connect("id_pressed", $GUI/Results, "_on_view_pressed")
 	
 func _process(delta):

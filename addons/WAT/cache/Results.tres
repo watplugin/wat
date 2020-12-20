@@ -8,24 +8,24 @@ _list = [ {
 "context": "Given a Boolean Assertion",
 "methods": [ {
 "assertions": [ {
-"actual": "|bool| True == true",
-"context": "Then it passes",
-"expected": "|bool| True == true",
-"success": true
-} ],
-"context": "When calling asserts.is_true(true)",
-"passed": 1,
-"success": true,
-"time": 0.0,
-"total": 1
-}, {
-"assertions": [ {
 "actual": "|bool| False == false",
 "context": "Then it passes",
 "expected": "|bool| False == false",
 "success": true
 } ],
 "context": "When calling asserts.is_false(false)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then it passes",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When calling asserts.is_true(true)",
 "passed": 1,
 "success": true,
 "time": 0.0,
