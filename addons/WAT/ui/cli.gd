@@ -73,8 +73,9 @@ func test_directory() -> String:
 
 func _list(path: String = test_directory()):
 	print()
-	#print(Filec.scripts(path))
-	push_warning("List All DeImplemented")
+	for script in filecache.script_paths:
+		if script.begins_with(path):
+			print(script)
 	
 func duplicate_tests(tests: Array, repeat: int) -> Array:
 	var duplicates = []
