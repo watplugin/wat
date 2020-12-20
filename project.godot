@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Examples/Scripts/login.gd"
 }, {
+"base": "Resource",
+"class": "Metadata",
+"language": "GDScript",
+"path": "res://addons/WAT/cache/metadata.gd"
+}, {
 "base": "Reference",
 "class": "WAT",
 "language": "GDScript",
@@ -38,6 +43,7 @@ _global_script_class_icons={
 "BaseLogin": "",
 "Calculator": "",
 "Login": "",
+"Metadata": "",
 "WAT": "",
 "WATTest": ""
 }
@@ -49,7 +55,7 @@ quick_access=Object(FuncRef,"script":null)
 
 Test_Directory="res://tests"
 ActiveRunPath="res://tests"
-Tags=PoolStringArray( "32", "64", "Linux", "Beep", "Hello" )
+Tags=PoolStringArray( "Windows", "Mac", "Linux", "Android", "IOS" )
 Display=8
 Minimize_Window_When_Running_Tests=false
 Results_Directory="res://tests/results/WAT"

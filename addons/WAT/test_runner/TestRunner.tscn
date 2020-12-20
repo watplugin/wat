@@ -1,25 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/WAT/test_runner/test_runner.gd" type="Script" id=1]
+[ext_resource path="res://tests/unit/test.test.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/test/test_controller.gd" type="Script" id=10]
-[ext_resource path="res://tests/integration/script_director.test.gd" type="Script" id=19]
-[ext_resource path="res://tests/integration/default_args.test.gd" type="Script" id=20]
-[ext_resource path="res://tests/integration/test_double.test.gd" type="Script" id=21]
-[ext_resource path="res://tests/integration/scene_director.test.gd" type="Script" id=22]
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 1 )
 TestController = ExtResource( 10 )
 tests = [ {
-"path": "res://tests/integration/default_args.test.gd",
-"script": ExtResource( 20 )
-}, {
-"path": "res://tests/integration/scene_director.test.gd",
-"script": ExtResource( 22 )
-}, {
-"path": "res://tests/integration/script_director.test.gd",
-"script": ExtResource( 19 )
-}, {
-"path": "res://tests/integration/test_double.test.gd",
-"script": ExtResource( 21 )
+"path": "res://tests/unit/test.test.gd",
+"script": ExtResource( 2 )
 } ]

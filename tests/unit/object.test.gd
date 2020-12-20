@@ -63,7 +63,7 @@ func test_when_calling_does_not_have_user_signal_with_class_signal_constant() ->
 	describe("When calling does not have user signal with class signal")
 	
 	asserts.object_does_not_have_user_signal(self, "builtin_dummy", 
-	                                          "Then it passes")
+											  "Then it passes")
 
 func test_when_calling_obj_is_queued_for_deletion_after_calling_queue_free() -> void:
 	describe("When calling asserts.object_is_queued for deletion after calling queue_free")

@@ -10,9 +10,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Element" type="HBoxContainer" parent="."]
+[node name="SaveTags" type="Button" parent="."]
 margin_right = 1010.0
 margin_bottom = 20.0
+text = "Save Tags"
+
+[node name="Element" type="HBoxContainer" parent="."]
+margin_top = 24.0
+margin_right = 1010.0
+margin_bottom = 44.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 

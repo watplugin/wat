@@ -44,9 +44,7 @@ func parse(arguments: Array) -> void:
 		RUN_SCRIPT:
 			tests = filecache.scripts(arguments.front())
 		RUN_TAG:
-			push_warning("Run Tag DeImplemented")
-			#strategy.RunTag(arguments.front(), repeat(arguments))
-			#_run()
+			tests = filecache.tagged(arguments.front())
 		RUN_METHOD:
 			tests = filecache.scripts(arguments[0])
 			tests[0].set_meta("method", arguments[1])
@@ -61,6 +59,10 @@ func parse(arguments: Array) -> void:
 		_:
 			push_error("Invalid Argument")
 			get_tree().quit()
+	if tests.empty():
+		push_warning("No Tests To Run")
+		OS.exit_code = FAILED
+		get_tree().quit()
 	var repeat = repeat(arguments)
 	tests = duplicate_tests(tests, repeat)
 	_run(tests)

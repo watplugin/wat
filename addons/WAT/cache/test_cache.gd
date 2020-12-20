@@ -11,6 +11,14 @@ func scripts(path: String) -> Array:
 			tests.append(scripts[test])
 	return tests
 	
+func tagged(tag: String) -> Array:
+	var metadata = load("res://addons/WAT/cache/metadata.tres")
+	var tests = []
+	for script in scripts:
+		if scripts[script]["script"] in metadata.scripts[tag]:
+			tests.append(scripts[script])
+	return tests
+	
 func paths(dir: String) -> Array:
 	var paths: Array = []
 	for path in script_paths:
@@ -27,9 +35,13 @@ func directory(path: String) -> Array:
 
 func initialize() -> void:
 	# Only to be Run on Plugin Load
+#	taggedscripts.clear()
 	scripts = {}
 	directories = []
 	script_paths = []
+#	var taglist = ProjectSettings.get_setting("WAT/Tags")
+#	for tag in taglist:
+#		taggedscripts[tag] = []
 	Directory.new().remove("res://addons/WAT/cache/.nested")
 	_suite_count = 0
 	var root = ProjectSettings.get_setting("WAT/Test_Directory")
@@ -49,7 +61,9 @@ func _search(root: String):
 			var script = load(title)
 			if script.get("TEST") != null:
 				script_paths.append(title)
-				scripts[title] = {"path": title, "script": script}
+				var s = {"path": title, "script": script}
+				scripts[title] = s
+				set_tags(s)
 			elif script.get("IS_WAT_SUITE"):
 				_load_suite(script)
 		# add dir
@@ -60,6 +74,15 @@ func _search(root: String):
 	for dir in subdirs:
 		directories.append(root + "/" + dir)
 		_search(root + "/" + dir)
+		
+func set_tags(script: Dictionary):
+	pass
+#	var tags = []
+#	if(script["script"].has_meta("tags")):
+#		tags = script["script"].get_meta("tags")
+#	for tag in tags:
+#		if not taggedscripts[tag].has(script):
+#			taggedscripts[tag].append(script)
 
 func _load_suite(suite: Script):
 	var tests: Array = []
@@ -77,8 +100,10 @@ func _load_suite(suite: Script):
 			_suite_count += 1
 			tests.append(loadedCopy)
 			var path = "%s.%s" % [suite.get_path(), constant]
-			scripts[path] = {"path": path, "script": loadedCopy}
+			var s = {"path": path, "script": loadedCopy}
+			scripts[path] = s
 			script_paths.append(path)
+			set_tags(s)
 	return tests
 	
 func _on_files_moved(old: String, new: String) -> void:

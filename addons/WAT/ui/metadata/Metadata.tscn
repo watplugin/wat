@@ -40,36 +40,39 @@ icon = ExtResource( 3 )
 [node name="HSeparator" type="HSeparator" parent="."]
 margin_top = 22.0
 margin_right = 1010.0
-margin_bottom = 38.0
+margin_bottom = 32.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_vertical = 3
 
 [node name="TagList" type="VBoxContainer" parent="."]
-margin_top = 38.0
+margin_top = 32.0
 margin_right = 1010.0
-margin_bottom = 54.0
+margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Tags" type="HBoxContainer" parent="."]
-margin_top = 54.0
+margin_top = 43.0
 margin_right = 1010.0
-margin_bottom = 76.0
+margin_bottom = 43.0
 
-[node name="Select" type="MenuButton" parent="Tags"]
-margin_right = 978.0
-margin_bottom = 22.0
+[node name="Select" type="MenuButton" parent="."]
+margin_top = 43.0
+margin_right = 1010.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Add New Tag"
+icon = ExtResource( 2 )
+align = 0
 switch_on_hover = true
 
-[node name="TextureRect" type="Button" parent="Tags"]
-margin_left = 982.0
+[node name="HSeparator2" type="HSeparator" parent="."]
+margin_top = 65.0
 margin_right = 1010.0
-margin_bottom = 22.0
+margin_bottom = 76.0
+grow_horizontal = 0
+grow_vertical = 0
 size_flags_vertical = 3
-icon = ExtResource( 2 )
-flat = true
