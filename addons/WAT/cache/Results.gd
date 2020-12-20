@@ -16,6 +16,3 @@ func failed() -> Array:
 
 func retrieve() -> Array:
 	return ResourceLoader.load(resource_path, "", true)._list
-
-#func update():
-#	return ResourceLoader.load(resource_path, "", true)
