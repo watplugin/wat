@@ -52,9 +52,7 @@ func parse(arguments: Array) -> void:
 #			strategy.RunMethod(arguments[0], arguments[1], repeat(arguments))
 #			_run()
 		RUN_FAILURES:
-			push_warning("Run Failures DeImplemented")
-#			strategy.RunFailures(repeat(arguments))
-#			_run()
+			tests = Results.failed()
 		LIST_ALL:
 			_list()
 			get_tree().quit()

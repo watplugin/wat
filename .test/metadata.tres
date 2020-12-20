@@ -1,13 +1,15 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=9 format=2]
 
 [ext_resource path="res://addons/WAT/ui/metadata/index.gd" type="Script" id=1]
 [ext_resource path="res://tests/unit/string.test.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/test/test.gd" type="Script" id=3]
 [ext_resource path="res://tests/integration/default_args.test.gd" type="Script" id=4]
 [ext_resource path="res://tests/unit/on_floor.test.gd" type="Script" id=5]
+[ext_resource path="res://tests/unit/test.test.gd" type="Script" id=6]
+[ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=7]
 [ext_resource path="res://tests/unit/null.test.gd" type="Script" id=10]
 
 [resource]
 script = ExtResource( 1 )
-scripts = [ ExtResource( 2 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ) ]
-tags = [ [  ], [  ], [  ], [  ], [  ] ]
+scripts = [ ExtResource( 2 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ) ]
+tags = [ [  ], [  ], [  ], [  ], [  ], [  ], [  ] ]

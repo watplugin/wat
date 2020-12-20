@@ -36,7 +36,7 @@ func _setup(test):
 		_test.free()
 	_test = test
 	_methods = _test.methods()
-	_case = preload("res://addons/WAT/test/case.gd").new(test.title(), test.path())
+	_case = preload("res://addons/WAT/test/case.gd").new(test.title(), test.path(), test.get_script())
 	_test.yielder = _yielder
 	_test.direct = _director
 	_test.asserts = _assertions

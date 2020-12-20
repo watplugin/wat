@@ -9,7 +9,9 @@ func save(results: Array) -> void:
 	
 func failed() -> Array:
 	var _failed: Array = []
-	
+	for case in _list:
+		if not case.success:
+			_failed.append(case.source)
 	return _failed
 
 func retrieve() -> Array:
