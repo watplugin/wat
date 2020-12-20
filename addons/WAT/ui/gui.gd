@@ -39,7 +39,9 @@ func _process(delta):
 func get_repeat() -> int:
 	return Repeater.value as int
 
-func run(tests) -> void:
+func run(tests = [], run_failures = false) -> void:
+	if tests == [] and run_failures:
+		tests = RESULTS.failed()
 	_run_as_editor(tests) if Engine.is_editor_hint() else _run_as_game(tests)
 	sceneWasLaunched = true
 	

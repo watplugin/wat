@@ -1,14 +1,14 @@
 extends MenuButton
 tool
 
-enum RUN { ALL, DIRECTORY, SCRIPT, METHOD, TAG }
+enum RUN { ALL, DIRECTORY, SCRIPT, METHOD, TAG, FAILED }
+
 var FileCache
 var dirs = get_popup()
 var scripts = PopupMenu.new()
 var methods = PopupMenu.new()
 var run_method = PopupMenu.new()
 signal _test_path_selected
-
 # Updated Continously
 var dir: String
 var scriptname: String
@@ -32,6 +32,7 @@ func _ready() -> void:
 	
 func _on_run_option_pressed(option: int, strategy = {"paths": null}) -> void:
 	var tests: Array = []
+	var run_failures: bool = false
 	match option:
 		RUN.ALL:
 			tests = FileCache.scripts(ProjectSettings.get("WAT/Test_Directory"))
@@ -44,7 +45,9 @@ func _on_run_option_pressed(option: int, strategy = {"paths": null}) -> void:
 			tests[0].set_meta("method", method)
 		RUN.TAG:
 			push_warning("Tag Needs To Be Reimplemented")
-	emit_signal("_test_path_selected", tests)
+		RUN.FAILED:
+			run_failures = true
+	emit_signal("_test_path_selected", tests, run_failures)
 	
 	
 func _on_about_to_show_directories():
@@ -57,6 +60,7 @@ func _on_about_to_show_directories():
 		return
 	# Runs All Tests In All Directories
 	dirs.add_item("Run All Tests", RUN.ALL)
+	dirs.add_item("Rerun Failures", RUN.FAILED)
 	for item in dirlist:
 		# We want to hide empty directories
 		if not FileCache.paths(item).empty():
