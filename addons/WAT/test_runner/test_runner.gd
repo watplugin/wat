@@ -14,7 +14,6 @@ func _ready() -> void:
 	test_controller = TestController.new()
 	add_child(test_controller)
 	print("Initializing TestRunner")
-	print(tests)
 	_run()
 
 func _run() -> void:

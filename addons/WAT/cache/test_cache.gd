@@ -39,7 +39,7 @@ func _search(root: String):
 	var subdirs = []
 	var d = Directory.new()
 	d.open(root)
-	d.list_dir_begin(DO_NOT_SEARCH_PARENT_DIRECTORIES) # do not search parent directories
+	d.list_dir_begin(DO_NOT_SEARCH_PARENT_DIRECTORIES)
 	var name = d.get_next()
 	while name != "":
 		var title = root + "/" + name
