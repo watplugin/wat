@@ -64,9 +64,8 @@ func parse(arguments: Array) -> void:
 		_:
 			push_error("Invalid Argument")
 			get_tree().quit()
-#	var repeat = repeat(arguments)
-#	for iteration in repeat:
-#		tests += tests.duplicate(true)
+	var repeat = repeat(arguments)
+	tests = duplicate_tests(tests, repeat)
 	_run(tests)
 			
 func test_directory() -> String:
@@ -76,6 +75,14 @@ func _list(path: String = test_directory()):
 	print()
 	#print(Filec.scripts(path))
 	push_warning("List All DeImplemented")
+	
+func duplicate_tests(tests: Array, repeat: int) -> Array:
+	var duplicates = []
+	for test in tests:
+		for i in repeat:
+			duplicates.append(test.duplicate())
+	tests += duplicates
+	return tests
 
 func _run(tests) -> void:
 	_runner = TestRunner.instance()
