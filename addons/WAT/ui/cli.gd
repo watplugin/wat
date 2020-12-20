@@ -48,9 +48,8 @@ func parse(arguments: Array) -> void:
 			#strategy.RunTag(arguments.front(), repeat(arguments))
 			#_run()
 		RUN_METHOD:
-			push_warning("Run Method DeImplemented")
-#			strategy.RunMethod(arguments[0], arguments[1], repeat(arguments))
-#			_run()
+			tests = filecache.scripts(arguments[0])
+			tests[0].set_meta("method", arguments[1])
 		RUN_FAILURES:
 			tests = Results.failed()
 		LIST_ALL:
