@@ -55,9 +55,9 @@ func _search(root: String):
 	var name = d.get_next()
 	while name != "":
 		var title = root + "/" + name
-		
 		# load script
-		if name.ends_with(".gd"):
+		# GDC is extension given to gdscript compiled scripts
+		if name.ends_with(".gd") or name.ends_with(".gdc"):
 			var script = load(title)
 			if script.get("TEST") != null:
 				script_paths.append(title)

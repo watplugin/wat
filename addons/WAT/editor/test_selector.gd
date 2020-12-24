@@ -51,14 +51,13 @@ func _on_run_option_pressed(option: int, strategy = {"paths": null}) -> void:
 			tests = FileCache.scripts(scriptname)
 		RUN.METHOD:
 			tests = FileCache.scripts(scriptname)
-			tests[0].set_meta("method", method)
+			tests[0]["script"].set_meta("method", method)
 		RUN.TAG:
 			push_warning("Tag Needs To Be Reimplemented")
 			tests = FileCache.tagged(tag)
 		RUN.FAILED:
 			run_failures = true
 	emit_signal("_test_path_selected", tests, run_failures)
-	
 	
 func _on_about_to_show_directories():
 	# We'll have to preload everything here
@@ -108,7 +107,7 @@ func _on_about_to_show_methods():
 	var methodlist = []
 	# Are we sure this is always a test script?
 	var script
-	if scriptname.ends_with(".gd"):
+	if scriptname.ends_with(".gd") or scriptname.ends_with(".gdc"):
 		script = load(scriptname)
 	else:
 		# Display SuiteOfSuites
