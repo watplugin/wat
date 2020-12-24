@@ -47,7 +47,7 @@ func parse(arguments: Array) -> void:
 			tests = filecache.tagged(arguments.front())
 		RUN_METHOD:
 			tests = filecache.scripts(arguments[0])
-			tests[0].set_meta("method", arguments[1])
+			tests[0]["script"].set_meta("method", arguments[1])
 		RUN_FAILURES:
 			tests = Results.failed()
 		LIST_ALL:
