@@ -6,19 +6,13 @@ const FAILED: Color = Color(1, 1, 1, 1)
 signal calculated
 var _cache: Array = []
 var _mega_cache: Array = []
+signal function_sought
 
 func _ready():
 	connect("button_pressed", self, "_on_button_pressed")
 
 func goto_function(path: String, function: String) -> void:
-	var p = EditorPlugin.new()
-	var script: Script = load(path)
-	p.get_editor_interface().edit_resource(script)
-	var source: PoolStringArray = script.source_code.split("\n")
-	for i in source.size():
-		if function in source[i] and "describe" in source[i]:
-			p.get_editor_interface().get_script_editor().goto_line(i)
-			return
+	emit_signal("function_sought", path, function)
 	
 func _on_button_pressed(item, column, id):
 	goto_function(item.get_meta("path"), item.get_meta("context"))

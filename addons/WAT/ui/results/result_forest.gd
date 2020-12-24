@@ -4,6 +4,7 @@ extends TabContainer
 const ResultTree: PackedScene = preload("res://addons/WAT/ui/results/ResultTree.tscn")
 var _results: Array
 var _tabs: Dictionary
+signal function_sought
 
 func get_last_run_failures() -> Array:
 	var failures = []
@@ -22,12 +23,16 @@ func _add_result_tree(results: Array) -> void:
 	var sorted = sort(results)
 	for path in sorted:
 		var result_tree = ResultTree.instance()
+		result_tree.connect("function_sought", self, "_on_function_sought")
 		result_tree.connect("calculated", self, "_on_tree_results_calculated")
 		result_tree.name = path
 		add_child(result_tree)
 		_tabs[result_tree] = tab_count
 		result_tree.display(sorted[path])
 		tab_count += 1
+		
+func _on_function_sought(path: String, function: String) -> void:
+	emit_signal("function_sought", path, function)
 	
 func sort(results: Array) -> Dictionary:
 	var sorted: Dictionary = {}

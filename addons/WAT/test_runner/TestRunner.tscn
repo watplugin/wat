@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/WAT/test_runner/test_runner.gd" type="Script" id=1]
-[ext_resource path="res://tests/unit/file.test.gd" type="Script" id=2]
+[ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/test/test_controller.gd" type="Script" id=10]
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 1 )
 TestController = ExtResource( 10 )
 tests = [ {
-"path": "res://tests/unit/file.test.gd",
+"path": "res://tests/unit/boolean.test.gd",
 "script": ExtResource( 2 )
 } ]

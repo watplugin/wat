@@ -29,6 +29,16 @@ func _enter_tree() -> void:
 	add_inspector_plugin(_TestMetadataEditor)
 	_DockController = DockController.new(self, _ControlPanel)
 	add_child(_DockController)
+	_ControlPanel.Results.connect("function_sought", self, "goto_function")
+	
+func goto_function(path: String, function: String):
+	var script: Script = load(path)
+	get_editor_interface().edit_resource(script)
+	var source: PoolStringArray = script.source_code.split("\n")
+	for i in source.size():
+		if function in source[i] and "describe" in source[i]:
+			get_editor_interface().get_script_editor().goto_line(i)
+			return
 
 	
 func _exit_tree() -> void:
