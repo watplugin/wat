@@ -14,6 +14,8 @@ var filecache
 var Context
 
 func _ready() -> void:
+	if filecache == null and not Engine.is_editor_hint():
+		filecache = preload("res://addons/WAT/cache/test_cache.gd").new()
 	filecache.initialize()
 	$GUI/Interact/MenuButton.FileCache = filecache
 	# QuickStart.connect("pressed", TestRunnerLauncher, "run", [TestRunnerLauncher.RUN.ALL])
