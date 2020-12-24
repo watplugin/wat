@@ -30,12 +30,10 @@ onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
 onready var QuickStart: Button = $GUI/Interact/QuickStart
 onready var Repeater: SpinBox = $GUI/Interact/Repeat
 var sceneWasLaunched: bool = false
-var p: EditorInterface
 var filecache
 var Context
 
 func _ready() -> void:
-	p = EditorPlugin.new().get_editor_interface()
 	filecache.initialize()
 	$GUI/Interact/MenuButton.FileCache = filecache
 	# QuickStart.connect("pressed", TestRunnerLauncher, "run", [TestRunnerLauncher.RUN.ALL])
