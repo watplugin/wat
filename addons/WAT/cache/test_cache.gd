@@ -65,6 +65,7 @@ func _search(root: String):
 				scripts[title] = s
 				set_tags(s)
 			elif script.get("IS_WAT_SUITE"):
+				#pass
 				_load_suite(script)
 		# add dir
 		if d.dir_exists(name):
