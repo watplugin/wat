@@ -9,23 +9,12 @@ onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
 onready var QuickStart: Button = $GUI/Interact/QuickStart
 onready var Repeater: SpinBox = $GUI/Interact/Repeat
 var sceneWasLaunched: bool = false
-var p
-var filecache = preload("res://addons/WAT/cache/test_cache.gd").new()
-
-func _init():
-	if(Engine.is_editor_hint()):
-		p = EditorPlugin.new().get_editor_interface()
-		var e = p.get_file_system_dock()
-		e.connect("files_moved", filecache, "_on_files_moved")
-		e.connect("file_removed", filecache, "_on_files_removed")
-		e.connect("folder_moved", filecache, "_on_folder_moved")
-		e.connect("folder_removed", filecache, "_on_folder_removed")
-	filecache.scripts = {}
-	filecache.directories = []
-	filecache.script_paths = []
-	filecache.initialize()
+var p: EditorInterface
+var filecache #= preload("res://addons/WAT/cache/test_cache.gd").new()
 
 func _ready() -> void:
+	p = EditorPlugin.new().get_editor_interface()
+	filecache.initialize()
 	$GUI/Interact/MenuButton.FileCache = filecache
 	# QuickStart.connect("pressed", TestRunnerLauncher, "run", [TestRunnerLauncher.RUN.ALL])
 	$GUI/Interact/MenuButton.connect("_test_path_selected", self, "run")
@@ -71,7 +60,6 @@ func _run_as_game(tests) -> void:
 	instance.connect("finished", self, "_display_results")
 	Summary.start_time()
 	add_child(instance)
-
 
 func _display_results() -> void:
 	var _res = RESULTS.retrieve()

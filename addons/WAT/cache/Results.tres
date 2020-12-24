@@ -1,68 +1,53 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://addons/WAT/cache/Results.gd" type="Script" id=1]
-[ext_resource path="res://tests/unit/test.test.gd" type="Script" id=2]
+[ext_resource path="res://tests/unit/null.test.gd" type="Script" id=2]
 
 [resource]
 script = ExtResource( 1 )
 _list = [ {
-"context": "Given a Test Script",
+"context": "Given a Null Assertion",
 "methods": [ {
 "assertions": [ {
-"actual": "|bool| True == true",
-"context": "",
-"expected": "|bool| True == true",
-"success": true
-}, {
-"actual": "|int| 2 is equal to |int| 2",
-"context": "",
-"expected": "|int| 2 is equal to |int| 2",
+"actual": "|Object| [Deleted Object] == null",
+"context": "A Freed Node is null in Engine 3.2.2 or greater",
+"expected": "|Object| [Deleted Object] == null",
 "success": true
 } ],
-"context": " when we omit context we can see expected and got under method",
-"passed": 2,
-"success": true,
-"time": 0.0,
-"total": 2
-}, {
-"assertions": [ {
-"actual": "|bool| True == true",
-"context": "if the test didn't break this works",
-"expected": "|bool| True == true",
-"success": true
-} ],
-"context": " we can omit describe",
+"context": "When calling freed object is null",
 "passed": 1,
 "success": true,
 "time": 0.0,
 "total": 1
 }, {
 "assertions": [ {
-"actual": "|int| 10 is greater than |int| 1",
-"context": "We get an array of multiple values back",
-"expected": "|int| 10 is greater than |int| 1",
-"success": true
-}, {
-"actual": "|int| 0 is not equal to |int| 9",
-"context": "With different values",
-"expected": "|int| 0 != |int| 9",
-"success": true
-}, {
-"actual": "|int| 10 is greater than |int| 1",
-"context": "And we can track multiple properties",
-"expected": "|int| 10 is greater than |int| 1",
+"actual": "|null| Null == null",
+"context": "Then it passes",
+"expected": "|null| Null == null",
 "success": true
 } ],
-"context": "When we record properties",
-"passed": 3,
+"context": "When calling asserts.is_null(null)",
+"passed": 1,
 "success": true,
 "time": 0.0,
-"total": 3
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|Object| [Node:1319] != null",
+"context": "Then it passes",
+"expected": "|Object| [Node:1319] != null",
+"success": true
+} ],
+"context": "When calling Node is not null",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
 } ],
 "passed": 3,
-"path": "res://tests/unit/test.test.gd",
+"path": "res://tests/unit/null.test.gd",
 "source": {
-"path": "res://tests/unit/test.test.gd",
+"path": "res://tests/unit/null.test.gd",
 "script": ExtResource( 2 )
 },
 "success": true,
