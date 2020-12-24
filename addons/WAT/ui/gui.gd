@@ -3,7 +3,7 @@ extends PanelContainer
 
 
 const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
-const RESULTS = preload("res://addons/WAT/cache/Results.tres")
+#const RESULTS = preload("res://addons/WAT/cache/Results.tres")
 onready var Summary: Label = $GUI/Interact/Summary
 onready var Results: TabContainer = $GUI/Results
 onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
@@ -39,7 +39,7 @@ func duplicate_tests(tests: Array, repeat: int) -> Array:
 
 func run(tests = [], run_failures = false) -> void:
 	if tests == [] and run_failures:
-		tests = RESULTS.failed()
+		tests = results().failed()
 	tests = duplicate_tests(tests, Repeater.value as int)
 	_run_as_editor(tests) if Engine.is_editor_hint() else _run_as_game(tests)
 	sceneWasLaunched = true
@@ -60,7 +60,10 @@ func _run_as_game(tests) -> void:
 func _display_results() -> void:
 	if is_instance_valid(Context):
 		Context.free()
-	var _res = RESULTS.retrieve()
+	var _res = results().retrieve()
 	Summary.summarize(_res)
 	Results.clear()
 	Results.display(_res)
+	
+func results() -> Resource:
+	return ResourceLoader.load(ProjectSettings.get_setting("WAT/Results_Directory") + "/Results.tres", "", true)

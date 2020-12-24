@@ -5,7 +5,7 @@ export(Array) var _list = []
 
 func save(results: Array) -> void:
 	_list = results
-	ResourceSaver.save(resource_path, self)
+	ResourceSaver.save(ProjectSettings.get_setting("WAT/Results_Directory") + "/Results.tres", self)
 	
 func failed() -> Array:
 	var _failed: Array = []
@@ -15,4 +15,4 @@ func failed() -> Array:
 	return _failed
 
 func retrieve() -> Array:
-	return ResourceLoader.load(resource_path, "", true)._list
+	return ResourceLoader.load(ProjectSettings.get_setting("WAT/Results_Directory") + "/Results.tres", "", true)._list

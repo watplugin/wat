@@ -55,9 +55,12 @@ func _create_results_folder() -> void:
 	if not ProjectSettings.has_setting(title):
 		var property_info: Dictionary = {"name": title, "type": TYPE_STRING, 
 		"hint_string": "You can save JUnit XML Results Here"}
-		ProjectSettings.set(title, "res://tests/results/WAT")
+		var path = OS.get_user_data_dir() + "/.WAT/.Results"
+		ProjectSettings.set(title, path)
 		ProjectSettings.add_property_info(property_info)
-		push_warning("Set Result Directory to 'res://tests/results/WAT'. You can change this in Project -> Project Settings -> General -> WAT")
+		push_warning("Set Result Directory to " + path + ". You can change this in Project -> Project Settings -> General -> WAT")
+		Directory.new().make_dir_recursive(path)
+		ResourceSaver.save(path + "/Results.tres", load("res://addons/WAT/cache/Results.gd").new())
 	
 func _add_window_setting() -> void:
 	if not ProjectSettings.has_setting("WAT/Minimize_Window_When_Running_Tests"):
