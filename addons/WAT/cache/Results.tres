@@ -9,18 +9,6 @@ _list = [ {
 "context": "Given a Null Assertion",
 "methods": [ {
 "assertions": [ {
-"actual": "|Object| [Deleted Object] == null",
-"context": "A Freed Node is null in Engine 3.2.2 or greater",
-"expected": "|Object| [Deleted Object] == null",
-"success": true
-} ],
-"context": "When calling freed object is null",
-"passed": 1,
-"success": true,
-"time": 0.0,
-"total": 1
-}, {
-"assertions": [ {
 "actual": "|null| Null == null",
 "context": "Then it passes",
 "expected": "|null| Null == null",
@@ -33,12 +21,24 @@ _list = [ {
 "total": 1
 }, {
 "assertions": [ {
-"actual": "|Object| [Node:1319] != null",
+"actual": "|Object| [Node:1293] != null",
 "context": "Then it passes",
-"expected": "|Object| [Node:1319] != null",
+"expected": "|Object| [Node:1293] != null",
 "success": true
 } ],
 "context": "When calling Node is not null",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|Object| [Deleted Object] == null",
+"context": "A Freed Node is null in Engine 3.2.2 or greater",
+"expected": "|Object| [Deleted Object] == null",
+"success": true
+} ],
+"context": "When calling freed object is null",
 "passed": 1,
 "success": true,
 "time": 0.0,

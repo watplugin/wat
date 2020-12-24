@@ -1,6 +1,27 @@
 tool
 extends PanelContainer
 
+class EditorContext extends Node:
+	var editor: EditorInterface
+	
+	func _init() -> void:
+		editor = EditorPlugin.new().get_editor_interface()
+	
+	func run(tests, runner) -> void:
+		var instance = load("res://addons/WAT/test_runner/TestRunner.tscn").instance()
+		instance.tests = tests
+		var scene = PackedScene.new()
+		scene.pack(instance)
+		ResourceSaver.save("res://addons/WAT/test_runner/TestRunner.tscn", scene)
+		var plugin = EditorPlugin.new()
+		plugin.get_editor_interface().reload_scene_from_path("res://addons/WAT/test_runner/TestRunner.tscn")
+		plugin.get_editor_interface().play_custom_scene(TestRunner)
+		plugin.make_bottom_panel_item_visible(runner)
+		runner.Summary.start_time()
+		
+	func is_finished() -> bool:
+		return not editor.is_playing_scene()
+
 const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 const RESULTS = preload("res://addons/WAT/cache/Results.tres")
 onready var Summary: Label = $GUI/Interact/Summary
@@ -10,7 +31,8 @@ onready var QuickStart: Button = $GUI/Interact/QuickStart
 onready var Repeater: SpinBox = $GUI/Interact/Repeat
 var sceneWasLaunched: bool = false
 var p: EditorInterface
-var filecache #= preload("res://addons/WAT/cache/test_cache.gd").new()
+var filecache
+var Context
 
 func _ready() -> void:
 	p = EditorPlugin.new().get_editor_interface()
@@ -21,7 +43,7 @@ func _ready() -> void:
 	ViewMenu.connect("id_pressed", $GUI/Results, "_on_view_pressed")
 	
 func _process(delta):
-	if Engine.is_editor_hint() and not p.is_playing_scene() and sceneWasLaunched:
+	if Context != null and Context.is_finished() and sceneWasLaunched:
 		sceneWasLaunched = false
 		_display_results()
 
@@ -41,17 +63,10 @@ func run(tests = [], run_failures = false) -> void:
 	_run_as_editor(tests) if Engine.is_editor_hint() else _run_as_game(tests)
 	sceneWasLaunched = true
 	
-func _run_as_editor(tests) -> void:
-	var instance = load("res://addons/WAT/test_runner/TestRunner.tscn").instance()
-	instance.tests = tests
-	var scene = PackedScene.new()
-	scene.pack(instance)
-	ResourceSaver.save("res://addons/WAT/test_runner/TestRunner.tscn", scene)
-	var plugin = EditorPlugin.new()
-	plugin.get_editor_interface().reload_scene_from_path("res://addons/WAT/test_runner/TestRunner.tscn")
-	plugin.get_editor_interface().play_custom_scene(TestRunner)
-	plugin.make_bottom_panel_item_visible(self)
-	Summary.start_time()
+func _run_as_editor(tests):
+	Context = EditorContext.new()
+	add_child(Context)
+	Context.run(tests, self)
 	
 func _run_as_game(tests) -> void:
 	var instance = preload(TestRunner).instance()
@@ -62,6 +77,8 @@ func _run_as_game(tests) -> void:
 	add_child(instance)
 
 func _display_results() -> void:
+	if is_instance_valid(Context):
+		Context.free()
 	var _res = RESULTS.retrieve()
 	Summary.summarize(_res)
 	Results.clear()
