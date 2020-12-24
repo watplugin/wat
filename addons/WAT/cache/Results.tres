@@ -1,53 +1,53 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://addons/WAT/cache/Results.gd" type="Script" id=1]
-[ext_resource path="res://tests/unit/null.test.gd" type="Script" id=2]
+[ext_resource path="res://tests/unit/file.test.gd" type="Script" id=2]
 
 [resource]
 script = ExtResource( 1 )
 _list = [ {
-"context": "Given a Null Assertion",
+"context": "Given A File Assertion",
 "methods": [ {
 "assertions": [ {
-"actual": "|null| Null == null",
+"actual": "res://tests/unit/file.test.gd exists",
 "context": "Then it passes",
-"expected": "|null| Null == null",
+"expected": "res://tests/unit/file.test.gd exists",
 "success": true
 } ],
-"context": "When calling asserts.is_null(null)",
+"context": "When calling asserts.file_exists when the file is this suite",
 "passed": 1,
 "success": true,
 "time": 0.0,
 "total": 1
 }, {
 "assertions": [ {
-"actual": "|Object| [Node:1293] != null",
+"actual": "res://somefile.gd does not exist",
 "context": "Then it passes",
-"expected": "|Object| [Node:1293] != null",
+"expected": "res://somefile.gd does not exist",
 "success": true
 } ],
-"context": "When calling Node is not null",
+"context": "When calling asserts.file_does_not_exist when there is no file",
 "passed": 1,
 "success": true,
 "time": 0.0,
 "total": 1
 }, {
 "assertions": [ {
-"actual": "|Object| [Deleted Object] == null",
-"context": "A Freed Node is null in Engine 3.2.2 or greater",
-"expected": "|Object| [Deleted Object] == null",
+"actual": " does not exist",
+"context": "Then it passes",
+"expected": " does not exist",
 "success": true
 } ],
-"context": "When calling freed object is null",
+"context": "When calling asserts file does not exist when path is empty",
 "passed": 1,
 "success": true,
 "time": 0.0,
 "total": 1
 } ],
 "passed": 3,
-"path": "res://tests/unit/null.test.gd",
+"path": "res://tests/unit/file.test.gd",
 "source": {
-"path": "res://tests/unit/null.test.gd",
+"path": "res://tests/unit/file.test.gd",
 "script": ExtResource( 2 )
 },
 "success": true,
