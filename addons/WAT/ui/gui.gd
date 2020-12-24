@@ -1,7 +1,7 @@
 tool
 extends PanelContainer
 
-const EditorContext = preload("res://addons/WAT/ui/editor_context.gd")
+
 const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 const RESULTS = preload("res://addons/WAT/cache/Results.tres")
 onready var Summary: Label = $GUI/Interact/Summary
@@ -12,8 +12,11 @@ onready var Repeater: SpinBox = $GUI/Interact/Repeat
 var sceneWasLaunched: bool = false
 var filecache
 var Context
+var EditorContext: Script
 
 func _ready() -> void:
+	if filecache == null and not Engine.is_editor_hint():
+		filecache = preload("res://addons/WAT/cache/test_cache.gd").new()
 	filecache.initialize()
 	$GUI/Interact/MenuButton.FileCache = filecache
 	# QuickStart.connect("pressed", TestRunnerLauncher, "run", [TestRunnerLauncher.RUN.ALL])
