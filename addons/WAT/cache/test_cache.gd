@@ -1,7 +1,14 @@
+
+#class TestContainer:
+#	var path: String
+#	var script: GDScript
+#	var 
+
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 export(Dictionary) var scripts = {}
 export(Array, String) var directories = []
 export(Array, String) var script_paths = []
+export(Array, Script) var suitecache = []
 var _suite_count: int = 0
 
 func scripts(path: String) -> Array:
@@ -65,7 +72,8 @@ func _search(root: String):
 				scripts[title] = s
 				set_tags(s)
 			elif script.get("IS_WAT_SUITE"):
-				_load_suite(script)
+				print("loading suite")
+				_load_suite(title, script)
 		# add dir
 		if d.dir_exists(name):
 			subdirs.append(name)
@@ -84,7 +92,8 @@ func set_tags(script: Dictionary):
 #		if not taggedscripts[tag].has(script):
 #			taggedscripts[tag].append(script)
 
-func _load_suite(suite: Script):
+func _load_suite(title: String, suite: Script) -> void:
+	suitecache.append(suite)
 	var tests: Array = []
 	for constant in suite.get_script_constant_map():
 		var expr: Expression = Expression.new()
@@ -93,19 +102,15 @@ func _load_suite(suite: Script):
 		if test.get("TEST") != null:
 			var tempCopy = GDScript.new()
 			tempCopy.source_code = 'extends "%s".%s' % [suite.get_path(), constant]
-			tempCopy.source_code += "\nvar custom_path = '%s.%s'" % [suite.get_path(), constant]
 			tempCopy.reload()
-			ResourceSaver.save("res://addons/WAT/cache/.nested/%s.gd" % _suite_count as String, tempCopy)
-			var loadedCopy = load("res://addons/WAT/cache/.nested/%s.gd" % _suite_count)
 			_suite_count += 1
-			tests.append(loadedCopy)
-			var path = "%s.%s" % [suite.get_path(), constant]
-			var s = {"path": path, "script": loadedCopy}
+			print(title, " is title?")
+			var path = "%s.%s" % [title, constant]
+			print(test.source_code)
+			var s = {"path": path, "script": tempCopy}
 			scripts[path] = s
 			script_paths.append(path)
-			set_tags(s)
-	return tests
-	
+
 func _on_files_moved(old: String, new: String) -> void:
 	print("moved file %s to %s" % [old, new])
 	
