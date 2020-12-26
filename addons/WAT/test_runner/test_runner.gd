@@ -11,7 +11,6 @@ var _cursor: int = 0
 var test_controller
 
 func _ready() -> void:
-	print(tests)
 	test_controller = TestController.new()
 	add_child(test_controller)
 	print("Initializing TestRunner")
@@ -29,9 +28,7 @@ func _run() -> void:
 func get_next_test() -> Node:
 	# Handle Inside Test Controller?
 	# We also won't need to duplicate tests, just point to them again?
-	print(tests[_cursor]["script"])
-	print(tests[_cursor]["script"].source_code)
-	var script = tests[_cursor]["script"].new()
+	var script = tests[_cursor].source.new()
 	script.path = tests[_cursor]["path"]
 	_cursor += 1
 	return script

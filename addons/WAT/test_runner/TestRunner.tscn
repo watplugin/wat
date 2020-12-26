@@ -32,62 +32,62 @@ script = ExtResource( 1 )
 TestController = ExtResource( 10 )
 tests = [ {
 "path": "res://tests/integration/default_args.test.gd",
-"script": ExtResource( 9 )
+"source": ExtResource( 9 )
 }, {
 "path": "res://tests/integration/scene_director.test.gd",
-"script": ExtResource( 3 )
+"source": ExtResource( 3 )
 }, {
 "path": "res://tests/integration/script_director.test.gd",
-"script": ExtResource( 5 )
+"source": ExtResource( 5 )
 }, {
 "path": "res://tests/integration/test_double.test.gd",
-"script": ExtResource( 4 )
+"source": ExtResource( 4 )
 }, {
 "path": "res://tests/unit/boolean.test.gd",
-"script": ExtResource( 6 )
+"source": ExtResource( 6 )
 }, {
 "path": "res://tests/unit/equality.test.gd",
-"script": ExtResource( 7 )
+"source": ExtResource( 7 )
 }, {
 "path": "res://tests/unit/file.test.gd",
-"script": ExtResource( 8 )
+"source": ExtResource( 8 )
 }, {
 "path": "res://tests/unit/is_instance.test.gd",
-"script": ExtResource( 17 )
+"source": ExtResource( 17 )
 }, {
 "path": "res://tests/unit/is_not_instance.test.gd",
-"script": ExtResource( 19 )
+"source": ExtResource( 19 )
 }, {
 "path": "res://tests/unit/null.test.gd",
-"script": ExtResource( 2 )
+"source": ExtResource( 2 )
 }, {
 "path": "res://tests/unit/object.test.gd",
-"script": ExtResource( 16 )
+"source": ExtResource( 16 )
 }, {
 "path": "res://tests/unit/on_floor.test.gd",
-"script": ExtResource( 12 )
+"source": ExtResource( 12 )
 }, {
 "path": "res://tests/unit/parameters.test.gd",
-"script": ExtResource( 13 )
+"source": ExtResource( 13 )
 }, {
 "path": "res://tests/unit/range.test.gd",
-"script": ExtResource( 11 )
+"source": ExtResource( 11 )
 }, {
 "path": "res://tests/unit/string.test.gd",
-"script": ExtResource( 14 )
+"source": ExtResource( 14 )
 }, {
 "path": "res://tests/unit/suite.test.gd.DummyTwo",
-"script": SubResource( 1 )
+"source": SubResource( 1 )
 }, {
 "path": "res://tests/unit/suite.test.gd.DummyOne",
-"script": SubResource( 2 )
+"source": SubResource( 2 )
 }, {
 "path": "res://tests/unit/test.test.gd",
-"script": ExtResource( 20 )
+"source": ExtResource( 20 )
 }, {
 "path": "res://tests/unit/watcher.test.gd",
-"script": ExtResource( 15 )
+"source": ExtResource( 15 )
 }, {
 "path": "res://tests/unit/yield.test.gd",
-"script": ExtResource( 18 )
+"source": ExtResource( 18 )
 } ]

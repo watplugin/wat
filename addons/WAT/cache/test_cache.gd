@@ -1,8 +1,8 @@
 
-#class TestContainer:
-#	var path: String
-#	var script: GDScript
-#	var 
+class TestContainer extends Resource:
+	var source: GDScript
+	var path: String
+	var tags: Array = []
 
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 export(Dictionary) var scripts = {}
@@ -22,7 +22,7 @@ func tagged(tag: String) -> Array:
 	var metadata = load("res://addons/WAT/cache/metadata.tres")
 	var tests = []
 	for script in scripts:
-		if scripts[script]["script"] in metadata.scripts[tag]:
+		if scripts[script]["source"] in metadata.scripts[tag]:
 			tests.append(scripts[script])
 	return tests
 	
@@ -67,12 +67,14 @@ func _search(root: String):
 		if name.ends_with(".gd") or name.ends_with(".gdc"):
 			var script = load(title)
 			if script.get("TEST") != null:
+#				var container = TestContainer.new()
+#				container.path = title
+#				container.source = script
 				script_paths.append(title)
-				var s = {"path": title, "script": script}
+				var s = {"path": title, source = script}
 				scripts[title] = s
 				set_tags(s)
 			elif script.get("IS_WAT_SUITE"):
-				print("loading suite")
 				_load_suite(title, script)
 		# add dir
 		if d.dir_exists(name):
@@ -86,8 +88,8 @@ func _search(root: String):
 func set_tags(script: Dictionary):
 	pass
 #	var tags = []
-#	if(script["script"].has_meta("tags")):
-#		tags = script["script"].get_meta("tags")
+#	if(script["source"].has_meta("tags")):
+#		tags = script["source"].get_meta("tags")
 #	for tag in tags:
 #		if not taggedscripts[tag].has(script):
 #			taggedscripts[tag].append(script)
@@ -104,10 +106,8 @@ func _load_suite(title: String, suite: Script) -> void:
 			tempCopy.source_code = 'extends "%s".%s' % [suite.get_path(), constant]
 			tempCopy.reload()
 			_suite_count += 1
-			print(title, " is title?")
 			var path = "%s.%s" % [title, constant]
-			print(test.source_code)
-			var s = {"path": path, "script": tempCopy}
+			var s = {"path": path, source = tempCopy}
 			scripts[path] = s
 			script_paths.append(path)
 

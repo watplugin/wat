@@ -51,7 +51,7 @@ func _on_run_option_pressed(option: int, strategy = {"paths": null}) -> void:
 			tests = FileCache.scripts(scriptname)
 		RUN.METHOD:
 			tests = FileCache.scripts(scriptname)
-			tests[0]["script"].set_meta("method", method)
+			tests[0].source.set_meta("method", method)
 		RUN.TAG:
 			push_warning("Tag Needs To Be Reimplemented")
 			tests = FileCache.tagged(tag)

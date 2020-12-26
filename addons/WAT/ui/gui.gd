@@ -32,7 +32,7 @@ func duplicate_tests(tests: Array, repeat: int) -> Array:
 	var duplicates = []
 	for test in tests:
 		for i in repeat:
-			var dupe = {"path": test["path"], "script": test["script"]}
+			var dupe = {"path": test["path"], source = test.source}
 			duplicates.append(dupe)
 	tests += duplicates
 	return tests
