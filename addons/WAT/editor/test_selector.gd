@@ -39,7 +39,7 @@ func _ready() -> void:
 	run_method.connect("id_pressed", self, "_on_run_option_pressed")
 	run_tag.connect("id_pressed", self, "_on_run_option_pressed")
 	
-func _on_run_option_pressed(option: int, strategy = {"paths": null}) -> void:
+func _on_run_option_pressed(option: int) -> void:
 	var tests: Array = []
 	var run_failures: bool = false
 	match option:
