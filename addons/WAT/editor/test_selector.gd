@@ -130,3 +130,10 @@ func _on_about_to_show_run_tag() -> void:
 	tag = tags.get_item_text(tags.get_current_index())
 	run_tag.clear()
 	run_tag.add_item("Run Tagged", RUN.TAG)
+
+func _input(event):
+	if get_parent().get_node("QuickStart").shortcut.is_shortcut(event):
+		_on_QuickStart_pressed()
+
+func _on_QuickStart_pressed():
+	_on_run_option_pressed(RUN.ALL)

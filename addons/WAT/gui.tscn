@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/ui/gui.gd" type="Script" id=3]
@@ -7,6 +7,15 @@
 [ext_resource path="res://addons/WAT/assets/play.svg" type="Texture" id=8]
 [ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=9]
 [ext_resource path="res://addons/WAT/editor/test_selector.gd" type="Script" id=11]
+
+[sub_resource type="InputEventKey" id=1]
+shift = true
+control = true
+command = true
+scancode = 65
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
 
 [node name="Tests" type="PanelContainer"]
 margin_right = 1024.0
@@ -43,6 +52,7 @@ __meta__ = {
 margin_right = 28.0
 margin_bottom = 24.0
 hint_tooltip = "Run All Tests"
+shortcut = SubResource( 2 )
 icon = ExtResource( 8 )
 flat = true
 
@@ -163,3 +173,4 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Online Docs"
 flat = true
+[connection signal="pressed" from="GUI/Interact/QuickStart" to="GUI/Interact/MenuButton" method="_on_QuickStart_pressed"]

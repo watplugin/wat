@@ -22,10 +22,10 @@
 [ext_resource path="res://tests/unit/test.test.gd" type="Script" id=20]
 
 [sub_resource type="GDScript" id=1]
-script/source = "extends \"res://tests/unit/suite.test.gd\".DummyTwo"
+script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
 
 [sub_resource type="GDScript" id=2]
-script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
+script/source = "extends \"res://tests/unit/suite.test.gd\".DummyTwo"
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 1 )
@@ -76,10 +76,10 @@ tests = [ {
 "path": "res://tests/unit/string.test.gd",
 "source": ExtResource( 14 )
 }, {
-"path": "res://tests/unit/suite.test.gd.DummyTwo",
+"path": "res://tests/unit/suite.test.gd.DummyOne",
 "source": SubResource( 1 )
 }, {
-"path": "res://tests/unit/suite.test.gd.DummyOne",
+"path": "res://tests/unit/suite.test.gd.DummyTwo",
 "source": SubResource( 2 )
 }, {
 "path": "res://tests/unit/test.test.gd",
