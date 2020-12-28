@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=24 format=2]
+[gd_resource type="Resource" load_steps=22 format=2]
 
 [ext_resource path="res://addons/WAT/cache/cache.gd" type="Script" id=1]
 [ext_resource path="res://tests/unit/object.test.gd" type="Script" id=2]
@@ -21,16 +21,9 @@
 [ext_resource path="res://tests/unit/yield.test.gd" type="Script" id=19]
 
 [sub_resource type="GDScript" id=1]
-script/source = "extends \"res://tests/unit/suite.test.gd\".DummyTwo"
 
-[sub_resource type="GDScript" id=2]
-script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
-
-[sub_resource type="GDScript" id=3]
-script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
-
-[sub_resource type="GDScript" id=4]
-script/source = "extends \"res://tests/unit/suite.test.gd\".DummyTwo"
+[sub_resource type="Resource" id=2]
+script = SubResource( 1 )
 
 [resource]
 script = ExtResource( 1 )
@@ -111,12 +104,12 @@ pool = [ {
 "test": ExtResource( 15 )
 }, {
 "method": "",
-"path": "res://tests/unit/suite.test.gd.DummyTwo",
+"path": "res://tests/unit/suite.test.gd.DummyOne",
 "tags": [  ],
 "test": SubResource( 1 )
 }, {
 "method": "",
-"path": "res://tests/unit/suite.test.gd.DummyOne",
+"path": "res://tests/unit/suite.test.gd.DummyTwo",
 "tags": [  ],
 "test": SubResource( 2 )
 }, {
@@ -134,105 +127,6 @@ pool = [ {
 "path": "res://tests/unit/yield.test.gd",
 "tags": [  ],
 "test": ExtResource( 19 )
-}, {
-"method": "",
-"path": "res://tests/integration/default_args.test.gd",
-"tags": [  ],
-"test": ExtResource( 8 )
-}, {
-"method": "",
-"path": "res://tests/integration/scene_director.test.gd",
-"tags": [  ],
-"test": ExtResource( 9 )
-}, {
-"method": "",
-"path": "res://tests/integration/script_director.test.gd",
-"tags": [  ],
-"test": ExtResource( 10 )
-}, {
-"method": "",
-"path": "res://tests/integration/test_double.test.gd",
-"tags": [  ],
-"test": ExtResource( 12 )
-}, {
-"method": "",
-"path": "res://tests/unit/boolean.test.gd",
-"tags": [  ],
-"test": ExtResource( 14 )
-}, {
-"method": "",
-"path": "res://tests/unit/equality.test.gd",
-"tags": [  ],
-"test": ExtResource( 7 )
-}, {
-"method": "",
-"path": "res://tests/unit/file.test.gd",
-"tags": [  ],
-"test": ExtResource( 11 )
-}, {
-"method": "",
-"path": "res://tests/unit/is_instance.test.gd",
-"tags": [  ],
-"test": ExtResource( 6 )
-}, {
-"method": "",
-"path": "res://tests/unit/is_not_instance.test.gd",
-"tags": [  ],
-"test": ExtResource( 4 )
-}, {
-"method": "",
-"path": "res://tests/unit/null.test.gd",
-"tags": [  ],
-"test": ExtResource( 3 )
-}, {
-"method": "",
-"path": "res://tests/unit/object.test.gd",
-"tags": [  ],
-"test": ExtResource( 2 )
-}, {
-"method": "",
-"path": "res://tests/unit/on_floor.test.gd",
-"tags": [  ],
-"test": ExtResource( 5 )
-}, {
-"method": "",
-"path": "res://tests/unit/parameters.test.gd",
-"tags": [  ],
-"test": ExtResource( 16 )
-}, {
-"method": "",
-"path": "res://tests/unit/range.test.gd",
-"tags": [  ],
-"test": ExtResource( 17 )
-}, {
-"method": "",
-"path": "res://tests/unit/string.test.gd",
-"tags": [  ],
-"test": ExtResource( 15 )
-}, {
-"method": "",
-"path": "res://tests/unit/suite.test.gd.DummyOne",
-"tags": [  ],
-"test": SubResource( 3 )
-}, {
-"method": "",
-"path": "res://tests/unit/suite.test.gd.DummyTwo",
-"tags": [  ],
-"test": SubResource( 4 )
-}, {
-"method": "",
-"path": "res://tests/unit/test.test.gd",
-"tags": [  ],
-"test": ExtResource( 13 )
-}, {
-"method": "",
-"path": "res://tests/unit/watcher.test.gd",
-"tags": [  ],
-"test": ExtResource( 18 )
-}, {
-"method": "",
-"path": "res://tests/unit/yield.test.gd",
-"tags": [  ],
-"test": ExtResource( 19 )
 } ]
 directories = [ "res://tests", "res://tests/integration", "res://tests/results", "res://tests/results/WAT", "res://tests/unit", "res://tests", "res://tests/integration", "res://tests/results", "res://tests/results/WAT", "res://tests/unit" ]
+hashpool = [ "res://tests", "res://tests/integration", ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 12 ), "res://tests/results", "res://tests/results/WAT", "res://tests/unit", ExtResource( 14 ), ExtResource( 7 ), ExtResource( 11 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 15 ), "res://tests/unit/suite.test.gd.DummyOne", "res://tests/unit/suite.test.gd.DummyTwo", ExtResource( 13 ), ExtResource( 18 ), ExtResource( 19 ) ]

@@ -7,6 +7,7 @@ class_name Cache
 # STORE CONTAINERS THAT STORE SCRIPTS (FOR REVERSE LOOKUP)
 export(Array, Script) var pool: Array = []
 export(Array, String) var directories: Array = []
+export(Array, int) var hashpool: Array = []
 
 func scripts(path: String) -> Array:
 	var tests: Array = []

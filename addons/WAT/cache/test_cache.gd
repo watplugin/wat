@@ -5,10 +5,11 @@ var _cache = preload("res://addons/WAT/cache/cache.tres")
 func initialize() -> void:
 	var path: String = ProjectSettings.get_setting("WAT/Test_Directory")
 	_search(path)
-	print(_cache.directories)
 	ResourceSaver.save(_cache.resource_path, _cache)
 	
 func _search(dirpath: String) -> void:
+	if not _cache.hashpool.has(dirpath):
+		_cache.hashpool.append(dirpath)
 	_cache.directories.append(dirpath)
 	var subdirs: Array = []
 	var dir = Directory.new()
@@ -43,7 +44,10 @@ func _is_suite(name: String) -> bool:
 	
 func _add_test(name: String) -> void:
 	var test = load(name)
+	if _cache.hashpool.has(test):
+		return
 	# Check if hash exists already here
+	_cache.hashpool.append(test)
 	var container = {}
 	container.path = name
 	container.test = test
@@ -58,6 +62,10 @@ func _add_suite(name: String) -> void:
 		expr.parse(klass)
 		var test = expr.execute([], suite)
 		if(test).get("TEST") != null:
+			var title = '%s.%s' % [suite.get_path(), klass]
+			if _cache.hashpool.has(title):
+				break
+			_cache.hashpool.append(title)
 			var copy: GDScript = GDScript.new()
 			copy.source_code = 'extends "%s".%s' % [suite.get_path(), klass]
 			copy.reload()
