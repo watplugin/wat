@@ -8,6 +8,7 @@ class_name Cache
 export(Array, Script) var pool: Array = []
 export(Array, String) var directories: Array = []
 export(Array, int) var hashpool: Array = []
+export(Array, Script) var suitepool: Array = []
 
 func scripts(path: String) -> Array:
 	var tests: Array = []

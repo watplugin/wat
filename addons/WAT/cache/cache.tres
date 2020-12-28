@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=22 format=2]
+[gd_resource type="Resource" load_steps=23 format=2]
 
 [ext_resource path="res://addons/WAT/cache/cache.gd" type="Script" id=1]
 [ext_resource path="res://tests/unit/object.test.gd" type="Script" id=2]
@@ -19,11 +19,13 @@
 [ext_resource path="res://tests/unit/range.test.gd" type="Script" id=17]
 [ext_resource path="res://tests/unit/watcher.test.gd" type="Script" id=18]
 [ext_resource path="res://tests/unit/yield.test.gd" type="Script" id=19]
+[ext_resource path="res://tests/unit/suite.test.gd" type="Script" id=20]
 
 [sub_resource type="GDScript" id=1]
+script/source = "extends \"res://tests/unit/suite.test.gd\".DummyTwo"
 
-[sub_resource type="Resource" id=2]
-script = SubResource( 1 )
+[sub_resource type="GDScript" id=2]
+script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
 
 [resource]
 script = ExtResource( 1 )
@@ -65,7 +67,7 @@ pool = [ {
 }, {
 "method": "",
 "path": "res://tests/unit/is_instance.test.gd",
-"tags": [ "Android", "IOS", "Windows", "Mac" ],
+"tags": [  ],
 "test": ExtResource( 6 )
 }, {
 "method": "",
@@ -75,7 +77,7 @@ pool = [ {
 }, {
 "method": "",
 "path": "res://tests/unit/null.test.gd",
-"tags": [ "Windows", "IOS" ],
+"tags": [  ],
 "test": ExtResource( 3 )
 }, {
 "method": "",
@@ -130,3 +132,4 @@ pool = [ {
 } ]
 directories = [ "res://tests", "res://tests/integration", "res://tests/results", "res://tests/results/WAT", "res://tests/unit" ]
 hashpool = [ "res://tests", "res://tests/integration", ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 12 ), "res://tests/results", "res://tests/results/WAT", "res://tests/unit", ExtResource( 14 ), ExtResource( 7 ), ExtResource( 11 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 15 ), "res://tests/unit/suite.test.gd.DummyTwo", "res://tests/unit/suite.test.gd.DummyOne", ExtResource( 13 ), ExtResource( 18 ), ExtResource( 19 ) ]
+suitepool = [ ExtResource( 20 ) ]

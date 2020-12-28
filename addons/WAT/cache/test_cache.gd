@@ -58,6 +58,8 @@ func _add_test(name: String) -> void:
 	
 func _add_suite(name: String) -> void:
 	var suite: Script = load(name)
+	if not _cache.suitepool.has(suite):
+		_cache.suitepool.append(suite)
 	for klass in suite.get_script_constant_map():
 		var expr: Expression = Expression.new()
 		expr.parse(klass)
