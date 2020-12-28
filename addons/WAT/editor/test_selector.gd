@@ -89,14 +89,14 @@ func _on_about_to_show_scripts():
 	dir = dirs.get_item_text(dirs.get_current_index())
 	scripts.clear()
 	scripts.set_as_minsize()
-	var scriptlist = FileCache.paths(dir)
+	var scriptlist = FileCache.scripts(dir)
 	if scriptlist.empty():
 		return
 	# Runs All Tests In Current Directory
 	scripts.add_item("Run All Tests In This Directory", RUN.DIRECTORY)
 	for item in scriptlist:
 #		if Directory.new().file_exists(item):
-		scripts.add_submenu_item(item, "Methods")
+		scripts.add_submenu_item(item.path, "Methods")
 #
 func _on_about_to_show_methods():
 	scriptname = scripts.get_item_text(scripts.get_current_index())

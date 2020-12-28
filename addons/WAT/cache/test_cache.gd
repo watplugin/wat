@@ -1,10 +1,3 @@
-
-class TestContainer extends Resource:
-	var path: String
-	var test: Script
-	var tags: Array = []
-	var method: String = ""
-
 const BLANK = ""
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 var _cache = preload("res://addons/WAT/cache/cache.tres")
@@ -13,6 +6,7 @@ func initialize() -> void:
 	var path: String = ProjectSettings.get_setting("WAT/Test_Directory")
 	_search(path)
 	print(_cache.directories)
+	ResourceSaver.save(_cache.resource_path, _cache)
 	
 func _search(dirpath: String) -> void:
 	_cache.directories.append(dirpath)
@@ -50,9 +44,11 @@ func _is_suite(name: String) -> bool:
 func _add_test(name: String) -> void:
 	var test = load(name)
 	# Check if hash exists already here
-	var container = TestContainer.new()
+	var container = {}
 	container.path = name
 	container.test = test
+	container.tags = []
+	container.method = ""
 	_cache.pool.append(container)
 	
 func _add_suite(name: String) -> void:
@@ -65,9 +61,11 @@ func _add_suite(name: String) -> void:
 			var copy: GDScript = GDScript.new()
 			copy.source_code = 'extends "%s".%s' % [suite.get_path(), klass]
 			copy.reload()
-			var container = TestContainer.new()
+			var container = {}
 			container.path = "%s.%s" % [suite.get_path(), klass]
 			container.test = copy
+			container.tags = []
+			container.method = ""
 			_cache.pool.append(container)
 
 func _on_files_moved(old: String, new: String) -> void:

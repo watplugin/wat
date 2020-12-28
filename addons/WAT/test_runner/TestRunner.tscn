@@ -8,6 +8,13 @@
 script = ExtResource( 1 )
 TestController = ExtResource( 10 )
 tests = [ {
+"method": "",
 "path": "res://tests/unit/boolean.test.gd",
-"source": ExtResource( 6 )
+"tags": [  ],
+"test": ExtResource( 6 )
+}, {
+"method": "",
+"path": "res://tests/unit/boolean.test.gd",
+"tags": [  ],
+"test": ExtResource( 6 )
 } ]
