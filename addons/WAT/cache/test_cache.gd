@@ -10,7 +10,8 @@ func initialize() -> void:
 func _search(dirpath: String) -> void:
 	if not _cache.hashpool.has(dirpath):
 		_cache.hashpool.append(dirpath)
-	_cache.directories.append(dirpath)
+	if not _cache.directories.has(dirpath):
+		_cache.directories.append(dirpath)
 	var subdirs: Array = []
 	var dir = Directory.new()
 	dir.open(dirpath)
