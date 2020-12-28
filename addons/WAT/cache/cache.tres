@@ -65,7 +65,7 @@ pool = [ {
 }, {
 "method": "",
 "path": "res://tests/unit/is_instance.test.gd",
-"tags": [ "Android", "IOS" ],
+"tags": [ "Android", "IOS", "Windows", "Mac" ],
 "test": ExtResource( 6 )
 }, {
 "method": "",

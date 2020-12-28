@@ -106,17 +106,7 @@ func _on_about_to_show_methods():
 	methods.add_item("Run Test", RUN.SCRIPT)
 	var methodlist = []
 	# Are we sure this is always a test script?
-	var script
-	if scriptname.ends_with(".gd") or scriptname.ends_with(".gdc"):
-		script = load(scriptname)
-	else:
-		# Display SuiteOfSuites
-		var sourcename = scriptname.substr(0, scriptname.find(".gd") + 3)
-		var nestedname = scriptname.substr(scriptname.find(".gd") + 4, scriptname.length())
-		var source = load(sourcename)
-		var expr: Expression = Expression.new()
-		expr.parse(nestedname)
-		script = expr.execute([], source)
+	var script = FileCache.scripts(scriptname)[0].test
 	for method in script.get_script_method_list():
 		if method.name.begins_with("test"):
 			methods.add_submenu_item(method.name, "RunMethod")

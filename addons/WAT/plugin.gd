@@ -43,9 +43,15 @@ func goto_function(path: String, function: String):
 			get_editor_interface().get_script_editor().goto_line(i)
 			return
 
-	
 func _exit_tree() -> void:
 	_DockController.free()
 	_ControlPanel.free()
 	remove_inspector_plugin(_TestMetadataEditor)
+
+func _notification(what):
+	if what == NOTIFICATION_WM_QUIT_REQUEST:
+		save()
+	
+func save() -> void:
+	ResourceSaver.save("res://addons/WAT/cache/cache.tres", _FileCache._cache)
 	
