@@ -29,11 +29,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Examples/Scripts/login.gd"
 }, {
-"base": "Resource",
-"class": "Metadata",
-"language": "GDScript",
-"path": "res://addons/WAT/cache/metadata.gd"
-}, {
 "base": "Reference",
 "class": "WAT",
 "language": "GDScript",
@@ -49,7 +44,6 @@ _global_script_class_icons={
 "Cache": "",
 "Calculator": "",
 "Login": "",
-"Metadata": "",
 "WAT": "",
 "WATTest": ""
 }

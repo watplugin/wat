@@ -15,6 +15,7 @@ class TagList extends EditorProperty:
 	func _init(_test: Script) -> void:
 		test = _test
 		metadata.test = _test
+		metadata.container = load("res://addons/WAT/cache/cache.tres").scripts(_test.get_path())[0]
 		add_child(metadata)
 		set_bottom_editor(metadata)
 		

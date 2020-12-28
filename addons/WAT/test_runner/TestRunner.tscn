@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/WAT/test_runner/test_runner.gd" type="Script" id=1]
-[ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=6]
+[ext_resource path="res://tests/unit/null.test.gd" type="Script" id=2]
+[ext_resource path="res://tests/unit/range.test.gd" type="Script" id=3]
 [ext_resource path="res://addons/WAT/test/test_controller.gd" type="Script" id=10]
 
 [node name="TestRunner" type="Node"]
@@ -9,12 +10,12 @@ script = ExtResource( 1 )
 TestController = ExtResource( 10 )
 tests = [ {
 "method": "",
-"path": "res://tests/unit/boolean.test.gd",
-"tags": [  ],
-"test": ExtResource( 6 )
+"path": "res://tests/unit/null.test.gd",
+"tags": [ "Windows", "IOS" ],
+"test": ExtResource( 2 )
 }, {
 "method": "",
-"path": "res://tests/unit/boolean.test.gd",
-"tags": [  ],
-"test": ExtResource( 6 )
+"path": "res://tests/unit/range.test.gd",
+"tags": [ "Android", "Windows" ],
+"test": ExtResource( 3 )
 } ]
