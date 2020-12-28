@@ -1,0 +1,254 @@
+[gd_resource type="Resource" load_steps=85 format=2]
+
+[ext_resource path="res://addons/WAT/cache/cache.gd" type="Script" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+[sub_resource type="Resource" id=2]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=3]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=4]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=5]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=6]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=7]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=8]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=9]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=10]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=11]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=12]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=13]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=14]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=15]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=16]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=17]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=18]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=19]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=20]
+script = SubResource( 1 )
+
+[sub_resource type="Resource" id=21]
+script = SubResource( 1 )
+
+[sub_resource type="GDScript" id=22]
+
+[sub_resource type="Resource" id=23]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=24]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=25]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=26]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=27]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=28]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=29]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=30]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=31]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=32]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=33]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=34]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=35]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=36]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=37]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=38]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=39]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=40]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=41]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=42]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=43]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=44]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=45]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=46]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=47]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=48]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=49]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=50]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=51]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=52]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=53]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=54]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=55]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=56]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=57]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=58]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=59]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=60]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=61]
+script = SubResource( 22 )
+
+[sub_resource type="Resource" id=62]
+script = SubResource( 22 )
+
+[sub_resource type="GDScript" id=63]
+
+[sub_resource type="Resource" id=64]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=65]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=66]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=67]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=68]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=69]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=70]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=71]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=72]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=73]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=74]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=75]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=76]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=77]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=78]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=79]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=80]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=81]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=82]
+script = SubResource( 63 )
+
+[sub_resource type="Resource" id=83]
+script = SubResource( 63 )
+
+[resource]
+script = ExtResource( 1 )
+pool = [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ), SubResource( 73 ), SubResource( 74 ), SubResource( 75 ), SubResource( 76 ), SubResource( 77 ), SubResource( 78 ), SubResource( 79 ), SubResource( 80 ), SubResource( 81 ), SubResource( 82 ), SubResource( 83 ) ]
+directories = [ "res://tests", "res://tests/integration", "res://tests/results", "res://tests/results/WAT", "res://tests/unit", "res://tests", "res://tests/integration", "res://tests/results", "res://tests/results/WAT", "res://tests/unit", "res://tests", "res://tests/integration", "res://tests/results", "res://tests/results/WAT", "res://tests/unit", "res://tests", "res://tests/integration", "res://tests/results", "res://tests/results/WAT", "res://tests/unit" ]

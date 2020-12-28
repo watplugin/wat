@@ -73,7 +73,7 @@ func _on_about_to_show_directories():
 	dirs.add_submenu_item("Tags", "Tags")
 	for item in dirlist:
 		# We want to hide empty directories
-		if not FileCache.paths(item).empty():
+		if not FileCache.scripts(item).empty():
 			dirs.add_submenu_item(item, "Scripts")
 			
 func _on_about_to_show_tags():

@@ -4,19 +4,19 @@ class_name Cache
 # NOTE
 # DO NOT STORE SCRIPTS
 # STORE CONTAINERS THAT STORE SCRIPTS (FOR REVERSE LOOKUP)
+export(Array, Script) var pool: Array = []
+export(Array, String) var directories: Array = []
 
-export(Array, Script) var scripts: Array = []
-
-# Dict<String, Array<Script>>
-# We include each level of directory here
-# ie "res://tests" and "res://tests/unit" are two different arrays
-export(Dictionary) var directories: Dictionary = {}
-
-# Dict<String, Array<Script>>
-export(Dictionary) var tags: Dictionary = {}
+func scripts(path: String) -> Array:
+	var tests: Array = []
+	for container in pool:
+		if container.path.begins_with(path):
+			tests.append(container)
+	return tests
 
 func tagged(tag: String) -> Array:
-	return tags[tag]
-	
-func directory(dir: String) -> Array:
-	return directories[dir]
+	var tests: Array = []
+	for container in pool:
+		if container.tags.has(tag):
+			tests.append(container)
+	return tests

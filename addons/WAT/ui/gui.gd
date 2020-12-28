@@ -10,14 +10,16 @@ onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
 onready var QuickStart: Button = $GUI/Interact/QuickStart
 onready var Repeater: SpinBox = $GUI/Interact/Repeat
 var sceneWasLaunched: bool = false
+#var filemanager
 var filecache
 var Context
 var EditorContext: Script
 
 func _ready() -> void:
-	if filecache == null and not Engine.is_editor_hint():
-		filecache = preload("res://addons/WAT/cache/test_cache.gd").new()
-	filecache.initialize()
+#	if filemanager == null and not Engine.is_editor_hint():
+#		filemanager = preload("res://addons/WAT/cache/test_cache.gd").new()
+#	filemanager.initialize()
+	filecache = load("res://addons/WAT/cache/cache.tres")
 	$GUI/Interact/MenuButton.FileCache = filecache
 	# QuickStart.connect("pressed", TestRunnerLauncher, "run", [TestRunnerLauncher.RUN.ALL])
 	$GUI/Interact/MenuButton.connect("_test_path_selected", self, "run")

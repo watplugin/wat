@@ -18,6 +18,7 @@ func get_plugin_name() -> String:
    return "WAT"
 
 func _enter_tree() -> void:
+	_FileCache.initialize()
 	SystemInitializer.new()
 	_ControlPanel = ControlPanel.instance()
 	_ControlPanel.EditorContext = EditorContext
