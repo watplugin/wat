@@ -52,7 +52,7 @@ pool = [ {
 }, {
 "method": "",
 "path": "res://tests/unit/boolean.test.gd",
-"tags": [  ],
+"tags": [ "Windows" ],
 "test": ExtResource( 14 )
 }, {
 "method": "",

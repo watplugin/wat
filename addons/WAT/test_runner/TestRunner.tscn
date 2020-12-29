@@ -1,17 +1,15 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/WAT/test_runner/test_runner.gd" type="Script" id=1]
+[ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/test/test_controller.gd" type="Script" id=10]
-
-[sub_resource type="GDScript" id=2]
-script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 1 )
 TestController = ExtResource( 10 )
 tests = [ {
 "method": "",
-"path": "res://tests/unit/suite.test.gd.DummyOne",
-"tags": [  ],
-"test": SubResource( 2 )
+"path": "res://tests/unit/boolean.test.gd",
+"tags": [ "Windows" ],
+"test": ExtResource( 2 )
 } ]

@@ -1,7 +1,6 @@
 extends MenuButton
 tool
 
-enum RUN { ALL, DIRECTORY, SCRIPT, METHOD, TAG, FAILED }
 var FileCache
 var dirs = get_popup()
 var tags = PopupMenu.new()
@@ -33,29 +32,19 @@ func _ready() -> void:
 	methods.connect("about_to_show", self, "_on_about_to_show_methods")
 	run_method.connect("about_to_show", self, "_on_about_to_show_run")
 	run_tag.connect("about_to_show", self, "_on_about_to_show_run_tag")
-	dirs.connect("id_pressed", self, "_on_run_option_pressed")
-	scripts.connect("id_pressed", self, "_on_run_option_pressed")
-	methods.connect("id_pressed", self, "_on_run_option_pressed")
-	run_method.connect("id_pressed", self, "_on_run_option_pressed")
-	run_tag.connect("id_pressed", self, "_on_run_option_pressed")
+	dirs.connect("index_pressed", self, "_on_run_option_pressed", [dirs])
+	scripts.connect("index_pressed", self, "_on_run_option_pressed", [scripts])
+	methods.connect("index_pressed", self, "_on_run_option_pressed", [methods])
+	run_method.connect("index_pressed", self, "_on_run_option_pressed", [run_method])
+	run_tag.connect("index_pressed", self, "_on_run_option_pressed", [run_tag])
 	
-func _on_run_option_pressed(option: int) -> void:
-	var tests: Array = []
-	var run_failures: bool = false
-	match option:
-		RUN.ALL:
-			tests = FileCache.scripts(ProjectSettings.get("WAT/Test_Directory"))
-		RUN.DIRECTORY:
-			tests = FileCache.scripts(dir)
-		RUN.SCRIPT:
-			tests = FileCache.scripts(scriptname)
-		RUN.METHOD:
-			tests = FileCache.scripts(scriptname)
-			tests[0].test.set_meta("method", method)
-		RUN.TAG:
-			tests = FileCache.tagged(tag)
-		RUN.FAILED:
-			run_failures = true
+func _on_run_option_pressed(idx: int, option: PopupMenu) -> void:
+	var tests = []
+	var run_failures: bool = false # Failed Tests should be accessible via filecache (they will be in globals?)
+	tests = option.get_item_metadata(idx)
+	if tests is bool:
+		run_failures = tests
+		tests = []
 	emit_signal("_test_path_selected", tests, run_failures)
 	
 func _on_about_to_show_directories():
@@ -67,12 +56,15 @@ func _on_about_to_show_directories():
 	if dirlist.empty():
 		return
 	# Runs All Tests In All Directories
-	dirs.add_item("Run All Tests", RUN.ALL)
-	dirs.add_item("Rerun Failures", RUN.FAILED)
+	dirs.add_item("Run All Tests")
+	dirs.add_item("Rerun Failures")
 	dirs.add_submenu_item("Tags", "Tags")
+	dirs.set_item_metadata(0, FileCache.scripts(ProjectSettings.get_setting("WAT/Test_Directory")))
+	dirs.set_item_metadata(1, true) # run failures
 	for item in dirlist:
 		# We want to hide empty directories
-		if not FileCache.scripts(item).empty():
+		var tests = FileCache.scripts(item)
+		if not tests.empty():
 			dirs.add_submenu_item(item, "Scripts")
 			
 func _on_about_to_show_tags():
@@ -92,7 +84,8 @@ func _on_about_to_show_scripts():
 	if scriptlist.empty():
 		return
 	# Runs All Tests In Current Directory
-	scripts.add_item("Run All Tests In This Directory", RUN.DIRECTORY)
+	scripts.add_item("Run All Tests In This Directory")
+	scripts.set_item_metadata(0, scriptlist)
 	for item in scriptlist:
 #		if Directory.new().file_exists(item):
 		scripts.add_submenu_item(item.path, "Methods")
@@ -102,10 +95,12 @@ func _on_about_to_show_methods():
 	methods.clear()
 	methods.set_as_minsize()
 	# Runs This Test
-	methods.add_item("Run Test", RUN.SCRIPT)
+	methods.add_item("Run Test")
+
 	var methodlist = []
 	# Are we sure this is always a test script?
 	var script = FileCache.scripts(scriptname)[0].test
+	methods.set_item_metadata(0, FileCache.scripts(scriptname))
 	for method in script.get_script_method_list():
 		if method.name.begins_with("test"):
 			methods.add_submenu_item(method.name, "RunMethod")
@@ -113,16 +108,22 @@ func _on_about_to_show_methods():
 func _on_about_to_show_run() -> void:
 	method = methods.get_item_text(methods.get_current_index())
 	run_method.clear()
-	run_method.add_item("Run Method", RUN.METHOD)
+	run_method.add_item("Run Method")
+	var tests = FileCache.scripts(scripts.get_item_text(scripts.get_current_index()))
+	tests[0].test.set_meta("method", methods.get_item_text(methods.get_current_index()))
+	run_method.set_item_metadata(0, tests)
 	
 func _on_about_to_show_run_tag() -> void:
 	tag = tags.get_item_text(tags.get_current_index())
 	run_tag.clear()
-	run_tag.add_item("Run Tagged", RUN.TAG)
+	var tests = FileCache.tagged(tag)
+	run_tag.add_item("Run Tagged")
+	run_tag.set_item_metadata(0, tests)
 
 func _input(event):
 	if get_parent().get_node("QuickStart").shortcut.is_shortcut(event):
 		_on_QuickStart_pressed()
 
 func _on_QuickStart_pressed():
-	_on_run_option_pressed(RUN.ALL)
+	pass
+#	_on_run_option_pressed(RUN.ALL)
