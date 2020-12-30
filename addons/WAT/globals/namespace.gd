@@ -1,5 +1,5 @@
 extends Node
-#tool
+tool
 
 const TestDoubleFactory = preload("res://addons/WAT/core/double/factory.gd")
 const Test: Script = preload("res://addons/WAT/core/test/test.gd")
