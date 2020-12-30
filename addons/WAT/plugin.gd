@@ -1,18 +1,15 @@
 tool
 extends EditorPlugin
 
-const EditorContext = preload("res://addons/WAT/ui/editor_context.gd")
 const TITLE: String = "Tests"
+const EditorContext = preload("res://addons/WAT/ui/editor_context.gd")
 const ControlPanel: PackedScene = preload("res://addons/WAT/gui.tscn")
 const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/editor.gd")
 const DockController: Script = preload("ui/dock.gd")
-#const Settings: Script = preload("settings.gd")
-#const FileCache: Script = preload("cache/test_cache.gd")
 
 var _ControlPanel: PanelContainer
 var _TestMetadataEditor: EditorInspectorPlugin
 var _DockController: Node
-#var _FileCache = FileCache.new()
 
 func get_plugin_name() -> String:
    return "WAT"
@@ -20,24 +17,30 @@ func get_plugin_name() -> String:
 func _enter_tree() -> void:
 	if not get_tree().root.has_node("WAT"):
 		add_autoload_singleton("WAT", "res://addons/WAT/namespace.gd")
+	
 	WAT.FileManager.initialize()
-#	WAT.FileManager = _FileCache
+	
 	_ControlPanel = ControlPanel.instance()
 	_ControlPanel.EditorContext = EditorContext
+	_TestMetadataEditor = TestMetadataEditor.new()
+	_DockController = DockController.new(self, _ControlPanel)
+	
+	add_inspector_plugin(_TestMetadataEditor)
+	add_child(_DockController)
+	
+	_ControlPanel.Results.connect("function_sought", self, "goto_function")
+		
+func connect_filemanager() -> void:
 	var filedock = get_editor_interface().get_file_system_dock()
 	filedock.connect("files_moved", WAT.FileManager, "_on_files_moved")
 	filedock.connect("file_removed", WAT.FileManager, "_on_files_removed")
 	filedock.connect("folder_moved", WAT.FileManager, "_on_folder_moved")
 	filedock.connect("folder_removed", WAT.FileManager, "_on_folder_removed")
-#	_ControlPanel.filecache = _FileCache
-	_TestMetadataEditor = TestMetadataEditor.new()
-	add_inspector_plugin(_TestMetadataEditor)
-	_DockController = DockController.new(self, _ControlPanel)
-	add_child(_DockController)
-	_ControlPanel.Results.connect("function_sought", self, "goto_function")
+	
+func create_results() -> void:
 	var path = ProjectSettings.get_setting("WAT/Results_Directory") + "/Results.tres"
 	if not Directory.new().file_exists(path):
-		var r = load("res://addons/WAT/cache/Results.gd").new()
+		var r = load("res://addons/WAT/cache/results.gd").new()
 		ResourceSaver.save(path, r)
 	
 func goto_function(path: String, function: String):

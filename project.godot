@@ -81,3 +81,4 @@ enabled=PoolStringArray( "WAT" )
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+quality/dynamic_fonts/use_oversampling=false
