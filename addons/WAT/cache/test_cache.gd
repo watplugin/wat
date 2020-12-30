@@ -41,7 +41,10 @@ func _search(dirpath: String) -> Array:
 	
 	for subdir in subdirs:
 		scripts += _search(subdir)
-		
+	
+	for test in scripts:
+		# Used for reverse lookup on removal/move
+		test.containers.append(tests[dirpath])
 	tests.directories.append(dirpath)
 	tests[dirpath] = scripts
 	return scripts
@@ -57,8 +60,7 @@ func _is_suite(name: String) -> bool:
 	return false
 	
 func _add_test(name: String) -> Dictionary:
-#	var test = load(name)
-	var container = {path = name, test = load(name), tags = [], method = ""}
+	var container = {path = name, test = load(name), tags = [], method = "", containers = []}
 	tests[name] = container
 	return container
 	
@@ -79,6 +81,7 @@ func _add_suite(name: String) -> Array:
 			container.test = copy
 			container.tags = []
 			container.method = ""
+			container.containers = []
 			scripts.append(container)
 			tests[container.path] = container
 	return scripts
