@@ -6,7 +6,7 @@ const TITLE: String = "Tests"
 const ControlPanel: PackedScene = preload("res://addons/WAT/gui.tscn")
 const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/editor.gd")
 const DockController: Script = preload("ui/dock.gd")
-const SystemInitializer: Script = preload("initializer.gd")
+const Settings: Script = preload("settings.gd")
 const FileCache: Script = preload("cache/test_cache.gd")
 
 var _ControlPanel: PanelContainer
@@ -18,8 +18,8 @@ func get_plugin_name() -> String:
    return "WAT"
 
 func _enter_tree() -> void:
+	Settings.new()
 	_FileCache.initialize()
-	SystemInitializer.new()
 	_ControlPanel = ControlPanel.instance()
 	_ControlPanel.EditorContext = EditorContext
 	var filedock = get_editor_interface().get_file_system_dock()

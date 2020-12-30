@@ -54,18 +54,11 @@ quick_access=Object(FuncRef,"script":null)
 [WAT]
 
 Test_Directory="res://tests"
-ActiveRunPath="res://tests"
-Tags=PoolStringArray( "Windows", "Mac", "Linux", "Android", "IOS" )
-Display=8
-Minimize_Window_When_Running_Tests=false
-TestStrategy={
-0: 2,
-1: 1,
-"script": "res://tests/unit/equality.test.gd"
-}
+Results_Directory="C:/Users/Alex/AppData/Roaming/Godot/app_userdata/WaitingAndTesting"
+Tags=PoolStringArray(  )
 Window_Size=Vector2( 1280, 720 )
-Port=6000
-Results_Directory="C:/Users/Alex/AppData/Roaming/Godot/app_userdata/WaitingAndTesting/.WAT/.Results"
+Minimize_Window_When_Running_Tests=false
+Display=8
 
 [application]
 

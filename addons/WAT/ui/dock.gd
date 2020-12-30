@@ -33,7 +33,7 @@ func _notification(what) -> void:
 
 func construct() -> void:
 	if not ProjectSettings.has_setting("WAT/Display"):
-		ProjectSettings.set_setting("WAT/Display", BOTTOM_PANEL)
+		ProjectSettings.set("WAT/Display", BOTTOM_PANEL)
 		ProjectSettings.save()
 	add_setting()
 	_state = get_window_state()
