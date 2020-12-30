@@ -3,12 +3,12 @@ extends Node
 enum { START, PRE, EXECUTE, POST, END }
 signal finished
 var _state = START
-var _assertions = preload("res://addons/WAT/core/assertions/assertions.gd").new()
-var _yielder: WAT.Yielder = preload("res://addons/WAT/core/test/yielder.gd").new()
-var _parameters = preload("res://addons/WAT/core/test/parameters.gd").new()
-var _watcher = preload("res://addons/WAT/core/test/watcher.gd").new()
-var _director = preload("res://addons/WAT/core/double/factory.gd").new()
-var _recorder = preload("res://addons/WAT/core/test/recorder.gd")
+var _assertions: WAT.Asserts = WAT.Asserts.new()
+var _yielder: WAT.Yielder = WAT.Yielder.new()
+var _parameters: WAT.Parameters = WAT.Parameters.new()
+var _watcher: WAT.SignalWatcher = WAT.SignalWatcher.new()
+var _director: WAT.TestDoubleFactory = WAT.TestDoubleFactory.new()
+var _recorder = WAT.Recorder
 var _test: WAT.Test
 var _case: WAT.TestCase
 var _methods: PoolStringArray = []
@@ -37,7 +37,7 @@ func _setup(test):
 		_test.free()
 	_test = test
 	_methods = _test.methods()
-	_case = preload("res://addons/WAT/core/test/case.gd").new(test.title(), test.path(), test.get_script())
+	_case = WAT.TestCase.new(test.title(), test.path(), test.get_script())
 	_test.yielder = _yielder
 	_test.direct = _director
 	_test.asserts = _assertions
