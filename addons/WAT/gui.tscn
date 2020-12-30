@@ -1,12 +1,20 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/assets/default.tres" type="Theme" id=2]
 [ext_resource path="res://addons/WAT/ui/gui.gd" type="Script" id=3]
 [ext_resource path="res://addons/WAT/ui/links.gd" type="Script" id=4]
 [ext_resource path="res://addons/WAT/ui/Summary.gd" type="Script" id=6]
 [ext_resource path="res://addons/WAT/assets/play.svg" type="Texture" id=8]
 [ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=9]
 [ext_resource path="res://addons/WAT/editor/test_selector.gd" type="Script" id=11]
+
+[sub_resource type="StyleBoxFlat" id=3]
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color( 0.2, 0.231373, 0.309804, 1 )
 
 [sub_resource type="InputEventKey" id=1]
 shift = true
@@ -23,16 +31,18 @@ margin_bottom = 600.0
 rect_min_size = Vector2( 0, 300 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource( 2 )
+custom_styles/panel = SubResource( 3 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="GUI" type="VBoxContainer" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1017.0
-margin_bottom = 593.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 590.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -40,7 +50,7 @@ __meta__ = {
 }
 
 [node name="Interact" type="HBoxContainer" parent="GUI"]
-margin_right = 1010.0
+margin_right = 1004.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
@@ -106,7 +116,7 @@ suffix = "Times"
 
 [node name="Summary" type="Label" parent="GUI/Interact"]
 margin_left = 376.0
-margin_right = 1010.0
+margin_right = 1004.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -119,8 +129,8 @@ __meta__ = {
 
 [node name="Results" type="TabContainer" parent="GUI"]
 margin_top = 28.0
-margin_right = 1010.0
-margin_bottom = 552.0
+margin_right = 1004.0
+margin_bottom = 546.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tab_align = 0
@@ -131,9 +141,9 @@ __meta__ = {
 }
 
 [node name="Links" type="HBoxContainer" parent="GUI"]
-margin_top = 556.0
-margin_right = 1010.0
-margin_bottom = 586.0
+margin_top = 550.0
+margin_right = 1004.0
+margin_bottom = 580.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 custom_constants/separation = 0
@@ -150,7 +160,7 @@ NodePath("OnlineDocs"): "https://wat.readthedocs.io/en/latest/index.html"
 }
 
 [node name="Support" type="Button" parent="GUI/Links"]
-margin_right = 252.0
+margin_right = 251.0
 margin_bottom = 30.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -166,8 +176,8 @@ flat = true
 expand_icon = true
 
 [node name="Issue" type="Button" parent="GUI/Links"]
-margin_left = 252.0
-margin_right = 505.0
+margin_left = 251.0
+margin_right = 502.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 shortcut_in_tooltip = false
@@ -176,16 +186,16 @@ text = "Report An Issue"
 flat = true
 
 [node name="RequestDocs" type="Button" parent="GUI/Links"]
-margin_left = 505.0
-margin_right = 757.0
+margin_left = 502.0
+margin_right = 753.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 text = "Request Docs"
 flat = true
 
 [node name="OnlineDocs" type="Button" parent="GUI/Links"]
-margin_left = 757.0
-margin_right = 1010.0
+margin_left = 753.0
+margin_right = 1004.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
