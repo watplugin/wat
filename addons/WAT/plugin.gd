@@ -17,9 +17,7 @@ func get_plugin_name() -> String:
 func _enter_tree() -> void:
 	if not get_tree().root.has_node("WAT"):
 		add_autoload_singleton("WAT", "res://addons/WAT/namespace.gd")
-	
-	WAT.FileManager.initialize()
-	
+
 	_ControlPanel = ControlPanel.instance()
 	_ControlPanel.EditorContext = EditorContext
 	_TestMetadataEditor = TestMetadataEditor.new()

@@ -2,7 +2,7 @@ extends Button
 tool
 
 signal _test_path_selected
-var FileCache
+var tests: Dictionary = {}
 onready var Directories: PopupMenu = $Directories
 onready var Scripts: PopupMenu = $Directories/Scripts
 onready var Methods: PopupMenu = $Directories/Scripts/Methods
@@ -10,7 +10,8 @@ onready var Tags: PopupMenu = $Directories/Tags
 
 
 func _ready() -> void:
-	FileCache = WAT.FileManager._cache
+	# Dictionaries are referenced, meaning this is a pointer to the main dir
+	tests = WAT.FileManager.tests
 	Directories.connect("index_pressed", self, "_on_idx_pressed", [Directories])
 	Scripts.connect("index_pressed", self, "_on_idx_pressed", [Scripts])
 	Methods.connect("index_pressed", self, "_on_idx_pressed", [Methods])
@@ -25,17 +26,17 @@ func _on_Directories_about_to_show():
 	Directories.add_item("Run All")
 	Directories.add_item("Rerun Failures")
 	Directories.add_submenu_item("Tags", "Tags")
-	Directories.set_item_metadata(0, FileCache.scripts(WAT.Settings.test_directory()))
+	Directories.set_item_metadata(0, tests[WAT.Settings.test_directory()])
 	Directories.set_item_metadata(1, WAT.Settings.results().failed())
 	Directories.set_item_icon(0, load("res://addons/WAT/assets/play.svg"))
 	Directories.set_item_icon(1, load("res://addons/WAT/assets/rerun_failures.svg"))
 	Directories.set_item_icon(2, load("res://addons/WAT/assets/label.svg"))
-	var dirs: Array = FileCache.directories
+	var dirs: Array = tests.directories
 	if dirs.empty():
 		return
 	var idx: int = Directories.get_item_count()
 	for dir in dirs:
-		if not FileCache.scripts(dir).empty():
+		if not tests[dir].empty():
 			Directories.add_submenu_item(dir, "Scripts")
 			Directories.set_item_icon(idx, load("res://addons/WAT/assets/folder.svg"))
 			idx += 1
@@ -47,7 +48,7 @@ func _on_Tags_about_to_show():
 	var idx: int = Tags.get_item_count()
 	for tag in ProjectSettings.get("WAT/Tags"):
 		Tags.add_item(tag)
-		Tags.set_item_metadata(idx, FileCache.tagged(tag))
+		Tags.set_item_metadata(idx, tests[tag])
 		idx += 1
 
 
@@ -55,13 +56,13 @@ func _on_Scripts_about_to_show():
 	Scripts.clear()
 	Scripts.set_as_minsize()
 	Scripts.add_item("Run All")
-	Scripts.set_item_metadata(0, FileCache.scripts(Directories.get_item_text(Directories.get_current_index())))
+	Scripts.set_item_metadata(0, tests[Directories.get_item_text(Directories.get_current_index())])
 	Scripts.set_item_icon(0, load("res://addons/WAT/assets/folder.svg"))
-	var tests: Array = FileCache.scripts(Directories.get_item_text(Directories.get_current_index()))
-	if tests.empty():
+	var scripts: Array = tests[Directories.get_item_text(Directories.get_current_index())]
+	if scripts.empty():
 		return
 	var idx: int = Scripts.get_item_count()
-	for test in tests:
+	for test in scripts:
 		Scripts.add_submenu_item(test.path, "Methods")
 		Scripts.set_item_icon(idx, load("res://addons/WAT/assets/script.svg"))
 		idx += 1
@@ -71,9 +72,9 @@ func _on_Methods_about_to_show():
 	Methods.clear()
 	Methods.set_as_minsize()
 	Methods.add_item("Run All")
-	Methods.set_item_metadata(0, FileCache.scripts(Scripts.get_item_text(Scripts.get_current_index())))
+	Methods.set_item_metadata(0, [tests[Scripts.get_item_text(Scripts.get_current_index())]])
 	Methods.set_item_icon(0, load("res://addons/WAT/assets/script.svg"))
-	var test = FileCache.scripts(Scripts.get_item_text(Scripts.get_current_index()))[0]
+	var test = tests[Scripts.get_item_text(Scripts.get_current_index())]
 	var methods = test.test.get_script_method_list()
 	var idx: int = Methods.get_item_count()
 	for method in methods:
@@ -94,5 +95,5 @@ func _on_pressed():
 	Directories.popup()
 
 func _on_QuickStart_pressed():
-	emit_signal("_test_path_selected", FileCache.scripts(WAT.Settings.test_directory()))
+	emit_signal("_test_path_selected", tests[WAT.Settings.test_directory()])
 

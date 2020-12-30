@@ -1,17 +1,26 @@
 const BLANK = ""
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 var _cache = preload("res://addons/WAT/cache/cache.tres")
+tool
 
-func initialize() -> void:
+var tests: Dictionary = {}
+
+func _init() -> void:
+	if Engine.is_editor_hint():
+		_initialize()
+	else:
+		tests = _cache.tests
+
+func _initialize() -> void:
+	tests = {directories = []}
 	var path: String = ProjectSettings.get_setting("WAT/Test_Directory")
 	_search(path)
+	tests.directories.erase(path)
+	_cache.tests = tests
 	ResourceSaver.save(_cache.resource_path, _cache)
 	
-func _search(dirpath: String) -> void:
-	if not _cache.hashpool.has(dirpath):
-		_cache.hashpool.append(dirpath)
-	if not _cache.directories.has(dirpath):
-		_cache.directories.append(dirpath)
+func _search(dirpath: String) -> Array:
+	var scripts: Array = []
 	var subdirs: Array = []
 	var dir = Directory.new()
 	dir.open(dirpath)
@@ -21,9 +30,9 @@ func _search(dirpath: String) -> void:
 		var name = dirpath + "/" + current_name
 		
 		if _is_test(name):
-			_add_test(name)
+			scripts.append(_add_test(name))
 		elif _is_suite(name):
-			_add_suite(name)
+			scripts += _add_suite(name)
 		elif dir.dir_exists(name):
 			subdirs.append(name)
 		
@@ -31,7 +40,11 @@ func _search(dirpath: String) -> void:
 	dir.list_dir_end()
 	
 	for subdir in subdirs:
-		_search(subdir)
+		scripts += _search(subdir)
+		
+	tests.directories.append(dirpath)
+	tests[dirpath] = scripts
+	return scripts
 
 func _is_test(name: String) -> bool:
 	if name.ends_with(".gd") or name.ends_with(".gdc"):
@@ -43,32 +56,21 @@ func _is_suite(name: String) -> bool:
 		return load(name).get("IS_WAT_SUITE")
 	return false
 	
-func _add_test(name: String) -> void:
-	var test = load(name)
-	if _cache.hashpool.has(test):
-		return
-	# Check if hash exists already here
-	_cache.hashpool.append(test)
-	var container = {}
-	container.path = name
-	container.test = test
-	container.tags = []
-	container.method = ""
-	_cache.pool.append(container)
+func _add_test(name: String) -> Dictionary:
+#	var test = load(name)
+	var container = {path = name, test = load(name), tags = [], method = ""}
+	tests[name] = container
+	return container
 	
-func _add_suite(name: String) -> void:
+func _add_suite(name: String) -> Array:
+	var scripts = []
 	var suite: Script = load(name)
-	if not _cache.suitepool.has(suite):
-		_cache.suitepool.append(suite)
 	for klass in suite.get_script_constant_map():
 		var expr: Expression = Expression.new()
 		expr.parse(klass)
 		var test = expr.execute([], suite)
 		if(test).get("TEST") != null:
 			var title = '%s.%s' % [suite.get_path(), klass]
-			if _cache.hashpool.has(title):
-				break
-			_cache.hashpool.append(title)
 			var copy: GDScript = GDScript.new()
 			copy.source_code = 'extends "%s".%s' % [suite.get_path(), klass]
 			copy.reload()
@@ -77,7 +79,9 @@ func _add_suite(name: String) -> void:
 			container.test = copy
 			container.tags = []
 			container.method = ""
-			_cache.pool.append(container)
+			scripts.append(container)
+			tests[container.path] = container
+	return scripts
 
 func _on_files_moved(old: String, new: String) -> void:
 	print("moved file %s to %s" % [old, new])
