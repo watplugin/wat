@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/WAT/core/test/test_controller.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/core/test_runner/test_runner.gd" type="Script" id=2]
+
+[node name="TestRunner" type="Node"]
+script = ExtResource( 2 )
+TestController = ExtResource( 1 )

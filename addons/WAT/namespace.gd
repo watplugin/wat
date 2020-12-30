@@ -1,15 +1,15 @@
 extends Node
 tool
 
-const TestDoubleFactory = preload("res://addons/WAT/double/factory.gd")
-const Test: Script = preload("res://addons/WAT/test/test.gd")
-const TestSuiteOfSuites = preload("res://addons/WAT/test/suite.gd")
-const SignalWatcher = preload("res://addons/WAT/test/watcher.gd")
-const Parameters = preload("res://addons/WAT/test/parameters.gd")
-const Yielder = preload("res://addons/WAT/test/yielder.gd")
-const Asserts = preload("res://addons/WAT/assertions/assertions.gd")
-const TestCase = preload("res://addons/WAT/test/case.gd")
-const Recorder = preload("res://addons/WAT/test/recorder.gd")
+const TestDoubleFactory = preload("res://addons/WAT/core/double/factory.gd")
+const Test: Script = preload("res://addons/WAT/core/test/test.gd")
+const TestSuiteOfSuites = preload("res://addons/WAT/core/test/suite.gd")
+const SignalWatcher = preload("res://addons/WAT/core/test/watcher.gd")
+const Parameters = preload("res://addons/WAT/core/test/parameters.gd")
+const Yielder = preload("res://addons/WAT/core/test/yielder.gd")
+const Asserts = preload("res://addons/WAT/core/assertions/assertions.gd")
+const TestCase = preload("res://addons/WAT/core/test/case.gd")
+const Recorder = preload("res://addons/WAT/core/test/recorder.gd")
 
 class Icon:
 	const SUCCESS = preload("res://addons/WAT/assets/success.png")

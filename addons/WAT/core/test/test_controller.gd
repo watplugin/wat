@@ -3,12 +3,12 @@ extends Node
 enum { START, PRE, EXECUTE, POST, END }
 signal finished
 var _state = START
-var _assertions = preload("res://addons/WAT/assertions/assertions.gd").new()
-var _yielder: WAT.Yielder = preload("res://addons/WAT/test/yielder.gd").new()
-var _parameters = preload("res://addons/WAT/test/parameters.gd").new()
-var _watcher = preload("res://addons/WAT/test/watcher.gd").new()
-var _director = preload("res://addons/WAT/double/factory.gd").new()
-var _recorder = preload("res://addons/WAT/test/recorder.gd")
+var _assertions = preload("res://addons/WAT/core/assertions/assertions.gd").new()
+var _yielder: WAT.Yielder = preload("res://addons/WAT/core/test/yielder.gd").new()
+var _parameters = preload("res://addons/WAT/core/test/parameters.gd").new()
+var _watcher = preload("res://addons/WAT/core/test/watcher.gd").new()
+var _director = preload("res://addons/WAT/core/double/factory.gd").new()
+var _recorder = preload("res://addons/WAT/core/test/recorder.gd")
 var _test: WAT.Test
 var _case: WAT.TestCase
 var _methods: PoolStringArray = []
@@ -27,7 +27,8 @@ func _init(test = null, yielder = null, case = null) -> void:
 	# We may need to recreate our yielders per test
 	add_child(_yielder)
 	_yielder.connect("finished", self, "_next")
-	_director.registry = preload("res://addons/WAT/double/registry.gd").new()
+	push_warning("Move Registry To Singleton")
+	_director.registry = preload("res://addons/WAT/core/double/registry.gd").new()
 	
 func _setup(test):
 	if is_instance_valid(_test):
@@ -36,7 +37,7 @@ func _setup(test):
 		_test.free()
 	_test = test
 	_methods = _test.methods()
-	_case = preload("res://addons/WAT/test/case.gd").new(test.title(), test.path(), test.get_script())
+	_case = preload("res://addons/WAT/core/test/case.gd").new(test.title(), test.path(), test.get_script())
 	_test.yielder = _yielder
 	_test.direct = _director
 	_test.asserts = _assertions

@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "WATTest",
 "language": "GDScript",
-"path": "res://addons/WAT/test/test.gd"
+"path": "res://addons/WAT/core/test/test.gd"
 } ]
 _global_script_class_icons={
 "BaseLogin": "",

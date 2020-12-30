@@ -2,7 +2,7 @@ tool
 extends PanelContainer
 
 
-const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
+const TestRunner: String = "res://addons/WAT/core/test_runner/TestRunner.tscn"
 onready var Summary: HBoxContainer = $GUI/Interact/Summary
 onready var Results: TabContainer = $GUI/Results
 onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
@@ -52,6 +52,3 @@ func _display_results() -> void:
 	var results: Array = WAT.Settings.results().retrieve()
 	Summary.summarize(results)
 	Results.display(results)
-	
-func results() -> Resource:
-	return ResourceLoader.load(ProjectSettings.get_setting("WAT/Results_Directory") + "/results.tres", "", true)

@@ -1,7 +1,7 @@
 extends Reference
 
 const TYPES = preload("constants/type_library.gd")
-const AssertionResult: Script = preload("res://addons/WAT/assertions/assertion_result.gd")
+const AssertionResult: Script = preload("res://addons/WAT/core/assertions/assertion_result.gd")
 var success: bool
 var expected: String = "NULL"
 var result: String
