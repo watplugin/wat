@@ -56,15 +56,33 @@ shortcut = SubResource( 2 )
 icon = ExtResource( 8 )
 flat = true
 
-[node name="MenuButton" type="MenuButton" parent="GUI/Interact"]
+[node name="MenuButton" type="Button" parent="GUI/Interact"]
 margin_left = 38.0
 margin_right = 120.0
 margin_bottom = 24.0
-focus_mode = 2
 size_flags_horizontal = 0
-enabled_focus_mode = 2
+action_mode = 0
 text = "Select Test"
+flat = true
 script = ExtResource( 11 )
+
+[node name="Directories" type="PopupMenu" parent="GUI/Interact/MenuButton"]
+margin_left = -45.0
+margin_top = -7.0
+margin_right = -25.0
+margin_bottom = 13.0
+
+[node name="Tags" type="PopupMenu" parent="GUI/Interact/MenuButton/Directories"]
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="Scripts" type="PopupMenu" parent="GUI/Interact/MenuButton/Directories"]
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="Methods" type="PopupMenu" parent="GUI/Interact/MenuButton/Directories/Scripts"]
+margin_right = 20.0
+margin_bottom = 20.0
 
 [node name="View" type="MenuButton" parent="GUI/Interact"]
 margin_left = 130.0
@@ -174,3 +192,8 @@ size_flags_vertical = 3
 text = "Online Docs"
 flat = true
 [connection signal="pressed" from="GUI/Interact/QuickStart" to="GUI/Interact/MenuButton" method="_on_QuickStart_pressed"]
+[connection signal="pressed" from="GUI/Interact/MenuButton" to="GUI/Interact/MenuButton" method="_on_pressed"]
+[connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories" to="GUI/Interact/MenuButton" method="_on_Directories_about_to_show"]
+[connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories/Tags" to="GUI/Interact/MenuButton" method="_on_Tags_about_to_show"]
+[connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories/Scripts" to="GUI/Interact/MenuButton" method="_on_Scripts_about_to_show"]
+[connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories/Scripts/Methods" to="GUI/Interact/MenuButton" method="_on_Methods_about_to_show"]

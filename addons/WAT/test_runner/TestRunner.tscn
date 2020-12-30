@@ -8,7 +8,7 @@
 script = ExtResource( 1 )
 TestController = ExtResource( 10 )
 tests = [ {
-"method": "",
+"method": "test_when_calling_asserts_is_false",
 "path": "res://tests/unit/boolean.test.gd",
 "tags": [ "Windows" ],
 "test": ExtResource( 2 )
