@@ -27,6 +27,9 @@ func _on_Directories_about_to_show():
 	Directories.add_submenu_item("Tags", "Tags")
 	Directories.set_item_metadata(0, FileCache.scripts(WAT.Settings.test_directory()))
 	Directories.set_item_metadata(1, WAT.Settings.results().failed())
+	Directories.set_item_icon(0, load("res://addons/WAT/assets/play.svg"))
+	Directories.set_item_icon(1, load("res://addons/WAT/assets/rerun_failures.svg"))
+	Directories.set_item_icon(2, load("res://addons/WAT/assets/label.svg"))
 	var dirs: Array = FileCache.directories
 	if dirs.empty():
 		return
