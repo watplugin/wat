@@ -16,16 +16,8 @@ func _ready() -> void:
 	Methods.connect("index_pressed", self, "_on_idx_pressed", [Methods])
 	Tags.connect("index_pressed", self, "_on_idx_pressed", [Tags])
 	
-	
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
-	var run_failures = false
-	var tests: Array = menu.get_item_metadata(idx)
-#	if metadata is bool:
-#		run_failures = true
-#	else:
-#		tests = metadata
-	emit_signal("_test_path_selected", tests, run_failures)
-
+	emit_signal("_test_path_selected", menu.get_item_metadata(idx))
 
 func _on_Directories_about_to_show():
 	Directories.clear()
@@ -34,11 +26,11 @@ func _on_Directories_about_to_show():
 	Directories.add_item("Rerun Failures")
 	Directories.add_submenu_item("Tags", "Tags")
 	Directories.set_item_metadata(0, FileCache.scripts(WAT.Settings.test_directory()))
-	Directories.set_item_metadata(1, WAT.Settings.results().failed()) # Failures aren't easily accessible at the moment
+	Directories.set_item_metadata(1, WAT.Settings.results().failed())
 	var dirs: Array = FileCache.directories
 	if dirs.empty():
 		return
-	var idx: int = 3
+	var idx: int = Directories.get_item_count()
 	for dir in dirs:
 		if not FileCache.scripts(dir).empty():
 			Directories.add_submenu_item(dir, "Scripts")
@@ -49,7 +41,7 @@ func _on_Directories_about_to_show():
 func _on_Tags_about_to_show():
 	Tags.clear()
 	Tags.set_as_minsize()
-	var idx: int = 0
+	var idx: int = Tags.get_item_count()
 	for tag in ProjectSettings.get("WAT/Tags"):
 		Tags.add_item(tag)
 		Tags.set_item_metadata(idx, FileCache.tagged(tag))
@@ -65,7 +57,7 @@ func _on_Scripts_about_to_show():
 	var tests: Array = FileCache.scripts(Directories.get_item_text(Directories.get_current_index()))
 	if tests.empty():
 		return
-	var idx: int = 1
+	var idx: int = Scripts.get_item_count()
 	for test in tests:
 		Scripts.add_submenu_item(test.path, "Methods")
 		Scripts.set_item_icon(idx, load("res://addons/WAT/assets/script.svg"))
@@ -80,7 +72,7 @@ func _on_Methods_about_to_show():
 	Methods.set_item_icon(0, load("res://addons/WAT/assets/script.svg"))
 	var test = FileCache.scripts(Scripts.get_item_text(Scripts.get_current_index()))[0]
 	var methods = test.test.get_script_method_list()
-	var idx: int = 1
+	var idx: int = Methods.get_item_count()
 	for method in methods:
 		if method.name.begins_with("test"):
 			var dupe = test.duplicate()

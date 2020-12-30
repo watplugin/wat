@@ -30,9 +30,7 @@ func duplicate_tests(tests: Array, repeat: int) -> Array:
 	tests += duplicates
 	return tests
 
-func run(tests = [], run_failures = false) -> void:
-	if tests == [] and run_failures:
-		tests = results().failed()
+func run(tests = []) -> void:
 	tests = duplicate_tests(tests, Repeater.value as int)
 	_run_as_editor(tests) if Engine.is_editor_hint() else _run_as_game(tests)
 	sceneWasLaunched = true
