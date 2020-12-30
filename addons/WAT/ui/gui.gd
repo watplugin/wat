@@ -53,10 +53,9 @@ func _run_as_game(tests) -> void:
 func _display_results() -> void:
 	if is_instance_valid(Context):
 		Context.free()
-	var _res = results().retrieve()
-	Summary.summarize(_res)
-	Results.clear()
-	Results.display(_res)
+	var results: Array = WAT.Settings.results().retrieve()
+	Summary.summarize(results)
+	Results.display(results)
 	
 func results() -> Resource:
 	return ResourceLoader.load(ProjectSettings.get_setting("WAT/Results_Directory") + "/Results.tres", "", true)

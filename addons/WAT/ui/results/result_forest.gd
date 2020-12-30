@@ -6,14 +6,8 @@ var _results: Array
 var _tabs: Dictionary
 signal function_sought
 
-func get_last_run_failures() -> Array:
-	var failures = []
-	for result in _results:
-		if not result.success:
-			failures.append(result.path)
-	return failures
-
 func display(results: Array):
+	clear()
 	_results = results
 	_add_result_tree(results)
 		
