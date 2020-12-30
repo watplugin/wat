@@ -44,7 +44,7 @@ func _search(dirpath: String) -> Array:
 	
 	for test in scripts:
 		# Used for reverse lookup on removal/move
-		test.containers.append(tests[dirpath])
+		test.containers.append(dirpath)
 	tests.directories.append(dirpath)
 	tests[dirpath] = scripts
 	return scripts
