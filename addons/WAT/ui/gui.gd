@@ -4,7 +4,7 @@ extends PanelContainer
 
 const TestRunner: String = "res://addons/WAT/test_runner/TestRunner.tscn"
 #const RESULTS = preload("res://addons/WAT/cache/Results.tres")
-onready var Summary: Label = $GUI/Interact/Summary
+onready var Summary: HBoxContainer = $GUI/Interact/Summary
 onready var Results: TabContainer = $GUI/Results
 onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
 onready var QuickStart: Button = $GUI/Interact/QuickStart

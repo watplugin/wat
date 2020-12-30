@@ -1,13 +1,17 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/assets/default.tres" type="Theme" id=2]
 [ext_resource path="res://addons/WAT/ui/gui.gd" type="Script" id=3]
 [ext_resource path="res://addons/WAT/ui/links.gd" type="Script" id=4]
+[ext_resource path="res://addons/WAT/assets/passed.svg" type="Texture" id=5]
 [ext_resource path="res://addons/WAT/ui/Summary.gd" type="Script" id=6]
+[ext_resource path="res://addons/WAT/assets/script.svg" type="Texture" id=7]
 [ext_resource path="res://addons/WAT/assets/play.svg" type="Texture" id=8]
 [ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=9]
+[ext_resource path="res://addons/WAT/assets/failed.svg" type="Texture" id=10]
 [ext_resource path="res://addons/WAT/editor/test_selector.gd" type="Script" id=11]
+[ext_resource path="res://addons/WAT/assets/timer.svg" type="Texture" id=12]
 
 [sub_resource type="StyleBoxFlat" id=3]
 content_margin_left = 10.0
@@ -114,18 +118,71 @@ allow_lesser = true
 prefix = "Repeat"
 suffix = "Times"
 
-[node name="Summary" type="Label" parent="GUI/Interact"]
+[node name="Summary" type="HBoxContainer" parent="GUI/Interact"]
 margin_left = 376.0
 margin_right = 1004.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
-size_flags_vertical = 1
-text = "Time Taken: 0.00 | Ran 0 Tests | 0 Tests Passed | 0 Tests Failed | Ran Tests 0 Times"
-align = 1
+alignment = 2
 script = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="Time" type="Button" parent="GUI/Interact/Summary"]
+margin_left = 362.0
+margin_right = 412.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 50, 0 )
+hint_tooltip = "Time Taken in Microseconds"
+focus_mode = 0
+button_mask = 0
+text = "0"
+icon = ExtResource( 12 )
+flat = true
+
+[node name="Tests" type="Button" parent="GUI/Interact/Summary"]
+margin_left = 416.0
+margin_right = 466.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 50, 0 )
+hint_tooltip = "Total Tests Run"
+focus_mode = 0
+button_mask = 0
+text = "0"
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Passing" type="Button" parent="GUI/Interact/Summary"]
+margin_left = 470.0
+margin_right = 520.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 50, 0 )
+focus_mode = 0
+button_mask = 0
+text = "0"
+icon = ExtResource( 5 )
+flat = true
+
+[node name="Failing" type="Button" parent="GUI/Interact/Summary"]
+margin_left = 524.0
+margin_right = 574.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 50, 0 )
+focus_mode = 0
+button_mask = 0
+text = "0"
+icon = ExtResource( 10 )
+flat = true
+
+[node name="Runs" type="Button" parent="GUI/Interact/Summary"]
+margin_left = 578.0
+margin_right = 628.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 50, 0 )
+hint_tooltip = "Total Runs Started"
+focus_mode = 0
+button_mask = 0
+text = "0"
+icon = ExtResource( 8 )
+flat = true
 
 [node name="Results" type="TabContainer" parent="GUI"]
 margin_top = 28.0
