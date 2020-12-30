@@ -29,11 +29,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Examples/Scripts/login.gd"
 }, {
-"base": "Reference",
-"class": "WAT",
-"language": "GDScript",
-"path": "res://addons/WAT/namespace.gd"
-}, {
 "base": "Node",
 "class": "WATTest",
 "language": "GDScript",
@@ -44,7 +39,6 @@ _global_script_class_icons={
 "Cache": "",
 "Calculator": "",
 "Login": "",
-"WAT": "",
 "WATTest": ""
 }
 AutoQuit=true
@@ -65,6 +59,10 @@ Display=8
 config/name="WaitingAndTesting"
 run/main_scene="res://addons/WAT/gui.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+WAT="*res://addons/WAT/namespace.gd"
 
 [debug]
 

@@ -1,5 +1,5 @@
 extends Reference
-class_name WAT
+tool
 
 const TestDoubleFactory = preload("res://addons/WAT/double/factory.gd")
 const Test: Script = preload("res://addons/WAT/test/test.gd")

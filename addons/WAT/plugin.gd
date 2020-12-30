@@ -18,6 +18,8 @@ func get_plugin_name() -> String:
    return "WAT"
 
 func _enter_tree() -> void:
+	if not get_tree().root.has_node("WAT"):
+		add_autoload_singleton("WAT", "res://addons/WAT/namespace.gd")
 	Settings.new()
 	_FileCache.initialize()
 	_ControlPanel = ControlPanel.instance()
@@ -33,6 +35,10 @@ func _enter_tree() -> void:
 	_DockController = DockController.new(self, _ControlPanel)
 	add_child(_DockController)
 	_ControlPanel.Results.connect("function_sought", self, "goto_function")
+	var path = ProjectSettings.get_setting("WAT/Results_Directory") + "/Results.tres"
+	if not Directory.new().file_exists(path):
+		var r = load("res://addons/WAT/cache/Results.gd").new()
+		ResourceSaver.save(path, r)
 	
 func goto_function(path: String, function: String):
 	var script: Script = load(path)
