@@ -1,5 +1,5 @@
 extends Node
-tool
+#tool
 
 const TestDoubleFactory = preload("res://addons/WAT/core/double/factory.gd")
 const Test: Script = preload("res://addons/WAT/core/test/test.gd")
@@ -12,8 +12,8 @@ const TestCase = preload("res://addons/WAT/core/test/case.gd")
 const Recorder = preload("res://addons/WAT/core/test/recorder.gd")
 
 class Icon:
-	const SUCCESS = preload("res://addons/WAT/assets/success.png")
-	const FAILED = preload("res://addons/WAT/assets/failed.png")
+	const SUCCESS = preload("res://addons/WAT/assets/passed.svg")
+	const FAILED = preload("res://addons/WAT/assets/failed.svg")
 	const SUPPORT = preload("res://addons/WAT/assets/kofi.png")
 	const FOLDER = preload("res://addons/WAT/assets/folder.svg")
 	const SCRIPT = preload("res://addons/WAT/assets/script.svg")
