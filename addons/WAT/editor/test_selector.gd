@@ -10,6 +10,7 @@ onready var Tags: PopupMenu = $Directories/Tags
 
 
 func _ready() -> void:
+	FileCache = WAT.FileManager._cache
 	Directories.connect("index_pressed", self, "_on_idx_pressed", [Directories])
 	Scripts.connect("index_pressed", self, "_on_idx_pressed", [Scripts])
 	Methods.connect("index_pressed", self, "_on_idx_pressed", [Methods])

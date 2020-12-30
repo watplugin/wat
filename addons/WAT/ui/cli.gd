@@ -17,10 +17,7 @@ var _runner: Node
 var _start_time: float
 
 func _ready() -> void:
-	filecache.scripts = {}
-	filecache.directories = []
-	filecache.script_paths = []
-	filecache.initialize()
+	WAT.FileManager.initialize()
 	parse(arguments())
 	
 func arguments() -> Array:

@@ -17,3 +17,7 @@ class Icon:
 	const SUPPORT = preload("res://addons/WAT/assets/kofi.png")
 	
 var Settings = preload("res://addons/WAT/settings.gd").new()
+
+# Preload Causes a Cyclic Error
+# Fortunately we only need this as a property, not a class type
+var FileManager = load("res://addons/WAT/cache/test_cache.gd").new()
