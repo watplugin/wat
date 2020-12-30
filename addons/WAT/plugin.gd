@@ -37,12 +37,6 @@ func connect_filemanager() -> void:
 	filedock.connect("folder_moved", WAT.FileManager, "_on_folder_moved")
 	filedock.connect("folder_removed", WAT.FileManager, "_on_folder_removed")
 	
-func create_results() -> void:
-	var path = ProjectSettings.get_setting("WAT/Results_Directory") + "/Results.tres"
-	if not Directory.new().file_exists(path):
-		var r = load("res://addons/WAT/cache/results.gd").new()
-		ResourceSaver.save(path, r)
-	
 func goto_function(path: String, function: String):
 	var script: Script = load(path)
 	get_editor_interface().edit_resource(script)

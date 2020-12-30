@@ -23,8 +23,13 @@ func test_directory() -> String:
 	return ProjectSettings.get_setting("WAT/Test_Directory")
 	
 func results() -> Resource:
+	# Lazy Initialization
 	# Add toggle for compiled/exported vs non-compiled/exported
-	var path = ProjectSettings.get_setting("WAT/Results_Directory") + "/Results.tres"
+	# Make seperate ResourceManager scripts?
+	var path = ProjectSettings.get_setting("WAT/Results_Directory") + "/results.tres"
+	if not Directory.new().file_exists(path):
+		var instance = load("res://addons/WAT/cache/results.gd").new()
+		ResourceSaver.save(path, instance)
 	return ResourceLoader.load(path, "", true)
 	
 func window_size() -> Vector2:

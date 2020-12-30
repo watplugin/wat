@@ -54,4 +54,4 @@ func _display_results() -> void:
 	Results.display(results)
 	
 func results() -> Resource:
-	return ResourceLoader.load(ProjectSettings.get_setting("WAT/Results_Directory") + "/Results.tres", "", true)
+	return ResourceLoader.load(ProjectSettings.get_setting("WAT/Results_Directory") + "/results.tres", "", true)
