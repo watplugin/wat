@@ -1,10 +1,12 @@
 tool
 extends Resource
 
+export(Array) var _temp = []
 export(Array) var _list = []
 
 func save(results: Array) -> void:
-	_list = results
+	_temp = results
+#	_list = results
 	ResourceSaver.save(ProjectSettings.get_setting("WAT/Results_Directory") + "/results.tres", self)
 	
 func failed() -> Array:
@@ -15,4 +17,10 @@ func failed() -> Array:
 	return _failed
 
 func retrieve() -> Array:
-	return ResourceLoader.load(ProjectSettings.get_setting("WAT/Results_Directory") + "/results.tres", "", true)._list
+	if _temp.empty():
+		push_warning("Fresh Results Not Found")
+		return []
+	_list = _temp
+	_temp = []
+	return _list
+#	return ResourceLoader.load(ProjectSettings.get_setting("WAT/Results_Directory") + "/results.tres", "", true)._list
