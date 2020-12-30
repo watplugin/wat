@@ -38,9 +38,12 @@ func _on_Directories_about_to_show():
 	var dirs: Array = FileCache.directories
 	if dirs.empty():
 		return
+	var idx: int = 3
 	for dir in dirs:
 		if not FileCache.scripts(dir).empty():
 			Directories.add_submenu_item(dir, "Scripts")
+			Directories.set_item_icon(idx, load("res://addons/WAT/assets/folder.svg"))
+			idx += 1
 
 
 func _on_Tags_about_to_show():
@@ -58,11 +61,15 @@ func _on_Scripts_about_to_show():
 	Scripts.set_as_minsize()
 	Scripts.add_item("Run All")
 	Scripts.set_item_metadata(0, FileCache.scripts(Directories.get_item_text(Directories.get_current_index())))
+	Scripts.set_item_icon(0, load("res://addons/WAT/assets/folder.svg"))
 	var tests: Array = FileCache.scripts(Directories.get_item_text(Directories.get_current_index()))
 	if tests.empty():
 		return
+	var idx: int = 1
 	for test in tests:
 		Scripts.add_submenu_item(test.path, "Methods")
+		Scripts.set_item_icon(idx, load("res://addons/WAT/assets/script.svg"))
+		idx += 1
 
 
 func _on_Methods_about_to_show():
@@ -70,6 +77,7 @@ func _on_Methods_about_to_show():
 	Methods.set_as_minsize()
 	Methods.add_item("Run All")
 	Methods.set_item_metadata(0, FileCache.scripts(Scripts.get_item_text(Scripts.get_current_index())))
+	Methods.set_item_icon(0, load("res://addons/WAT/assets/script.svg"))
 	var test = FileCache.scripts(Scripts.get_item_text(Scripts.get_current_index()))[0]
 	var methods = test.test.get_script_method_list()
 	var idx: int = 1
@@ -79,6 +87,7 @@ func _on_Methods_about_to_show():
 			dupe.method = method.name
 			Methods.add_item(method.name)
 			Methods.set_item_metadata(idx, [dupe])
+			Methods.set_item_icon(idx, load("res://addons/WAT/assets/function.svg"))
 			idx += 1
 
 
