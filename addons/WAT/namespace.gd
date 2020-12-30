@@ -1,4 +1,4 @@
-extends Reference
+extends Node
 tool
 
 const TestDoubleFactory = preload("res://addons/WAT/double/factory.gd")
