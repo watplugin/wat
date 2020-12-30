@@ -28,9 +28,10 @@ func _on_Directories_about_to_show():
 	Directories.add_submenu_item("Tags", "Tags")
 	Directories.set_item_metadata(0, tests[WAT.Settings.test_directory()])
 	Directories.set_item_metadata(1, WAT.Settings.results().failed())
-	Directories.set_item_icon(0, load("res://addons/WAT/assets/play.svg"))
-	Directories.set_item_icon(1, load("res://addons/WAT/assets/rerun_failures.svg"))
-	Directories.set_item_icon(2, load("res://addons/WAT/assets/label.svg"))
+	Directories.set_item_icon(0, WAT.Icon.RUN)
+	Directories.set_item_icon(1, WAT.Icon.RERUN_FAILED)
+	Directories.set_item_icon(2, WAT.Icon.TAG)
+	
 	var dirs: Array = tests.directories
 	if dirs.empty():
 		return
@@ -38,7 +39,7 @@ func _on_Directories_about_to_show():
 	for dir in dirs:
 		if not tests[dir].empty():
 			Directories.add_submenu_item(dir, "Scripts")
-			Directories.set_item_icon(idx, load("res://addons/WAT/assets/folder.svg"))
+			Directories.set_item_icon(idx, WAT.Icon.FOLDER)
 			idx += 1
 
 
@@ -46,7 +47,7 @@ func _on_Tags_about_to_show():
 	Tags.clear()
 	Tags.set_as_minsize()
 	var idx: int = Tags.get_item_count()
-	for tag in ProjectSettings.get("WAT/Tags"):
+	for tag in ProjectSettings.get("WAT/Tags"): # WAT.Settings.Tags()
 		Tags.add_item(tag)
 		Tags.set_item_metadata(idx, tests[tag])
 		idx += 1
@@ -57,14 +58,14 @@ func _on_Scripts_about_to_show():
 	Scripts.set_as_minsize()
 	Scripts.add_item("Run All")
 	Scripts.set_item_metadata(0, tests[Directories.get_item_text(Directories.get_current_index())])
-	Scripts.set_item_icon(0, load("res://addons/WAT/assets/folder.svg"))
+	Scripts.set_item_icon(0, WAT.Icon.FOLDER)
 	var scripts: Array = tests[Directories.get_item_text(Directories.get_current_index())]
 	if scripts.empty():
 		return
 	var idx: int = Scripts.get_item_count()
 	for test in scripts:
 		Scripts.add_submenu_item(test.path, "Methods")
-		Scripts.set_item_icon(idx, load("res://addons/WAT/assets/script.svg"))
+		Scripts.set_item_icon(idx, WAT.Icon.SCRIPT)
 		idx += 1
 
 
@@ -73,7 +74,7 @@ func _on_Methods_about_to_show():
 	Methods.set_as_minsize()
 	Methods.add_item("Run All")
 	Methods.set_item_metadata(0, [tests[Scripts.get_item_text(Scripts.get_current_index())]])
-	Methods.set_item_icon(0, load("res://addons/WAT/assets/script.svg"))
+	Methods.set_item_icon(0, WAT.Icon.SCRIPT)
 	var test = tests[Scripts.get_item_text(Scripts.get_current_index())]
 	var methods = test.test.get_script_method_list()
 	var idx: int = Methods.get_item_count()
@@ -83,7 +84,7 @@ func _on_Methods_about_to_show():
 			dupe.method = method.name
 			Methods.add_item(method.name)
 			Methods.set_item_metadata(idx, [dupe])
-			Methods.set_item_icon(idx, load("res://addons/WAT/assets/function.svg"))
+			Methods.set_item_icon(idx, WAT.Icon.FUNCTION)
 			idx += 1
 
 func _on_pressed():

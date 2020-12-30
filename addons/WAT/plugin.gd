@@ -2,6 +2,7 @@ tool
 extends EditorPlugin
 
 const TITLE: String = "Tests"
+const Global: String = "res://addons/WAT/globals/namespace.gd"
 const EditorContext = preload("res://addons/WAT/ui/editor_context.gd")
 const ControlPanel: PackedScene = preload("res://addons/WAT/gui.tscn")
 const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/editor.gd")
@@ -16,7 +17,7 @@ func get_plugin_name() -> String:
 
 func _enter_tree() -> void:
 	if not get_tree().root.has_node("WAT"):
-		add_autoload_singleton("WAT", "res://addons/WAT/namespace.gd")
+		add_autoload_singleton("WAT", Global)
 
 	_ControlPanel = ControlPanel.instance()
 	_ControlPanel.EditorContext = EditorContext

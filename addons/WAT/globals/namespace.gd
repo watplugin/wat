@@ -15,9 +15,12 @@ class Icon:
 	const SUCCESS = preload("res://addons/WAT/assets/success.png")
 	const FAILED = preload("res://addons/WAT/assets/failed.png")
 	const SUPPORT = preload("res://addons/WAT/assets/kofi.png")
+	const FOLDER = preload("res://addons/WAT/assets/folder.svg")
+	const SCRIPT = preload("res://addons/WAT/assets/script.svg")
+	const FUNCTION = preload("res://addons/WAT/assets/function.svg")
+	const RERUN_FAILED = preload("res://addons/WAT/assets/rerun_failures.svg")
+	const RUN = preload("res://addons/WAT/assets/play.svg")
+	const TAG = preload("res://addons/WAT/assets/label.svg")
 	
-var Settings = preload("res://addons/WAT/settings.gd").new()
-
-# Preload Causes a Cyclic Error
-# Fortunately we only need this as a property, not a class type
+var Settings = preload("res://addons/WAT/globals/settings.gd").new()
 var FileManager = load("res://addons/WAT/cache/test_cache.gd").new()
