@@ -11,7 +11,7 @@ func failed() -> Array:
 	var _failed: Array = []
 	for case in _list:
 		if not case.success:
-			_failed.append(case.source)
+			_failed.append(case.source) 
 	return _failed
 
 func retrieve() -> Array:

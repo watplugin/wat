@@ -13,21 +13,21 @@
 [ext_resource path="res://addons/WAT/editor/test_selector.gd" type="Script" id=11]
 [ext_resource path="res://addons/WAT/assets/timer.svg" type="Texture" id=12]
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 10.0
 content_margin_right = 10.0
 content_margin_top = 10.0
 content_margin_bottom = 10.0
 bg_color = Color( 0.2, 0.231373, 0.309804, 1 )
 
-[sub_resource type="InputEventKey" id=1]
+[sub_resource type="InputEventKey" id=2]
 shift = true
 control = true
 command = true
 scancode = 65
 
-[sub_resource type="ShortCut" id=2]
-shortcut = SubResource( 1 )
+[sub_resource type="ShortCut" id=3]
+shortcut = SubResource( 2 )
 
 [node name="Tests" type="PanelContainer"]
 margin_right = 1024.0
@@ -36,7 +36,7 @@ rect_min_size = Vector2( 0, 300 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 2 )
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 1 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -66,7 +66,7 @@ __meta__ = {
 margin_right = 28.0
 margin_bottom = 24.0
 hint_tooltip = "Run All Tests"
-shortcut = SubResource( 2 )
+shortcut = SubResource( 3 )
 icon = ExtResource( 8 )
 flat = true
 

@@ -6,7 +6,7 @@ const TITLE: String = "Tests"
 const ControlPanel: PackedScene = preload("res://addons/WAT/gui.tscn")
 const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/editor.gd")
 const DockController: Script = preload("ui/dock.gd")
-const Settings: Script = preload("settings.gd")
+#const Settings: Script = preload("settings.gd")
 const FileCache: Script = preload("cache/test_cache.gd")
 
 var _ControlPanel: PanelContainer
@@ -20,7 +20,7 @@ func get_plugin_name() -> String:
 func _enter_tree() -> void:
 	if not get_tree().root.has_node("WAT"):
 		add_autoload_singleton("WAT", "res://addons/WAT/namespace.gd")
-	Settings.new()
+	#Settings.new()
 	_FileCache.initialize()
 	_ControlPanel = ControlPanel.instance()
 	_ControlPanel.EditorContext = EditorContext

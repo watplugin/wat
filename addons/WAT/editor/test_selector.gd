@@ -18,12 +18,11 @@ func _ready() -> void:
 	
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 	var run_failures = false
-	var tests = []
-	var metadata = menu.get_item_metadata(idx)
-	if metadata is bool:
-		run_failures = true
-	else:
-		tests = metadata
+	var tests: Array = menu.get_item_metadata(idx)
+#	if metadata is bool:
+#		run_failures = true
+#	else:
+#		tests = metadata
 	emit_signal("_test_path_selected", tests, run_failures)
 
 
@@ -33,8 +32,8 @@ func _on_Directories_about_to_show():
 	Directories.add_item("Run All")
 	Directories.add_item("Rerun Failures")
 	Directories.add_submenu_item("Tags", "Tags")
-	Directories.set_item_metadata(0, FileCache.scripts(ProjectSettings.get_setting("WAT/Test_Directory")))
-	Directories.set_item_metadata(1, true) # Failures aren't easily accessible at the moment
+	Directories.set_item_metadata(0, FileCache.scripts(WAT.Settings.test_directory()))
+	Directories.set_item_metadata(1, WAT.Settings.results().failed()) # Failures aren't easily accessible at the moment
 	var dirs: Array = FileCache.directories
 	if dirs.empty():
 		return

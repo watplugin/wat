@@ -1,7 +1,7 @@
 extends Node
 
 signal finished
-var Results: Resource = load(ProjectSettings.get_setting("WAT/Results_Directory") + "/Results.tres")
+var Results: Resource = WAT.Settings.results()
 export(Script) var TestController
 export(Array, Dictionary) var tests = []
 var is_editor: bool = true

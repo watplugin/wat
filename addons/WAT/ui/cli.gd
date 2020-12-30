@@ -13,7 +13,6 @@ const FAILED: int = 1
 
 const TestRunner: PackedScene = preload("res://addons/WAT/test_runner/TestRunner.tscn")
 var filecache = preload("res://addons/WAT/cache/test_cache.gd").new()
-var Results = load(ProjectSettings.get_setting("WAT/Result_Directory" + "/Results.tres"))
 var _runner: Node
 var _start_time: float
 
@@ -38,7 +37,7 @@ func parse(arguments: Array) -> void:
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
-			tests = filecache.scripts(ProjectSettings.get("WAT/Test_Directory"))
+			tests = filecache.scripts(WAT.Settings.test_directory())
 		RUN_DIRECTORY:
 			tests = filecache.scripts(arguments.front())
 		RUN_SCRIPT:
@@ -49,7 +48,7 @@ func parse(arguments: Array) -> void:
 			tests = filecache.scripts(arguments[0])
 			tests[0].test.set_meta("method", arguments[1])
 		RUN_FAILURES:
-			tests = Results.failed()
+			tests = WAT.Settings.results.failed()
 		LIST_ALL:
 			_list()
 			get_tree().quit()
@@ -94,7 +93,7 @@ func _run(tests) -> void:
 	
 func _on_testrunner_ended() -> void:
 	_runner.queue_free()
-	var caselist: Array = Results.retrieve()
+	var caselist: Array = WAT.Settings.results().retrieve()
 	var cases = {passed = 0, total = 0, crashed = 0}
 	for case in caselist:
 		cases.total += 1

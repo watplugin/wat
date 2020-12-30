@@ -15,3 +15,5 @@ class Icon:
 	const SUCCESS = preload("res://addons/WAT/assets/success.png")
 	const FAILED = preload("res://addons/WAT/assets/failed.png")
 	const SUPPORT = preload("res://addons/WAT/assets/kofi.png")
+	
+var Settings = preload("res://addons/WAT/settings.gd").new()
