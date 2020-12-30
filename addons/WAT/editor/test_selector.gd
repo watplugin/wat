@@ -82,12 +82,6 @@ func _on_Methods_about_to_show():
 			Methods.set_item_icon(idx, load("res://addons/WAT/assets/function.svg"))
 			idx += 1
 
-
-func _input(event):
-	if get_parent().get_node("QuickStart").shortcut.is_shortcut(event):
-		_on_QuickStart_pressed()
-		
-		
 func _on_pressed():
 	var position = rect_global_position
 	position.y += rect_size.y
@@ -97,5 +91,5 @@ func _on_pressed():
 	Directories.popup()
 
 func _on_QuickStart_pressed():
-	_on_idx_pressed(0, Directories)
+	emit_signal("_test_path_selected", FileCache.scripts(WAT.Settings.test_directory()))
 
