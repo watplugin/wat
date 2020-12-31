@@ -1,7 +1,6 @@
 extends Node
 
 signal finished
-var Results: Resource = WAT.Settings.results()
 export(Script) var TestController
 export(Array, Dictionary) var tests = []
 var is_editor: bool = true
@@ -22,7 +21,7 @@ func _run() -> void:
 		test_controller.run(get_next_test())
 		yield(test_controller, "finished")
 		results.append(test_controller.results)
-	Results.save(results)
+	get_tree().root.get_node("WATNamespace").results().save(results)
 	_terminate()
 	
 func get_next_test() -> Node:

@@ -11,7 +11,7 @@ onready var Tags: PopupMenu = $Directories/Tags
 
 func _ready() -> void:
 	# Dictionaries are referenced, meaning this is a pointer to the main dir
-	tests = WAT.FileManager.tests
+	tests = get_tree().root.get_node("WATNamespace").FileManager.tests
 	Directories.connect("index_pressed", self, "_on_idx_pressed", [Directories])
 	Scripts.connect("index_pressed", self, "_on_idx_pressed", [Scripts])
 	Methods.connect("index_pressed", self, "_on_idx_pressed", [Methods])
@@ -26,11 +26,11 @@ func _on_Directories_about_to_show():
 	Directories.add_item("Run All")
 	Directories.add_item("Rerun Failures")
 	Directories.add_submenu_item("Tags", "Tags")
-	Directories.set_item_metadata(0, tests[WAT.Settings.test_directory()])
-	Directories.set_item_metadata(1, WAT.Settings.results().failed())
-	Directories.set_item_icon(0, WAT.Icon.RUN)
-	Directories.set_item_icon(1, WAT.Icon.RERUN_FAILED)
-	Directories.set_item_icon(2, WAT.Icon.TAG)
+	Directories.set_item_metadata(0, tests[get_tree().root.get_node("WATNamespace").Settings.test_directory()])
+	Directories.set_item_metadata(1, get_tree().root.get_node("WATNamespace").Settings.results().failed())
+	Directories.set_item_icon(0, get_tree().root.get_node("WATNamespace").Icon.RUN)
+	Directories.set_item_icon(1, get_tree().root.get_node("WATNamespace").Icon.RERUN_FAILED)
+	Directories.set_item_icon(2, get_tree().root.get_node("WATNamespace").Icon.TAG)
 	
 	var dirs: Array = tests.directories
 	if dirs.empty():
@@ -39,7 +39,7 @@ func _on_Directories_about_to_show():
 	for dir in dirs:
 		if not tests[dir].empty():
 			Directories.add_submenu_item(dir, "Scripts")
-			Directories.set_item_icon(idx, WAT.Icon.FOLDER)
+			Directories.set_item_icon(idx, get_tree().root.get_node("WATNamespace").Icon.FOLDER)
 			idx += 1
 
 
@@ -47,7 +47,7 @@ func _on_Tags_about_to_show():
 	Tags.clear()
 	Tags.set_as_minsize()
 	var idx: int = Tags.get_item_count()
-	for tag in ProjectSettings.get("WAT/Tags"): # WAT.Settings.Tags()
+	for tag in ProjectSettings.get("WAT/Tags"): # get_tree().root.get_node("WATNamespace").Settings.Tags()
 		Tags.add_item(tag)
 		Tags.set_item_metadata(idx, tests[tag])
 		idx += 1
@@ -58,14 +58,14 @@ func _on_Scripts_about_to_show():
 	Scripts.set_as_minsize()
 	Scripts.add_item("Run All")
 	Scripts.set_item_metadata(0, tests[Directories.get_item_text(Directories.get_current_index())])
-	Scripts.set_item_icon(0, WAT.Icon.FOLDER)
+	Scripts.set_item_icon(0, get_tree().root.get_node("WATNamespace").Icon.FOLDER)
 	var scripts: Array = tests[Directories.get_item_text(Directories.get_current_index())]
 	if scripts.empty():
 		return
 	var idx: int = Scripts.get_item_count()
 	for test in scripts:
 		Scripts.add_submenu_item(test.path, "Methods")
-		Scripts.set_item_icon(idx, WAT.Icon.SCRIPT)
+		Scripts.set_item_icon(idx, get_tree().root.get_node("WATNamespace").Icon.SCRIPT)
 		idx += 1
 
 
@@ -74,7 +74,7 @@ func _on_Methods_about_to_show():
 	Methods.set_as_minsize()
 	Methods.add_item("Run All")
 	Methods.set_item_metadata(0, [tests[Scripts.get_item_text(Scripts.get_current_index())]])
-	Methods.set_item_icon(0, WAT.Icon.SCRIPT)
+	Methods.set_item_icon(0, get_tree().root.get_node("WATNamespace").Icon.SCRIPT)
 	var test = tests[Scripts.get_item_text(Scripts.get_current_index())]
 	var methods = test.test.get_script_method_list()
 	var idx: int = Methods.get_item_count()
@@ -84,7 +84,7 @@ func _on_Methods_about_to_show():
 			dupe.method = method.name
 			Methods.add_item(method.name)
 			Methods.set_item_metadata(idx, [dupe])
-			Methods.set_item_icon(idx, WAT.Icon.FUNCTION)
+			Methods.set_item_icon(idx, get_tree().root.get_node("WATNamespace").Icon.FUNCTION)
 			idx += 1
 
 func _on_pressed():
@@ -96,5 +96,5 @@ func _on_pressed():
 	Directories.popup()
 
 func _on_QuickStart_pressed():
-	emit_signal("_test_path_selected", tests[WAT.Settings.test_directory()])
+	emit_signal("_test_path_selected", tests[get_tree().root.get_node("WATNamespace").Settings.test_directory()])
 

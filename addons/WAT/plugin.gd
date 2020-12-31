@@ -16,8 +16,12 @@ func get_plugin_name() -> String:
    return "WAT"
 
 func _enter_tree() -> void:
-	if not get_tree().root.has_node("WAT"):
-		add_autoload_singleton("WAT", Global)
+	yield(get_tree(), "idle_frame")
+	if not get_tree().root.has_node("WATNamespace"):
+		var autoload = load(Global).new()
+		autoload.name = "WATNamespace"
+		get_tree().root.add_child(autoload, true)
+#		add_autoload_singleton("WATNamespace", Global)
 
 	_ControlPanel = ControlPanel.instance()
 	_ControlPanel.EditorContext = EditorContext
@@ -31,10 +35,10 @@ func _enter_tree() -> void:
 		
 func connect_filemanager() -> void:
 	var filedock = get_editor_interface().get_file_system_dock()
-	filedock.connect("files_moved", WAT.FileManager, "_on_files_moved")
-	filedock.connect("file_removed", WAT.FileManager, "_on_files_removed")
-	filedock.connect("folder_moved", WAT.FileManager, "_on_folder_moved")
-	filedock.connect("folder_removed", WAT.FileManager, "_on_folder_removed")
+	filedock.connect("files_moved", get_tree().root.get_node("WATNamespace").FileManager, "_on_files_moved")
+	filedock.connect("file_removed", get_tree().root.get_node("WATNamespace").FileManager, "_on_files_removed")
+	filedock.connect("folder_moved", get_tree().root.get_node("WATNamespace").FileManager, "_on_folder_moved")
+	filedock.connect("folder_removed", get_tree().root.get_node("WATNamespace").FileManager, "_on_folder_removed")
 	
 func goto_function(path: String, function: String):
 	var script: Script = load(path)
@@ -49,11 +53,4 @@ func _exit_tree() -> void:
 	_DockController.free()
 	_ControlPanel.free()
 	remove_inspector_plugin(_TestMetadataEditor)
-
-func _notification(what):
-	if what == NOTIFICATION_WM_QUIT_REQUEST:
-		save()
-	
-func save() -> void:
-	ResourceSaver.save("res://addons/WAT/cache/cache.tres", WAT.FileManager._cache)
 	

@@ -1,4 +1,5 @@
 extends Node
+class_name WAT
 tool
 
 const TestDoubleFactory = preload("res://addons/WAT/core/double/factory.gd")
