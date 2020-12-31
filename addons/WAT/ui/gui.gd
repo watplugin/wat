@@ -15,9 +15,8 @@ func _ready() -> void:
 	
 func duplicate_tests(tests: Array, repeat: int) -> Array:
 	var duplicates = []
-	for test in tests:
-		for i in repeat:
-			duplicates.append(test.duplicate())
+	for i in repeat:
+		duplicates += tests.duplicate()
 	tests += duplicates
 	return tests
 
