@@ -17,23 +17,13 @@ func _ready() -> void:
 
 func _run() -> void:
 	# In Threaded versions, we could replace this with a system in process using "isRunning" boolean
-	while not is_done():
-		test_controller.run(get_next_test())
+	while not _cursor == tests.size():
+		test_controller.run(tests[_cursor])
+		_cursor += 1
 		yield(test_controller, "finished")
 		results.append(test_controller.results)
 	get_tree().root.get_node("WATNamespace").Settings.results().save(results)
 	_terminate()
-	
-func get_next_test() -> Node:
-	# Handle Inside Test Controller?
-	# We also won't need to duplicate tests, just point to them again?
-	var script = tests[_cursor].test.new()
-	script.path = tests[_cursor]["path"]
-	_cursor += 1
-	return script
-	
-func is_done() -> bool:
-	return _cursor == tests.size()
 	
 func _terminate() -> void:
 	print("Terminating TestRunner")

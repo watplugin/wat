@@ -23,21 +23,21 @@ func _get_results() -> Dictionary:
 	_case.calculate()
 	return _case.to_dictionary()
 
-func _init(test = null, yielder = null, case = null) -> void:
+func _init() -> void:
 	# We may need to recreate our yielders per test
 	add_child(_yielder)
 	_yielder.connect("finished", self, "_next")
 	push_warning("Move Registry To Singleton")
 	_director.registry = preload("res://addons/WAT/core/double/registry.gd").new()
 	
-func _setup(test):
+func _setup(container: Dictionary):
 	if is_instance_valid(_test):
 		remove_child(_test)
 		_assertions.disconnect("asserted", _case,"_on_asserted")
 		_test.free()
-	_test = test
+	_test = container.test.new()
 	_methods = _test.methods()
-	_case = WAT.TestCase.new(test.title(), test.path(), test.get_script())
+	_case = WAT.TestCase.new(_test.title(), container)
 	_test.yielder = _yielder
 	_test.direct = _director
 	_test.asserts = _assertions

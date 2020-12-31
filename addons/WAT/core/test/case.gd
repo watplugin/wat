@@ -9,11 +9,10 @@ var success: bool = false
 var time_taken: float = 0.0
 var source: Dictionary = {"path": null, "script": null}
 
-func _init(test_title: String, test_path: String, test_script: Script) -> void:
-	title = test_title
-	path = test_path
-	# Why not just pass our dict here?
-	source = {"path": test_path, "test": test_script}
+func _init(name: String, container: Dictionary) -> void:
+	title = name
+	path = container.path
+	source = container
 	
 func add_method(name: String) -> void:
 	name = name.replace("_", " ").lstrip("test")

@@ -8,7 +8,6 @@ const CRASH_IF_TEST_FAILS: bool = true
 signal described
 
 # Set By A Factory Script
-var path: String
 var asserts: Assertions
 var direct: Reference
 var watcher: Reference
@@ -58,8 +57,8 @@ func describe(message: String) -> void:
 func parameters(list: Array) -> void:
 	rerun_method = parameters.parameters(list)
 
-func path() -> String:
-	return path
+#func path() -> String:
+#	return path
 	
 func title() -> String:
 	var path: String = get_script().get_path()
