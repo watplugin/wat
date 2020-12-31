@@ -32,6 +32,5 @@ func run(tests = []) -> void:
 	
 func _display_results() -> void:
 	var results: Array = get_tree().root.get_node("WATNamespace").Settings.results().retrieve(runkey)
-	print(results)
 	Summary.summarize(results)
 	Results.display(results)
