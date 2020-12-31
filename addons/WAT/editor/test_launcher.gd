@@ -11,7 +11,6 @@ func launch(tests: Array) -> void:
 	context.launch(tests)
 	
 func _on_launch_finished() -> void:
-	print("launch finished")
 	context.queue_free()
 	emit_signal("finished")
 	

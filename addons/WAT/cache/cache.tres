@@ -21,10 +21,10 @@
 [ext_resource path="res://tests/unit/is_instance.test.gd" type="Script" id=19]
 
 [sub_resource type="GDScript" id=1]
-script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
+script/source = "extends \"res://tests/unit/suite.test.gd\".DummyTwo"
 
 [sub_resource type="GDScript" id=2]
-script/source = "extends \"res://tests/unit/suite.test.gd\".DummyTwo"
+script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
 
 [resource]
 script = ExtResource( 1 )
@@ -123,13 +123,13 @@ tests = {
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
-"path": "res://tests/unit/suite.test.gd.DummyOne",
+"path": "res://tests/unit/suite.test.gd.DummyTwo",
 "tags": [  ],
 "test": SubResource( 1 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
-"path": "res://tests/unit/suite.test.gd.DummyTwo",
+"path": "res://tests/unit/suite.test.gd.DummyOne",
 "tags": [  ],
 "test": SubResource( 2 )
 }, {
@@ -275,13 +275,13 @@ tests = {
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
-"path": "res://tests/unit/suite.test.gd.DummyOne",
+"path": "res://tests/unit/suite.test.gd.DummyTwo",
 "tags": [  ],
 "test": SubResource( 1 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
-"path": "res://tests/unit/suite.test.gd.DummyTwo",
+"path": "res://tests/unit/suite.test.gd.DummyOne",
 "tags": [  ],
 "test": SubResource( 2 )
 }, {
@@ -385,14 +385,14 @@ tests = {
 "method": "",
 "path": "res://tests/unit/suite.test.gd.DummyOne",
 "tags": [  ],
-"test": SubResource( 1 )
+"test": SubResource( 2 )
 },
 "res://tests/unit/suite.test.gd.DummyTwo": {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
 "path": "res://tests/unit/suite.test.gd.DummyTwo",
 "tags": [  ],
-"test": SubResource( 2 )
+"test": SubResource( 1 )
 },
 "res://tests/unit/test.test.gd": {
 "containers": [ "res://tests/unit", "res://tests" ],

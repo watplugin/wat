@@ -60,12 +60,6 @@ func parameters(list: Array) -> void:
 
 func path() -> String:
 	return path
-#	var meta: String = ""
-#	var path = get_script().get_path()
-#	if get("custom_path") != null:
-#		meta = get("custom_path")
-#		print("is meta: ", meta)
-#	return path if meta == "" else meta
 	
 func title() -> String:
 	var path: String = get_script().get_path()
