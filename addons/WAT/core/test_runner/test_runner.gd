@@ -21,7 +21,7 @@ func _run() -> void:
 		test_controller.run(get_next_test())
 		yield(test_controller, "finished")
 		results.append(test_controller.results)
-	get_tree().root.get_node("WATNamespace").results().save(results)
+	get_tree().root.get_node("WATNamespace").Settings.results().save(results)
 	_terminate()
 	
 func get_next_test() -> Node:

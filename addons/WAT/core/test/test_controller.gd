@@ -3,12 +3,12 @@ extends Node
 enum { START, PRE, EXECUTE, POST, END }
 signal finished
 var _state = START
-var _assertions = get_tree().root.get_node("WATNamespace").Asserts.new()
-var _yielder = get_tree().root.get_node("WATNamespace").Yielder.new()
-var _parameters = get_tree().root.get_node("WATNamespace").Parameters.new()
-var _watcher = get_tree().root.get_node("WATNamespace").SignalWatcher.new()
-var _director = get_tree().root.get_node("WATNamespace").TestDoubleFactory.new()
-var _recorder = get_tree().root.get_node("WATNamespace").Recorder
+var _assertions = WAT.Asserts.new()
+var _yielder = WAT.Yielder.new()
+var _parameters = WAT.Parameters.new()
+var _watcher = WAT.SignalWatcher.new()
+var _director = WAT.TestDoubleFactory.new()
+var _recorder = WAT.Recorder
 var _test
 var _case
 var _methods: PoolStringArray = []
@@ -37,7 +37,7 @@ func _setup(test):
 		_test.free()
 	_test = test
 	_methods = _test.methods()
-	_case = get_tree().root.get_node("WATNamespace").TestCase.new(test.title(), test.path(), test.get_script())
+	_case = WAT.TestCase.new(test.title(), test.path(), test.get_script())
 	_test.yielder = _yielder
 	_test.direct = _director
 	_test.asserts = _assertions

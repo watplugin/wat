@@ -3,7 +3,6 @@ extends EditorPlugin
 
 const TITLE: String = "Tests"
 const Global: String = "res://addons/WAT/globals/namespace.gd"
-const EditorContext = preload("res://addons/WAT/ui/editor_context.gd")
 const ControlPanel: PackedScene = preload("res://addons/WAT/gui.tscn")
 const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/editor.gd")
 const DockController: Script = preload("ui/dock.gd")
@@ -18,13 +17,11 @@ func get_plugin_name() -> String:
 func _enter_tree() -> void:
 	yield(get_tree(), "idle_frame")
 	if not get_tree().root.has_node("WATNamespace"):
-		var autoload = load(Global).new()
-		autoload.name = "WATNamespace"
-		get_tree().root.add_child(autoload, true)
-#		add_autoload_singleton("WATNamespace", Global)
+		add_autoload_singleton("WATNamespace", Global)
 
+	get_tree().root.get_node("WATNamespace").Plugin = EditorPlugin.new()
+	get_tree().root.get_node("WATNamespace").Editor = get_editor_interface()
 	_ControlPanel = ControlPanel.instance()
-	_ControlPanel.EditorContext = EditorContext
 	_TestMetadataEditor = TestMetadataEditor.new()
 	_DockController = DockController.new(self, _ControlPanel)
 	

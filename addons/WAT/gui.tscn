@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/assets/default.tres" type="Theme" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://addons/WAT/assets/failed.svg" type="Texture" id=10]
 [ext_resource path="res://addons/WAT/editor/test_selector.gd" type="Script" id=11]
 [ext_resource path="res://addons/WAT/assets/timer.svg" type="Texture" id=12]
+[ext_resource path="res://addons/WAT/editor/test_launcher.gd" type="Script" id=13]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 10.0
@@ -29,7 +30,9 @@ scancode = 65
 [sub_resource type="ShortCut" id=3]
 shortcut = SubResource( 2 )
 
-[node name="Tests" type="PanelContainer"]
+[node name="Tests" type="PanelContainer" groups=[
+"WAT",
+]]
 margin_right = 1024.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 0, 300 )
@@ -258,6 +261,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Online Docs"
 flat = true
+
+[node name="Launcher" type="Node" parent="."]
+script = ExtResource( 13 )
 [connection signal="pressed" from="GUI/Interact/QuickStart" to="GUI/Interact/MenuButton" method="_on_QuickStart_pressed"]
 [connection signal="pressed" from="GUI/Interact/MenuButton" to="GUI/Interact/MenuButton" method="_on_pressed"]
 [connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories" to="GUI/Interact/MenuButton" method="_on_Directories_about_to_show"]

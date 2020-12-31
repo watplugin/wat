@@ -25,3 +25,7 @@ class Icon:
 	
 var Settings = preload("res://addons/WAT/globals/settings.gd").new()
 var FileManager = load("res://addons/WAT/cache/test_cache.gd").new()
+
+# Set by Plugin if used in Engine
+var Plugin
+var Editor
