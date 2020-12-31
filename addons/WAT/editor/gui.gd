@@ -18,12 +18,10 @@ func _on_tests_selected(tests = []) -> void:
 	TestLauncher.launch(tests)
 	Summary.start_time()
 	if Engine.is_editor_hint():
-		get_tree().root.get_node("WATNamespace").Plugin.make_bottom_panel_item_visible(self)
+		ClassDB.instance("EditorPlugin").make_bottom_panel_item_visible(self)
 		
 func _on_launch_finished():
-	print("results finished")
 	var results: Array = WAT.results().retrieve(runkey)
-	print(results)
 	Summary.summarize(results)
 	Results.display(results)	
 	

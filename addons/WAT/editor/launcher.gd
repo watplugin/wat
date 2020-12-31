@@ -11,7 +11,6 @@ func launch(tests: Array) -> void:
 	context.launch(tests)
 	
 func _on_launch_finished() -> void:
-	print("finished")
 	context.queue_free()
 	emit_signal("finished")
 	
@@ -21,17 +20,14 @@ class EditorLaunch extends Node:
 	var editor
 	
 	func launch(tests: Array) -> void:
-		print("launching from editor")
 		var instance = load(TestRunner).instance()
 		instance.tests = tests
 		var scene = PackedScene.new()
 		scene.pack(instance)
 		ResourceSaver.save(TestRunner, scene)
-		editor = get_tree().root.get_node("WATNamespace").Editor
+		editor = ClassDB.instance("EditorPlugin").get_editor_interface()
 		editor.reload_scene_from_path(TestRunner)
 		editor.play_custom_scene(TestRunner)
-		print("launching")
-
 	
 	func _process(delta: float) -> void:
 		if _is_done():

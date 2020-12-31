@@ -20,8 +20,6 @@ func _enter_tree() -> void:
 	if not get_tree().root.has_node("WATNamespace"):
 		add_autoload_singleton("WATNamespace", Global)
 
-	get_tree().root.get_node("WATNamespace").Plugin = EditorPlugin.new()
-	get_tree().root.get_node("WATNamespace").Editor = get_editor_interface()
 	_ControlPanel = ControlPanel.instance()
 	_TestMetadataEditor = TestMetadataEditor.new()
 	_DockController = DockController.new(self, _ControlPanel)
