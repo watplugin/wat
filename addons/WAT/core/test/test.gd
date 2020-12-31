@@ -57,9 +57,6 @@ func describe(message: String) -> void:
 func parameters(list: Array) -> void:
 	rerun_method = parameters.parameters(list)
 
-#func path() -> String:
-#	return path
-	
 func title() -> String:
 	var path: String = get_script().get_path()
 	var substr: String = path.substr(path.find_last("/") + 1, 
@@ -72,7 +69,6 @@ func watch(emitter, event: String) -> void:
 func unwatch(emitter, event: String) -> void:
 	watcher.unwatch(emitter, event)
 
-## Untested
 ## Thanks to bitwes @ https://github.com/bitwes/Gut/
 func simulate(obj, times, delta):
 	for i in range(times):
