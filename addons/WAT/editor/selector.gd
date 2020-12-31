@@ -26,7 +26,7 @@ func _on_Directories_about_to_show():
 	Directories.add_item("Run All")
 	Directories.add_item("Rerun Failures")
 	Directories.add_submenu_item("Tags", "Tags")
-	Directories.set_item_metadata(0, tests[get_tree().root.get_node("WATNamespace").Settings.test_directory()])
+	Directories.set_item_metadata(0, tests[WAT.Settings.test_directory()])
 	Directories.set_item_metadata(1, WAT.results().failed())
 	Directories.set_item_icon(0, WAT.Icon.RUN)
 	Directories.set_item_icon(1, WAT.Icon.RERUN_FAILED)
@@ -47,7 +47,7 @@ func _on_Tags_about_to_show():
 	Tags.clear()
 	Tags.set_as_minsize()
 	var idx: int = Tags.get_item_count()
-	for tag in ProjectSettings.get("WAT/Tags"): # get_tree().root.get_node("WATNamespace").Settings.Tags()
+	for tag in ProjectSettings.get("WAT/Tags"): # WAT.Settings.Tags()
 		Tags.add_item(tag)
 		Tags.set_item_metadata(idx, tests[tag])
 		idx += 1
@@ -96,5 +96,5 @@ func _on_pressed():
 	Directories.popup()
 
 func _on_QuickStart_pressed():
-	emit_signal("_tests_selected", tests[get_tree().root.get_node("WATNamespace").Settings.test_directory()])
+	emit_signal("_tests_selected", tests[WAT.Settings.test_directory()])
 

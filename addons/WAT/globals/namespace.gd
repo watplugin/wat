@@ -11,6 +11,7 @@ const Yielder = preload("res://addons/WAT/core/test/yielder.gd")
 const Asserts = preload("res://addons/WAT/core/assertions/assertions.gd")
 const TestCase = preload("res://addons/WAT/core/test/case.gd")
 const Recorder = preload("res://addons/WAT/core/test/recorder.gd")
+const Settings = preload("res://addons/WAT/globals/settings.gd")
 
 class Icon:
 	const SUCCESS = preload("res://addons/WAT/assets/passed.svg")
@@ -23,7 +24,7 @@ class Icon:
 	const RUN = preload("res://addons/WAT/assets/play.svg")
 	const TAG = preload("res://addons/WAT/assets/label.svg")
 	
-var Settings = preload("res://addons/WAT/globals/settings.gd").new()
+#var Settings = preload("res://addons/WAT/globals/settings.gd").new()
 var FileManager = load("res://addons/WAT/cache/test_cache.gd").new()
 
 # Set by Plugin if used in Engine
@@ -39,3 +40,5 @@ static func results() -> Resource:
 		var instance = load("res://addons/WAT/cache/results.gd").new()
 		ResourceSaver.save(path, instance)
 	return ResourceLoader.load(path, "", true)
+	
+

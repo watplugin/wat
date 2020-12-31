@@ -1,7 +1,7 @@
 extends Reference
 tool
 
-func _init() -> void:
+static func initialize() -> void:
 	_add_setting("Test_Directory", TYPE_STRING, "res://tests")
 	_add_setting("Results_Directory", TYPE_STRING, OS.get_user_data_dir())
 	_add_setting("Tags", TYPE_STRING_ARRAY, PoolStringArray())
@@ -9,7 +9,7 @@ func _init() -> void:
 	_add_setting("Minimize_Window_When_Running_Tests", TYPE_BOOL, false)
 	ProjectSettings.save()
 	
-func _add_setting(title: String, type: int, value) -> void:
+static func _add_setting(title: String, type: int, value) -> void:
 	title = title.insert(0, "WAT/")
 	if ProjectSettings.has_setting(title):
 		return
@@ -19,14 +19,14 @@ func _add_setting(title: String, type: int, value) -> void:
 	prop["type"] = type
 	ProjectSettings.add_property_info(prop)
 
-func test_directory() -> String:
+static func test_directory() -> String:
 	return ProjectSettings.get_setting("WAT/Test_Directory")
 	
-func window_size() -> Vector2:
+static func window_size() -> Vector2:
 	return ProjectSettings.get_setting("WAT/Window_Size")
 	
-func tags() -> PoolStringArray:
+static func tags() -> PoolStringArray:
 	return ProjectSettings.get_setting("WAT/Tags")
 	
-func minimize_window_when_running_tests() -> bool:
+static func minimize_window_when_running_tests() -> bool:
 	return ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests")

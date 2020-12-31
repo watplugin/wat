@@ -2,7 +2,7 @@
 
 [ext_resource path="res://addons/WAT/core/test/test_controller.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/core/test_runner/test_runner.gd" type="Script" id=2]
-[ext_resource path="res://tests/unit/equality.test.gd" type="Script" id=3]
+[ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=3]
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 2 )
@@ -10,7 +10,7 @@ TestController = ExtResource( 1 )
 tests = [ {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
-"path": "res://tests/unit/equality.test.gd",
+"path": "res://tests/unit/boolean.test.gd",
 "tags": [  ],
 "test": ExtResource( 3 )
 } ]
