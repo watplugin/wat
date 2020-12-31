@@ -5,6 +5,12 @@ var time: float = 0
 var runcount: int = 0
 var running = false
 
+onready var Time: Button = $Time
+onready var Tests: Button = $Tests
+onready var Passing: Button = $Passing
+onready var Failing: Button = $Failing
+onready var Runs: Button = $Runs
+
 func start_time() -> void:
 	runcount += 1
 	time = OS.get_ticks_msec()
@@ -12,7 +18,7 @@ func start_time() -> void:
 	
 func _process(delta):
 	if running:
-		$Time.text = str((OS.get_ticks_msec() - time) / 1000)
+		Time.text = str((OS.get_ticks_msec() - time) / 1000)
 
 func summarize(caselist: Array) -> void:
 	running = false
@@ -26,9 +32,9 @@ func summarize(caselist: Array) -> void:
 			passed += 1
 		else:
 			failed += 1
-	$Time.text = time as String
-	$Tests.text = total as String
-	$Passing.text = passed as String
-	$Failing.text = failed as String
-	$Runs.text = runcount as String
+	Time.text = time as String
+	Tests.text = total as String
+	Passing.text = passed as String
+	Failing.text = failed as String
+	Runs.text = runcount as String
 	

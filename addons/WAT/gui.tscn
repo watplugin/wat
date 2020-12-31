@@ -2,10 +2,10 @@
 
 [ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/assets/default.tres" type="Theme" id=2]
-[ext_resource path="res://addons/WAT/ui/gui.gd" type="Script" id=3]
-[ext_resource path="res://addons/WAT/ui/links.gd" type="Script" id=4]
+[ext_resource path="res://addons/WAT/editor/gui.gd" type="Script" id=3]
+[ext_resource path="res://addons/WAT/editor/links.gd" type="Script" id=4]
 [ext_resource path="res://addons/WAT/assets/passed.svg" type="Texture" id=5]
-[ext_resource path="res://addons/WAT/ui/Summary.gd" type="Script" id=6]
+[ext_resource path="res://addons/WAT/editor/summary.gd" type="Script" id=6]
 [ext_resource path="res://addons/WAT/assets/script.svg" type="Texture" id=7]
 [ext_resource path="res://addons/WAT/assets/play.svg" type="Texture" id=8]
 [ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=9]
@@ -30,9 +30,7 @@ scancode = 65
 [sub_resource type="ShortCut" id=3]
 shortcut = SubResource( 2 )
 
-[node name="Tests" type="PanelContainer" groups=[
-"WAT",
-]]
+[node name="Tests" type="PanelContainer"]
 margin_right = 1024.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 0, 300 )
@@ -264,8 +262,10 @@ flat = true
 [node name="Launcher" type="Node" parent="."]
 script = ExtResource( 13 )
 [connection signal="pressed" from="GUI/Interact/QuickStart" to="GUI/Interact/MenuButton" method="_on_QuickStart_pressed"]
+[connection signal="_tests_selected" from="GUI/Interact/MenuButton" to="." method="_on_tests_selected"]
 [connection signal="pressed" from="GUI/Interact/MenuButton" to="GUI/Interact/MenuButton" method="_on_pressed"]
 [connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories" to="GUI/Interact/MenuButton" method="_on_Directories_about_to_show"]
 [connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories/Tags" to="GUI/Interact/MenuButton" method="_on_Tags_about_to_show"]
 [connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories/Scripts" to="GUI/Interact/MenuButton" method="_on_Scripts_about_to_show"]
 [connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories/Scripts/Methods" to="GUI/Interact/MenuButton" method="_on_Methods_about_to_show"]
+[connection signal="finished" from="Launcher" to="." method="_on_launch_finished"]

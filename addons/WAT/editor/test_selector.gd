@@ -1,12 +1,12 @@
 extends Button
 tool
 
-signal _test_path_selected
-var tests: Dictionary = {}
+signal _tests_selected
 onready var Directories: PopupMenu = $Directories
 onready var Scripts: PopupMenu = $Directories/Scripts
 onready var Methods: PopupMenu = $Directories/Scripts/Methods
 onready var Tags: PopupMenu = $Directories/Tags
+var tests: Dictionary = {}
 
 
 func _ready() -> void:
@@ -18,7 +18,7 @@ func _ready() -> void:
 	Tags.connect("index_pressed", self, "_on_idx_pressed", [Tags])
 	
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
-	emit_signal("_test_path_selected", menu.get_item_metadata(idx))
+	emit_signal("_tests_selected", menu.get_item_metadata(idx))
 
 func _on_Directories_about_to_show():
 	Directories.clear()
@@ -96,5 +96,5 @@ func _on_pressed():
 	Directories.popup()
 
 func _on_QuickStart_pressed():
-	emit_signal("_test_path_selected", tests[get_tree().root.get_node("WATNamespace").Settings.test_directory()])
+	emit_signal("_tests_selected", tests[get_tree().root.get_node("WATNamespace").Settings.test_directory()])
 
