@@ -29,3 +29,13 @@ var FileManager = load("res://addons/WAT/cache/test_cache.gd").new()
 # Set by Plugin if used in Engine
 var Plugin
 var Editor
+
+static func results() -> Resource:
+	# Lazy Initialization
+	# Add toggle for compiled/exported vs non-compiled/exported
+	# Make seperate ResourceManager scripts?
+	var path = ProjectSettings.get_setting("WAT/Results_Directory") + "/results.tres"
+	if not Directory.new().file_exists(path):
+		var instance = load("res://addons/WAT/cache/results.gd").new()
+		ResourceSaver.save(path, instance)
+	return ResourceLoader.load(path, "", true)

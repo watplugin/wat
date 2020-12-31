@@ -13,7 +13,7 @@ func _ready() -> void:
 	
 func _on_tests_selected(tests = []) -> void:
 	runkey = OS.get_unix_time()
-	get_tree().root.get_node("WATNamespace").Settings.results().add_unique_run_key(runkey)
+	WAT.results().add_unique_run_key(runkey)
 	tests = duplicate_tests(tests, Repeater.value as int)
 	TestLauncher.launch(tests)
 	Summary.start_time()
@@ -21,7 +21,9 @@ func _on_tests_selected(tests = []) -> void:
 		get_tree().root.get_node("WATNamespace").Plugin.make_bottom_panel_item_visible(self)
 		
 func _on_launch_finished():
-	var results: Array = get_tree().root.get_node("WATNamespace").Settings.results().retrieve(runkey)
+	print("results finished")
+	var results: Array = WAT.results().retrieve(runkey)
+	print(results)
 	Summary.summarize(results)
 	Results.display(results)	
 	

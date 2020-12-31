@@ -22,7 +22,7 @@ func _run() -> void:
 		_cursor += 1
 		yield(test_controller, "finished")
 		results.append(test_controller.results)
-	get_tree().root.get_node("WATNamespace").Settings.results().save(results)
+	WAT.results().save(results)
 	_terminate()
 	
 func _terminate() -> void:
