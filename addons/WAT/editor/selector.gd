@@ -1,13 +1,14 @@
-extends Button
+extends HBoxContainer
 tool
 
 signal _tests_selected
-onready var Directories: PopupMenu = $Directories
-onready var Scripts: PopupMenu = $Directories/Scripts
-onready var Methods: PopupMenu = $Directories/Scripts/Methods
-onready var Tags: PopupMenu = $Directories/Tags
+onready var TestMenu: Button = $TestMenu
+onready var Directories: PopupMenu = $TestMenu/Directories
+onready var Scripts: PopupMenu = $TestMenu/Directories/Scripts
+onready var Methods: PopupMenu = $TestMenu/Directories/Scripts/Methods
+onready var Tags: PopupMenu = $TestMenu/Directories/Tags
+onready var Repeater: SpinBox = $Repeat
 var tests: Dictionary = {}
-
 
 func _ready() -> void:
 	# Dictionaries are referenced, meaning this is a pointer to the main dir
@@ -18,7 +19,7 @@ func _ready() -> void:
 	Tags.connect("index_pressed", self, "_on_idx_pressed", [Tags])
 	
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
-	emit_signal("_tests_selected", menu.get_item_metadata(idx))
+	emit_signal("_tests_selected", duplicate_tests(menu.get_item_metadata(idx)))
 
 func _on_Directories_about_to_show():
 	Directories.clear()
@@ -87,14 +88,24 @@ func _on_Methods_about_to_show():
 			Methods.set_item_icon(idx, WAT.Icon.FUNCTION)
 			idx += 1
 
-func _on_pressed():
-	var position = rect_global_position
-	position.y += rect_size.y
+
+func _on_TestMenu_pressed():
+	var position = TestMenu.rect_global_position
+	position.y += TestMenu.rect_size.y
 	Directories.rect_global_position = position
 	Directories.rect_size = Vector2(rect_size.x, 0)
 	Directories.grab_focus()
 	Directories.popup()
 
-func _on_QuickStart_pressed():
-	emit_signal("_tests_selected", tests[WAT.Settings.test_directory()])
 
+func _on_QuickStart_pressed():
+	var scripts = duplicate_tests(tests[WAT.Settings.test_directory()])
+	emit_signal("_tests_selected", scripts)
+	
+	
+func duplicate_tests(scripts: Array) -> Array:
+	var duplicates = []
+	for i in Repeater.value as int:
+		duplicates += scripts.duplicate()
+	scripts += duplicates
+	return scripts

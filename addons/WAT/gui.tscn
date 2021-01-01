@@ -59,6 +59,7 @@ margin_right = 1004.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 custom_constants/separation = 10
+script = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -71,7 +72,7 @@ shortcut = SubResource( 3 )
 icon = ExtResource( 8 )
 flat = true
 
-[node name="MenuButton" type="Button" parent="GUI/Interact"]
+[node name="TestMenu" type="Button" parent="GUI/Interact"]
 margin_left = 38.0
 margin_right = 120.0
 margin_bottom = 24.0
@@ -79,23 +80,22 @@ size_flags_horizontal = 0
 action_mode = 0
 text = "Select Test"
 flat = true
-script = ExtResource( 11 )
 
-[node name="Directories" type="PopupMenu" parent="GUI/Interact/MenuButton"]
+[node name="Directories" type="PopupMenu" parent="GUI/Interact/TestMenu"]
 margin_left = -45.0
 margin_top = -7.0
 margin_right = -25.0
 margin_bottom = 13.0
 
-[node name="Tags" type="PopupMenu" parent="GUI/Interact/MenuButton/Directories"]
+[node name="Tags" type="PopupMenu" parent="GUI/Interact/TestMenu/Directories"]
 margin_right = 20.0
 margin_bottom = 20.0
 
-[node name="Scripts" type="PopupMenu" parent="GUI/Interact/MenuButton/Directories"]
+[node name="Scripts" type="PopupMenu" parent="GUI/Interact/TestMenu/Directories"]
 margin_right = 20.0
 margin_bottom = 20.0
 
-[node name="Methods" type="PopupMenu" parent="GUI/Interact/MenuButton/Directories/Scripts"]
+[node name="Methods" type="PopupMenu" parent="GUI/Interact/TestMenu/Directories/Scripts"]
 margin_right = 20.0
 margin_bottom = 20.0
 
@@ -261,11 +261,11 @@ flat = true
 
 [node name="Launcher" type="Node" parent="."]
 script = ExtResource( 13 )
-[connection signal="pressed" from="GUI/Interact/QuickStart" to="GUI/Interact/MenuButton" method="_on_QuickStart_pressed"]
-[connection signal="_tests_selected" from="GUI/Interact/MenuButton" to="." method="_on_tests_selected"]
-[connection signal="pressed" from="GUI/Interact/MenuButton" to="GUI/Interact/MenuButton" method="_on_pressed"]
-[connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories" to="GUI/Interact/MenuButton" method="_on_Directories_about_to_show"]
-[connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories/Tags" to="GUI/Interact/MenuButton" method="_on_Tags_about_to_show"]
-[connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories/Scripts" to="GUI/Interact/MenuButton" method="_on_Scripts_about_to_show"]
-[connection signal="about_to_show" from="GUI/Interact/MenuButton/Directories/Scripts/Methods" to="GUI/Interact/MenuButton" method="_on_Methods_about_to_show"]
+[connection signal="_tests_selected" from="GUI/Interact" to="." method="_on_tests_selected"]
+[connection signal="pressed" from="GUI/Interact/QuickStart" to="GUI/Interact" method="_on_QuickStart_pressed"]
+[connection signal="pressed" from="GUI/Interact/TestMenu" to="GUI/Interact" method="_on_TestMenu_pressed"]
+[connection signal="about_to_show" from="GUI/Interact/TestMenu/Directories" to="GUI/Interact" method="_on_Directories_about_to_show"]
+[connection signal="about_to_show" from="GUI/Interact/TestMenu/Directories/Tags" to="GUI/Interact" method="_on_Tags_about_to_show"]
+[connection signal="about_to_show" from="GUI/Interact/TestMenu/Directories/Scripts" to="GUI/Interact" method="_on_Scripts_about_to_show"]
+[connection signal="about_to_show" from="GUI/Interact/TestMenu/Directories/Scripts/Methods" to="GUI/Interact" method="_on_Methods_about_to_show"]
 [connection signal="finished" from="Launcher" to="." method="_on_launch_finished"]
