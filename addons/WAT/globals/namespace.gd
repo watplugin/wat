@@ -37,6 +37,13 @@ static func results() -> Resource:
 		ResourceSaver.save(path, instance)
 	return ResourceLoader.load(path, "", true)
 	
-static func tests() -> Resource:
-	return load("res://addons/WAT/cache/cache.tres")
+static func tests():
+	if Engine.is_editor_hint():
+		print("loading engine")
+		return load("res://addons/WAT/cache/cache.tres")
+	elif OS.has_feature("standalone"):
+		print(OS.get_user_data_dir())
+		print("loading standalone")
+		return load(OS.get_user_data_dir() + "/" + "cache.tres")
+
 

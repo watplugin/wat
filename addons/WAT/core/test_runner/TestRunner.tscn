@@ -3,29 +3,29 @@
 [ext_resource path="res://addons/WAT/core/test/test_controller.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/core/test_runner/test_runner.gd" type="Script" id=2]
 [ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=3]
-[ext_resource path="res://tests/integration/test_double.test.gd" type="Script" id=4]
-[ext_resource path="res://tests/integration/default_args.test.gd" type="Script" id=5]
-[ext_resource path="res://tests/unit/watcher.test.gd" type="Script" id=6]
-[ext_resource path="res://tests/unit/test.test.gd" type="Script" id=7]
-[ext_resource path="res://tests/integration/script_director.test.gd" type="Script" id=8]
-[ext_resource path="res://tests/unit/file.test.gd" type="Script" id=9]
-[ext_resource path="res://tests/unit/yield.test.gd" type="Script" id=10]
-[ext_resource path="res://tests/unit/is_instance.test.gd" type="Script" id=11]
-[ext_resource path="res://tests/unit/parameters.test.gd" type="Script" id=12]
-[ext_resource path="res://tests/unit/null.test.gd" type="Script" id=13]
+[ext_resource path="res://tests/unit/test.test.gd" type="Script" id=4]
+[ext_resource path="res://tests/unit/range.test.gd" type="Script" id=5]
+[ext_resource path="res://tests/integration/default_args.test.gd" type="Script" id=6]
+[ext_resource path="res://tests/integration/script_director.test.gd" type="Script" id=7]
+[ext_resource path="res://tests/unit/string.test.gd" type="Script" id=8]
+[ext_resource path="res://tests/integration/scene_director.test.gd" type="Script" id=9]
+[ext_resource path="res://tests/unit/on_floor.test.gd" type="Script" id=10]
+[ext_resource path="res://tests/unit/is_not_instance.test.gd" type="Script" id=11]
+[ext_resource path="res://tests/unit/is_instance.test.gd" type="Script" id=12]
+[ext_resource path="res://tests/integration/test_double.test.gd" type="Script" id=13]
 [ext_resource path="res://tests/unit/equality.test.gd" type="Script" id=14]
-[ext_resource path="res://tests/unit/string.test.gd" type="Script" id=15]
-[ext_resource path="res://tests/unit/is_not_instance.test.gd" type="Script" id=16]
-[ext_resource path="res://tests/unit/object.test.gd" type="Script" id=17]
-[ext_resource path="res://tests/unit/on_floor.test.gd" type="Script" id=18]
-[ext_resource path="res://tests/integration/scene_director.test.gd" type="Script" id=19]
-[ext_resource path="res://tests/unit/range.test.gd" type="Script" id=20]
+[ext_resource path="res://tests/unit/file.test.gd" type="Script" id=15]
+[ext_resource path="res://tests/unit/null.test.gd" type="Script" id=16]
+[ext_resource path="res://tests/unit/watcher.test.gd" type="Script" id=17]
+[ext_resource path="res://tests/unit/yield.test.gd" type="Script" id=18]
+[ext_resource path="res://tests/unit/object.test.gd" type="Script" id=19]
+[ext_resource path="res://tests/unit/parameters.test.gd" type="Script" id=20]
 
 [sub_resource type="GDScript" id=1]
-script/source = "extends \"res://tests/unit/suite.test.gd\".DummyTwo"
+script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
 
 [sub_resource type="GDScript" id=2]
-script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
+script/source = "extends \"res://tests/unit/suite.test.gd\".DummyTwo"
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 2 )
@@ -35,25 +35,25 @@ tests = [ {
 "method": "",
 "path": "res://tests/integration/default_args.test.gd",
 "tags": [  ],
-"test": ExtResource( 5 )
+"test": ExtResource( 6 )
 }, {
 "containers": [ "res://tests/integration", "res://tests" ],
 "method": "",
 "path": "res://tests/integration/scene_director.test.gd",
 "tags": [  ],
-"test": ExtResource( 19 )
+"test": ExtResource( 9 )
 }, {
 "containers": [ "res://tests/integration", "res://tests" ],
 "method": "",
 "path": "res://tests/integration/script_director.test.gd",
 "tags": [  ],
-"test": ExtResource( 8 )
+"test": ExtResource( 7 )
 }, {
 "containers": [ "res://tests/integration", "res://tests" ],
 "method": "",
 "path": "res://tests/integration/test_double.test.gd",
 "tags": [  ],
-"test": ExtResource( 4 )
+"test": ExtResource( 13 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
@@ -71,65 +71,65 @@ tests = [ {
 "method": "",
 "path": "res://tests/unit/file.test.gd",
 "tags": [  ],
-"test": ExtResource( 9 )
+"test": ExtResource( 15 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
 "path": "res://tests/unit/is_instance.test.gd",
 "tags": [  ],
-"test": ExtResource( 11 )
+"test": ExtResource( 12 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
 "path": "res://tests/unit/is_not_instance.test.gd",
 "tags": [  ],
-"test": ExtResource( 16 )
+"test": ExtResource( 11 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
 "path": "res://tests/unit/null.test.gd",
 "tags": [  ],
-"test": ExtResource( 13 )
+"test": ExtResource( 16 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
 "path": "res://tests/unit/object.test.gd",
 "tags": [  ],
-"test": ExtResource( 17 )
+"test": ExtResource( 19 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
 "path": "res://tests/unit/on_floor.test.gd",
 "tags": [  ],
-"test": ExtResource( 18 )
+"test": ExtResource( 10 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
 "path": "res://tests/unit/parameters.test.gd",
 "tags": [  ],
-"test": ExtResource( 12 )
+"test": ExtResource( 20 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
 "path": "res://tests/unit/range.test.gd",
 "tags": [  ],
-"test": ExtResource( 20 )
+"test": ExtResource( 5 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
 "path": "res://tests/unit/string.test.gd",
 "tags": [  ],
-"test": ExtResource( 15 )
+"test": ExtResource( 8 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
-"path": "res://tests/unit/suite.test.gd.DummyTwo",
+"path": "res://tests/unit/suite.test.gd.DummyOne",
 "tags": [  ],
 "test": SubResource( 1 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
-"path": "res://tests/unit/suite.test.gd.DummyOne",
+"path": "res://tests/unit/suite.test.gd.DummyTwo",
 "tags": [  ],
 "test": SubResource( 2 )
 }, {
@@ -137,17 +137,17 @@ tests = [ {
 "method": "",
 "path": "res://tests/unit/test.test.gd",
 "tags": [  ],
-"test": ExtResource( 7 )
+"test": ExtResource( 4 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
 "path": "res://tests/unit/watcher.test.gd",
 "tags": [  ],
-"test": ExtResource( 6 )
+"test": ExtResource( 17 )
 }, {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
 "path": "res://tests/unit/yield.test.gd",
 "tags": [  ],
-"test": ExtResource( 10 )
+"test": ExtResource( 18 )
 } ]

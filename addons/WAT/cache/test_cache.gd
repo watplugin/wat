@@ -6,10 +6,7 @@ tool
 var tests: Dictionary = {}
 
 func _init() -> void:
-	if Engine.is_editor_hint():
-		_initialize()
-	else:
-		tests = _cache.tests
+	_initialize()
 
 func _initialize() -> void:
 	tests = {directories = []}
@@ -17,14 +14,18 @@ func _initialize() -> void:
 	_search(path)
 	tests.directories.erase(path)
 	_cache.tests = tests
-	ResourceSaver.save(_cache.resource_path, _cache)
-	_cache = ResourceLoader.load("res://addons/WAT/cache/cache.tres", "", true)
+	if Engine.is_editor_hint():
+		ResourceSaver.save(_cache.resource_path, _cache)
+	elif OS.has_feature("standalone"):
+		ResourceSaver.save(OS.get_user_data_dir() + "/" + "cache.tres", _cache)
 	
 func _search(dirpath: String) -> Array:
 	var scripts: Array = []
 	var subdirs: Array = []
 	var dir = Directory.new()
-	dir.open(dirpath)
+	var err = dir.open(dirpath)
+	if err != OK:
+		push_error("%s : %s " % [dirpath, err as String])
 	dir.list_dir_begin(DO_NOT_SEARCH_PARENT_DIRECTORIES)
 	var current_name = dir.get_next()
 	while current_name != BLANK:
@@ -34,12 +35,12 @@ func _search(dirpath: String) -> Array:
 			scripts.append(_add_test(name))
 		elif _is_suite(name):
 			scripts += _add_suite(name)
-		elif dir.dir_exists(name):
+		# Use relative paths, absolute res:// paths are broken in export builds
+		elif dir.dir_exists(current_name):
 			subdirs.append(name)
 		
 		current_name = dir.get_next()
 	dir.list_dir_end()
-	
 	for subdir in subdirs:
 		scripts += _search(subdir)
 	
