@@ -18,6 +18,7 @@ func _initialize() -> void:
 	tests.directories.erase(path)
 	_cache.tests = tests
 	ResourceSaver.save(_cache.resource_path, _cache)
+	_cache = ResourceLoader.load("res://addons/WAT/cache/cache.tres", "", true)
 	
 func _search(dirpath: String) -> Array:
 	var scripts: Array = []

@@ -8,11 +8,10 @@ onready var Scripts: PopupMenu = $TestMenu/Directories/Scripts
 onready var Methods: PopupMenu = $TestMenu/Directories/Scripts/Methods
 onready var Tags: PopupMenu = $TestMenu/Directories/Tags
 onready var Repeater: SpinBox = $Repeat
-var tests: Dictionary = {}
 
 func _ready() -> void:
 	# Dictionaries are referenced, meaning this is a pointer to the main dir
-	tests = get_tree().root.get_node("WATNamespace").FileManager.tests
+#	tests = get_tree().root.get_node("WATNamespace").FileManager.tests
 	Directories.connect("index_pressed", self, "_on_idx_pressed", [Directories])
 	Scripts.connect("index_pressed", self, "_on_idx_pressed", [Scripts])
 	Methods.connect("index_pressed", self, "_on_idx_pressed", [Methods])
@@ -27,18 +26,18 @@ func _on_Directories_about_to_show():
 	Directories.add_item("Run All")
 	Directories.add_item("Rerun Failures")
 	Directories.add_submenu_item("Tags", "Tags")
-	Directories.set_item_metadata(0, tests[WAT.Settings.test_directory()])
+	Directories.set_item_metadata(0, tests(WAT.Settings.test_directory()))
 	Directories.set_item_metadata(1, WAT.results().failed())
 	Directories.set_item_icon(0, WAT.Icon.RUN)
 	Directories.set_item_icon(1, WAT.Icon.RERUN_FAILED)
 	Directories.set_item_icon(2, WAT.Icon.TAG)
 	
-	var dirs: Array = tests.directories
+	var dirs: Array = tests("directories")
 	if dirs.empty():
 		return
 	var idx: int = Directories.get_item_count()
 	for dir in dirs:
-		if not tests[dir].empty():
+		if not tests(dir).empty():
 			Directories.add_submenu_item(dir, "Scripts")
 			Directories.set_item_icon(idx, WAT.Icon.FOLDER)
 			idx += 1
@@ -50,7 +49,7 @@ func _on_Tags_about_to_show():
 	var idx: int = Tags.get_item_count()
 	for tag in ProjectSettings.get("WAT/Tags"): # WAT.Settings.Tags()
 		Tags.add_item(tag)
-		Tags.set_item_metadata(idx, tests[tag])
+		Tags.set_item_metadata(idx, tests(tag))
 		idx += 1
 
 
@@ -58,9 +57,9 @@ func _on_Scripts_about_to_show():
 	Scripts.clear()
 	Scripts.set_as_minsize()
 	Scripts.add_item("Run All")
-	Scripts.set_item_metadata(0, tests[Directories.get_item_text(Directories.get_current_index())])
+	Scripts.set_item_metadata(0, tests(Directories.get_item_text(Directories.get_current_index())))
 	Scripts.set_item_icon(0, WAT.Icon.FOLDER)
-	var scripts: Array = tests[Directories.get_item_text(Directories.get_current_index())]
+	var scripts: Array = tests(Directories.get_item_text(Directories.get_current_index()))
 	if scripts.empty():
 		return
 	var idx: int = Scripts.get_item_count()
@@ -74,9 +73,9 @@ func _on_Methods_about_to_show():
 	Methods.clear()
 	Methods.set_as_minsize()
 	Methods.add_item("Run All")
-	Methods.set_item_metadata(0, [tests[Scripts.get_item_text(Scripts.get_current_index())]])
+	Methods.set_item_metadata(0, [tests(Scripts.get_item_text(Scripts.get_current_index()))])
 	Methods.set_item_icon(0, WAT.Icon.SCRIPT)
-	var test = tests[Scripts.get_item_text(Scripts.get_current_index())]
+	var test = tests(Scripts.get_item_text(Scripts.get_current_index()))
 	var methods = test.test.get_script_method_list()
 	var idx: int = Methods.get_item_count()
 	for method in methods:
@@ -99,7 +98,7 @@ func _on_TestMenu_pressed():
 
 
 func _on_QuickStart_pressed():
-	var scripts = duplicate_tests(tests[WAT.Settings.test_directory()])
+	var scripts = duplicate_tests(tests(WAT.Settings.test_directory()))
 	emit_signal("_tests_selected", scripts)
 	
 	
@@ -109,3 +108,6 @@ func duplicate_tests(scripts: Array) -> Array:
 		duplicates += scripts.duplicate()
 	scripts += duplicates
 	return scripts
+
+func tests(path: String):
+	return WAT.tests().tests[path]

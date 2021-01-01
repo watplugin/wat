@@ -37,4 +37,6 @@ static func results() -> Resource:
 		ResourceSaver.save(path, instance)
 	return ResourceLoader.load(path, "", true)
 	
+static func tests() -> Resource:
+	return load("res://addons/WAT/cache/cache.tres")
 
