@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/label.svg-f53de51911b66d239e92ef725405ccc1.stex"
+path="res://.import/Label.svg-6b661fdea20eff5c844051e2cc019a6c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/WAT/assets/label.svg"
-dest_files=[ "res://.import/label.svg-f53de51911b66d239e92ef725405ccc1.stex" ]
+source_file="res://addons/WAT/assets/Label.svg"
+dest_files=[ "res://.import/Label.svg-6b661fdea20eff5c844051e2cc019a6c.stex" ]
 
 [params]
 

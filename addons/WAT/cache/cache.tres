@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=22 format=2]
+[gd_resource type="Resource" load_steps=23 format=2]
 
 [ext_resource path="res://addons/WAT/cache/cache.gd" type="Script" id=1]
 [ext_resource path="res://tests/unit/string.test.gd" type="Script" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://tests/unit/object.test.gd" type="Script" id=17]
 [ext_resource path="res://tests/unit/watcher.test.gd" type="Script" id=18]
 [ext_resource path="res://tests/unit/yield.test.gd" type="Script" id=19]
+[ext_resource path="res://tests/unit/suite.test.gd" type="Script" id=20]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
@@ -414,5 +415,6 @@ tests = {
 "path": "res://tests/unit/yield.test.gd",
 "tags": [  ],
 "test": ExtResource( 19 )
-}
+},
+"suitepool": [ ExtResource( 20 ) ]
 }

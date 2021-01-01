@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/folder.svg-5e66b21e399aee2f0ec799a2a8360870.stex"
+path="res://.import/Folder.svg-6b061da09b843bb394143a3ccfb226f9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/WAT/assets/folder.svg"
-dest_files=[ "res://.import/folder.svg-5e66b21e399aee2f0ec799a2a8360870.stex" ]
+source_file="res://addons/WAT/assets/Folder.svg"
+dest_files=[ "res://.import/Folder.svg-6b061da09b843bb394143a3ccfb226f9.stex" ]
 
 [params]
 

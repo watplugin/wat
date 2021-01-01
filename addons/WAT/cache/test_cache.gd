@@ -9,7 +9,7 @@ func _init() -> void:
 	_initialize()
 
 func _initialize() -> void:
-	tests = {directories = []}
+	tests = {directories = [], suitepool = []}
 	var path: String = ProjectSettings.get_setting("WAT/Test_Directory")
 	_search(path)
 	tests.directories.erase(path)
@@ -69,6 +69,7 @@ func _add_test(name: String) -> Dictionary:
 func _add_suite(name: String) -> Array:
 	var scripts = []
 	var suite: Script = load(name)
+	tests.suitepool.append(suite)
 	for klass in suite.get_script_constant_map():
 		var expr: Expression = Expression.new()
 		expr.parse(klass)
