@@ -48,7 +48,7 @@ func _on_Directories_about_to_show():
 func _on_Tags_about_to_show():
 	Tags.clear()
 	Tags.set_as_minsize()
-	var idx: int = Tags.get_item_count()
+	var idx: int = 0
 	for tag in WAT.Settings.tags(): # WAT.Settings.Tags()
 		Tags.add_item(tag)
 		Tags.set_item_metadata(idx, tests(tag))
@@ -127,12 +127,13 @@ func _on_TagEditor_about_to_show():
 		idx += 1
 
 func _on_TagEditor_index_pressed(index):
-	var script = tests(Scripts.get_item_text(Scripts.get_current_index()))
+	var script = tests(Scripts.get_item_text(Scripts.get_current_index()) as String)
 	if TagEditor.is_item_checked(index):
 		TagEditor.set_item_checked(index, false)
 	else:
 		TagEditor.set_item_checked(index, true)
-		script.tags.append(TagEditor.get_item_text(TagEditor.get_current_index()))
+		script.tags.append(TagEditor.get_item_text(TagEditor.get_current_index()) as String)
 
 func tests(path: String):
 	return Tests.tests[path]
+	

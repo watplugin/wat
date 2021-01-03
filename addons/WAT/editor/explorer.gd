@@ -12,6 +12,7 @@ func _ready() -> void:
 	_cache = _load_cache()
 	var time = OS.get_ticks_msec()
 	tests = {directories = [], suitepool = []}
+	_define_tags()
 	var path: String = ProjectSettings.get_setting("WAT/Test_Directory")
 	_search(path)
 	tests.directories.erase(path)
@@ -32,8 +33,21 @@ func _notification(what) -> void:
 		push_warning("Metadata is not saved in release builds")
 		return
 	else:
+		_serialize_metadata()
 		ResourceSaver.save("res://addons/WAT/resources/test_cache.tres", _cache)
 		ResourceSaver.save("res://addons/WAT/resources/metadata.tres", METADATA)
+		
+func _serialize_metadata():
+	var metadata = {}
+	for test in tests:
+		if test.ends_with(".gd"):
+			var c = tests[test]
+			metadata[test] = {"path": test, "tags": c.tags}
+	METADATA.metadata = metadata
+	
+func _define_tags() -> void:
+	for tag in WAT.Settings.tags():
+		tests[tag] = []
 	
 func _search(dirpath: String) -> Array:
 	var scripts: Array = []
@@ -80,9 +94,11 @@ func _is_suite(name: String) -> bool:
 func _add_test(name: String) -> Dictionary:
 	var container = {path = name, test = load(name), tags = [], method = "", containers = []}
 	if METADATA.metadata.has(name):
-		container.tags = METADATA.metadata[name]
+		container.tags = METADATA.metadata[name].tags
 	if not _cache.scripts.has(container.test):
 		_cache.scripts.append(container.test)
+	for tag in container.tags:
+		tests[tag].append(container)
 	tests[name] = container
 	return container
 	
@@ -110,9 +126,9 @@ func _add_suite(name: String) -> Array:
 			if METADATA.metadata.has(name):
 				container.tags = METADATA.metadata[name].tags
 				tests[name] = container
-			if not _cache.scripts.has(container.test):
-				_cache.scripts.append(container.test)
 			scripts.append(container)
+			for tag in container.tags:
+				tests[tag].append(container)
 			tests[container.path] = container
 	return scripts
 
