@@ -84,7 +84,7 @@ func _add_suite(name: String) -> Array:
 			container.method = ""
 			container.containers = []
 			if METADATA.metadata.has(name):
-				container.tags = METADATA.metadata[name]
+				container.tags = METADATA.metadata[name].tags
 				tests[name] = container
 			scripts.append(container)
 			tests[container.path] = container
