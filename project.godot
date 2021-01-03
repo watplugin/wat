@@ -24,16 +24,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Examples/Scripts/login.gd"
 }, {
-"base": "Resource",
-"class": "Metadata",
-"language": "GDScript",
-"path": "res://addons/WAT/resources/metadata.gd"
-}, {
-"base": "Resource",
-"class": "TestCache",
-"language": "GDScript",
-"path": "res://addons/WAT/resources/test_cache.gd"
-}, {
 "base": "Node",
 "class": "WAT",
 "language": "GDScript",
@@ -48,8 +38,6 @@ _global_script_class_icons={
 "BaseLogin": "",
 "Calculator": "",
 "Login": "",
-"Metadata": "",
-"TestCache": "",
 "WAT": "",
 "WATTest": ""
 }
@@ -61,7 +49,7 @@ quick_access=Object(FuncRef,"script":null)
 
 Test_Directory="res://tests"
 Results_Directory="C:/Users/Alex/AppData/Roaming/Godot/app_userdata/WaitingAndTesting"
-Tags=PoolStringArray(  )
+Tags=PoolStringArray( "Windows", "Linux", "IOS", "Android" )
 Window_Size=Vector2( 1280, 720 )
 Minimize_Window_When_Running_Tests=false
 Display=8
@@ -79,10 +67,19 @@ WATNamespace="*res://addons/WAT/globals/namespace.gd"
 [debug]
 
 gdscript/warnings/enable=false
+gdscript/warnings/unused_class_variable=true
+gdscript/warnings/unsafe_property_access=true
+gdscript/warnings/unsafe_method_access=true
+gdscript/warnings/unsafe_cast=true
+gdscript/warnings/unsafe_call_argument=true
 
 [display]
 
 window/stretch/mode="2d"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "WAT" )
 
 [rendering]
 

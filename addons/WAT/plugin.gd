@@ -7,9 +7,7 @@ const ControlPanel: PackedScene = preload("res://addons/WAT/gui.tscn")
 const DockController: Script = preload("ui/dock.gd")
 
 var _ControlPanel: PanelContainer
-var _TestMetadataEditor: EditorInspectorPlugin
 var _DockController: Node
-#var _FileManager = preload("res://addons/WAT/cache/test_cache.gd").new()
 
 func get_plugin_name() -> String:
    return "WAT"
@@ -23,7 +21,6 @@ func _enter_tree() -> void:
 	_ControlPanel = ControlPanel.instance()
 	_DockController = DockController.new(self, _ControlPanel)
 	
-	add_inspector_plugin(_TestMetadataEditor)
 	add_child(_DockController)
 	
 	_ControlPanel.Results.connect("function_sought", self, "goto_function")
@@ -47,5 +44,4 @@ func goto_function(path: String, function: String):
 func _exit_tree() -> void:
 	_DockController.free()
 	_ControlPanel.free()
-	remove_inspector_plugin(_TestMetadataEditor)
 	

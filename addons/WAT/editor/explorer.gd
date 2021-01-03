@@ -4,9 +4,12 @@ tool
 const METADATA: Resource = preload("res://addons/WAT/resources/metadata.tres")
 const BLANK = ""
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
+var _cache
+
 var tests: Dictionary = {}
 
 func _ready() -> void:
+	_cache = _load_cache()
 	var time = OS.get_ticks_msec()
 	tests = {directories = [], suitepool = []}
 	var path: String = ProjectSettings.get_setting("WAT/Test_Directory")
@@ -14,6 +17,23 @@ func _ready() -> void:
 	tests.directories.erase(path)
 	tests = tests
 	print("Time Taken: ", OS.get_ticks_msec() - time)
+	
+func _load_cache() -> Resource:
+	var cache = load("res://addons/WAT/resources/test_cache.tres")
+	if cache == null:
+		push_warning("Could not load test cache. Overwriting with new file")
+		cache = load("res://addons/WAT/resources/testcache.gd").new()
+	return cache
+	
+func _notification(what) -> void:
+	if what != NOTIFICATION_WM_QUIT_REQUEST:
+		return
+	if OS.has_feature("standalone"):
+		push_warning("Metadata is not saved in release builds")
+		return
+	else:
+		ResourceSaver.save("res://addons/WAT/resources/test_cache.tres", _cache)
+		ResourceSaver.save("res://addons/WAT/resources/metadata.tres", METADATA)
 	
 func _search(dirpath: String) -> Array:
 	var scripts: Array = []
@@ -61,6 +81,8 @@ func _add_test(name: String) -> Dictionary:
 	var container = {path = name, test = load(name), tags = [], method = "", containers = []}
 	if METADATA.metadata.has(name):
 		container.tags = METADATA.metadata[name]
+	if not _cache.scripts.has(container.test):
+		_cache.scripts.append(container.test)
 	tests[name] = container
 	return container
 	
@@ -68,6 +90,8 @@ func _add_suite(name: String) -> Array:
 	var scripts = []
 	var suite: Script = load(name)
 	tests.suitepool.append(suite)
+	if not _cache.scripts.has(suite):
+		_cache.scripts.append(suite)
 	for klass in suite.get_script_constant_map():
 		var expr: Expression = Expression.new()
 		expr.parse(klass)
@@ -86,10 +110,13 @@ func _add_suite(name: String) -> Array:
 			if METADATA.metadata.has(name):
 				container.tags = METADATA.metadata[name].tags
 				tests[name] = container
+			if not _cache.scripts.has(container.test):
+				_cache.scripts.append(container.test)
 			scripts.append(container)
 			tests[container.path] = container
 	return scripts
 
+# Editor Only Functions
 func _on_files_moved(old: String, new: String) -> void:
 	print("moved file %s to %s" % [old, new])
 	
