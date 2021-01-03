@@ -24,9 +24,6 @@ class Icon:
 	const RUN = preload("res://addons/WAT/assets/play.svg")
 	const TAG = preload("res://addons/WAT/assets/label.svg")
 	
-#var Settings = preload("res://addons/WAT/globals/settings.gd").new()
-var FileManager = load("res://addons/WAT/cache/test_cache.gd").new()
-
 static func results() -> Resource:
 	# Lazy Initialization
 	# Add toggle for compiled/exported vs non-compiled/exported
@@ -36,14 +33,4 @@ static func results() -> Resource:
 		var instance = load("res://addons/WAT/cache/results.gd").new()
 		ResourceSaver.save(path, instance)
 	return ResourceLoader.load(path, "", true)
-	
-static func tests():
-	if Engine.is_editor_hint():
-		print("loading engine")
-		return load("res://addons/WAT/cache/cache.tres")
-	elif OS.has_feature("standalone"):
-		print(OS.get_user_data_dir())
-		print("loading standalone")
-		return load(OS.get_user_data_dir() + "/" + "cache.tres")
-
 

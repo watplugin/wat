@@ -6,7 +6,7 @@ onready var Results: TabContainer = $GUI/Results
 onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
 onready var TestLauncher: Node = $Launcher
 var runkey: int = 0
-var _FileManager = preload("res://addons/WAT/cache/test_cache.gd").new()
+#var _FileManager = preload("res://addons/WAT/globals/test_cache.gd").new()
 
 func _ready() -> void:
 	ViewMenu.connect("id_pressed", $GUI/Results, "_on_view_pressed")

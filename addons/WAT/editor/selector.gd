@@ -8,6 +8,7 @@ onready var Scripts: PopupMenu = $TestMenu/Directories/Scripts
 onready var Methods: PopupMenu = $TestMenu/Directories/Scripts/Methods
 onready var Tags: PopupMenu = $TestMenu/Directories/Tags
 onready var Repeater: SpinBox = $Repeat
+onready var Tests: Node = $Explorer
 
 func _ready() -> void:
 	# Dictionaries are referenced, meaning this is a pointer to the main dir
@@ -110,4 +111,4 @@ func duplicate_tests(scripts: Array) -> Array:
 	return scripts
 
 func tests(path: String):
-	return WAT.tests().tests[path]
+	return Tests.tests[path]

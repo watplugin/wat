@@ -1,23 +1,19 @@
-const BLANK = ""
-const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
-var _cache = preload("res://addons/WAT/cache/cache.tres")
+extends Node
 tool
 
+const METADATA: Resource = preload("res://addons/WAT/resources/metadata.tres")
+const BLANK = ""
+const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 var tests: Dictionary = {}
 
-func _init() -> void:
-	_initialize()
-
-func _initialize() -> void:
+func _ready() -> void:
+	var time = OS.get_ticks_msec()
 	tests = {directories = [], suitepool = []}
 	var path: String = ProjectSettings.get_setting("WAT/Test_Directory")
 	_search(path)
 	tests.directories.erase(path)
-	_cache.tests = tests
-	if Engine.is_editor_hint():
-		ResourceSaver.save(_cache.resource_path, _cache)
-	elif OS.has_feature("standalone"):
-		ResourceSaver.save(OS.get_user_data_dir() + "/" + "cache.tres", _cache)
+	tests = tests
+	print("Time Taken: ", OS.get_ticks_msec() - time)
 	
 func _search(dirpath: String) -> Array:
 	var scripts: Array = []
@@ -63,6 +59,8 @@ func _is_suite(name: String) -> bool:
 	
 func _add_test(name: String) -> Dictionary:
 	var container = {path = name, test = load(name), tags = [], method = "", containers = []}
+	if METADATA.metadata.has(name):
+		container.tags = METADATA.metadata[name]
 	tests[name] = container
 	return container
 	
@@ -85,6 +83,9 @@ func _add_suite(name: String) -> Array:
 			container.tags = []
 			container.method = ""
 			container.containers = []
+			if METADATA.metadata.has(name):
+				container.tags = METADATA.metadata[name]
+				tests[name] = container
 			scripts.append(container)
 			tests[container.path] = container
 	return scripts

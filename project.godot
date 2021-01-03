@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Examples/Scripts/base_login.gd"
 }, {
-"base": "Resource",
-"class": "Cache",
-"language": "GDScript",
-"path": "res://addons/WAT/cache/cache.gd"
-}, {
 "base": "Node",
 "class": "Calculator",
 "language": "GDScript",
@@ -28,6 +23,16 @@ _global_script_classes=[ {
 "class": "Login",
 "language": "GDScript",
 "path": "res://Examples/Scripts/login.gd"
+}, {
+"base": "Resource",
+"class": "Metadata",
+"language": "GDScript",
+"path": "res://addons/WAT/resources/metadata.gd"
+}, {
+"base": "Resource",
+"class": "TestCache",
+"language": "GDScript",
+"path": "res://addons/WAT/resources/test_cache.gd"
 }, {
 "base": "Node",
 "class": "WAT",
@@ -41,9 +46,10 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "BaseLogin": "",
-"Cache": "",
 "Calculator": "",
 "Login": "",
+"Metadata": "",
+"TestCache": "",
 "WAT": "",
 "WATTest": ""
 }
@@ -77,10 +83,6 @@ gdscript/warnings/enable=false
 [display]
 
 window/stretch/mode="2d"
-
-[editor_plugins]
-
-enabled=PoolStringArray( "WAT" )
 
 [rendering]
 

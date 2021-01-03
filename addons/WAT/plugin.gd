@@ -4,7 +4,6 @@ extends EditorPlugin
 const TITLE: String = "Tests"
 const Global: String = "res://addons/WAT/globals/namespace.gd"
 const ControlPanel: PackedScene = preload("res://addons/WAT/gui.tscn")
-const TestMetadataEditor: Script = preload("res://addons/WAT/ui/metadata/editor.gd")
 const DockController: Script = preload("ui/dock.gd")
 
 var _ControlPanel: PanelContainer
@@ -22,7 +21,6 @@ func _enter_tree() -> void:
 		add_autoload_singleton("WATNamespace", Global)
 
 	_ControlPanel = ControlPanel.instance()
-	_TestMetadataEditor = TestMetadataEditor.new()
 	_DockController = DockController.new(self, _ControlPanel)
 	
 	add_inspector_plugin(_TestMetadataEditor)
