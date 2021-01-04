@@ -9,7 +9,8 @@ var _metadata
 var tests: Dictionary = {}
 
 func _ready() -> void:
-	_load_cache()
+	_cache = WAT.ResManager.cache()
+	_metadata = WAT.ResManager.metadata()
 	var time = OS.get_ticks_msec()
 	tests = {directories = [], suitepool = []}
 	_define_tags()
@@ -19,35 +20,6 @@ func _ready() -> void:
 	tests = tests
 	print("Time Taken: ", OS.get_ticks_msec() - time)
 	
-func _load_cache() -> void:
-	var testdir = WAT.Settings.test_directory()
-	var cachedir = testdir + "/.test"
-	var cachepath = cachedir + "/cache.tres"
-	var metadatapath = cachedir + "/metadata.tres"
-	
-	if not ResourceLoader.exists(cachepath):
-		push_warning("Creating Test Cache at %s" % cachedir)
-		var err = Directory.new().make_dir(cachedir)
-		if err != OK:
-			push_warning(err as String)
-		var cacheres = preload("res://addons/WAT/resources/testcache.gd").new()
-		ResourceSaver.save(cachepath, cacheres)
-	if not ResourceLoader.exists(metadatapath):
-		push_warning("Creating Metadata cache at %s" % metadatapath)
-		var metadatares = preload("res://addons/WAT/resources/metadata.gd").new()
-		ResourceSaver.save(metadatapath, metadatares)
-	
-	_metadata = load(metadatapath)
-	_cache = load(cachepath)
-	if _cache == null:
-		push_warning("Error loading test cache. Recreating")
-		var err = Directory.new().make_dir(cachedir)
-		if err != OK:
-			push_warning(err as String)
-		var newcache = preload("res://addons/WAT/resources/testcache.gd").new()
-		ResourceSaver.save(cachepath, newcache)
-		_cache = load(cachepath)
-	
 func _notification(what) -> void:
 	if what != NOTIFICATION_WM_QUIT_REQUEST:
 		return
@@ -55,16 +27,9 @@ func _notification(what) -> void:
 		push_warning("Metadata is not saved in release builds")
 		return
 	else:
-		_save()
-		
-func _save() -> void:
 		_serialize_metadata()
-		var testdir = WAT.Settings.test_directory()
-		var cachedir = testdir + "/.test"
-		var cachepath = cachedir + "/cache.tres"
-		var metadatapath = cachedir + "/metadata.tres"
-		ResourceSaver.save(cachepath, _cache)
-		ResourceSaver.save(metadatapath, _metadata)
+		WAT.ResManager.save_cache(_cache)
+		WAT.ResManager.save_metadata(_metadata)
 		
 func _serialize_metadata():
 	var metadata = {}
@@ -111,12 +76,12 @@ func _search(dirpath: String) -> Array:
 	return scripts
 
 func _is_test(name: String) -> bool:
-	if name.ends_with(".gd") or name.ends_with(".gdc"):
+	if name.ends_with(".gd") or name.ends_with(".gdc") and not "/.test" in name:
 		return load(name).get("TEST") != null
 	return false
 	
 func _is_suite(name: String) -> bool:
-	if name.ends_with(".gd") or name.ends_with(".gdc"):
+	if name.ends_with(".gd") or name.ends_with(".gdc") and not "/.test" in name:
 		return load(name).get("IS_WAT_SUITE")
 	return false
 	
