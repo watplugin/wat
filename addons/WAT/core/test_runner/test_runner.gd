@@ -1,6 +1,5 @@
 extends Node
 
-const LOCKED = true
 signal finished
 export(Script) var TestController
 export(Array, Dictionary) var tests = []
@@ -10,6 +9,7 @@ var is_editor: bool = true
 var results = []
 var _cursor: int = 0
 var controllers: Dictionary = {}
+var _is_terminating = false
 
 # In Threaded Versions, we'll create a controller per thread
 #var test_controller
@@ -23,16 +23,12 @@ func _ready() -> void:
 	print("Initializing TestRunner")
 	_run()
 	
-func _process(delta) -> void:
-	_run()
-	
 func _on_controller_finished(controller) -> void:
 	controllers[controller].wait_to_finish()
 	results.append(controller.results)
+	call_deferred("_run")
 	
 func _run() -> void:
-	# Controller passes itself in via signal when it is ready for another test
-#	if _cursor < tests.size() - 1:
 	if not tests.empty():
 		for controller in controllers:
 			# If a Thread is free
@@ -46,6 +42,9 @@ func _run() -> void:
 		_terminate()
 
 func _terminate() -> void:
+	if _is_terminating:
+		return
+	_is_terminating = true
 	WAT.results().save(results)
 	print("Terminating TestRunner")
 	get_tree().quit() if is_editor else emit_signal("finished")

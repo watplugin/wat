@@ -76,5 +76,13 @@ metadata = {
 "res://tests/unit/yield.test.gd": {
 "path": "res://tests/unit/yield.test.gd",
 "tags": [  ]
+},
+"res://tests/unit/yield2.test.gd": {
+"path": "res://tests/unit/yield2.test.gd",
+"tags": [  ]
+},
+"res://tests/unit/yield3.test.gd": {
+"path": "res://tests/unit/yield3.test.gd",
+"tags": [  ]
 }
 }
