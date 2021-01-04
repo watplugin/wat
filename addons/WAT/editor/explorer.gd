@@ -163,16 +163,16 @@ func _add_suite(name: String) -> Array:
 
 # Editor Only Functions
 func _on_files_moved(old: String, new: String) -> void:
-	print("moved file %s to %s" % [old, new])
+	push_warning("Moved File: %s -> %s" % [old, new])
 	
 func _on_file_removed(removed: String):
-	print("removed file ", removed)
+	push_warning("Removed File: %s" % removed)
 	
 func _on_folder_moved(old: String, new: String) -> void:
 	# Counts for renaming
-	print("moved folder %s to %s" % [old, new])
+	push_warning("Moved Folder: %s -> %s" % [old, new])
 	
 func _on_folder_removed(removed: String) -> void:
 	# Doesn't inform us about which files were in that folder
 	# We'll likely be able to do a remove all that begins with path
-	print("removed folder ", removed)
+	push_warning("Removed Folder: " % removed)

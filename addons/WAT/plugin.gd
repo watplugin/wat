@@ -21,13 +21,14 @@ func _enter_tree() -> void:
 	add_child(_DockController)
 	
 	_ControlPanel.Results.connect("function_sought", self, "goto_function")
+	connect_filemanager(_ControlPanel.get_node("GUI/Interact/Explorer"))
 		
-#func connect_filemanager() -> void:
-#	var filedock = get_editor_interface().get_file_system_dock()
-#	filedock.connect("files_moved", _FileManager, "_on_files_moved")
-#	filedock.connect("file_removed", _FileManager, "_on_files_removed")
-#	filedock.connect("folder_moved", _FileManager, "_on_folder_moved")
-#	filedock.connect("folder_removed", _FileManager, "_on_folder_removed")
+func connect_filemanager(filemanager) -> void:
+	var filedock = get_editor_interface().get_file_system_dock()
+	filedock.connect("files_moved", filemanager, "_on_files_moved")
+	filedock.connect("file_removed", filemanager, "_on_files_removed")
+	filedock.connect("folder_moved", filemanager, "_on_folder_moved")
+	filedock.connect("folder_removed", filemanager, "_on_folder_removed")
 	
 func goto_function(path: String, function: String):
 	var script: Script = load(path)
