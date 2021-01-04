@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=18 format=2]
+[gd_resource type="Resource" load_steps=20 format=2]
 
 [ext_resource path="res://addons/WAT/resources/results.gd" type="Script" id=1]
 [ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=2]
@@ -20,6 +20,12 @@
 script/source = "extends \"res://tests/unit/suite.test.gd\".DummyTwo"
 
 [sub_resource type="GDScript" id=2]
+script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends \"res://tests/unit/suite.test.gd\".DummyTwo"
+
+[sub_resource type="GDScript" id=4]
 script/source = "extends \"res://tests/unit/suite.test.gd\".DummyOne"
 
 [resource]
@@ -2000,6 +2006,2289 @@ results = {
 "success": false,
 "time_taken": 0.0,
 "total": 3
+} ],
+1609796425: [ {
+"context": "Given a Boolean Assertion",
+"methods": [ {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then it passes",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When calling asserts.is_true(true)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True != false",
+"context": "",
+"expected": "|bool| True == false",
+"success": false
+} ],
+"context": " intentional failure",
+"passed": 0,
+"success": false,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| False == false",
+"context": "Then it passes",
+"expected": "|bool| False == false",
+"success": true
+} ],
+"context": "When calling asserts.is_false(false)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 2,
+"path": "res://tests/unit/boolean.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/boolean.test.gd",
+"tags": [  ],
+"test": ExtResource( 2 )
+},
+"success": false,
+"time_taken": 0.0,
+"total": 3
+} ],
+1609796442: [ {
+"context": "Given a Yield",
+"methods": [ {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then we set var a to true",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then we set var b to true",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we yield in start twice",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "[100, Null, Null, Null, Null, Null] is builtin: Array",
+"context": "Then we get an array",
+"expected": "[100, Null, Null, Null, Null, Null] is builtin: Array",
+"success": true
+}, {
+"actual": "|int| 6 is equal to |int| 6",
+"context": "Of size 6",
+"expected": "|int| 6 is equal to |int| 6",
+"success": true
+}, {
+"actual": "|int| 100 is equal to |int| 100",
+"context": "Where element 0 is 100",
+"expected": "|int| 100 is equal to |int| 100",
+"success": true
+} ],
+"context": "When yield(self.yield_value()) returns",
+"passed": 3,
+"success": true,
+"time": 0.0,
+"total": 3
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then we set var c to true",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then we set var d to true",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we yield in pre thrice",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then we set var e to true",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then we set var f to true",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we yield twice in execute",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then yielder is not active",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When asserting against a test",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the yielder is paused",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When a signal being yielded on is emitted",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the yielder is unpaused",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then the timeout signal of the yielder is connected",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then our signal is connected to the yielder",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we call until signal",
+"passed": 3,
+"success": true,
+"time": 0.0,
+"total": 3
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the timeout signal is disconnected",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then the signal-signal is disconnected",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When it is finished",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the yielder is paused",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then the timeout signal of the yielder is disconnected",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then our signal to the yielder is disconnected",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When the yielder heres our signal",
+"passed": 3,
+"success": true,
+"time": 0.0,
+"total": 3
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the yielder is paused",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "The timeout signal of the yielder is not connected",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When the yielder times out on until_timeout(0.1)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+} ],
+"passed": 10,
+"path": "res://tests/unit/yield.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/yield.test.gd",
+"tags": [  ],
+"test": ExtResource( 11 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 10
+} ],
+1609796540: [ {
+"context": "Given a Yield",
+"methods": [ {
+"assertions": [ {
+"actual": "[100, Null, Null, Null, Null, Null] is builtin: Array",
+"context": "Then we get an array",
+"expected": "[100, Null, Null, Null, Null, Null] is builtin: Array",
+"success": true
+}, {
+"actual": "|int| 6 is equal to |int| 6",
+"context": "Of size 6",
+"expected": "|int| 6 is equal to |int| 6",
+"success": true
+}, {
+"actual": "|int| 100 is equal to |int| 100",
+"context": "Where element 0 is 100",
+"expected": "|int| 100 is equal to |int| 100",
+"success": true
+} ],
+"context": "When yield(self.yield_value()) returns",
+"passed": 3,
+"success": true,
+"time": 0.0,
+"total": 3
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then we set var a to true",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then we set var b to true",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we yield in start twice",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the yielder is paused",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then the timeout signal of the yielder is disconnected",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then our signal to the yielder is disconnected",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When the yielder heres our signal",
+"passed": 3,
+"success": true,
+"time": 0.0,
+"total": 3
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then yielder is not active",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When asserting against a test",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then we set var c to true",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then we set var d to true",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we yield in pre thrice",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then we set var e to true",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then we set var f to true",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we yield twice in execute",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the yielder is paused",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "The timeout signal of the yielder is not connected",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When the yielder times out on until_timeout(0.1)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the yielder is paused",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When a signal being yielded on is emitted",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the timeout signal is disconnected",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then the signal-signal is disconnected",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When it is finished",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+} ],
+"passed": 9,
+"path": "res://tests/unit/yield.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/yield.test.gd",
+"tags": [  ],
+"test": ExtResource( 11 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 9
+} ],
+1609796620: [ {
+"context": "Given a Boolean Assertion",
+"methods": [ {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then it passes",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When calling asserts.is_true(true)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| False == false",
+"context": "Then it passes",
+"expected": "|bool| False == false",
+"success": true
+} ],
+"context": "When calling asserts.is_false(false)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True != false",
+"context": "",
+"expected": "|bool| True == false",
+"success": false
+} ],
+"context": " intentional failure",
+"passed": 0,
+"success": false,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 2,
+"path": "res://tests/unit/boolean.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/boolean.test.gd",
+"tags": [  ],
+"test": ExtResource( 2 )
+},
+"success": false,
+"time_taken": 0.0,
+"total": 3
+}, {
+"context": "Given an Equality Assertion",
+"methods": [ {
+"assertions": [ {
+"actual": "|int| 1 is equal or less than |int| 1",
+"context": "Then it passes!",
+"expected": "|int| 1 is equal or less than |int| 1",
+"success": true
+} ],
+"context": "When calling asserts.is_equal_or_less_than(1, 1)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 1 is less than |int| 2",
+"context": "Then it passes",
+"expected": "|int| 1 is less than |int| 2",
+"success": true
+} ],
+"context": "When calling asserts.is_less_than(2, 1)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 2 is equal or greater |int| 1",
+"context": "Then it passes",
+"expected": "|int| 2 is equal or greater |int| 1",
+"success": true
+} ],
+"context": "When calling asserts.is_equal_or_greater_than(2, 1)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 2 is greater than |int| 1",
+"context": "Then it passes",
+"expected": "|int| 2 is greater than |int| 1",
+"success": true
+} ],
+"context": "When calling asserts.is_greater_than(2, 1)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 1 is equal or greater |int| 1",
+"context": "Then it passes",
+"expected": "|int| 1 is equal or greater |int| 1",
+"success": true
+} ],
+"context": "When calling asserts.is_equal_or_greater_than(1, 1)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 1 is equal to |int| 1",
+"context": "Then it passes",
+"expected": "|int| 1 is equal to |int| 1",
+"success": true
+} ],
+"context": "When calling asserts.is_equal(1, 1)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 5 is not equal to |int| 6",
+"context": "Then it passes",
+"expected": "|int| 5 != |int| 6",
+"success": true
+} ],
+"context": "When callign asserts.is_not_equal(5, 6)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 7,
+"path": "res://tests/unit/equality.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/equality.test.gd",
+"tags": [  ],
+"test": ExtResource( 9 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 7
+}, {
+"context": "Given A File Assertion",
+"methods": [ {
+"assertions": [ {
+"actual": "res://tests/unit/file.test.gd exists",
+"context": "Then it passes",
+"expected": "res://tests/unit/file.test.gd exists",
+"success": true
+} ],
+"context": "When calling asserts.file_exists when the file is this suite",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": " does not exist",
+"context": "Then it passes",
+"expected": " does not exist",
+"success": true
+} ],
+"context": "When calling asserts file does not exist when path is empty",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "res://somefile.gd does not exist",
+"context": "Then it passes",
+"expected": "res://somefile.gd does not exist",
+"success": true
+} ],
+"context": "When calling asserts.file_does_not_exist when there is no file",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 3,
+"path": "res://tests/unit/file.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/file.test.gd",
+"tags": [  ],
+"test": ExtResource( 8 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 3
+}, {
+"context": "Given an Is Instance of class/type Assertion",
+"methods": [ {
+"assertions": [ {
+"actual": "|NodePath| . != null",
+"context": "@'Parent/Child' is not null",
+"expected": "|NodePath| . != null",
+"success": true
+}, {
+"actual": ". is builtin: NodePath",
+"context": "Then it passes",
+"expected": ". is builtin: NodePath",
+"success": true
+} ],
+"context": "When calling asserts.is_NodePath(@'Parent/Child')",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|AABB| 0, 0, 0 - 0, 0, 0 != null",
+"context": "AABB is not null",
+"expected": "|AABB| 0, 0, 0 - 0, 0, 0 != null",
+"success": true
+}, {
+"actual": "0, 0, 0 - 0, 0, 0 is builtin: AABB",
+"context": "Then it passes",
+"expected": "0, 0, 0 - 0, 0, 0 is builtin: AABB",
+"success": true
+} ],
+"context": "When calling asserts.is_AABB(aabb: AABB)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|Object| [Node:3090] != null",
+"context": "node is not null",
+"expected": "|Object| [Node:3090] != null",
+"success": true
+}, {
+"actual": "[Node:3090] is builtin: Object",
+"context": "An instance of node is an Object",
+"expected": "[Node:3090] is builtin: Object",
+"success": true
+} ],
+"context": "When calling is asserts.object(node: Node)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|Basis| ((1, 0, 0), (0, 1, 0), (0, 0, 1)) != null",
+"context": "basis is not null",
+"expected": "|Basis| ((1, 0, 0), (0, 1, 0), (0, 0, 1)) != null",
+"success": true
+}, {
+"actual": "((1, 0, 0), (0, 1, 0), (0, 0, 1)) is builtin: Basis",
+"context": "Then it passes",
+"expected": "((1, 0, 0), (0, 1, 0), (0, 0, 1)) is builtin: Basis",
+"success": true
+} ],
+"context": "When calling asserts.is_basis(basis: Basis",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "{} is builtin: Dictionary",
+"context": "Then it passes",
+"expected": "{} is builtin: Dictionary",
+"success": true
+} ],
+"context": "When calling asserts.is_Dictionary({})",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "True is builtin: bool",
+"context": "Then it passes",
+"expected": "True is builtin: bool",
+"success": true
+} ],
+"context": "When calling asserts.is_bool(true)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|Color| 0,0,0,1 != null",
+"context": "color is not null",
+"expected": "|Color| 0,0,0,1 != null",
+"success": true
+}, {
+"actual": "0,0,0,1 is builtin: Color",
+"context": "Then it passes",
+"expected": "0,0,0,1 is builtin: Color",
+"success": true
+} ],
+"context": "When calling asserts.is_color(color: Color)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "1 is builtin: int",
+"context": "Then it passes",
+"expected": "1 is builtin: int",
+"success": true
+} ],
+"context": "When callign asserts.is_int(1)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|Array| [] != null",
+"context": "array is not null",
+"expected": "|Array| [] != null",
+"success": true
+}, {
+"actual": "[] is builtin: Array",
+"context": "Then it passes",
+"expected": "[] is builtin: Array",
+"success": true
+} ],
+"context": "When calling asserts.is_Array(array: Array)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "1 is builtin: float",
+"context": "Then it passes",
+"expected": "1 is builtin: float",
+"success": true
+} ],
+"context": "When calling asserts.is_float(1.0)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|Quat| (0, 0, 0, 1) != null",
+"context": "quat is not null",
+"expected": "|Quat| (0, 0, 0, 1) != null",
+"success": true
+}, {
+"actual": "(0, 0, 0, 1) is builtin: Quat",
+"context": "Then it passes",
+"expected": "(0, 0, 0, 1) is builtin: Quat",
+"success": true
+} ],
+"context": "When calling asserts.is_Quat(quat: Quat)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|String|  != null",
+"context": "strs is not null",
+"expected": "|String|  != null",
+"success": true
+}, {
+"actual": " is builtin: String",
+"context": "Then it passes",
+"expected": " is builtin: String",
+"success": true
+} ],
+"context": "When calling asserts.is_string(strs: String)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|PoolRealArray| [] != null",
+"context": "reals is not null",
+"expected": "|PoolRealArray| [] != null",
+"success": true
+}, {
+"actual": "[] is builtin: PoolRealArray",
+"context": "Then it passes",
+"expected": "[] is builtin: PoolRealArray",
+"success": true
+} ],
+"context": "When calling is asserts.is_PoolRealArray(reals: PoolRealArray)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|PoolStringArray| [] != null",
+"context": "strs is not null",
+"expected": "|PoolStringArray| [] != null",
+"success": true
+}, {
+"actual": "[] is builtin: PoolStringArray",
+"context": "Then it passes",
+"expected": "[] is builtin: PoolStringArray",
+"success": true
+} ],
+"context": "When calling is asserts.is_PoolStringArray(strs: PoolStringArray)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|PoolByteArray| [PoolByteArray] != null",
+"context": "bytes is not null",
+"expected": "|PoolByteArray| [PoolByteArray] != null",
+"success": true
+}, {
+"actual": "[PoolByteArray] is builtin: PoolByteArray",
+"context": "Then it passes",
+"expected": "[PoolByteArray] is builtin: PoolByteArray",
+"success": true
+} ],
+"context": "When calling asserts.is_PoolByteArray(bytes: PoolByteArray)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|Vector3| (0, 0, 0) != null",
+"context": "vec3 is not null",
+"expected": "|Vector3| (0, 0, 0) != null",
+"success": true
+}, {
+"actual": "(0, 0, 0) is builtin: Vector3",
+"context": "Then it passes",
+"expected": "(0, 0, 0) is builtin: Vector3",
+"success": true
+} ],
+"context": "When calling asserts.is_Vector3(vec3: Vector3",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|PoolIntArray| [] != null",
+"context": "ints is not null",
+"expected": "|PoolIntArray| [] != null",
+"success": true
+}, {
+"actual": "[] is builtin: PoolIntArray",
+"context": "Then it passes",
+"expected": "[] is builtin: PoolIntArray",
+"success": true
+} ],
+"context": "When calling asserts.is_PoolIntArray(ints: PoolIntArray)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|PoolVector3Array| [] != null",
+"context": "vec3s is not null",
+"expected": "|PoolVector3Array| [] != null",
+"success": true
+}, {
+"actual": "[] is builtin: PoolVector3Array",
+"context": "Then it passes",
+"expected": "[] is builtin: PoolVector3Array",
+"success": true
+} ],
+"context": "When calling is asserts.is_PoolVector3Array(vec3s: PoolVector3Array)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|Transform| 1, 0, 0, 0, 1, 0, 0, 0, 1 - 0, 0, 0 != null",
+"context": "transform is not null",
+"expected": "|Transform| 1, 0, 0, 0, 1, 0, 0, 0, 1 - 0, 0, 0 != null",
+"success": true
+}, {
+"actual": "1, 0, 0, 0, 1, 0, 0, 0, 1 - 0, 0, 0 is builtin: Transform",
+"context": "Then it passes",
+"expected": "1, 0, 0, 0, 1, 0, 0, 0, 1 - 0, 0, 0 is builtin: Transform",
+"success": true
+} ],
+"context": "When calling asserts.is_Transform(transform: Transform)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|Plane| 0, 0, 0, 0 != null",
+"context": "plane is not null",
+"expected": "|Plane| 0, 0, 0, 0 != null",
+"success": true
+}, {
+"actual": "0, 0, 0, 0 is builtin: Plane",
+"context": "then it passes",
+"expected": "0, 0, 0, 0 is builtin: Plane",
+"success": true
+} ],
+"context": "When calling asserts.is_Plane(plane: Plane())",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|Transform2D| ((1, 0), (0, 1), (0, 0)) != null",
+"context": "transform2D is not null",
+"expected": "|Transform2D| ((1, 0), (0, 1), (0, 0)) != null",
+"success": true
+}, {
+"actual": "((1, 0), (0, 1), (0, 0)) is builtin: Transform2D",
+"context": "Then it passes",
+"expected": "((1, 0), (0, 1), (0, 0)) is builtin: Transform2D",
+"success": true
+} ],
+"context": "When calling asserts.is_Transform(transform2D: Transform2D)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|Rect2| (0, 0, 0, 0) != null",
+"context": "rect2 is not null",
+"expected": "|Rect2| (0, 0, 0, 0) != null",
+"success": true
+}, {
+"actual": "(0, 0, 0, 0) is builtin: Rect2",
+"context": "Then it passes",
+"expected": "(0, 0, 0, 0) is builtin: Rect2",
+"success": true
+} ],
+"context": "When calling asserts.is_Rect2(rect2: Rect2)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|Vector2| (0, 0) != null",
+"context": "vec2 is not null",
+"expected": "|Vector2| (0, 0) != null",
+"success": true
+}, {
+"actual": "(0, 0) is builtin: Vector2",
+"context": "Then it passes",
+"expected": "(0, 0) is builtin: Vector2",
+"success": true
+} ],
+"context": "When calling asserts.is_Vector2(vec2)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|RID| [RID] != null",
+"context": "rid is not null",
+"expected": "|RID| [RID] != null",
+"success": true
+}, {
+"actual": "[RID] is builtin: RID",
+"context": "Then it passes",
+"expected": "[RID] is builtin: RID",
+"success": true
+} ],
+"context": "When calling asserts.is_RID(rid: RID)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|PoolColorArray| [PoolColorArray] != null",
+"context": "colors is not null",
+"expected": "|PoolColorArray| [PoolColorArray] != null",
+"success": true
+}, {
+"actual": "[PoolColorArray] is builtin: PoolColorArray",
+"context": "Then it passes",
+"expected": "[PoolColorArray] is builtin: PoolColorArray",
+"success": true
+} ],
+"context": "When calling asserts.is_PoolColorArray(colors: PoolColorArray)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|PoolVector2Array| [] != null",
+"context": "vec2s is not null",
+"expected": "|PoolVector2Array| [] != null",
+"success": true
+}, {
+"actual": "[] is builtin: PoolVector2Array",
+"context": "Then it passes",
+"expected": "[] is builtin: PoolVector2Array",
+"success": true
+} ],
+"context": "When calling is asserts.is_PoolVector2Array(vec2s: PoolVector2Array)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+} ],
+"passed": 26,
+"path": "res://tests/unit/is_instance.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/is_instance.test.gd",
+"tags": [  ],
+"test": ExtResource( 12 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 26
+}, {
+"context": "Given an Is Not Instance of class/type Assertion",
+"methods": [ {
+"assertions": [ {
+"actual": "Null is not builtin: Object",
+"context": "Then it passes",
+"expected": "Null is not builtin: Object",
+"success": true
+} ],
+"context": "when calling asserts.is_not_Object(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: AABB",
+"context": "Then it passes",
+"expected": "Null is not builtin: AABB",
+"success": true
+} ],
+"context": "when calling asserts.is_not_AABB(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: float",
+"context": "Then it passes",
+"expected": "Null is not builtin: float",
+"success": true
+} ],
+"context": "when calling asserts.is_not_float(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: int",
+"context": "Then it passes",
+"expected": "Null is not builtin: int",
+"success": true
+} ],
+"context": "when calling asserts.is_not_int(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: PoolByteArray",
+"context": "Then it passes",
+"expected": "Null is not builtin: PoolByteArray",
+"success": true
+} ],
+"context": "when calling asserts.is_not_PoolByteArray(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: PoolRealArray",
+"context": "Then it passes",
+"expected": "Null is not builtin: PoolRealArray",
+"success": true
+} ],
+"context": "when calling asserts.is_not_PoolRealArray(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: Plane",
+"context": "Then it passes",
+"expected": "Null is not builtin: Plane",
+"success": true
+} ],
+"context": "when calling asserts.is_not_Plane(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: Quat",
+"context": "Then it passes",
+"expected": "Null is not builtin: Quat",
+"success": true
+} ],
+"context": "when calling asserts.is_not_Quat(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: NodePath",
+"context": "Then it passes",
+"expected": "Null is not builtin: NodePath",
+"success": true
+} ],
+"context": "when calling asserts.is_not_NodePath(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: String",
+"context": "Then it passes",
+"expected": "Null is not builtin: String",
+"success": true
+} ],
+"context": "when calling asserts.is_not_String(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: PoolIntArray",
+"context": "Then it passes",
+"expected": "Null is not builtin: PoolIntArray",
+"success": true
+} ],
+"context": "when calling asserts.is_not_PoolIntArray(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: bool",
+"context": "Then it passes",
+"expected": "Null is not builtin: bool",
+"success": true
+} ],
+"context": "when calling asserts.is_not_bool(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: Dictionary",
+"context": "Then it passes",
+"expected": "Null is not builtin: Dictionary",
+"success": true
+} ],
+"context": "when calling asserts.is_not_Dictionary(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: PoolStringArray",
+"context": "Then it passes",
+"expected": "Null is not builtin: PoolStringArray",
+"success": true
+} ],
+"context": "when calling asserts.is_not_PoolStringArray(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: PoolVector2Array",
+"context": "Then it passes",
+"expected": "Null is not builtin: PoolVector2Array",
+"success": true
+} ],
+"context": "when calling asserts.is_not_PoolVector2Array(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: RID",
+"context": "Then it passes",
+"expected": "Null is not builtin: RID",
+"success": true
+} ],
+"context": "when calling asserts.is_not_RID(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: Array",
+"context": "Then it passes",
+"expected": "Null is not builtin: Array",
+"success": true
+} ],
+"context": "when calling asserts.is_not_Array(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: Basis",
+"context": "Then it passes",
+"expected": "Null is not builtin: Basis",
+"success": true
+} ],
+"context": "when calling asserts.is_not_Basis(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: Color",
+"context": "Then it passes",
+"expected": "Null is not builtin: Color",
+"success": true
+} ],
+"context": "when calling asserts.is_not_Color(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: PoolVector3Array",
+"context": "Then it passes",
+"expected": "Null is not builtin: PoolVector3Array",
+"success": true
+} ],
+"context": "when calling asserts.is_not_PoolVector3Array(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: Rect2",
+"context": "Then it passes",
+"expected": "Null is not builtin: Rect2",
+"success": true
+} ],
+"context": "when calling asserts.is_not_Rect2(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: PoolColorArray",
+"context": "Then it passes",
+"expected": "Null is not builtin: PoolColorArray",
+"success": true
+} ],
+"context": "when calling asserts.is_not_PoolColorArray(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: Transform",
+"context": "Then it passes",
+"expected": "Null is not builtin: Transform",
+"success": true
+} ],
+"context": "when calling asserts.is_not_Transform(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: Vector3",
+"context": "Then it passes",
+"expected": "Null is not builtin: Vector3",
+"success": true
+} ],
+"context": "when calling asserts.is_not_Vector3(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: Vector2",
+"context": "Then it passes",
+"expected": "Null is not builtin: Vector2",
+"success": true
+} ],
+"context": "when calling asserts.is_not_Vector2(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is not builtin: Transform2D",
+"context": "Then it passes",
+"expected": "Null is not builtin: Transform2D",
+"success": true
+} ],
+"context": "when calling asserts.is_not_Transform2D(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 26,
+"path": "res://tests/unit/is_not_instance.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/is_not_instance.test.gd",
+"tags": [  ],
+"test": ExtResource( 6 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 26
+}, {
+"context": "Given a Null Assertion",
+"methods": [ {
+"assertions": [ {
+"actual": "|null| Null == null",
+"context": "Then it passes",
+"expected": "|null| Null == null",
+"success": true
+} ],
+"context": "When calling asserts.is_null(null)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|Object| [Node:3168] != null",
+"context": "Then it passes",
+"expected": "|Object| [Node:3168] != null",
+"success": true
+} ],
+"context": "When calling Node is not null",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|Object| [Deleted Object] == null",
+"context": "A Freed Node is null in Engine 3.2.2 or greater",
+"expected": "|Object| [Deleted Object] == null",
+"success": true
+} ],
+"context": "When calling freed object is null",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 3,
+"path": "res://tests/unit/null.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/null.test.gd",
+"tags": [  ],
+"test": ExtResource( 4 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 3
+}, {
+"context": "Given an Object Assertion",
+"methods": [ {
+"assertions": [ {
+"actual": "[Node:3175] is queued for deletion",
+"context": "Then it passes",
+"expected": "[Node:3175] is queued for deletion",
+"success": true
+} ],
+"context": "When calling asserts.object_is_queued for deletion after calling queue_free",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Null is freed from memory",
+"context": "Then it passes",
+"expected": "Null is freed from memory",
+"success": true
+} ],
+"context": "When calling asserts.is_freed(freed_object",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Node:3172] does not have meta: bad_meta",
+"context": "Then it passes",
+"expected": "[Node:3172] does not have meta: bad_meta",
+"success": true
+} ],
+"context": "When calling asserts.object_does_not_have_meta()",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Node:3172] does not have user signal: builtin_dummy",
+"context": "Then it passes",
+"expected": "[Node:3172] does not have user signal: builtin_dummy",
+"success": true
+} ],
+"context": "When calling does not have user signal with class signal",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Node:3172] has user signal: dummy_signal",
+"context": "Then it passes",
+"expected": "[Node:3172] has user signal: dummy_signal",
+"success": true
+} ],
+"context": "When calling obj_has_user_signal after adding a signal",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Node:3172].builtin_dummy is not connected to [Node:3172].title",
+"context": "Then it passes",
+"expected": "[Node:3172].builtin_dummy is not connected to [Node:3172].title",
+"success": true
+} ],
+"context": "When calling asserts object is not connected with an invalid connection",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Node:3172] has meta: dummy",
+"context": "Then it passes",
+"expected": "[Node:3172] has meta: dummy",
+"success": true
+}, {
+"actual": "[Node:3172] has meta: dummy",
+"context": "Then it passes",
+"expected": "[Node:3172] has meta: dummy",
+"success": true
+} ],
+"context": "When calling asserts.object_has_meta() after adding metadata",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "[Node:3185] is not blocking signals",
+"context": "Then it passes",
+"expected": "[Node:3185] is not blocking signals",
+"success": true
+} ],
+"context": "When calling is not blocking signals while not blocking signals",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Node:3172].builtin_dummy is connected to [Node:3172].title",
+"context": "Then it passes",
+"expected": "[Node:3172].builtin_dummy is connected to [Node:3172].title",
+"success": true
+} ],
+"context": "When calling asserts object is connected with a valid connection",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Node:3188] is not queued for deletion",
+"context": "Then it passes",
+"expected": "[Node:3188] is not queued for deletion",
+"success": true
+} ],
+"context": "When calling asserts.object_is_not_for_queued_deletion after not calling queue free()",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Node:3172] does not have user signal: false_signal",
+"context": "Then it passes",
+"expected": "[Node:3172] does not have user signal: false_signal",
+"success": true
+} ],
+"context": "When calling obj_does_not_have_user_signal with fake signal",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Node:3191] is not freed",
+"context": "Then it passes",
+"expected": "[Node:3191] is not freed",
+"success": true
+} ],
+"context": "When calling asserts.is_not_freed(unfreed_object)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Node:3172] has method: title",
+"context": "Then it passes",
+"expected": "[Node:3172] has method: title",
+"success": true
+} ],
+"context": "When calling has_method('title')",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Node:3172] does not have meta: confusing",
+"context": "Then it passes",
+"expected": "[Node:3172] does not have meta: confusing",
+"success": true
+} ],
+"context": "When calling asserts.object_has_meta with real key but null val",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "[Node:3195] is blocking signals",
+"context": "Then it passes",
+"expected": "[Node:3195] is blocking signals",
+"success": true
+} ],
+"context": "When calling is blocking signals while blocking signals",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 15,
+"path": "res://tests/unit/object.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/object.test.gd",
+"tags": [  ],
+"test": ExtResource( 3 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 15
+}, {
+"context": "Given is_on_floor",
+"methods": [ {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then it can be stubbed",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "From a built-in KinematicBody2D2",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then it can be stubbed",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "From a user-defined script",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then it can be stubbed",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "From a child node of a scene without scripts",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 3,
+"path": "res://tests/unit/on_floor.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/on_floor.test.gd",
+"tags": [  ],
+"test": ExtResource( 7 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 3
+}, {
+"context": "Given the Addition Operator",
+"methods": [ {
+"assertions": [ {
+"actual": "|int| 0 is equal to |int| 0",
+"context": "",
+"expected": "|int| 0 is equal to |int| 0",
+"success": true
+} ],
+"context": "When we subtract 2 from 2 we get 0",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 2 is equal to |int| 2",
+"context": "",
+"expected": "|int| 2 is equal to |int| 2",
+"success": true
+} ],
+"context": "When we subtract 5 from 3 we get 2",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 1 is equal to |int| 1",
+"context": "",
+"expected": "|int| 1 is equal to |int| 1",
+"success": true
+} ],
+"context": "When we subtract 7 from 6 we get 1",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 4 is equal to |int| 4",
+"context": "",
+"expected": "|int| 4 is equal to |int| 4",
+"success": true
+} ],
+"context": "When we add 2 to 2 we get 4",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 8 is equal to |int| 8",
+"context": "",
+"expected": "|int| 8 is equal to |int| 8",
+"success": true
+} ],
+"context": "When we add 5 to 3 we get 8",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|int| 13 is equal to |int| 13",
+"context": "",
+"expected": "|int| 13 is equal to |int| 13",
+"success": true
+} ],
+"context": "When we add 7 to 6 we get 13",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 6,
+"path": "res://tests/unit/parameters.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/parameters.test.gd",
+"tags": [  ],
+"test": ExtResource( 5 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 6
+}, {
+"context": "Given A Range Assertion",
+"methods": [ {
+"assertions": [ {
+"actual": "0 is in range(0, 10)",
+"context": "Then it passes",
+"expected": "0 is in range(0, 10)",
+"success": true
+} ],
+"context": "When calling is (0) in range(0, 10)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "10 is not in range(0, 10)",
+"context": "Then it passes",
+"expected": "10 is not in range(0, 10)",
+"success": true
+} ],
+"context": "When calling is (10) not in range (in range(0, 10)",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 2,
+"path": "res://tests/unit/range.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/range.test.gd",
+"tags": [  ],
+"test": ExtResource( 13 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 2
+}, {
+"context": "Given a String Assertion",
+"methods": [ {
+"assertions": [ {
+"actual": "lorem impsum contains em im",
+"context": "Then it passes",
+"expected": "lorem impsum contains em im",
+"success": true
+} ],
+"context": "When calling asserts.string_contains('em im', 'lorem impsum')",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "lorem impsum ends with impsum",
+"context": "Then it passes",
+"expected": "lorem impsum ends with impsum",
+"success": true
+} ],
+"context": "When calling asserts.string_ends_with('impsum', 'lorem impsum')",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "impsum does not begin with bleh lorem",
+"context": "Then it passes",
+"expected": "impsum does not begin with bleh lorem",
+"success": true
+} ],
+"context": "When calling asserts.string_does_not_begin_with('lorem', 'impsum')",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "impsum does not contain beem im",
+"context": "Then it passes",
+"expected": "impsum does not contain beem im",
+"success": true
+} ],
+"context": "When calling asserts.string_does_not_contain('em im', 'impsum')",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "lorem impsum begins with lorem",
+"context": "Then it passes",
+"expected": "lorem impsum begins with lorem",
+"success": true
+} ],
+"context": "When calling asserts.string_begins_with('lorem', 'lorem impsum')",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "impsum does not end with lorem",
+"context": "Then it passes",
+"expected": "impsum does not end with lorem",
+"success": true
+} ],
+"context": "When calling asserts.string_does_not_end_with('lorem', 'impsum')",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 6,
+"path": "res://tests/unit/string.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/string.test.gd",
+"tags": [  ],
+"test": ExtResource( 10 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 6
+}, {
+"context": "Dummy Test 2",
+"methods": [ {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Passing!",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "This method passes",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 1,
+"path": "res://tests/unit/suite.test.gd.DummyTwo",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/suite.test.gd.DummyTwo",
+"tags": [  ],
+"test": SubResource( 3 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 1
+}, {
+"context": "Dummy Passing Test",
+"methods": [ {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Passing!",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "This method passes",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 1,
+"path": "res://tests/unit/suite.test.gd.DummyOne",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/suite.test.gd.DummyOne",
+"tags": [  ],
+"test": SubResource( 4 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 1
+}, {
+"context": "Given a Test Script",
+"methods": [ {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|int| 2 is equal to |int| 2",
+"context": "",
+"expected": "|int| 2 is equal to |int| 2",
+"success": true
+} ],
+"context": " when we omit context we can see expected and got under method",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|int| 10 is greater than |int| 1",
+"context": "We get an array of multiple values back",
+"expected": "|int| 10 is greater than |int| 1",
+"success": true
+}, {
+"actual": "|int| 0 is not equal to |int| 9",
+"context": "With different values",
+"expected": "|int| 0 != |int| 9",
+"success": true
+}, {
+"actual": "|int| 10 is greater than |int| 1",
+"context": "And we can track multiple properties",
+"expected": "|int| 10 is greater than |int| 1",
+"success": true
+} ],
+"context": "When we record properties",
+"passed": 3,
+"success": true,
+"time": 0.0,
+"total": 3
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "if the test didn't break this works",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": " we can omit describe",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 3,
+"path": "res://tests/unit/test.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/test.test.gd",
+"tags": [  ],
+"test": ExtResource( 14 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 3
+}, {
+"context": "Given a Signal Watcher",
+"methods": [ {
+"assertions": [ {
+"actual": "Signal: example was not emitted from [Node:3278]",
+"context": "Then it does not capture the non-emitted signal",
+"expected": "Signal: example was not emitted from [Node:3278]",
+"success": true
+} ],
+"context": "When we watch and do not emit a signal",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "Signal: example was emitted from [Node:3278] with arguments: [1, 20, 5]",
+"context": "Then it captures any arguments that where passed when the signal was emitted",
+"expected": "Signal: example was emitted from [Node:3278] with arguments: [1, 20, 5]",
+"success": true
+} ],
+"context": "When we watch a signal from an object with no bound variables",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "signal: multiple was emitted from [Node:3278] 2",
+"context": "Then we can track how many times we emitted it",
+"expected": "signal: multiple was emitted from [Node:3278] 2",
+"success": true
+} ],
+"context": "When we watch and signal and emit it multiple times",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "signal: example was emitted from [Node:3278]",
+"context": "Then it captures the emitted signal",
+"expected": "signal: example was emitted from [Node:3278]",
+"success": true
+} ],
+"context": "When we watch and emit a signal",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 4,
+"path": "res://tests/unit/watcher.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/watcher.test.gd",
+"tags": [  ],
+"test": ExtResource( 15 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 4
+}, {
+"context": "Given a Yield",
+"methods": [ {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then we set var c to true",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then we set var d to true",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we yield in pre thrice",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then we set var e to true",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then we set var f to true",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we yield twice in execute",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "[100, Null, Null, Null, Null, Null] is builtin: Array",
+"context": "Then we get an array",
+"expected": "[100, Null, Null, Null, Null, Null] is builtin: Array",
+"success": true
+}, {
+"actual": "|int| 6 is equal to |int| 6",
+"context": "Of size 6",
+"expected": "|int| 6 is equal to |int| 6",
+"success": true
+}, {
+"actual": "|int| 100 is equal to |int| 100",
+"context": "Where element 0 is 100",
+"expected": "|int| 100 is equal to |int| 100",
+"success": true
+} ],
+"context": "When yield(self.yield_value()) returns",
+"passed": 3,
+"success": true,
+"time": 0.0,
+"total": 3
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then we set var a to true",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then we set var b to true",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we yield in start twice",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the timeout signal is disconnected",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then the signal-signal is disconnected",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When it is finished",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the yielder is unpaused",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then the timeout signal of the yielder is connected",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then our signal is connected to the yielder",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we call until signal",
+"passed": 3,
+"success": true,
+"time": 0.0,
+"total": 3
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the yielder is paused",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then the timeout signal of the yielder is disconnected",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "Then our signal to the yielder is disconnected",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When the yielder heres our signal",
+"passed": 3,
+"success": true,
+"time": 0.0,
+"total": 3
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then yielder is not active",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When asserting against a test",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the yielder is paused",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When a signal being yielded on is emitted",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then yielder is unpaused",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "The timeout signal of the yielder is connected",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When we call until_timeout (with 1.0)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then the yielder is paused",
+"expected": "|bool| True == true",
+"success": true
+}, {
+"actual": "|bool| True == true",
+"context": "The timeout signal of the yielder is not connected",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When the yielder times out on until_timeout(0.1)",
+"passed": 2,
+"success": true,
+"time": 0.0,
+"total": 2
+} ],
+"passed": 11,
+"path": "res://tests/unit/yield.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/yield.test.gd",
+"tags": [  ],
+"test": ExtResource( 11 )
+},
+"success": true,
+"time_taken": 0.0,
+"total": 11
 } ]
 }
-current_key = 1609792392
+current_key = 1609796620

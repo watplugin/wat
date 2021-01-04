@@ -82,8 +82,24 @@ func _is_suite(name: String) -> bool:
 		return load(name).get("IS_WAT_SUITE")
 	return false
 	
+func _calculate_yield_time(source: String) -> float:
+	var yieldtime = 0.0
+	if not "yield" in source:
+		return yieldtime
+	var lines = source.split("\n")
+	for l in lines:
+		if "YIELD" in l:
+			if "until_signal" in l:
+				var sub = l.replace("), YIELD)", "")
+				sub = Array(sub.split(" ")).back() as float
+				yieldtime += sub
+			elif "until_timeout" in l:
+				var sub = l.replace("yield(until_timeout(", "").replace("), YIELD)", "") as float
+				yieldtime += sub
+	return yieldtime
+	
 func _add_test(name: String) -> Dictionary:
-	var container = {path = name, test = load(name), tags = [], method = "", containers = []}
+	var container = {path = name, test = load(name), tags = [], method = "", containers = [], yield_time = 0.0}
 	if _metadata.metadata.has(name):
 		container.tags = _metadata.metadata[name].tags
 	if not _cache.scripts.has(container.test):
@@ -91,6 +107,7 @@ func _add_test(name: String) -> Dictionary:
 	for tag in container.tags:
 		tests[tag].append(container)
 	tests[name] = container
+	container.yield_time = _calculate_yield_time(load(name).source_code)
 	return container
 	
 func _add_suite(name: String) -> Array:
@@ -114,6 +131,8 @@ func _add_suite(name: String) -> Array:
 			container.tags = []
 			container.method = ""
 			container.containers = []
+			# We don't have easy access to source code here so we just ignore it
+			container.yield_time = 0.0
 			if _metadata.metadata.has(name):
 				container.tags = _metadata.metadata[name].tags
 				tests[name] = container
