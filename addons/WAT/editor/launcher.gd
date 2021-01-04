@@ -4,6 +4,7 @@ tool
 signal finished
 var context
 
+
 func launch(tests: Array) -> void:
 	context = EditorLaunch.new() if Engine.is_editor_hint() else GameLaunch.new()
 	context.connect("finished", self, "_on_launch_finished")
@@ -18,6 +19,7 @@ class EditorLaunch extends Node:
 	signal finished
 	const TestRunner: String = "res://addons/WAT/core/test_runner/TestRunner.tscn"
 	var editor
+	var _wasLaunched
 	
 	func launch(tests: Array) -> void:
 		var instance = load(TestRunner).instance()
@@ -28,16 +30,19 @@ class EditorLaunch extends Node:
 		editor = ClassDB.instance("EditorPlugin").get_editor_interface()
 		editor.reload_scene_from_path(TestRunner)
 		editor.play_custom_scene(TestRunner)
+		_wasLaunched = true
 	
 	func _process(delta: float) -> void:
 		if _is_done():
+#		print(editor.get_playing_scene())
 			_reset()
 
 			
 	func _is_done() -> bool:
-		return editor != null and not editor.is_playing_scene()
+		return editor != null and not editor.is_playing_scene() and _wasLaunched
 		
 	func _reset() -> void:
+		_wasLaunched = false
 		var instance = load(TestRunner).instance()
 		# We want to make sure we clear the testrunner after each run 
 		# ..especially when dealing with exported tests
