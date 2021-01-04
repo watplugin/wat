@@ -31,10 +31,23 @@ class EditorLaunch extends Node:
 	
 	func _process(delta: float) -> void:
 		if _is_done():
-			emit_signal("finished")
+			_reset()
+
 			
 	func _is_done() -> bool:
 		return editor != null and not editor.is_playing_scene()
+		
+	func _reset() -> void:
+		var instance = load(TestRunner).instance()
+		# We want to make sure we clear the testrunner after each run 
+		# ..especially when dealing with exported tests
+		instance.tests = []
+		var scene = PackedScene.new()
+		scene.pack(instance)
+		ResourceSaver.save(TestRunner, scene)
+		editor = ClassDB.instance("EditorPlugin").get_editor_interface()
+		editor.reload_scene_from_path(TestRunner)
+		emit_signal("finished")
 	
 class GameLaunch extends Node:
 	signal finished
