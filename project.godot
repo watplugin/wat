@@ -48,7 +48,6 @@ quick_access=Object(FuncRef,"script":null)
 [WAT]
 
 Test_Directory="res://tests"
-Results_Directory="C:/Users/Alex/AppData/Roaming/Godot/app_userdata/WaitingAndTesting"
 Tags=PoolStringArray( "Windows", "Linux", "IOS", "Android" )
 Window_Size=Vector2( 1280, 720 )
 Minimize_Window_When_Running_Tests=false

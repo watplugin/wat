@@ -11,12 +11,12 @@ func add_unique_run_key(key: int) -> void:
 		return
 	results[key] = []
 	current_key = key
-	ResourceSaver.save(ProjectSettings.get_setting("WAT/Results_Directory") + "/results.tres", self)
+	ResourceSaver.save(WAT.Settings.test_directory() + "/.test/results.tres", self)
 	pass
 	
 func save(_results: Array) -> void:
 	results[current_key] = _results
-	ResourceSaver.save(ProjectSettings.get_setting("WAT/Results_Directory") + "/results.tres", self)
+	ResourceSaver.save(WAT.Settings.test_directory() + "/.test/results.tres", self)
 
 func failed() -> Array:
 	var _failed: Array = []

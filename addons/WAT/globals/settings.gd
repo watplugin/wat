@@ -4,7 +4,6 @@ tool
 static func initialize() -> void:
 	push_warning("You may change any setting for WAT in Project -> ProjectSettings -> General -> WAT")
 	_add_setting("Test_Directory", TYPE_STRING, "res://tests")
-	_add_setting("Results_Directory", TYPE_STRING, OS.get_user_data_dir())
 	_add_setting("Tags", TYPE_STRING_ARRAY, PoolStringArray())
 	_add_setting("Window_Size", TYPE_VECTOR2, Vector2(1280, 720))
 	_add_setting("Minimize_Window_When_Running_Tests", TYPE_BOOL, false)
