@@ -21,6 +21,14 @@ metadata = {
 "path": "res://tests/integration/test_double.test.gd",
 "tags": [  ]
 },
+"res://tests/unit/Gyield2.test.gd": {
+"path": "res://tests/unit/Gyield2.test.gd",
+"tags": [  ]
+},
+"res://tests/unit/ayield2.test.gd": {
+"path": "res://tests/unit/ayield2.test.gd",
+"tags": [  ]
+},
 "res://tests/unit/boolean.test.gd": {
 "path": "res://tests/unit/boolean.test.gd",
 "tags": [  ]
@@ -59,6 +67,10 @@ metadata = {
 },
 "res://tests/unit/range.test.gd": {
 "path": "res://tests/unit/range.test.gd",
+"tags": [  ]
+},
+"res://tests/unit/someyield2.test.gd": {
+"path": "res://tests/unit/someyield2.test.gd",
 "tags": [  ]
 },
 "res://tests/unit/string.test.gd": {

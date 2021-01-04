@@ -15,13 +15,15 @@ var _is_terminating = false
 #var test_controller
 
 func _ready() -> void:
+	_is_terminating = false
+	controllers = {}
 	for thread in threads:
 		var controller = TestController.new()
 		controllers[controller] = Thread.new()
 		controller.connect("finished", self, "_on_controller_finished", [controller])
 		add_child(controller)
 	print("Initializing TestRunner")
-	_run()
+	call_deferred("_run")
 	
 func _on_controller_finished(controller) -> void:
 	controllers[controller].wait_to_finish()
@@ -40,8 +42,15 @@ func _run() -> void:
 			if controllers[controller].is_active():
 				return
 		_terminate()
+		
+func _process(delta):
+	_run()
 
 func _terminate() -> void:
+	for controller in controllers:
+		controllers.erase(controller)
+		remove_child(controller)
+		controller.queue_free()
 	if _is_terminating:
 		return
 	_is_terminating = true

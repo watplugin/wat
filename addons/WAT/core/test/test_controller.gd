@@ -16,6 +16,7 @@ var _current_method: String
 var _cursor = -1
 var _repeat = 0
 var results: Dictionary setget ,_get_results
+var thread_id = 0
 
 #	test.recorder = Recorder
 
