@@ -273,6 +273,7 @@ flat = true
 
 [node name="Launcher" type="Node" parent="."]
 script = ExtResource( 13 )
+[connection signal="_tests_selected" from="GUI/Interact" to="." method="_on_tests_selected"]
 [connection signal="pressed" from="GUI/Interact/QuickStart" to="GUI/Interact" method="_on_QuickStart_pressed"]
 [connection signal="pressed" from="GUI/Interact/TestMenu" to="GUI/Interact" method="_on_TestMenu_pressed"]
 [connection signal="about_to_show" from="GUI/Interact/TestMenu/Directories" to="GUI/Interact" method="_on_Directories_about_to_show"]

@@ -14,6 +14,7 @@ const Recorder = preload("res://addons/WAT/core/test/recorder.gd")
 const Settings = preload("res://addons/WAT/globals/settings.gd")
 const ResManager = preload("res://addons/WAT/globals/resourcemanager.gd")
 
+
 class Icon:
 	const SUCCESS = preload("res://addons/WAT/assets/passed.svg")
 	const FAILED = preload("res://addons/WAT/assets/failed.svg")

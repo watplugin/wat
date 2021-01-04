@@ -1,11 +1,6 @@
 extends Reference
 
-func save(results, time: float = 0.0) -> void:
-	if not ProjectSettings.has_setting("WAT/Results_Directory"):
-		return
-	var path = ProjectSettings.get_setting("WAT/Results_Directory")
-	if not Directory.new().dir_exists(path):
-		Directory.new().make_dir_recursive(path)
+static func save(results, time: String = "0.0") -> void:
 	var tests: int = results.size()
 	var failures: int = 0
 	for i in results:
@@ -24,7 +19,4 @@ func save(results, time: float = 0.0) -> void:
 				output += '\n</testcase>' 
 		output += "\n</testsuite>"
 	output += '\n</testsuites>'
-	var XML = File.new()
-	XML.open("%s/results.xml" % path, File.WRITE)
-	XML.store_string(output)
-	XML.close()
+	WAT.ResManager.save_junit_xml(output)

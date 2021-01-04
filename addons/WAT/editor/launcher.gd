@@ -34,7 +34,6 @@ class EditorLaunch extends Node:
 	
 	func _process(delta: float) -> void:
 		if _is_done():
-#		print(editor.get_playing_scene())
 			_reset()
 
 			

@@ -23,6 +23,17 @@ static func save_metadata(metadata: Resource) -> void:
 	_create_metadata()
 	ResourceSaver.save(_metadata_path(), metadata())
 	
+static func save_results(results: Resource) -> void:
+	_create_results()
+	ResourceSaver.save(_result_path(), results)
+	
+static func save_junit_xml(xml) -> void:
+	_set_datapath()
+	var XML = File.new()
+	XML.open(_xml_path(), File.WRITE)
+	XML.store_string(xml)
+	XML.close()
+	
 static func _create_metadata():
 	var savepath: String = _metadata_path()
 	if ResourceLoader.exists(savepath):
@@ -59,6 +70,9 @@ static func _cache_path():
 	
 static func _result_path():
 	return Settings.test_directory() + "/.test" + "/results.tres"
+	
+static func _xml_path():
+	return Settings.test_directory() + "/.test" + "/results.xml"
 
 static func _set_datapath():
 	Directory.new().make_dir(Settings.test_directory())

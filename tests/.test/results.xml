@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<testsuites failures="1" name="TestXML" tests="1" time="2.087">
+<testsuite failures="1" name="Given a Boolean Assertion" tests="3" time="0">
+<testcase name=" intentional failure" time="0">
+<failure message="EXPECTED: |bool| True == false but GOT |bool| True != false"></failure>
+</testcase>
+<testcase name="When calling asserts.is_true(true)" time="0">
+</testcase>
+<testcase name="When calling asserts.is_false(false)" time="0">
+</testcase>
+</testsuite>
+</testsuites>

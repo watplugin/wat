@@ -11,14 +11,11 @@ var tests: Dictionary = {}
 func _ready() -> void:
 	_cache = WAT.ResManager.cache()
 	_metadata = WAT.ResManager.metadata()
-	var time = OS.get_ticks_msec()
 	tests = {directories = [], suitepool = []}
 	_define_tags()
 	var path: String = ProjectSettings.get_setting("WAT/Test_Directory")
 	_search(path)
 	tests.directories.erase(path)
-	tests = tests
-	print("Time Taken: ", OS.get_ticks_msec() - time)
 	
 func _notification(what) -> void:
 	if what != NOTIFICATION_WM_QUIT_REQUEST:

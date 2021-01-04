@@ -12,7 +12,7 @@ const PASSED: int = 0
 const FAILED: int = 1
 
 const TestRunner: PackedScene = preload("res://addons/WAT/core/test_runner/TestRunner.tscn")
-var filecache = preload("res://addons/WAT/cache/test_cache.gd").new()
+var filecache 
 var _runner: Node
 var _start_time: float
 

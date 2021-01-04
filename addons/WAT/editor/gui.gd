@@ -20,7 +20,6 @@ func _on_tests_selected(tests = []) -> void:
 		
 func _on_launch_finished():
 	var results: Array = WAT.results().retrieve(runkey)
+	preload("res://addons/WAT/resources/junitxml.gd").save(results, Summary.Time.text)
 	Summary.summarize(results)
 	Results.display(results)	
-	
-
