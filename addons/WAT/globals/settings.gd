@@ -2,6 +2,7 @@ extends Reference
 tool
 
 static func initialize() -> void:
+	push_warning("You may change any setting for WAT in Project -> ProjectSettings -> General -> WAT")
 	_add_setting("Test_Directory", TYPE_STRING, "res://tests")
 	_add_setting("Results_Directory", TYPE_STRING, OS.get_user_data_dir())
 	_add_setting("Tags", TYPE_STRING_ARRAY, PoolStringArray())

@@ -1,15 +1,15 @@
 extends Node
 tool
 
-const METADATA: Resource = preload("res://addons/WAT/resources/metadata.tres")
 const BLANK = ""
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 var _cache
+var _metadata
 
 var tests: Dictionary = {}
 
 func _ready() -> void:
-	_cache = _load_cache()
+	_load_cache()
 	var time = OS.get_ticks_msec()
 	tests = {directories = [], suitepool = []}
 	_define_tags()
@@ -19,12 +19,34 @@ func _ready() -> void:
 	tests = tests
 	print("Time Taken: ", OS.get_ticks_msec() - time)
 	
-func _load_cache() -> Resource:
-	var cache = load("res://addons/WAT/resources/test_cache.tres")
-	if cache == null:
-		push_warning("Could not load test cache. Overwriting with new file")
-		cache = load("res://addons/WAT/resources/testcache.gd").new()
-	return cache
+func _load_cache() -> void:
+	var testdir = WAT.Settings.test_directory()
+	var cachedir = testdir + "/.test"
+	var cachepath = cachedir + "/cache.tres"
+	var metadatapath = cachedir + "/metadata.tres"
+	
+	if not ResourceLoader.exists(cachepath):
+		push_warning("Creating Test Cache at %s" % cachedir)
+		var err = Directory.new().make_dir(cachedir)
+		if err != OK:
+			push_warning(err as String)
+		var cacheres = preload("res://addons/WAT/resources/testcache.gd").new()
+		ResourceSaver.save(cachepath, cacheres)
+	if not ResourceLoader.exists(metadatapath):
+		push_warning("Creating Metadata cache at %s" % metadatapath)
+		var metadatares = preload("res://addons/WAT/resources/metadata.gd").new()
+		ResourceSaver.save(metadatapath, metadatares)
+	
+	_metadata = load(metadatapath)
+	_cache = load(cachepath)
+	if _cache == null:
+		push_warning("Error loading test cache. Recreating")
+		var err = Directory.new().make_dir(cachedir)
+		if err != OK:
+			push_warning(err as String)
+		var newcache = preload("res://addons/WAT/resources/testcache.gd").new()
+		ResourceSaver.save(cachepath, newcache)
+		_cache = load(cachepath)
 	
 func _notification(what) -> void:
 	if what != NOTIFICATION_WM_QUIT_REQUEST:
@@ -33,9 +55,16 @@ func _notification(what) -> void:
 		push_warning("Metadata is not saved in release builds")
 		return
 	else:
+		_save()
+		
+func _save() -> void:
 		_serialize_metadata()
-		ResourceSaver.save("res://addons/WAT/resources/test_cache.tres", _cache)
-		ResourceSaver.save("res://addons/WAT/resources/metadata.tres", METADATA)
+		var testdir = WAT.Settings.test_directory()
+		var cachedir = testdir + "/.test"
+		var cachepath = cachedir + "/cache.tres"
+		var metadatapath = cachedir + "/metadata.tres"
+		ResourceSaver.save(cachepath, _cache)
+		ResourceSaver.save(metadatapath, _metadata)
 		
 func _serialize_metadata():
 	var metadata = {}
@@ -43,7 +72,7 @@ func _serialize_metadata():
 		if test.ends_with(".gd"):
 			var c = tests[test]
 			metadata[test] = {"path": test, "tags": c.tags}
-	METADATA.metadata = metadata
+	_metadata.metadata = metadata
 	
 func _define_tags() -> void:
 	for tag in WAT.Settings.tags():
@@ -93,8 +122,8 @@ func _is_suite(name: String) -> bool:
 	
 func _add_test(name: String) -> Dictionary:
 	var container = {path = name, test = load(name), tags = [], method = "", containers = []}
-	if METADATA.metadata.has(name):
-		container.tags = METADATA.metadata[name].tags
+	if _metadata.metadata.has(name):
+		container.tags = _metadata.metadata[name].tags
 	if not _cache.scripts.has(container.test):
 		_cache.scripts.append(container.test)
 	for tag in container.tags:
@@ -123,8 +152,8 @@ func _add_suite(name: String) -> Array:
 			container.tags = []
 			container.method = ""
 			container.containers = []
-			if METADATA.metadata.has(name):
-				container.tags = METADATA.metadata[name].tags
+			if _metadata.metadata.has(name):
+				container.tags = _metadata.metadata[name].tags
 				tests[name] = container
 			scripts.append(container)
 			for tag in container.tags:
