@@ -60,10 +60,6 @@ config/name="WaitingAndTesting"
 run/main_scene="res://addons/WAT/gui.tscn"
 config/icon="res://icon.png"
 
-[autoload]
-
-WATNamespace="*res://addons/WAT/globals/namespace.gd"
-
 [debug]
 
 gdscript/warnings/enable=false
@@ -76,10 +72,6 @@ gdscript/warnings/unsafe_call_argument=true
 [display]
 
 window/stretch/mode="2d"
-
-[editor_plugins]
-
-enabled=PoolStringArray( "WAT" )
 
 [rendering]
 

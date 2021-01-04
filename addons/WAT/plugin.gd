@@ -14,9 +14,6 @@ func get_plugin_name() -> String:
 
 func _enter_tree() -> void:
 	WAT.Settings.initialize()
-	yield(get_tree(), "idle_frame")
-	if not get_tree().root.has_node("WATNamespace"):
-		add_autoload_singleton("WATNamespace", Global)
 
 	_ControlPanel = ControlPanel.instance()
 	_DockController = DockController.new(self, _ControlPanel)
