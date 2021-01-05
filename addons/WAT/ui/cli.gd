@@ -12,12 +12,13 @@ const PASSED: int = 0
 const FAILED: int = 1
 
 const TestRunner: PackedScene = preload("res://addons/WAT/core/test_runner/TestRunner.tscn")
-var filecache 
 var _runner: Node
 var _start_time: float
+var _tests
+var runkey: int
 
 func _ready() -> void:
-	WAT.FileManager.initialize()
+	_tests = get_node("explorer")
 	parse(arguments())
 	
 func arguments() -> Array:
@@ -34,18 +35,18 @@ func parse(arguments: Array) -> void:
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
-			tests = filecache.scripts(WAT.Settings.test_directory())
+			tests = _tests.tests[WAT.Settings.test_directory()]
 		RUN_DIRECTORY:
-			tests = filecache.scripts(arguments.front())
+			tests = _tests.tests[arguments.front()]
 		RUN_SCRIPT:
-			tests = filecache.scripts(arguments.front())
+			tests = _tests.tests[arguments.front()]
 		RUN_TAG:
-			tests = filecache.tagged(arguments.front())
+			tests = _tests.tests[arguments.front()]
 		RUN_METHOD:
-			tests = filecache.scripts(arguments[0])
-			tests[0].test.set_meta("method", arguments[1])
+			tests = _tests.tests[arguments[0]]
+			tests[0].method = arguments[1]
 		RUN_FAILURES:
-			tests = WAT.Settings.results.failed()
+			tests = WAT.ResManager.results().failed()
 		LIST_ALL:
 			_list()
 			get_tree().quit()
@@ -68,9 +69,8 @@ func test_directory() -> String:
 
 func _list(path: String = test_directory()):
 	print()
-	for script in filecache.script_paths:
-		if script.begins_with(path):
-			print(script)
+	for script in _tests.tests[path]:
+		print(script.path)
 	
 func duplicate_tests(tests: Array, repeat: int) -> Array:
 	var duplicates = []
@@ -81,6 +81,8 @@ func duplicate_tests(tests: Array, repeat: int) -> Array:
 	return tests
 
 func _run(tests) -> void:
+	runkey = OS.get_unix_time()
+	WAT.ResManager.results().add_unique_run_key(runkey)
 	_runner = TestRunner.instance()
 	_runner.tests = tests
 	_runner.is_editor = false
@@ -90,7 +92,7 @@ func _run(tests) -> void:
 	
 func _on_testrunner_ended() -> void:
 	_runner.queue_free()
-	var caselist: Array = WAT.ResManager.results().retrieve()
+	var caselist: Array = WAT.ResManager.results().retrieve(runkey)
 	var cases = {passed = 0, total = 0, crashed = 0}
 	for case in caselist:
 		cases.total += 1
