@@ -5,11 +5,11 @@ signal finished
 var context
 
 
-func launch(tests: Array) -> void:
+func launch(tests: Array, threads: int = 1) -> void:
 	context = EditorLaunch.new() if Engine.is_editor_hint() else GameLaunch.new()
 	context.connect("finished", self, "_on_launch_finished")
 	add_child(context)
-	context.launch(tests)
+	context.launch(tests, threads)
 	
 func _on_launch_finished() -> void:
 	context.queue_free()
@@ -21,9 +21,10 @@ class EditorLaunch extends Node:
 	var editor
 	var _wasLaunched
 	
-	func launch(tests: Array) -> void:
+	func launch(tests: Array, threads: int = 1) -> void:
 		var instance = load(TestRunner).instance()
 		instance.tests = tests
+		instance.threads = threads
 		var scene = PackedScene.new()
 		scene.pack(instance)
 		ResourceSaver.save(TestRunner, scene)
@@ -57,9 +58,10 @@ class GameLaunch extends Node:
 	signal finished
 	const TestRunner: String = "res://addons/WAT/core/test_runner/TestRunner.tscn"
 	
-	func launch(tests: Array) -> void:
+	func launch(tests: Array, threads: int = 1) -> void:
 		var instance = load(TestRunner).instance()
 		instance.is_editor = false
 		instance.tests = tests
+		instance.threads = threads
 		instance.connect("finished", self, "emit_signal", ["finished"])
 		add_child(instance)

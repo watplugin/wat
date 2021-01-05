@@ -10,17 +10,19 @@ onready var Tags: PopupMenu = $TestMenu/Directories/Tags
 onready var TagEditor: PopupMenu = $TestMenu/Directories/Scripts/Methods/TagEditor
 onready var Repeater: SpinBox = $Repeat
 onready var Tests: Node = $Explorer
+onready var Threads: SpinBox = $Threads
 
 func _ready() -> void:
 	# Dictionaries are referenced, meaning this is a pointer to the main dir
 #	tests = get_tree().root.get_node("WATNamespace").FileManager.tests
+	Threads.max_value = OS.get_processor_count() - 1
 	Directories.connect("index_pressed", self, "_on_idx_pressed", [Directories])
 	Scripts.connect("index_pressed", self, "_on_idx_pressed", [Scripts])
 	Methods.connect("index_pressed", self, "_on_idx_pressed", [Methods])
 	Tags.connect("index_pressed", self, "_on_idx_pressed", [Tags])
 	
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
-	emit_signal("_tests_selected", duplicate_tests(menu.get_item_metadata(idx)))
+	emit_signal("_tests_selected", duplicate_tests(menu.get_item_metadata(idx)), Threads.value as int)
 
 func _on_Directories_about_to_show():
 	Directories.clear()
