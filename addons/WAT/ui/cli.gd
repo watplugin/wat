@@ -90,7 +90,7 @@ func _run(tests) -> void:
 	
 func _on_testrunner_ended() -> void:
 	_runner.queue_free()
-	var caselist: Array = WAT.Settings.results().retrieve()
+	var caselist: Array = WAT.ResManager.results().retrieve()
 	var cases = {passed = 0, total = 0, crashed = 0}
 	for case in caselist:
 		cases.total += 1

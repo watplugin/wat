@@ -31,7 +31,7 @@ func _on_Directories_about_to_show():
 	Directories.add_item("Rerun Failures")
 	Directories.add_submenu_item("Tags", "Tags")
 	Directories.set_item_metadata(0, tests(WAT.Settings.test_directory()))
-	Directories.set_item_metadata(1, WAT.results().failed())
+	Directories.set_item_metadata(1, WAT.ResManager.results().failed())
 	Directories.set_item_icon(0, WAT.Icon.RUN)
 	Directories.set_item_icon(1, WAT.Icon.RERUN_FAILED)
 	Directories.set_item_icon(2, WAT.Icon.TAG)

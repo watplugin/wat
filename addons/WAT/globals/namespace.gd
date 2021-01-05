@@ -25,15 +25,4 @@ class Icon:
 	const RERUN_FAILED = preload("res://addons/WAT/assets/rerun_failures.svg")
 	const RUN = preload("res://addons/WAT/assets/play.svg")
 	const TAG = preload("res://addons/WAT/assets/label.svg")
-	
-static func results() -> Resource:
-	# Lazy Initialization
-	# Add toggle for compiled/exported vs non-compiled/exported
-	# Make seperate ResourceManager scripts?
-	var path = Settings.test_directory() + "/.test/results.tres"
-	if not ResourceLoader.exists(path):
-		Directory.new().make_dir(Settings.test_directory() + "/.test")
-		var instance = load("res://addons/WAT/resources/results.gd").new()
-		ResourceSaver.save(path, instance)
-	return ResourceLoader.load(path, "", true)
 

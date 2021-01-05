@@ -72,6 +72,6 @@ func _terminate() -> void:
 	if _is_terminating and threads > 1:
 		return
 	_is_terminating = true
-	WAT.results().save(results)
+	WAT.ResManager.results().save(results)
 	print("Terminating TestRunner")
 	get_tree().quit() if is_editor else emit_signal("finished")
