@@ -8,6 +8,9 @@ jobs:
     steps:
         - checkout
         - run:
+            name: "Delete .import files"
+            command: rm addons/WAT/assets/*.import
+        - run:
             name: "Reimport files"
             command: godot -e --quit
         - run:
