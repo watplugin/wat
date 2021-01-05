@@ -8,6 +8,9 @@ jobs:
     steps:
         - checkout
         - run:
+            name: "Reimport files"
+            command: godot -e --quit
+        - run:
             name: "Run Unit Tests"
             command: godot addons/WAT/cli.tscn -run_dir=res://tests/unit
         - run:
