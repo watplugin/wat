@@ -8,9 +8,6 @@ jobs:
     steps:
         - checkout
         - run:
-            name: "Delete .import files"
-            command: rm addons/WAT/assets/*.import
-        - run:
             name: "Run Unit Tests"
             command: godot addons/WAT/cli.tscn -run_dir=res://tests/unit
         - run:
