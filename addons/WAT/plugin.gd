@@ -42,7 +42,7 @@ func goto_function(path: String, function: String):
 	get_editor_interface().edit_resource(script)
 	var source: PoolStringArray = script.source_code.split("\n")
 	for i in source.size():
-		if function in source[i] and "describe" in source[i]:
+		if function in source[i]:
 			get_editor_interface().get_script_editor().goto_line(i)
 			return
 

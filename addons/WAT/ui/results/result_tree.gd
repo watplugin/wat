@@ -15,7 +15,7 @@ func goto_function(path: String, function: String) -> void:
 	emit_signal("function_sought", path, function)
 	
 func _on_button_pressed(item, column, id):
-	goto_function(item.get_meta("path"), item.get_meta("context"))
+	goto_function(item.get_meta("path"), item.get_meta("fullname"))
 
 func display(cases: Array) -> void:
 	var total = cases.size()
@@ -42,6 +42,7 @@ func display(cases: Array) -> void:
 			method.set_tooltip(0, "Click icon to show test method in editor")
 			method.set_meta("path", c.path)
 			method.set_meta("context", m.context)
+			method.set_meta("fullname", m.fullname)
 
 			for a in m.assertions:
 				if a.context != "":

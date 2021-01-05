@@ -1,27 +1,12 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="4.037">
-<testsuite failures="0" name="Given a Yield" tests="11" time="0">
-<testcase name="When we yield in pre thrice" time="0">
+<testsuites failures="1" name="TestXML" tests="1" time="2.568">
+<testsuite failures="1" name="Given a Boolean Assertion" tests="3" time="0">
+<testcase name="When calling asserts.is_false(false)" time="0">
 </testcase>
-<testcase name="When we yield twice in execute" time="0">
+<testcase name=" intentional failure" time="0">
+<failure message="EXPECTED: |bool| True == false but GOT |bool| True != false"></failure>
 </testcase>
-<testcase name="When asserting against a test" time="0">
-</testcase>
-<testcase name="When it is finished" time="0">
-</testcase>
-<testcase name="When the yielder heres our signal" time="0">
-</testcase>
-<testcase name="When we call until_timeout (with 1.0)" time="0">
-</testcase>
-<testcase name="When we call until signal" time="0">
-</testcase>
-<testcase name="When the yielder times out on until_timeout(0.1)" time="0">
-</testcase>
-<testcase name="When yield(self.yield_value()) returns" time="0">
-</testcase>
-<testcase name="When we yield in start twice" time="0">
-</testcase>
-<testcase name="When a signal being yielded on is emitted" time="0">
+<testcase name="When calling asserts.is_true(true)" time="0">
 </testcase>
 </testsuite>
 </testsuites>

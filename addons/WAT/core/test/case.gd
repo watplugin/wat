@@ -15,8 +15,8 @@ func _init(name: String, container: Dictionary) -> void:
 	source = container
 	
 func add_method(name: String) -> void:
-	name = name.replace("_", " ").lstrip("test")
-	methods.append({context = name, assertions = [], total = 0, passed = 0, success = false, time = 0.0})
+	var contxt = name.replace("_", " ").lstrip("test")
+	methods.append({fullname = name, context = contxt, assertions = [], total = 0, passed = 0, success = false, time = 0.0})
 
 func _on_test_method_described(description: String) -> void:
 	methods.back().context = description
