@@ -12,7 +12,7 @@ jobs:
             command: rm addons/WAT/assets/*.import
         - run:
             name: "Reimport files"
-            command: godot -e --quit
+            command: timeout 30 ./godot --editor
         - run:
             name: "Run Unit Tests"
             command: godot addons/WAT/cli.tscn -run_dir=res://tests/unit
