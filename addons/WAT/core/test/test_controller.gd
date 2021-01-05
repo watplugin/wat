@@ -28,7 +28,6 @@ func _init() -> void:
 	# We may need to recreate our yielders per test
 	add_child(_yielder)
 	_yielder.connect("finished", self, "_next")
-	push_warning("Move Registry To Singleton")
 	_director.registry = preload("res://addons/WAT/core/double/registry.gd").new()
 	
 func _setup(container: Dictionary):
