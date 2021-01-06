@@ -29,10 +29,6 @@ metadata = {
 "path": "res://tests/unit/ayield2.test.gd",
 "tags": [  ]
 },
-"res://tests/unit/boolean.test.gd": {
-"path": "res://tests/unit/boolean.test.gd",
-"tags": [  ]
-},
 "res://tests/unit/equality.test.gd": {
 "path": "res://tests/unit/equality.test.gd",
 "tags": [  ]
@@ -57,10 +53,6 @@ metadata = {
 "path": "res://tests/unit/object.test.gd",
 "tags": [  ]
 },
-"res://tests/unit/on_floor.test.gd": {
-"path": "res://tests/unit/on_floor.test.gd",
-"tags": [  ]
-},
 "res://tests/unit/parameters.test.gd": {
 "path": "res://tests/unit/parameters.test.gd",
 "tags": [  ]
@@ -71,10 +63,6 @@ metadata = {
 },
 "res://tests/unit/someyield2.test.gd": {
 "path": "res://tests/unit/someyield2.test.gd",
-"tags": [  ]
-},
-"res://tests/unit/string.test.gd": {
-"path": "res://tests/unit/string.test.gd",
 "tags": [  ]
 },
 "res://tests/unit/test.test.gd": {

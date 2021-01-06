@@ -28,7 +28,6 @@ func _init(_registry, _klass: String, _inner_klass: String, deps: Array = []) ->
 	inner_klass = _inner_klass
 	dependecies = deps
 	is_built_in = ClassDB.class_exists(_klass)
-	#ProjectSettings.get_setting("WAT/TestDouble").register(self)
 	registry = _registry
 	registry.register(self)
 	set_methods()
@@ -63,12 +62,19 @@ func set_methods() -> void:
 	var params: String = "abcdefghij"
 	for m in method_list():
 		var arguments: String = ""
-		for i in m.args.size():
-			arguments = arguments + params[i] + ", "
+		# m.args.size() causes crashes in release exports
+		var idx = 0
+		for i in m.args:
+			arguments = arguments + params[idx] + ", "
+			idx += 1
 		var sanitized = arguments.replace(", ", "")
 		arguments = arguments.rstrip(", ")
 		var default_args = arguments
-		if m.default_args.size() > 0:
+		var def_idx = 0
+		# m.default_args.size() causes crashes in release exports
+		for def in m.default_args:
+			def_idx += 1
+		if def_idx > 0:
 			default_args = get_args_with_default(sanitized, m.default_args)
 		base_methods[m.name] = {"arguments": arguments, "default_arguments": default_args}
 		
@@ -96,8 +102,8 @@ func method_list() -> Array:
 	if is_built_in:
 		return ClassDB.class_get_method_list(klass)
 	var script = load(klass) if inner_klass == "" else _load_nested_class()
-	# We get our script methods first in case there is a custom constructor
-	# This way we don't end up reading the empty base constructors of Object
+#	# We get our script methods first in case there is a custom constructor
+#	# This way we don't end up reading the empty base constructors of Object
 	list += script.get_script_method_list()
 	list += ClassDB.class_get_method_list(script.get_instance_base_type())
 	var filtered = {}

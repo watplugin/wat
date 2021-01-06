@@ -1,106 +1,173 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://addons/WAT/resources/results.gd" type="Script" id=1]
-[ext_resource path="res://tests/unit/parameters.test.gd" type="Script" id=2]
+[ext_resource path="res://tests/integration/default_args.test.gd" type="Script" id=2]
 
 [resource]
 script = ExtResource( 1 )
 results = {
 0: [  ],
-1609894057: [ {
-"context": "Given the Addition Operator",
+1609946369: [ {
+"context": "Default Args",
 "methods": [ {
 "assertions": [ {
-"actual": "|int| 4 is equal to |int| 4",
+"actual": "|bool| True == true",
 "context": "",
-"expected": "|int| 4 is equal to |int| 4",
+"expected": "|bool| True == true",
 "success": true
 } ],
-"context": "When we add 2 to 2 we get 4",
-"fullname": "test_add",
-"passed": 1,
-"success": true,
-"time": 0.0,
-"total": 1
-}, {
-"assertions": [ {
-"actual": "|int| 8 is equal to |int| 8",
-"context": "",
-"expected": "|int| 8 is equal to |int| 8",
-"success": true
-} ],
-"context": "When we add 5 to 3 we get 8",
-"fullname": "test_add",
-"passed": 1,
-"success": true,
-"time": 0.0,
-"total": 1
-}, {
-"assertions": [ {
-"actual": "|int| 13 is equal to |int| 13",
-"context": "",
-"expected": "|int| 13 is equal to |int| 13",
-"success": true
-} ],
-"context": "When we add 7 to 6 we get 13",
-"fullname": "test_add",
-"passed": 1,
-"success": true,
-"time": 0.0,
-"total": 1
-}, {
-"assertions": [ {
-"actual": "|int| 0 is equal to |int| 0",
-"context": "",
-"expected": "|int| 0 is equal to |int| 0",
-"success": true
-} ],
-"context": "When we subtract 2 from 2 we get 0",
-"fullname": "test_subtract",
-"passed": 1,
-"success": true,
-"time": 0.0,
-"total": 1
-}, {
-"assertions": [ {
-"actual": "|int| 2 is equal to |int| 2",
-"context": "",
-"expected": "|int| 2 is equal to |int| 2",
-"success": true
-} ],
-"context": "When we subtract 5 from 3 we get 2",
-"fullname": "test_subtract",
-"passed": 1,
-"success": true,
-"time": 0.0,
-"total": 1
-}, {
-"assertions": [ {
-"actual": "|int| 1 is equal to |int| 1",
-"context": "",
-"expected": "|int| 1 is equal to |int| 1",
-"success": true
-} ],
-"context": "When we subtract 7 from 6 we get 1",
-"fullname": "test_subtract",
+"context": " default arguments of interpolate property",
+"fullname": "test_default_arguments_of_interpolate_property",
 "passed": 1,
 "success": true,
 "time": 0.0,
 "total": 1
 } ],
-"passed": 6,
-"path": "res://tests/unit/parameters.test.gd",
+"passed": 1,
+"path": "res://tests/integration/default_args.test.gd",
 "source": {
-"containers": [ "res://tests/unit", "res://tests" ],
+"containers": [ "res://tests/integration", "res://tests" ],
 "method": "",
-"path": "res://tests/unit/parameters.test.gd",
+"path": "res://tests/integration/default_args.test.gd",
 "tags": [  ],
 "test": ExtResource( 2 ),
 "yield_time": 0.0
 },
 "success": true,
 "time_taken": 0.0,
-"total": 6
+"total": 1
+} ],
+1609946471: [ {
+"context": "Default Args",
+"methods": [ {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": " default arguments of interpolate property",
+"fullname": "test_default_arguments_of_interpolate_property",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 1,
+"path": "res://tests/integration/default_args.test.gd",
+"source": {
+"containers": [ "res://tests/integration", "res://tests" ],
+"method": "",
+"path": "res://tests/integration/default_args.test.gd",
+"tags": [  ],
+"test": ExtResource( 2 ),
+"yield_time": 0.0
+},
+"success": true,
+"time_taken": 0.0,
+"total": 1
+} ],
+1609947128: [  ],
+1609947162: [  ],
+1609947207: [ {
+"context": "Default Args",
+"methods": [ {
+"assertions": [  ],
+"context": " default arguments of interpolate property",
+"fullname": "test_default_arguments_of_interpolate_property",
+"passed": 0,
+"success": false,
+"time": 0.0,
+"total": 0
+} ],
+"passed": 0,
+"path": "res://tests/integration/default_args.test.gd",
+"source": {
+"containers": [ "res://tests/integration", "res://tests" ],
+"method": "",
+"path": "res://tests/integration/default_args.test.gd",
+"tags": [  ],
+"test": ExtResource( 2 ),
+"yield_time": 0.0
+},
+"success": false,
+"time_taken": 0.0,
+"total": 1
+} ],
+1609947574: [ {
+"context": "Default Args",
+"methods": [ {
+"assertions": [  ],
+"context": " default arguments of interpolate property",
+"fullname": "test_default_arguments_of_interpolate_property",
+"passed": 0,
+"success": false,
+"time": 0.0,
+"total": 0
+} ],
+"passed": 0,
+"path": "res://tests/integration/default_args.test.gd",
+"source": {
+"containers": [ "res://tests/integration", "res://tests" ],
+"method": "",
+"path": "res://tests/integration/default_args.test.gd",
+"tags": [  ],
+"test": ExtResource( 2 ),
+"yield_time": 0.0
+},
+"success": false,
+"time_taken": 0.0,
+"total": 1
+} ],
+1609947685: [ {
+"context": "Default Args",
+"methods": [ {
+"assertions": [  ],
+"context": " default arguments of interpolate property",
+"fullname": "test_default_arguments_of_interpolate_property",
+"passed": 0,
+"success": false,
+"time": 0.0,
+"total": 0
+} ],
+"passed": 0,
+"path": "res://tests/integration/default_args.test.gd",
+"source": {
+"containers": [ "res://tests/integration", "res://tests" ],
+"method": "",
+"path": "res://tests/integration/default_args.test.gd",
+"tags": [  ],
+"test": ExtResource( 2 ),
+"yield_time": 0.0
+},
+"success": false,
+"time_taken": 0.0,
+"total": 1
+} ],
+1609947968: [ {
+"context": "Default Args",
+"methods": [ {
+"assertions": [  ],
+"context": " default arguments of interpolate property",
+"fullname": "test_default_arguments_of_interpolate_property",
+"passed": 0,
+"success": false,
+"time": 0.0,
+"total": 0
+} ],
+"passed": 0,
+"path": "res://tests/integration/default_args.test.gd",
+"source": {
+"containers": [ "res://tests/integration", "res://tests" ],
+"method": "",
+"path": "res://tests/integration/default_args.test.gd",
+"tags": [  ],
+"test": ExtResource( 2 ),
+"yield_time": 0.0
+},
+"success": false,
+"time_taken": 0.0,
+"total": 1
 } ]
 }
-current_key = 1609894057
+current_key = 1609947968
