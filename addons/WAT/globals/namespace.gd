@@ -16,7 +16,7 @@ const ResManager = preload("res://addons/WAT/globals/resourcemanager.gd")
 
 
 class Icon:
-	const SUCCESS = preload("res://addons/WAT/assets/passed.svg")
+	const SUCCESS = preload("res://addons/WAT/assets/passed.png")
 	const FAILED = preload("res://addons/WAT/assets/failed.svg")
 	const SUPPORT = preload("res://addons/WAT/assets/kofi.png")
 	const FOLDER = preload("res://addons/WAT/assets/folder.svg")
