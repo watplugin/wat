@@ -21,7 +21,7 @@ jobs:
             command: godot addons/WAT/cli.tscn -run_all
         - run:
             name: dircheck
-            command: dir
+            command: dir tests
         - store_test_results:
             path: tests/.test/xml
         - store_artifacts:
