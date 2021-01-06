@@ -14,9 +14,6 @@ jobs:
             name: "Run Unit Tests"
             command: godot addons/WAT/cli.tscn -run_dir=res://tests/unit
         - run:
-            name: "Run Integration Tests"
-            command: godot addons/WAT/cli.tscn -run_dir=res://tests/integration
-        - run:
             name: "Run All Tests"
             command: godot addons/WAT/cli.tscn -run_all
         - run:
