@@ -9,6 +9,10 @@ metadata = {
 "path": "res://tests/integration/default_args.test.gd",
 "tags": [  ]
 },
+"res://tests/integration/on_floor.test.gd": {
+"path": "res://tests/integration/on_floor.test.gd",
+"tags": [  ]
+},
 "res://tests/integration/scene_director.test.gd": {
 "path": "res://tests/integration/scene_director.test.gd",
 "tags": [  ]
@@ -21,12 +25,8 @@ metadata = {
 "path": "res://tests/integration/test_double.test.gd",
 "tags": [  ]
 },
-"res://tests/unit/Gyield2.test.gd": {
-"path": "res://tests/unit/Gyield2.test.gd",
-"tags": [  ]
-},
-"res://tests/unit/ayield2.test.gd": {
-"path": "res://tests/unit/ayield2.test.gd",
+"res://tests/unit/boolean.test.gd": {
+"path": "res://tests/unit/boolean.test.gd",
 "tags": [  ]
 },
 "res://tests/unit/equality.test.gd": {
@@ -61,8 +61,8 @@ metadata = {
 "path": "res://tests/unit/range.test.gd",
 "tags": [  ]
 },
-"res://tests/unit/someyield2.test.gd": {
-"path": "res://tests/unit/someyield2.test.gd",
+"res://tests/unit/string.test.gd": {
+"path": "res://tests/unit/string.test.gd",
 "tags": [  ]
 },
 "res://tests/unit/test.test.gd": {
@@ -75,14 +75,6 @@ metadata = {
 },
 "res://tests/unit/yield.test.gd": {
 "path": "res://tests/unit/yield.test.gd",
-"tags": [  ]
-},
-"res://tests/unit/yield2.test.gd": {
-"path": "res://tests/unit/yield2.test.gd",
-"tags": [  ]
-},
-"res://tests/unit/yield3.test.gd": {
-"path": "res://tests/unit/yield3.test.gd",
 "tags": [  ]
 }
 }
