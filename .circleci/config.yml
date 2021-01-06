@@ -19,6 +19,9 @@ jobs:
         - run:
             name: "Run All Tests"
             command: godot addons/WAT/cli.tscn -run_all
+        - run:
+            name: checkdir
+            command: dir tests/watdata
         - store_test_results:
             path: tests/watdata/xml
         - store_artifacts:
