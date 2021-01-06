@@ -1,6 +1,6 @@
 # Config Ignores
 .vscode/
-tests/.test/
+tests/.test/xml/
 
 # Godot-specific ignores
 .import/
