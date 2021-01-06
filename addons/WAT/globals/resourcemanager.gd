@@ -104,11 +104,11 @@ static func _xml_path():
 static func _set_datapath():
 	if _is_standalone():
 		Directory.new().make_dir(OS.get_user_data_dir() + "/watdata")
-		Directory.new().make_dir(OS.get_user_data_dir() + "/.test/xml")
+		Directory.new().make_dir(OS.get_user_data_dir() + "/watdata/xml")
 	else:
 		Directory.new().make_dir(Settings.test_directory())
 		Directory.new().make_dir(Settings.test_directory() + "/watdata")
-		Directory.new().make_dir(Settings.test_directory() + "/.test/xml")
+		Directory.new().make_dir(Settings.test_directory() + "/watdata/xml")
 
 	
 static func _is_standalone() -> bool:
