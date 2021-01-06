@@ -1,6 +1,5 @@
 # Config Ignores
 .vscode/
-tests/watdata/xml/results.xml
 
 # Godot-specific ignores
 .import/
