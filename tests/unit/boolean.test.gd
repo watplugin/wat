@@ -14,5 +14,5 @@ func test_when_calling_asserts_is_false():
 	asserts.is_false(false, "Then it passes")
 
 # Only used sometimes
-func test_intentional_failure():
-	asserts.is_false(true)
+#func test_intentional_failure():
+#	asserts.is_false(true)

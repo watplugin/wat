@@ -88,7 +88,7 @@ static func _result_path():
 		return Settings.test_directory() + "/.test" + "/results.tres"
 	
 static func _xml_path():
-	return Settings.test_directory() + "/.test" + "/results.xml"
+	return Settings.test_directory() + "/.test" + "/xml/results.xml"
 	
 #static func results() -> Resource:
 #	# Lazy Initialization
@@ -104,9 +104,11 @@ static func _xml_path():
 static func _set_datapath():
 	if _is_standalone():
 		Directory.new().make_dir(OS.get_user_data_dir() + "/.test")
+		Directory.new().make_dir(OS.get_user_data_dir() + "/.test/xml")
 	else:
 		Directory.new().make_dir(Settings.test_directory())
 		Directory.new().make_dir(Settings.test_directory() + "/.test")
+		Directory.new().make_dir(Settings.test_directory() + "/.test/xml")
 
 	
 static func _is_standalone() -> bool:
