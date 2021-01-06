@@ -75,20 +75,20 @@ static func _create_results():
 	
 static func _metadata_path():
 #	if OS.has_feature("standalone"):
-#		return OS.get_user_data_dir() + "/.test" + "/metadata.tres"
-	return Settings.test_directory() + "/.test" + "/metadata.tres"
+#		return OS.get_user_data_dir() + "/watdata" + "/metadata.tres"
+	return Settings.test_directory() + "/watdata" + "/metadata.tres"
 	
 static func _cache_path():
-	return Settings.test_directory() + "/.test" + "/cache.tres"
+	return Settings.test_directory() + "/watdata" + "/cache.tres"
 	
 static func _result_path():
 	if _is_standalone():
-		return OS.get_user_data_dir() + "/.test" + "/results.tres"
+		return OS.get_user_data_dir() + "/watdata" + "/results.tres"
 	else:
-		return Settings.test_directory() + "/.test" + "/results.tres"
+		return Settings.test_directory() + "/watdata" + "/results.tres"
 	
 static func _xml_path():
-	return Settings.test_directory() + "/.test" + "/xml/results.xml"
+	return Settings.test_directory() + "/watdata" + "/xml/results.xml"
 	
 #static func results() -> Resource:
 #	# Lazy Initialization
@@ -96,18 +96,18 @@ static func _xml_path():
 #	# Make seperate ResourceManager scripts?
 #	var savepath = _res
 #	if not ResourceLoader.exists(path):
-#		Directory.new().make_dir(Settings.test_directory() + "/.test")
+#		Directory.new().make_dir(Settings.test_directory() + "/watdata")
 #		var instance = load("res://addons/WAT/resources/results.gd").new()
 #		ResourceSaver.save(path, instance)
 #	return ResourceLoader.load(path, "", true)
 
 static func _set_datapath():
 	if _is_standalone():
-		Directory.new().make_dir(OS.get_user_data_dir() + "/.test")
+		Directory.new().make_dir(OS.get_user_data_dir() + "/watdata")
 		Directory.new().make_dir(OS.get_user_data_dir() + "/.test/xml")
 	else:
 		Directory.new().make_dir(Settings.test_directory())
-		Directory.new().make_dir(Settings.test_directory() + "/.test")
+		Directory.new().make_dir(Settings.test_directory() + "/watdata")
 		Directory.new().make_dir(Settings.test_directory() + "/.test/xml")
 
 	
