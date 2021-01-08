@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Resource",
-"class": "Arguments",
-"language": "GDScript",
-"path": "res://arguments.gd"
-}, {
 "base": "Node",
 "class": "BaseLogin",
 "language": "GDScript",
@@ -45,7 +40,6 @@ _global_script_classes=[ {
 "path": "res://addons/WAT/core/test/test.gd"
 } ]
 _global_script_class_icons={
-"Arguments": "",
 "BaseLogin": "",
 "Calculator": "",
 "Login": "",
