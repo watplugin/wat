@@ -18,8 +18,10 @@ var _repeat = 0
 var results: Dictionary setget ,_get_results
 var thread_id = 0
 
-#	test.recorder = Recorder
+func delete():
+	_yielder.free()
 
+	
 func _get_results() -> Dictionary:
 	_case.calculate()
 	return _case.to_dictionary()

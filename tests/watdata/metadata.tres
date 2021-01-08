@@ -5,6 +5,10 @@
 [resource]
 script = ExtResource( 1 )
 metadata = {
+"res://tests/integration/boolean.test.gd": {
+"path": "res://tests/integration/boolean.test.gd",
+"tags": [  ]
+},
 "res://tests/integration/default_args.test.gd": {
 "path": "res://tests/integration/default_args.test.gd",
 "tags": [  ]

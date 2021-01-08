@@ -6,3 +6,4 @@
 [node name="TestRunner" type="Node"]
 script = ExtResource( 2 )
 TestController = ExtResource( 1 )
+threads = 1

@@ -68,7 +68,11 @@ func _terminate() -> void:
 	for controller in controllers:
 		controllers.erase(controller)
 		remove_child(controller)
+		controller.delete()
 		controller.queue_free()
+	if _test_controller != null:
+		_test_controller.delete()
+		_test_controller.queue_free()
 	if _is_terminating and threads > 1:
 		return
 	_is_terminating = true

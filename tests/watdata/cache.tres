@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=21 format=2]
+[gd_resource type="Resource" load_steps=22 format=2]
 
 [ext_resource path="res://addons/WAT/resources/testcache.gd" type="Script" id=1]
 [ext_resource path="res://tests/integration/default_args.test.gd" type="Script" id=2]
@@ -20,7 +20,8 @@
 [ext_resource path="res://tests/unit/test.test.gd" type="Script" id=18]
 [ext_resource path="res://tests/unit/yield.test.gd" type="Script" id=19]
 [ext_resource path="res://tests/unit/watcher.test.gd" type="Script" id=20]
+[ext_resource path="res://tests/integration/boolean.test.gd" type="Script" id=21]
 
 [resource]
 script = ExtResource( 1 )
-scripts = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 14 ), ExtResource( 6 ), ExtResource( 16 ), ExtResource( 12 ), ExtResource( 8 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 19 ) ]
+scripts = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 14 ), ExtResource( 6 ), ExtResource( 16 ), ExtResource( 12 ), ExtResource( 8 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 19 ), ExtResource( 21 ) ]
