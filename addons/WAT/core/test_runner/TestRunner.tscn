@@ -1,15 +1,14 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://addons/WAT/core/test/test_controller.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/core/test_runner/test_runner.gd" type="Script" id=2]
 [ext_resource path="res://addons/WAT/core/test_runner/single_threaded_runner.gd" type="Script" id=4]
+[ext_resource path="res://addons/WAT/core/test_runner/multithreaded_runner.gd" type="Script" id=22]
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 2 )
-TestController = ExtResource( 1 )
-threads = 1
 
 [node name="SingleThreadedRunner" type="Node" parent="."]
 script = ExtResource( 4 )
 
 [node name="MultiThreadedRunner" type="Node" parent="."]
+script = ExtResource( 22 )
