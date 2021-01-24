@@ -1,13 +1,17 @@
 extends Node
+tool
 
-onready var SingleThreadedRunner: Node = $SingleThreadedRunner
-onready var MultiThreadedRunner: Node = $MultiThreadedRunner
+onready var SingleThreadedRunner: Node = preload("res://addons/WAT/core/test_runner/single_threaded_runner.gd").new()
+onready var MultiThreadedRunner: Node = preload("res://addons/WAT/core/test_runner/multithreaded_runner.gd").new()
 export(Array, Dictionary) var tests = []
 export(int) var threads = 7
 var is_editor: bool = true
+var editor_context: bool = false
 signal finished
 
 func _ready() -> void:
+	print("ready")
+	add_child(SingleThreadedRunner)
 	threads = _validate_threads(threads)
 	if threads > 1:
 		MultiThreadedRunner.connect("run_completed", self, "_on_run_completed")
@@ -17,9 +21,13 @@ func _ready() -> void:
 		SingleThreadedRunner.run(tests)
 		
 func _on_run_completed(results: Array) -> void:
-	WAT.ResManager.results().save(results)
-	print("Terminating TestRunner")
-	get_tree().quit() if is_editor else emit_signal("finished")
+	if editor_context:
+		emit_signal("finished", results)
+		print("Terminating TestRunner")
+	else:
+		WAT.ResManager.results().save(results)
+		print("Terminating TestRunner")
+		get_tree().quit() if is_editor else emit_signal("finished")
 	
 func _validate_threads(threads: int) -> int:
 	if threads == OS.get_processor_count():

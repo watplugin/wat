@@ -83441,6 +83441,128 @@ results = {
 "success": true,
 "time_taken": 0.0,
 "total": 11
-} ]
+} ],
+1611518257: [  ],
+1611518304: [ {
+"context": "Given a Boolean Assertion",
+"methods": [ {
+"assertions": [ {
+"actual": "|bool| False == false",
+"context": "Then it passes",
+"expected": "|bool| False == false",
+"success": true
+} ],
+"context": "When calling asserts.is_false(false)",
+"fullname": "test_when_calling_asserts_is_false",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then it passes",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When calling asserts.is_true(true)",
+"fullname": "test_when_calling_asserts_is_true",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True != false",
+"context": "",
+"expected": "|bool| True == false",
+"success": false
+} ],
+"context": " intentional failure",
+"fullname": "test_intentional_failure",
+"passed": 0,
+"success": false,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 2,
+"path": "res://tests/unit/boolean.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/boolean.test.gd",
+"tags": [  ],
+"test": ExtResource( 11 ),
+"yield_time": 0.0
+},
+"success": false,
+"time_taken": 0.0,
+"total": 3
+} ],
+1611518314: [  ],
+1611518361: [  ],
+1611518395: [  ],
+1611518435: [  ],
+1611518533: [ {
+"context": "Given a Boolean Assertion",
+"methods": [ {
+"assertions": [ {
+"actual": "|bool| False == false",
+"context": "Then it passes",
+"expected": "|bool| False == false",
+"success": true
+} ],
+"context": "When calling asserts.is_false(false)",
+"fullname": "test_when_calling_asserts_is_false",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True == true",
+"context": "Then it passes",
+"expected": "|bool| True == true",
+"success": true
+} ],
+"context": "When calling asserts.is_true(true)",
+"fullname": "test_when_calling_asserts_is_true",
+"passed": 1,
+"success": true,
+"time": 0.0,
+"total": 1
+}, {
+"assertions": [ {
+"actual": "|bool| True != false",
+"context": "",
+"expected": "|bool| True == false",
+"success": false
+} ],
+"context": " intentional failure",
+"fullname": "test_intentional_failure",
+"passed": 0,
+"success": false,
+"time": 0.0,
+"total": 1
+} ],
+"passed": 2,
+"path": "res://tests/unit/boolean.test.gd",
+"source": {
+"containers": [ "res://tests/unit", "res://tests" ],
+"method": "",
+"path": "res://tests/unit/boolean.test.gd",
+"tags": [  ],
+"test": ExtResource( 11 ),
+"yield_time": 0.0
+},
+"success": false,
+"time_taken": 0.0,
+"total": 3
+} ],
+1611518576: [  ],
+1611518592: [  ],
+1611518613: [  ],
+1611518837: [  ],
+1611518867: [  ]
 }
-current_key = 1611514702
+current_key = 1611518867

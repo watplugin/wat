@@ -11,6 +11,7 @@ onready var TagEditor: PopupMenu = $TestMenu/Directories/Scripts/Methods/TagEdit
 onready var Repeater: SpinBox = $Repeat
 onready var Tests: Node = $Explorer
 onready var Threads: SpinBox = $Threads
+onready var RunInEdtor: CheckBox = $CheckBox
 
 func _ready() -> void:
 	# Dictionaries are referenced, meaning this is a pointer to the main dir
@@ -22,7 +23,7 @@ func _ready() -> void:
 	Tags.connect("index_pressed", self, "_on_idx_pressed", [Tags])
 	
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
-	emit_signal("_tests_selected", duplicate_tests(menu.get_item_metadata(idx)), Threads.value as int)
+	emit_signal("_tests_selected", duplicate_tests(menu.get_item_metadata(idx)), Threads.value as int, RunInEdtor.pressed)
 
 func _on_Directories_about_to_show():
 	Directories.clear()

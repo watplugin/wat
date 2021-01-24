@@ -1,4 +1,5 @@
 extends Node
+#tool
 
 const TestController: Script = preload("res://addons/WAT/core/test/test_controller.gd")
 var _test_controllers: Dictionary = {} # K = Controller, V = Thread

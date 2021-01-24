@@ -148,6 +148,12 @@ suffix = "Thread(s)"
 [node name="Explorer" type="Node" parent="GUI/Interact"]
 script = ExtResource( 14 )
 
+[node name="CheckBox" type="CheckBox" parent="GUI/Interact"]
+margin_left = 609.0
+margin_right = 719.0
+margin_bottom = 24.0
+text = "Run In Editor"
+
 [node name="Results" type="TabContainer" parent="GUI"]
 margin_top = 28.0
 margin_right = 1004.0
