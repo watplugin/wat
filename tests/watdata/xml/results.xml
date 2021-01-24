@@ -1,11 +1,12 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="1.578">
-<testsuite failures="0" name="Given A File Assertion" tests="3" time="0">
-<testcase name="When calling asserts.file_exists when the file is this suite" time="0">
+<testsuites failures="1" name="TestXML" tests="1" time="0">
+<testsuite failures="1" name="Given a Boolean Assertion" tests="3" time="0">
+<testcase name="When calling asserts.is_true(true)" time="0">
 </testcase>
-<testcase name="When calling asserts.file_does_not_exist when there is no file" time="0">
+<testcase name=" intentional failure" time="0">
+<failure message="EXPECTED: |bool| True == false but GOT |bool| True != false"></failure>
 </testcase>
-<testcase name="When calling asserts file does not exist when path is empty" time="0">
+<testcase name="When calling asserts.is_false(false)" time="0">
 </testcase>
 </testsuite>
 </testsuites>

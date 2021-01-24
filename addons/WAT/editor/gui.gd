@@ -22,8 +22,6 @@ func _on_tests_selected(tests = [], threads: int = 1, run_in_editor: bool = fals
 		TestLauncher.launch(tests, threads)
 	else:
 		var testrunner = TestRunner.instance()
-		testrunner.tests = tests
-		testrunner.threads = threads
 		testrunner.editor_context = true
 		testrunner.connect("finished", self, "_on_launch_finished")
 		add_child(testrunner)

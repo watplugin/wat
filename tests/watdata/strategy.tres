@@ -1,16 +1,16 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://addons/WAT/resources/strategy.gd" type="Script" id=1]
-[ext_resource path="res://tests/unit/file.test.gd" type="Script" id=2]
+[ext_resource path="res://addons/WAT/resources/strategy.gd" type="Script" id=8]
+[ext_resource path="res://tests/unit/boolean.test.gd" type="Script" id=16]
 
 [resource]
-script = ExtResource( 1 )
+script = ExtResource( 8 )
 tests = [ {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
-"path": "res://tests/unit/file.test.gd",
+"path": "res://tests/unit/boolean.test.gd",
 "tags": [  ],
-"test": ExtResource( 2 ),
+"test": ExtResource( 16 ),
 "yield_time": 0.0
 } ]
 threads = 0
