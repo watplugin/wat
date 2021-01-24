@@ -1,6 +1,7 @@
 tool
 extends PanelContainer
 
+
 const TestRunner: PackedScene = preload("res://addons/WAT/core/test_runner/TestRunner.tscn")
 onready var Summary: HBoxContainer = $GUI/Summary
 onready var Results: TabContainer = $GUI/Results
@@ -11,8 +12,11 @@ var runkey: int = 0
 func _ready() -> void:
 	ViewMenu.connect("id_pressed", $GUI/Results, "_on_view_pressed")
 	
+
+	
 func _on_tests_selected(tests = [], threads: int = 1, run_in_editor: bool = false) -> void:
 	runkey = OS.get_unix_time()
+	WAT.ResManager.set_strategy(tests, threads)
 	WAT.ResManager.results().add_unique_run_key(runkey)
 	if not run_in_editor:
 		TestLauncher.launch(tests, threads)

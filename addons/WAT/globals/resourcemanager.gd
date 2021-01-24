@@ -3,6 +3,15 @@ tool
 
 const Settings: Script = preload("settings.gd")
 
+static func set_strategy(tests, threads) -> void:
+	var strat = preload("res://addons/WAT/resources/strategy.gd").new()
+	strat.tests = tests
+	strat.threads = threads
+	ResourceSaver.save(Settings.test_directory() + "/watdata/strategy.tres", strat)
+	
+static func get_strategy() -> Resource:
+	return load(Settings.test_directory() + "/watdata/strategy.tres")
+
 static func cache():
 	_create_cache()
 	return load(_cache_path())

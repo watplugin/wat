@@ -3,13 +3,14 @@ tool
 
 onready var SingleThreadedRunner: Node = preload("res://addons/WAT/core/test_runner/single_threaded_runner.gd").new()
 onready var MultiThreadedRunner: Node = preload("res://addons/WAT/core/test_runner/multithreaded_runner.gd").new()
-export(Array, Dictionary) var tests = []
-export(int) var threads = 7
 var is_editor: bool = true
 var editor_context: bool = false
 signal finished
 
 func _ready() -> void:
+	var strat = WAT.ResManager.get_strategy()
+	var tests = strat.tests
+	var threads = strat.threads
 	add_child(SingleThreadedRunner)
 	threads = _validate_threads(threads)
 	if threads > 1:
