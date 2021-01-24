@@ -4,3 +4,5 @@
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 2 )
+tests = [  ]
+threads = 7

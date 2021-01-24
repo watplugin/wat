@@ -5,19 +5,10 @@ const BLANK = ""
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 var _cache
 var _metadata
-
 var tests: Dictionary = {}
-signal thread_finished
-var t = Thread.new()
+
 
 func _ready() -> void:
-	connect("thread_finished", self, "_on_thread_finished")
-	t.start(self, "initialize")
-
-func _on_thread_finished() -> void:
-	t.wait_to_finish()
-	
-func initialize() -> void:
 	_cache = WAT.ResManager.cache()
 	_metadata = WAT.ResManager.metadata()
 	tests = {directories = [], suitepool = []}
@@ -25,7 +16,6 @@ func initialize() -> void:
 	var path: String = ProjectSettings.get_setting("WAT/Test_Directory")
 	_search(path)
 	tests.directories.erase(path)
-	emit_signal("thread_finished")
 	
 func _notification(what) -> void:
 	if what != NOTIFICATION_WM_QUIT_REQUEST:
