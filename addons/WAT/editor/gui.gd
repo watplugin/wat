@@ -1,7 +1,7 @@
 tool
 extends PanelContainer
 
-onready var Summary: HBoxContainer = $GUI/Interact/Summary
+onready var Summary: HBoxContainer = $GUI/Summary
 onready var Results: TabContainer = $GUI/Results
 onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
 onready var TestLauncher: Node = $Launcher

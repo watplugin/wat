@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Panel2.gd" type="Script" id=1]
+
+[node name="613" type="VSplitContainer"]
+margin_right = 1031.0
+margin_bottom = 600.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 1031.0
+margin_bottom = 274.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_top = 286.0
+margin_right = 1031.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Panel2" type="Panel" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1024.0
+margin_bottom = 307.0
+rect_min_size = Vector2( 0, 300 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+
+[node name="Button" type="Button" parent="PanelContainer/Panel2"]
+margin_left = 7.0
+margin_top = 229.0
+margin_right = 112.0
+margin_bottom = 293.0
+text = "Hey"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="PanelContainer/Panel2"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 84.0
+margin_bottom = 59.0
+text = "Hey"
+__meta__ = {
+"_edit_use_anchors_": false
+}

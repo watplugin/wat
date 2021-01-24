@@ -1,14 +1,12 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/assets/default.tres" type="Theme" id=2]
 [ext_resource path="res://addons/WAT/editor/gui.gd" type="Script" id=3]
-[ext_resource path="res://addons/WAT/editor/links.gd" type="Script" id=4]
 [ext_resource path="res://addons/WAT/assets/passed.png" type="Texture" id=5]
 [ext_resource path="res://addons/WAT/editor/summary.gd" type="Script" id=6]
 [ext_resource path="res://addons/WAT/assets/script.png" type="Texture" id=7]
 [ext_resource path="res://addons/WAT/assets/play.png" type="Texture" id=8]
-[ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=9]
 [ext_resource path="res://addons/WAT/assets/failed.png" type="Texture" id=10]
 [ext_resource path="res://addons/WAT/editor/selector.gd" type="Script" id=11]
 [ext_resource path="res://addons/WAT/assets/timer.png" type="Texture" id=12]
@@ -116,9 +114,17 @@ text = "Filter Results"
 items = [ "Expand All Results", null, 0, false, false, 0, 0, null, "", false, "Collapse All Results", null, 0, false, false, 1, 0, null, "", false, "Expand All Failures", null, 0, false, false, 2, 0, null, "", false ]
 switch_on_hover = true
 
-[node name="Repeat" type="SpinBox" parent="GUI/Interact"]
+[node name="Links" type="MenuButton" parent="GUI/Interact"]
 margin_left = 254.0
-margin_right = 384.0
+margin_right = 299.0
+margin_bottom = 24.0
+text = "Links"
+items = [ "Support WAT", null, 0, false, false, 0, 0, null, "", false, "Report An Issue", null, 0, false, false, 1, 0, null, "", false, "Request Docs", null, 0, false, false, 2, 0, null, "", false, "Online Docs", null, 0, false, false, 3, 0, null, "", false ]
+switch_on_hover = true
+
+[node name="Repeat" type="SpinBox" parent="GUI/Interact"]
+margin_left = 309.0
+margin_right = 439.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 130, 0 )
 size_flags_horizontal = 0
@@ -128,8 +134,8 @@ prefix = "Repeat"
 suffix = "Times"
 
 [node name="Threads" type="SpinBox" parent="GUI/Interact"]
-margin_left = 394.0
-margin_right = 544.0
+margin_left = 449.0
+margin_right = 599.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 0
@@ -139,79 +145,13 @@ value = 1.0
 prefix = "Run on"
 suffix = "Thread(s)"
 
-[node name="Summary" type="HBoxContainer" parent="GUI/Interact"]
-margin_left = 554.0
-margin_right = 1004.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-alignment = 2
-script = ExtResource( 6 )
-
-[node name="Time" type="Button" parent="GUI/Interact/Summary"]
-margin_left = 184.0
-margin_right = 234.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 50, 0 )
-hint_tooltip = "Time Taken in Microseconds"
-focus_mode = 0
-button_mask = 0
-text = "0"
-icon = ExtResource( 12 )
-flat = true
-
-[node name="Tests" type="Button" parent="GUI/Interact/Summary"]
-margin_left = 238.0
-margin_right = 288.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 50, 0 )
-hint_tooltip = "Total Tests Run"
-focus_mode = 0
-button_mask = 0
-text = "0"
-icon = ExtResource( 7 )
-flat = true
-
-[node name="Passing" type="Button" parent="GUI/Interact/Summary"]
-margin_left = 292.0
-margin_right = 342.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 50, 0 )
-focus_mode = 0
-button_mask = 0
-text = "0"
-icon = ExtResource( 5 )
-flat = true
-
-[node name="Failing" type="Button" parent="GUI/Interact/Summary"]
-margin_left = 346.0
-margin_right = 396.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 50, 0 )
-focus_mode = 0
-button_mask = 0
-text = "0"
-icon = ExtResource( 10 )
-flat = true
-
-[node name="Runs" type="Button" parent="GUI/Interact/Summary"]
-margin_left = 400.0
-margin_right = 450.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 50, 0 )
-hint_tooltip = "Total Runs Started"
-focus_mode = 0
-button_mask = 0
-text = "0"
-icon = ExtResource( 8 )
-flat = true
-
 [node name="Explorer" type="Node" parent="GUI/Interact"]
 script = ExtResource( 14 )
 
 [node name="Results" type="TabContainer" parent="GUI"]
 margin_top = 28.0
 margin_right = 1004.0
-margin_bottom = 546.0
+margin_bottom = 552.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tab_align = 0
@@ -221,66 +161,68 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Links" type="HBoxContainer" parent="GUI"]
-margin_top = 550.0
+[node name="Summary" type="HBoxContainer" parent="GUI"]
+margin_top = 556.0
 margin_right = 1004.0
 margin_bottom = 580.0
-rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
-custom_constants/separation = 0
-alignment = 1
-script = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-links = {
-NodePath("Support"): "https://www.ko-fi.com/alexanddraw",
-NodePath("Issue"): "https://github.com/CodeDarigan/WAT/issues/new",
-NodePath("RequestDocs"): "https://github.com/CodeDarigan/WATDocs/issues/new",
-NodePath("OnlineDocs"): "https://wat.readthedocs.io/en/latest/index.html"
-}
+script = ExtResource( 6 )
 
-[node name="Support" type="Button" parent="GUI/Links"]
-margin_right = 251.0
-margin_bottom = 30.0
-grow_horizontal = 0
-grow_vertical = 0
-rect_min_size = Vector2( 30, 30 )
-hint_tooltip = "Support WAT on Kofi"
-focus_mode = 1
-size_flags_horizontal = 3
-size_flags_vertical = 3
-enabled_focus_mode = 1
-text = "  Support WAT   "
-icon = ExtResource( 9 )
-flat = true
-expand_icon = true
-
-[node name="Issue" type="Button" parent="GUI/Links"]
-margin_left = 251.0
-margin_right = 502.0
-margin_bottom = 30.0
-size_flags_horizontal = 3
-shortcut_in_tooltip = false
-action_mode = 0
-text = "Report An Issue"
+[node name="Time" type="Button" parent="GUI/Summary"]
+margin_right = 50.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 50, 0 )
+hint_tooltip = "Time Taken in Microseconds"
+focus_mode = 0
+button_mask = 0
+text = "0"
+icon = ExtResource( 12 )
 flat = true
 
-[node name="RequestDocs" type="Button" parent="GUI/Links"]
-margin_left = 502.0
-margin_right = 753.0
-margin_bottom = 30.0
-size_flags_horizontal = 3
-text = "Request Docs"
+[node name="Tests" type="Button" parent="GUI/Summary"]
+margin_left = 54.0
+margin_right = 104.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 50, 0 )
+hint_tooltip = "Total Tests Run"
+focus_mode = 0
+button_mask = 0
+text = "0"
+icon = ExtResource( 7 )
 flat = true
 
-[node name="OnlineDocs" type="Button" parent="GUI/Links"]
-margin_left = 753.0
-margin_right = 1004.0
-margin_bottom = 30.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Online Docs"
+[node name="Passing" type="Button" parent="GUI/Summary"]
+margin_left = 108.0
+margin_right = 158.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 50, 0 )
+focus_mode = 0
+button_mask = 0
+text = "0"
+icon = ExtResource( 5 )
+flat = true
+
+[node name="Failing" type="Button" parent="GUI/Summary"]
+margin_left = 162.0
+margin_right = 212.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 50, 0 )
+focus_mode = 0
+button_mask = 0
+text = "0"
+icon = ExtResource( 10 )
+flat = true
+
+[node name="Runs" type="Button" parent="GUI/Summary"]
+margin_left = 216.0
+margin_right = 266.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 50, 0 )
+hint_tooltip = "Total Runs Started"
+focus_mode = 0
+button_mask = 0
+text = "0"
+icon = ExtResource( 8 )
 flat = true
 
 [node name="Launcher" type="Node" parent="."]
