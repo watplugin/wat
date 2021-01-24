@@ -1,7 +1,7 @@
 tool
 extends TabContainer
 
-const ResultTree: PackedScene = preload("res://addons/WAT/ui/results/ResultTree.tscn")
+const ResultTree: PackedScene = preload("res://addons/WAT/ui/scenes/ResultTree.tscn")
 var _results: Array
 var _tabs: Dictionary
 signal function_sought

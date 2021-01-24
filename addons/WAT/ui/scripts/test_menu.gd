@@ -15,10 +15,10 @@ func _ready() -> void:
 	# Dictionaries are referenced, meaning this is a pointer to the main dir
 #	tests = get_tree().root.get_node("WATNamespace").FileManager.tests
 #	Threads.max_value = OS.get_processor_count() - 1
-	Directories.connect("index_pressed", self, "_on_idx_pressed", [Directories])
-	Scripts.connect("index_pressed", self, "_on_idx_pressed", [Scripts])
-	Methods.connect("index_pressed", self, "_on_idx_pressed", [Methods])
-	Tags.connect("index_pressed", self, "_on_idx_pressed", [Tags])
+	Directories.connect("index_pressed", self, "_on_idx_pressed", [Directories], CONNECT_DEFERRED)
+	Scripts.connect("index_pressed", self, "_on_idx_pressed", [Scripts], CONNECT_DEFERRED)
+	Methods.connect("index_pressed", self, "_on_idx_pressed", [Methods], CONNECT_DEFERRED)
+	Tags.connect("index_pressed", self, "_on_idx_pressed", [Tags], CONNECT_DEFERRED)
 	
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 	emit_signal("_tests_selected", menu.get_item_metadata(idx))

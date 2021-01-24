@@ -1,7 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/WAT/ui/scripts/result_forest.gd" type="Script" id=1]
-
+[ext_resource path="res://addons/WAT/ui/scenes/ResultTree.tscn" type="PackedScene" id=2]
 
 [node name="Results" type="TabContainer"]
 margin_top = 26.0
@@ -15,3 +15,4 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+ResultTree = ExtResource( 2 )
