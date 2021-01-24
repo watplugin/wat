@@ -1,5 +1,8 @@
 extends Node
 
+onready var SingleThreadedRunner: Node = $SingleThreadedRunner
+onready var MultiThreadedRunner: Node = $MultiThreadedRunner
+
 signal finished
 export(Script) var TestController
 export(Array, Dictionary) var tests = []
@@ -29,22 +32,28 @@ func _ready() -> void:
 			add_child(controller)
 		call_deferred("_run_threaded")
 	else:
-		_test_controller = TestController.new()
-		add_child(_test_controller)
-		_run_single_thread()
+		SingleThreadedRunner.connect("run_completed", self, "_on_run_completed")
+		SingleThreadedRunner.run(tests)
+#		_test_controller = TestController.new()
+#		add_child(_test_controller)
+#		_run_single_thread()
+		
+func _on_run_completed(_results: Array) -> void:
+	results = _results
+	_terminate()
 	
 func _on_controller_finished(controller) -> void:
 	controllers[controller].wait_to_finish()
 	results.append(controller.results)
 	call_deferred("_run_threaded")
 	
-func _run_single_thread():
-	# In Threaded versions, we could replace this with a system in process using "isRunning" boolean
-	while not tests.empty():
-		_test_controller.run(tests.pop_front())
-		yield(_test_controller, "finished")
-		results.append(_test_controller.results)
-	_terminate()
+#func _run_single_thread():
+#	# In Threaded versions, we could replace this with a system in process using "isRunning" boolean
+#	while not tests.empty():
+#		_test_controller.run(tests.pop_front())
+#		yield(_test_controller, "finished")
+#		results.append(_test_controller.results)
+#	_terminate()
 	
 func _run_threaded() -> void:
 	if threads == 1:
