@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/ui/scripts/result_forest.gd" type="Script" id=1]
+
 
 [node name="Results" type="TabContainer"]
 margin_top = 26.0

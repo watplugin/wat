@@ -1,7 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/WAT/assets/script.png" type="Texture" id=1]
-[ext_resource path="res://addons/WAT/ui/TestMenu.gd" type="Script" id=2]
+[ext_resource path="res://addons/WAT/ui/scripts/test_menu.gd" type="Script" id=2]
+
+
 
 [node name="TestMenu" type="Button"]
 margin_left = 38.0

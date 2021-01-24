@@ -1,9 +1,9 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/ui/scripts/result_forest.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/assets/default.tres" type="Theme" id=2]
 [ext_resource path="res://addons/WAT/editor/gui.gd" type="Script" id=3]
-[ext_resource path="res://addons/WAT/ui/MainMenu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/WAT/ui/scenes/MainMenu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/WAT/assets/passed.png" type="Texture" id=5]
 [ext_resource path="res://addons/WAT/editor/summary.gd" type="Script" id=6]
 [ext_resource path="res://addons/WAT/assets/script.png" type="Texture" id=7]
@@ -11,6 +11,7 @@
 [ext_resource path="res://addons/WAT/assets/failed.png" type="Texture" id=10]
 [ext_resource path="res://addons/WAT/assets/timer.png" type="Texture" id=12]
 [ext_resource path="res://addons/WAT/editor/launcher.gd" type="Script" id=13]
+
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 10.0
