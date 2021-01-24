@@ -21,7 +21,7 @@ func _enter_tree() -> void:
 	add_child(_DockController)
 	
 	_ControlPanel.Results.connect("function_sought", self, "goto_function")
-	connect_filemanager(_ControlPanel.get_node("GUI/Interact/Explorer"))
+	connect_filemanager(_ControlPanel.get_node("GUI/Interact").Tests)
 		
 func connect_filemanager(filemanager) -> void:
 	var filedock = get_editor_interface().get_file_system_dock()
@@ -47,7 +47,7 @@ func goto_function(path: String, function: String):
 			return
 
 func _exit_tree() -> void:
-	disconnect_filemanager(_ControlPanel.get_node("GUI/Interact/Explorer"))
+	disconnect_filemanager(_ControlPanel.get_node("GUI/Interact").Tests)
 	_DockController.free()
 	_ControlPanel.free()
 	

@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/WAT/assets/script.png" type="Texture" id=1]
 [ext_resource path="res://addons/WAT/ui/TestMenu.gd" type="Script" id=2]
-[ext_resource path="res://addons/WAT/editor/explorer.gd" type="Script" id=3]
 
 [node name="TestMenu" type="Button"]
 margin_left = 38.0
@@ -42,7 +41,10 @@ margin_bottom = 16.0
 focus_mode = 1
 items = [ "Item 0", null, 0, true, false, 0, 0, null, "", false ]
 hide_on_checkable_item_selection = false
-
-[node name="Node" type="Node" parent="."]
-script = ExtResource( 3 )
-[connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="pressed" from="." to="." method="_on_TestMenu_pressed"]
+[connection signal="about_to_show" from="Directories" to="." method="_on_Directories_about_to_show"]
+[connection signal="about_to_show" from="Directories/Tags" to="." method="_on_Tags_about_to_show"]
+[connection signal="about_to_show" from="Directories/Scripts" to="." method="_on_Scripts_about_to_show"]
+[connection signal="about_to_show" from="Directories/Scripts/Methods" to="." method="_on_Methods_about_to_show"]
+[connection signal="about_to_show" from="Directories/Scripts/Methods/TagEditor" to="." method="_on_TagEditor_about_to_show"]
+[connection signal="index_pressed" from="Directories/Scripts/Methods/TagEditor" to="." method="_on_TagEditor_index_pressed"]

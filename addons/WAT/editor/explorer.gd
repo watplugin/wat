@@ -7,8 +7,7 @@ var _cache
 var _metadata
 var tests: Dictionary = {}
 
-
-func _ready() -> void:
+func _init() -> void:
 	_cache = WAT.ResManager.cache()
 	_metadata = WAT.ResManager.metadata()
 	tests = {directories = [], suitepool = []}

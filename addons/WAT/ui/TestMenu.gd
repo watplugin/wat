@@ -7,22 +7,23 @@ onready var Scripts: PopupMenu = $Directories/Scripts
 onready var Methods: PopupMenu = $Directories/Scripts/Methods
 onready var Tags: PopupMenu = $Directories/Tags
 onready var TagEditor: PopupMenu = $Directories/Scripts/Methods/TagEditor
-#onready var Repeater: SpinBox = $Repeat
-onready var Tests: Node = $Explorer
-#onready var Threads: SpinBox = $Threads
+
+# Set By Parent
+var Tests
 
 func _ready() -> void:
 	# Dictionaries are referenced, meaning this is a pointer to the main dir
 #	tests = get_tree().root.get_node("WATNamespace").FileManager.tests
-	#Threads.max_value = OS.get_processor_count() - 1
+#	Threads.max_value = OS.get_processor_count() - 1
 	Directories.connect("index_pressed", self, "_on_idx_pressed", [Directories])
 	Scripts.connect("index_pressed", self, "_on_idx_pressed", [Scripts])
 	Methods.connect("index_pressed", self, "_on_idx_pressed", [Methods])
 	Tags.connect("index_pressed", self, "_on_idx_pressed", [Tags])
 	
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
-	#emit_signal("_tests_selected", duplicate_tests(menu.get_item_metadata(idx)), Threads.value as int)
-	emit_signal("_tests_selected", duplicate_tests(menu.get_item_metadata(idx)), 1)
+	emit_signal("_tests_selected", menu.get_item_metadata(idx))
+	print("selected tests")
+
 
 func _on_Directories_about_to_show():
 	Directories.clear()
@@ -46,7 +47,6 @@ func _on_Directories_about_to_show():
 			Directories.set_item_icon(idx, WAT.Icon.FOLDER)
 			idx += 1
 
-
 func _on_Tags_about_to_show():
 	Tags.clear()
 	Tags.set_as_minsize()
@@ -55,7 +55,6 @@ func _on_Tags_about_to_show():
 		Tags.add_item(tag)
 		Tags.set_item_metadata(idx, tests(tag))
 		idx += 1
-
 
 func _on_Scripts_about_to_show():
 	Scripts.clear()
@@ -71,7 +70,6 @@ func _on_Scripts_about_to_show():
 		Scripts.add_submenu_item(test.path, "Methods")
 		Scripts.set_item_icon(idx, WAT.Icon.SCRIPT)
 		idx += 1
-
 
 func _on_Methods_about_to_show():
 	Methods.clear()
@@ -95,8 +93,7 @@ func _on_Methods_about_to_show():
 			Methods.set_item_icon(idx, WAT.Icon.FUNCTION)
 			idx += 1
 
-
-func _on_pressed():
+func _on_TestMenu_pressed():
 	var position = rect_global_position
 	position.y += rect_size.y
 	Directories.rect_global_position = position
@@ -104,18 +101,9 @@ func _on_pressed():
 	Directories.grab_focus()
 	Directories.popup()
 
-
 func _on_QuickStart_pressed():
-	var scripts = duplicate_tests(tests(WAT.Settings.test_directory()))
+	var scripts #= duplicate_tests(tests(WAT.Settings.test_directory()))
 	emit_signal("_tests_selected", scripts)
-	
-	
-func duplicate_tests(scripts: Array) -> Array:
-	var duplicates = []
-	#for i in Repeater.value as int:
-	#	duplicates += scripts.duplicate()
-	#scripts += duplicates
-	return scripts
 
 func _on_TagEditor_about_to_show():
 	var script = tests(Scripts.get_item_text(Scripts.get_current_index()))

@@ -3,6 +3,7 @@
 [ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/assets/default.tres" type="Theme" id=2]
 [ext_resource path="res://addons/WAT/editor/gui.gd" type="Script" id=3]
+[ext_resource path="res://addons/WAT/ui/TestMenu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/WAT/assets/passed.png" type="Texture" id=5]
 [ext_resource path="res://addons/WAT/editor/summary.gd" type="Script" id=6]
 [ext_resource path="res://addons/WAT/assets/script.png" type="Texture" id=7]
@@ -11,7 +12,6 @@
 [ext_resource path="res://addons/WAT/editor/selector.gd" type="Script" id=11]
 [ext_resource path="res://addons/WAT/assets/timer.png" type="Texture" id=12]
 [ext_resource path="res://addons/WAT/editor/launcher.gd" type="Script" id=13]
-[ext_resource path="res://addons/WAT/editor/explorer.gd" type="Script" id=14]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 10.0
@@ -71,40 +71,7 @@ shortcut = SubResource( 3 )
 icon = ExtResource( 8 )
 flat = true
 
-[node name="TestMenu" type="Button" parent="GUI/Interact"]
-margin_left = 38.0
-margin_right = 138.0
-margin_bottom = 24.0
-size_flags_horizontal = 0
-action_mode = 0
-text = "Select Test"
-icon = ExtResource( 7 )
-flat = true
-
-[node name="Directories" type="PopupMenu" parent="GUI/Interact/TestMenu"]
-margin_left = -45.0
-margin_top = -7.0
-margin_right = -25.0
-margin_bottom = 13.0
-
-[node name="Tags" type="PopupMenu" parent="GUI/Interact/TestMenu/Directories"]
-margin_right = 20.0
-margin_bottom = 20.0
-
-[node name="Scripts" type="PopupMenu" parent="GUI/Interact/TestMenu/Directories"]
-margin_right = 20.0
-margin_bottom = 20.0
-
-[node name="Methods" type="PopupMenu" parent="GUI/Interact/TestMenu/Directories/Scripts"]
-margin_right = 20.0
-margin_bottom = 20.0
-
-[node name="TagEditor" type="PopupMenu" parent="GUI/Interact/TestMenu/Directories/Scripts/Methods"]
-margin_right = 16.0
-margin_bottom = 16.0
-focus_mode = 1
-items = [ "Item 0", null, 0, true, false, 0, 0, null, "", false ]
-hide_on_checkable_item_selection = false
+[node name="TestMenu" parent="GUI/Interact" instance=ExtResource( 4 )]
 
 [node name="View" type="MenuButton" parent="GUI/Interact"]
 margin_left = 148.0
@@ -144,9 +111,6 @@ max_value = 7.0
 value = 1.0
 prefix = "Run on"
 suffix = "Thread(s)"
-
-[node name="Explorer" type="Node" parent="GUI/Interact"]
-script = ExtResource( 14 )
 
 [node name="CheckBox" type="CheckBox" parent="GUI/Interact"]
 margin_left = 609.0
@@ -235,11 +199,4 @@ flat = true
 script = ExtResource( 13 )
 [connection signal="_tests_selected" from="GUI/Interact" to="." method="_on_tests_selected"]
 [connection signal="pressed" from="GUI/Interact/QuickStart" to="GUI/Interact" method="_on_QuickStart_pressed"]
-[connection signal="pressed" from="GUI/Interact/TestMenu" to="GUI/Interact" method="_on_TestMenu_pressed"]
-[connection signal="about_to_show" from="GUI/Interact/TestMenu/Directories" to="GUI/Interact" method="_on_Directories_about_to_show"]
-[connection signal="about_to_show" from="GUI/Interact/TestMenu/Directories/Tags" to="GUI/Interact" method="_on_Tags_about_to_show"]
-[connection signal="about_to_show" from="GUI/Interact/TestMenu/Directories/Scripts" to="GUI/Interact" method="_on_Scripts_about_to_show"]
-[connection signal="about_to_show" from="GUI/Interact/TestMenu/Directories/Scripts/Methods" to="GUI/Interact" method="_on_Methods_about_to_show"]
-[connection signal="about_to_show" from="GUI/Interact/TestMenu/Directories/Scripts/Methods/TagEditor" to="GUI/Interact" method="_on_TagEditor_about_to_show"]
-[connection signal="index_pressed" from="GUI/Interact/TestMenu/Directories/Scripts/Methods/TagEditor" to="GUI/Interact" method="_on_TagEditor_index_pressed"]
 [connection signal="finished" from="Launcher" to="." method="_on_launch_finished"]
