@@ -9,7 +9,7 @@ tests = [ {
 "containers": [ "res://tests/unit", "res://tests" ],
 "method": "",
 "path": "res://tests/unit/boolean.test.gd",
-"tags": [  ],
+"tags": [ "Windows", "Linux" ],
 "test": ExtResource( 2 ),
 "yield_time": 0.0
 } ]

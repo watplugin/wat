@@ -3,8 +3,6 @@
 [ext_resource path="res://addons/WAT/assets/script.png" type="Texture" id=1]
 [ext_resource path="res://addons/WAT/ui/scripts/test_menu.gd" type="Script" id=2]
 
-
-
 [node name="TestMenu" type="Button"]
 margin_left = 38.0
 margin_right = 138.0
@@ -24,6 +22,7 @@ margin_left = -45.0
 margin_top = -7.0
 margin_right = -25.0
 margin_bottom = 13.0
+hide_on_state_item_selection = true
 
 [node name="Tags" type="PopupMenu" parent="Directories"]
 margin_right = 20.0

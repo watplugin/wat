@@ -9,18 +9,14 @@ onready var Tags: PopupMenu = $Directories/Tags
 onready var TagEditor: PopupMenu = $Directories/Scripts/Methods/TagEditor
 onready var Tests: Node = preload("res://addons/WAT/editor/explorer.gd").new()
 
-# Set By Parent
-
 func _ready() -> void:
-	# Dictionaries are referenced, meaning this is a pointer to the main dir
-#	tests = get_tree().root.get_node("WATNamespace").FileManager.tests
-#	Threads.max_value = OS.get_processor_count() - 1
-	Directories.connect("index_pressed", self, "_on_idx_pressed", [Directories], CONNECT_DEFERRED)
-	Scripts.connect("index_pressed", self, "_on_idx_pressed", [Scripts], CONNECT_DEFERRED)
-	Methods.connect("index_pressed", self, "_on_idx_pressed", [Methods], CONNECT_DEFERRED)
-	Tags.connect("index_pressed", self, "_on_idx_pressed", [Tags], CONNECT_DEFERRED)
+	Directories.connect("index_pressed", self, "_on_idx_pressed", [Directories])
+	Scripts.connect("index_pressed", self, "_on_idx_pressed", [Scripts])
+	Methods.connect("index_pressed", self, "_on_idx_pressed", [Methods])
+	Tags.connect("index_pressed", self, "_on_idx_pressed", [Tags])
 	
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
+	# Move Away from entire arrays of test in favor of keys
 	emit_signal("_tests_selected", menu.get_item_metadata(idx))
 
 func _on_Directories_about_to_show():
