@@ -15,6 +15,11 @@ func _ready() -> void:
 func _on_tests_selected(tests: Array) -> void:
 	tests = duplicate_tests(tests)
 	emit_signal("_tests_selected", tests, Repeater.value as int, RunInEdtor.pressed)
+	
+func _on_QuickStart_pressed():
+	var scripts = duplicate_tests(TestMenu.tests(WAT.Settings.test_directory()))
+	emit_signal("_tests_selected", scripts)
+
 
 func duplicate_tests(scripts: Array) -> Array:
 	var duplicates = []

@@ -95,10 +95,6 @@ func _on_TestMenu_pressed():
 	Directories.grab_focus()
 	Directories.popup()
 
-func _on_QuickStart_pressed():
-	var scripts #= duplicate_tests(tests(WAT.Settings.test_directory()))
-	emit_signal("_tests_selected", scripts)
-
 func _on_TagEditor_about_to_show():
 	var script = tests(Scripts.get_item_text(Scripts.get_current_index()))
 	TagEditor.clear()
