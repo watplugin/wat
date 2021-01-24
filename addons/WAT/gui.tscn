@@ -1,15 +1,14 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/assets/default.tres" type="Theme" id=2]
 [ext_resource path="res://addons/WAT/editor/gui.gd" type="Script" id=3]
-[ext_resource path="res://addons/WAT/ui/TestMenu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/WAT/ui/Interact.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/WAT/assets/passed.png" type="Texture" id=5]
 [ext_resource path="res://addons/WAT/editor/summary.gd" type="Script" id=6]
 [ext_resource path="res://addons/WAT/assets/script.png" type="Texture" id=7]
 [ext_resource path="res://addons/WAT/assets/play.png" type="Texture" id=8]
 [ext_resource path="res://addons/WAT/assets/failed.png" type="Texture" id=10]
-[ext_resource path="res://addons/WAT/editor/selector.gd" type="Script" id=11]
 [ext_resource path="res://addons/WAT/assets/timer.png" type="Texture" id=12]
 [ext_resource path="res://addons/WAT/editor/launcher.gd" type="Script" id=13]
 
@@ -19,15 +18,6 @@ content_margin_right = 10.0
 content_margin_top = 10.0
 content_margin_bottom = 10.0
 bg_color = Color( 0.2, 0.231373, 0.309804, 1 )
-
-[sub_resource type="InputEventKey" id=2]
-shift = true
-control = true
-command = true
-scancode = 65
-
-[sub_resource type="ShortCut" id=3]
-shortcut = SubResource( 2 )
 
 [node name="Tests" type="PanelContainer"]
 margin_right = 1024.0
@@ -53,70 +43,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Interact" type="HBoxContainer" parent="GUI"]
-margin_right = 1004.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-custom_constants/separation = 10
-script = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="QuickStart" type="Button" parent="GUI/Interact"]
-margin_right = 28.0
-margin_bottom = 24.0
-hint_tooltip = "Run All Tests"
-shortcut = SubResource( 3 )
-icon = ExtResource( 8 )
-flat = true
-
-[node name="TestMenu" parent="GUI/Interact" instance=ExtResource( 4 )]
-
-[node name="View" type="MenuButton" parent="GUI/Interact"]
-margin_left = 148.0
-margin_right = 244.0
-margin_bottom = 24.0
-text = "Filter Results"
-items = [ "Expand All Results", null, 0, false, false, 0, 0, null, "", false, "Collapse All Results", null, 0, false, false, 1, 0, null, "", false, "Expand All Failures", null, 0, false, false, 2, 0, null, "", false ]
-switch_on_hover = true
-
-[node name="Links" type="MenuButton" parent="GUI/Interact"]
-margin_left = 254.0
-margin_right = 299.0
-margin_bottom = 24.0
-text = "Links"
-items = [ "Support WAT", null, 0, false, false, 0, 0, null, "", false, "Report An Issue", null, 0, false, false, 1, 0, null, "", false, "Request Docs", null, 0, false, false, 2, 0, null, "", false, "Online Docs", null, 0, false, false, 3, 0, null, "", false ]
-switch_on_hover = true
-
-[node name="Repeat" type="SpinBox" parent="GUI/Interact"]
-margin_left = 309.0
-margin_right = 439.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 130, 0 )
-size_flags_horizontal = 0
-max_value = 10.0
-allow_greater = true
-prefix = "Repeat"
-suffix = "Times"
-
-[node name="Threads" type="SpinBox" parent="GUI/Interact"]
-margin_left = 449.0
-margin_right = 599.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 150, 0 )
-size_flags_horizontal = 0
-min_value = 1.0
-max_value = 7.0
-value = 1.0
-prefix = "Run on"
-suffix = "Thread(s)"
-
-[node name="CheckBox" type="CheckBox" parent="GUI/Interact"]
-margin_left = 609.0
-margin_right = 719.0
-margin_bottom = 24.0
-text = "Run In Editor"
+[node name="Interact" parent="GUI" instance=ExtResource( 4 )]
 
 [node name="Results" type="TabContainer" parent="GUI"]
 margin_top = 28.0
@@ -198,5 +125,4 @@ flat = true
 [node name="Launcher" type="Node" parent="."]
 script = ExtResource( 13 )
 [connection signal="_tests_selected" from="GUI/Interact" to="." method="_on_tests_selected"]
-[connection signal="pressed" from="GUI/Interact/QuickStart" to="GUI/Interact" method="_on_QuickStart_pressed"]
 [connection signal="finished" from="Launcher" to="." method="_on_launch_finished"]

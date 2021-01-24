@@ -6,11 +6,9 @@ onready var TestMenu: Button = $TestMenu
 onready var Repeater: SpinBox = $Repeat
 onready var Threads: SpinBox = $Threads
 onready var RunInEdtor: CheckBox = $CheckBox
-onready var Tests: Node = preload("res://addons/WAT/editor/explorer.gd").new()
 
 func _ready() -> void:
 	Threads.max_value = OS.get_processor_count() - 1
-	TestMenu.Tests = Tests
 	TestMenu.connect("_tests_selected", self, "_on_tests_selected")
 
 func _on_tests_selected(tests: Array) -> void:

@@ -7,9 +7,9 @@ onready var Scripts: PopupMenu = $Directories/Scripts
 onready var Methods: PopupMenu = $Directories/Scripts/Methods
 onready var Tags: PopupMenu = $Directories/Tags
 onready var TagEditor: PopupMenu = $Directories/Scripts/Methods/TagEditor
+onready var Tests: Node = preload("res://addons/WAT/editor/explorer.gd").new()
 
 # Set By Parent
-var Tests
 
 func _ready() -> void:
 	# Dictionaries are referenced, meaning this is a pointer to the main dir
@@ -22,8 +22,6 @@ func _ready() -> void:
 	
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 	emit_signal("_tests_selected", menu.get_item_metadata(idx))
-	print("selected tests")
-
 
 func _on_Directories_about_to_show():
 	Directories.clear()

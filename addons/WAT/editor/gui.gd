@@ -12,8 +12,6 @@ var runkey: int = 0
 func _ready() -> void:
 	ViewMenu.connect("id_pressed", $GUI/Results, "_on_view_pressed")
 	
-
-	
 func _on_tests_selected(tests = [], threads: int = 1, run_in_editor: bool = false) -> void:
 	runkey = OS.get_unix_time()
 	WAT.ResManager.set_strategy(tests, threads)
@@ -36,3 +34,4 @@ func _on_launch_finished(results: Array = []):
 	preload("res://addons/WAT/resources/junitxml.gd").save(results, Summary.Time.text)
 	Summary.summarize(results)
 	Results.display(results)	
+
