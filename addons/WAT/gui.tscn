@@ -3,7 +3,7 @@
 [ext_resource path="res://addons/WAT/ui/results/result_forest.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/assets/default.tres" type="Theme" id=2]
 [ext_resource path="res://addons/WAT/editor/gui.gd" type="Script" id=3]
-[ext_resource path="res://addons/WAT/ui/Interact.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/WAT/ui/MainMenu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/WAT/assets/passed.png" type="Texture" id=5]
 [ext_resource path="res://addons/WAT/editor/summary.gd" type="Script" id=6]
 [ext_resource path="res://addons/WAT/assets/script.png" type="Texture" id=7]
@@ -43,7 +43,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Interact" parent="GUI" instance=ExtResource( 4 )]
+[node name="MainMenu" parent="GUI" instance=ExtResource( 4 )]
 
 [node name="Results" type="TabContainer" parent="GUI"]
 margin_top = 28.0
@@ -124,5 +124,5 @@ flat = true
 
 [node name="Launcher" type="Node" parent="."]
 script = ExtResource( 13 )
-[connection signal="_tests_selected" from="GUI/Interact" to="." method="_on_tests_selected"]
+[connection signal="_tests_selected" from="GUI/MainMenu" to="." method="_on_tests_selected"]
 [connection signal="finished" from="Launcher" to="." method="_on_launch_finished"]

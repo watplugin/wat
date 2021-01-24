@@ -5,7 +5,8 @@ extends PanelContainer
 const TestRunner: PackedScene = preload("res://addons/WAT/core/test_runner/TestRunner.tscn")
 onready var Summary: HBoxContainer = $GUI/Summary
 onready var Results: TabContainer = $GUI/Results
-onready var ViewMenu: PopupMenu = $GUI/Interact/View.get_popup()
+onready var MainMenu: HBoxContainer = $GUI/MainMenu
+onready var ViewMenu: PopupMenu = $GUI/MainMenu/View.get_popup()
 onready var TestLauncher: Node = $Launcher
 var runkey: int = 0
 

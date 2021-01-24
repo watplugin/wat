@@ -13,7 +13,7 @@ scancode = 65
 [sub_resource type="ShortCut" id=2]
 shortcut = SubResource( 1 )
 
-[node name="Interact" type="HBoxContainer"]
+[node name="MainMenu" type="HBoxContainer"]
 margin_right = 1004.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
