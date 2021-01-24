@@ -31,6 +31,9 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+Menu = NodePath("GUI/MainMenu")
+TestResults = NodePath("GUI/Results")
+TestSummary = NodePath("GUI/Summary")
 
 [node name="GUI" type="VBoxContainer" parent="."]
 margin_left = 10.0

@@ -3,6 +3,7 @@ tool
 
 signal _tests_selected
 onready var TestMenu: Button = $TestMenu
+onready var ViewMenu: PopupMenu = $View.get_popup()
 onready var Repeater: SpinBox = $Repeat
 onready var Threads: SpinBox = $Threads
 onready var RunInEdtor: CheckBox = $CheckBox

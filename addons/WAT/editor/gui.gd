@@ -1,17 +1,22 @@
 tool
 extends PanelContainer
 
-
 const TestRunner: PackedScene = preload("res://addons/WAT/core/test_runner/TestRunner.tscn")
-onready var Summary: HBoxContainer = $GUI/Summary
-onready var Results: TabContainer = $GUI/Results
-onready var MainMenu: HBoxContainer = $GUI/MainMenu
-onready var ViewMenu: PopupMenu = $GUI/MainMenu/View.get_popup()
+export(NodePath) var Menu: NodePath
+export(NodePath) var TestResults: NodePath
+export(NodePath) var TestSummary: NodePath
+
+onready var MainMenu: HBoxContainer = get_node(Menu)
+onready var Results: TabContainer = get_node(TestResults)
+onready var Summary: HBoxContainer = get_node(TestSummary)
+onready var ViewMenu: PopupMenu = MainMenu.ViewMenu
+
+# Launcher should be seperate script (ie not an attached node)
 onready var TestLauncher: Node = $Launcher
 var runkey: int = 0
 
 func _ready() -> void:
-	ViewMenu.connect("id_pressed", $GUI/Results, "_on_view_pressed")
+	ViewMenu.connect("id_pressed", Results, "_on_view_pressed")
 	
 func _on_tests_selected(tests = [], threads: int = 1, run_in_editor: bool = false) -> void:
 	runkey = OS.get_unix_time()
