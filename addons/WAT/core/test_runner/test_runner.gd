@@ -10,7 +10,6 @@ var editor_context: bool = false
 signal finished
 
 func _ready() -> void:
-	print("ready")
 	add_child(SingleThreadedRunner)
 	threads = _validate_threads(threads)
 	if threads > 1:
