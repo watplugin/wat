@@ -7,20 +7,6 @@
 		],
 		"passing": true
 	},
-	"res://tests/simple.duplicated.test.gd": {
-		"path": "res://tests/simple.duplicated.test.gd",
-		"tags": [
-
-		],
-		"passing": false
-	},
-	"res://tests/simple.test.gd": {
-		"path": "res://tests/simple.test.gd",
-		"tags": [
-
-		],
-		"passing": false
-	},
 	"res://tests/integration/default_args.test.gd": {
 		"path": "res://tests/integration/default_args.test.gd",
 		"tags": [
@@ -98,13 +84,6 @@
 
 		],
 		"passing": true
-	},
-	"res://tests/unit/new_script.gd": {
-		"path": "res://tests/unit/new_script.gd",
-		"tags": [
-
-		],
-		"passing": false
 	},
 	"res://tests/unit/null.test.gd": {
 		"path": "res://tests/unit/null.test.gd",
