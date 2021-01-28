@@ -18,12 +18,13 @@ static func write(results, time: float = 0.0) -> void:
 	for result in results:
 		output += '\n\t<testsuite name="%s" failures="%s"  tests="%s" time="%s">' % [result.context, result.total - result.passed, result.total, result.time_taken]
 		if result.methods.empty():
-			output += '\n\t\t<failure message="No Tests Found On Suite %s"></failure>' % result.path
+			output += '\n\t\t<testcase name="Not Found" time="0">'
+			output += '\n\t\t\t<failure message="No Tests Found On Suite %s"></failure>' % result.path
 		for case in result.methods:
 				output += '\n\t\t<testcase name="%s" time="%s">' % [case.context, case.time]
 				for assertion in case.assertions:
 					if not assertion.success:
-						output += '\n<failure message="EXPECTED: %s but GOT %s"></failure>' % [assertion.expected, assertion.actual]
+						output += '\n\t\t\t<failure message="EXPECTED: %s but GOT %s"></failure>' % [assertion.expected, assertion.actual]
 	# I think these are unnecessary. Will revisit on CLI creation.
 				output += '</testcase>' 
 		output += "\n\t</testsuite>\n"
