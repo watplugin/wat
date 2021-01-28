@@ -58,6 +58,7 @@ func test_when_calling_does_not_have_user_signal() -> void:
 	asserts.object_does_not_have_user_signal(self, "false_signal", 
 												"Then it passes")
 
+# warning-ignore:unused_signal
 signal builtin_dummy
 func test_when_calling_does_not_have_user_signal_with_class_signal_constant() -> void:
 	describe("When calling does not have user signal with class signal")
@@ -65,9 +66,10 @@ func test_when_calling_does_not_have_user_signal_with_class_signal_constant() ->
 	asserts.object_does_not_have_user_signal(self, "builtin_dummy", 
 											  "Then it passes")
 
+### WARNING: This causes a memory leak
 func test_when_calling_obj_is_queued_for_deletion_after_calling_queue_free() -> void:
 	describe("When calling asserts.object_is_queued for deletion after calling queue_free")
-	
+
 	var node: Node = Node.new()
 	node.queue_free()
 	asserts.object_is_queued_for_deletion(node, "Then it passes")
@@ -82,6 +84,7 @@ func test_when_calling_obj_is_not_for_queued_deletion_after_not_calling_queue_fr
 func test_when_calling_obj_is_connected_with_a_real_connection() -> void:
 	describe("When calling asserts object is connected with a valid connection")
 
+# warning-ignore:return_value_discarded
 	connect("builtin_dummy", self, "title")
 	asserts.object_is_connected(self, "builtin_dummy", self, "title", "Then it passes")
 	disconnect("builtin_dummy", self, "title")

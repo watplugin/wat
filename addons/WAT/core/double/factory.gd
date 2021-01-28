@@ -1,4 +1,4 @@
-extends Reference
+extends Object
 
 const ScriptDirector = preload("script_director.gd")
 const SceneDirector = preload("scene_director.gd")

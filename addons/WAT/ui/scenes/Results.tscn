@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/WAT/ui/scripts/result_forest.gd" type="Script" id=1]
+
+[node name="Results" type="TabContainer"]
+margin_top = 28.0
+margin_right = 1004.0
+margin_bottom = 552.0
+rect_min_size = Vector2( 0, 300 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tab_align = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,4 +1,4 @@
-extends Reference
+extends Object
 
 var test_directors: Dictionary = {}
 

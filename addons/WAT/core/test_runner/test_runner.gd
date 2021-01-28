@@ -1,38 +1,56 @@
 extends Node
-tool
 
-onready var SingleThreadedRunner: Node = preload("res://addons/WAT/core/test_runner/single_threaded_runner.gd").new()
-onready var MultiThreadedRunner: Node = preload("res://addons/WAT/core/test_runner/multithreaded_runner.gd").new()
-var is_editor: bool = true
-var editor_context: bool = false
-signal finished
+const Client: Script = preload("res://addons/WAT/network/client.gd")
+const Log: Script = preload("res://addons/WAT/log.gd")
+const SingleThreadedRunner: Script = preload("single_threaded_runner.gd")
+const MultiThreadedRunner: Script = preload("multi_threaded_runner.gd")
+var _runner: Node
+var _client: Client
+var tests: Array
+var threads: int = 1
+signal run_completed
 
-func _ready() -> void:
-	var strat = WAT.ResManager.get_strategy()
-	var tests = strat.tests
-	var threads = strat.threads
-	add_child(SingleThreadedRunner)
-	threads = _validate_threads(threads)
-	if threads > 1:
-		MultiThreadedRunner.connect("run_completed", self, "_on_run_completed")
-		MultiThreadedRunner.run(tests, threads)
-	else:
-		SingleThreadedRunner.connect("run_completed", self, "_on_run_completed")
-		SingleThreadedRunner.run(tests)
-		
-func _on_run_completed(results: Array) -> void:
-	if editor_context:
-		emit_signal("finished", results)
-		print("Terminating TestRunner")
-	else:
-		WAT.ResManager.results().save(results)
-		print("Terminating TestRunner")
-		get_tree().quit() if is_editor else emit_signal("finished")
+func _init(_tests: Array = [], _threads: int = 1) -> void:
+	threads = _threads
+	tests = _tests
+	if not Engine.is_editor_hint():
+		_set_window_size()
+		_minimize_window()
 	
-func _validate_threads(threads: int) -> int:
-	if threads == OS.get_processor_count():
-		push_warning("Max Available Threads is %s" % (OS.get_processor_count() - 1) as String)
-		threads = OS.get_processor_count() - 1
-		if threads == 0: # Unlikely event that people only have a single thread?
-			threads = 1
-	return threads
+func _ready() -> void:
+	name = "TestRunner"
+	if tests.empty() and not Engine.is_editor_hint():
+		print("WAT: Seeking Tests from Test Server")
+		_client = Client.new()
+		_client.connect("test_strategy", self, "run")
+		connect("run_completed", _client, "_on_run_completed")
+		add_child(_client)
+	else:
+		print("running")
+		run()
+
+func run(_tests = tests, _threads = threads) -> void:
+	tests = _tests
+	Log.method("run", self)
+	if _threads > 1:
+		print("WAT: Tests Received from Test Server")
+		_runner = MultiThreadedRunner.new()
+		_runner.name = "MultiThreadedRunner"
+	else:
+		_runner = SingleThreadedRunner.new()
+		_runner.name = "SingleThreadedRunner"
+	_runner.connect("run_completed", self, "_on_run_completed")
+	add_child(_runner, true)
+	_runner.run(_tests, _threads)
+
+
+func _on_run_completed(results: Array) -> void:
+	_runner.queue_free()
+	emit_signal("run_completed", results)
+	
+func _set_window_size() -> void:
+	OS.window_size = ProjectSettings.get_setting("WAT/Window_Size")
+	
+func _minimize_window() -> void:
+	OS.window_minimized = ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests")
+

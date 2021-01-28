@@ -1,7 +1,7 @@
 extends "assertion.gd"
 
 
-static func is_null(value, context: String) -> AssertionResult:
+static func is_null(value, context: String) -> Dictionary:
 	var type = type2str(value)
 	var passed: String = "|%s| %s == null" % [type, value]
 	var failed: String = "|%s| %s != null" % [type, value]
@@ -10,7 +10,7 @@ static func is_null(value, context: String) -> AssertionResult:
 	var result = passed if success else failed
 	return _result(success, expected, result, context)
 
-static func is_not_null(value, context: String) -> AssertionResult:
+static func is_not_null(value, context: String) -> Dictionary:
 	var type = type2str(value)
 	var passed: String = "|%s| %s != null" % [type, value]
 	var failed: String = "|%s| %s == null" % [type, value]

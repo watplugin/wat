@@ -1,5 +1,6 @@
 extends Node
 
+
 const RUN_ALL: String = "-run_all"
 const RUN_DIRECTORY: String = "-run_dir"
 const RUN_SCRIPT: String = "-run_script"
@@ -10,89 +11,142 @@ const LIST_ALL: String = "-list_all"
 const LIST_DIR: String = "-list_dir"
 const PASSED: int = 0
 const FAILED: int = 1
+var test
+const TestRunner: GDScript = preload("res://addons/WAT/core/test_runner/test_runner.gd")
 
-const TestRunner: PackedScene = preload("res://addons/WAT/core/test_runner/TestRunner.tscn")
 var _runner: Node
 var _start_time: float
-var _tests
-var runkey: int
 
 func _ready() -> void:
-	_tests = get_node("explorer")
 	parse(arguments())
 	
 func arguments() -> Array:
 	return Array(OS.get_cmdline_args()).pop_back().split("=") as Array
-	
-func repeat(args) -> int:
-	if not args.empty() and args.back().is_valid_integer():
-		return args.back() as int
-	else:
-		return 0
-		
+
 func parse(arguments: Array) -> void:
-	var tests: Array = []
+	test = load("res://addons/WAT/editor/test_gatherer.gd").new().discover()
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
-			tests = _tests.tests[WAT.Settings.test_directory()]
+			var repeat = arguments.pop_front()
+			var threads = arguments.pop_front()
+			repeat = 0 if repeat == null else int(repeat) 
+			threads = 1 if threads == null else int(threads)
+			if test.all.empty():
+				push_warning("No Tests Found")
+				OS.set_exit_code(1)
+				get_tree().quit()
+				return
+			_run(test.all, repeat, threads)
 		RUN_DIRECTORY:
-			tests = _tests.tests[arguments.front()]
+			var dir: String = arguments.pop_front()
+			var repeat = arguments.pop_front()
+			var threads = arguments.pop_front()
+			repeat = 0 if repeat == null else int(repeat) 
+			threads = 1 if threads == null else int(threads)
+			if test[dir].empty():
+				push_warning("No Tests Found")
+				OS.set_exit_code(1)
+				get_tree().quit()
+				return
+			_run(test[dir], repeat, threads)
 		RUN_SCRIPT:
-			tests = _tests.tests[arguments.front()]
+			var script: String = arguments.pop_front()
+			var repeat = arguments.pop_front()
+			var threads = arguments.pop_front()
+			repeat = 0 if repeat == null else int(repeat) 
+			threads = 1 if threads == null else int(threads)
+			if not test.script.has(script):
+				push_warning("No Tests Found")
+				OS.set_exit_code(1)
+				get_tree().quit()
+				return
+			_run([test.scripts[script]], repeat, threads)
 		RUN_TAG:
-			tests = _tests.tests[arguments.front()]
+			var tag: String = arguments.pop_front()
+			var repeat = arguments.pop_front()
+			var threads = arguments.pop_front()
+			repeat = 0 if repeat == null else int(repeat) 
+			threads = 1 if threads == null else int(threads)
+			var t = []
+			for container in test.all:
+				if container["tags"].has(tag):
+					t.append(container)
+			if t.empty():
+				push_warning("No Tests Found")
+				OS.set_exit_code(1)
+				get_tree().quit()
+				return
+			_run(t, repeat, threads)
 		RUN_METHOD:
-			tests = _tests.tests[arguments[0]]
-			tests[0].method = arguments[1]
+			var script: String = arguments.pop_front()
+			var method: String = arguments.pop_front()
+			var repeat = arguments.pop_front()
+			var threads = arguments.pop_front()
+			repeat = 0 if repeat == null else int(repeat) 
+			threads = 1 if threads == null else int(threads)
+			if not test.scripts.has(script):
+				push_warning("No Tests Found")
+				OS.set_exit_code(1)
+				get_tree().quit()
+				return
+			var container = test.scripts[script].duplicate()
+			container["method"] = method
+			_run([container], repeat, threads)
 		RUN_FAILURES:
-			tests = WAT.ResManager.results().failed()
+			var toRun = []
+			for container in test.all:
+				print(container)
+				if container.has("passing") and not container["passing"]:
+					toRun.append(container)
+			if toRun.empty():
+				push_warning("No Tests Found")
+				OS.set_exit_code(1)
+				get_tree().quit()
+				return
+			var repeat = arguments.pop_front()
+			var threads = arguments.pop_front()
+			repeat = 0 if repeat == null else int(repeat) 
+			threads = 1 if threads == null else int(threads)
+			_run(toRun, repeat, threads)
 		LIST_ALL:
-			_list()
+			print(test.scripts.keys())
 			get_tree().quit()
 		LIST_DIR:
-			_list(arguments.pop_front())
+			var dirlist: Array = []
+			for container in test[arguments.pop_front()]:
+				dirlist.append(container.path)
+			print(dirlist)
 			get_tree().quit()
 		_:
 			push_error("Invalid Argument")
 			get_tree().quit()
-	if tests.empty():
-		push_warning("No Tests To Run")
-		OS.exit_code = FAILED
-		get_tree().quit()
-	var repeat = repeat(arguments)
-	tests = duplicate_tests(tests, repeat)
-	_run(tests)
 			
 func test_directory() -> String:
 	return ProjectSettings.get_setting("WAT/Test_Directory")
-
-func _list(path: String = test_directory()):
-	print()
-	for script in _tests.tests[path]:
-		print(script.path)
 	
-func duplicate_tests(tests: Array, repeat: int) -> Array:
-	var duplicates = []
-	for test in tests:
-		for i in repeat:
-			duplicates.append(test.duplicate())
-	tests += duplicates
-	return tests
+func set_last_run_success(results) -> void:
+	for result in results:
+		test.scripts[result["path"]]["passing"] = result.success
+	load("res://addons/WAT/editor/test_gatherer.gd").new().save(test)
 
-func _run(tests) -> void:
-	runkey = OS.get_unix_time()
-	WAT.ResManager.results().add_unique_run_key(runkey)
-	_runner = TestRunner.instance()
-	_runner.tests = tests
-	_runner.is_editor = false
-	_runner.connect("finished", self, "_on_testrunner_ended")
+func _run(tests: Array, repeats: int = 0, threads: int = 0) -> void:
+	var toRun = repeat(tests, repeats)
+	_runner = TestRunner.new(toRun, threads)
+	_runner.connect("run_completed", self, "_on_run_completed")
 	_start_time = OS.get_ticks_msec()
 	add_child(_runner)
 	
-func _on_testrunner_ended() -> void:
+func repeat(tests: Array, repeat: int) -> Array:
+	var duplicates: Array = []
+	for idx in repeat:
+		for test in tests:
+			duplicates.append(test)
+	duplicates += tests
+	return duplicates
+
+func _on_run_completed(caselist: Array) -> void:
 	_runner.queue_free()
-	var caselist: Array = WAT.ResManager.results().retrieve(runkey)
 	var cases = {passed = 0, total = 0, crashed = 0}
 	for case in caselist:
 		cases.total += 1
@@ -101,6 +155,8 @@ func _on_testrunner_ended() -> void:
 		else:
 			display_failures(case)
 	display_summary(cases)
+	load("res://addons/WAT/editor/junit_xml.gd").write(caselist, cases.seconds)
+	set_last_run_success(caselist)
 	set_exit_code(cases)
 	get_tree().quit()
 

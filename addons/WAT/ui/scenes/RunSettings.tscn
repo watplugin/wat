@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/WAT/ui/scripts/run_settings.gd" type="Script" id=1]
+
+[node name="RunSettings" type="HBoxContainer"]
+margin_left = 267.0
+margin_right = 695.0
+margin_bottom = 24.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Repeats" type="SpinBox" parent="."]
+margin_right = 150.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 150, 0 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+align = 1
+prefix = "Repeat"
+suffix = "Time(s)"
+
+[node name="Threads" type="SpinBox" parent="."]
+margin_left = 154.0
+margin_right = 314.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 160, 0 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+min_value = 1.0
+max_value = 7.0
+value = 1.0
+align = 1
+prefix = "Run on"
+suffix = "Thread(s)"
+
+[node name="RunInEditor" type="CheckBox" parent="."]
+margin_left = 318.0
+margin_right = 428.0
+margin_bottom = 24.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+pressed = true
+text = "Run In Editor"

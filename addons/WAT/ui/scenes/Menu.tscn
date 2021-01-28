@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://addons/WAT/ui/scripts/links.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/assets/play.png" type="Texture" id=2]
+[ext_resource path="res://addons/WAT/ui/scenes/TestMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/WAT/ui/scenes/RunSettings.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/WAT/ui/scripts/save_metadata.gd" type="Script" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="InputEventKey" id=6]
+shift = true
+control = true
+command = true
+scancode = 65
+
+[sub_resource type="ShortCut" id=7]
+shortcut = SubResource( 6 )
+
+[node name="Menu" type="HBoxContainer"]
+margin_right = 1004.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuickRunAll" type="Button" parent="."]
+margin_right = 16.0
+margin_bottom = 16.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+shortcut = SubResource( 7 )
+icon = ExtResource( 2 )
+flat = true
+
+[node name="TestMenu" parent="." instance=ExtResource( 3 )]
+margin_left = 20.0
+margin_right = 102.0
+margin_bottom = 20.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="ResultsMenu" type="MenuButton" parent="."]
+margin_left = 106.0
+margin_right = 202.0
+margin_bottom = 20.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Filter Results"
+items = [ "Expand All", null, 0, false, false, 0, 0, null, "", false, "Collapse All", null, 0, false, false, 1, 0, null, "", false, "Expand All Failures", null, 0, false, false, 2, 0, null, "", false ]
+
+[node name="RunSettings" parent="." instance=ExtResource( 4 )]
+margin_left = 206.0
+margin_right = 634.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="SaveMetadata" type="Button" parent="."]
+margin_left = 638.0
+margin_right = 742.0
+margin_bottom = 24.0
+hint_tooltip = "Save metadata before uploading to source control if you use continous integration."
+text = "Save Metadata"
+flat = true
+script = ExtResource( 5 )
+
+[node name="Links" type="MenuButton" parent="."]
+margin_left = 746.0
+margin_right = 791.0
+margin_bottom = 20.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Links"
+items = [ "Support WAT", null, 0, false, false, 0, 0, "https://ko-fi.com/alexanddraw", "", false, "Report An Issue", null, 0, false, false, 1, 0, "https://github.com/CodeDarigan/WAT-GDScript/issues/new", "", false, "Request Docs", null, 0, false, false, 2, 0, "https://github.com/CodeDarigan/WAT-Documentation/issues/new", "", false, "Online Docs", null, 0, false, false, 3, 0, "https://wat.readthedocs.io/en/latest/", "", false ]
+script = ExtResource( 1 )

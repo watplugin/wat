@@ -34,7 +34,7 @@ class Recordee extends Node:
 	var age = 0
 	var wisdom = 100
 	
-	func _process(delta: float) -> void:
+	func _process(_delta: float) -> void:
 		age += 1
 		if wisdom > 0:
 			wisdom -= 1

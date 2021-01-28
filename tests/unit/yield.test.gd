@@ -1,7 +1,9 @@
 extends WAT.Test
 
+const Yielder: Script = preload("res://addons/WAT/core/test/yielder.gd")
 var a; var b; var c; var d; var e; var f;
 ## warning-ignore:unused_signal 
+# warning-ignore:unused_signal
 signal abc # (its used by call_defferred)
 
 func title() -> String:
@@ -43,6 +45,7 @@ func test_When_we_yield_in_execute():
 func test_When_we_yield_we_get_the_return_value() -> void:
 	describe("When yield(self.yield_value()) returns")
 	
+# warning-ignore:function_may_yield
 	var args: Array = yield(until_signal(yield_value(), "completed", 0.5), YIELD)
 
 	asserts.is_Array(args, "Then we get an array")
@@ -73,7 +76,7 @@ func test_When_yielder_is_finished_signals_are_disconnected():
 #
 func test_When_we_call_until_timeout() -> void:
 	describe("When we call until_timeout (with 1.0)")
-	var yielder = WAT.Yielder.new()
+	var yielder = Yielder.new()
 	add_child(yielder)
 	yielder.until_timeout(1.0)
 	asserts.is_true(not yielder.paused, "Then yielder is unpaused")
@@ -83,7 +86,7 @@ func test_When_we_call_until_timeout() -> void:
 #
 func test_When_we_call_until_signal() -> void:
 	describe("When we call until signal")
-	var yielder = WAT.Yielder.new()
+	var yielder = Yielder.new()
 	add_child(yielder)
 	yielder.until_signal(1.0, self, "abc")
 	asserts.is_true(not yielder.paused, "Then the yielder is unpaused")

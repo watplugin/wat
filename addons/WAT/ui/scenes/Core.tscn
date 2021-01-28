@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/WAT/ui/scripts/core.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/ui/scenes/Results.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/WAT/ui/scenes/Menu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/WAT/ui/scenes/Summary.tscn" type="PackedScene" id=4]
+
+[node name="Core" type="VBoxContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 590.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" parent="." instance=ExtResource( 3 )]
+margin_right = 791.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Results" parent="." instance=ExtResource( 2 )]
+margin_bottom = 554.0
+
+[node name="Summary" parent="." instance=ExtResource( 4 )]
+margin_top = 558.0

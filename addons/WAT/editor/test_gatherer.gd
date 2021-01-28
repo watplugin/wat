@@ -1,0 +1,72 @@
+extends Reference
+
+const BLANK: String = ""
+const Settings: Script = preload("res://addons/WAT/settings.gd")
+var tests: Dictionary
+
+func discover() -> Dictionary:
+	tests.clear()
+	tests = {dirs = [], scripts = {}, all = []}
+	_discover()
+	var metadata = _get_metadata()
+	for path in tests.scripts:
+		if(metadata.has(path)):
+			tests.scripts[path]["tags"] = metadata[path]["tags"]
+			tests.scripts[path]["passing"] = metadata[path]["passing"]
+	return tests
+
+func _discover(path: String = Settings.test_directory()) -> Array:
+	tests.dirs.append(path)
+	var scripts: Array = []
+	var subdirs: Array = []
+	var dir: Directory = Directory.new()
+	var err: int = dir.open(path)
+	if err != OK:
+		push_error("%s : %s " % [path, err as String])
+		
+	dir.list_dir_begin(true)
+	var current_name = dir.get_next()
+	
+	while current_name != BLANK:
+		var title: String = path + "/" + current_name
+		if title.ends_with(".gd") and load(title).get("TEST"):
+			var script = load(title)
+			var test = {"script": script, "path": title, "tags": [], "passing": false}
+			scripts.append(test)
+			tests.scripts[title] = test
+		elif dir.dir_exists(current_name):
+			subdirs.append(title)
+#			tests.dirs.append(title)
+		current_name = dir.get_next()
+	dir.list_dir_end()
+	
+	for subdir in subdirs:
+		# Parent Dirs subsume child dirs
+		_discover(subdir)
+	tests[path] = scripts
+	tests.all += scripts
+	return scripts
+	
+func _get_metadata() -> Dictionary:
+	var path: String = ProjectSettings.get_setting("WAT/Test_Metadata_Directory")
+	var file: File = File.new()
+	var err: int = file.open(path + "/test_metadata.json", File.READ)
+	if err != OK:
+		push_warning(err as String)
+		return {}
+	var metadata: Dictionary = JSON.parse(file.get_as_text()).result
+	file.close()
+	return metadata
+	
+func save(data: Dictionary) -> void:
+	var path: String = ProjectSettings.get_setting("WAT/Test_Metadata_Directory")
+	var file: File = File.new()
+	var err: int = file.open(path + "/test_metadata.json", File.WRITE)
+	if err != OK:
+		push_warning(err as String)
+	for test in data.scripts:
+		var value = data.scripts[test]
+		value.erase("script")
+	var val: String = JSON.print(data.scripts, "\t")
+	file.store_string(val)
+	file.close()

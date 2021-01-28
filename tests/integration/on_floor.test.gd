@@ -2,7 +2,7 @@ extends WAT.Test
 
 func title() -> String:
 	return "Given is_on_floor"
-	
+
 func test_stubbing_is_on_floor_method_from_user_defined_class() -> void:
 	describe("From a user-defined script")
 
@@ -11,7 +11,7 @@ func test_stubbing_is_on_floor_method_from_user_defined_class() -> void:
 	var bodydouble = bodydirector.double()
 
 	asserts.is_true(bodydouble.is_on_floor(), "Then it can be stubbed")
-	
+
 func test_stubbing_is_on_floor_method_from_builtin_class2() -> void:
 	describe("From a built-in KinematicBody2D2")
 
@@ -20,7 +20,7 @@ func test_stubbing_is_on_floor_method_from_builtin_class2() -> void:
 	var bodydouble = bodydirector.double()
 
 	asserts.is_true(bodydouble.is_on_floor(), "Then it can be stubbed")
-	
+
 func test_stubbing_is_on_floor_as_child_node_with_no_script() -> void:
 	describe("From a child node of a scene without scripts")
 

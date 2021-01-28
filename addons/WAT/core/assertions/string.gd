@@ -1,6 +1,6 @@
 extends "assertion.gd"
 
-static func begins_with(value: String, string: String, context: String) -> AssertionResult:
+static func begins_with(value: String, string: String, context: String) -> Dictionary:
 	var passed: String = "%s begins with %s" % [string, value]
 	var failed: String = "%s does not begins with %s" % [string, value]
 	var success = string.begins_with(value)
@@ -8,7 +8,7 @@ static func begins_with(value: String, string: String, context: String) -> Asser
 	var result = passed if success else failed
 	return _result(success, expected, result, context)
 	
-static func contains(value: String, string: String, context: String) -> AssertionResult:
+static func contains(value: String, string: String, context: String) -> Dictionary:
 	var passed: String = "%s contains %s" % [string, value]
 	var failed: String = "%s does not contain %s" % [string, value]
 	var success = value in string
@@ -16,7 +16,7 @@ static func contains(value: String, string: String, context: String) -> Assertio
 	var result = passed if success else failed
 	return _result(success, expected, result, context)
 
-static func does_not_begin_with(value: String, string: String, context: String) -> AssertionResult:
+static func does_not_begin_with(value: String, string: String, context: String) -> Dictionary:
 	var passed: String = "%s does not begin with %s" % [string, value]
 	var failed: String = "%s begins with %s" % [string, value]
 	var success = not string.begins_with(value)
@@ -24,7 +24,7 @@ static func does_not_begin_with(value: String, string: String, context: String) 
 	var result = passed if success else failed
 	return _result(success, expected, result, context)
 
-static func does_not_contain(value: String, string: String, context: String) -> AssertionResult:
+static func does_not_contain(value: String, string: String, context: String) -> Dictionary:
 	var passed: String = "%s does not contain %s" % [string, value]
 	var failed: String = "%s contains %s" % [string, value]
 	var success = not value in string
@@ -32,7 +32,7 @@ static func does_not_contain(value: String, string: String, context: String) -> 
 	var result = passed if success else failed
 	return _result(success, expected, result, context)
 	
-static func does_not_end_with(value: String, string: String, context: String) -> AssertionResult:
+static func does_not_end_with(value: String, string: String, context: String) -> Dictionary:
 	var passed: String = "%s does not end with %s" % [string, value]
 	var failed: String = "%s ends with %s" % [string, value]
 	var success = not string.ends_with(value)
@@ -40,7 +40,7 @@ static func does_not_end_with(value: String, string: String, context: String) ->
 	var result = passed if success else failed
 	return _result(success, expected, result, context)
 
-static func ends_with(value: String, string: String, context: String) -> AssertionResult:
+static func ends_with(value: String, string: String, context: String) -> Dictionary:
 	var passed: String = "%s ends with %s" % [string, value]
 	var failed: String = "%s does not end with %s" % [string, value]
 	var success = string.ends_with(value)

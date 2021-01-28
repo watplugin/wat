@@ -11,16 +11,10 @@ jobs:
             name: "Delete .import files"
             command: rm addons/WAT/assets/*.import
         - run:
-            name: "Run Unit Tests"
-            command: godot addons/WAT/cli.tscn -run_dir=res://tests/unit
-        - run:
             name: "Run All Tests"
             command: godot addons/WAT/cli.tscn -run_all
-        - run:
-            name: checkdir
-            command: dir tests/watdata
         - store_test_results:
-            path: tests/watdata/xml
+            path: tests/
         - store_artifacts:
-            path: tests/watadata/xml
+            path: tests/
 

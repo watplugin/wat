@@ -1,4 +1,4 @@
-extends Reference
+extends Object
 
 const Is: Script = preload("is.gd")
 const IsNot: Script = preload("is_not.gd")
@@ -14,15 +14,10 @@ const Utility: Script = preload("utility.gd")
 const Property: Script = preload("property.gd")
 const ObjectX: Script = preload("object.gd")
 
-signal OUTPUT
 signal asserted
 
-func output(data) -> void:
+func output(data: Dictionary) -> void:
 	emit_signal("asserted", data)
-
-func loop(method: String, data: Array) -> void:
-	for set in data:
-		callv(method, set)
 
 func is_true(condition: bool, context: String = "") -> void:
 	output(Boolean.is_true(condition, context))

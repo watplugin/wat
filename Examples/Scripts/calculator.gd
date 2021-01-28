@@ -1,7 +1,7 @@
 extends Node
 class_name Calculator
 
-var sum: int = 0
+var _sum: int = 0
 
 func add(a, b):
 	return a + b
@@ -16,10 +16,10 @@ func divide(a, b):
 	return a / b
 
 func sum(list):
-	var sum = 0
+	_sum = 0
 	for number in list:
-		sum += number
-	return sum
+		_sum += number
+	return _sum
 
 static func pi():
 	return PI
