@@ -12,7 +12,7 @@ jobs:
             command: rm addons/WAT/assets/*.import
         - run:
             name: "Run All Tests"
-            command: godot addons/WAT/cli.tscn -run_dir=res://tests
+            command: godot addons/WAT/cli.tscn -run_all
         - store_test_results:
             path: tests/
         - store_artifacts:
