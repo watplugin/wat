@@ -1,4 +1,4 @@
 extends WAT.Test
 
-func test_simple():
+func sim_test_simple():
     asserts.is_true(false)
