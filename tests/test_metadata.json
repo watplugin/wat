@@ -7,6 +7,13 @@
 		],
 		"passing": true
 	},
+	"res://tests/simple.test.gd": {
+		"path": "res://tests/simple.test.gd",
+		"tags": [
+
+		],
+		"passing": false
+	},
 	"res://tests/integration/default_args.test.gd": {
 		"path": "res://tests/integration/default_args.test.gd",
 		"tags": [
