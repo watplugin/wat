@@ -19,7 +19,8 @@ static func write(results, time: float = 0.0) -> void:
 		output += '\n\t<testsuite name="%s" failures="%s"  tests="%s" time="%s">' % [result.context, result.total - result.passed, result.total, result.time_taken]
 		if result.methods.empty():
 			output += '\n\t\t<testcase name="Not Found" time="0">'
-			output += '\n\t\t\t<failure message="No Tests Found On Suite %s"></failure>' % result.path
+			output += '<failure message="No Tests Found On Suite %s"></failure>' % result.path
+			output += "</testcase>"
 		for case in result.methods:
 				output += '\n\t\t<testcase name="%s" time="%s">' % [case.context, case.time]
 				for assertion in case.assertions:
