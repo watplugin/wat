@@ -16,17 +16,16 @@ static func write(results, time: float = 0.0) -> void:
 	output += '<?xml version="1.0" ?>'
 	output += '\n<testsuites failures="%s" name="TestXML" tests="%s" time="%s">' % [failures, tests, time]
 	for result in results:
-		output += '\n<testsuite failures="%s" name="%s" tests="%s" time="%s">' % [result.total - result.passed, result.context, result.total, result.time_taken]
+		output += '\n\t<testsuite name="%s" failures="%s"  tests="%s" time="%s">' % [result.context, result.total - result.passed, result.total, result.time_taken]
 		for case in result.methods:
-				output += '\n<testcase name="%s" time="%s">' % [case.context, case.time]
+				output += '\n\t\t<testcase name="%s" time="%s">' % [case.context, case.time]
 				for assertion in case.assertions:
 					if not assertion.success:
 						output += '\n<failure message="EXPECTED: %s but GOT %s"></failure>' % [assertion.expected, assertion.actual]
-			
 	# I think these are unnecessary. Will revisit on CLI creation.
-#				output += '\n</testcase>' 
-#		output += "\n</testsuite>"
-#	output += '\n</testsuites>'
+				output += '</testcase>' 
+		output += "\n\t</testsuite>\n"
+	output += '\n</testsuites>'
 	var XML = File.new()
 	var err = XML.open("%s/results.xml" % path, File.WRITE)
 	if err:
