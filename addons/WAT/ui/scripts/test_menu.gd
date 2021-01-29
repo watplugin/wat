@@ -20,6 +20,9 @@ func _init() -> void:
 	
 func _exit_tree() -> void:
 	TestGatherer.new().save(test)
+	clear()
+	
+func clear():
 	for item in range(pool.size(), -1, 0):
 		pool.pop_back().free()
 	
@@ -34,15 +37,9 @@ func save_metadata() -> void:
 	
 func _ready() -> void:
 	Directories.connect(ABOUT_TO_SHOW, self, "_on_dirs_about_to_show")
-#	Scripts.connect(ABOUT_TO_SHOW, self, "_on_scripts_about_to_show")
-#	Methods.connect(ABOUT_TO_SHOW, self, "_on_methods_about_to_show")
-#	Tags.connect(ABOUT_TO_SHOW, self, "_on_tags_about_to_show")
-#	TagEditor.connect(ABOUT_TO_SHOW, self, "_on_tag_editor_about_to_show")
+	Tags.connect(ABOUT_TO_SHOW, self, "_on_tags_about_to_show")
 	Directories.connect(IDX_PRESSED, self, ON_IDX_PRESSED, [Directories])
-#	Scripts.connect(IDX_PRESSED, self, ON_IDX_PRESSED, [Scripts])
-#	Methods.connect(IDX_PRESSED, self, ON_IDX_PRESSED, [Methods])
-#	Tags.connect(IDX_PRESSED, self, ON_IDX_PRESSED, [Tags])
-#	TagEditor.connect(IDX_PRESSED, self, "_on_tag_editor_idx_pressed")
+	Tags.connect(IDX_PRESSED, self, ON_IDX_PRESSED, [Tags])
 	
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 	var metadata: Dictionary = menu.get_item_metadata(idx)
@@ -75,21 +72,22 @@ func select_tests(metadata: Dictionary) -> void:
 				if container.has("passing") and not container["passing"]:
 					tests.append(container)
 			push_warning("RUN FAILURES NOT IMPLEMENTED")
+	clear()
 	emit_signal("_tests_selected", tests)
 	
 func set_last_run_success(results) -> void:
 	for result in results:
 		test.scripts[result["path"]]["passing"] = result.success
 	
-func _on_tag_editor_idx_pressed(idx) -> void:
-	var container: Dictionary = test.scripts[TagEditor.get_item_metadata(idx)]
-	var tag: String = TagEditor.get_item_text(idx)
-	if TagEditor.is_item_checked(idx):
+func _on_tag_editor_idx_pressed(idx, tagEditor) -> void:
+	var container: Dictionary = test.scripts[tagEditor.get_item_metadata(idx)]
+	var tag: String = tagEditor.get_item_text(idx)
+	if tagEditor.is_item_checked(idx):
 		container["tags"].erase(tag)
-		TagEditor.set_item_checked(idx, false)
+		tagEditor.set_item_checked(idx, false)
 	else:
 		container["tags"].append(tag as String)
-		TagEditor.set_item_checked(idx, true)
+		tagEditor.set_item_checked(idx, true)
 	
 func _on_dirs_about_to_show() -> void:
 	refresh()
@@ -110,10 +108,11 @@ func _on_dirs_about_to_show() -> void:
 	for dir in dirs:
 		if not test[dir].empty():
 			var script = Scripts.duplicate()
+			script.connect(IDX_PRESSED, self, ON_IDX_PRESSED, [script])
 			pool.append(script)
 			script.name = idx as String
-			Directories.add_child(script)
-			Directories.add_submenu_item(dir, idx as String)
+			Directories.add_child(script, true)
+			Directories.add_submenu_item(dir, idx as String, idx)
 			Directories.set_item_icon(idx, load("res://addons/WAT/assets/folder.png"))
 			script.connect(ABOUT_TO_SHOW, self, "_on_scripts_about_to_show", [script], CONNECT_ONESHOT)
 			idx += 1
@@ -131,31 +130,41 @@ func _on_scripts_about_to_show(scripts) -> void:
 		return
 	var idx: int = scripts.get_item_count()
 	for script in scriptlist:
-		scripts.add_submenu_item(script["path"], "Methods")
+		var method = Methods.duplicate()
+		method.connect(IDX_PRESSED, self, ON_IDX_PRESSED, [method])
+		pool.append(method)
+		method.name = idx as String
+		scripts.add_child(method, true)
+		scripts.add_submenu_item(script["path"], method.name, idx)
 		scripts.set_item_icon(idx, load("res://addons/WAT/assets/script.png"))
+		method.connect(ABOUT_TO_SHOW, self, "_on_methods_about_to_show", [method, scripts], CONNECT_ONESHOT)
 		idx += 1
 	
-func _on_methods_about_to_show() -> void:
+func _on_methods_about_to_show(methods, scripts) -> void:
 	refresh()
-#	Methods.clear()
-#	Methods.set_as_minsize()
-#	Methods.add_item("Run All")
-#	#Methods.add_item("Edit Tags")
-#	Methods.add_submenu_item("Edit Tags", "TagEditor")
-#	var currentScript: String = Scripts.get_item_text(Scripts.get_current_index())
-#	Methods.set_item_metadata(0, {command = RUN_SCRIPT, path = currentScript})
-#	Methods.set_item_metadata(1, {command = RUN_TAG, tag = "?"})
-#	Methods.set_item_icon(0, load("res://addons/WAT/assets/script.png"))
-#	Methods.set_item_icon(1, load("res://addons/WAT/assets/label.png"))
-#	var script: GDScript = test.scripts[currentScript]["script"]
-#	var methods = script.get_script_method_list()
-#	var idx: int = Methods.get_item_count()
-#	for method in methods:
-#		if method.name.begins_with("test"):
-#			Methods.add_item(method.name)
-#			Methods.set_item_metadata(idx, {command = RUN_METHOD, path = script.get_path(), method = method.name})
-#			Methods.set_item_icon(idx, load("res://addons/WAT/assets/function.png"))
-#			idx += 1
+	methods.clear()
+	methods.set_as_minsize()
+	methods.add_item("Run All")
+	var tag_editor = TagEditor.duplicate()
+	pool.append(tag_editor)
+	tag_editor.name = "tagEditor"
+	methods.add_child(tag_editor)
+	methods.add_submenu_item("Edit Tags", tag_editor.name)
+	tag_editor.connect(ABOUT_TO_SHOW, self, "_on_tag_editor_about_to_show", [tag_editor, scripts])
+	var currentScript: String = scripts.get_item_text(methods.name as int)
+	methods.set_item_metadata(0, {command = RUN_SCRIPT, path = currentScript})
+	methods.set_item_metadata(1, {command = RUN_TAG, tag = "?"})
+	methods.set_item_icon(0, load("res://addons/WAT/assets/script.png"))
+	methods.set_item_icon(1, load("res://addons/WAT/assets/label.png"))
+	var script: GDScript = test.scripts[currentScript]["script"]
+	var methodlist = script.get_script_method_list()
+	var idx: int = methods.get_item_count()
+	for method in methodlist:
+		if method.name.begins_with("test"):
+			methods.add_item(method.name)
+			methods.set_item_metadata(idx, {command = RUN_METHOD, path = script.get_path(), method = method.name})
+			methods.set_item_icon(idx, load("res://addons/WAT/assets/function.png"))
+			idx += 1
 	
 func _on_tags_about_to_show() -> void:
 	refresh()
@@ -168,19 +177,20 @@ func _on_tags_about_to_show() -> void:
 		Tags.set_item_metadata(idx, {command = RUN_TAG, tag = taglabel})
 		idx += 1
 		
-func _on_tag_editor_about_to_show() -> void:
+func _on_tag_editor_about_to_show(tagEditor, scripts) -> void:
 	refresh()
-	TagEditor.clear()
-	TagEditor.set_as_minsize()
-	var currentScript: String = Scripts.get_item_text(Scripts.get_current_index())
+	tagEditor.clear()
+	tagEditor.set_as_minsize()
+	var currentScript: String = scripts.get_item_text(scripts.name as int)
 	var container = test.scripts[currentScript]
 	var tags: PoolStringArray = ProjectSettings.get_setting("WAT/Tags")
-	var idx: int = TagEditor.get_item_count()
+	var idx: int = tagEditor.get_item_count()
+	tagEditor.connect(IDX_PRESSED, self, "_on_tag_editor_idx_pressed", [tagEditor])
 	for tag in tags:
-		TagEditor.add_check_item(tag)
-		TagEditor.set_item_checked(idx, container["tags"].has(tag))
-		TagEditor.set_item_metadata(idx, currentScript)
-		TagEditor.set_item_as_checkable(idx, true)
+		tagEditor.add_check_item(tag)
+		tagEditor.set_item_checked(idx, container["tags"].has(tag))
+		tagEditor.set_item_metadata(idx, currentScript)
+		tagEditor.set_item_as_checkable(idx, true)
 		idx += 1
 		
 func _pressed() -> void:
