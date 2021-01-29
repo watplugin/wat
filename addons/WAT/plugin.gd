@@ -1,6 +1,8 @@
 tool
 extends EditorPlugin
 
+const RUN_CURRENT_SCENE_GODOT_3_2: int = 39
+const RUN_CURRENT_SCENE_GODOT_3_1: int = 33
 const Title: String = "Tests"
 const Settings: Script = preload("res://addons/WAT/settings.gd")
 const GUI: PackedScene = preload("res://addons/WAT/gui.tscn")
@@ -35,7 +37,15 @@ func _exit_tree():
 	instance.free()
 	
 func _on_launched_via_editor() -> void:
-	get_editor_interface().play_custom_scene("res://addons/WAT/core/test_runner/TestRunner.tscn")
+	var version = Engine.get_version_info()
+	if version.minor > 2:
+		get_editor_interface().play_custom_scene("res://addons/WAT/core/test_runner/TestRunner.tscn")
+	elif version.major == 3 and version.minor == 1:
+		get_editor_interface().open_scene_from_path("res://addons/WAT/core/test_runner/TestRunner.tscn")
+		get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_1)
+	elif version.major == 3 and version.minor == 2:
+		get_editor_interface().open_scene_from_path("res://addons/WAT/core/test_runner/TestRunner.tscn")
+		get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_2)
 	make_bottom_panel_item_visible(instance)
 	
 func _on_function_selected(file: String, function: String) -> void:
