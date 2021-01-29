@@ -145,7 +145,7 @@ func _on_methods_about_to_show(methods, scripts) -> void:
 	methods.clear()
 	methods.set_as_minsize()
 	methods.add_item("Run All")
-	var tag_editor = TagEditor.duplicate()
+	var tag_editor = TagEditor.duplicate(true)
 	pool.append(tag_editor)
 	tag_editor.name = "tagEditor"
 	methods.add_child(tag_editor)
@@ -185,7 +185,8 @@ func _on_tag_editor_about_to_show(tagEditor, scripts) -> void:
 	var container = test.scripts[currentScript]
 	var tags: PoolStringArray = ProjectSettings.get_setting("WAT/Tags")
 	var idx: int = tagEditor.get_item_count()
-	tagEditor.connect(IDX_PRESSED, self, "_on_tag_editor_idx_pressed", [tagEditor])
+	if not tagEditor.is_connected(IDX_PRESSED, self, "_on_tag_editor_idx_pressed"):
+		tagEditor.connect(IDX_PRESSED, self, "_on_tag_editor_idx_pressed", [tagEditor])
 	for tag in tags:
 		tagEditor.add_check_item(tag)
 		tagEditor.set_item_checked(idx, container["tags"].has(tag))

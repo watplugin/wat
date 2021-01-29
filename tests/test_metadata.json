@@ -30,9 +30,9 @@
 	"res://tests/integration/script_director.test.gd": {
 		"path": "res://tests/integration/script_director.test.gd",
 		"tags": [
-
+			"64"
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/integration/test_double.test.gd": {
 		"path": "res://tests/integration/test_double.test.gd",
