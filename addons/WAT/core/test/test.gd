@@ -15,6 +15,13 @@ var rerun_method: bool
 var direct: Object
 var yielder: Timer
 var p: Dictionary
+var _last_assertion_passed: bool = false
+
+func _on_last_assertion(assertion: Dictionary) -> void:
+	_last_assertion_passed = assertion["success"]
+
+func previous_assertion_failed() -> bool:
+	return not _last_assertion_passed
 
 func _ready() -> void:
 	p = parameters.parameters

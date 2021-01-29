@@ -61,6 +61,7 @@ func run(test: Dictionary) -> void:
 	_test.connect("cancelled", self, "_on_test_cancelled")
 	_test.connect("described", _case, "_on_test_method_described")
 	_assertions.connect("asserted", _case, "_on_asserted")
+	_assertions.connect("asserted", _test, "_on_last_assertion")
 	add_child(_test)
 	_start()
 	
