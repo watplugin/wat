@@ -49,7 +49,6 @@ func sort(results: Array) -> Dictionary:
 				# For the dangerous people who want to run tests in project root
 				path = "res://"
 		
-		print(path)
 		path = path.replace(".", " ")
 		path = path.capitalize()
 		path = path.replace(" ", "/")
