@@ -13,11 +13,17 @@ const StringX: Script = preload("string.gd")
 const Utility: Script = preload("utility.gd")
 const Property: Script = preload("property.gd")
 const ObjectX: Script = preload("object.gd")
+var _most_recent_assertion_state: bool = false
 
 signal asserted
 
 func output(data: Dictionary) -> void:
+	_most_recent_assertion_state = data["success"]
 	emit_signal("asserted", data)
+
+
+func previous_failed() -> bool:
+	return not _most_recent_assertion_state
 
 func is_true(condition: bool, context: String = "") -> void:
 	output(Boolean.is_true(condition, context))

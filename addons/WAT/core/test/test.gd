@@ -5,6 +5,7 @@ const Assertions: Script = preload("res://addons/WAT/core/assertions/assertions.
 const TEST: bool = true
 const YIELD: String = "finished"
 signal described
+signal cancelled
 var asserts: Assertions
 var parameters: Reference
 var recorder: Script
@@ -14,7 +15,6 @@ var rerun_method: bool
 var direct: Object
 var yielder: Timer
 var p: Dictionary
-
 
 func _ready() -> void:
 	p = parameters.parameters

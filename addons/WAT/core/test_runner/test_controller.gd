@@ -58,6 +58,7 @@ func run(test: Dictionary) -> void:
 		push_warning("No Tests found in " + test["path"] + "")
 		call_deferred("_complete")
 		return
+	_test.connect("cancelled", self, "_on_test_cancelled")
 	_test.connect("described", _case, "_on_test_method_described")
 	_assertions.connect("asserted", _case, "_on_asserted")
 	add_child(_test)
