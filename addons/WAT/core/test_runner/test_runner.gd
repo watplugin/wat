@@ -26,7 +26,6 @@ func _ready() -> void:
 		connect("run_completed", _client, "_on_run_completed")
 		add_child(_client)
 	else:
-		print("running")
 		run()
 
 func run(_tests = tests, _threads = threads) -> void:
