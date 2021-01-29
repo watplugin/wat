@@ -19,16 +19,18 @@ func _enter_tree():
 	instance.connect("function_selected", self, "_on_function_selected")
 	add_child(docker)
 	yield(get_tree().create_timer(0.5), "timeout")
-	var filedock: FileSystemDock = get_editor_interface().get_file_system_dock()
-	observe_filesystem(filedock, instance.TestMenu)
+	if Engine.get_version_info().minor > 2:
+		var filedock = get_editor_interface().call("get_file_system_dock")
+		observe_filesystem(filedock, instance.TestMenu)
 	if not is_connected("resource_saved", instance.TestMenu, "_on_resource_saved"):
 		connect("resource_saved", instance.TestMenu, "_on_resource_saved")
 	
 func _exit_tree():
 	if is_connected("resource_saved", instance.TestMenu, "_on_resource_saved"):
 		disconnect("resource_saved", instance.TestMenu, "_on_resource_saved")
-	var filedock: FileSystemDock = get_editor_interface().get_file_system_dock()
-	stop_observing_filesystem(filedock, instance.TestMenu)
+	if Engine.get_version_info().minor > 2:
+		var filedock = get_editor_interface().call("get_file_system_dock")	
+		stop_observing_filesystem(filedock, instance.TestMenu)
 	docker.free()
 	instance.free()
 	
@@ -59,7 +61,7 @@ func _initialize_metadata() -> void:
 	file.store_string("{}")
 	file.close()
 	
-func observe_filesystem(filesystem: FileSystemDock, menu: Button) -> void:
+func observe_filesystem(filesystem, menu: Button) -> void:
 	if not filesystem.is_connected("folder_moved", menu, "_on_folder_moved"):
 		filesystem.connect("folder_moved", menu, "_on_folder_moved")
 	if not filesystem.is_connected("folder_removed", menu, "_on_folder_removed"):
@@ -70,7 +72,7 @@ func observe_filesystem(filesystem: FileSystemDock, menu: Button) -> void:
 		filesystem.connect("file_removed", menu, "_on_file_removed")
 	
 
-func stop_observing_filesystem(filesystem: FileSystemDock, menu: Button) -> void:
+func stop_observing_filesystem(filesystem, menu: Button) -> void:
 	if filesystem.is_connected("folder_moved", menu, "_on_folder_moved"):
 		filesystem.disconnect("folder_moved", menu, "_on_folder_moved")
 	if filesystem.is_connected("folder_removed", menu, "_on_folder_removed"):
