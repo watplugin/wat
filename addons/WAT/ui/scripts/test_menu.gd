@@ -123,11 +123,9 @@ func _on_scripts_about_to_show(scripts) -> void:
 	scripts.set_as_minsize()
 	scripts.add_item("Run All")
 	var currentdir: String = Directories.get_item_text(scripts.name as int)
-	print(currentdir)
 	scripts.set_item_metadata(0, {command = RUN_DIR, path = currentdir})
 	scripts.set_item_icon(0,load("res://addons/WAT/assets/folder.png"))
 	var scriptlist: Array = test[currentdir]
-	print(scriptlist.size())
 	if scriptlist.empty():
 		return
 	var idx: int = scripts.get_item_count()
