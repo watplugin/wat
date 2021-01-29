@@ -6,6 +6,13 @@
 		],
 		"passing": false
 	},
+	"res://tests/new_script.gd": {
+		"path": "res://tests/new_script.gd",
+		"tags": [
+
+		],
+		"passing": false
+	},
 	"res://tests/integration/default_args.test.gd": {
 		"path": "res://tests/integration/default_args.test.gd",
 		"tags": [
@@ -53,7 +60,7 @@
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
 	"res://tests/unit/example.gd": {
 		"path": "res://tests/unit/example.gd",

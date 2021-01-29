@@ -17,10 +17,6 @@
 [sub_resource type="StyleBoxEmpty" id=5]
 
 [sub_resource type="InputEventKey" id=6]
-shift = true
-control = true
-command = true
-scancode = 65
 
 [sub_resource type="ShortCut" id=7]
 shortcut = SubResource( 6 )

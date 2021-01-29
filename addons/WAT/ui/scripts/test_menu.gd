@@ -27,7 +27,7 @@ func clear():
 		pool.pop_back().free()
 	
 func refresh() -> void:
-	if ProjectSettings.get_setting("WAT/Auto_Refresh_Tests"):
+	if ProjectSettings.get_setting("WAT/Auto_Refresh_Tests") or Engine.get_version_info().minor < 3:
 		var test_gatherer = TestGatherer.new()
 		test_gatherer.save(test)
 		test = test_gatherer.discover()
@@ -57,7 +57,7 @@ func select_tests(metadata: Dictionary) -> void:
 		RUN_METHOD:
 			var path: String = metadata["path"]
 			var method: String = metadata["method"]
-			var container: Dictionary = test.scripts[path].duplicate()
+			var container: Dictionary = test.scripts[path].duplicate(true)
 			container["method"] = method
 			tests.append(container)
 		RUN_TAG:
@@ -88,7 +88,7 @@ func _on_tag_editor_idx_pressed(idx, tagEditor) -> void:
 	else:
 		container["tags"].append(tag as String)
 		tagEditor.set_item_checked(idx, true)
-	
+		
 func _on_dirs_about_to_show() -> void:
 	refresh()
 	Directories.clear()
@@ -107,14 +107,14 @@ func _on_dirs_about_to_show() -> void:
 	var idx: int = Directories.get_item_count()
 	for dir in dirs:
 		if not test[dir].empty():
-			var script = Scripts.duplicate()
+			var script = Scripts.duplicate(true)
 			script.connect(IDX_PRESSED, self, ON_IDX_PRESSED, [script])
 			pool.append(script)
 			script.name = idx as String
 			Directories.add_child(script, true)
 			Directories.add_submenu_item(dir, idx as String, idx)
 			Directories.set_item_icon(idx, load("res://addons/WAT/assets/folder.png"))
-			script.connect(ABOUT_TO_SHOW, self, "_on_scripts_about_to_show", [script], CONNECT_ONESHOT)
+			script.connect(ABOUT_TO_SHOW, self, "_on_scripts_about_to_show", [script])
 			idx += 1
 	
 func _on_scripts_about_to_show(scripts) -> void:
@@ -123,21 +123,23 @@ func _on_scripts_about_to_show(scripts) -> void:
 	scripts.set_as_minsize()
 	scripts.add_item("Run All")
 	var currentdir: String = Directories.get_item_text(scripts.name as int)
+	print(currentdir)
 	scripts.set_item_metadata(0, {command = RUN_DIR, path = currentdir})
 	scripts.set_item_icon(0,load("res://addons/WAT/assets/folder.png"))
 	var scriptlist: Array = test[currentdir]
+	print(scriptlist.size())
 	if scriptlist.empty():
 		return
 	var idx: int = scripts.get_item_count()
 	for script in scriptlist:
-		var method = Methods.duplicate()
+		var method = Methods.duplicate(true)
 		method.connect(IDX_PRESSED, self, ON_IDX_PRESSED, [method])
 		pool.append(method)
 		method.name = idx as String
 		scripts.add_child(method, true)
 		scripts.add_submenu_item(script["path"], method.name, idx)
 		scripts.set_item_icon(idx, load("res://addons/WAT/assets/script.png"))
-		method.connect(ABOUT_TO_SHOW, self, "_on_methods_about_to_show", [method, scripts], CONNECT_ONESHOT)
+		method.connect(ABOUT_TO_SHOW, self, "_on_methods_about_to_show", [method, scripts])
 		idx += 1
 	
 func _on_methods_about_to_show(methods, scripts) -> void:
