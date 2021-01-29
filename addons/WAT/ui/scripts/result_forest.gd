@@ -23,6 +23,7 @@ func _add_result_tree(results: Array) -> void:
 		result_tree.connect("calculated", self, "_on_tree_results_calculated")
 		result_tree.name = path
 		add_child(result_tree)
+		set_tab_title(tab_count, path)
 		_tabs[result_tree] = tab_count
 		result_tree.display(sorted[path])
 		tab_count += 1
@@ -40,16 +41,18 @@ func sort(results: Array) -> Dictionary:
 		var end: int = path.find_last("/")
 		
 		if end > 0:
-			path = path.substr(0, end).replace("/", "")
+			path = path.substr(0, end).replace("/", " ")
 		else:
 			# Our test is in root so we'll just give it the root dir
 			path = ProjectSettings.get_setting("WAT/Test_Directory").replace("res://", "")
 			if path.empty():
 				# For the dangerous people who want to run tests in project root
 				path = "res://"
-			
+		
+		print(path)
 		path = path.replace(".", " ")
 		path = path.capitalize()
+		path = path.replace(" ", "/")
 		if sorted.has(path):
 			sorted[path].append(result)
 		else:

@@ -29,7 +29,8 @@ func _discover(path: String = Settings.test_directory()) -> Array:
 	
 	while current_name != BLANK:
 		var title: String = path + "/" + current_name
-		if title.ends_with(".gd") and load(title).get("TEST"):
+		#																	The third slash is for the leading dir
+		if title.ends_with(".gd") and load(title).get("TEST") and title != "res:///addons/WAT/core/test/test.gd":
 			var script = load(title)
 			var test = {"script": script, "path": title, "tags": [], "passing": false}
 			scripts.append(test)
