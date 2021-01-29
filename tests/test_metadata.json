@@ -1,177 +1,149 @@
 {
-	"res:///Examples/Bootstrap/empty_test.gd": {
-		"path": "res:///Examples/Bootstrap/empty_test.gd",
+	"res://tests/boolean.test.gd": {
+		"path": "res://tests/boolean.test.gd",
 		"tags": [
 
 		],
 		"passing": false
 	},
-	"res:///Examples/Bootstrap/failing_test.gd": {
-		"path": "res:///Examples/Bootstrap/failing_test.gd",
+	"res://tests/integration/default_args.test.gd": {
+		"path": "res://tests/integration/default_args.test.gd",
 		"tags": [
 
 		],
 		"passing": false
 	},
-	"res:///Examples/Bootstrap/one_test_method_no_asserts.gd": {
-		"path": "res:///Examples/Bootstrap/one_test_method_no_asserts.gd",
+	"res://tests/integration/on_floor.test.gd": {
+		"path": "res://tests/integration/on_floor.test.gd",
 		"tags": [
 
 		],
 		"passing": false
 	},
-	"res:///Examples/Bootstrap/passing_test.gd": {
-		"path": "res:///Examples/Bootstrap/passing_test.gd",
+	"res://tests/integration/scene_director.test.gd": {
+		"path": "res://tests/integration/scene_director.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/boolean.test.gd": {
-		"path": "res:///tests/boolean.test.gd",
+	"res://tests/integration/script_director.test.gd": {
+		"path": "res://tests/integration/script_director.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/integration/default_args.test.gd": {
-		"path": "res:///tests/integration/default_args.test.gd",
+	"res://tests/integration/test_double.test.gd": {
+		"path": "res://tests/integration/test_double.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/integration/on_floor.test.gd": {
-		"path": "res:///tests/integration/on_floor.test.gd",
+	"res://tests/unit/boolean.test.gd": {
+		"path": "res://tests/unit/boolean.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/integration/scene_director.test.gd": {
-		"path": "res:///tests/integration/scene_director.test.gd",
+	"res://tests/unit/equality.test.gd": {
+		"path": "res://tests/unit/equality.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/integration/script_director.test.gd": {
-		"path": "res:///tests/integration/script_director.test.gd",
+	"res://tests/unit/example.gd": {
+		"path": "res://tests/unit/example.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/integration/test_double.test.gd": {
-		"path": "res:///tests/integration/test_double.test.gd",
+	"res://tests/unit/file.test.gd": {
+		"path": "res://tests/unit/file.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/unit/boolean.test.gd": {
-		"path": "res:///tests/unit/boolean.test.gd",
+	"res://tests/unit/is_instance.test.gd": {
+		"path": "res://tests/unit/is_instance.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/unit/equality.test.gd": {
-		"path": "res:///tests/unit/equality.test.gd",
+	"res://tests/unit/is_not_instance.test.gd": {
+		"path": "res://tests/unit/is_not_instance.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/unit/example.gd": {
-		"path": "res:///tests/unit/example.gd",
+	"res://tests/unit/null.test.gd": {
+		"path": "res://tests/unit/null.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/unit/file.test.gd": {
-		"path": "res:///tests/unit/file.test.gd",
+	"res://tests/unit/object.test.gd": {
+		"path": "res://tests/unit/object.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/unit/is_instance.test.gd": {
-		"path": "res:///tests/unit/is_instance.test.gd",
+	"res://tests/unit/parameters.test.gd": {
+		"path": "res://tests/unit/parameters.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/unit/is_not_instance.test.gd": {
-		"path": "res:///tests/unit/is_not_instance.test.gd",
+	"res://tests/unit/range.test.gd": {
+		"path": "res://tests/unit/range.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/unit/null.test.gd": {
-		"path": "res:///tests/unit/null.test.gd",
+	"res://tests/unit/string.test.gd": {
+		"path": "res://tests/unit/string.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/unit/object.test.gd": {
-		"path": "res:///tests/unit/object.test.gd",
+	"res://tests/unit/supersimple.gd": {
+		"path": "res://tests/unit/supersimple.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/unit/parameters.test.gd": {
-		"path": "res:///tests/unit/parameters.test.gd",
+	"res://tests/unit/test.test.gd": {
+		"path": "res://tests/unit/test.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/unit/range.test.gd": {
-		"path": "res:///tests/unit/range.test.gd",
+	"res://tests/unit/watcher.test.gd": {
+		"path": "res://tests/unit/watcher.test.gd",
 		"tags": [
 
 		],
-		"passing": true
+		"passing": false
 	},
-	"res:///tests/unit/string.test.gd": {
-		"path": "res:///tests/unit/string.test.gd",
+	"res://tests/unit/yield.test.gd": {
+		"path": "res://tests/unit/yield.test.gd",
 		"tags": [
 
 		],
-		"passing": true
-	},
-	"res:///tests/unit/supersimple.gd": {
-		"path": "res:///tests/unit/supersimple.gd",
-		"tags": [
-
-		],
-		"passing": true
-	},
-	"res:///tests/unit/test.test.gd": {
-		"path": "res:///tests/unit/test.test.gd",
-		"tags": [
-
-		],
-		"passing": true
-	},
-	"res:///tests/unit/watcher.test.gd": {
-		"path": "res:///tests/unit/watcher.test.gd",
-		"tags": [
-
-		],
-		"passing": true
-	},
-	"res:///tests/unit/yield.test.gd": {
-		"path": "res:///tests/unit/yield.test.gd",
-		"tags": [
-
-		],
-		"passing": true
+		"passing": false
 	}
 }
