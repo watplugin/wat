@@ -10,3 +10,6 @@ func test_is_true() -> void:
 func test_is_false() -> void:
 	describe("Simple IsFalse")
 	asserts.is_false(false, "false is false")
+
+func test_force_fail() -> void:
+	asserts.fail("forced for action test")
