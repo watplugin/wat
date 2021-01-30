@@ -10,9 +10,10 @@ jobs:
     container: codedarigan/godot_headless_ci:latest
 
     steps:
+      - name: Checkout
       - uses: actions/checkout@v2
         
-      - name: Run
+      - name: Run Tests
         run: godot addons/WAT/cli.tscn -run_all
         
       - name: Upload Test Results
