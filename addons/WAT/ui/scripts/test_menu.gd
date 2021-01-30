@@ -129,6 +129,8 @@ func _on_scripts_about_to_show(scripts) -> void:
 	if scriptlist.empty():
 		return
 	var idx: int = scripts.get_item_count()
+	for child in scripts.get_children():
+		child.name += "Thrash"
 	for script in scriptlist:
 		var method = Methods.duplicate(true)
 		method.connect(IDX_PRESSED, self, ON_IDX_PRESSED, [method])

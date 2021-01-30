@@ -4,7 +4,7 @@
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/new_script.gd": {
 		"path": "res://tests/new_script.gd",
