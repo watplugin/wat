@@ -23,3 +23,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run All Tests
         run: godot addons/WAT/cli.tscn -run_all
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test Results
+          path: tests/results.xml
