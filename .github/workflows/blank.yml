@@ -3,10 +3,6 @@ name: CI
 
 on: push
 
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-
-
 jobs:
   # This workflow contains a single job called "build"
   Tests:
@@ -21,7 +17,7 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Run All Tests
+      - name: Run
         run: godot addons/WAT/cli.tscn -run_all
       - name: Upload Test Results
         if: always()
