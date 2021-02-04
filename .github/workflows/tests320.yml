@@ -1,7 +1,7 @@
 
 name: "  Godot 3.2.0  "
 
-on: push
+on: [push, pull_request]
 
 jobs:
   Tests:
