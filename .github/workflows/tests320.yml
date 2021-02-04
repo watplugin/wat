@@ -7,7 +7,7 @@ jobs:
   Tests:
     name: Run All Tests on 3.2.0
     runs-on:  ubuntu-latest
-    container: barichello/godot-ci:3.0
+    container: barichello/godot-ci:3.2
     steps:
       - uses: actions/checkout@v2
       - name: Run
