@@ -13,8 +13,29 @@
 		],
 		"passing": false
 	},
+	"res://tests/integration/beep.gd": {
+		"path": "res://tests/integration/beep.gd",
+		"tags": [
+
+		],
+		"passing": false
+	},
 	"res://tests/integration/default_args.test.gd": {
 		"path": "res://tests/integration/default_args.test.gd",
+		"tags": [
+
+		],
+		"passing": false
+	},
+	"res://tests/integration/fddd.gd": {
+		"path": "res://tests/integration/fddd.gd",
+		"tags": [
+
+		],
+		"passing": false
+	},
+	"res://tests/integration/new_script.gd": {
+		"path": "res://tests/integration/new_script.gd",
 		"tags": [
 
 		],
