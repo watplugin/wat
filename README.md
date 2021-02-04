@@ -1,4 +1,4 @@
-![3.2]https://github.com/CodeDarigan/WAT-GDScript/workflows/GDScript%20Tests/badge.svg
+![3.2](https://github.com/CodeDarigan/WAT-GDScript/workflows/GDScript%20Tests/badge.svg0
 
 # WAT ![3.2](https://img.shields.io/badge/godot-3.2-%23478cbf)!
 
