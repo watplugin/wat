@@ -1,3 +1,5 @@
+![3.2]https://github.com/CodeDarigan/WAT-GDScript/workflows/GDScript%20Tests/badge.svg
+
 # WAT ![3.2](https://img.shields.io/badge/godot-3.2-%23478cbf)!
 
 [Documentation](https://wat.readthedocs.io/en/latest/index.html)
