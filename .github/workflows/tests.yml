@@ -1,0 +1,85 @@
+
+name: GDScript Tests
+
+on: push
+
+jobs:
+  Tests320:
+    name: Run All Tests on 3.2.0
+    runs-on:  ubuntu-latest
+    container: barichello/godot-ci:3.2
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run
+        run: godot addons/WAT/cli.tscn -run_all
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test Results
+          path: tests/results.xml
+
+  Tests321:
+    name: Run All Tests on 3.2.1
+    runs-on:  ubuntu-latest
+    container: barichello/godot-ci:3.2.1
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run
+        run: godot addons/WAT/cli.tscn -run_all
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test Results
+          path: tests/results.xml
+
+  Tests322:
+    name: Run All Tests on 3.2.2
+    runs-on:  ubuntu-latest
+    container: barichello/godot-ci:3.2.2
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run
+        run: godot addons/WAT/cli.tscn -run_all
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test Results
+          path: tests/results.xml
+
+  Tests323:
+  name: Run All Tests on 3.2.3
+  runs-on:  ubuntu-latest
+  container: barichello/godot-ci:3.2.3
+
+  # Steps represent a sequence of tasks that will be executed as part of the job
+  steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Runs a single command using the runners shell
+    - name: Run
+      run: godot addons/WAT/cli.tscn -run_all
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: Test Results
+        path: tests/results.xml
