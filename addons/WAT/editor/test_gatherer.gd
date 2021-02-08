@@ -12,7 +12,8 @@ func discover() -> Dictionary:
 	for path in tests.scripts:
 		if(metadata.has(path)):
 			tests.scripts[path]["tags"] = metadata[path]["tags"]
-			tests.scripts[path]["passing"] = metadata[path]["passing"]
+			if(metadata[path].has("passing")):
+				tests.scripts[path]["passing"] = metadata[path]["passing"]
 	return tests
 
 func _discover(path: String = Settings.test_directory()) -> Array:
