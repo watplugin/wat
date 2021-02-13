@@ -91,4 +91,3 @@ func stop_observing_filesystem(filesystem, menu: Button) -> void:
 		filesystem.disconnect("files_moved", menu, "_on_file_moved")
 	if filesystem.is_connected("file_removed", menu, "_on_file_removed"):
 		filesystem.disconnect("file_removed", menu, "_on_file_removed")
-

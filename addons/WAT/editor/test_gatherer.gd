@@ -24,7 +24,7 @@ func _discover(path: String = Settings.test_directory()) -> Array:
 	var err: int = dir.open(path)
 	if err != OK:
 		push_error("%s : %s " % [path, err as String])
-		
+		return []
 	dir.list_dir_begin(true)
 	var current_name = dir.get_next()
 	
