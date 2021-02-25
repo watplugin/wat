@@ -4,21 +4,21 @@
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/integration/on_floor.test.gd": {
 		"path": "res://tests/integration/on_floor.test.gd",
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/integration/scene_director.test.gd": {
 		"path": "res://tests/integration/scene_director.test.gd",
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/integration/script_director.test.gd": {
 		"path": "res://tests/integration/script_director.test.gd",
@@ -32,7 +32,7 @@
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/unit/boolean.test.gd": {
 		"path": "res://tests/unit/boolean.test.gd",
@@ -46,7 +46,7 @@
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/unit/example.gd": {
 		"path": "res://tests/unit/example.gd",
@@ -131,6 +131,13 @@
 
 		],
 		"passing": true
+	},
+	"res://tests/unit/x.test.gd": {
+		"path": "res://tests/unit/x.test.gd",
+		"tags": [
+
+		],
+		"passing": false
 	},
 	"res://tests/unit/yield.test.gd": {
 		"path": "res://tests/unit/yield.test.gd",
