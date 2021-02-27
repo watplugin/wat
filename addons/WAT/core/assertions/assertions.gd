@@ -161,7 +161,7 @@ func is_empty(value, context: String = "") -> void:
 	if value is String:
 		output(StringX.is_empty(value, context))
 	else:
-		output(Collections.is_empty(value, context)
+		output(Collections.is_empty(value, context))
 
 func is_bool(value, context: String = "") -> void:
 		output(Is.is_bool(value, context))

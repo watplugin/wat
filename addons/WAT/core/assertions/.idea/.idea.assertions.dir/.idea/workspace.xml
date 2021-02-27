@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c881f43a-de7c-4c5f-b572-be4420cfa3a0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../assets/default_theme.tres" beforeDir="false" afterPath="$PROJECT_DIR$/../../assets/default_theme.tres" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assertions.gd" beforeDir="false" afterPath="$PROJECT_DIR$/assertions.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/collections.gd" beforeDir="false" afterPath="$PROJECT_DIR$/collections.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/string.gd" beforeDir="false" afterPath="$PROJECT_DIR$/string.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gui.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/../../gui.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../tests/test_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../tests/test_metadata.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectId" id="1p5Pntqzb2Cq9uStlVsxiI8GhG3" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <created>1614470179608</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1614470179608</updated>
+      <workItem from="1614470214513" duration="5000" />
+    </task>
+    <servers />
+  </component>
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>
