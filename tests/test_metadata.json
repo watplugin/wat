@@ -74,12 +74,12 @@
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/unit/is_instance.test.gd": {
 		"path": "res://tests/unit/is_instance.test.gd",
 		"tags": [
-
+			"64"
 		],
 		"passing": true
 	},

@@ -1,4 +1,4 @@
-﻿extends WAT.Test 
+extends WAT.Test 
 
 func test_simple():
-    asserts.is_true(true)
+	asserts.is_true(true)
