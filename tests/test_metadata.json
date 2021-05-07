@@ -1,11 +1,4 @@
 {
-	"res://tests/base.test.gd": {
-		"path": "res://tests/base.test.gd",
-		"tags": [
-
-		],
-		"passing": true
-	},
 	"res://tests/integration/default_args.test.gd": {
 		"path": "res://tests/integration/default_args.test.gd",
 		"tags": [
@@ -40,6 +33,13 @@
 
 		],
 		"passing": true
+	},
+	"res://tests/unit/assertthat.test.gd": {
+		"path": "res://tests/unit/assertthat.test.gd",
+		"tags": [
+
+		],
+		"passing": false
 	},
 	"res://tests/unit/boolean.test.gd": {
 		"path": "res://tests/unit/boolean.test.gd",
