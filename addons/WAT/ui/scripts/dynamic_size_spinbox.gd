@@ -9,6 +9,10 @@ func _ready():
 	get_line_edit().connect("focus_exited", self, "_on_focus_exited")
 	connect("value_changed", self, "_on_value_changed")
 	oldText = get_line_edit().text
+	
+	# Set's the text to itself in order to shoot an update to the line edit
+	# This is needed or else the line edit starts off off-centered at startup
+	get_line_edit().text = oldText
 
 func _on_focus_exited():
 	# Disgusting frame waiting workaround because there is currently no way to 
