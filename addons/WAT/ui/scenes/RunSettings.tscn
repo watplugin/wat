@@ -34,12 +34,3 @@ value = 1.0
 align = 1
 prefix = "Run on"
 suffix = "Thread(s)"
-
-[node name="RunInEditor" type="CheckBox" parent="."]
-margin_left = 318.0
-margin_right = 428.0
-margin_bottom = 24.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-pressed = true
-text = "Run In Editor"
