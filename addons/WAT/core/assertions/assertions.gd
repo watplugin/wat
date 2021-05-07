@@ -50,10 +50,10 @@ func is_not_in_range(value, low, high, context: String = "") -> void:
 	output(RangeX.is_not_in_range(value, low, high, context))
 
 func has(value, container, context: String = "") -> void:
-	output(Property.has.new(value, container, context))
+	output(Property.has(value, container, context))
 
 func does_not_have(value, container, context: String = "") -> void:
-	output(Property.does_not_have.new(value, container, context))
+	output(Property.does_not_have(value, container, context))
 
 func is_class_instance(instance, type, context: String = "") -> void:
 	output(Is.is_class_instance(instance, type, context))

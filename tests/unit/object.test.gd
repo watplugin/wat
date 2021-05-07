@@ -109,3 +109,4 @@ func test_is_not_blocking_signals() -> void:
 	node.set_block_signals(false)
 	asserts.object_is_not_blocking_signals(node, "Then it passes")
 	node.free()
+

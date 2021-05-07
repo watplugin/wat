@@ -1,5 +1,6 @@
 extends "assertion.gd"
 
+# ONLY FOR CONTAINER CLASSES. NOT FOR OBJECTS
 static func has(value, container, context: String) -> Dictionary:
 	var passed: String = "%s has %s" % [container, value]
 	var failed: String = "%s has %s" % [container, value]

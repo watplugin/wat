@@ -69,6 +69,13 @@
 		],
 		"passing": true
 	},
+	"res://tests/unit/has.test.gd": {
+		"path": "res://tests/unit/has.test.gd",
+		"tags": [
+
+		],
+		"passing": false
+	},
 	"res://tests/unit/is_instance.test.gd": {
 		"path": "res://tests/unit/is_instance.test.gd",
 		"tags": [
@@ -88,7 +95,7 @@
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/unit/object.test.gd": {
 		"path": "res://tests/unit/object.test.gd",
