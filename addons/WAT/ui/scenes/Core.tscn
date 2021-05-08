@@ -18,7 +18,7 @@ __meta__ = {
 }
 
 [node name="Menu" parent="." instance=ExtResource( 3 )]
-margin_right = 811.0
+margin_right = 697.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
