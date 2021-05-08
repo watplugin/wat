@@ -1,11 +1,13 @@
 extends TabContainer
 tool
 
-const PASSED_ICON: Texture = preload("res://addons/WAT/assets/passed.png")
-const FAILED_ICON: Texture = preload("res://addons/WAT/assets/failed.png")
+var PASSED_ICON: Texture
+var FAILED_ICON: Texture
 const ResultTree = preload("res://addons/WAT/ui/scripts/result_tree.gd")
 var _results: Array
 var _tabs = {}
+# Stores asset_registry so that result_tree can be configured with scaled icons
+var _assets_registry
 signal function_selected
 
 func display(results: Array) -> void:
@@ -19,6 +21,7 @@ func _add_result_tree(results: Array) -> void:
 	var sorted = sort(results)
 	for path in sorted:
 		var result_tree = ResultTree.new()
+		result_tree._setup_editor_assets(_assets_registry)
 		result_tree.connect("function_selected", self, "_on_function_selected")
 		result_tree.connect("calculated", self, "_on_tree_results_calculated")
 		result_tree.name = path
@@ -89,3 +92,9 @@ func collapse_all():
 func expand_failures():
 	for results in get_children():
 		results.expand_failures()
+
+# Loads scaled assets like icons and fonts
+func _setup_editor_assets(assets_registry):
+	_assets_registry = assets_registry
+	PASSED_ICON = assets_registry.load_asset("assets/passed.png")
+	FAILED_ICON = assets_registry.load_asset("assets/failed.png")

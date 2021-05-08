@@ -39,7 +39,7 @@
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/unit/boolean.test.gd": {
 		"path": "res://tests/unit/boolean.test.gd",

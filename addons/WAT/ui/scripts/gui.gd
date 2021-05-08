@@ -11,6 +11,7 @@ const XML: Script = preload("res://addons/WAT/editor/junit_xml.gd")
 onready var TestMenu: Button = $Core/Menu/TestMenu
 onready var Results: TabContainer = $Core/Results
 onready var Summary: HBoxContainer = $Core/Summary
+onready var Core: VBoxContainer = $Core
 var instance: TestRunner
 var server: Server
 signal launched_via_editor
@@ -67,3 +68,7 @@ func _exit_tree() -> void:
 
 func _set_window_size() -> void:
 	OS.window_size = ProjectSettings.get_setting("WAT/Window_Size")
+
+# Loads scaled assets like icons and fonts
+func _setup_editor_assets(assets_registry):
+	Core._setup_editor_assets(assets_registry)
