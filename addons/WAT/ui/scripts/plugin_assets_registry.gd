@@ -11,6 +11,9 @@ var plugin: EditorPlugin
 # do not duplicate the same asset multiple times.  
 var loaded_editor_assets: Dictionary
 
+# Only used by pre 3.3 Godot editors
+var _cached_editor_scale = -1
+
 func _init(plugin_ = null):
 	plugin = plugin_
 
@@ -47,8 +50,44 @@ func _load_scaled_font(font: Font) -> DynamicFont:
 	var duplicate = font.duplicate()
 	duplicate.size *= get_editor_scale()
 	return duplicate
-	
+
 func get_editor_scale():
 	if plugin == null:
 		return 1
-	return plugin.get_editor_interface().get_editor_scale()
+	if Engine.get_version_info().minor > 2:
+		return plugin.get_editor_interface().get_editor_scale()
+	else:
+		if _cached_editor_scale == -1:
+			_cached_editor_scale = _calculate_current_editor_scale()
+		return _cached_editor_scale
+
+func _calculate_current_editor_scale():
+	var editor_settings = plugin.get_editor_interface().get_editor_settings()
+	
+	var display_scale_type: int = editor_settings.get_setting("interface/editor/display_scale")
+	var custom_display_scale: float = editor_settings.get_setting("interface/editor/custom_display_scale")
+
+	match (display_scale_type):
+		0:
+			if OS.get_name() == "OSX":
+				return OS.get_screen_max_scale()
+			else:
+				var curr_screen: int = OS.get_current_screen()
+				if OS.get_screen_dpi(curr_screen) >= 192 and OS.get_screen_size(curr_screen).x > 2000:
+					return 2.0
+				else:
+					return 1.0
+		1:
+			return 0.75
+		2:
+			return 1.0
+		3:
+			return 1.25
+		4:
+			return 1.5
+		5:
+			return 1.75
+		6:
+			return 2.0
+		_:
+			return custom_display_scale
