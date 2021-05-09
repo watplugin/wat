@@ -11,7 +11,10 @@ var plugin: EditorPlugin
 # do not duplicate the same asset multiple times.  
 var loaded_editor_assets: Dictionary
 
-func _init(plugin_: EditorPlugin):
+# Only used by pre 3.3 Godot editors
+var _cached_editor_scale = -1
+
+func _init(plugin_ = null):
 	plugin = plugin_
 
 # Returns an asset scaled to fit the current editor's UI scale
@@ -47,6 +50,68 @@ func _load_scaled_font(font: Font) -> DynamicFont:
 	var duplicate = font.duplicate()
 	duplicate.size *= get_editor_scale()
 	return duplicate
-	
+
 func get_editor_scale():
-	return plugin.get_editor_interface().get_editor_scale()
+	if plugin == null:
+		return 1
+	if Engine.get_version_info().minor >= 3:
+		return plugin.get_editor_interface().get_editor_scale()
+	else:
+		if _cached_editor_scale == -1:
+			if Engine.get_version_info().minor >= 1:
+				_cached_editor_scale = _calculate_current_editor_scale_3_1()
+			else:
+				_cached_editor_scale = _calculate_current_editor_scale_3_0()
+		return _cached_editor_scale
+
+func _calculate_current_editor_scale_3_1():
+	var editor_settings = plugin.get_editor_interface().get_editor_settings()
+	
+	var display_scale: int = editor_settings.get_setting("interface/editor/display_scale")
+	var custom_display_scale: float = editor_settings.get_setting("interface/editor/custom_display_scale")
+
+	match display_scale:
+		0:
+			if OS.get_name() == "OSX":
+				return OS.get_screen_max_scale()
+			else:
+				var screen: int = OS.get_current_screen()
+				if OS.get_screen_dpi(screen) >= 192 and OS.get_screen_size(screen).x > 2000:
+					return 2.0
+				else:
+					return 1.0
+		1:
+			return 0.75
+		2:
+			return 1.0
+		3:
+			return 1.25
+		4:
+			return 1.5
+		5:
+			return 1.75
+		6:
+			return 2.0
+		_:
+			return custom_display_scale
+
+func _calculate_current_editor_scale_3_0():
+	var editor_settings = plugin.get_editor_interface().get_editor_settings()
+	
+	var dpi_mode = editor_settings.get_settings("interface/editor/hidpi_mode")
+	
+	match dpi_mode:
+		0:
+			var screen: int = OS.get_current_screen()
+			if OS.get_screen_dpi(screen) >= 192 and OS.get_screen_size(screen).x > 2000:
+				return 2.0
+			else:
+				return 1.0
+		1:
+			return 0.75
+		2:
+			return 1.0
+		3:
+			return 1.5
+		4:
+			return 2.0
