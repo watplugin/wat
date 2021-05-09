@@ -70,7 +70,7 @@ func _calculate_current_editor_scale_3_1():
 	var display_scale: int = editor_settings.get_setting("interface/editor/display_scale")
 	var custom_display_scale: float = editor_settings.get_setting("interface/editor/custom_display_scale")
 
-	match (display_scale):
+	match display_scale:
 		0:
 			if OS.get_name() == "OSX":
 				return OS.get_screen_max_scale()
