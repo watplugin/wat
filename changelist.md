@@ -1,3 +1,48 @@
+
+## FEATURE
+
+Add Continous Integration to Github Actions (badges included)
+
+## REFACTOR
+
+Replace RunInEditor Toggle with RunInDebug Button
+
+Disable RunInDebug in Standalone Builds
+
+Added UI Scaling including for HDPI Devices (Atlinx)
+
+WAT theme defaults to your editor theme (Atlinx)
+
+Optimized is_in_range (speed increased tenfold) (JaymanLink Here)
+
+## FIXES
+
+Fix Type
+
+    GUI.gd is now gui.gd. This should prevent crashes on Linux.
+
+Fix Crash on No Test Directory found.
+
+    If no directory is found in settings, we return an empty array to prevent crashing.
+
+Fix Assert.that bug
+
+    Arguments were being formatted incorrectly.
+
+Fix Assert.has() bug
+
+    This was a typo'ed call. Should work now.
+
+Fix Bad Launching in 3.24
+
+    The RUN_OPTION enum (inside the Engine) itself changes version sometimes..
+    ..So an if statement was added to fix choose the correct run option.
+
+Fix Drop Down Bug
+Fix Tag Editor
+Fix Results showing properly in Tabs
+
+
 # Check WAT5 Log too
 
 commit 2bea561c05cd75cfd905c0efd2af3bd2ad143e54
