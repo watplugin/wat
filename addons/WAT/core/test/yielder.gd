@@ -5,30 +5,22 @@ var _emitter: Object
 var _event: String
 
 func _init() -> void:
-	paused = true
 	one_shot = true
+	connect("timeout", self, "_on_resume", [], CONNECT_DEFERRED)
 
 func until_timeout(time: float) -> Timer:
-	# Oneshot doesn't disconnect properly without also being deferred
-	connect("timeout", self, "_on_resume", [], CONNECT_DEFERRED)
-	wait_time = time
-	paused = false
-	start()
+	start(time)
 	return self
 	
 func until_signal(time: float, emitter: Object, event: String) -> Timer:
 	_emitter = emitter
 	_event = event
 	_emitter.connect(event, self, "_on_resume", [], CONNECT_DEFERRED)
-	connect("timeout", self, "_on_resume", [], CONNECT_DEFERRED)
-	wait_time = time
-	paused = false
-	start()
+	start(time)
 	return self
 
 func _on_resume(a = null, b = null, c = null, d = null, e = null, f = null) -> void:
-	paused = true
-	disconnect("timeout", self, "_on_resume")
+	stop()
 	if is_instance_valid(_emitter) and _emitter.is_connected(_event, self, "_on_resume"):
 		_emitter.disconnect(_event, self, "_on_resume")
 	# Our adapter is connected to this. When this is emitted our adapter
@@ -38,4 +30,4 @@ func _on_resume(a = null, b = null, c = null, d = null, e = null, f = null) -> v
 	emit_signal("finished", [a, b, c, d, e, f])
 
 func is_active() -> bool:
-	return not paused and time_left > 0
+	return not is_stopped() and time_left > 0
