@@ -1,16 +1,10 @@
 tool
 extends Node
 
+const Splitter: GDScript = preload("splitter.gd")
 const COMPLETED: String = "completed"
 signal completed
 
-class TestThread extends Thread:
-	var tests: Array = []
-	var controller: Node = preload("res://addons/WAT/runner/test_controller.gd").new()
-	
-	func _init(_tests: Array) -> void:
-		tests = _tests
-		
 func _ready() -> void:
 	name = "TestRunner"
 	if not Engine.is_editor_hint():
@@ -19,7 +13,7 @@ func _ready() -> void:
 
 func run(tests, threads) -> void:
 	var results: Array = []
-	var testthreads = split(tests, threads)
+	var testthreads = Splitter.split(tests, threads)
 	print("Threads?", threads)
 	print("Testthreads", testthreads.size())
 	for thread in testthreads:
@@ -33,7 +27,7 @@ func run(tests, threads) -> void:
 	return results
 
 	
-func _run(thread: TestThread) -> void:
+func _run(thread) -> void:
 	print("_Running thread")
 	print("Tests size? ", thread.tests.size())
 	var results: Array = []
@@ -42,18 +36,3 @@ func _run(thread: TestThread) -> void:
 	print("Returned from controller")
 	thread.controller.queue_free()
 	emit_signal(COMPLETED, results)
-
-func split(tests, threads) -> Array:
-	var testpools = []
-	for i in threads:
-		testpools.append([])
-	var pool_idx = 0
-	for test in tests:
-		testpools[pool_idx].append(test)
-		pool_idx += 1
-		if pool_idx == threads:
-			pool_idx = 0
-	var threadpools: Array = []
-	for testpool in testpools:
-		threadpools.append(TestThread.new(testpool))
-	return threadpools
