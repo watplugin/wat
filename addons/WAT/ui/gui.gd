@@ -48,6 +48,7 @@ func setup_game_context() -> void:
 	# No argument makes the AssetsRegistry default to a scale of 1, which
 	# should make every icon look normal when the Tests UI launches
 	# outside of the editor.
+	QuickstartDebug.disabled = true
 	_setup_editor_assets(PluginAssetsRegistry.new())
 	
 func setup_editor_context(plugin: Node) -> void:
@@ -126,5 +127,7 @@ func _launch_debugger(tests: Array, threads: int) -> void:
 # Loads scaled assets like icons and fonts
 func _setup_editor_assets(assets_registry):
 	Summary._setup_editor_assets(assets_registry)
-	Menu._setup_editor_assets(assets_registry)
 	Results._setup_editor_assets(assets_registry)
+	TestMenu._setup_editor_assets(assets_registry)
+	Quickstart.icon = assets_registry.load_asset(Quickstart.icon)
+	QuickstartDebug.icon = assets_registry.load_asset(QuickstartDebug.icon)
