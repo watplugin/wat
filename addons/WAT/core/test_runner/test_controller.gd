@@ -8,8 +8,8 @@ const Parameters: Script = preload("res://addons/WAT/test/parameters.gd")
 const Recorder: Script = preload("res://addons/WAT/test/recorder.gd")
 const Watcher: Script = preload("res://addons/WAT/test/watcher.gd")
 const Any: Script = preload("res://addons/WAT/test/any.gd")
-const Director: Script = preload("res://addons/WAT/core/double/factory.gd")
-const Registry: Script = preload("res://addons/WAT/core/double/registry.gd")
+const Director: Script = preload("res://addons/WAT/double/factory.gd")
+const Registry: Script = preload("res://addons/WAT/double/registry.gd")
 const Yielder: Script = preload("res://addons/WAT/test/yielder.gd")
 enum { START, PRE, EXECUTE, POST, END }
 signal finished
