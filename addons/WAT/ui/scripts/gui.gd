@@ -12,6 +12,8 @@ const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/scripts/plugin
 onready var TestMenu: Button = $Core/Menu/TestMenu
 onready var Results: TabContainer = $Core/Results
 onready var Summary: HBoxContainer = $Core/Summary
+onready var Threads: SpinBox = $Core/Menu/RunSettings/Threads
+onready var Repeats: SpinBox = $Core/Menu/RunSettings/Repeats
 onready var Core: VBoxContainer = $Core
 var instance #: #TestRunner
 var server: Server
@@ -19,6 +21,8 @@ signal launched_via_editor
 signal function_selected
 
 func _ready() -> void:
+	Threads.max_value = OS.get_processor_count() - 1
+	Threads.min_value = 1
 	if not Engine.is_editor_hint():
 		_set_window_size()
 		# No argument makes the AssetsRegistry default to a scale of 1, which
@@ -31,16 +35,25 @@ func _ready() -> void:
 func _on_function_selected(path: String, function: String) -> void:
 	emit_signal("function_selected", path, function)
 
-func _on_test_strategy_set(tests, threads, run_in_editor) -> void:
+func _on_test_strategy_set(tests, run_in_editor) -> void:
 	if tests.empty():
 		push_warning("Tests Are Empty!")
 		return
 	Results.clear()
 	Summary.time()
+	tests = _repeat(tests, Repeats.value)
 	if run_in_editor:
-		_launch_in_editor(tests, threads)
+		_launch_in_editor(tests, Threads.value)
 	else:
-		_launch_via_editor(tests, threads)
+		_launch_via_editor(tests, Threads.value)
+		
+func _repeat(tests: Array, repeat: int) -> Array:
+	var duplicates: Array = []
+	for idx in repeat:
+		for test in tests:
+			duplicates.append(test)
+	duplicates += tests
+	return duplicates
 	
 func _launch_in_editor(tests: Array, threads: int) -> void:
 	# This is also the launch method used for exported scenes

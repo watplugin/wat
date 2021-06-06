@@ -21,18 +21,7 @@ func _ready() -> void:
 	$Menu/SaveMetadata.connect("pressed", RunMenu, "save_metadata")
 
 func _on_tests_selected(tests: Array, run_in_editor: bool) -> void:
-	var repeats: int = RunSettings.repeats
-	tests = _repeat(tests, RunSettings.repeats)
-	var threads: int = RunSettings.threads
-	emit_signal("test_strategy_set", tests, threads, run_in_editor)
-	
-func _repeat(tests: Array, repeat: int) -> Array:
-	var duplicates: Array = []
-	for idx in repeat:
-		for test in tests:
-			duplicates.append(test)
-	duplicates += tests
-	return duplicates
+	emit_signal("test_strategy_set", tests, run_in_editor)
 
 # Loads scaled assets like icons and fonts
 func _setup_editor_assets(assets_registry):

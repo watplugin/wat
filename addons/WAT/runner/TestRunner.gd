@@ -20,6 +20,7 @@ func _ready() -> void:
 func run(tests, threads) -> void:
 	var results: Array = []
 	var testthreads = split(tests, threads)
+	print("Threads?", threads)
 	print("Testthreads", testthreads.size())
 	for thread in testthreads:
 		print("Running Thread")
@@ -30,7 +31,7 @@ func run(tests, threads) -> void:
 		print("yielding for testthreads")
 		results += yield(self, COMPLETED)
 	return results
-#	get_tree().quit()
+
 	
 func _run(thread: TestThread) -> void:
 	print("_Running thread")

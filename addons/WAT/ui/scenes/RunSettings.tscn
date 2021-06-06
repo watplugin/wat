@@ -1,13 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://addons/WAT/ui/scripts/run_settings.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/ui/scripts/dynamic_size_spinbox.gd" type="Script" id=2]
 
 [node name="RunSettings" type="HBoxContainer"]
 margin_left = 267.0
 margin_right = 695.0
 margin_bottom = 24.0
-script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -31,7 +29,7 @@ rect_min_size = Vector2( 160, 0 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
 min_value = 1.0
-max_value = 15.0
+max_value = 7.0
 value = 1.0
 align = 1
 prefix = "Run on"
