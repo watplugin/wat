@@ -27,7 +27,9 @@ func _on_peer_connected(id: int) -> void:
 
 master func _on_run_completed(results: Array) -> void:
 	rpc_id(multiplayer.get_rpc_sender_id(), "run_completion_confirmed")
+	print("emitting")
 	emit_signal("run_completed", results)
+	print("emitted")
 	
 func close() -> void:
 	if is_instance_valid(_server):

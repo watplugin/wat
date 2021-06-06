@@ -1,8 +1,7 @@
 tool
 extends EditorPlugin
 
-const RUN_CURRENT_SCENE_GODOT_3_2: int = 39
-const RUN_CURRENT_SCENE_GODOT_3_1: int = 33
+
 const Title: String = "Tests"
 const Settings: Script = preload("res://addons/WAT/settings.gd")
 const GUI: PackedScene = preload("res://addons/WAT/gui.tscn")
@@ -10,7 +9,6 @@ const Docker: Script = preload("res://addons/WAT/ui/docker.gd")
 const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/plugin_assets_registry.gd")
 var instance: Control
 var docker: Docker
-var script_editor: ScriptEditor
 var assets_registry = PluginAssetsRegistry.new(self)
 
 func _ready():
@@ -24,8 +22,7 @@ func _enter_tree():
 	_initialize_metadata()
 	instance = GUI.instance()
 	docker = Docker.new(self, instance)
-	script_editor = get_editor_interface().get_script_editor()
-	instance.connect("launched_via_editor", self, "_on_launched_via_editor")
+	instance.setup_editor_context(self)
 	instance.connect("function_selected", self, "_on_function_selected")
 	add_child(docker)
 	yield(get_tree().create_timer(0.5), "timeout")
@@ -44,30 +41,6 @@ func _exit_tree():
 	docker.free()
 	instance.free()
 	
-func _on_launched_via_editor() -> void:
-	var version = Engine.get_version_info()
-	if get_editor_interface().has_method("play_custom_scene"):
-		get_editor_interface().play_custom_scene("res://addons/WAT/runner/TestRunner.tscn")
-	elif version.major == 3 and version.minor == 1:
-		get_editor_interface().open_scene_from_path("res://addons/WAT/runner/TestRunner.tscn")
-		get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_1)
-	elif version.major == 3 and version.minor == 2:
-		get_editor_interface().open_scene_from_path("res://addons/WAT/runner/TestRunner.tscn")
-		get_editor_interface().get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_2)
-	else:
-		print("No Plugin Launch Found")
-	make_bottom_panel_item_visible(instance)
-	
-func _on_function_selected(file: String, function: String) -> void:
-	var script: Script = load(file)
-	get_editor_interface().edit_resource(script)
-	var idx: int = 0
-	for line in script.source_code.split("\n"):
-		idx += 1
-		if function in line and line.begins_with("func"):
-			script_editor.goto_line(idx)
-			return
-
 func _initialize_metadata() -> void:
 	# Check if file exists!
 	var path: String = ProjectSettings.get_setting("WAT/Test_Metadata_Directory")
