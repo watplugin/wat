@@ -1,34 +1,34 @@
 <?xml version="1.0" ?>
 <testsuites failures="1" name="TestXML" tests="25" time="0">
 	<testsuite name="Property Member Test" failures="0"  tests="2" time="0">
-		<testcase name="When we double a scene via path with exported values" time="0"></testcase>
 		<testcase name="When we double a scene via PackedScene with exported values" time="0"></testcase>
+		<testcase name="When we double a scene via path with exported values" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given a Signal Watcher" failures="0"  tests="4" time="0">
-		<testcase name="When we watch and signal and emit it multiple times" time="0"></testcase>
-		<testcase name="When we watch a signal from an object with no bound variables" time="0"></testcase>
 		<testcase name="When we watch and emit a signal" time="0"></testcase>
 		<testcase name="When we watch and do not emit a signal" time="0"></testcase>
+		<testcase name="When we watch and signal and emit it multiple times" time="0"></testcase>
+		<testcase name="When we watch a signal from an object with no bound variables" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given a Test Script" failures="0"  tests="3" time="0">
-		<testcase name="When we record properties" time="0"></testcase>
 		<testcase name=" we can omit describe" time="0"></testcase>
 		<testcase name=" when we omit context we can see expected and got under method" time="0"></testcase>
+		<testcase name="When we record properties" time="0"></testcase>
 	</testsuite>
 
-	<testsuite name="Supersimple" failures="0"  tests="1" time="0">
+	<testsuite name="" failures="0"  tests="1" time="0">
 		<testcase name=" simple" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given a String Assertion" failures="0"  tests="6" time="0">
-		<testcase name="When calling asserts.string_does_not_end_with('lorem', 'impsum')" time="0"></testcase>
-		<testcase name="When calling asserts.string_contains('em im', 'lorem impsum')" time="0"></testcase>
-		<testcase name="When calling asserts.string_ends_with('impsum', 'lorem impsum')" time="0"></testcase>
-		<testcase name="When calling asserts.string_does_not_contain('em im', 'impsum')" time="0"></testcase>
-		<testcase name="When calling asserts.string_does_not_begin_with('lorem', 'impsum')" time="0"></testcase>
 		<testcase name="When calling asserts.string_begins_with('lorem', 'lorem impsum')" time="0"></testcase>
+		<testcase name="When calling asserts.string_does_not_end_with('lorem', 'impsum')" time="0"></testcase>
+		<testcase name="When calling asserts.string_does_not_begin_with('lorem', 'impsum')" time="0"></testcase>
+		<testcase name="When calling asserts.string_ends_with('impsum', 'lorem impsum')" time="0"></testcase>
+		<testcase name="When calling asserts.string_contains('em im', 'lorem impsum')" time="0"></testcase>
+		<testcase name="When calling asserts.string_does_not_contain('em im', 'impsum')" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given A Range Assertion" failures="0"  tests="2" time="0">
@@ -43,92 +43,92 @@
 
 	<testsuite name="Given an Object Assertion" failures="0"  tests="15" time="0">
 		<testcase name="When calling obj_does_not_have_user_signal with fake signal" time="0"></testcase>
-		<testcase name="When calling has_method('title')" time="0"></testcase>
-		<testcase name="When calling does not have user signal with class signal" time="0"></testcase>
-		<testcase name="When calling asserts object is connected with a valid connection" time="0"></testcase>
 		<testcase name="When calling asserts.is_freed(freed_object" time="0"></testcase>
-		<testcase name="When calling asserts.object_has_meta() after adding metadata" time="0"></testcase>
-		<testcase name="When calling asserts.object_has_meta with real key but null val" time="0"></testcase>
-		<testcase name="When calling obj_has_user_signal after adding a signal" time="0"></testcase>
-		<testcase name="When calling asserts.object_does_not_have_meta()" time="0"></testcase>
-		<testcase name="When calling asserts.is_not_freed(unfreed_object)" time="0"></testcase>
-		<testcase name="When calling asserts.object_is_not_for_queued_deletion after not calling queue free()" time="0"></testcase>
+		<testcase name="When calling has_method('title')" time="0"></testcase>
 		<testcase name="When calling asserts.object_is_queued for deletion after calling queue_free" time="0"></testcase>
-		<testcase name="When calling asserts object is not connected with an invalid connection" time="0"></testcase>
-		<testcase name="When calling is not blocking signals while not blocking signals" time="0"></testcase>
+		<testcase name="When calling asserts.is_not_freed(unfreed_object)" time="0"></testcase>
+		<testcase name="When calling asserts.object_does_not_have_meta()" time="0"></testcase>
+		<testcase name="When calling asserts.object_is_not_for_queued_deletion after not calling queue free()" time="0"></testcase>
 		<testcase name="When calling is blocking signals while blocking signals" time="0"></testcase>
+		<testcase name="When calling is not blocking signals while not blocking signals" time="0"></testcase>
+		<testcase name="When calling asserts object is connected with a valid connection" time="0"></testcase>
+		<testcase name="When calling asserts object is not connected with an invalid connection" time="0"></testcase>
+		<testcase name="When calling asserts.object_has_meta() after adding metadata" time="0"></testcase>
+		<testcase name="When calling does not have user signal with class signal" time="0"></testcase>
+		<testcase name="When calling obj_has_user_signal after adding a signal" time="0"></testcase>
+		<testcase name="When calling asserts.object_has_meta with real key but null val" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given a Null Assertion" failures="0"  tests="3" time="0">
-		<testcase name="When calling asserts.is_null(null)" time="0"></testcase>
 		<testcase name="When calling freed object is null" time="0"></testcase>
 		<testcase name="When calling Node is not null" time="0"></testcase>
+		<testcase name="When calling asserts.is_null(null)" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given an Is Not Instance of class/type Assertion" failures="0"  tests="26" time="0">
-		<testcase name="when calling asserts.is_not_int(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_PoolStringArray(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_PoolByteArray(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_Array(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_bool(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_String(null)" time="0"></testcase>
 		<testcase name="when calling asserts.is_not_Color(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_PoolColorArray(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_PoolIntArray(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_PoolRealArray(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_PoolVector3Array(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_Quat(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_Plane(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_Rect2(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_PoolVector2Array(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_RID(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_AABB(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_Transform(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_PoolByteArray(null)" time="0"></testcase>
 		<testcase name="when calling asserts.is_not_Dictionary(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_int(null)" time="0"></testcase>
 		<testcase name="when calling asserts.is_not_float(null)" time="0"></testcase>
 		<testcase name="when calling asserts.is_not_Basis(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_PoolColorArray(null)" time="0"></testcase>
 		<testcase name="when calling asserts.is_not_NodePath(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_Array(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_bool(null)" time="0"></testcase>
 		<testcase name="when calling asserts.is_not_Object(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_PoolStringArray(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_Plane(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_PoolVector2Array(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_PoolVector3Array(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_Quat(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_AABB(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_PoolRealArray(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_Rect2(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_RID(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_PoolIntArray(null)" time="0"></testcase>
+		<testcase name="when calling asserts.is_not_Vector3(null)" time="0"></testcase>
 		<testcase name="when calling asserts.is_not_Transform2D(null)" time="0"></testcase>
 		<testcase name="when calling asserts.is_not_Vector2(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_String(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_Transform(null)" time="0"></testcase>
-		<testcase name="when calling asserts.is_not_Vector3(null)" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given an Is Instance of class/type Assertion" failures="0"  tests="26" time="0">
-		<testcase name="When calling asserts.is_Array(array: Array)" time="0"></testcase>
-		<testcase name="When calling asserts.is_bool(true)" time="0"></testcase>
-		<testcase name="When callign asserts.is_int(1)" time="0"></testcase>
-		<testcase name="When calling asserts.is_Dictionary({})" time="0"></testcase>
-		<testcase name="When calling asserts.is_color(color: Color)" time="0"></testcase>
-		<testcase name="When calling asserts.is_AABB(aabb: AABB)" time="0"></testcase>
-		<testcase name="When calling asserts.is_basis(basis: Basis" time="0"></testcase>
-		<testcase name="When calling asserts.is_NodePath(@'Parent/Child')" time="0"></testcase>
-		<testcase name="When calling asserts.is_Plane(plane: Plane())" time="0"></testcase>
-		<testcase name="When calling asserts.is_PoolByteArray(bytes: PoolByteArray)" time="0"></testcase>
-		<testcase name="When calling asserts.is_PoolIntArray(ints: PoolIntArray)" time="0"></testcase>
-		<testcase name="When calling is asserts.is_PoolRealArray(reals: PoolRealArray)" time="0"></testcase>
-		<testcase name="When calling is asserts.is_PoolStringArray(strs: PoolStringArray)" time="0"></testcase>
-		<testcase name="When calling is asserts.is_PoolVector2Array(vec2s: PoolVector2Array)" time="0"></testcase>
 		<testcase name="When calling asserts.is_float(1.0)" time="0"></testcase>
-		<testcase name="When calling is asserts.is_PoolVector3Array(vec3s: PoolVector3Array)" time="0"></testcase>
-		<testcase name="When calling is asserts.object(node: Node)" time="0"></testcase>
-		<testcase name="When calling asserts.is_PoolColorArray(colors: PoolColorArray)" time="0"></testcase>
-		<testcase name="When calling asserts.is_Vector2(vec2)" time="0"></testcase>
-		<testcase name="When calling asserts.is_Vector3(vec3: Vector3" time="0"></testcase>
-		<testcase name="When calling asserts.is_RID(rid: RID)" time="0"></testcase>
-		<testcase name="When calling asserts.is_Transform(transform2D: Transform2D)" time="0"></testcase>
-		<testcase name="When calling asserts.is_Transform(transform: Transform)" time="0"></testcase>
 		<testcase name="When calling asserts.is_Rect2(rect2: Rect2)" time="0"></testcase>
+		<testcase name="When calling asserts.is_NodePath(@'Parent/Child')" time="0"></testcase>
+		<testcase name="When calling asserts.is_RID(rid: RID)" time="0"></testcase>
+		<testcase name="When calling asserts.is_color(color: Color)" time="0"></testcase>
 		<testcase name="When calling asserts.is_string(strs: String)" time="0"></testcase>
+		<testcase name="When calling asserts.is_Array(array: Array)" time="0"></testcase>
+		<testcase name="When calling asserts.is_Plane(plane: Plane())" time="0"></testcase>
+		<testcase name="When calling is asserts.is_PoolStringArray(strs: PoolStringArray)" time="0"></testcase>
 		<testcase name="When calling asserts.is_Quat(quat: Quat)" time="0"></testcase>
+		<testcase name="When calling is asserts.is_PoolVector3Array(vec3s: PoolVector3Array)" time="0"></testcase>
+		<testcase name="When callign asserts.is_int(1)" time="0"></testcase>
+		<testcase name="When calling asserts.is_AABB(aabb: AABB)" time="0"></testcase>
+		<testcase name="When calling asserts.is_Transform(transform: Transform)" time="0"></testcase>
+		<testcase name="When calling asserts.is_PoolColorArray(colors: PoolColorArray)" time="0"></testcase>
+		<testcase name="When calling asserts.is_basis(basis: Basis" time="0"></testcase>
+		<testcase name="When calling asserts.is_Transform(transform2D: Transform2D)" time="0"></testcase>
+		<testcase name="When calling asserts.is_PoolByteArray(bytes: PoolByteArray)" time="0"></testcase>
+		<testcase name="When calling asserts.is_Vector2(vec2)" time="0"></testcase>
+		<testcase name="When calling asserts.is_bool(true)" time="0"></testcase>
+		<testcase name="When calling asserts.is_PoolIntArray(ints: PoolIntArray)" time="0"></testcase>
+		<testcase name="When calling asserts.is_Dictionary({})" time="0"></testcase>
+		<testcase name="When calling is asserts.object(node: Node)" time="0"></testcase>
+		<testcase name="When calling is asserts.is_PoolRealArray(reals: PoolRealArray)" time="0"></testcase>
+		<testcase name="When calling is asserts.is_PoolVector2Array(vec2s: PoolVector2Array)" time="0"></testcase>
+		<testcase name="When calling asserts.is_Vector3(vec3: Vector3" time="0"></testcase>
 	</testsuite>
 
-	<testsuite name="Has" failures="0"  tests="5" time="0">
+	<testsuite name="" failures="0"  tests="5" time="0">
 		<testcase name=" array does not have value" time="0"></testcase>
-		<testcase name=" dict has key" time="0"></testcase>
 		<testcase name=" dict does not have value" time="0"></testcase>
-		<testcase name=" array has value" time="0"></testcase>
 		<testcase name=" dict does not have key" time="0"></testcase>
+		<testcase name=" dict has key" time="0"></testcase>
+		<testcase name=" array has value" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given A File Assertion" failures="0"  tests="3" time="0">
@@ -137,17 +137,17 @@
 		<testcase name="When calling asserts file does not exist when path is empty" time="0"></testcase>
 	</testsuite>
 
-	<testsuite name="Example" failures="0"  tests="1" time="0">
+	<testsuite name="" failures="0"  tests="1" time="0">
 		<testcase name=" simple" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given an Equality Assertion" failures="0"  tests="7" time="0">
-		<testcase name="When calling asserts.is_greater_than(2, 1)" time="0"></testcase>
+		<testcase name="When calling asserts.is_equal(1, 1)" time="0"></testcase>
+		<testcase name="When calling asserts.is_less_than(2, 1)" time="0"></testcase>
 		<testcase name="When calling asserts.is_equal_or_greater_than(2, 1)" time="0"></testcase>
 		<testcase name="When calling asserts.is_equal_or_less_than(1, 1)" time="0"></testcase>
 		<testcase name="When callign asserts.is_not_equal(5, 6)" time="0"></testcase>
-		<testcase name="When calling asserts.is_equal(1, 1)" time="0"></testcase>
-		<testcase name="When calling asserts.is_less_than(2, 1)" time="0"></testcase>
+		<testcase name="When calling asserts.is_greater_than(2, 1)" time="0"></testcase>
 		<testcase name="When calling asserts.is_equal_or_greater_than(1, 1)" time="0"></testcase>
 	</testsuite>
 
@@ -156,96 +156,97 @@
 		<testcase name="When calling asserts.is_false(false)" time="0"></testcase>
 	</testsuite>
 
-	<testsuite name="Assertthat" failures="0"  tests="1" time="0">
+	<testsuite name="" failures="0"  tests="1" time="0">
 		<testcase name=" assert that" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given a Test Double" failures="0"  tests="19" time="0">
-		<testcase name="When we double an inner class" time="0"></testcase>
-		<testcase name="When we call a method that was stubbed to return different values based on argument patterns" time="0"></testcase>
-		<testcase name="When we pass an Object with a call_func function" time="0"></testcase>
+		<testcase name="When we call a method that we have dummied" time="0"></testcase>
 		<testcase name="When we call an add(x, y) method that we haven't directed" time="0"></testcase>
+		<testcase name="When we pass a funcref as a subcall" time="0"></testcase>
+		<testcase name="When we pass in dependecies on double" time="0"></testcase>
+		<testcase name="When we double an inner class" time="0"></testcase>
+		<testcase name="When we pass a funcref as a subcall that returns" time="0"></testcase>
+		<testcase name="When we call a method that we have stubbed to return a node" time="0"></testcase>
 		<testcase name="When we call a method that we are spying on" time="0"></testcase>
 		<testcase name="When we add an doubled inner class to it" time="0"></testcase>
-		<testcase name="When we pass in dependecies on double" time="0"></testcase>
-		<testcase name="When we pass in dependecies on direct" time="0"></testcase>
 		<testcase name="When we stub a method of a doubled inner class" time="0"></testcase>
-		<testcase name="When we call a method that we have stubbed to return true" time="0"></testcase>
-		<testcase name="When we pass arguments to a method call that we are spying on" time="0"></testcase>
-		<testcase name="When we call a method that was stubbed with a partial (ie using any()) argument pattern" time="0"></testcase>
-		<testcase name="When we call a method that we have dummied" time="0"></testcase>
-		<testcase name="When we call a method that we have stubbed to return a node" time="0"></testcase>
-		<testcase name="When we call a method that was stubbed with an argument pattern that includes a non-primitive object" time="0"></testcase>
-		<testcase name="When we pass a funcref as a subcall that returns" time="0"></testcase>
-		<testcase name="When we call a method that we stubbed to call its super implementation by default" time="0"></testcase>
-		<testcase name="When we pass a funcref as a subcall" time="0"></testcase>
 		<testcase name="When we stubbed a keyworded method by passing in the correct keyword" time="0"></testcase>
+		<testcase name="When we call a method that we have stubbed to return true" time="0"></testcase>
+		<testcase name="When we pass in dependecies on direct" time="0"></testcase>
+		<testcase name="When we call a method that we stubbed to call its super implementation by default" time="0"></testcase>
+		<testcase name="When we pass arguments to a method call that we are spying on" time="0"></testcase>
+		<testcase name="When we call a method that was stubbed with an argument pattern that includes a non-primitive object" time="0"></testcase>
+		<testcase name="When we call a method that was stubbed with a partial (ie using any()) argument pattern" time="0"></testcase>
+		<testcase name="When we call a method that was stubbed to return different values based on argument patterns" time="0"></testcase>
+		<testcase name="When we pass an Object with a call_func function" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given a Script Director" failures="0"  tests="3" time="0">
-		<testcase name="When we double an inner class" time="0"></testcase>
-		<testcase name="When we call the double the second time" time="0"></testcase>
 		<testcase name="When we create two of it for the same script" time="0"></testcase>
+		<testcase name="When we call the double the second time" time="0"></testcase>
+		<testcase name="When we double an inner class" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given a Scene Director" failures="1"  tests="5" time="0">
-		<testcase name="When we add it to the tree it runs" time="0"></testcase>
-		<testcase name="When we call a method from a grandchild node that we stubbed" time="0"></testcase>
-		<testcase name="When we call a method from the root node that we stubbed" time="0"></testcase>
-		<testcase name="When we create two of it for the same scene" time="0"></testcase>
 		<testcase name="When we call a method from a child node that we stubbed" time="0"></testcase>
+		<testcase name="When we add it to the tree it runs" time="0"></testcase>
+		<testcase name="When we create two of it for the same scene" time="0"></testcase>
+		<testcase name="When we call a method from the root node that we stubbed" time="0">
+			<failure message="EXPECTED: |int| 9999 is equal to |int| 20 but GOT |int| 9999 is not equal to |int| 20"></failure></testcase>
+		<testcase name="When we call a method from a grandchild node that we stubbed" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given is_on_floor" failures="0"  tests="3" time="0">
 		<testcase name="From a child node of a scene without scripts" time="0"></testcase>
-		<testcase name="From a built-in KinematicBody2D2" time="0"></testcase>
 		<testcase name="From a user-defined script" time="0"></testcase>
+		<testcase name="From a built-in KinematicBody2D2" time="0"></testcase>
 	</testsuite>
 
-	<testsuite name="Default Args" failures="0"  tests="1" time="0">
+	<testsuite name="" failures="0"  tests="1" time="0">
 		<testcase name=" default arguments of interpolate property" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given a Yield" failures="0"  tests="11" time="0">
-		<testcase name="When the yielder heres our signal" time="0"></testcase>
-		<testcase name="When we call until signal" time="0"></testcase>
-		<testcase name="When we call until_timeout (with 1.0)" time="0"></testcase>
-		<testcase name="When we yield in start twice" time="0"></testcase>
-		<testcase name="When yield(self.yield_value()) returns" time="0"></testcase>
-		<testcase name="When asserting against a test" time="0"></testcase>
+		<testcase name="When a signal being yielded on is emitted" time="0"></testcase>
 		<testcase name="When it is finished" time="0"></testcase>
+		<testcase name="When yield(self.yield_value()) returns" time="0"></testcase>
 		<testcase name="When we yield in pre thrice" time="0"></testcase>
 		<testcase name="When we yield twice in execute" time="0"></testcase>
-		<testcase name="When a signal being yielded on is emitted" time="0"></testcase>
 		<testcase name="When the yielder times out on until_timeout(0.1)" time="0"></testcase>
+		<testcase name="When asserting against a test" time="0"></testcase>
+		<testcase name="When we call until_timeout (with 1.0)" time="0"></testcase>
+		<testcase name="When we call until signal" time="0"></testcase>
+		<testcase name="When the yielder heres our signal" time="0"></testcase>
+		<testcase name="When we yield in start twice" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given a Yield" failures="0"  tests="11" time="0">
-		<testcase name="When the yielder heres our signal" time="0"></testcase>
-		<testcase name="When we call until signal" time="0"></testcase>
-		<testcase name="When we call until_timeout (with 1.0)" time="0"></testcase>
-		<testcase name="When we yield in start twice" time="0"></testcase>
-		<testcase name="When yield(self.yield_value()) returns" time="0"></testcase>
-		<testcase name="When asserting against a test" time="0"></testcase>
+		<testcase name="When a signal being yielded on is emitted" time="0"></testcase>
 		<testcase name="When it is finished" time="0"></testcase>
+		<testcase name="When yield(self.yield_value()) returns" time="0"></testcase>
 		<testcase name="When we yield in pre thrice" time="0"></testcase>
 		<testcase name="When we yield twice in execute" time="0"></testcase>
-		<testcase name="When a signal being yielded on is emitted" time="0"></testcase>
 		<testcase name="When the yielder times out on until_timeout(0.1)" time="0"></testcase>
+		<testcase name="When asserting against a test" time="0"></testcase>
+		<testcase name="When we call until_timeout (with 1.0)" time="0"></testcase>
+		<testcase name="When we call until signal" time="0"></testcase>
+		<testcase name="When the yielder heres our signal" time="0"></testcase>
+		<testcase name="When we yield in start twice" time="0"></testcase>
 	</testsuite>
 
 	<testsuite name="Given a Yield" failures="0"  tests="11" time="0">
-		<testcase name="When the yielder heres our signal" time="0"></testcase>
-		<testcase name="When we call until signal" time="0"></testcase>
-		<testcase name="When we call until_timeout (with 1.0)" time="0"></testcase>
-		<testcase name="When we yield in start twice" time="0"></testcase>
-		<testcase name="When yield(self.yield_value()) returns" time="0"></testcase>
-		<testcase name="When asserting against a test" time="0"></testcase>
+		<testcase name="When a signal being yielded on is emitted" time="0"></testcase>
 		<testcase name="When it is finished" time="0"></testcase>
+		<testcase name="When yield(self.yield_value()) returns" time="0"></testcase>
 		<testcase name="When we yield in pre thrice" time="0"></testcase>
 		<testcase name="When we yield twice in execute" time="0"></testcase>
-		<testcase name="When a signal being yielded on is emitted" time="0"></testcase>
 		<testcase name="When the yielder times out on until_timeout(0.1)" time="0"></testcase>
+		<testcase name="When asserting against a test" time="0"></testcase>
+		<testcase name="When we call until_timeout (with 1.0)" time="0"></testcase>
+		<testcase name="When we call until signal" time="0"></testcase>
+		<testcase name="When the yielder heres our signal" time="0"></testcase>
+		<testcase name="When we yield in start twice" time="0"></testcase>
 	</testsuite>
 
 </testsuites>

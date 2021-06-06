@@ -3,7 +3,7 @@ tool
 
 var PASSED_ICON: Texture
 var FAILED_ICON: Texture
-const ResultTree = preload("res://addons/WAT/ui/scripts/result_tree.gd")
+const ResultTree = preload("res://addons/WAT/ui/result_tree.gd")
 var _results: Array
 var _tabs = {}
 # Stores asset_registry so that result_tree can be configured with scaled icons

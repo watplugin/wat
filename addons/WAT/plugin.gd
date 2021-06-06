@@ -6,8 +6,8 @@ const RUN_CURRENT_SCENE_GODOT_3_1: int = 33
 const Title: String = "Tests"
 const Settings: Script = preload("res://addons/WAT/settings.gd")
 const GUI: PackedScene = preload("res://addons/WAT/gui.tscn")
-const Docker: Script = preload("res://addons/WAT/ui/scripts/docker.gd")
-const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/scripts/plugin_assets_registry.gd")
+const Docker: Script = preload("res://addons/WAT/ui/docker.gd")
+const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/plugin_assets_registry.gd")
 var instance: Control
 var docker: Docker
 var script_editor: ScriptEditor

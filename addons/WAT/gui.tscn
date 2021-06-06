@@ -1,7 +1,38 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=26 format=2]
 
-[ext_resource path="res://addons/WAT/ui/scripts/gui.gd" type="Script" id=1]
-[ext_resource path="res://addons/WAT/ui/scenes/Core.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/WAT/ui/gui.gd" type="Script" id=1]
+[ext_resource path="res://addons/WAT/assets/play.png" type="Texture" id=2]
+[ext_resource path="res://addons/WAT/ui/summary.gd" type="Script" id=3]
+[ext_resource path="res://addons/WAT/ui/links.gd" type="Script" id=4]
+[ext_resource path="res://addons/WAT/ui/dynamic_size_spinbox.gd" type="Script" id=5]
+[ext_resource path="res://addons/WAT/ui/result_forest.gd" type="Script" id=6]
+[ext_resource path="res://addons/WAT/ui/menu.gd" type="Script" id=7]
+[ext_resource path="res://addons/WAT/ui/save_metadata.gd" type="Script" id=8]
+[ext_resource path="res://addons/WAT/ui/test_menu.gd" type="Script" id=9]
+[ext_resource path="res://addons/WAT/assets/play_debug.png" type="Texture" id=10]
+[ext_resource path="res://addons/WAT/assets/timer.png" type="Texture" id=11]
+[ext_resource path="res://addons/WAT/assets/request_docs.svg" type="Texture" id=12]
+[ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=13]
+[ext_resource path="res://addons/WAT/assets/script.png" type="Texture" id=14]
+[ext_resource path="res://addons/WAT/assets/docs.svg" type="Texture" id=15]
+[ext_resource path="res://addons/WAT/assets/issue.svg" type="Texture" id=16]
+[ext_resource path="res://addons/WAT/assets/failed.png" type="Texture" id=17]
+[ext_resource path="res://addons/WAT/assets/passed.png" type="Texture" id=18]
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="StyleBoxEmpty" id=8]
+
+[sub_resource type="StyleBoxEmpty" id=9]
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="StyleBoxEmpty" id=11]
+
+[sub_resource type="InputEventKey" id=6]
+
+[sub_resource type="ShortCut" id=12]
+shortcut = SubResource( 6 )
 
 [node name="Tests" type="PanelContainer"]
 anchor_right = 1.0
@@ -13,8 +44,240 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Core" parent="." instance=ExtResource( 3 )]
+[node name="Core" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
 margin_bottom = 593.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="HBoxContainer" parent="Core"]
+margin_right = 704.0
+margin_bottom = 24.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuickRunAll" type="Button" parent="Core/Menu"]
+margin_top = 4.0
+margin_right = 16.0
+margin_bottom = 20.0
+hint_tooltip = "Run All (Non Debug)"
+size_flags_horizontal = 0
+size_flags_vertical = 4
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 8 )
+custom_styles/focus = SubResource( 9 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+shortcut = SubResource( 12 )
+icon = ExtResource( 2 )
+flat = true
+
+[node name="ButtonSpacer" type="Control" parent="Core/Menu"]
+margin_left = 20.0
+margin_right = 23.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 3, 0 )
+
+[node name="QuickRunAllDebug" type="Button" parent="Core/Menu"]
+margin_left = 27.0
+margin_top = 4.0
+margin_right = 43.0
+margin_bottom = 20.0
+hint_tooltip = "Run All (With Debugger)"
+size_flags_horizontal = 0
+size_flags_vertical = 4
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 8 )
+custom_styles/focus = SubResource( 9 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+shortcut = SubResource( 12 )
+icon = ExtResource( 10 )
+flat = true
+
+[node name="TestMenu" type="Button" parent="Core/Menu"]
+margin_left = 47.0
+margin_right = 129.0
+margin_bottom = 24.0
+size_flags_horizontal = 0
+size_flags_vertical = 5
+text = "Select Test"
+flat = true
+script = ExtResource( 9 )
+
+[node name="Directories" type="PopupMenu" parent="Core/Menu/TestMenu"]
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="Scripts" type="PopupMenu" parent="Core/Menu/TestMenu/Directories"]
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="Methods" type="PopupMenu" parent="Core/Menu/TestMenu/Directories/Scripts"]
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="TagEditor" type="PopupMenu" parent="Core/Menu/TestMenu/Directories/Scripts/Methods"]
+margin_right = 20.0
+margin_bottom = 20.0
+hide_on_checkable_item_selection = false
+
+[node name="Tags" type="PopupMenu" parent="Core/Menu/TestMenu/Directories"]
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="ResultsMenu" type="MenuButton" parent="Core/Menu"]
+margin_left = 133.0
+margin_right = 229.0
+margin_bottom = 24.0
+size_flags_horizontal = 0
+size_flags_vertical = 5
+text = "Filter Results"
+items = [ "Expand All", null, 0, false, false, 0, 0, null, "", false, "Collapse All", null, 0, false, false, 1, 0, null, "", false, "Expand All Failures", null, 0, false, false, 2, 0, null, "", false ]
+
+[node name="RunSettings" type="HBoxContainer" parent="Core/Menu"]
+margin_left = 233.0
+margin_right = 547.0
+margin_bottom = 24.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Repeats" type="SpinBox" parent="Core/Menu/RunSettings"]
+margin_right = 150.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 150, 0 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+align = 1
+prefix = "Repeat"
+suffix = "Time(s)"
+script = ExtResource( 5 )
+
+[node name="Threads" type="SpinBox" parent="Core/Menu/RunSettings"]
+margin_left = 154.0
+margin_right = 314.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 160, 0 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+min_value = 1.0
+max_value = 7.0
+value = 1.0
+align = 1
+prefix = "Run on"
+suffix = "Thread(s)"
+script = ExtResource( 5 )
+
+[node name="SaveMetadata" type="Button" parent="Core/Menu"]
+margin_left = 551.0
+margin_right = 655.0
+margin_bottom = 24.0
+hint_tooltip = "Save metadata before uploading to source control if you use continous integration."
+size_flags_vertical = 5
+text = "Save Metadata"
+flat = true
+script = ExtResource( 8 )
+
+[node name="Links" type="MenuButton" parent="Core/Menu"]
+margin_left = 659.0
+margin_right = 704.0
+margin_bottom = 24.0
+size_flags_horizontal = 0
+size_flags_vertical = 5
+text = "Links"
+items = [ "Support WAT", ExtResource( 13 ), 0, false, false, 0, 0, "https://ko-fi.com/alexanddraw", "", false, "Documentation", ExtResource( 15 ), 0, false, false, 3, 0, "https://github.com/CodeDarigan/WAT-GDScript/issues/new", "", false, "Request Docs", ExtResource( 12 ), 0, false, false, 2, 0, "https://github.com/CodeDarigan/WAT-Documentation/issues/new", "", false, "Report an Issue", ExtResource( 16 ), 0, false, false, 1, 0, "https://wat.readthedocs.io/en/latest/", "", false ]
+script = ExtResource( 4 )
+
+[node name="Results" type="TabContainer" parent="Core"]
+margin_top = 28.0
+margin_right = 1010.0
+margin_bottom = 560.0
+rect_min_size = Vector2( 0, 300 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tab_align = 0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Summary" type="HBoxContainer" parent="Core"]
+margin_top = 564.0
+margin_right = 266.0
+margin_bottom = 586.0
+size_flags_horizontal = 2
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Runs" type="Button" parent="Core/Summary"]
+margin_right = 50.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 50, 0 )
+focus_mode = 0
+button_mask = 0
+enabled_focus_mode = 0
+text = "0"
+icon = ExtResource( 2 )
+flat = true
+
+[node name="Tests" type="Button" parent="Core/Summary"]
+margin_left = 54.0
+margin_right = 104.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 50, 0 )
+focus_mode = 0
+button_mask = 0
+enabled_focus_mode = 0
+text = "0"
+icon = ExtResource( 14 )
+flat = true
+
+[node name="Passing" type="Button" parent="Core/Summary"]
+margin_left = 108.0
+margin_right = 158.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 50, 0 )
+focus_mode = 0
+button_mask = 0
+enabled_focus_mode = 0
+text = "0"
+icon = ExtResource( 18 )
+flat = true
+
+[node name="Failing" type="Button" parent="Core/Summary"]
+margin_left = 162.0
+margin_right = 212.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 50, 0 )
+focus_mode = 0
+button_mask = 0
+enabled_focus_mode = 0
+text = "0"
+icon = ExtResource( 17 )
+flat = true
+
+[node name="Time" type="Button" parent="Core/Summary"]
+margin_left = 216.0
+margin_right = 266.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 50, 0 )
+focus_mode = 0
+button_mask = 0
+enabled_focus_mode = 0
+text = "0"
+icon = ExtResource( 11 )
+flat = true
