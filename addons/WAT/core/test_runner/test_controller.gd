@@ -36,6 +36,7 @@ func _init() -> void:
 	_registry = Registry.new()
 	_yielder = Yielder.new()
 	_director.registry = _registry
+	add_child(_director)
 	add_child(_yielder)
 	_yielder.connect("finished", self, "_next")
 
@@ -143,7 +144,7 @@ func _notification(what: int) -> void:
 		_registry.clear()
 		_assertions.free()
 		_registry.free()
-		_director.free()
+		# _director.free(), This gets freed automatically because it is a child now
 		_watcher.clear()
 		if is_instance_valid(_case):
 			_case.free()

@@ -1,8 +1,9 @@
-extends Object
+extends Node
 
 const ScriptDirector = preload("script_director.gd")
 const SceneDirector = preload("scene_director.gd")
 var registry
+
 
 func script(path, inner: String = "", deps: Array = []) -> ScriptDirector:
 	if path is GDScript: path = path.resource_path
@@ -27,8 +28,9 @@ func scene(tscn) -> SceneDirector:
 		elif ClassDB.class_exists(next.get_class()):
 			nodes[path] = script(next.get_class())
 	_set_nodepath_variables(instance, nodes)
+	var export_values = _get_exported_variable_values(instance)
 	instance.queue_free()
-	return SceneDirector.new(nodes)
+	return SceneDirector.new(nodes, export_values)
 	
 func _set_nodepath_variables(instance, nodes: Dictionary):
 	# Nodepath Variables Are Exported
@@ -41,3 +43,14 @@ func _set_nodepath_variables(instance, nodes: Dictionary):
 			if(prop.type == TYPE_NODE_PATH and prop.name != "_import_path"):
 				var exported_value = source.get(prop.name) as NodePath
 				copy.nodepaths[prop.name] = exported_value as NodePath
+
+# We need this script to be inside the tree to prevent some errors...
+# ..everything should be fine if the instance isn't a tool script I think..
+# ..at least in editor
+func _get_exported_variable_values(instance) -> Dictionary:
+	var exported: Dictionary = {}
+	add_child(instance)
+	for prop in instance.get_property_list():
+		exported[prop.name] = instance.get(prop.name)
+	remove_child(instance)
+	return exported

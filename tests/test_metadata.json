@@ -1,4 +1,11 @@
 {
+	"res://tests/property_member.gd": {
+		"path": "res://tests/property_member.gd",
+		"tags": [
+
+		],
+		"passing": true
+	},
 	"res://tests/integration/default_args.test.gd": {
 		"path": "res://tests/integration/default_args.test.gd",
 		"tags": [

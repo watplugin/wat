@@ -5,10 +5,11 @@ tool
 var nodes: Dictionary = {}
 var _created: bool = false
 var cache: Array = []
+var _export_vars = {}
 
-
-func _init(nodes: Dictionary = {}) -> void:
+func _init(nodes: Dictionary = {}, export_vars = {}) -> void:
 	self.nodes = nodes
+	_export_vars = export_vars
 
 func get_node(path: String) -> Node:
 	return nodes[path]
@@ -29,6 +30,8 @@ func double() -> Node:
 			_add_child(path, nodepath, root)
 		elif path.size() > 1:
 			_add_grandchild(path, nodepath, root)
+	for prop_name in _export_vars:
+		root.set(prop_name, _export_vars[prop_name])
 	return root
 	
 func _add_child(path: PoolStringArray, nodepath: String, root: Node) -> void:
