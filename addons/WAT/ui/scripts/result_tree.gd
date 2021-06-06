@@ -4,8 +4,8 @@ tool
 var FUNCTION: Texture
 var PASSED_ICON: Texture
 var FAILED_ICON: Texture
-const PASSED: Color = Color(0, 1, 0, 1)
-const FAILED: Color = Color(1, 1, 1, 1)
+const PASSED: Color = Color(0.34375, 1, 0.34375)
+const FAILED: Color = Color(1, 0.425781, 0.425781)
 signal calculated
 var _cache: Array = []
 var _mega_cache: Array = []
