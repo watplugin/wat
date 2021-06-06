@@ -9,6 +9,12 @@ class TestThread extends Thread:
 	
 	func _init(_tests: Array) -> void:
 		tests = _tests
+		
+func _ready() -> void:
+	name = "TestRunner"
+	if not Engine.is_editor_hint():
+		OS.window_size = ProjectSettings.get_setting("WAT/Window_Size")
+		OS.window_minimized = ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests")
 
 func run(tests, threads) -> void:
 	var results: Array = []

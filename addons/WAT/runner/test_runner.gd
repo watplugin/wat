@@ -13,9 +13,6 @@ signal run_completed
 func _init(_tests: Array = [], _threads: int = 1) -> void:
 	threads = _threads
 	tests = _tests
-	if not Engine.is_editor_hint():
-		_set_window_size()
-		_minimize_window()
 	
 func _ready() -> void:
 	name = "TestRunner"
@@ -46,10 +43,3 @@ func run(_tests = tests, _threads = threads) -> void:
 func _on_run_completed(results: Array) -> void:
 	_runner.queue_free()
 	emit_signal("run_completed", results)
-	
-func _set_window_size() -> void:
-	OS.window_size = ProjectSettings.get_setting("WAT/Window_Size")
-	
-func _minimize_window() -> void:
-	OS.window_minimized = ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests")
-
