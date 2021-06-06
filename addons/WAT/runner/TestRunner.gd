@@ -1,3 +1,4 @@
+tool
 extends Node
 
 const COMPLETED: String = "completed"

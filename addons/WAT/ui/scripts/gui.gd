@@ -5,7 +5,7 @@ const Log: Script = preload("res://addons/WAT/log.gd")
 
 # Resources require tool to work inside the editor whereas..
 # ..scripts objects without tool can be called from tool based scripts
-const TestRunner: Script = preload("res://addons/WAT/runner/test_runner.gd")
+const TestRunner: PackedScene = preload("res://addons/WAT/runner/TestRunner.tscn")
 const Server: Script = preload("res://addons/WAT/network/server.gd")
 const XML: Script = preload("res://addons/WAT/editor/junit_xml.gd")
 const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/scripts/plugin_assets_registry.gd")
@@ -13,7 +13,7 @@ onready var TestMenu: Button = $Core/Menu/TestMenu
 onready var Results: TabContainer = $Core/Results
 onready var Summary: HBoxContainer = $Core/Summary
 onready var Core: VBoxContainer = $Core
-var instance: TestRunner
+var instance #: #TestRunner
 var server: Server
 signal launched_via_editor
 signal function_selected
@@ -44,9 +44,11 @@ func _on_test_strategy_set(tests, threads, run_in_editor) -> void:
 	
 func _launch_in_editor(tests: Array, threads: int) -> void:
 	# This is also the launch method used for exported scenes
-	instance = TestRunner.new(tests, threads)
-	instance.connect("run_completed", self, "_on_run_completed")
+	instance = TestRunner.instance() #tests, threads)
+	#instance.connect("run_completed", self, "_on_run_completed")
 	add_child(instance)
+	var results = yield(instance.run(tests, threads), "completed")
+	_on_run_completed(results)
 	
 func _launch_via_editor(tests: Array, threads: int) -> void:
 	if not is_instance_valid(server):
