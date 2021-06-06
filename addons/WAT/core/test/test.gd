@@ -1,12 +1,12 @@
 extends Node
 class_name WATTest
 
-const Assertions: Script = preload("res://addons/WAT/core/assertions/assertions.gd")
+#const Assertions: Script = preload("res://addons/WAT/assertions/assertions.gd")
 const TEST: bool = true
 const YIELD: String = "finished"
 signal described
 signal cancelled
-var asserts: Assertions
+var asserts #: Assertions
 var parameters: Reference
 var recorder: Script
 var any: Script

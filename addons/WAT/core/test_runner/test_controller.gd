@@ -3,7 +3,7 @@ extends Node
 const Log: Script = preload("res://addons/WAT/log.gd")
 const Test: Script = preload("res://addons/WAT/core/test/test.gd")
 const Case: Script = preload("res://addons/WAT/core/test/case.gd")
-const Assertions: Script = preload("res://addons/WAT/core/assertions/assertions.gd")
+const Assertions: Script = preload("res://addons/WAT/assertions/assertions.gd")
 const Parameters: Script = preload("res://addons/WAT/core/test/parameters.gd")
 const Recorder: Script = preload("res://addons/WAT/core/test/recorder.gd")
 const Watcher: Script = preload("res://addons/WAT/core/test/watcher.gd")
