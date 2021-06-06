@@ -116,7 +116,7 @@
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/unit/range.test.gd": {
 		"path": "res://tests/unit/range.test.gd",

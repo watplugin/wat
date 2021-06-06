@@ -12,7 +12,7 @@ const LIST_DIR: String = "-list_dir"
 const PASSED: int = 0
 const FAILED: int = 1
 var test
-const TestRunner: GDScript = preload("res://addons/WAT/runner/test_runner.gd")
+const TestRunner: PackedScene = preload("res://addons/WAT/runner/TestRunner.tscn")
 
 var _runner: Node
 var _start_time: float
@@ -133,9 +133,12 @@ func set_last_run_success(results) -> void:
 func _run(tests: Array, repeats: int = 0, threads: int = 0) -> void:
 	var toRun = repeat(tests, repeats)
 	_runner = TestRunner.new(toRun, threads)
-	_runner.connect("run_completed", self, "_on_run_completed")
+	_runner = TestRunner.instance()
+#	_runner.connect("run_completed", self, "_on_run_completed")
 	_start_time = OS.get_ticks_msec()
 	add_child(_runner)
+	var results: Array = yield(_runner.run(tests, threads), "completed")
+	_on_run_completed(results)
 	
 func repeat(tests: Array, repeat: int) -> Array:
 	var duplicates: Array = []
