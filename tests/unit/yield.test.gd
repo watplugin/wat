@@ -65,13 +65,12 @@ func test_When_a_signal_being_yielded_on_is_emitted_the_yielder_is_stopped():
 	describe("When a signal being yielded on is emitted")
 	call_deferred("emit_signal", "abc")
 	yield(until_signal(self, "abc", 0.3), YIELD)
-	asserts.is_true(yielder.paused, "Then the yielder is paused")
+	asserts.is_true(yielder.is_stopped(), "Then the yielder is stopped")
 
 func test_When_yielder_is_finished_signals_are_disconnected():
 	describe("When it is finished")
 
 	yield(until_signal(self, "abc", 0.1), YIELD)
-	asserts.is_true(not yielder.is_connected("timeout", yielder, "_on_resume"), "Then the timeout signal is disconnected")
 	asserts.is_true(not is_connected("abc", yielder, "_on_resume"), "Then the signal-signal is disconnected")
 #
 func test_When_we_call_until_timeout() -> void:
@@ -79,8 +78,7 @@ func test_When_we_call_until_timeout() -> void:
 	var yielder = Yielder.new()
 	add_child(yielder)
 	yielder.until_timeout(1.0)
-	asserts.is_true(not yielder.paused, "Then yielder is unpaused")
-	asserts.is_true(yielder.is_connected("timeout", yielder, "_on_resume"), "The timeout signal of the yielder is connected")
+	asserts.is_true(not yielder.is_stopped(), "Then yielder is not stopped")
 	remove_child(yielder)
 	yielder.free()
 #
@@ -98,14 +96,12 @@ func test_When_we_call_until_signal() -> void:
 func test_When_the_yielder_times_out() -> void:
 	describe("When the yielder times out on until_timeout(0.1)")
 	yield(until_timeout(0.1), YIELD)
-	asserts.is_true(yielder.paused, "Then the yielder is paused")
-	asserts.is_true(not yielder.is_connected("timeout", yielder, "_on_resume"), "The timeout signal of the yielder is not connected")
+	asserts.is_true(yielder.is_stopped(), "Then the yielder is stopped")
 
 func test_When_the_yielder_hears_our_signal() -> void:
 	describe("When the yielder heres our signal")
 
 	call_deferred("emit_signal", "abc")
 	yield(until_signal(self, "abc", 0.1), YIELD)
-	asserts.is_true(yielder.paused, "Then the yielder is paused")
-	asserts.is_true(not yielder.is_connected("timeout", yielder, "_on_resume"), "Then the timeout signal of the yielder is disconnected")
+	asserts.is_true(yielder.is_stopped(), "Then the yielder is stopped")
 	asserts.is_true(not is_connected("abc", yielder, "_on_resume"), "Then our signal to the yielder is disconnected")
