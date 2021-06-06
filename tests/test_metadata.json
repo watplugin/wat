@@ -157,6 +157,7 @@
 		"path": "res://tests/unit/yield.test.gd",
 		"tags": [
 
-		]
+		],
+		"passing": true
 	}
 }

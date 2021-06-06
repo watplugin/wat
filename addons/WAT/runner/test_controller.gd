@@ -12,6 +12,7 @@ const Director: Script = preload("res://addons/WAT/double/factory.gd")
 const Registry: Script = preload("res://addons/WAT/double/registry.gd")
 const Yielder: Script = preload("res://addons/WAT/test/yielder.gd")
 enum { START, PRE, EXECUTE, POST, END }
+signal completed
 signal finished
 signal done
 
@@ -137,7 +138,8 @@ func get_results() -> Dictionary:
 func _complete() -> void:
 	Log.event("finished", self)
 	_test.free()
-	emit_signal("finished")
+	print("completed")
+	emit_signal("completed")
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
