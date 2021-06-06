@@ -16,7 +16,8 @@ func join() -> void:
 	custom_multiplayer.network_peer = _client
 	
 puppet func test_strategy_received(tests: Array, threads: int) -> void:
-	owner.run(tests, threads)
+	var results: Array = yield(owner.run(tests, threads), "completed")
+	rpc_id(1, "_on_run_completed", results)
 	
 puppet func run_completion_confirmed() -> void:
 	get_tree().quit()

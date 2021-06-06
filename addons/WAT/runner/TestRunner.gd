@@ -22,18 +22,15 @@ func run(tests, threads) -> void:
 	for count in testthreads:
 		print("yielding for testthreads")
 		results += yield(self, COMPLETED)
-	print(results)
-	get_tree().quit()
+	return results
+#	get_tree().quit()
 	
 func _run(thread: TestThread) -> void:
 	print("_Running thread")
 	print("Tests size? ", thread.tests.size())
 	var results: Array = []
 	for test in thread.tests:
-		thread.controller.run(test)
-		yield(thread.controller, COMPLETED)
-		results.append(thread.controller.get_results())
-#		results.append(yield(thread.controller.run(test), COMPLETED))
+		results.append(yield(thread.controller.run(test), COMPLETED))
 	print("Returned from controller")
 	thread.controller.queue_free()
 	emit_signal(COMPLETED, results)

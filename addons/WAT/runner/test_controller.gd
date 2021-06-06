@@ -11,14 +11,11 @@ const Any: Script = preload("res://addons/WAT/test/any.gd")
 const Director: Script = preload("res://addons/WAT/double/factory.gd")
 const Registry: Script = preload("res://addons/WAT/double/registry.gd")
 const Yielder: Script = preload("res://addons/WAT/test/yielder.gd")
-enum { START, PRE, EXECUTE, POST, END }
+const COMPLETED: String = "completed"
 signal completed
-signal finished
-signal done
 
 var _test: Test
 var _case: Node
-var _state: int = START
 var _cursor: int = -1
 var _methods: PoolStringArray = []
 var _current_method: String
@@ -39,7 +36,7 @@ func _init() -> void:
 	_director.registry = _registry
 	add_child(_director)
 	add_child(_yielder)
-	_yielder.connect("finished", self, "_next")
+#	_yielder.connect("finished", self, "_next")
 
 func run(test: Dictionary) -> void:
 	Log.method("run", self)
@@ -65,82 +62,37 @@ func run(test: Dictionary) -> void:
 	_assertions.connect("asserted", _case, "_on_asserted")
 	_assertions.connect("asserted", _test, "_on_last_assertion")
 	add_child(_test)
-	_start()
 	
-func _change_state() -> void:
-	if _yielder.is_active():
-		return
-	if _state == END: #or _is_done(): // This is exiting too quickly
-		_complete()
-		return
-	match _state:
-		START:
-			_pre()
-		PRE:
-			_execute()
-		EXECUTE:
-			_post()
-		POST:
-			_pre() if not _is_done() else _end()
-		END:
-			_end()
-			
-func _next(vargs: Array = []) -> void:
-	# When yielding until signals or timeouts, this gets called on resume
-	# We call defer here to give the __testcase method time to reach either the end
-	# or an extra yield at which point we're able to check the _state of the yield and
-	# see if we stay paused or can continue
-	call_deferred("_change_state")
-			
-func _start() -> void:
-	_cursor = -1
-	_state = START
-	_test.start()
-	_next()
+	# Core run
+	var cursor = -1
+	yield(call_function("start"), COMPLETED)
+	for function in _methods:
+		if not _test.rerun_method:
+			cursor += 1
+		for hook in ["pre", "execute", "post"]:
+			yield(call_function(hook, cursor), COMPLETED)
+	yield(call_function("end"), COMPLETED)
 	
-func _pre() -> void:
-	_state = PRE
-	_test.pre()
-	_next()
+#	_test = {}
+	_test.queue_free()
+	return get_results()
 	
-func _execute() -> void:
-	_state = EXECUTE
-	_current_method = _next_test_method()
+func call_function(function, cursor = 0):
+	var s = _test.call(function) if function != "execute" else execute(cursor)
+	call_deferred("emit_signal", COMPLETED)
+	yield(s, COMPLETED) if s is GDScriptFunctionState else yield(self, COMPLETED)
+	
+func execute(cursor: int):
+	var _current_method: String = _methods[cursor]
 	_case.add_method(_current_method)
-	_test.call(_current_method)
-	_next()
-	
-func _post() -> void:
-	_state = POST #if _is_done() else END
-	_test.post()
-	_next()
-	
-func _end() -> void:
-	_state = END
-	_test.end()
-	_next()
-	
-func _next_test_method() -> String:
-	if _test.rerun_method:
-		return _current_method
-	_cursor += 1
-	return _methods[_cursor]
-		
-func _is_done() -> bool:
-	return _cursor == _methods.size() - 1 and not _test.rerun_method
-	
+	return _test.call(_current_method)
+
 func get_results() -> Dictionary:
 	_case.calculate()
 	var results: Dictionary = _case.to_dictionary()
 	_case.free()
 	return results
 	
-func _complete() -> void:
-	Log.event("finished", self)
-	_test.free()
-	print("completed")
-	emit_signal("completed")
-
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		_registry.clear()
