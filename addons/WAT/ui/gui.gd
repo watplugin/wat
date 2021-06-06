@@ -6,7 +6,6 @@ const Log: Script = preload("res://addons/WAT/log.gd")
 # Resources require tool to work inside the editor whereas..
 # ..scripts objects without tool can be called from tool based scripts
 const TestRunner: PackedScene = preload("res://addons/WAT/runner/TestRunner.tscn")
-const Server: Script = preload("res://addons/WAT/network/server.gd")
 const XML: Script = preload("res://addons/WAT/editor/junit_xml.gd")
 const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/plugin_assets_registry.gd")
 
@@ -25,8 +24,8 @@ onready var ViewMenu: PopupMenu = $Core/Menu/ResultsMenu.get_popup()
 onready var Menu: HBoxContainer = $Core/Menu
 onready var SaveMetadata: Button = $Core/Menu/SaveMetadata
 
+onready var Server: Node = $Server
 var instance: Node
-var server: Server
 var _plugin: Node
 
 func _ready() -> void:
@@ -69,10 +68,7 @@ func _on_function_selected(path: String, function: String) -> void:
 	emit_signal("function_selected", path, function)
 
 func _on_tests_selected(tests, run_in_editor) -> void:
-	if run_in_editor:
-		_launch_runner(tests, Threads.value)
-	else:
-		_launch_debugger(tests, Threads.value)
+	_launch_runner(tests, Threads.value) if run_in_editor else _launch_debugger(tests, Threads.value)
 		
 func _repeat(tests: Array, repeat: int) -> Array:
 	var duplicates: Array = []
@@ -108,12 +104,6 @@ func _launch_debugger(tests: Array, threads: int) -> void:
 	Results.clear()
 	Summary.time()
 	tests = _repeat(tests, Repeats.value)
-	if not is_instance_valid(server):
-		server = Server.new()
-		#server.connect("run_completed", self, "_on_run_completed")
-		add_child(server)
-	server.tests = tests
-	server.threads = threads
 	
 	var version = Engine.get_version_info()
 	var editor = _plugin.get_editor_interface()
@@ -124,19 +114,15 @@ func _launch_debugger(tests: Array, threads: int) -> void:
 		editor.open_scene_from_path("res://addons/WAT/runner/TestRunner.tscn")
 		editor.get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_2)
 	_plugin.make_bottom_panel_item_visible(self)
-	print("begin yield")
-	var results = yield(server, "run_completed")
-	print("end yield")
+	
+	yield(Server, "network_peer_connected")
+	Server.send_tests(tests, threads)
+	var results = yield(Server, "results_received")
 	Summary.summarize(results)
 	TestMenu.set_last_run_success(results)
 	XML.write(results)
 	Results.display(results)
 	
-func _exit_tree() -> void:
-	if is_instance_valid(server):
-		server.close()
-		server.free()
-
 # Loads scaled assets like icons and fonts
 func _setup_editor_assets(assets_registry):
 	Summary._setup_editor_assets(assets_registry)
