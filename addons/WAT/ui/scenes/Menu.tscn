@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://addons/WAT/ui/scripts/links.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/assets/play.png" type="Texture" id=2]
@@ -7,6 +7,10 @@
 [ext_resource path="res://addons/WAT/ui/scripts/save_metadata.gd" type="Script" id=5]
 [ext_resource path="res://addons/WAT/assets/play_debug.png" type="Texture" id=6]
 [ext_resource path="res://addons/WAT/ui/scripts/menu.gd" type="Script" id=7]
+[ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=8]
+[ext_resource path="res://addons/WAT/assets/issue.svg" type="Texture" id=9]
+[ext_resource path="res://addons/WAT/assets/docs.svg" type="Texture" id=10]
+[ext_resource path="res://addons/WAT/assets/request_docs.svg" type="Texture" id=11]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -18,10 +22,10 @@
 
 [sub_resource type="StyleBoxEmpty" id=5]
 
-[sub_resource type="InputEventKey" id=6]
+[sub_resource type="InputEventKey" id=8]
 
 [sub_resource type="ShortCut" id=7]
-shortcut = SubResource( 6 )
+shortcut = SubResource( 8 )
 
 [node name="Menu" type="HBoxContainer"]
 margin_right = 1004.0
@@ -103,5 +107,5 @@ margin_bottom = 24.0
 size_flags_horizontal = 0
 size_flags_vertical = 5
 text = "Links"
-items = [ "Support WAT", null, 0, false, false, 0, 0, "https://ko-fi.com/alexanddraw", "", false, "Report An Issue", null, 0, false, false, 1, 0, "https://github.com/CodeDarigan/WAT-GDScript/issues/new", "", false, "Request Docs", null, 0, false, false, 2, 0, "https://github.com/CodeDarigan/WAT-Documentation/issues/new", "", false, "Online Docs", null, 0, false, false, 3, 0, "https://wat.readthedocs.io/en/latest/", "", false ]
+items = [ "Support WAT", ExtResource( 8 ), 0, false, false, 0, 0, "https://ko-fi.com/alexanddraw", "", false, "Documentation", ExtResource( 10 ), 0, false, false, 3, 0, "https://github.com/CodeDarigan/WAT-GDScript/issues/new", "", false, "Request Docs", ExtResource( 11 ), 0, false, false, 2, 0, "https://github.com/CodeDarigan/WAT-Documentation/issues/new", "", false, "Report an Issue", ExtResource( 9 ), 0, false, false, 1, 0, "https://wat.readthedocs.io/en/latest/", "", false ]
 script = ExtResource( 1 )
