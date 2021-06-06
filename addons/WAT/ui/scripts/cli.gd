@@ -132,7 +132,7 @@ func set_last_run_success(results) -> void:
 
 func _run(tests: Array, repeats: int = 0, threads: int = 0) -> void:
 	var toRun = repeat(tests, repeats)
-	_runner = TestRunner.new(toRun, threads)
+	#_runner = TestRunner.new(toRun, threads)
 	_runner = TestRunner.instance()
 #	_runner.connect("run_completed", self, "_on_run_completed")
 	_start_time = OS.get_ticks_msec()
