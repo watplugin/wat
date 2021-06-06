@@ -1,16 +1,16 @@
 extends Node
 
 const Log: Script = preload("res://addons/WAT/log.gd")
-const Test: Script = preload("res://addons/WAT/core/test/test.gd")
-const Case: Script = preload("res://addons/WAT/core/test/case.gd")
+const Test: Script = preload("res://addons/WAT/test/test.gd")
+const Case: Script = preload("res://addons/WAT/test/case.gd")
 const Assertions: Script = preload("res://addons/WAT/assertions/assertions.gd")
-const Parameters: Script = preload("res://addons/WAT/core/test/parameters.gd")
-const Recorder: Script = preload("res://addons/WAT/core/test/recorder.gd")
-const Watcher: Script = preload("res://addons/WAT/core/test/watcher.gd")
-const Any: Script = preload("res://addons/WAT/core/test/any.gd")
+const Parameters: Script = preload("res://addons/WAT/test/parameters.gd")
+const Recorder: Script = preload("res://addons/WAT/test/recorder.gd")
+const Watcher: Script = preload("res://addons/WAT/test/watcher.gd")
+const Any: Script = preload("res://addons/WAT/test/any.gd")
 const Director: Script = preload("res://addons/WAT/core/double/factory.gd")
 const Registry: Script = preload("res://addons/WAT/core/double/registry.gd")
-const Yielder: Script = preload("res://addons/WAT/core/test/yielder.gd")
+const Yielder: Script = preload("res://addons/WAT/test/yielder.gd")
 enum { START, PRE, EXECUTE, POST, END }
 signal finished
 signal done
