@@ -5,7 +5,7 @@ const Log: Script = preload("res://addons/WAT/log.gd")
 
 # Resources require tool to work inside the editor whereas..
 # ..scripts objects without tool can be called from tool based scripts
-const TestRunner: Script = preload("res://addons/WAT/core/test_runner/test_runner.gd")
+const TestRunner: Script = preload("res://addons/WAT/runner/test_runner.gd")
 const Server: Script = preload("res://addons/WAT/network/server.gd")
 const XML: Script = preload("res://addons/WAT/editor/junit_xml.gd")
 const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/scripts/plugin_assets_registry.gd")

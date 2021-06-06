@@ -1,6 +1,6 @@
 extends WAT.Test
 
-const Yielder: Script = preload("res://addons/WAT/core/test/yielder.gd")
+const Yielder: Script = preload("res://addons/WAT/test/yielder.gd")
 var a; var b; var c; var d; var e; var f;
 ## warning-ignore:unused_signal 
 # warning-ignore:unused_signal

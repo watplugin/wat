@@ -1,6 +1,6 @@
 extends Node
 
-const TestController: Script = preload("res://addons/WAT/core/test_runner/test_controller.gd")
+const TestController: Script = preload("res://addons/WAT/runner/test_controller.gd")
 var _results: Array = []
 var _threads: Array = []
 signal run_completed

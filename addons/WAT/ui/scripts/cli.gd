@@ -12,7 +12,7 @@ const LIST_DIR: String = "-list_dir"
 const PASSED: int = 0
 const FAILED: int = 1
 var test
-const TestRunner: GDScript = preload("res://addons/WAT/core/test_runner/test_runner.gd")
+const TestRunner: GDScript = preload("res://addons/WAT/runner/test_runner.gd")
 
 var _runner: Node
 var _start_time: float
