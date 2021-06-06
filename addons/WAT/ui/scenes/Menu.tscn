@@ -18,10 +18,10 @@
 
 [sub_resource type="StyleBoxEmpty" id=5]
 
-[sub_resource type="InputEventKey" id=6]
+[sub_resource type="InputEventKey" id=8]
 
 [sub_resource type="ShortCut" id=7]
-shortcut = SubResource( 6 )
+shortcut = SubResource( 8 )
 
 [node name="Menu" type="HBoxContainer"]
 margin_right = 1004.0
@@ -48,10 +48,16 @@ shortcut = SubResource( 7 )
 icon = ExtResource( 2 )
 flat = true
 
-[node name="QuickRunAllDebug" type="Button" parent="."]
+[node name="ButtonSpacer" type="Control" parent="."]
 margin_left = 20.0
+margin_right = 23.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 3, 0 )
+
+[node name="QuickRunAllDebug" type="Button" parent="."]
+margin_left = 27.0
 margin_top = 4.0
-margin_right = 36.0
+margin_right = 43.0
 margin_bottom = 20.0
 hint_tooltip = "Run All (With Debugger)"
 size_flags_horizontal = 0
@@ -66,14 +72,14 @@ icon = ExtResource( 6 )
 flat = true
 
 [node name="TestMenu" parent="." instance=ExtResource( 3 )]
-margin_left = 40.0
-margin_right = 122.0
+margin_left = 47.0
+margin_right = 129.0
 size_flags_horizontal = 0
 size_flags_vertical = 5
 
 [node name="ResultsMenu" type="MenuButton" parent="."]
-margin_left = 126.0
-margin_right = 222.0
+margin_left = 133.0
+margin_right = 229.0
 margin_bottom = 24.0
 size_flags_horizontal = 0
 size_flags_vertical = 5
@@ -81,14 +87,14 @@ text = "Filter Results"
 items = [ "Expand All", null, 0, false, false, 0, 0, null, "", false, "Collapse All", null, 0, false, false, 1, 0, null, "", false, "Expand All Failures", null, 0, false, false, 2, 0, null, "", false ]
 
 [node name="RunSettings" parent="." instance=ExtResource( 4 )]
-margin_left = 226.0
-margin_right = 540.0
+margin_left = 233.0
+margin_right = 547.0
 size_flags_horizontal = 0
 size_flags_vertical = 4
 
 [node name="SaveMetadata" type="Button" parent="."]
-margin_left = 544.0
-margin_right = 648.0
+margin_left = 551.0
+margin_right = 655.0
 margin_bottom = 24.0
 hint_tooltip = "Save metadata before uploading to source control if you use continous integration."
 size_flags_vertical = 5
@@ -97,8 +103,8 @@ flat = true
 script = ExtResource( 5 )
 
 [node name="Links" type="MenuButton" parent="."]
-margin_left = 652.0
-margin_right = 697.0
+margin_left = 659.0
+margin_right = 704.0
 margin_bottom = 24.0
 size_flags_horizontal = 0
 size_flags_vertical = 5
