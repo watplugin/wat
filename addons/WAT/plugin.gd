@@ -23,7 +23,6 @@ func _enter_tree():
 	instance = GUI.instance()
 	docker = Docker.new(self, instance)
 	instance.setup_editor_context(self)
-	instance.connect("function_selected", self, "_on_function_selected")
 	add_child(docker)
 	yield(get_tree().create_timer(0.5), "timeout")
 	if Engine.get_version_info().minor > 2:

@@ -25,10 +25,9 @@ onready var ViewMenu: PopupMenu = $Core/Menu/ResultsMenu.get_popup()
 onready var Menu: HBoxContainer = $Core/Menu
 onready var SaveMetadata: Button = $Core/Menu/SaveMetadata
 
-var instance #: #TestRunner
+var instance: Node
 var server: Server
 var _plugin: Node
-signal function_selected
 
 func _ready() -> void:
 	setup_game_context()
@@ -46,7 +45,7 @@ func _ready() -> void:
 func setup_game_context() -> void:
 	if Engine.is_editor_hint():
 		return
-	_set_window_size()
+	OS.window_size = ProjectSettings.get_setting("WAT/Window_Size")
 	# No argument makes the AssetsRegistry default to a scale of 1, which
 	# should make every icon look normal when the Tests UI launches
 	# outside of the editor.
@@ -133,21 +132,10 @@ func _launch_debugger(tests: Array, threads: int) -> void:
 	XML.write(results)
 	Results.display(results)
 	
-#func _on_run_completed(results: Array = []) -> void:
-#	if is_instance_valid(instance):
-#		instance.queue_free()
-#	Summary.summarize(results)
-#	TestMenu.set_last_run_success(results)
-#	XML.write(results)
-#	Results.display(results)
-
 func _exit_tree() -> void:
 	if is_instance_valid(server):
 		server.close()
 		server.free()
-
-func _set_window_size() -> void:
-	OS.window_size = ProjectSettings.get_setting("WAT/Window_Size")
 
 # Loads scaled assets like icons and fonts
 func _setup_editor_assets(assets_registry):
