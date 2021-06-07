@@ -37,7 +37,7 @@
 	"res://tests/integration/test_double.test.gd": {
 		"path": "res://tests/integration/test_double.test.gd",
 		"tags": [
-
+			"64"
 		],
 		"passing": true
 	},

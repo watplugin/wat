@@ -56,6 +56,7 @@ func update() -> void:
 		
 		for test in dir.tests:
 			var test_menu = add_menu(dir_menu, test, Icon.SCRIPT)
+			_add_tag_editor(test_menu, test)
 			
 			for method in test.methods:
 				add_menu(test_menu, method, Icon.FUNCTION)
@@ -85,7 +86,24 @@ func _add_tag_menu(run: String, id: int) -> void:
 	_menu.add_submenu_item(run % "Tagged", _tag_menu.name, id)
 	_menu.set_item_icon(id, Icon.TAG)
 
+func _add_tag_editor(script_menu: PopupMenu, test: Reference) -> void:
+	var _tag_editor: PopupMenu = PopupMenu.new()
+	for tag in Settings.tags():
+		_tag_editor.add_check_item(tag)
+	script_menu.add_child(_tag_editor)
+	script_menu.add_submenu_item("Edit Tags", _tag_editor.name)
+	script_menu.set_item_icon(2, Icon.TAG)
+	_tag_editor.connect("index_pressed", self, "_on_tagged", [_tag_editor, test.gdscript])
 	
+func _on_tagged(idx: int, tag_editor: PopupMenu, script: GDScript) -> void:
+	var tag: String = tag_editor.get_item_text(idx)
+	var is_already_selected: bool = tag_editor.is_item_checked(idx)
+	if is_already_selected:
+		tag_editor.set_item_checked(idx, false)
+		push_warning("Removing Tag %s From %s" % [tag, script])
+	else:
+		tag_editor.set_item_checked(idx, true)
+		push_warning("Adding Tag %s To %s" % [tag, script])
 
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 	var data: Metadata = menu.get_item_metadata(idx)
