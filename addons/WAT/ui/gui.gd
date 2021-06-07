@@ -34,9 +34,10 @@ func _ready() -> void:
 	Threads.min_value = 1
 	Results.connect("function_selected", self, "_on_function_selected")
 	ViewMenu.connect("index_pressed", Results, "_on_view_pressed")
-	Quickstart.connect("pressed", TestMenu, "select_tests", [{command = TestMenu.RUN_ALL, run_in_editor = true}])
-	QuickstartDebug.connect("pressed", TestMenu, "select_tests", [{command = TestMenu.RUN_ALL, run_in_editor = false}])
-	TestMenu.connect("_tests_selected", self, "_on_tests_selected")
+	Quickstart.connect("pressed", TestMenu, "select_tests", [{command = TestMenu.RUN_ALL}])
+	QuickstartDebug.connect("pressed", TestMenu, "select_tests", [{command = TestMenu.DEBUG_ALL}])
+	TestMenu.connect("_tests_selected", self, "_launch_runner")
+	TestMenu.connect("_tests_debug_selected", self, "_launch_debugger")
 	var shortcut = ProjectSettings.get_setting("WAT/Run_All_Tests")
 	Quickstart.shortcut.shortcut = shortcut
 	SaveMetadata.connect("pressed", TestMenu, "save_metadata")
@@ -68,8 +69,8 @@ func _on_function_selected(path: String, function: String) -> void:
 			return
 	emit_signal("function_selected", path, function)
 
-func _on_tests_selected(tests, run_in_editor) -> void:
-	_launch_runner(tests, Threads.value) if run_in_editor else _launch_debugger(tests, Threads.value)
+#func _on_tests_selected(tests) -> void:
+#	_launch_runner(tests, Threads.value) if run_in_editor else _launch_debugger(tests, Threads.value)
 		
 func _repeat(tests: Array, repeat: int) -> Array:
 	var duplicates: Array = []
@@ -79,7 +80,7 @@ func _repeat(tests: Array, repeat: int) -> Array:
 	duplicates += tests
 	return duplicates
 	
-func _launch_runner(tests: Array, threads: int) -> void:
+func _launch_runner(tests: Array, threads: int = Threads.value) -> void:
 	# This is also the launch method used for exported scenes
 	if tests.empty():
 		push_warning("Tests Are Empty!")
@@ -98,7 +99,7 @@ func _launch_runner(tests: Array, threads: int) -> void:
 	
 const RUN_CURRENT_SCENE_GODOT_3_2: int = 39
 const RUN_CURRENT_SCENE_GODOT_3_1: int = 33
-func _launch_debugger(tests: Array, threads: int) -> void:
+func _launch_debugger(tests: Array, threads: int = Threads.value) -> void:
 	if tests.empty():
 		push_warning("Tests Are Empty!")
 		return

@@ -1,7 +1,22 @@
 extends Button
 tool
 
-enum { RUN_ALL, RUN_DIR, RUN_SCRIPT, RUN_TAG, RUN_METHOD, RUN_FAILURES }
+enum { 
+	RUN_ALL, 
+	RUN_DIR, 
+	RUN_SCRIPT, 
+	RUN_TAG, 
+	RUN_METHOD, 
+	RUN_FAILURES,
+	
+	DEBUG_ALL,
+	DEBUG_DIR,
+	DEBUG_SCRIPT,
+	DEBUG_TAG,
+	DEBUG_METHOD,
+	DEBUG_FAILURES, 
+	}
+	
 var FOLDER_ICON: Texture
 var FAILED_ICON: Texture
 var SCRIPT_ICON: Texture
@@ -20,6 +35,7 @@ onready var Tags: PopupMenu = $Directories/Tags
 onready var TagEditor: PopupMenu = $Directories/Scripts/Methods/TagEditor
 var test: Dictionary
 signal _tests_selected
+signal _tests_debug_selected
 var pool: Array = []
 
 func _init() -> void:
@@ -56,32 +72,37 @@ func select_tests(metadata: Dictionary) -> void:
 	var tests: Array = []
 	var run_in_editor: bool = false
 	match metadata.command:
-		RUN_ALL:
+		RUN_ALL, DEBUG_ALL:
 			tests = test.all
-		RUN_DIR:
+		RUN_DIR, DEBUG_DIR:
 			tests = test[metadata.path]
-		RUN_SCRIPT:
+		RUN_SCRIPT, DEBUG_SCRIPT:
 			tests.append(test.scripts[metadata.path])
-		RUN_METHOD:
+		RUN_METHOD, DEBUG_METHOD:
 			var path: String = metadata["path"]
 			var method: String = metadata["method"]
 			var container: Dictionary = test.scripts[path].duplicate(true)
 			container["method"] = method
 			tests.append(container)
-		RUN_TAG:
+		RUN_TAG, DEBUG_TAG:
 			var tag: String = metadata.tag
 			for t in test.scripts:
 				var container = test.scripts[t]
 				if container["tags"].has(tag as String):
 					tests.append(container)
-		RUN_FAILURES:
+		RUN_FAILURES, DEBUG_FAILURES:
 			for path in test.scripts:
 				var container: Dictionary = test.scripts[path]
 				if container.has("passing") and not container["passing"]:
 					tests.append(container)
 			push_warning("RUN FAILURES NOT IMPLEMENTED")
 	clear()
-	emit_signal("_tests_selected", tests, metadata.run_in_editor)
+	if metadata.command < DEBUG_ALL:
+		# We're in run mode
+		emit_signal("_tests_selected", tests)
+	else:
+		# We're in debug mode
+		emit_signal("_tests_debug_selected", tests)
 	
 func set_last_run_success(results) -> void:
 	for result in results:
