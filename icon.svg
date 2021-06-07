@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="64"
+   height="64"
+   viewBox="0 0 16.933333 16.933333"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c4e8f9ed74, 2021-05-24)"
+   sodipodi:docname="icon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     width="64px"
+     units="px"
+     inkscape:snap-grids="false"
+     inkscape:snap-page="false"
+     inkscape:snap-object-midpoints="true"
+     showguides="true"
+     inkscape:zoom="10.732997"
+     inkscape:cx="29.162405"
+     inkscape:cy="37.594347"
+     inkscape:window-width="1920"
+     inkscape:window-height="1149"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:snap-to-guides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid37141"
+       spacingx="0.26458333"
+       spacingy="0.26458333" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-45.141217,-73.191945)">
+    <path
+       style="color:#000000;fill:#009b8f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.33329;stroke-opacity:1;-inkscape-stroke:none"
+       d="m 61.185939,81.672487 a 7.6049637,7.6049637 0 0 1 -7.604963,7.604961 7.6049637,7.6049637 0 0 1 -7.604965,-7.604961 7.6049637,7.6049637 0 0 1 7.604965,-7.604962 7.6049637,7.6049637 0 0 1 7.604963,7.604962 z"
+       id="path10356" />
+    <path
+       id="path10358"
+       style="color:#000000;fill:#0b273a;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.983974;stroke-opacity:1;-inkscape-stroke:none"
+       d="m 53.58088,73.400476 c -4.560382,0 -8.271491,3.711104 -8.271491,8.27149 0,4.560377 3.711109,8.271492 8.271491,8.271492 4.560381,0 8.271489,-3.711115 8.271489,-8.271492 0,-4.560386 -3.711108,-8.27149 -8.271489,-8.27149 z m 0,1.33375 c 3.71759,0 6.739945,2.904111 6.928588,6.573665 H 58.68198 c -0.243876,5.21e-4 -0.44148,0.197997 -0.441872,0.441874 -7.81e-4,0.244675 0.197196,0.44402 0.441872,0.444413 h 1.817826 c -0.164272,2.221716 -1.369202,4.148041 -3.130221,5.295849 l -0.872556,-1.511719 c -0.08242,-0.142559 -0.237175,-0.227579 -0.401702,-0.220682 v -5.22e-4 c -0.07179,0.003 -0.141772,0.0239 -0.203901,0.06 -0.2117,0.122505 -0.283893,0.393509 -0.161189,0.605092 l 0.868488,1.503587 c -0.911718,0.439763 -1.935462,0.685941 -3.017845,0.685941 -1.105084,0 -2.148255,-0.257167 -3.074288,-0.714418 l 0.8512,-1.47511 c 0.122696,-0.211583 0.05051,-0.482587 -0.161189,-0.605092 -0.07234,-0.04172 -0.155016,-0.06224 -0.238477,-0.05899 v -5.21e-4 c -0.03315,0.0011 -0.06609,0.0064 -0.09813,0.01525 -0.112582,0.0306 -0.208525,0.104442 -0.266956,0.205428 l -0.853233,1.477651 C 48.007331,86.30424 46.825104,84.393754 46.662468,82.194147 h 1.743586 c 0.245467,7.81e-4 0.444643,-0.198951 0.443906,-0.444413 -5.2e-4,-0.244668 -0.199236,-0.442599 -0.443906,-0.441873 h -1.753248 c 0.115049,-2.237974 1.28401,-4.191311 3.021913,-5.374663 l 0.918319,1.588501 c 0.122291,0.210971 0.392189,0.283277 0.60357,0.161697 0.210784,-0.122464 0.282854,-0.392322 0.161189,-0.603569 l -0.920353,-1.597145 c 0.943076,-0.478629 2.0108,-0.748486 3.143441,-0.748486 z" />
+    <path
+       style="fill:none;stroke:#9aff49;stroke-width:2.60064;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 51.049537,80.211439 2.511083,2.629769 5.703765,-7.527257"
+       id="path97935"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/jummit/path97935.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+  </g>
+</svg>
