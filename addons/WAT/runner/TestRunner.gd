@@ -21,14 +21,17 @@ func run(tests, threads) -> void:
 		thread.wait_to_finish()
 	for count in testthreads:
 		results += yield(self, COMPLETED)
+	print("returning results")
 	return results
 
 	
 func _run(thread: Thread) -> void:
+	print("running thread")
 	var results: Array = []
 	for test in thread.tests:
 		results.append(yield(thread.controller.run(test), COMPLETED))
 	thread.controller.queue_free()
+	print("returning from thread")
 	emit_signal(COMPLETED, results)
 
 

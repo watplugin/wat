@@ -10,6 +10,7 @@ const XML: Script = preload("res://addons/WAT/editor/junit_xml.gd")
 const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/plugin_assets_registry.gd")
 
 onready var TestMenu: Button = $Core/Menu/TestMenu
+onready var TestMenu2: Button = $Core/Menu/TestMenuR
 
 onready var Results: TabContainer = $Core/Results
 onready var Summary: HBoxContainer = $Core/Summary
@@ -25,22 +26,36 @@ onready var Menu: HBoxContainer = $Core/Menu
 onready var SaveMetadata: Button = $Core/Menu/SaveMetadata
 
 onready var Server: Node = $Server
+
+var filesystem = preload("res://addons/WAT/filesystem/filesystem.gd").new()
 var instance: Node
 var _plugin: Node
 
 func _ready() -> void:
+	TestMenu2.filesystem = filesystem
 	setup_game_context()
 	Threads.max_value = OS.get_processor_count() - 1
 	Threads.min_value = 1
 	Results.connect("function_selected", self, "_on_function_selected")
 	ViewMenu.connect("index_pressed", Results, "_on_view_pressed")
-	Quickstart.connect("pressed", TestMenu, "select_tests", [{command = TestMenu.RUN_ALL}])
-	QuickstartDebug.connect("pressed", TestMenu, "select_tests", [{command = TestMenu.DEBUG_ALL}])
+#	Quickstart.connect("pressed", TestMenu, "select_tests", [{command = TestMenu.RUN_ALL}])
+#	QuickstartDebug.connect("pressed", TestMenu, "select_tests", [{command = TestMenu.DEBUG_ALL}])
 	TestMenu.connect("_tests_selected", self, "_launch_runner")
 	TestMenu.connect("_tests_debug_selected", self, "_launch_debugger")
 	var shortcut = ProjectSettings.get_setting("WAT/Run_All_Tests")
 	Quickstart.shortcut.shortcut = shortcut
 	SaveMetadata.connect("pressed", TestMenu, "save_metadata")
+	
+	Quickstart.connect("pressed", self, "_launch_runnerR")
+	QuickstartDebug.connect("pressed", self, "_launch_debuggerR")
+	TestMenu2.connect("tests_selected", self, "_launch_runnerR")
+	TestMenu2.connect("tests_selected_debug", self, "_launch_debuggerR")
+	
+func _launch_runnerR(testdir = filesystem) -> void:
+	_launch_runner(testdir.get_tests(), Threads.value)
+
+func _launch_debuggerR(testdir = filesystem) -> void:
+	_launch_debugger(testdir.get_tests(), Threads.value)
 	
 func setup_game_context() -> void:
 	if Engine.is_editor_hint():

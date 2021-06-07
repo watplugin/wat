@@ -11,10 +11,19 @@ const TestTag: GDScript = FileObjects.TestTag
 var has_been_updated: bool = false
 var primary: TestDirectory
 var dirs: Array = []
+var _all_tests: Array = []
+
+func get_tests() -> Array:
+	return _all_tests
+
+func _init() -> void:
+	update()
 
 func update() -> void:
 	dirs.clear()
+	_all_tests.clear()
 	primary = TestDirectory.new(Settings.test_directory())
+	_update(primary)
 	has_been_updated = true
 
 func _update(testdir: TestDirectory) -> void:
@@ -34,11 +43,15 @@ func _update(testdir: TestDirectory) -> void:
 			subdirs.append(TestDirectory.new(absolute_path))
 		
 		elif _is_valid_test(absolute_path):
-			pass
-			
+			var test: TestScript = _get_test_script(absolute_path)
+			if not test.methods.empty():
+				testdir.tests.append(test)
+				_all_tests += test.get_tests()
+
 		relative_path = dir.get_next()
 	dir.list_dir_end()
 	
+	dirs.append_array(subdirs)
 	for subdir in subdirs:
 		_update(subdir)
 			
