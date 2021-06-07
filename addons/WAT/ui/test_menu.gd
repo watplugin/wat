@@ -71,18 +71,6 @@ func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 func select_tests(metadata: Dictionary) -> void:
 	var tests: Array = []
 	match metadata.command:
-		RUN_ALL, DEBUG_ALL:
-			tests = test.all
-		RUN_DIR, DEBUG_DIR:
-			tests = test[metadata.path]
-		RUN_SCRIPT, DEBUG_SCRIPT:
-			tests.append(test.scripts[metadata.path])
-		RUN_METHOD, DEBUG_METHOD:
-			var path: String = metadata["path"]
-			var method: String = metadata["method"]
-			var container: Dictionary = test.scripts[path].duplicate(true)
-			container["method"] = method
-			tests.append(container)
 		RUN_TAG, DEBUG_TAG:
 			var tag: String = metadata.tag
 			for t in test.scripts:
@@ -121,22 +109,14 @@ func _on_dirs_about_to_show() -> void:
 	refresh()
 	Directories.clear()
 	Directories.set_as_minsize()
-	Directories.add_item("Run All")
-	Directories.set_item_icon(0, PLAY_ICON)
-	Directories.add_item("Run With Debug")
-	Directories.set_item_icon(1, PLAY_DEBUG_ICON)
 	Directories.add_item("Rerun Failures")
-	Directories.set_item_icon(2, FAILED_ICON)
+	Directories.set_item_icon(0, FAILED_ICON)
 	Directories.add_item("Rerun Failures With Debug")
-	Directories.set_item_icon(3, FAILED_ICON)
+	Directories.set_item_icon(1, FAILED_ICON)
 	Directories.add_submenu_item("Tags", "Tags")
-	Directories.set_item_icon(4, LABEL_ICON)
-	Directories.set_item_metadata(0, {command = RUN_ALL})
-	Directories.set_item_metadata(1, {command = DEBUG_ALL})
-	Directories.set_item_metadata(2, {command = RUN_FAILURES})
-	Directories.set_item_metadata(3, {command = DEBUG_FAILURES})
-	if not Engine.is_editor_hint():
-		Directories.set_item_disabled(1, true)
+	Directories.set_item_icon(2, LABEL_ICON)
+	Directories.set_item_metadata(0, {command = RUN_FAILURES})
+	Directories.set_item_metadata(1, {command = DEBUG_FAILURES})
 	var dirs: Array = test.dirs
 	if dirs.empty():
 		return
@@ -157,18 +137,18 @@ func _on_scripts_about_to_show(scripts) -> void:
 	refresh()
 	scripts.clear()
 	scripts.set_as_minsize()
-	
+
 	scripts.add_item("Run All")
 	var currentdir: String = Directories.get_item_text(scripts.name as int)
 	scripts.set_item_metadata(0, {command = RUN_DIR, path = currentdir})
 	scripts.set_item_icon(0,FOLDER_ICON)
-	
+
 	scripts.add_item("Run All With Debug")
 	scripts.set_item_metadata(1, {command = DEBUG_DIR, path = currentdir})
 	scripts.set_item_icon(1, PLAY_DEBUG_ICON)
 	if not Engine.is_editor_hint():
 		scripts.set_item_disabled(1, true)
-	
+
 	var scriptlist: Array = test[currentdir]
 	if scriptlist.empty():
 		return
