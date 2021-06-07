@@ -138,16 +138,16 @@ func _on_scripts_about_to_show(scripts) -> void:
 	scripts.clear()
 	scripts.set_as_minsize()
 
-	scripts.add_item("Run All")
+#	scripts.add_item("Run All")
 	var currentdir: String = Directories.get_item_text(scripts.name as int)
-	scripts.set_item_metadata(0, {command = RUN_DIR, path = currentdir})
-	scripts.set_item_icon(0,FOLDER_ICON)
-
-	scripts.add_item("Run All With Debug")
-	scripts.set_item_metadata(1, {command = DEBUG_DIR, path = currentdir})
-	scripts.set_item_icon(1, PLAY_DEBUG_ICON)
-	if not Engine.is_editor_hint():
-		scripts.set_item_disabled(1, true)
+#	scripts.set_item_metadata(0, {command = RUN_DIR, path = currentdir})
+#	scripts.set_item_icon(0,FOLDER_ICON)
+#
+#	scripts.add_item("Run All With Debug")
+#	scripts.set_item_metadata(1, {command = DEBUG_DIR, path = currentdir})
+#	scripts.set_item_icon(1, PLAY_DEBUG_ICON)
+#	if not Engine.is_editor_hint():
+#		scripts.set_item_disabled(1, true)
 
 	var scriptlist: Array = test[currentdir]
 	if scriptlist.empty():
@@ -170,37 +170,15 @@ func _on_methods_about_to_show(methods, scripts) -> void:
 	refresh()
 	methods.clear()
 	methods.set_as_minsize()
-	methods.add_item("Run All")
-	methods.add_item("Run All With Debug")
 	var tag_editor = TagEditor.duplicate(true)
 	pool.append(tag_editor)
 	tag_editor.name = "tagEditor"
 	methods.add_child(tag_editor)
 	methods.add_submenu_item("Edit Tags", tag_editor.name)
 	tag_editor.connect(ABOUT_TO_SHOW, self, "_on_tag_editor_about_to_show", [tag_editor, scripts])
-	var currentScript: String = scripts.get_item_text(methods.name as int)
-	methods.set_item_metadata(0, {command = RUN_SCRIPT, path = currentScript})
-	methods.set_item_metadata(1, {command = DEBUG_SCRIPT, path = currentScript})
-	methods.set_item_metadata(2, {command = RUN_TAG, tag = "?"})
-	methods.set_item_icon(0, SCRIPT_ICON)
-	methods.set_item_icon(1, PLAY_DEBUG_ICON)
-	methods.set_item_icon(2, LABEL_ICON)
-	if not Engine.is_editor_hint():
-		methods.set_item_disabled(1, true)
-	var script: GDScript = test.scripts[currentScript]["script"]
-	var methodlist = script.get_script_method_list()
-	var idx: int = methods.get_item_count()
-	for method in methodlist:
-		if method.name.begins_with("test"):
-			methods.add_item(method.name)
-			methods.set_item_metadata(idx, {command = RUN_METHOD, path = script.get_path(), method = method.name})
-			methods.set_item_icon(idx, FUNCTION_ICON)
-			idx += 1
-			methods.add_item(method.name + " (Debug) ")
-			methods.set_item_metadata(idx, {command = DEBUG_METHOD, path = script.get_path(), method = method.name})
-			methods.set_item_icon(idx, FUNCTION_ICON)
-			idx += 1
-	
+	methods.set_item_metadata(0, {command = RUN_TAG, tag = "?"})
+	methods.set_item_icon(0, LABEL_ICON)
+
 func _on_tags_about_to_show() -> void:
 	refresh()
 	var tags: PoolStringArray = ProjectSettings.get_setting("WAT/Tags")

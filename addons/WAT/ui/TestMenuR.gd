@@ -12,6 +12,7 @@ class Icon:
 	const TAG = preload("res://addons/WAT/assets/label.png")
 	const FUNCTION = preload("res://addons/WAT/assets/function.png")
 
+const Settings: GDScript = preload("res://addons/WAT/settings.gd")
 var filesystem: Reference # Set by GUI
 var _menu: PopupMenu = PopupMenu.new()
 var _id: int = 0
@@ -39,11 +40,15 @@ func update() -> void:
 	_menu.add_icon_item(Icon.PLAY, "Run All", 0)
 	_menu.add_icon_item(Icon.DEBUG, "Debug All", 1)
 	_menu.add_icon_item(Icon.FAILED, "Run Failed", 2)
-	_menu.add_icon_item(Icon.TAG, "Run Tagged", 3)
+	_menu.add_icon_item(Icon.FAILED, "Debug Failed", 3)
+	
+	_add_tag_menu("Run %s", 4)
+	_add_tag_menu("Debug %s", 5)
+	
 	_menu.set_item_metadata(0, Metadata.new(RUN, filesystem))
 	_menu.set_item_metadata(1, Metadata.new(DEBUG, filesystem))
 	_menu.connect("index_pressed", self, "_on_idx_pressed", [_menu])
-	_id = 4
+	_id = 6
 	for dir in filesystem.dirs:
 		if dir.tests.empty():
 			continue
@@ -71,6 +76,16 @@ func add_menu(parent: PopupMenu, data: Reference, ico: Texture) -> PopupMenu:
 	child.set_item_metadata(1, Metadata.new(DEBUG, data))
 	_id += 1
 	return child
+	
+func _add_tag_menu(run: String, id: int) -> void:
+	var _tag_menu: PopupMenu = PopupMenu.new()
+	for tag in Settings.tags():
+		_tag_menu.add_icon_item(Icon.TAG, run % tag)
+	_menu.add_child(_tag_menu)
+	_menu.add_submenu_item(run % "Tagged", _tag_menu.name, id)
+	_menu.set_item_icon(id, Icon.TAG)
+
+	
 
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 	var data: Metadata = menu.get_item_metadata(idx)
