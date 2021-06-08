@@ -21,9 +21,9 @@ signal tests_selected_debug
 enum { NONE, RUN, DEBUG } # This may be unnecessary
 
 func _pressed() -> void:
-	if filesystem.has_been_updated:
+	if filesystem.has_been_changed:
 		update()
-		filesystem.has_been_updated = false
+		filesystem.has_been_changed = false
 	var position: Vector2 = rect_global_position
 	position.y += rect_size.y
 	_menu.rect_global_position = position

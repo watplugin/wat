@@ -8,7 +8,7 @@ const TestDirectory: GDScript = FileObjects.TestDirectory
 const TestScript: GDScript = FileObjects.TestScript
 const TestMethod: GDScript = FileObjects.TestMethod
 const TestTag: GDScript = FileObjects.TestTag
-var has_been_updated: bool = false
+var has_been_changed: bool = false
 var primary: TestDirectory
 var dirs: Array = []
 var _all_tests: Array = []
@@ -23,8 +23,9 @@ func update() -> void:
 	dirs.clear()
 	_all_tests.clear()
 	primary = TestDirectory.new(Settings.test_directory())
+	dirs.append(primary)
 	_update(primary)
-	has_been_updated = true
+	has_been_changed = true
 
 func _update(testdir: TestDirectory) -> void:
 	var dir: Directory = Directory.new()
@@ -68,6 +69,26 @@ func _get_test_script(path: String) -> TestScript:
 			test.methods.append(TestMethod.new(test.path, test.gdscript, method.name))
 	test.yield_time = YieldCalculator.calculate_yield_time(test.gdscript, test.method_names.size())
 	return test
+	
+func _on_folder_moved(source: String, destination: String) -> void:
+	if source.begins_with(Settings.test_directory()) or destination.begins_with(Settings.test_directory()):
+		has_been_changed = true
+	
+func _on_file_moved(source: String, destination: String) -> void:
+	if source.begins_with(Settings.test_directory()) or destination.begins_with(Settings.test_directory()):
+		has_been_changed = true
+	
+func _on_file_removed(file: String) -> void:
+	if file.begins_with(Settings.test_directory()):
+		has_been_changed = true
+	
+func _on_folder_removed(folder: String) -> void:
+	if folder.begins_with(Settings.test_directory()):
+		has_been_changed = true
+	
+func _on_resource_saved(resource: Resource) -> void:
+	if resource.resource_path.begins_with(Settings.test_directory()):
+		has_been_changed = true
 	
 # get_failures()
 # get_metadata()

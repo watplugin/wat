@@ -20,6 +20,13 @@
 		],
 		"passing": true
 	},
+	"res://tests/integration/resourcex.test.gd": {
+		"path": "res://tests/integration/resourcex.test.gd",
+		"tags": [
+
+		],
+		"passing": false
+	},
 	"res://tests/integration/scene_director.test.gd": {
 		"path": "res://tests/integration/scene_director.test.gd",
 		"tags": [
