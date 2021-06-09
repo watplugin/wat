@@ -61,3 +61,7 @@ Display=8
 
 config/name="WAT5"
 config/icon="res://icon.svg"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/WAT/plugin.cfg" )

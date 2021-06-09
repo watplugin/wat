@@ -12,6 +12,7 @@ var has_been_changed: bool = false
 var primary: TestDirectory
 var dirs: Array = []
 var _all_tests: Array = []
+var _tag_metadata: Dictionary = {} # resource path, script,
 
 func get_tests() -> Array:
 	return _all_tests
@@ -45,6 +46,12 @@ func _update(testdir: TestDirectory) -> void:
 		
 		elif _is_valid_test(absolute_path):
 			var test: TestScript = _get_test_script(absolute_path)
+			
+			# We add a direct reference to the test tag array so when we modify
+			# ..it elsewhere we the update is sent here automatically
+			_tag_metadata[test.path] = test.tags
+			
+				
 			if not test.methods.empty():
 				testdir.tests.append(test)
 				_all_tests += test.get_tests()
@@ -63,6 +70,8 @@ func _is_valid_test(p: String) -> bool:
 func _get_test_script(path: String) -> TestScript:
 	var gdscript: GDScript = load(path)
 	var test: TestScript = TestScript.new(path, load(path))
+	if _tag_metadata.has(test.gdscript.resource_path):
+		test.tags = _tag_metadata[test.gdscript.resource_path]
 	for method in test.gdscript.get_script_method_list():
 		if method.name.begins_with("test"):
 			test.method_names.append(method.name)
@@ -75,7 +84,13 @@ func _on_folder_moved(source: String, destination: String) -> void:
 		has_been_changed = true
 	
 func _on_file_moved(source: String, destination: String) -> void:
+	var tags: Array = _tag_metadata[source.rstrip("/")]
+	var dest: Resource = load(destination)
 	if source.begins_with(Settings.test_directory()) or destination.begins_with(Settings.test_directory()):
+		# Swapping Tags
+		_tag_metadata[dest.resource_path] = tags
+		_tag_metadata.erase(source.rstrip("/"))
+		print(_tag_metadata[dest.resource_path]) # Arrays shared, making sure it exists
 		has_been_changed = true
 	
 func _on_file_removed(file: String) -> void:

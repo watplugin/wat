@@ -20,11 +20,12 @@ class TestScript extends Reference:
 	var method_names: Array = []
 	var methods: Array = []
 	var yield_time: float = 0.0
+	var tags: Array = []
 	
 	func _init(_path: String, _gdscript: GDScript) -> void:
 		path = _path
 		gdscript = _gdscript
-
+		
 	func get_tests() -> Array:
 		return [{
 		gdscript = gdscript,
