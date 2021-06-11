@@ -8,17 +8,30 @@ const TestDirectory: GDScript = FileObjects.TestDirectory
 const TestScript: GDScript = FileObjects.TestScript
 const TestMethod: GDScript = FileObjects.TestMethod
 const TestTag: GDScript = FileObjects.TestTag
+const TestFailures: GDScript = FileObjects.TestFailures
 var has_been_changed: bool = false
 var primary: TestDirectory
 var dirs: Array = []
 var _all_tests: Array = []
 var _tag_metadata: Dictionary = {} # resource path, script,
 var tags: Dictionary = {} 
+var failed
 
 func get_tests() -> Array:
 	return _all_tests
+	
+func set_failed(results: Array) -> void:
+	# TODO: Cache for better performance
+	failed.tests = []
+	for result in results:
+		if not result.success:
+			for test in _all_tests:
+				if test.path == result.path:
+					failed.tests.append(test)
+			
 
 func _init() -> void:
+	failed = TestFailures.new()
 	update()
 	
 func _initialize_tags() -> void:

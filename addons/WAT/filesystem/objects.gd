@@ -69,6 +69,7 @@ class TestTag extends Reference:
 		
 		
 class TestFailures extends Reference:
+	var tests: Array = []
 	
-	func _init() -> void:
-		pass
+	func get_tests() -> Array:
+		return tests

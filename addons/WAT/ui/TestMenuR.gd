@@ -42,12 +42,15 @@ func update() -> void:
 	_menu.add_icon_item(Icon.FAILED, "Run Failed", 2)
 	_menu.add_icon_item(Icon.FAILED, "Debug Failed", 3)
 	
+	
 	# We need to update the tag menus when changing tags
 	_add_tag_menu("Run %s", filesystem.tags, RUN, 4)
 	_add_tag_menu("Debug %s", filesystem.tags, DEBUG, 5)
 	
 	_menu.set_item_metadata(0, Metadata.new(RUN, filesystem))
 	_menu.set_item_metadata(1, Metadata.new(DEBUG, filesystem))
+	_menu.set_item_metadata(2, Metadata.new(RUN, filesystem.failed))
+	_menu.set_item_metadata(3, Metadata.new(DEBUG, filesystem.failed))
 	_menu.connect("index_pressed", self, "_on_idx_pressed", [_menu])
 	_id = 6
 	for dir in filesystem.dirs:

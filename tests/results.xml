@@ -1,7 +1,16 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0">
-	<testsuite name="Assertthat" failures="0"  tests="1" time="0">
-		<testcase name=" assert that" time="0"></testcase>
+<testsuites failures="2" name="TestXML" tests="2" time="0">
+	<testsuite name="Resourcex" failures="1"  tests="2" time="0">
+		<testcase name=" deleted resource has no res path" time="0"></testcase>
+		<testcase name=" resource updates path" time="0">
+			<failure message="EXPECTED: |String|  is equal to |String| res://moved.tres but GOT |String|  is not equal to |String| res://moved.tres"></failure>
+			<failure message="EXPECTED: |Object| [Resource:25856] is equal to |Object| [Resource:26177] but GOT |Object| [Resource:25856] is not equal to |Object| [Resource:26177]"></failure>
+			<failure message="EXPECTED: |int| 823798677 is equal to |int| 823795349 but GOT |int| 823798677 is not equal to |int| 823795349"></failure></testcase>
+	</testsuite>
+
+	<testsuite name="New Script" failures="1"  tests="1" time="0">
+		<testcase name=" bad" time="0">
+			<failure message="EXPECTED: |bool| False == true but GOT |bool| False != true"></failure></testcase>
 	</testsuite>
 
 </testsuites>

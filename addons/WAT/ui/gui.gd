@@ -116,6 +116,7 @@ func _launch_runner(tests: Array, threads: int = Threads.value) -> void:
 	TestMenu.set_last_run_success(results)
 	XML.write(results)
 	Results.display(results)
+	filesystem.set_failed(results)
 	
 const RUN_CURRENT_SCENE_GODOT_3_2: int = 39
 const RUN_CURRENT_SCENE_GODOT_3_1: int = 33
@@ -144,6 +145,7 @@ func _launch_debugger(tests: Array, threads: int = Threads.value) -> void:
 	TestMenu.set_last_run_success(results)
 	XML.write(results)
 	Results.display(results)
+	filesystem.set_failed(results)
 	
 # Loads scaled assets like icons and fonts
 func _setup_editor_assets(assets_registry):

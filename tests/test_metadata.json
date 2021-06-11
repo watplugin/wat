@@ -4,6 +4,13 @@
 		"tags": [
 
 		],
+		"passing": true
+	},
+	"res://tests/new_script.gd": {
+		"path": "res://tests/new_script.gd",
+		"tags": [
+
+		],
 		"passing": false
 	},
 	"res://tests/integration/default_args.test.gd": {
@@ -25,7 +32,7 @@
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/integration/resourcex.test.gd": {
 		"path": "res://tests/integration/resourcex.test.gd",
@@ -39,7 +46,7 @@
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/integration/script_director.test.gd": {
 		"path": "res://tests/integration/script_director.test.gd",
