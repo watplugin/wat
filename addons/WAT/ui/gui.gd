@@ -70,11 +70,10 @@ func setup_game_context() -> void:
 func setup_editor_context(plugin: Node) -> void:
 	_plugin = plugin
 	var filesystemdock: Node = plugin.get_editor_interface().get_file_system_dock()
-	filesystemdock.connect("folder_moved", filesystem, "_on_folder_moved")
+	for event in ["folder_removed", "folder_moved", "file_removed"]:
+		filesystemdock.connect(event, filesystem, "_on_filesystem_changed", [], CONNECT_DEFERRED)
 	filesystemdock.connect("files_moved", filesystem, "_on_file_moved")
-	filesystemdock.connect("file_removed", filesystem, "_on_file_removed")
-	filesystemdock.connect("folder_removed", filesystem, "_on_folder_removed")
-	_plugin.connect("resource_saved", filesystem, "_on_resource_saved")
+	_plugin.connect("resource_saved", filesystem, "_on_resource_saved", [], CONNECT_DEFERRED)
 	
 func _on_function_selected(path: String, function: String) -> void:
 	if not _plugin:

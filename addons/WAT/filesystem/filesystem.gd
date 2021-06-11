@@ -79,31 +79,28 @@ func _get_test_script(path: String) -> TestScript:
 	test.yield_time = YieldCalculator.calculate_yield_time(test.gdscript, test.method_names.size())
 	return test
 	
-func _on_folder_moved(source: String, destination: String) -> void:
-	if source.begins_with(Settings.test_directory()) or destination.begins_with(Settings.test_directory()):
-		has_been_changed = true
-	
 func _on_file_moved(source: String, destination: String) -> void:
-	var tags: Array = _tag_metadata[source.rstrip("/")]
+	var key: String = source.rstrip("/")
+	var tags: Array = _tag_metadata[key]
 	var dest: Resource = load(destination)
-	if source.begins_with(Settings.test_directory()) or destination.begins_with(Settings.test_directory()):
+	if _is_in_test_directory(source) or _is_in_test_directory(destination):
 		# Swapping Tags
 		_tag_metadata[dest.resource_path] = tags
-		_tag_metadata.erase(source.rstrip("/"))
+		_tag_metadata.erase(key)
 		print(_tag_metadata[dest.resource_path]) # Arrays shared, making sure it exists
 		has_been_changed = true
 	
-func _on_file_removed(file: String) -> void:
-	if file.begins_with(Settings.test_directory()):
-		has_been_changed = true
-	
-func _on_folder_removed(folder: String) -> void:
-	if folder.begins_with(Settings.test_directory()):
-		has_been_changed = true
-	
 func _on_resource_saved(resource: Resource) -> void:
-	if resource.resource_path.begins_with(Settings.test_directory()):
+	if _is_in_test_directory(resource.resource_path):
 		has_been_changed = true
+		
+func _is_in_test_directory(path: String) -> bool:
+	return path.begins_with(Settings.test_directory())
+	
+func _on_filesystem_changed(source: String, destination: String = "") -> void:
+	for path in [source, destination]:
+		if _is_in_test_directory(path):
+			has_been_changed = true
 	
 # get_failures()
 # get_metadata()

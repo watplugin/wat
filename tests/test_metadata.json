@@ -1,11 +1,4 @@
 {
-	"res://tests/property_member.gd": {
-		"path": "res://tests/property_member.gd",
-		"tags": [
-
-		],
-		"passing": false
-	},
 	"res://tests/integration/default_args.test.gd": {
 		"path": "res://tests/integration/default_args.test.gd",
 		"tags": [
@@ -19,6 +12,20 @@
 
 		],
 		"passing": true
+	},
+	"res://tests/integration/property_membe2r.gd": {
+		"path": "res://tests/integration/property_membe2r.gd",
+		"tags": [
+
+		],
+		"passing": false
+	},
+	"res://tests/integration/property_member.gd": {
+		"path": "res://tests/integration/property_member.gd",
+		"tags": [
+
+		],
+		"passing": false
 	},
 	"res://tests/integration/resourcex.test.gd": {
 		"path": "res://tests/integration/resourcex.test.gd",
