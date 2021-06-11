@@ -37,21 +37,19 @@ func _ready() -> void:
 	Threads.min_value = 1
 	Results.connect("function_selected", self, "_on_function_selected")
 	ViewMenu.connect("index_pressed", Results, "_on_view_pressed")
-	TestMenu.connect("_tests_selected", self, "_launch_runner")
-	TestMenu.connect("_tests_debug_selected", self, "_launch_debugger")
 	var shortcut = ProjectSettings.get_setting("WAT/Run_All_Tests")
 	Quickstart.shortcut.shortcut = shortcut
 	SaveMetadata.connect("pressed", TestMenu, "save_metadata")
-	Quickstart.connect("pressed", self, "_launch_runnerR")
-	QuickstartDebug.connect("pressed", self, "_launch_debuggerR")
-	TestMenu.connect("tests_selected", self, "_launch_runnerR")
-	TestMenu.connect("tests_selected_debug", self, "_launch_debuggerR")
+	Quickstart.connect("pressed", self, "_launch_runner")
+	QuickstartDebug.connect("pressed", self, "_launch_debugger")
+	TestMenu.connect("tests_selected", self, "_launch_runner")
+	TestMenu.connect("tests_selected_debug", self, "_launch_debugger")
 	
-func _launch_runnerR(testdir = filesystem) -> void:
-	_launch_runner(testdir.get_tests(), Threads.value)
-
-func _launch_debuggerR(testdir = filesystem) -> void:
-	_launch_debugger(testdir.get_tests(), Threads.value)
+#func _launch_runner(testdir = filesystem) -> void:
+#	_launch_runner(testdir.get_tests(), Threads.value)
+#
+#func _launch_debugger(testdir = filesystem) -> void:
+#	_launch_debugger(testdir.get_tests(), Threads.value)
 	
 func setup_game_context() -> void:
 	if Engine.is_editor_hint():
@@ -92,8 +90,8 @@ func _repeat(tests: Array, repeat: int) -> Array:
 			duplicates.append(test)
 	duplicates += tests
 	return duplicates
-	
-func _launch_runner(tests: Array, threads: int = Threads.value) -> void:
+
+func _launch_runner(tests: Array = filesystem.get_tests(), threads: int = Threads.value) -> void:
 	# This is also the launch method used for exported scenes
 	if tests.empty():
 		push_warning("Tests Are Empty!")
@@ -106,14 +104,13 @@ func _launch_runner(tests: Array, threads: int = Threads.value) -> void:
 	var results = yield(instance.run(tests, threads), "completed")
 	instance.queue_free()
 	Summary.summarize(results)
-	TestMenu.set_last_run_success(results)
 	XML.write(results)
 	Results.display(results)
 	filesystem.set_failed(results)
 	
 const RUN_CURRENT_SCENE_GODOT_3_2: int = 39
 const RUN_CURRENT_SCENE_GODOT_3_1: int = 33
-func _launch_debugger(tests: Array, threads: int = Threads.value) -> void:
+func _launch_debugger(tests: Array = filesystem.get_tests(), threads: int = Threads.value) -> void:
 	if tests.empty():
 		push_warning("Tests Are Empty!")
 		return
@@ -135,7 +132,6 @@ func _launch_debugger(tests: Array, threads: int = Threads.value) -> void:
 	Server.send_tests(tests, threads)
 	var results = yield(Server, "results_received")
 	Summary.summarize(results)
-	TestMenu.set_last_run_success(results)
 	XML.write(results)
 	Results.display(results)
 	filesystem.set_failed(results)

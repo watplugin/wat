@@ -1,9 +1,6 @@
 extends Node
 
 static func split(tests: Array, threads: int = 1) -> Array:
-	print("splitting")
-#	for test in tests:
-#		test["yield_time"] = load("res://addons/WAT/yield_calculator.gd").calculate_yield_time(test["gdscript"], test["gdscript"].new().methods().size())
 	tests.sort_custom(YieldTimeSorter, "sort_ascending")
 	threads = calibrate_threads(tests.size(), threads)
 	return _testthreads(_distribute(_testpools(threads), tests, threads))
