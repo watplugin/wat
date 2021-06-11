@@ -55,9 +55,18 @@ class TestMethod extends Reference:
 	}]
 		
 class TestTag extends Reference:
+	var tag: String
+	var tests: Array = []
 	
-	func _init() -> void:
-		pass
+	func _init(_tag: String) -> void:
+		tag = _tag
+		
+	func get_tests() -> Array:
+		var scripts: Array = []
+		for test in tests:
+			scripts += test.get_tests()
+		return scripts
+		
 		
 class TestFailures extends Reference:
 	

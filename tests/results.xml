@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<testsuites failures="0" name="TestXML" tests="1" time="0">
+	<testsuite name="Assertthat" failures="0"  tests="1" time="0">
+		<testcase name=" assert that" time="0"></testcase>
+	</testsuite>
+
+</testsuites>

@@ -13,16 +13,24 @@ var primary: TestDirectory
 var dirs: Array = []
 var _all_tests: Array = []
 var _tag_metadata: Dictionary = {} # resource path, script,
+var tags: Dictionary = {} 
 
 func get_tests() -> Array:
 	return _all_tests
 
 func _init() -> void:
 	update()
+	
+func _initialize_tags() -> void:
+	for tag in Settings.tags():
+		tags[tag] = TestTag.new(tag)
 
 func update() -> void:
+	tags.clear()
 	dirs.clear()
 	_all_tests.clear()
+	
+	_initialize_tags()
 	primary = TestDirectory.new(Settings.test_directory())
 	dirs.append(primary)
 	_update(primary)
@@ -51,7 +59,14 @@ func _update(testdir: TestDirectory) -> void:
 			# ..it elsewhere we the update is sent here automatically
 			_tag_metadata[test.path] = test.tags
 			
-				
+			# Add To Tag Object In Our Tag Dictionary
+			for tag in test.tags:
+				if tag in Settings.tags():
+					tags[tag].tests.append(test)
+				else:
+					push_warning("Tag %s does not exist in WAT Settings")
+					# Push an add check here to auto-add it?
+			
 			if not test.methods.empty():
 				testdir.tests.append(test)
 				_all_tests += test.get_tests()
@@ -78,6 +93,14 @@ func _get_test_script(path: String) -> TestScript:
 			test.methods.append(TestMethod.new(test.path, test.gdscript, method.name))
 	test.yield_time = YieldCalculator.calculate_yield_time(test.gdscript, test.method_names.size())
 	return test
+	
+func add_test_to_tag(test: TestScript, tag: String) -> void:
+	print("Adding %s to %s" % [test, tag])
+	tags[tag].tests.append(test)
+	print(tags[tag].tests)
+	
+func remove_test_from_tag(test: TestScript, tag: String) -> void:
+	tags[tag].tests.erase(test)
 	
 func _on_file_moved(source: String, destination: String) -> void:
 	var key: String = source.rstrip("/")

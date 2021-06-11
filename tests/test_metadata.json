@@ -1,4 +1,11 @@
 {
+	"res://tests/example.gd": {
+		"path": "res://tests/example.gd",
+		"tags": [
+
+		],
+		"passing": false
+	},
 	"res://tests/integration/default_args.test.gd": {
 		"path": "res://tests/integration/default_args.test.gd",
 		"tags": [
@@ -12,13 +19,6 @@
 
 		],
 		"passing": true
-	},
-	"res://tests/integration/property_membe2r.gd": {
-		"path": "res://tests/integration/property_membe2r.gd",
-		"tags": [
-
-		],
-		"passing": false
 	},
 	"res://tests/integration/property_member.gd": {
 		"path": "res://tests/integration/property_member.gd",
@@ -71,13 +71,6 @@
 	},
 	"res://tests/unit/equality.test.gd": {
 		"path": "res://tests/unit/equality.test.gd",
-		"tags": [
-
-		],
-		"passing": true
-	},
-	"res://tests/unit/example.gd": {
-		"path": "res://tests/unit/example.gd",
 		"tags": [
 
 		],

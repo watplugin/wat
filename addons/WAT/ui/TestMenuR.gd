@@ -42,8 +42,9 @@ func update() -> void:
 	_menu.add_icon_item(Icon.FAILED, "Run Failed", 2)
 	_menu.add_icon_item(Icon.FAILED, "Debug Failed", 3)
 	
-	_add_tag_menu("Run %s", 4)
-	_add_tag_menu("Debug %s", 5)
+	# We need to update the tag menus when changing tags
+	_add_tag_menu("Run %s", filesystem.tags, RUN, 4)
+	_add_tag_menu("Debug %s", filesystem.tags, DEBUG, 5)
 	
 	_menu.set_item_metadata(0, Metadata.new(RUN, filesystem))
 	_menu.set_item_metadata(1, Metadata.new(DEBUG, filesystem))
@@ -78,13 +79,17 @@ func add_menu(parent: PopupMenu, data: Reference, ico: Texture) -> PopupMenu:
 	_id += 1
 	return child
 	
-func _add_tag_menu(run: String, id: int) -> void:
+func _add_tag_menu(run: String, tags: Dictionary, run_type: int, id: int) -> void:
 	var _tag_menu: PopupMenu = PopupMenu.new()
+	var idx: int = 0
 	for tag in Settings.tags():
 		_tag_menu.add_icon_item(Icon.TAG, run % tag)
+		_tag_menu.set_item_metadata(idx, Metadata.new(run_type, tags[tag]))
+		idx += 1
 	_menu.add_child(_tag_menu)
 	_menu.add_submenu_item(run % "Tagged", _tag_menu.name, id)
 	_menu.set_item_icon(id, Icon.TAG)
+	_tag_menu.connect("index_pressed", self, "_on_idx_pressed", [_tag_menu])
 
 func _add_tag_editor(script_menu: PopupMenu, test: Reference) -> void:
 	var _tag_editor: PopupMenu = PopupMenu.new()
@@ -105,16 +110,20 @@ func _on_tagged(idx: int, tag_editor: PopupMenu, test: Reference) -> void:
 	if is_already_selected:
 		tag_editor.set_item_checked(idx, false)
 		test.tags.erase(tag)
+		filesystem.remove_test_from_tag(test, tag)
 		push_warning("Removing Tag %s From %s" % [tag, test.gdscript])
 	else:
 		tag_editor.set_item_checked(idx, true)
 		test.tags.append(tag)
+		filesystem.add_test_to_tag(test, tag)
 		push_warning("Adding Tag %s To %s" % [tag, test.gdscript])
 
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 	var data: Metadata = menu.get_item_metadata(idx)
 	match data.run_type:
 		RUN:
+			print("running ", menu.name)
+			print("running, ", data.tests.get_ref().get_tests())
 			emit_signal("tests_selected", data.tests.get_ref())
 		DEBUG:
 			emit_signal("tests_selected_debug", data.tests.get_ref())
