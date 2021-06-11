@@ -51,6 +51,10 @@ func _get_exported_variable_values(instance) -> Dictionary:
 	var exported: Dictionary = {}
 	add_child(instance)
 	for prop in instance.get_property_list():
-		exported[prop.name] = instance.get(prop.name)
+		if _is_exported_variable(prop.usage):
+			exported[prop.name] = instance.get(prop.name)
 	remove_child(instance)
 	return exported
+
+func _is_exported_variable(usage: int) -> bool:
+	return usage == PROPERTY_USAGE_DEFAULT + PROPERTY_USAGE_SCRIPT_VARIABLE 
