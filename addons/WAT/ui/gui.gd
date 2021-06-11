@@ -103,14 +103,13 @@ func _launch_runner(tests: Array = filesystem.get_tests(), threads: int = Thread
 	add_child(instance)
 	var results = yield(instance.run(tests, threads), "completed")
 	instance.queue_free()
-	Summary.summarize(results)
-	XML.write(results)
-	Results.display(results)
-	filesystem.set_failed(results)
+	_on_run_completed(results)
+	
 	
 const RUN_CURRENT_SCENE_GODOT_3_2: int = 39
 const RUN_CURRENT_SCENE_GODOT_3_1: int = 33
 func _launch_debugger(tests: Array = filesystem.get_tests(), threads: int = Threads.value) -> void:
+	
 	if tests.empty():
 		push_warning("Tests Are Empty!")
 		return
@@ -131,6 +130,9 @@ func _launch_debugger(tests: Array = filesystem.get_tests(), threads: int = Thre
 	yield(Server, "network_peer_connected")
 	Server.send_tests(tests, threads)
 	var results = yield(Server, "results_received")
+	_on_run_completed(results)
+	
+func _on_run_completed(results: Array) -> void:
 	Summary.summarize(results)
 	XML.write(results)
 	Results.display(results)
