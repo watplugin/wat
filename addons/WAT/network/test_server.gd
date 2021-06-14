@@ -6,6 +6,8 @@ signal results_received
 var _peer_id: int
 
 func _ready() -> void:
+	if not Engine.is_editor_hint():
+		return
 	custom_multiplayer.connect("network_peer_connected", self, "_on_network_peer_connected")
 	if _error(_peer.create_server(PORT, MAXCLIENTS)) == OK:
 		custom_multiplayer.network_peer = _peer

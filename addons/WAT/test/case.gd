@@ -2,6 +2,7 @@ extends Node
 
 var _total: int = 0
 var _passed: int = 0
+var _directory: String
 var _title: String
 var _path: String
 var _methods: Array = []
@@ -9,10 +10,11 @@ var _success: bool = false
 var _time_taken: float = 0.0
 var _test: Node
 
-func _init(test: Node, path: String) -> void:
+func _init(test: Node, data: Dictionary) -> void:
 	_test = test
 	_title = test.title()
-	_path = path
+	_path = data.path
+	_directory = data.directory
 
 func add_method(name: String) -> void:
 	var contxt = name.replace("_", " ").lstrip("test")
@@ -42,4 +44,5 @@ func to_dictionary() -> Dictionary:
 			 success = _success,
 			 path = _path,
 			 time_taken = _time_taken,
+			 directory = _directory,
 			}

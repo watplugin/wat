@@ -41,7 +41,7 @@ func _init() -> void:
 func run(test: Dictionary) -> void:
 	Log.method("run", self)
 	_test = test["gdscript"].new()
-	_case = Case.new(_test, test["path"])
+	_case = Case.new(_test, test)
 	_test.asserts = _assertions
 	_test.parameters = _parameters
 	_test.recorder = Recorder

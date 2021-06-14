@@ -127,9 +127,9 @@ func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 		RUN:
 			print("running ", menu.name)
 			print("running, ", data.tests.get_ref().get_tests())
-			emit_signal("tests_selected", data.tests.get_ref())
+			emit_signal("tests_selected", data.tests.get_ref().get_tests())
 		DEBUG:
-			emit_signal("tests_selected_debug", data.tests.get_ref())
+			emit_signal("tests_selected_debug", data.tests.get_ref().get_tests())
 		NONE:
 			pass
 

@@ -66,7 +66,7 @@ func _update(testdir: TestDirectory) -> void:
 			subdirs.append(TestDirectory.new(absolute_path))
 		
 		elif _is_valid_test(absolute_path):
-			var test: TestScript = _get_test_script(absolute_path)
+			var test: TestScript = _get_test_script(testdir.path, absolute_path)
 			
 			# We add a direct reference to the test tag array so when we modify
 			# ..it elsewhere we the update is sent here automatically
@@ -95,15 +95,15 @@ func _is_valid_test(p: String) -> bool:
 	var base: String = "res://addons/WAT/core/test/test.gd"
 	return p.ends_with(".gd") and p != base and load(p).get("TEST")
 	
-func _get_test_script(path: String) -> TestScript:
+func _get_test_script(dir: String, path: String) -> TestScript:
 	var gdscript: GDScript = load(path)
-	var test: TestScript = TestScript.new(path, load(path))
+	var test: TestScript = TestScript.new(dir, path, load(path))
 	if _tag_metadata.has(test.gdscript.resource_path):
 		test.tags = _tag_metadata[test.gdscript.resource_path]
 	for method in test.gdscript.get_script_method_list():
 		if method.name.begins_with("test"):
 			test.method_names.append(method.name)
-			test.methods.append(TestMethod.new(test.path, test.gdscript, method.name))
+			test.methods.append(TestMethod.new(dir, test.path, test.gdscript, method.name))
 	test.yield_time = YieldCalculator.calculate_yield_time(test.gdscript, test.method_names.size())
 	return test
 	

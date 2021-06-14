@@ -37,30 +37,12 @@ func _on_function_selected(path: String, function: String) -> void:
 func sort(results: Array) -> Dictionary:
 	var sorted: Dictionary = {}
 	for result in results:
-		# We're searching for dirs, not path names
-		var path: String = result.path
-		path = path.replace(ProjectSettings.get_setting("WAT/Test_Directory"), "")
-		path = path.replace(".gd", "")
-		var end: int = path.find_last("/")
-		
-		if end > 0:
-			path = path.substr(0, end).replace("/", " ")
+		if sorted.has(result.directory):
+			sorted[result.directory].append(result)
 		else:
-			# Our test is in root so we'll just give it the root dir
-			path = ProjectSettings.get_setting("WAT/Test_Directory").replace("res://", "")
-			if path.empty():
-				# For the dangerous people who want to run tests in project root
-				path = "res://"
-		
-		path = path.replace(".", " ")
-		path = path.capitalize()
-		path = path.replace(" ", "/")
-		if sorted.has(path):
-			sorted[path].append(result)
-		else:
-			sorted[path] = [result]
+			sorted[result.directory] = [result]
 	return sorted
-	
+
 func _on_tree_results_calculated(tree: Tree, passed: int, total: int, success: bool) -> void:
 	tree.name += " (%s|%s)" % [passed, total]
 	set_tab_icon(_tabs[tree], PASSED_ICON if success else FAILED_ICON)
