@@ -45,12 +45,6 @@ func _ready() -> void:
 	TestMenu.connect("tests_selected", self, "_launch_runner")
 	TestMenu.connect("tests_selected_debug", self, "_launch_debugger")
 	
-#func _launch_runner(testdir = filesystem) -> void:
-#	_launch_runner(testdir.get_tests(), Threads.value)
-#
-#func _launch_debugger(testdir = filesystem) -> void:
-#	_launch_debugger(testdir.get_tests(), Threads.value)
-	
 func setup_game_context() -> void:
 	if Engine.is_editor_hint():
 		return
@@ -63,10 +57,10 @@ func setup_game_context() -> void:
 	
 func setup_editor_context(plugin: Node) -> void:
 	_plugin = plugin
-	var filesystemdock: Node = plugin.get_editor_interface().get_file_system_dock()
+	var file_dock: Node = plugin.get_editor_interface().get_file_system_dock()
 	for event in ["folder_removed", "folder_moved", "file_removed"]:
-		filesystemdock.connect(event, filesystem, "_on_filesystem_changed", [], CONNECT_DEFERRED)
-	filesystemdock.connect("files_moved", filesystem, "_on_file_moved")
+		file_dock.connect(event, filesystem, "_on_filesystem_changed", [], CONNECT_DEFERRED)
+	file_dock.connect("files_moved", filesystem, "_on_file_moved")
 	_plugin.connect("resource_saved", filesystem, "_on_resource_saved", [], CONNECT_DEFERRED)
 	
 func _on_function_selected(path: String, function: String) -> void:
@@ -75,13 +69,15 @@ func _on_function_selected(path: String, function: String) -> void:
 	var script: Script = load(path)
 	var script_editor = _plugin.get_editor_interface().get_script_editor()
 	_plugin.get_editor_interface().edit_resource(script)
+	
+	# We could add this as metadata information when looking for yield times
+	# ..in scripts?
 	var idx: int = 0
 	for line in script.source_code.split("\n"):
 		idx += 1
 		if function in line and line.begins_with("func"):
 			script_editor.goto_line(idx)
 			return
-	emit_signal("function_selected", path, function)
 
 func _repeat(tests: Array, repeat: int) -> Array:
 	var duplicates: Array = []
