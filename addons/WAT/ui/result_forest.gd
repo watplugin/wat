@@ -6,9 +6,12 @@ var FAILED_ICON: Texture
 const ResultTree = preload("res://addons/WAT/ui/result_tree.gd")
 var _results: Array
 var _tabs = {}
+signal function_selected
+var results: Array = []
+var failures: Array = []
+
 # Stores asset_registry so that result_tree can be configured with scaled icons
 var _assets_registry
-signal function_selected
 
 func display(results: Array) -> void:
 	clear()
@@ -20,10 +23,9 @@ func _add_result_tree(results: Array) -> void:
 	var tab_count: int = 0
 	var sorted = sort(results)
 	for path in sorted:
-		var result_tree = ResultTree.new()
+		var result_tree = ResultTree.new(self)
 		result_tree._setup_editor_assets(_assets_registry)
-		result_tree.connect("function_selected", self, "_on_function_selected")
-		result_tree.connect("calculated", self, "_on_tree_results_calculated")
+		result_tree.connect("button_pressed", self, "_on_function_selected")
 		result_tree.name = path
 		add_child(result_tree)
 		set_tab_title(tab_count, path)
@@ -31,21 +33,19 @@ func _add_result_tree(results: Array) -> void:
 		result_tree.display(sorted[path])
 		tab_count += 1
 
-func _on_function_selected(path: String, function: String) -> void:
-	emit_signal("function_selected", path, function)
+func _on_function_selected(item, column, id) -> void:
+	emit_signal("function_selected", item.get_meta("path"), item.get_meta("fullname"))
 	
 func sort(results: Array) -> Dictionary:
 	var sorted: Dictionary = {}
 	for result in results:
+		# Note to self: If we're already sorting by directory, maybe we should..
+		# ..do it earlier in the first place?
 		if sorted.has(result.directory):
 			sorted[result.directory].append(result)
 		else:
 			sorted[result.directory] = [result]
 	return sorted
-
-func _on_tree_results_calculated(tree: Tree, passed: int, total: int, success: bool) -> void:
-	tree.name += " (%s|%s)" % [passed, total]
-	set_tab_icon(_tabs[tree], PASSED_ICON if success else FAILED_ICON)
 
 func clear() -> void:
 	var children: Array = get_children()
@@ -62,21 +62,17 @@ func _on_view_pressed(option: int) -> void:
 			collapse_all()
 		EXPAND_FAILURES:
 			expand_failures()
-		
+
+# We could add another option to make non-failures invisible?
 func expand_all():
-	for results in get_children():
-		results.expand_all()
+	for item in results:
+		item.collapsed = false
 		
 func collapse_all():
-	for results in get_children():
-		results.collapse_all()
+	for item in results:
+		item.collapsed = true
 		
 func expand_failures():
-	for results in get_children():
-		results.expand_failures()
-
-# Loads scaled assets like icons and fonts
-func _setup_editor_assets(assets_registry):
-	_assets_registry = assets_registry
-	PASSED_ICON = assets_registry.load_asset("assets/passed.png")
-	FAILED_ICON = assets_registry.load_asset("assets/failed.png")
+	collapse_all()
+	for item in failures:
+		item.collapsed = false
