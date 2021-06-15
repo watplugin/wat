@@ -22,20 +22,3 @@ func test_deleted_resource_has_no_res_path() -> void:
 	Directory.new().remove(source)
 	asserts.is_equal(resource.resource_path, "", 
 		"A deleted resource has no resource_path")
-		
-func test_resource_updates_path() -> void:
-	var resource: Resource = Resource.new()
-	ResourceSaver.save("res://test.tres", resource)
-	yield(get_tree(), "idle_frame")
-	var source: String = "res://test.tres"
-	var first: Resource = load(source)
-#	Directory.new().remove(source)
-	var destination = "res://moved.tres"
-	ResourceSaver.save("res://moved.tres", resource, ResourceSaver.FLAG_CHANGE_PATH)
-	yield(get_tree(), "idle_frame")
-	
-	asserts.is_equal(resource.resource_path, destination,
-		"A Moved resource updates its path")
-		
-	asserts.is_equal(resource, load(destination), "ffff")
-	asserts.is_equal(hash(resource), hash(load(destination)), "eqhash")
