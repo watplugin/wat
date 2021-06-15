@@ -76,3 +76,6 @@ func expand_failures():
 	collapse_all()
 	for item in failures:
 		item.collapsed = false
+
+func _setup_editor_assets(reg) -> void:
+	_assets_registry = reg
