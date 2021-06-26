@@ -10,20 +10,14 @@ const XML: Script = preload("res://addons/WAT/editor/junit_xml.gd")
 const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/plugin_assets_registry.gd")
 
 onready var TestMenu: Button = $Core/Menu/TestMenu
-
 onready var Results: TabContainer = $Core/Results
 onready var Summary: HBoxContainer = $Core/Summary
-
 onready var Threads: SpinBox = $Core/Menu/RunSettings/Threads
 onready var Repeats: SpinBox = $Core/Menu/RunSettings/Repeats
-
 onready var Quickstart: Button = $Core/Menu/QuickRunAll
 onready var QuickstartDebug: Button = $Core/Menu/QuickRunAllDebug
-
 onready var ViewMenu: PopupMenu = $Core/Menu/ResultsMenu.get_popup()
 onready var Menu: HBoxContainer = $Core/Menu
-onready var SaveMetadata: Button = $Core/Menu/SaveMetadata
-
 onready var Server: Node = $Server
 
 var filesystem = preload("res://addons/WAT/filesystem/filesystem.gd").new()
@@ -39,7 +33,6 @@ func _ready() -> void:
 	ViewMenu.connect("index_pressed", Results, "_on_view_pressed")
 	var shortcut = ProjectSettings.get_setting("WAT/Run_All_Tests")
 	Quickstart.shortcut.shortcut = shortcut
-	SaveMetadata.connect("pressed", TestMenu, "save_metadata")
 	Quickstart.connect("pressed", self, "_launch_runner")
 	QuickstartDebug.connect("pressed", self, "_launch_debugger")
 	TestMenu.connect("tests_selected", self, "_launch_runner")
