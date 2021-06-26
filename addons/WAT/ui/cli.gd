@@ -96,7 +96,6 @@ func parse(arguments: Array) -> void:
 		RUN_FAILURES:
 			var toRun = []
 			for container in test.all:
-				print(container)
 				if container.has("passing") and not container["passing"]:
 					toRun.append(container)
 			if toRun.empty():

@@ -123,7 +123,6 @@ func _on_file_moved(source: String, destination: String) -> void:
 		# Swapping Tags
 		_tag_metadata[dest.resource_path] = tags
 		_tag_metadata.erase(key)
-		print(_tag_metadata[dest.resource_path]) # Arrays shared, making sure it exists
 		has_been_changed = true
 	
 func _on_resource_saved(resource: Resource) -> void:

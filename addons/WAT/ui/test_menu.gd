@@ -125,8 +125,6 @@ func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 	var data: Metadata = menu.get_item_metadata(idx)
 	match data.run_type:
 		RUN:
-			print("running ", menu.name)
-			print("running, ", data.tests.get_ref().get_tests())
 			emit_signal("tests_selected", data.tests.get_ref().get_tests())
 		DEBUG:
 			emit_signal("tests_selected_debug", data.tests.get_ref().get_tests())
