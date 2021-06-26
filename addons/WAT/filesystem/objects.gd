@@ -4,9 +4,11 @@ extends Node
 class TestDirectory extends Reference:
 	var path: String
 	var tests: Array = []
+	var name: String
 	
 	func _init(_path: String) -> void:
 		path = _path
+		name = _path
 		
 	func get_tests() -> Array:
 		var scripts: Array = []
@@ -22,11 +24,13 @@ class TestScript extends Reference:
 	var methods: Array = []
 	var yield_time: float = 0.0
 	var tags: Array = []
+	var name: String
 	
 	func _init(dir: String, _path: String, _gdscript: GDScript) -> void:
 		path = _path
 		gdscript = _gdscript
 		directory = dir
+		name = _path
 		
 	func get_tests() -> Array:
 		return [{
@@ -43,11 +47,13 @@ class TestMethod extends Reference:
 	var path: String
 	var gdscript: GDScript
 	var method_names: PoolStringArray
+	var name: String
 	
-	func _init(_dir: String, _path: String, _gdscript: GDScript, name: String) -> void:
+	func _init(_dir: String, _path: String, _gdscript: GDScript, _name: String) -> void:
 		path = _path
 		gdscript = _gdscript
-		method_names = [name]
+		method_names = [_name]
+		name = _name
 		
 	func get_tests() -> Array:
 		return [{
@@ -62,9 +68,11 @@ class TestMethod extends Reference:
 class TestTag extends Reference:
 	var tag: String
 	var tests: Array = []
+	var name
 	
 	func _init(_tag: String) -> void:
 		tag = _tag
+		name = tag
 		
 	func get_tests() -> Array:
 		var scripts: Array = []

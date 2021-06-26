@@ -71,7 +71,7 @@ func add_menu(parent: PopupMenu, data: Reference, ico: Texture) -> PopupMenu:
 	child.connect("index_pressed", self, "_on_idx_pressed", [child])
 	parent.add_child(child)
 	child.name = child.get_index() as String
-	parent.add_submenu_item(data.path, child.name, _id)
+	parent.add_submenu_item(data.name, child.name, _id)
 	parent.set_item_icon(parent.get_item_index(_id), ico)
 	_id += 1
 	child.add_icon_item(Icon.PLAY, "Run All", _id)
