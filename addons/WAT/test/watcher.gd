@@ -29,6 +29,9 @@ func unwatch(emitter, event: String) -> void:
 		
 func get_emit_count(event: String) -> int:
 	return watching[event]["emit_count"]
+	
+func get_data(event: String) -> Dictionary:
+	return watching[event]
 		
 func clear() -> void:
 	pass
