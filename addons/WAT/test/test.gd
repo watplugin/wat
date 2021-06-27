@@ -11,7 +11,6 @@ signal executed
 var rerun_method: bool
 var p: Dictionary
 var _last_assertion_passed: bool = false
-signal method_begun
 
 var recorder: Script = preload("res://addons/WAT/test/recorder.gd")
 var any: Script = preload("res://addons/WAT/test/any.gd")

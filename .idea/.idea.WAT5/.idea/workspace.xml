@@ -2,18 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/unitMono/WatcherTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/unitMono/YieldTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Node.gd" beforeDir="false" afterPath="$PROJECT_DIR$/Node.gd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Nodex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Nodex.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/filesystem/filesystem.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/filesystem/filesystem.gd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/runner/test_controller.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/runner/test_controller.gd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/integration/property_member.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/integration/property_member.gd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/integration/resourcex.test.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/integration/resourcex.test.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/test/test.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/test/test.gd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/results.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitMono/BasicCSharpTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitMono/BooleanTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitMono/EqualityTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitMono/IsInstanceTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitMono/IsNotInstanceTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitMono/NameSpaced.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitMono/ObjectTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitMono/RangeTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitMono/SimpleTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitMono/StringTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitMono/WatcherTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitMono/YieldTest.cs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,10 +27,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CD6B08EA-F252-4ECE-B580-488B249D3E36/6d/9a1fd388/Dictionary.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/addons/WAT/mono/TestController.cs" />
-      <option value="$PROJECT_DIR$/addons/WAT/test/test.gd" />
       <option value="$PROJECT_DIR$/addons/WAT/mono/assertions/Assertions.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/assertions/assertion.gd" />
       <option value="$PROJECT_DIR$/tests/unitMono/SimpleTest.cs" />
@@ -36,9 +42,11 @@
       <option value="$PROJECT_DIR$/addons/WAT/runner/test_controller.gd" />
       <option value="$PROJECT_DIR$/tests/integration/property_member.gd" />
       <option value="$PROJECT_DIR$/tests/integration/resourcex.test.gd" />
-      <option value="$PROJECT_DIR$/tests/unitMono/WatcherTest.cs" />
-      <option value="$PROJECT_DIR$/tests/unitMono/YieldTest.cs" />
       <option value="$PROJECT_DIR$/Nodex.cs" />
+      <option value="$PROJECT_DIR$/addons/WAT/test/test.gd" />
+      <option value="$PROJECT_DIR$/tests/unitMono/YieldTest.cs" />
+      <option value="$PROJECT_DIR$/tests/unitMono/WatcherTest.cs" />
+      <option value="$PROJECT_DIR$/tests/mono/SimpleTest.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/mono/Test.cs" />
     </changedPaths>
   </component>
@@ -120,6 +128,7 @@
       <workItem from="1624745832210" duration="2498000" />
       <workItem from="1624786263138" duration="8262000" />
       <workItem from="1624795895192" duration="1792000" />
+      <workItem from="1624804676447" duration="4499000" />
     </task>
     <servers />
   </component>
