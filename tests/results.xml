@@ -1,7 +1,22 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0">
-	<testsuite name="SimpleTest" failures="0"  tests="1" time="0">
-		<testcase name="IsTrue" time="0"></testcase>
+<testsuites failures="1" name="TestXML" tests="1" time="0">
+	<testsuite name="Given a Yield" failures="4"  tests="10" time="0">
+		<testcase name="TestWhenWeYieldInStart" time="0"></testcase>
+		<testcase name="TestWhenWeYieldInPre" time="0"></testcase>
+		<testcase name="When we yield twice in execute" time="0"></testcase>
+		<testcase name="YielderIsNotActiveWhenAsserting" time="0"></testcase>
+		<testcase name="WhenTheYielderTimesOut" time="0">
+			<failure message="EXPECTED: |boolean| False == true but GOT |boolean| False == false"></failure>
+			<failure message="EXPECTED: |boolean| False == true but GOT |boolean| False == false"></failure></testcase>
+		<testcase name="WhenWeCallUntilTimeout" time="0"></testcase>
+		<testcase name="WhenASignalBeingYieldedOnIsEmittedTheYielderIsStopped" time="0">
+			<failure message="EXPECTED: |boolean| False == true but GOT |boolean| False == false"></failure></testcase>
+		<testcase name="WhenYielderIsFinishedSignalsAreDisconnected" time="0">
+			<failure message="EXPECTED: |boolean| False == true but GOT |boolean| False == false"></failure></testcase>
+		<testcase name="WhenWeCallUntilSignal" time="0"></testcase>
+		<testcase name="WhenTheYielderHearsOurSignal" time="0">
+			<failure message="EXPECTED: |boolean| False == true but GOT |boolean| False == false"></failure>
+			<failure message="EXPECTED: |boolean| False == true but GOT |boolean| False == false"></failure></testcase>
 	</testsuite>
 
 </testsuites>

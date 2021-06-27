@@ -1,3 +1,4 @@
+#nullable enable
 using Godot;
 using System;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace WAT
 		[AttributeUsage(AttributeTargets.Method)] protected class TestAttribute: Attribute { }
 		[Signal] public delegate void executed();
 		[Signal] public delegate void Described();
-		
+
+		protected const string YIELD = "finished";
 		private const bool TEST = true;
 		private const int Recorder = 0; // Apparently we require the C# Version
 		private Godot.Collections.Array _methods;
@@ -42,24 +44,43 @@ namespace WAT
 		public async void run()
 		{
 			int cursor = 0;
+			await Execute("Start")!;
 			while (cursor < _methods.Count)
 			{
-				_case.Call("add_method", _methods[cursor]);
-				await Task.Run(() => Call((string) _methods[cursor]));
+				string currentMethod = (string) _methods[cursor];
+				_case.Call("add_method", currentMethod);
+				await Execute("Pre")!;
+				await Execute(currentMethod)!;
+				await Execute("Post")!;
 				cursor++;
 			}
+			await Execute("End")!;
 			EmitSignal(nameof(executed));
+		}
+
+		private async Task? Execute(string method)
+		{
+			if (GetType().GetMethod(method)?.Invoke(this, null) is Task task)
+			{
+				await task;
+			}
 		}
 
 		protected void Describe(string description) {EmitSignal(nameof(Described), description);}
 		private string title() { return Title(); }
 		public virtual string Title() { return GetType().Name; }
-		protected virtual async void Start() { }
-		protected virtual async void Pre() { }
-		protected virtual async void Post() { }
-		protected virtual async void End() {}
+
+		// public virtual async Task? Start() { await Task.Run(() => { });}
+		// public virtual async Task? Pre() { await Task.Run(() => { }); }
+		// public virtual async Task? Post() { }
+		// protected virtual async Task? End() {}
 		protected Timer UntilTimeout(double time) { return (Timer) Yielder.Call("until_timeout", time); }
 
+		protected Timer UntilSignal(Godot.Object emitter, string signal, double time)
+		{
+			//watcher.Call("watch", emitter, signal);
+			return (Timer) Yielder.Call("until_signal", time, emitter, signal);
+		}
 		public override void _Ready()
 		{
 			Direct.Set("registry", _registry);
