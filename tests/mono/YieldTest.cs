@@ -5,7 +5,7 @@ using GodotArray = Godot.Collections.Array;
 
 public class YieldTest : WAT.Test
 {
-	//private static readonly GDScript Yielder = GD.Load<GDScript>("res://addons/WAT/test/yielder.gd");
+	private static readonly GDScript LocalYielder = GD.Load<GDScript>("res://addons/WAT/test/yielder.gd");
 	private bool a;
 	private bool b;
 	private bool c;
@@ -37,14 +37,14 @@ public class YieldTest : WAT.Test
 	}
 
 	[Test]
-	public void TestWhenWeYieldInStart()
+	public void WhenWeYieldInStart()
 	{
 		Assert.IsTrue(a, "Then we set var a to true");
 		Assert.IsTrue(b, "Then we set var b to true");
 	}
 
 	[Test]
-	public void TestWhenWeYieldInPre()
+	public void WhenWeYieldInPre()
 	{
 		Assert.IsTrue(c, "Then we set var c to true");
 		Assert.IsTrue(d, "Then we set var d to true");
@@ -53,96 +53,72 @@ public class YieldTest : WAT.Test
 	[Test]
 	public async Task WhenWeYieldInExecute()
 	{
-		Describe("When we yield twice in execute");
 		await ToSignal(UntilTimeout(0.1), YIELD);
 		e = true;
 		await ToSignal(UntilTimeout(0.1), YIELD);
 		f = true;
-		Assert.IsTrue(e, "Then we we set var e to true");
+		Assert.IsTrue(e, "Then we set var e to true");
 		Assert.IsTrue(f, "Then we set var f to true");
 	}
 
 	[Test]
-	public async Task YielderIsNotActiveWhenAsserting()
+	public async Task YielderIsNotActiveDuringAssertions()
 	{
 		await ToSignal(UntilTimeout(0.1), YIELD);
-		bool result = (bool) Yielder.Call("is_active");
-		Assert.IsTrue(!result, "Then yielder is not active");
+		Assert.IsTrue(! (bool) Yielder.Call("is_active"));
 	}
-	
+
+	[Test]
+	public async Task WhenASignalBeingYieldedOnIsEmittedTheYielderIsStopped()
+	{
+		CallDeferred("emit_signal", nameof(abc));
+		await ToSignal(UntilSignal(this, nameof(abc), 0.3), YIELD);
+		Assert.IsTrue( (bool) Yielder.Call("is_stopped"), "Then the yielder is stopped");
+	}
+
+	[Test]
+	public async Task WhenTheYielderIsFinishedSignalsAreDisconnected()
+	{
+		await ToSignal(UntilSignal(this, nameof(abc), 0.1), YIELD);
+		Assert.IsTrue(!IsConnected(nameof(abc), Yielder, "_on_resume"), "Then the signal is disconnected");
+	}
+
+	[Test]
+	public void WhenWeCallUntilTimeout()
+	{
+		Timer yielder = (Timer) LocalYielder.New();
+		AddChild(yielder);
+		yielder.Call("until_timeout", 1.0);
+		Assert.IsFalse((bool) yielder.Call("is_stopped"), "Then the yielder is not stopped");
+		RemoveChild(yielder);
+		yielder.Free();
+	}
+
+	[Test]
+	public void WhenWeCallUntilSignal()
+	{
+		Timer yielder = (Timer) LocalYielder.New();
+		AddChild(yielder);
+		yielder.Call("until_signal", 1.0, this, nameof(abc));
+		Assert.IsFalse((bool) Yielder.Get("paused"), "Then the yielder is unpaused");
+		Assert.IsTrue(IsConnected(nameof(abc), yielder, "_on_resume"), "Then our signal is connected to the yielder");
+		RemoveChild(yielder);
+		yielder.Free();
+	}
+
 	[Test]
 	public async Task WhenTheYielderTimesOut()
 	{
 		await ToSignal(UntilTimeout(0.1), YIELD);
-		bool paused = (bool) Yielder.Call("get", "paused");
-		bool connected = (bool) Yielder.Call("is_connected", "timeout", Yielder, "_on_resume");
-		Assert.IsTrue(paused, "Then the yielder is paused");
-		Assert.IsTrue(!connected, "The timeout signal of the yielder is not connected");
+		Assert.IsTrue((bool) Yielder.Call("is_stopped"), "Then the yielder is stopped");
 	}
-	
-	[Test]
-	public void WhenWeCallUntilTimeout()
-	{
-		string yPath = "res://addons/WAT/test/yielder.gd";
-		Script script = (Script) ResourceLoader.Load(yPath);
-		Timer yielder = (Timer) script.Call("new");
-		AddChild(yielder);
-		yielder.Call("until_timeout", 1.0F);
-		bool paused = (bool) yielder.Call("get", "paused");
-		bool connected = (bool) yielder.Call("is_connected", "timeout", yielder, "_on_resume");
-		Assert.IsTrue(!paused, "Then yielder is unpaused");
-		Assert.IsTrue(connected, "The timeout signal of the yielder is connected");
-		RemoveChild(yielder);
-		yielder.Call("free");
-	}
-	
-	[Test]
-	public async Task WhenASignalBeingYieldedOnIsEmittedTheYielderIsStopped()
-	{
-		CallDeferred("emit_signal", "abc");
-		await ToSignal(UntilSignal(this, "abc", 0.3), YIELD);
-		bool paused = (bool) Yielder.Call("get", "paused");
-		Assert.IsTrue(paused, "Then the yielder is paused");
-	}
-	
-	[Test]
-	public async Task WhenYielderIsFinishedSignalsAreDisconnected()
-	{
-		await ToSignal(UntilSignal(this, "abc", 0.1), YIELD);
-		bool connected = (bool) Yielder.Call("is_connected", "timeout", Yielder, "_on_resume");
-		bool connected2 = IsConnected("abc", Yielder, "_on_resume");
-		Assert.IsTrue(!connected, "Then the timeout signal is disconnected");
-		Assert.IsTrue(!connected2, "Then the signal signal is disconnected");
-	}
-	
-	[Test]
-	public void WhenWeCallUntilSignal()
-	{
-		String yPath = "res://addons/WAT/test/yielder.gd";
-		Script script = (Script)ResourceLoader.Load(yPath);
-		Timer yielder = (Timer)script.Call("new");
-		AddChild(yielder);
-		yielder.Call("until_signal", 1.0, this, "abc");
-		bool paused = (bool)yielder.Call("get", "paused");
-		bool connected = (bool)yielder.Call("is_connected", "timeout", yielder, "_on_resume");
-		bool this_connected = IsConnected("abc", yielder, "_on_resume");
-		Assert.IsTrue(!paused, "Then the yielder is unpaused");
-		Assert.IsTrue(connected, "Then the timeout signal of the yielder is connected");
-		Assert.IsTrue(this_connected, "Then our signal is connected to the yielder");
-		RemoveChild(yielder);
-		yielder.Call("free");
-	}
-	
+
 	[Test]
 	public async Task WhenTheYielderHearsOurSignal()
 	{
-		CallDeferred("emit_signal", "abc");
-		await ToSignal(UntilSignal(this, "abc", 0.1), YIELD);
-		bool paused = (bool) Yielder.Call("get", "paused");
-		bool connected = (bool) Yielder.Call("is_connected", "timeout", Yielder, "_on_resume");
-		bool our_connected = IsConnected("abc", Yielder, "_on_resume");
-		Assert.IsTrue(paused, "Then the yielder is paused");
-		Assert.IsTrue(!connected, "Then the timeout signal of the yielder is disconnected");
-		Assert.IsTrue(!our_connected, "Then our signal to the yielder is disconnected");
+		CallDeferred("emit_signal", nameof(abc));
+		await ToSignal(UntilSignal(this, nameof(abc), 0.1), YIELD);
+		Assert.IsTrue((bool) Yielder.Call("is_stopped"), "Then the yielder is stopped");
+		Assert.IsTrue(! Yielder.IsConnected(nameof(abc), Yielder, "_on_resume"), "Then our signal to the yielder is disconnected");
 	}
 }

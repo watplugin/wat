@@ -95,5 +95,21 @@
     <Content Include="addons\WAT\ui\result_tree.gd" />
     <Content Include="addons\WAT\ui\summary.gd" />
     <Content Include="addons\WAT\ui\test_menu.gd" />
+    <Content Include="tests\unit\assertthat.test.gd" />
+    <Content Include="tests\unit\boolean.test.gd" />
+    <Content Include="tests\unit\equality.test.gd" />
+    <Content Include="tests\unit\file.test.gd" />
+    <Content Include="tests\unit\has.test.gd" />
+    <Content Include="tests\unit\is_instance.test.gd" />
+    <Content Include="tests\unit\is_not_instance.test.gd" />
+    <Content Include="tests\unit\null.test.gd" />
+    <Content Include="tests\unit\object.test.gd" />
+    <Content Include="tests\unit\parameters.test.gd" />
+    <Content Include="tests\unit\range.test.gd" />
+    <Content Include="tests\unit\string.test.gd" />
+    <Content Include="tests\unit\supersimple.gd" />
+    <Content Include="tests\unit\test.test.gd" />
+    <Content Include="tests\unit\watcher.test.gd" />
+    <Content Include="tests\unit\yield.test.gd" />
   </ItemGroup>
 </Project>
