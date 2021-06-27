@@ -8,7 +8,6 @@ func test_double_scene_exported_values_StringPath() -> void:
 	describe("When we double a scene via path with exported values")
 	var director = direct.scene("res://Test.tscn")
 	var double = director.double()
-	var original_value = double.age
 	asserts.is_equal(double.age, 5, "Then their value is equal to the exported value")
 
 func test_double_scene_exported_values_PackedScene() -> void:

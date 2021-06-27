@@ -62,7 +62,6 @@ func _update(testdir: TestDirectory) -> void:
 	var relative_path: String = dir.get_next()
 	while relative_path != "":
 		var absolute_path: String = "%s/%s" % [testdir.path, relative_path]
-		print(absolute_path)
 		if dir.dir_exists(absolute_path):
 			subdirs.append(TestDirectory.new(absolute_path))
 		
@@ -133,9 +132,7 @@ func _get_test_script(dir: String, path: String) -> TestScript:
 	return test
 	
 func add_test_to_tag(test: TestScript, tag: String) -> void:
-	print("Adding %s to %s" % [test, tag])
 	tags[tag].tests.append(test)
-	print(tags[tag].tests)
 	
 func remove_test_from_tag(test: TestScript, tag: String) -> void:
 	tags[tag].tests.erase(test)

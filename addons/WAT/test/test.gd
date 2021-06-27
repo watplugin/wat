@@ -1,21 +1,24 @@
 extends Node
 class_name WATTest
 
-#const Assertions: Script = preload("res://addons/WAT/assertions/assertions.gd")
 const TEST: bool = true
 const YIELD: String = "finished"
 signal described
 signal cancelled
-var asserts = preload("res://addons/WAT/assertions/assertions.gd").new()
-var parameters: Reference
-var recorder: Script
-var any: Script
-var watcher
+
+
 var rerun_method: bool
-var direct: Object
 var yielder: Timer
 var p: Dictionary
 var _last_assertion_passed: bool = false
+
+var recorder: Script = preload("res://addons/WAT/test/recorder.gd")
+var any: Script = preload("res://addons/WAT/test/any.gd")
+var asserts = preload("res://addons/WAT/assertions/assertions.gd").new()
+var direct = preload("res://addons/WAT/double/factory.gd").new()
+var _parameters = preload("res://addons/WAT/test/parameters.gd").new()
+var _watcher = preload("res://addons/WAT/test/watcher.gd").new()
+var _registry = preload("res://addons/WAT/double/registry.gd").new()
 
 func _on_last_assertion(assertion: Dictionary) -> void:
 	_last_assertion_passed = assertion["success"]
@@ -24,7 +27,9 @@ func previous_assertion_failed() -> bool:
 	return not _last_assertion_passed
 
 func _ready() -> void:
-	p = parameters.parameters
+	p = _parameters.parameters
+	direct.registry = _registry
+	add_child(direct)
 
 func start():
 	pass
@@ -42,10 +47,10 @@ func any():
 	return any.new()
 	
 func watch(emitter, event: String) -> void:
-	watcher.watch(emitter, event)
+	_watcher.watch(emitter, event)
 	
 func unwatch(emitter, event: String) -> void:
-	watcher.unwatch(emitter, event)
+	_watcher.unwatch(emitter, event)
 	
 func record(who: Object, properties: Array) -> Node:
 	var record = recorder.new()
@@ -78,7 +83,7 @@ func path() -> String:
 	return get_script().get_path()
 	
 func parameters(list: Array) -> void:
-	rerun_method = parameters.parameters(list)
+	rerun_method = _parameters.parameters(list)
 	
 func until_signal(emitter: Object, event: String, time_limit: float) -> Node:
 	watch(emitter, event)
@@ -94,3 +99,9 @@ func methods() -> PoolStringArray:
 		if method.name.begins_with("test"):
 			output.append(method.name)
 	return output
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		_registry.clear()
+		_registry.free()
+		_watcher.clear()

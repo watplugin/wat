@@ -15,10 +15,9 @@ extends WAT.Test
 
 func test_deleted_resource_has_no_res_path() -> void:
 	var resource: Resource = Resource.new()
-	ResourceSaver.save("res://test.tres", resource)
+	var _err: int = ResourceSaver.save("res://test.tres", resource)
 	yield(get_tree(), "idle_frame")
 	var source: String = "res://test.tres"
-	var first: Resource = load(source)
-	Directory.new().remove(source)
+	var _errx: int = Directory.new().remove(source)
 	asserts.is_equal(resource.resource_path, "", 
 		"A deleted resource has no resource_path")
