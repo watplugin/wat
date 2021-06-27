@@ -19,16 +19,16 @@ class TestDirectory extends Reference:
 class TestScript extends Reference:
 	var directory: String
 	var path: String
-	var gdscript: GDScript
+	var gdscript: Script
 	var method_names: Array = []
 	var methods: Array = []
 	var yield_time: float = 0.0
 	var tags: Array = []
 	var name: String
 	
-	func _init(dir: String, _path: String, _gdscript: GDScript) -> void:
+	func _init(dir: String, _path: String, _script: Script) -> void:
 		path = _path
-		gdscript = _gdscript
+		gdscript = _script
 		directory = dir
 		name = _path
 		
@@ -45,13 +45,13 @@ class TestScript extends Reference:
 class TestMethod extends Reference:
 	var dir: String = ""
 	var path: String
-	var gdscript: GDScript
+	var gdscript: Script
 	var method_names: PoolStringArray
 	var name: String
 	
-	func _init(_dir: String, _path: String, _gdscript: GDScript, _name: String) -> void:
+	func _init(_dir: String, _path: String, _script: Script, _name: String) -> void:
 		path = _path
-		gdscript = _gdscript
+		gdscript = _script
 		method_names = [_name]
 		name = _name
 		

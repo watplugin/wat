@@ -3,7 +3,6 @@ extends Node
 const Log: Script = preload("res://addons/WAT/log.gd")
 const Test: Script = preload("res://addons/WAT/test/test.gd")
 const Case: Script = preload("res://addons/WAT/test/case.gd")
-const Assertions: Script = preload("res://addons/WAT/assertions/assertions.gd")
 const Parameters: Script = preload("res://addons/WAT/test/parameters.gd")
 const Recorder: Script = preload("res://addons/WAT/test/recorder.gd")
 const Watcher: Script = preload("res://addons/WAT/test/watcher.gd")
@@ -14,12 +13,11 @@ const Yielder: Script = preload("res://addons/WAT/test/yielder.gd")
 const COMPLETED: String = "completed"
 signal completed
 
-var _test: Test
+var _test: Node #Test
 var _case: Node
 var _cursor: int = -1
 var _methods: PoolStringArray = []
 var _current_method: String
-var _assertions: Assertions
 var _parameters: Parameters
 var _watcher: Watcher
 var _director: Director
@@ -27,7 +25,6 @@ var _registry: Registry
 var _yielder: Yielder
 
 func _init() -> void:
-	_assertions = Assertions.new()
 	_parameters = Parameters.new()
 	_watcher = Watcher.new()
 	_director = Director.new()
@@ -36,18 +33,19 @@ func _init() -> void:
 	_director.registry = _registry
 	add_child(_director)
 	add_child(_yielder)
-#	_yielder.connect("finished", self, "_next")
-
+	
 func run(test: Dictionary) -> void:
+	print("Running ", test["gdscript"], test["name"], test["path"])
 	Log.method("run", self)
-	_test = test["gdscript"].new()
+	#_test = test["gdscript"].call("new") #//.new()
+	_test = load(test["path"]).new()
+	print(_test, " is valid")
 	_case = Case.new(_test, test)
-	_test.asserts = _assertions
-	_test.parameters = _parameters
+	_test.parameters = _parameters # We use attributes in C# (Our system is built around with hooks?)
 	_test.recorder = Recorder
-	_test.watcher = _watcher
-	_test.direct = _director
-	_test.yielder = _yielder
+	_test.watcher = _watcher 
+	_test.direct = _director # Not Available in CSharp
+	_test.yielder = _yielder # Requires CSharp Version
 	_test.any = Any
 	if test.has("method"):
 		_methods.append(test["method"])
@@ -59,11 +57,12 @@ func run(test: Dictionary) -> void:
 		return
 	_test.connect("cancelled", self, "_on_test_cancelled")
 	_test.connect("described", _case, "_on_test_method_described")
-	_assertions.connect("asserted", _case, "_on_asserted")
-	_assertions.connect("asserted", _test, "_on_last_assertion")
+	_test.asserts.connect("asserted", _case, "_on_asserted")
+	_test.asserts.connect("asserted", _test, "_on_last_assertion")
 	add_child(_test)
 	
 	# Core run
+	print("running test")
 	var cursor = -1
 	yield(call_function("start"), COMPLETED)
 	for function in _methods:
@@ -72,8 +71,8 @@ func run(test: Dictionary) -> void:
 		for hook in ["pre", "execute", "post"]:
 			yield(call_function(hook, cursor), COMPLETED)
 	yield(call_function("end"), COMPLETED)
+	print("test ended")
 	
-#	_test = {}
 	_test.queue_free()
 	return get_results()
 	
@@ -96,7 +95,6 @@ func get_results() -> Dictionary:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		_registry.clear()
-		_assertions.free()
 		_registry.free()
 		# _director.free(), This gets freed automatically because it is a child now
 		_watcher.clear()

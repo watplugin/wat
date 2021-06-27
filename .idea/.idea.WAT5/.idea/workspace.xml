@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Node.gd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Node.tscn" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Nodex.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/Assertion.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/Assertions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/Boolean.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/Equality.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/File.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/Is.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/ObjectX.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/Property.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/Range.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/Signal.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/StringX.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/Utility.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/test/logs/godot.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WAT5.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WAT5.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/assertions/assertion.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/assertions/assertion.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/filesystem/filesystem.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/filesystem/filesystem.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/filesystem/objects.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/filesystem/objects.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/filesystem/yield_calculator.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/filesystem/yield_calculator.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/runner/test_controller.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/runner/test_controller.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/test/test.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/test/test.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/results.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <changedPaths>
+      <option value="$PROJECT_DIR$/addons/WAT/filesystem/filesystem.gd" />
+      <option value="$PROJECT_DIR$/addons/WAT/mono/TestController.cs" />
+      <option value="$PROJECT_DIR$/addons/WAT/test/test.gd" />
+      <option value="$PROJECT_DIR$/addons/WAT/mono/assertions/Assertions.cs" />
+      <option value="$PROJECT_DIR$/addons/WAT/assertions/assertion.gd" />
+      <option value="$PROJECT_DIR$/tests/unitMono/SimpleTest.cs" />
+      <option value="$PROJECT_DIR$/Node.cs" />
+      <option value="$PROJECT_DIR$/Nodex.cs" />
+      <option value="$PROJECT_DIR$/Node.gd" />
+      <option value="$PROJECT_DIR$/addons/WAT/runner/test_controller.gd" />
+      <option value="$PROJECT_DIR$/addons/WAT/mono/Test.cs" />
+    </changedPaths>
+  </component>
+  <component name="ProjectId" id="1uUfeRRvNHRfBeX2hqDT0vIRWyt" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager" selected="Godot.test">
+    <configuration name="Attach to Player" type="ConnectRemote" factoryName="Mono Remote" show_console_on_std_err="false" show_console_on_std_out="false" port="23685" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+    <configuration name="Editor" type="GODOT_DEBUG_RUN_CONFIGURATION" factoryName="Start and Debug">
+      <option name="EXE_PATH" value="$USER_HOME$/GameEngines/Godot/3.3_Mono/3.3_Mono.exe" />
+      <option name="PROGRAM_PARAMETERS" value="--path &quot;$PROJECT_DIR$&quot; --editor" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2">
+        <option name="Build Solution" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Player" type="GODOT_DEBUG_RUN_CONFIGURATION" factoryName="Start and Debug">
+      <option name="EXE_PATH" value="$USER_HOME$/GameEngines/Godot/3.3_Mono/3.3_Mono.exe" />
+      <option name="PROGRAM_PARAMETERS" value="--path &quot;$PROJECT_DIR$&quot;" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2">
+        <option name="Build Solution" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WATSharpGui" type="GODOT_DEBUG_RUN_CONFIGURATION" factoryName="Start and Debug">
+      <option name="EXE_PATH" value="$USER_HOME$/GameEngines/Godot/3.3_Mono/3.3_Mono.exe" />
+      <option name="PROGRAM_PARAMETERS" value="--path &quot;$PROJECT_DIR$&quot; &quot;res://addons/WAT/gui.tscn&quot;" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2">
+        <option name="Build Solution" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test" type="godotConfiguration" factoryName="Godot" temporary="true" executable="godot" workingDirectory="$PROJECT_DIR$/addons/WAT/test" parameters="--script test.gd">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Godot.test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="" />
+      <created>1624725202685</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1624725202685</updated>
+      <workItem from="1624725236584" duration="659000" />
+      <workItem from="1624737732992" duration="190000" />
+      <workItem from="1624738138496" duration="1533000" />
+      <workItem from="1624745832210" duration="2498000" />
+      <workItem from="1624786263138" duration="6323000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>

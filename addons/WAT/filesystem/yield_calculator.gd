@@ -6,7 +6,7 @@ const POST_HOOK: String = "func post()"
 const FUNCTION: String = "func"
 const OPENING_STRING_QUOTE: String = '"'
 
-static func calculate_yield_time(gdscript: GDScript, test_method_count: int) -> float:
+static func calculate_yield_time(gdscript: Script, test_method_count: int) -> float:
 	var time: float = 0.0
 	var floats: PoolRealArray = PoolRealArray()
 	var in_hook: bool = false

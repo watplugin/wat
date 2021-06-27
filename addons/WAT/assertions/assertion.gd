@@ -13,7 +13,7 @@ static func _result(success: bool, expected: String, actual: String, context: St
 			 "actual": actual,
 			 "context": context
 			}
-		
+			
 static func type2str(property) -> String:
 	match typeof(property):
 		TYPE_NIL:

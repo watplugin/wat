@@ -6,7 +6,7 @@ const TEST: bool = true
 const YIELD: String = "finished"
 signal described
 signal cancelled
-var asserts #: Assertions
+var asserts = preload("res://addons/WAT/assertions/assertions.gd").new()
 var parameters: Reference
 var recorder: Script
 var any: Script
