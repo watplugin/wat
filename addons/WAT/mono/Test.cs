@@ -34,8 +34,10 @@ namespace WAT
 		}
 		public Test setup(Dictionary<string, object> metadata)
 		{
-			Console.WriteLine(metadata["methods"].GetType());
-			_methods = (Godot.Collections.Array) metadata["methods"];
+			_methods = metadata["methods"] is string[] method
+				? new Godot.Collections.Array { string.Join("", method) }
+				: (Godot.Collections.Array) metadata["methods"];
+			
 			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(this, metadata);
 			return this;
 		}
@@ -67,10 +69,6 @@ namespace WAT
 		private string title() { return Title(); }
 		public virtual string Title() { return GetType().Name; }
 
-		// public virtual async Task? Start() { await Task.Run(() => { });}
-		// public virtual async Task? Pre() { await Task.Run(() => { }); }
-		// public virtual async Task? Post() { }
-		// protected virtual async Task? End() {}
 		protected Timer UntilTimeout(double time) { return (Timer) Yielder.Call("until_timeout", time); }
 
 		protected Timer UntilSignal(Godot.Object emitter, string signal, double time)
@@ -94,16 +92,10 @@ namespace WAT
 			_case.Free();
 			return results;
 		}
-		// protected Timer UntilSignal(Godot.Object emitter, string signal, double time)
-		// {
-		// 	watcher.Call("watch", emitter, signal);
-		// 	return (Timer) yielder.Call("until_signal", time, emitter, signal);
-		// }
-		//
+
 		// protected void Watch(Godot.Object emitter, string signal) { watcher.Call("watch", emitter, signal); }
 		// protected void UnWatch(Godot.Object emitter, string signal) { watcher.Call("unwatch", emitter, signal); }
-
-
+		
 		private Array<string> GetTestMethods()
 		{
 			return new Array<string>(GetType().GetMethods()
