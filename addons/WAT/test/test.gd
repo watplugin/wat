@@ -5,11 +5,10 @@ const COMPLETED: String = "completed"
 const TEST: bool = true
 const YIELD: String = "finished"
 signal described
-signal cancelled
 signal completed
+signal executed
 
 var rerun_method: bool
-var yielder: Timer
 var p: Dictionary
 var _last_assertion_passed: bool = false
 signal method_begun
@@ -21,19 +20,25 @@ var direct = preload("res://addons/WAT/double/factory.gd").new()
 var _parameters = preload("res://addons/WAT/test/parameters.gd").new()
 var _watcher = preload("res://addons/WAT/test/watcher.gd").new()
 var _registry = preload("res://addons/WAT/double/registry.gd").new()
+var _yielder: Timer = preload("res://addons/WAT/test/yielder.gd").new()
+var _case
 var _methods = []
 
-func run(methods):
-	_methods = methods()
+func setup(metadata: Dictionary) -> Node:
+	_methods = metadata["methods"]
+	_case = preload("res://addons/WAT/test/case.gd").new(self, metadata)
+	return self
+
+func run():
 	var cursor = -1
 	yield(call_function("start"), COMPLETED)
 	for function in _methods:
 		if not rerun_method:
 			cursor += 1
 		for hook in ["pre", "execute", "post"]:
-			print(hook)
 			yield(call_function(hook, cursor), COMPLETED)
 	yield(call_function("end"), COMPLETED)
+	emit_signal("executed")
 	
 func call_function(function, cursor = 0):
 	var s = call(function) if function != "execute" else execute(cursor)
@@ -41,9 +46,8 @@ func call_function(function, cursor = 0):
 	yield(s, COMPLETED) if s is GDScriptFunctionState else yield(self, COMPLETED)
 
 func execute(cursor: int):
-	print("executing ", _methods[cursor])
 	var _current_method: String = _methods[cursor]
-	emit_signal("method_begun", _current_method)
+	_case.add_method(_current_method)
 	return call(_current_method)
 
 func _on_last_assertion(assertion: Dictionary) -> void:
@@ -55,7 +59,13 @@ func previous_assertion_failed() -> bool:
 func _ready() -> void:
 	p = _parameters.parameters
 	direct.registry = _registry
+	# May be better just as a property on asserts itself
+	asserts.connect("asserted", self, "_on_last_assertion")
 	add_child(direct)
+	add_child(_yielder)
+	print(_yielder)
+	connect("described", _case, "_on_test_method_described")
+	asserts.connect("asserted", _case, "_on_asserted")
 
 func start():
 	pass
@@ -113,10 +123,10 @@ func parameters(list: Array) -> void:
 	
 func until_signal(emitter: Object, event: String, time_limit: float) -> Node:
 	watch(emitter, event)
-	return yielder.until_signal(time_limit, emitter, event)
+	return _yielder.until_signal(time_limit, emitter, event)
 
 func until_timeout(time_limit: float) -> Node:
-	return yielder.until_timeout(time_limit)
+	return _yielder.until_timeout(time_limit)
 	
 func methods() -> PoolStringArray:
 	# In future, this may be done in a container else where
@@ -125,6 +135,12 @@ func methods() -> PoolStringArray:
 		if method.name.begins_with("test"):
 			output.append(method.name)
 	return output
+	
+func get_results() -> Dictionary:
+	_case.calculate()
+	var results: Dictionary = _case.to_dictionary()
+	_case.free()
+	return results
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:

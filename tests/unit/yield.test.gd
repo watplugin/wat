@@ -59,19 +59,19 @@ func yield_value() -> int:
 func test_Yielder_is_not_active_when_asserting():
 	describe("When asserting against a test")
 	yield(until_timeout(0.1), YIELD)
-	asserts.is_true(not yielder.is_active(), "Then yielder is not active")
+	asserts.is_true(not _yielder.is_active(), "Then yielder is not active")
 
 func test_When_a_signal_being_yielded_on_is_emitted_the_yielder_is_stopped():
 	describe("When a signal being yielded on is emitted")
 	call_deferred("emit_signal", "abc")
 	yield(until_signal(self, "abc", 0.3), YIELD)
-	asserts.is_true(yielder.is_stopped(), "Then the yielder is stopped")
+	asserts.is_true(_yielder.is_stopped(), "Then the yielder is stopped")
 
 func test_When_yielder_is_finished_signals_are_disconnected():
 	describe("When it is finished")
 
 	yield(until_signal(self, "abc", 0.1), YIELD)
-	asserts.is_true(not is_connected("abc", yielder, "_on_resume"), "Then the signal-signal is disconnected")
+	asserts.is_true(not is_connected("abc", _yielder, "_on_resume"), "Then the signal-signal is disconnected")
 #
 func test_When_we_call_until_timeout() -> void:
 	describe("When we call until_timeout (with 1.0)")
@@ -96,12 +96,12 @@ func test_When_we_call_until_signal() -> void:
 func test_When_the_yielder_times_out() -> void:
 	describe("When the yielder times out on until_timeout(0.1)")
 	yield(until_timeout(0.1), YIELD)
-	asserts.is_true(yielder.is_stopped(), "Then the yielder is stopped")
+	asserts.is_true(_yielder.is_stopped(), "Then the yielder is stopped")
 
 func test_When_the_yielder_hears_our_signal() -> void:
 	describe("When the yielder heres our signal")
 
 	call_deferred("emit_signal", "abc")
 	yield(until_signal(self, "abc", 0.1), YIELD)
-	asserts.is_true(yielder.is_stopped(), "Then the yielder is stopped")
-	asserts.is_true(not is_connected("abc", yielder, "_on_resume"), "Then our signal to the yielder is disconnected")
+	asserts.is_true(_yielder.is_stopped(), "Then the yielder is stopped")
+	asserts.is_true(not is_connected("abc", _yielder, "_on_resume"), "Then our signal to the yielder is disconnected")

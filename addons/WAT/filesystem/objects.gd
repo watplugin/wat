@@ -54,6 +54,7 @@ class TestMethod extends Reference:
 		gdscript = _script
 		method_names = [_name]
 		name = _name
+		dir = _dir
 		
 	func get_tests() -> Array:
 		return [{
