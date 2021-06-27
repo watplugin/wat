@@ -60,10 +60,7 @@ namespace WAT
 
 		private async Task? Execute(string method)
 		{
-			if (GetType().GetMethod(method)?.Invoke(this, null) is Task task)
-			{
-				await task;
-			}
+			if (GetType().GetMethod(method)?.Invoke(this, null) is Task task) { await task; }
 		}
 
 		protected void Describe(string description) {EmitSignal(nameof(Described), description);}
