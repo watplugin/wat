@@ -22,7 +22,7 @@ namespace WAT
 		private Godot.Collections.Array _methods;
 		private Object _case;
 		private static readonly GDScript Any = GD.Load<GDScript>("res://addons/WAT/test/any.gd");
-		private readonly Object _watcher = (Object) GD.Load<GDScript>("res://addons/WAT/test/watcher.gd").New();
+		private readonly Reference _watcher = (Reference) GD.Load<GDScript>("res://addons/WAT/test/watcher.gd").New();
 		private readonly Object _registry = (Object) GD.Load<GDScript>("res://addons/WAT/double/registry.gd").New();
 		protected readonly Node Direct = (Node) GD.Load<GDScript>("res://addons/WAT/double/factory.gd").New();
 		protected readonly Timer Yielder = (Timer) GD.Load<GDScript>("res://addons/WAT/test/yielder.gd").New();
@@ -76,7 +76,7 @@ namespace WAT
 
 		protected SignalAwaiter UntilSignal(Godot.Object emitter, string signal, double time)
 		{
-			//watcher.Call("watch", emitter, signal);
+			_watcher.Call("watch", emitter, signal);
 			return ToSignal((Timer) Yielder.Call("until_signal", time, emitter, signal), YIELD);
 		}
 		public override void _Ready()
@@ -96,8 +96,8 @@ namespace WAT
 			return results;
 		}
 
-		// protected void Watch(Godot.Object emitter, string signal) { watcher.Call("watch", emitter, signal); }
-		// protected void UnWatch(Godot.Object emitter, string signal) { watcher.Call("unwatch", emitter, signal); }
+		protected void Watch(Godot.Object emitter, string signal) { _watcher.Call("watch", emitter, signal); }
+		protected void UnWatch(Godot.Object emitter, string signal) { _watcher.Call("unwatch", emitter, signal); }
 		
 		private Array<string> GetTestMethods()
 		{

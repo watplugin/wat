@@ -15,8 +15,8 @@ namespace WAT
 		{
 			var passed = $"Signal {signal} was emitted from {emitter}";
 			var failed = $"Signal {signal} was not emitted from {emitter}";
-			
-			var watcher = (Reference) emitter.GetMeta("watcher");
+
+			var watcher = (Reference) emitter.Call("get_meta", "watcher");
 			var success = (int) watcher.Call("get_emit_count", signal) > 0;
 			var result = success ? passed : failed;
 
@@ -28,7 +28,7 @@ namespace WAT
 			var passed = $"Signal {signal} was not emitted from {emitter}";
 			var failed = $"Signal {signal} was emitted from {emitter}";
 			
-			var watcher = (Object) emitter.GetMeta("watcher");
+			var watcher = (Reference) emitter.GetMeta("watcher");
 			var success = (int) watcher.Call("get_emit_count", signal) <= 0;
 			var result = success ? passed : failed;
 
@@ -40,7 +40,7 @@ namespace WAT
 			var passed = $"Signal {signal} was emitted {times} times from {emitter}";
 			var failed = $"Signal {signal} was not emitted {times} times from {emitter}";
 			
-			var watcher = (Object) emitter.GetMeta("watcher");
+			var watcher = (Reference) emitter.GetMeta("watcher");
 			var success = (int) watcher.Call("get_emit_count", signal) == times;
 			var result = success ? passed : failed;
 
@@ -55,7 +55,7 @@ namespace WAT
 
 			var success = false;
 			var result = "";
-			var watcher = (Object) emitter.GetMeta("watcher");
+			var watcher = (Reference) emitter.GetMeta("watcher");
 			var data = (IDictionary) watcher.Call("get_data", signal);
 			if ((int) data["emit_count"] <= 0)
 			{

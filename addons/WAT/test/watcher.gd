@@ -27,6 +27,9 @@ func unwatch(emitter, event: String) -> void:
 		watching.erase(event)
 		emitter.set_meta("watcher", null)
 		
+func get_emit_count(event: String) -> int:
+	return watching[event]["emit_count"]
+		
 func clear() -> void:
 	pass
 	for object in _objects:

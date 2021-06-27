@@ -9,7 +9,7 @@ namespace WAT {
 		// ReSharper disable once InconsistentNaming
 		[Signal] public delegate void asserted();
 		
-		public Assertions() { }
+		public Assertions(){}
 
 		private void Output(Godot.Collections.Dictionary result)
 		{
