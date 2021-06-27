@@ -21,19 +21,19 @@ public class YieldTest : WAT.Test
 
 	public async Task Start()
 	{
-		await ToSignal(UntilTimeout(0.1), YIELD);
+		await UntilTimeout(0.1);
 		a = true;
-		await ToSignal(UntilTimeout(0.1), YIELD);
+		await UntilTimeout(0.1);
 		b = true;
 	}
 
 	public async Task Pre()
 	{
-		await ToSignal(UntilTimeout(0.1), YIELD);
+		await UntilTimeout(0.1);
 		c = true;
-		await ToSignal(UntilTimeout(0.1), YIELD);
+		await UntilTimeout(0.1);
 		d = true;
-		await ToSignal(UntilTimeout(0.1), YIELD);
+		await UntilTimeout(0.1);
 	}
 
 	[Test]
@@ -53,9 +53,9 @@ public class YieldTest : WAT.Test
 	[Test]
 	public async Task WhenWeYieldInExecute()
 	{
-		await ToSignal(UntilTimeout(0.1), YIELD);
+		await UntilTimeout(0.1);
 		e = true;
-		await ToSignal(UntilTimeout(0.1), YIELD);
+		await UntilTimeout(0.1);
 		f = true;
 		Assert.IsTrue(e, "Then we set var e to true");
 		Assert.IsTrue(f, "Then we set var f to true");
@@ -64,7 +64,7 @@ public class YieldTest : WAT.Test
 	[Test]
 	public async Task YielderIsNotActiveDuringAssertions()
 	{
-		await ToSignal(UntilTimeout(0.1), YIELD);
+		await UntilTimeout(0.1);
 		Assert.IsTrue(! (bool) Yielder.Call("is_active"));
 	}
 
@@ -72,14 +72,14 @@ public class YieldTest : WAT.Test
 	public async Task WhenASignalBeingYieldedOnIsEmittedTheYielderIsStopped()
 	{
 		CallDeferred("emit_signal", nameof(abc));
-		await ToSignal(UntilSignal(this, nameof(abc), 0.3), YIELD);
+		await UntilSignal(this, nameof(abc), 0.3);
 		Assert.IsTrue( (bool) Yielder.Call("is_stopped"), "Then the yielder is stopped");
 	}
 
 	[Test]
 	public async Task WhenTheYielderIsFinishedSignalsAreDisconnected()
 	{
-		await ToSignal(UntilSignal(this, nameof(abc), 0.1), YIELD);
+		await UntilSignal(this, nameof(abc), 0.1);
 		Assert.IsTrue(!IsConnected(nameof(abc), Yielder, "_on_resume"), "Then the signal is disconnected");
 	}
 
@@ -109,7 +109,7 @@ public class YieldTest : WAT.Test
 	[Test]
 	public async Task WhenTheYielderTimesOut()
 	{
-		await ToSignal(UntilTimeout(0.1), YIELD);
+		await UntilTimeout(0.1);
 		Assert.IsTrue((bool) Yielder.Call("is_stopped"), "Then the yielder is stopped");
 	}
 
@@ -117,7 +117,7 @@ public class YieldTest : WAT.Test
 	public async Task WhenTheYielderHearsOurSignal()
 	{
 		CallDeferred("emit_signal", nameof(abc));
-		await ToSignal(UntilSignal(this, nameof(abc), 0.1), YIELD);
+		await UntilSignal(this, nameof(abc), 0.1);
 		Assert.IsTrue((bool) Yielder.Call("is_stopped"), "Then the yielder is stopped");
 		Assert.IsTrue(! Yielder.IsConnected(nameof(abc), Yielder, "_on_resume"), "Then our signal to the yielder is disconnected");
 	}

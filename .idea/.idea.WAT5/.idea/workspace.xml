@@ -4,6 +4,7 @@
     <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/mono/YieldTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/mono/YieldTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/results.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -122,7 +123,7 @@
       <workItem from="1624745832210" duration="2498000" />
       <workItem from="1624786263138" duration="8262000" />
       <workItem from="1624795895192" duration="1792000" />
-      <workItem from="1624804676447" duration="16044000" />
+      <workItem from="1624804676447" duration="16493000" />
     </task>
     <servers />
   </component>

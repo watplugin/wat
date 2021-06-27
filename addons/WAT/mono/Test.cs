@@ -16,7 +16,7 @@ namespace WAT
 		[Signal] public delegate void executed();
 		[Signal] public delegate void Described();
 
-		protected const string YIELD = "finished";
+		private const string YIELD = "finished";
 		private const bool TEST = true;
 		private const int Recorder = 0; // Apparently we require the C# Version
 		private Godot.Collections.Array _methods;
@@ -69,12 +69,15 @@ namespace WAT
 		private string title() { return Title(); }
 		public virtual string Title() { return GetType().Name; }
 
-		protected Timer UntilTimeout(double time) { return (Timer) Yielder.Call("until_timeout", time); }
+		protected SignalAwaiter UntilTimeout(double time)
+		{
+			return ToSignal((Timer) Yielder.Call("until_timeout", time), YIELD);
+		}
 
-		protected Timer UntilSignal(Godot.Object emitter, string signal, double time)
+		protected SignalAwaiter UntilSignal(Godot.Object emitter, string signal, double time)
 		{
 			//watcher.Call("watch", emitter, signal);
-			return (Timer) Yielder.Call("until_signal", time, emitter, signal);
+			return ToSignal((Timer) Yielder.Call("until_signal", time, emitter, signal), YIELD);
 		}
 		public override void _Ready()
 		{
