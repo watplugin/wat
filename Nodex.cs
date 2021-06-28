@@ -9,11 +9,4 @@ public class Nodex : Godot.Node
 	{
 		
 	}
-	
-	public async Task Wait()
-	{
-		GD.Print("Hey");
-		//return ToSignal(this, "ready");
-		//GD.Print("Bye");
-	}
 }

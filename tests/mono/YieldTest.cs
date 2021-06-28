@@ -19,21 +19,23 @@ public class YieldTest : WAT.Test
 		return "Given a Yield";
 	}
 
-	public async Task Start()
+	public override async Task Start(Task task)
 	{
-		await UntilTimeout(0.1);
+		await UntilTimeout(3);
 		a = true;
-		await UntilTimeout(0.1);
+		await UntilTimeout(3);
 		b = true;
+		await task;
 	}
 
-	public async Task Pre()
+	public override async Task Pre(Task task)
 	{
 		await UntilTimeout(0.1);
 		c = true;
 		await UntilTimeout(0.1);
 		d = true;
 		await UntilTimeout(0.1);
+		await task;
 	}
 
 	[Test]

@@ -19,7 +19,7 @@ namespace WAT
 		private const string YIELD = "finished";
 		private const bool TEST = true;
 		private const int Recorder = 0; // Apparently we require the C# Version
-		private Godot.Collections.Array _methods;
+		private Godot.Collections.Array _methods = new Godot.Collections.Array();
 		private Object _case;
 		private static readonly GDScript Any = GD.Load<GDScript>("res://addons/WAT/test/any.gd");
 		private readonly Reference _watcher = (Reference) GD.Load<GDScript>("res://addons/WAT/test/watcher.gd").New();
@@ -46,17 +46,23 @@ namespace WAT
 		public async void run()
 		{
 			int cursor = 0;
-			await Execute("Start")!;
+			Start();
+			await Start(Task.CompletedTask);
 			while (cursor < _methods.Count)
 			{
 				string currentMethod = (string) _methods[cursor];
 				_case.Call("add_method", currentMethod);
-				await Execute("Pre")!;
+				Pre();
+				await Pre(Task.CompletedTask);
 				await Execute(currentMethod)!;
-				await Execute("Post")!;
+				Post();
+				await Post(Task.CompletedTask);
 				cursor++;
 			}
-			await Execute("End")!;
+
+			End();
+			await End(Task.CompletedTask);
+			
 			EmitSignal(nameof(executed));
 		}
 
@@ -65,6 +71,16 @@ namespace WAT
 			if (GetType().GetMethod(method)?.Invoke(this, null) is Task task) { await task; }
 		}
 
+		public virtual void Start() {}
+		public virtual void Pre() { }
+		public virtual void Post() { }
+		public virtual void End() { }
+
+		public virtual async Task Start(Task task) { await task; }
+		public virtual async Task Pre(Task task) { await task; }
+		public virtual async Task Post(Task task) { await task; }
+		public virtual async Task End(Task task) { await task; }
+		
 		protected void Describe(string description) {EmitSignal(nameof(Described), description);}
 		private string title() { return Title(); }
 		public virtual string Title() { return GetType().Name; }

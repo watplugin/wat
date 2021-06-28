@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/test/watcher.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/test/watcher.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nodex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Nodex.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/mono/WatcherTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/mono/WatcherTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/mono/YieldTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/mono/YieldTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/results.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +31,6 @@
       <option value="$PROJECT_DIR$/addons/WAT/runner/test_controller.gd" />
       <option value="$PROJECT_DIR$/tests/integration/property_member.gd" />
       <option value="$PROJECT_DIR$/tests/integration/resourcex.test.gd" />
-      <option value="$PROJECT_DIR$/Nodex.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/test/test.gd" />
       <option value="$PROJECT_DIR$/tests/unitMono/YieldTest.cs" />
       <option value="$PROJECT_DIR$/tests/unitMono/WatcherTest.cs" />
@@ -39,12 +41,13 @@
       <option value="$PROJECT_DIR$/tests/mono/ObjectTest.cs" />
       <option value="$PROJECT_DIR$/tests/mono/RangeTest.cs" />
       <option value="$PROJECT_DIR$/tests/mono/StringTest.cs" />
-      <option value="$PROJECT_DIR$/tests/mono/YieldTest.cs" />
-      <option value="$PROJECT_DIR$/tests/mono/WatcherTest.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/mono/assertions/Signal.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/mono/assertions/Assertions.cs" />
-      <option value="$PROJECT_DIR$/addons/WAT/mono/Test.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/test/watcher.gd" />
+      <option value="$PROJECT_DIR$/Nodex.cs" />
+      <option value="$PROJECT_DIR$/tests/mono/YieldTest.cs" />
+      <option value="$PROJECT_DIR$/tests/mono/WatcherTest.cs" />
+      <option value="$PROJECT_DIR$/addons/WAT/mono/Test.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1uUfeRRvNHRfBeX2hqDT0vIRWyt" />
@@ -126,6 +129,7 @@
       <workItem from="1624786263138" duration="8262000" />
       <workItem from="1624795895192" duration="1792000" />
       <workItem from="1624804676447" duration="19728000" />
+      <workItem from="1624879400296" duration="2531000" />
     </task>
     <servers />
   </component>
