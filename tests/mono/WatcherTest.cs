@@ -19,20 +19,19 @@ public class WatcherTest : WAT.Test
 		return "Given A Signal Watcher";
 	}
 	
-	public override void Start()
+	public void Start()
 	{
 		// There is no RemoveUserSignal Method apparently.
 		AddUserSignal("Example");
 	}
 	
-	public override void Pre()
+	public void Pre()
 	{
 		Watch(this, "Example");
 	}
 	
-	public override void Post()
+	public void Post()
 	{
-		
 		UnWatch(this, "Example");
 	}
 	

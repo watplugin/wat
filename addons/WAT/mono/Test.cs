@@ -46,23 +46,18 @@ namespace WAT
 		public async void run()
 		{
 			int cursor = 0;
-			Start();
-			await Start(Task.CompletedTask);
+			await Execute("Start")!;
 			while (cursor < _methods.Count)
 			{
 				string currentMethod = (string) _methods[cursor];
 				_case.Call("add_method", currentMethod);
-				Pre();
-				await Pre(Task.CompletedTask);
+				await Execute("Pre")!;
 				await Execute(currentMethod)!;
-				Post();
-				await Post(Task.CompletedTask);
+				await Execute("Post")!;
 				cursor++;
 			}
 
-			End();
-			await End(Task.CompletedTask);
-			
+			await Execute("End")!;
 			EmitSignal(nameof(executed));
 		}
 
@@ -70,16 +65,6 @@ namespace WAT
 		{
 			if (GetType().GetMethod(method)?.Invoke(this, null) is Task task) { await task; }
 		}
-
-		public virtual void Start() {}
-		public virtual void Pre() { }
-		public virtual void Post() { }
-		public virtual void End() { }
-
-		public virtual async Task Start(Task task) { await task; }
-		public virtual async Task Pre(Task task) { await task; }
-		public virtual async Task Post(Task task) { await task; }
-		public virtual async Task End(Task task) { await task; }
 		
 		protected void Describe(string description) {EmitSignal(nameof(Described), description);}
 		private string title() { return Title(); }
