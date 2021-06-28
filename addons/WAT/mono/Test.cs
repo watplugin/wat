@@ -1,10 +1,13 @@
 #nullable enable
 using Godot;
 using System;
+using System.Collections;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Godot.Collections;
+using Array = Godot.Collections.Array;
 using Object = Godot.Object;
 
 namespace WAT 
@@ -12,7 +15,20 @@ namespace WAT
 	
 	public class Test : Node
 	{
-		[AttributeUsage(AttributeTargets.Method)] protected class TestAttribute: Attribute { }
+		[AttributeUsage(AttributeTargets.Method)] 
+		protected class TestAttribute: Attribute { }
+		
+		[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+		protected class RunWith : Attribute
+		{
+			public object[] arguments;
+
+			public RunWith(params object[] args)
+			{
+				arguments = args;
+			}
+		}
+		
 		[Signal] public delegate void executed();
 		[Signal] public delegate void Described();
 
@@ -35,8 +51,8 @@ namespace WAT
 		public Test setup(Dictionary<string, object> metadata)
 		{
 			_methods = metadata["methods"] is string[] method
-				? new Godot.Collections.Array { string.Join("", method) }
-				: (Godot.Collections.Array) metadata["methods"];
+				? GenerateTestMethods( string.Join("", method))
+				: GenerateTestMethods((Godot.Collections.Array) metadata["methods"]);
 			
 			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(this, metadata);
 			return this;
@@ -49,10 +65,11 @@ namespace WAT
 			await Execute("Start")!;
 			while (cursor < _methods.Count)
 			{
-				string currentMethod = (string) _methods[cursor];
-				_case.Call("add_method", currentMethod);
+				Dictionary currentMethod = (Dictionary) _methods[cursor];
+				_case.Call("add_method", currentMethod["name"]);
 				await Execute("Pre")!;
-				await Execute(currentMethod)!;
+				Console.WriteLine((string) currentMethod["name"]);
+				await Execute((string) currentMethod["name"], (object[]) currentMethod["args"])!;
 				await Execute("Post")!;
 				cursor++;
 			}
@@ -63,7 +80,18 @@ namespace WAT
 
 		private async Task? Execute(string method)
 		{
-			if (GetType().GetMethod(method)?.Invoke(this, null) is Task task) { await task; }
+			if (GetType().GetMethod(method)?.Invoke(this, null) is Task task)
+			{
+				await task;
+			}
+		}
+		
+		private async Task? Execute(string method, object[] args)
+		{
+			if (GetType().GetMethod(method)?.Invoke(this, args) is Task task)
+			{
+				await task;
+			}
 		}
 		
 		protected void Describe(string description) {EmitSignal(nameof(Described), description);}
@@ -105,6 +133,57 @@ namespace WAT
 			return new Array<string>(GetType().GetMethods()
 				.Where(m => m.IsDefined(typeof(TestAttribute)))
 				.Select(info => info.Name).ToList());
+		}
+		
+		public void Simulate(Node obj, int times, float delta)
+		{
+			for (int i = 0; i < times; i++)
+			{
+				if (obj.HasMethod("_Process"))
+				{
+					obj._Process(delta);
+				}
+
+				if (obj.HasMethod("_PhysicsProcess"))
+				{
+					obj._PhysicsProcess(delta);
+				}
+
+				foreach (Node kid in obj.GetChildren())
+				{
+					Simulate(kid, 1, delta);
+				}
+			}
+		}
+		
+		private Godot.Collections.Array GenerateTestMethods(IEnumerable names)
+		{
+			Godot.Collections.Array methods = new Godot.Collections.Array();
+			foreach (string name in names)
+			{
+				MethodInfo methodInfo = GetType().GetMethod(name)!;
+				if (methodInfo.IsDefined(typeof(RunWith)))
+				{
+					foreach (Attribute attribute in System.Attribute.GetCustomAttributes(methodInfo)
+						.Where(attr => attr is RunWith))
+					{
+						// Could probably use system array?
+						Godot.Collections.Array args = new Godot.Collections.Array();
+						Dictionary info = new Dictionary{{"name", methodInfo.Name}, {"args", args}};
+						methods.Add(info);
+					}
+				}
+				else
+				{
+					Dictionary info = new Dictionary {{"name", methodInfo.Name}, {"args", null}};
+				}
+			}
+			return methods;
+		}
+		
+		private Godot.Collections.Array GenerateTestMethods(string method)
+		{
+			return GenerateTestMethods(new Array{method});
 		}
 	}
 }
