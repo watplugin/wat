@@ -40,17 +40,6 @@ namespace WAT
 			}
 		}
 		
-		[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-		protected class RunWith : Attribute
-		{
-			public object[] Arguments;
-
-			public RunWith(params object[] args)
-			{
-				Arguments = args;
-			}
-		}
-		
 		[Signal] public delegate void executed();
 		[Signal] public delegate void Described();
 
