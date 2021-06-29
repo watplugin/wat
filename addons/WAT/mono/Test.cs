@@ -65,10 +65,16 @@ namespace WAT
 		protected readonly Node Direct = (Node) GD.Load<GDScript>("res://addons/WAT/double/factory.gd").New();
 		protected readonly Timer Yielder = (Timer) GD.Load<GDScript>("res://addons/WAT/test/yielder.gd").New();
 		protected Assertions Assert = new Assertions();
+		private Type Type;
 
 		public Test()
 		{
 			
+		}
+
+		private static bool is_test()
+		{
+			return true;
 		}
 
 		public Test setup(Godot.Collections.Dictionary<string, object> metadata)
@@ -84,22 +90,17 @@ namespace WAT
 
 		public async void run()
 		{
-			Type type = GetType();
-			List<ExecutableTest> methods = GenerateTestMethods().ToList();
 			MethodInfo? start = GetTestHook(typeof(StartAttribute));
 			MethodInfo? pre = GetTestHook(typeof(PreAttribute));
 			MethodInfo? post = GetTestHook(typeof(PostAttribute));
 			MethodInfo? end = GetTestHook(typeof(EndAttribute));
-			int cursor = 0;
 			await CallTestHook(start);
-			while (cursor < methods.Count)
+			foreach (ExecutableTest test in GenerateTestMethods())
 			{
-				ExecutableTest test = methods[cursor];
 				_case.Call("add_method", test.Method.Name);
 				await CallTestHook(pre);
 				await Execute(test)!;
 				await CallTestHook(post);
-				cursor++;
 			}
 
 			await CallTestHook(end);
@@ -195,7 +196,11 @@ namespace WAT
 
 			return array;
 		}
-		
+
+		private static bool _is_wat_test()
+		{
+			return true;
+		}
 		
 		private class ExecutableTest
 		{

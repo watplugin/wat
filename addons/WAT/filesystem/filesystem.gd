@@ -65,7 +65,7 @@ func _update(testdir: TestDirectory) -> void:
 		if dir.dir_exists(absolute_path):
 			subdirs.append(TestDirectory.new(absolute_path))
 		
-		elif _is_valid_test(absolute_path):
+		elif callv("_is_valid_test", [absolute_path, "res://addons/WAT/test/test.gd", ".gd"]) or callv("_is_valid_test", [absolute_path, "res://addons/WAT/mono/Test.cs", ".cs"]):
 			var test: TestScript = _get_test_script(testdir.path, absolute_path)
 			
 			for tag in test.tags:
@@ -78,24 +78,6 @@ func _update(testdir: TestDirectory) -> void:
 			if not test.methods.empty():
 				testdir.tests.append(test)
 				_all_tests += test.get_tests()
-				
-		elif _is_valid_mono_test(absolute_path):
-			var test: TestScript = _get_test_script(testdir.path, absolute_path)
-			# We add a direct reference to the test tag array so when we modify
-			# ..it elsewhere we the update is sent here automatically
-			_tag_metadata[test.path] = test.tags
-			
-			# Add To Tag Object In Our Tag Dictionary
-			for tag in test.tags:
-				if tag in Settings.tags():
-					tags[tag].tests.append(test)
-				else:
-					push_warning("Tag %s does not exist in WAT Settings")
-					# Push an add check here to auto-add it?
-			
-			if not test.methods.empty():
-				testdir.tests.append(test)
-				_all_tests += test.get_tests()
 
 		relative_path = dir.get_next()
 	dir.list_dir_end()
@@ -104,13 +86,8 @@ func _update(testdir: TestDirectory) -> void:
 	for subdir in subdirs:
 		_update(subdir)
 			
-func _is_valid_test(p: String) -> bool:
-	var base: String = "res://addons/WAT/core/test/test.gd"
-	return p.ends_with(".gd") and p != base and load(p).get("TEST")
-	
-func _is_valid_mono_test(p: String) -> bool:
-	var base: String = "res://addons/WAT/mono/Test.cs"
-	return p.ends_with(".cs") and p != base and load(p).new().get("TEST")
+func _is_valid_test(p: String, base: String, extension: String) -> bool:
+	return p.ends_with(extension) and p != base and load(p).call("_is_wat_test")
 	
 func _get_test_script(dir: String, path: String) -> TestScript:
 	var gdscript: Script = load(path)
