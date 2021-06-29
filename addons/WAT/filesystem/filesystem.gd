@@ -91,21 +91,14 @@ func _is_valid_test(p: String, base: String, extension: String) -> bool:
 	
 func _get_test_script(dir: String, path: String) -> TestScript:
 	var gdscript: Script = load(path)
-	var test: TestScript = TestScript.new(dir, path, load(path))
-	if _tag_metadata.has(test.gdscript.resource_path):
-		test.tags = _tag_metadata[test.gdscript.resource_path]
-	if test.gdscript is GDScript:
-		for method in test.gdscript.get_script_method_list():
-			if method.name.begins_with("test"):
-				test.method_names.append(method.name)
-				test.methods.append(TestMethod.new(dir, test.path, test.gdscript, method.name))
-		test.yield_time = YieldCalculator.calculate_yield_time(test.gdscript, test.method_names.size())
-	elif test.gdscript is CSharpScript:
-		var methods = test.gdscript.new().get_script_method_list()
-		for m in methods:
-			test.method_names.append(m)
-			test.methods.append(TestMethod.new(dir, test.path, test.gdscript, m))
-		test.yield_time = 0
+	var test: TestScript = TestScript.new(dir, path)
+	if _tag_metadata.has(gdscript.resource_path):
+		test.tags = _tag_metadata[gdscript.resource_path]
+		
+	for method in gdscript.new().get_test_methods():
+		test.method_names.append(method)
+		test.methods.append(TestMethod.new(dir, test.path, method))
+		test.yield_time = YieldCalculator.calculate_yield_time(gdscript, test.method_names.size())
 	return test
 	
 func add_test_to_tag(test: TestScript, tag: String) -> void:

@@ -127,20 +127,19 @@ func until_signal(emitter: Object, event: String, time_limit: float) -> Node:
 
 func until_timeout(time_limit: float) -> Node:
 	return _yielder.until_timeout(time_limit)
-	
-func methods() -> PoolStringArray:
-	# In future, this may be done in a container else where
-	var output: PoolStringArray = []
-	for method in get_method_list():
-		if method.name.begins_with("test"):
-			output.append(method.name)
-	return output
-	
+		
 func get_results() -> Dictionary:
 	_case.calculate()
 	var results: Dictionary = _case.to_dictionary()
 	_case.free()
 	return results
+	
+func get_test_methods() -> Array:
+	var methods: Array = []
+	for method in get_script().get_script_method_list():
+		if method.name.begins_with("test"):
+			methods.append(method.name)
+	return methods
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:

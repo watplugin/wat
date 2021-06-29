@@ -19,22 +19,19 @@ class TestDirectory extends Reference:
 class TestScript extends Reference:
 	var directory: String
 	var path: String
-	var gdscript: Script
 	var method_names: Array = []
 	var methods: Array = []
 	var yield_time: float = 0.0
 	var tags: Array = []
 	var name: String
 	
-	func _init(dir: String, _path: String, _script: Script) -> void:
+	func _init(dir: String, _path: String) -> void:
 		path = _path
-		gdscript = _script
 		directory = dir
 		name = _path
 		
 	func get_tests() -> Array:
 		return [{
-		gdscript = gdscript,
 		methods = method_names,
 		path = path,
 		name = path,
@@ -45,20 +42,17 @@ class TestScript extends Reference:
 class TestMethod extends Reference:
 	var dir: String = ""
 	var path: String
-	var gdscript: Script
 	var method_names: PoolStringArray
 	var name: String
 	
-	func _init(_dir: String, _path: String, _script: Script, _name: String) -> void:
+	func _init(_dir: String, _path: String, _name: String) -> void:
 		path = _path
-		gdscript = _script
 		method_names = [_name]
 		name = _name
 		dir = _dir
 		
 	func get_tests() -> Array:
 		return [{
-		gdscript = gdscript,
 		methods = method_names,
 		path = path,
 		name = path,

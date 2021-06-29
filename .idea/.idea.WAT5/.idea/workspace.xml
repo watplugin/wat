@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/filesystem/filesystem.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/filesystem/filesystem.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/filesystem/objects.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/filesystem/objects.gd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/runner/test_controller.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/runner/test_controller.gd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/WAT/test/test.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/test/test.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/results.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,11 +48,12 @@
       <option value="$PROJECT_DIR$/tests/mono/AttributeYieldTest.cs" />
       <option value="$PROJECT_DIR$/tests/mono/RepeatTests.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/test/case.gd" />
-      <option value="$PROJECT_DIR$/addons/WAT/filesystem/filesystem.gd" />
       <option value="$PROJECT_DIR$/tests/mono/WatcherTest.cs" />
+      <option value="$PROJECT_DIR$/addons/WAT/runner/test_controller.gd" />
       <option value="$PROJECT_DIR$/addons/WAT/mono/Test.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/test/test.gd" />
-      <option value="$PROJECT_DIR$/addons/WAT/runner/test_controller.gd" />
+      <option value="$PROJECT_DIR$/addons/WAT/filesystem/objects.gd" />
+      <option value="$PROJECT_DIR$/addons/WAT/filesystem/filesystem.gd" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1uUfeRRvNHRfBeX2hqDT0vIRWyt" />
@@ -136,7 +140,8 @@
       <workItem from="1624883678165" duration="368000" />
       <workItem from="1624914224799" duration="1433000" />
       <workItem from="1624975350781" duration="13554000" />
-      <workItem from="1624990549442" duration="6507000" />
+      <workItem from="1624990549442" duration="6589000" />
+      <workItem from="1625003290099" duration="1460000" />
     </task>
     <servers />
   </component>

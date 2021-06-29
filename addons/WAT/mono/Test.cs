@@ -154,7 +154,7 @@ namespace WAT
 		}
 		
 		[UsedImplicitly]
-		public Array get_script_method_list()
+		public Array get_test_methods()
 		{
 			return new Array
 			(GetType().GetMethods().
