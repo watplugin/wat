@@ -9,6 +9,7 @@ var _methods: Array = []
 var _success: bool = false
 var _time_taken: float = 0.0
 var _test: Node
+var _names: Array = []
 
 func _init(test: Node, data: Dictionary) -> void:
 	_test = test
@@ -17,6 +18,10 @@ func _init(test: Node, data: Dictionary) -> void:
 	_directory = data.directory
 
 func add_method(name: String) -> void:
+	if name in _names:
+		# We're running a test with multiple arguments
+		return
+	_names.append(name)
 	var contxt = name.replace("_", " ").lstrip("test")
 	_methods.append({fullname = name, context = contxt, assertions = [], total = 0, passed = 0, success = false, time = 0.0})
 

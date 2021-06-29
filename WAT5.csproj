@@ -112,4 +112,7 @@
     <Content Include="tests\unit\watcher.test.gd" />
     <Content Include="tests\unit\yield.test.gd" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2021.2.0-eap3" />
+  </ItemGroup>
 </Project>

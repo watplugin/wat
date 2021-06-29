@@ -124,7 +124,7 @@ func _get_test_script(dir: String, path: String) -> TestScript:
 				test.methods.append(TestMethod.new(dir, test.path, test.gdscript, method.name))
 		test.yield_time = YieldCalculator.calculate_yield_time(test.gdscript, test.method_names.size())
 	elif test.gdscript is CSharpScript:
-		var methods = test.gdscript.new().GetTestMethods()
+		var methods = test.gdscript.new().get_script_method_list()
 		for m in methods:
 			test.method_names.append(m)
 			test.methods.append(TestMethod.new(dir, test.path, test.gdscript, m))
