@@ -48,18 +48,18 @@ public class WatcherTest : WAT.Test
 	}
 	
 	[Test]
+	[Description("When we watch and emit a signal xxx")]
 	public void WhenWeWatchAndEmitASignal()
 	{
-		Describe("When we watch and emit a signal");
 		EmitSignal("Example");
 		Assert.SignalWasEmitted(this, "Example", "Then it captures the emitted signal");
 		
 	}
 	
 	[Test]
+	[Description("When we watch and do not emit a signal xxxx")]
 	public void WhenWeWatchAndDoNotEmitASignal()
 	{
-		Describe("When we Watch and Do not Emit a Signal");
 		Assert.SignalWasNotEmitted(this, "Example", "Then it does not capture the non-emitted signal");
 	}
 	

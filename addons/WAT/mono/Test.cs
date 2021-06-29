@@ -22,27 +22,30 @@ namespace WAT
 			public readonly string Method;
 			protected HookAttribute(string method) => Method = method;
 		}
-		
-		protected class StartAttribute : HookAttribute { public StartAttribute(string method) : base(method) { } }
-		protected class PreAttribute : HookAttribute { public PreAttribute(string method) : base(method) { } }
-		protected class PostAttribute : HookAttribute { public PostAttribute(string method) : base(method) { } }
-		protected class EndAttribute : HookAttribute { public EndAttribute(string method) : base(method) { } }
 
+		[AttributeUsage(AttributeTargets.Method)]
+		protected class DescriptionAttribute : Attribute
+		{
+			public readonly string Description;
+			public DescriptionAttribute(string description) { Description = description; }
+		}
+		
 		[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 		protected class TestAttribute : Attribute
 		{
 			public readonly object[] Arguments = new object[0];
 			public TestAttribute() {}
-
-			public TestAttribute(params object[] args)
-			{
-				Arguments = args;
-			}
+			public TestAttribute(params object[] args) { Arguments = args; }
 		}
+		
+		protected class StartAttribute : HookAttribute { public StartAttribute(string method) : base(method) { } }
+		protected class PreAttribute : HookAttribute { public PreAttribute(string method) : base(method) { } }
+		protected class PostAttribute : HookAttribute { public PostAttribute(string method) : base(method) { } }
+		protected class EndAttribute : HookAttribute { public EndAttribute(string method) : base(method) { } }
+		
 		
 		[Signal] public delegate void executed();
 		[Signal] public delegate void Described();
-
 		private static bool _is_wat_test() => true;
 		private const int Recorder = 0; // Apparently we require the C# Version
 		private Godot.Collections.Array _methods = new Godot.Collections.Array();
@@ -69,6 +72,15 @@ namespace WAT
 			GD.Print(_methods.Count);
 			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(this, metadata);
 			return this;
+		}
+		
+		public override void _Ready()
+		{
+			Direct.Set("registry", _registry);
+			Assert.Connect(nameof(Assertions.asserted), _case, "_on_asserted");
+			Connect(nameof(Described), _case, "_on_test_method_described");
+			AddChild(Direct);
+			AddChild(Yielder);
 		}
 
 		public async void run()
@@ -101,31 +113,23 @@ namespace WAT
 		}
 
 		private async Task CallTestHook(MethodInfo? hook) { if (hook?.Invoke(this, null) is Task task) { await task; } }
-		private async Task Execute(ExecutableTest test) { if (test.Method.Invoke(this, test.Arguments) is Task task) { await task; } }
-		
-		protected void Describe(string description) {EmitSignal(nameof(Described), description);}
+
+		private async Task Execute(ExecutableTest test)
+		{
+			if (test.Method.GetCustomAttribute(typeof(DescriptionAttribute)) is DescriptionAttribute description) { EmitSignal(nameof(Described), description.Description); }
+			if (test.Method.Invoke(this, test.Arguments) is Task task) { await task; }
+		}
 		private string title() { return Title(); }
 		public virtual string Title() { return GetType().Name; }
 
-		protected SignalAwaiter UntilTimeout(double time)
-		{
-			return ToSignal((Timer) Yielder.Call("until_timeout", time), "finished");
-		}
+		protected SignalAwaiter UntilTimeout(double time) { return ToSignal((Timer) Yielder.Call("until_timeout", time), "finished"); }
 
 		protected SignalAwaiter UntilSignal(Godot.Object emitter, string signal, double time)
 		{
 			_watcher.Call("watch", emitter, signal);
 			return ToSignal((Timer) Yielder.Call("until_signal", time, emitter, signal), "finished");
 		}
-		public override void _Ready()
-		{
-			Direct.Set("registry", _registry);
-			Assert.Connect(nameof(Assertions.asserted), _case, "_on_asserted");
-			Connect(nameof(Described), _case, "_on_test_method_described");
-			AddChild(Direct);
-			AddChild(Yielder);
-		}
-
+		
 		public Dictionary get_results()
 		{
 			_case.Call("calculate"); // #")
