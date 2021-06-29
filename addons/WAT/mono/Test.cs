@@ -44,9 +44,8 @@ namespace WAT
 		protected class EndAttribute : HookAttribute { public EndAttribute(string method) : base(method) { } }
 		
 		
-		[Signal] public delegate void executed();
+		
 		[Signal] public delegate void Described();
-		private static bool _is_wat_test() => true;
 		private const int Recorder = 0; // Apparently we require the C# Version
 		private Godot.Collections.Array _methods = new Godot.Collections.Array();
 		private Object _case;
@@ -61,17 +60,6 @@ namespace WAT
 		public Test()
 		{
 			
-		}
-		
-		public Test setup(Godot.Collections.Dictionary<string, object> metadata)
-		{
-			_methods = metadata["methods"] is string[] method
-				? new Array{string.Join("", method) }
-				: (Array) metadata["methods"];
-			
-			GD.Print(_methods.Count);
-			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(this, metadata);
-			return this;
 		}
 		
 		public override void _Ready()
@@ -119,7 +107,6 @@ namespace WAT
 			if (test.Method.GetCustomAttribute(typeof(DescriptionAttribute)) is DescriptionAttribute description) { EmitSignal(nameof(Described), description.Description); }
 			if (test.Method.Invoke(this, test.Arguments) is Task task) { await task; }
 		}
-		private string title() { return Title(); }
 		public virtual string Title() { return GetType().Name; }
 
 		protected SignalAwaiter UntilTimeout(double time) { return ToSignal((Timer) Yielder.Call("until_timeout", time), "finished"); }
@@ -130,14 +117,6 @@ namespace WAT
 			return ToSignal((Timer) Yielder.Call("until_signal", time, emitter, signal), "finished");
 		}
 		
-		public Dictionary get_results()
-		{
-			_case.Call("calculate"); // #")
-			Dictionary results = (Dictionary) _case.Call("to_dictionary");
-			_case.Free();
-			return results;
-		}
-
 		protected void Watch(Godot.Object emitter, string signal) { _watcher.Call("watch", emitter, signal); }
 		protected void UnWatch(Godot.Object emitter, string signal) { _watcher.Call("unwatch", emitter, signal); }
 		
@@ -160,15 +139,6 @@ namespace WAT
 				select new ExecutableTest(methodInfo, attribute.Arguments)).ToList();
 		}
 		
-		[UsedImplicitly]
-		public Array get_script_method_list()
-		{
-			return new Array
-			(GetType().GetMethods().
-				Where(m => m.IsDefined(typeof(TestAttribute))).
-				Select(m => (string) m.Name).ToList());
-		}
-		
 		private class ExecutableTest
 		{
 			public readonly MethodInfo Method;
@@ -180,5 +150,40 @@ namespace WAT
 				Arguments = arguments;
 			}
 		}
+		
+		[UsedImplicitly]
+		public Array get_script_method_list()
+		{
+			return new Array
+			(GetType().GetMethods().
+				Where(m => m.IsDefined(typeof(TestAttribute))).
+				Select(m => (string) m.Name).ToList());
+		}
+		
+		public Dictionary get_results()
+		{
+			_case.Call("calculate"); // #")
+			Dictionary results = (Dictionary) _case.Call("to_dictionary");
+			_case.Free();
+			return results;
+		}
+		
+		public Test setup(Godot.Collections.Dictionary<string, object> metadata)
+		{
+			_methods = metadata["methods"] is string[] method
+				? new Array{string.Join("", method) }
+				: (Array) metadata["methods"];
+			
+			GD.Print(_methods.Count);
+			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(this, metadata);
+			return this;
+		}
+		
+		private string title() { return Title(); }
+		
+		[Signal] public delegate void executed();
+		private static bool _is_wat_test() => true;
+
+
 	}
 }
