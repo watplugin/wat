@@ -54,8 +54,7 @@ namespace WAT
 		[Signal] public delegate void executed();
 		[Signal] public delegate void Described();
 
-		private const string YIELD = "finished";
-		private const bool TEST = true;
+		private static bool _is_wat_test() => true;
 		private const int Recorder = 0; // Apparently we require the C# Version
 		private Godot.Collections.Array _methods = new Godot.Collections.Array();
 		private Object _case;
@@ -64,19 +63,14 @@ namespace WAT
 		private readonly Object _registry = (Object) GD.Load<GDScript>("res://addons/WAT/double/registry.gd").New();
 		protected readonly Node Direct = (Node) GD.Load<GDScript>("res://addons/WAT/double/factory.gd").New();
 		protected readonly Timer Yielder = (Timer) GD.Load<GDScript>("res://addons/WAT/test/yielder.gd").New();
-		protected Assertions Assert = new Assertions();
+		protected readonly Assertions Assert = new Assertions();
 		private Type Type;
 
 		public Test()
 		{
 			
 		}
-
-		private static bool is_test()
-		{
-			return true;
-		}
-
+		
 		public Test setup(Godot.Collections.Dictionary<string, object> metadata)
 		{
 			_methods = metadata["methods"] is string[] method
@@ -117,20 +111,8 @@ namespace WAT
 			return null;
 		}
 
-		private async Task CallTestHook(MethodInfo? hook)
-		{
-			if (hook?.Invoke(this, null) is Task task) { await task; }
-			else { await Task.Run(() => { }); }
-		}
-		
-	
-		private async Task? Execute(ExecutableTest test)
-		{
-			if (test.Method.Invoke(this, test.Arguments) is Task task)
-			{
-				await task;
-			}
-		}
+		private async Task CallTestHook(MethodInfo? hook) { if (hook?.Invoke(this, null) is Task task) { await task; } }
+		private async Task Execute(ExecutableTest test) { if (test.Method.Invoke(this, test.Arguments) is Task task) { await task; } }
 		
 		protected void Describe(string description) {EmitSignal(nameof(Described), description);}
 		private string title() { return Title(); }
@@ -138,13 +120,13 @@ namespace WAT
 
 		protected SignalAwaiter UntilTimeout(double time)
 		{
-			return ToSignal((Timer) Yielder.Call("until_timeout", time), YIELD);
+			return ToSignal((Timer) Yielder.Call("until_timeout", time), "finished");
 		}
 
 		protected SignalAwaiter UntilSignal(Godot.Object emitter, string signal, double time)
 		{
 			_watcher.Call("watch", emitter, signal);
-			return ToSignal((Timer) Yielder.Call("until_signal", time, emitter, signal), YIELD);
+			return ToSignal((Timer) Yielder.Call("until_signal", time, emitter, signal), "finished");
 		}
 		public override void _Ready()
 		{
@@ -188,18 +170,10 @@ namespace WAT
 		[UsedImplicitly]
 		public Array get_script_method_list()
 		{
-			Array array = new Array();
-			foreach (MethodInfo method in GetType().GetMethods().Where(m => m.IsDefined(typeof(TestAttribute))))
-			{
-				array.Add(method.Name);
-			}
-
-			return array;
-		}
-
-		private static bool _is_wat_test()
-		{
-			return true;
+			return new Array
+			(GetType().GetMethods().
+				Where(m => m.IsDefined(typeof(TestAttribute))).
+				Select(m => (string) m.Name).ToList());
 		}
 		
 		private class ExecutableTest
