@@ -5,7 +5,7 @@ extends Reference
 # Replace 'demo_plugin' with your plugin's name
 const PLUGIN_ABSOLUTE_PATH_PREFIX = "res://addons/WAT/"
 
-var plugin: EditorPlugin
+var plugin
 
 # Stores already loaded assets so multiple loads of the same asset 
 # do not duplicate the same asset multiple times.  

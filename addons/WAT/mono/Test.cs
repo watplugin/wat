@@ -50,11 +50,11 @@ namespace WAT
 		private string Executed => nameof(TestExecuted);
 		private const int Recorder = 0; // Apparently we require the C# Version
 		private Godot.Collections.Array _methods = new Godot.Collections.Array();
-		private Object _case;
+		private Object? _case;
 		private static readonly GDScript Any = GD.Load<GDScript>("res://addons/WAT/test/any.gd");
 		private readonly Reference _watcher = (Reference) GD.Load<GDScript>("res://addons/WAT/test/watcher.gd").New();
 		private readonly Object _registry = (Object) GD.Load<GDScript>("res://addons/WAT/double/registry.gd").New();
-		protected readonly Node Direct = (Node) GD.Load<GDScript>("res://addons/WAT/double/factory.gd").New();
+		//protected readonly Node Direct = (Node) GD.Load<GDScript>("res://addons/WAT/double/factory.gd").New();
 		protected readonly Timer Yielder = (Timer) GD.Load<GDScript>("res://addons/WAT/test/yielder.gd").New();
 		protected readonly Assertions Assert = new Assertions();
 		private Type Type;
@@ -66,10 +66,10 @@ namespace WAT
 		
 		public override void _Ready()
 		{
-			Direct.Set("registry", _registry);
+			//Direct.Set("registry", _registry);
 			Assert.Connect(nameof(Assertions.asserted), _case, "_on_asserted");
 			Connect(nameof(Described), _case, "_on_test_method_described");
-			AddChild(Direct);
+			//AddChild(Direct);
 			AddChild(Yielder);
 		}
 

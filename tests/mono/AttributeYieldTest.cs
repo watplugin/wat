@@ -1,8 +1,5 @@
-using Godot;
-
 using System;
 using System.Threading.Tasks;
-using Godot;
 
 [Start(nameof(StartX))]
 [Pre(nameof(PreX))]

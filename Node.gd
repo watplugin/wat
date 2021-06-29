@@ -1,13 +1,13 @@
-extends Node
+extends TextEdit
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	var x = load("res://Nodex.cs").new()
-	var y = x.Wait()
-	print(y)
+func _ready() -> void:
+	var d = Directory.new()
+	d.open("res://Test")
+	d.list_dir_begin(true)
+	var n = d.get_next()
+	while n != "":
+		print(n)
+		text += "\n"
+		text += n
+		n = d.get_next()
+	d.list_dir_end()

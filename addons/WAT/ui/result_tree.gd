@@ -35,7 +35,8 @@ func display(cases: Array) -> void:
 			method.set_text(0, "%s" % m.context)
 			method.set_custom_color(0, _color(m.success))
 			method.set_icon(0, _icon(m.success))
-			method.add_button(0, FUNCTION)
+			if Engine.is_editor_hint():
+				method.add_button(0, FUNCTION)
 			method.set_tooltip(0, "Click icon to show test method in editor")
 			method.set_meta("path", c.path)
 			method.set_meta("context", m.context)

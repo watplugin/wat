@@ -12,7 +12,7 @@ func _init() -> void:
 	_close()
 	custom_multiplayer = MultiplayerAPI.new()
 	custom_multiplayer.root_node = self
-	custom_multiplayer.allow_object_decoding = true
+	# custom_multiplayer.allow_object_decoding = true
 	_peer = NetworkedMultiplayerENet.new()
 	
 func _process(delta: float) -> void:
