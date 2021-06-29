@@ -46,6 +46,8 @@ namespace WAT
 		
 		
 		[Signal] public delegate void Described();
+		[Signal] public delegate void TestExecuted();
+		private string Executed => nameof(TestExecuted);
 		private const int Recorder = 0; // Apparently we require the C# Version
 		private Godot.Collections.Array _methods = new Godot.Collections.Array();
 		private Object _case;
@@ -87,7 +89,7 @@ namespace WAT
 			}
 
 			await CallTestHook(end);
-			EmitSignal(nameof(executed));
+			EmitSignal(Executed);
 		}
 
 		private MethodInfo? GetTestHook(Type attributeType)

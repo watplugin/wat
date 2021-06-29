@@ -4,6 +4,7 @@ class_name WATTest
 const COMPLETED: String = "completed"
 const TEST: bool = true
 const YIELD: String = "finished"
+const Executed: String = "executed"
 signal described
 signal completed
 signal executed
@@ -37,7 +38,7 @@ func run():
 		for hook in ["pre", "execute", "post"]:
 			yield(call_function(hook, cursor), COMPLETED)
 	yield(call_function("end"), COMPLETED)
-	emit_signal("executed")
+	emit_signal(Executed)
 	
 func call_function(function, cursor = 0):
 	var s = call(function) if function != "execute" else execute(cursor)
