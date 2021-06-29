@@ -3,6 +3,8 @@ using System;
 using System.Threading.Tasks;
 using GodotArray = Godot.Collections.Array;
 
+[Start(nameof(Start))]
+[Pre(nameof(Pre))]
 public class YieldTest : WAT.Test
 {
 	private static readonly GDScript LocalYielder = GD.Load<GDScript>("res://addons/WAT/test/yielder.gd");
@@ -19,6 +21,7 @@ public class YieldTest : WAT.Test
 		return "Given a Yield";
 	}
 
+	
 	public async Task Start()
 	{
 		await UntilTimeout(3);

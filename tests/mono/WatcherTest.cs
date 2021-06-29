@@ -12,6 +12,9 @@ using GDArray = Godot.Collections.Array;
 // We currently cannot track bound arguments.
 // END NOTE
 
+[Start(nameof(Start))]
+[Pre(nameof(Pre))]
+[Post(nameof(Post))]
 public class WatcherTest : WAT.Test
 {
 	public override string Title()

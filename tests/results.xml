@@ -1,43 +1,7 @@
 <?xml version="1.0" ?>
-<testsuites failures="10" name="TestXML" tests="10" time="0">
-	<testsuite name="BasicCSharpTest" failures="0"  tests="0" time="0">
-		<testcase name="Not Found" time="0"><failure message="No Tests Found On Suite res://tests/mono/BasicCSharpTest.cs"></failure></testcase>
-	</testsuite>
-
-	<testsuite name="Given A Boolean Assertion" failures="0"  tests="0" time="0">
-		<testcase name="Not Found" time="0"><failure message="No Tests Found On Suite res://tests/mono/BooleanTest.cs"></failure></testcase>
-	</testsuite>
-
-	<testsuite name="Is Instance ( class / type ) Assertions" failures="0"  tests="0" time="0">
-		<testcase name="Not Found" time="0"><failure message="No Tests Found On Suite res://tests/mono/IsInstanceTest.cs"></failure></testcase>
-	</testsuite>
-
-	<testsuite name="IsNotInstanceTest" failures="0"  tests="0" time="0">
-		<testcase name="Not Found" time="0"><failure message="No Tests Found On Suite res://tests/mono/IsNotInstanceTest.cs"></failure></testcase>
-	</testsuite>
-
-	<testsuite name="Object Assertions" failures="0"  tests="0" time="0">
-		<testcase name="Not Found" time="0"><failure message="No Tests Found On Suite res://tests/mono/ObjectTest.cs"></failure></testcase>
-	</testsuite>
-
-	<testsuite name="Range Assertions" failures="0"  tests="0" time="0">
-		<testcase name="Not Found" time="0"><failure message="No Tests Found On Suite res://tests/mono/RangeTest.cs"></failure></testcase>
-	</testsuite>
-
-	<testsuite name="SimpleTest" failures="0"  tests="0" time="0">
-		<testcase name="Not Found" time="0"><failure message="No Tests Found On Suite res://tests/mono/SimpleTest.cs"></failure></testcase>
-	</testsuite>
-
-	<testsuite name="Given A String Assertion" failures="0"  tests="0" time="0">
-		<testcase name="Not Found" time="0"><failure message="No Tests Found On Suite res://tests/mono/StringTest.cs"></failure></testcase>
-	</testsuite>
-
-	<testsuite name="Given A Signal Watcher" failures="0"  tests="0" time="0">
-		<testcase name="Not Found" time="0"><failure message="No Tests Found On Suite res://tests/mono/WatcherTest.cs"></failure></testcase>
-	</testsuite>
-
-	<testsuite name="Given a Yield" failures="0"  tests="0" time="0">
-		<testcase name="Not Found" time="0"><failure message="No Tests Found On Suite res://tests/mono/YieldTest.cs"></failure></testcase>
+<testsuites failures="0" name="TestXML" tests="1" time="0">
+	<testsuite name="AttributeYieldTest" failures="0"  tests="1" time="0">
+		<testcase name="SimpleTest" time="0"></testcase>
 	</testsuite>
 
 </testsuites>

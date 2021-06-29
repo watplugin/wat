@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/tests/mono/AttributeTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/mono/AttributeYieldTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/mono/WatcherTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/mono/WatcherTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/mono/YieldTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/mono/YieldTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/results.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +48,10 @@
       <option value="$PROJECT_DIR$/Nodex.cs" />
       <option value="$PROJECT_DIR$/tests/mono/YieldTest.cs" />
       <option value="$PROJECT_DIR$/tests/mono/WatcherTest.cs" />
+      <option value="$PROJECT_DIR$/tests/mono/Attribute.Test.cs" />
+      <option value="$PROJECT_DIR$/tests/mono/AttributeTest.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/mono/Test.cs" />
+      <option value="$PROJECT_DIR$/tests/mono/AttributeYieldTest.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1uUfeRRvNHRfBeX2hqDT0vIRWyt" />
@@ -129,6 +136,7 @@
       <workItem from="1624879400296" duration="2760000" />
       <workItem from="1624883678165" duration="368000" />
       <workItem from="1624914224799" duration="1433000" />
+      <workItem from="1624975350781" duration="8087000" />
     </task>
     <servers />
   </component>

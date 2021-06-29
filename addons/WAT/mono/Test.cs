@@ -12,11 +12,21 @@ using Object = Godot.Object;
 
 namespace WAT 
 {
-	
 	public class Test : Node
 	{
-		[AttributeUsage(AttributeTargets.Method)] 
-		protected class TestAttribute: Attribute { }
+		[AttributeUsage(AttributeTargets.Class)] 
+		protected class HookAttribute : Attribute
+		{
+			public readonly string Method;
+			protected HookAttribute(string method) => Method = method;
+		}
+		
+		protected class StartAttribute : HookAttribute { public StartAttribute(string method) : base(method) { } }
+		protected class PreAttribute : HookAttribute { public PreAttribute(string method) : base(method) { } }
+		protected class PostAttribute : HookAttribute { public PostAttribute(string method) : base(method) { } }
+		protected class EndAttribute : HookAttribute { public EndAttribute(string method) : base(method) { } }
+
+		[AttributeUsage(AttributeTargets.Method)] protected class TestAttribute: Attribute { }
 		
 		[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 		protected class RunWith : Attribute
@@ -44,51 +54,72 @@ namespace WAT
 		protected readonly Timer Yielder = (Timer) GD.Load<GDScript>("res://addons/WAT/test/yielder.gd").New();
 		protected Assertions Assert = new Assertions();
 
+		private MethodInfo? _startMethod;
+		private MethodInfo? _preMethod;
+		private MethodInfo? _postMethod;
+		private MethodInfo? _endMethod;
+
 		public Test()
 		{
-			
+			_startMethod = GetTestHook(typeof(StartAttribute));
+			_preMethod = GetTestHook(typeof(PreAttribute));
+			_postMethod = GetTestHook(typeof(PostAttribute));
+			_endMethod = GetTestHook(typeof(EndAttribute));
 		}
 		public Test setup(Dictionary<string, object> metadata)
 		{
 			_methods = metadata["methods"] is string[] method
-				? GenerateTestMethods( string.Join("", method))
-				: GenerateTestMethods((Godot.Collections.Array) metadata["methods"]);
+				? new Array(string.Join("", method))
+				: (Array) metadata["methods"];
 			
 			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(this, metadata);
 			return this;
 		}
 
-		// ReSharper disable once InconsistentNaming
 		public async void run()
 		{
 			int cursor = 0;
-			await Execute("Start")!;
+			await CallTestHook(_startMethod);
 			while (cursor < _methods.Count)
 			{
-				Dictionary currentMethod = (Dictionary) _methods[cursor];
-				_case.Call("add_method", currentMethod["name"]);
-				await Execute("Pre")!;
-				Console.WriteLine((string) currentMethod["name"]);
-				await Execute((string) currentMethod["name"], (object[]) currentMethod["args"])!;
-				await Execute("Post")!;
+				string currentMethod = (string) _methods[cursor];
+				_case.Call("add_method", currentMethod);
+				await CallTestHook(_preMethod);
+				await Execute(currentMethod)!;
+				await CallTestHook(_postMethod);
 				cursor++;
 			}
 
-			await Execute("End")!;
+			await CallTestHook(_endMethod);
 			EmitSignal(nameof(executed));
 		}
 
-		private async Task? Execute(string method)
+		private MethodInfo? GetTestHook(Type attributeType)
 		{
-			if (GetType().GetMethod(method)?.Invoke(this, null) is Task task)
+			if (Attribute.IsDefined(GetType(), attributeType) && 
+				Attribute.GetCustomAttribute(GetType(), attributeType) is HookAttribute hookAttribute)
+			{
+				return GetType().GetMethod(hookAttribute.Method);
+			}
+			return null;
+		}
+
+		private async Task CallTestHook(MethodInfo? hook)
+		{
+			if (hook?.Invoke(this, null) is Task task)
 			{
 				await task;
 			}
+			else
+			{
+				await Task.Run(() => Task.CompletedTask);
+			}
 		}
 		
-		private async Task? Execute(string method, object[] args)
+	
+		private async Task? Execute(string method)
 		{
-			if (GetType().GetMethod(method)?.Invoke(this, args) is Task task)
+			if (GetType().GetMethod(method)?.Invoke(this, null) is Task task)
 			{
 				await task;
 			}
@@ -156,34 +187,34 @@ namespace WAT
 			}
 		}
 		
-		private Godot.Collections.Array GenerateTestMethods(IEnumerable names)
-		{
-			Godot.Collections.Array methods = new Godot.Collections.Array();
-			foreach (string name in names)
-			{
-				MethodInfo methodInfo = GetType().GetMethod(name)!;
-				if (methodInfo.IsDefined(typeof(RunWith)))
-				{
-					foreach (Attribute attribute in System.Attribute.GetCustomAttributes(methodInfo)
-						.Where(attr => attr is RunWith))
-					{
-						// Could probably use system array?
-						Godot.Collections.Array args = new Godot.Collections.Array();
-						Dictionary info = new Dictionary{{"name", methodInfo.Name}, {"args", args}};
-						methods.Add(info);
-					}
-				}
-				else
-				{
-					Dictionary info = new Dictionary {{"name", methodInfo.Name}, {"args", null}};
-				}
-			}
-			return methods;
-		}
-		
-		private Godot.Collections.Array GenerateTestMethods(string method)
-		{
-			return GenerateTestMethods(new Array{method});
-		}
+		// private Godot.Collections.Array GenerateTestMethods(IEnumerable names)
+		// {
+		// 	Godot.Collections.Array methods = new Godot.Collections.Array();
+		// 	foreach (string name in names)
+		// 	{
+		// 		MethodInfo methodInfo = GetType().GetMethod(name)!;
+		// 		if (methodInfo.IsDefined(typeof(RunWith)))
+		// 		{
+		// 			foreach (Attribute attribute in System.Attribute.GetCustomAttributes(methodInfo)
+		// 				.Where(attr => attr is RunWith))
+		// 			{
+		// 				// Could probably use system array?
+		// 				Godot.Collections.Array args = new Godot.Collections.Array();
+		// 				Dictionary info = new Dictionary{{"name", methodInfo.Name}, {"args", args}};
+		// 				methods.Add(info);
+		// 			}
+		// 		}
+		// 		else
+		// 		{
+		// 			Dictionary info = new Dictionary {{"name", methodInfo.Name}, {"args", null}};
+		// 		}
+		// 	}
+		// 	return methods;
+		// }
+		//
+		// private Godot.Collections.Array GenerateTestMethods(string method)
+		// {
+		// 	return GenerateTestMethods(new Array{method});
+		// }
 	}
 }
