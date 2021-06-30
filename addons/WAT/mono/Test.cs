@@ -45,29 +45,19 @@ namespace WAT
 			_methods = methods;
 		}
 		
-		// public Test setup(Godot.Collections.Dictionary<string, object> metadata)
-		// {
-		// 	_methods = metadata["method_names"] is string[] method
-		// 		? new Array{string.Join("", method) }
-		// 		: (Array) metadata["method_names"];
-		// 	
-		// 	GD.Print(_methods.Count);
-		// 	_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(this, metadata);
-		// 	return this;
-		// }
-
 		private void Blank() { }
 
-		public override void _Ready()
+		public override async void _Ready()
 		{
 			//Direct.Set("registry", _registry);
 			Assert.Connect(nameof(Assertions.asserted), _case, "_on_asserted");
 			Connect(nameof(Described), _case, "_on_test_method_described");
 			//AddChild(Direct);
 			AddChild(Yielder);
+			CallDeferred(nameof(Run)); //Run();
 		}
 
-		private async Task Run()
+		private async void Run()
 		{
 			// Can we do this in _Ready?
 			MethodInfo start = GetTestHook(typeof(StartAttribute));
@@ -84,7 +74,7 @@ namespace WAT
 			}
 
 			await CallTestHook(end);
-			EmitSignal(Executed);
+			EmitSignal(Executed, GetResults());
 		}
 		
 		private string Title()
@@ -100,13 +90,18 @@ namespace WAT
 			return GetType().GetMethod(hook.Method)!;
 		}
 
-		private async Task CallTestHook(MethodInfo hook) { if (hook.Invoke(this, null) is Task task) { await task; } }
+		private async Task CallTestHook(MethodInfo hook)
+		{
+			if (hook?.Invoke(this, null) is Task task) { await task; } else { await Task.Run((() => { })); }
+		}
 
 		private async Task Execute(Executable test)
 		{
 			if (test.Method.GetCustomAttribute(typeof(DescriptionAttribute)) is DescriptionAttribute description) { EmitSignal(nameof(Described), description.Description); }
 			if (test.Method.Invoke(this, test.Arguments) is Task task) { await task; }
+			else { await Task.Run((() => { })); }
 		}
+
 		protected SignalAwaiter UntilTimeout(double time) { return ToSignal((Timer) Yielder.Call("until_timeout", time), "finished"); }
 
 		protected SignalAwaiter UntilSignal(Godot.Object emitter, string signal, double time)
@@ -135,6 +130,14 @@ namespace WAT
 					.OfType<TestAttribute>()
 				from attribute in tests
 				select new Executable(methodInfo, attribute.Arguments)).ToList();
+		}
+		
+		private Dictionary GetResults()
+		{
+			_case.Call("calculate"); // #")
+			Dictionary results = (Dictionary) _case.Call("to_dictionary");
+			_case.Free();
+			return results;
 		}
 		
 		private class Executable

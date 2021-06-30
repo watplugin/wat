@@ -30,7 +30,6 @@ func setup(directory = "", filepath = "", methods = []):
 	return self
 
 func run():
-	print(_methods)
 	var cursor = -1
 	yield(call_function("start"), COMPLETED)
 	for function in _methods:
@@ -39,7 +38,7 @@ func run():
 		for hook in ["pre", "execute", "post"]:
 			yield(call_function(hook, cursor), COMPLETED)
 	yield(call_function("end"), COMPLETED)
-	emit_signal(Executed)
+	emit_signal(Executed, get_results())
 	
 func call_function(function, cursor = 0):
 	var s = call(function) if function != "execute" else execute(cursor)
@@ -67,6 +66,7 @@ func _ready() -> void:
 	print(_yielder)
 	connect("described", _case, "_on_test_method_described")
 	asserts.connect("asserted", _case, "_on_asserted")
+	run()
 
 func start():
 	pass
