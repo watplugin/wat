@@ -1,9 +1,11 @@
 extends Node
 
 func run(metadata: Dictionary) -> void:
-	print("data: ", metadata)
-	print("tests: ", metadata["tests"])
-	var test = load(metadata["path"]).new().setup(metadata)
+	var directory = metadata["directory"]
+	var path = metadata["path"]
+	var methods = metadata["method_names"]
+	print(methods)
+	var test: Node = load(path).new().setup(directory, path, methods)
 	add_child(test)
 	# We need to wait for the object itself to emit the signal (since we..
 	# ..cannot yield for C# so we defer the call to run so we have time to..

@@ -23,13 +23,14 @@ var _registry = preload("res://addons/WAT/double/registry.gd").new()
 var _yielder: Timer = preload("res://addons/WAT/test/yielder.gd").new()
 var _case
 var _methods = []
-
-func setup(metadata: Dictionary) -> Node:
-	_methods = metadata["method_names"]
-	_case = preload("res://addons/WAT/test/case.gd").new(self, metadata)
+		
+func setup(directory = "", filepath = "", methods = []):
+	_methods = methods
+	_case = preload("res://addons/WAT/test/case.gd").new(directory, filepath, title(), self)
 	return self
 
 func run():
+	print(_methods)
 	var cursor = -1
 	yield(call_function("start"), COMPLETED)
 	for function in _methods:

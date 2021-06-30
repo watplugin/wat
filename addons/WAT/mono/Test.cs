@@ -16,52 +16,15 @@ namespace WAT
 	[Pre(nameof(Blank))]
 	[Post(nameof(Blank))]
 	[End(nameof(Blank))]
-	public class Test : Node
+	public partial class Test : Node
 	{
-		[AttributeUsage(AttributeTargets.Class)]
-		protected class TitleAttribute : Attribute
-		{
-			public readonly string Title;
-
-			public TitleAttribute(string title)
-			{
-				Title = title;
-			}
-		}
-		
-		[AttributeUsage(AttributeTargets.Class)] 
-		protected class HookAttribute : Attribute
-		{
-			public readonly string Method;
-			protected HookAttribute(string method) => Method = method;
-		}
-
-		[AttributeUsage(AttributeTargets.Method)]
-		protected class DescriptionAttribute : Attribute
-		{
-			public readonly string Description;
-			public DescriptionAttribute(string description) { Description = description; }
-		}
-		
-		[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-		protected class TestAttribute : Attribute
-		{
-			public readonly object[] Arguments = new object[0];
-			public TestAttribute() {}
-			public TestAttribute(params object[] args) { Arguments = args; }
-		}
-		
-		protected class StartAttribute : HookAttribute { public StartAttribute(string method) : base(method) { } }
-		protected class PreAttribute : HookAttribute { public PreAttribute(string method) : base(method) { } }
-		protected class PostAttribute : HookAttribute { public PostAttribute(string method) : base(method) { } }
-		protected class EndAttribute : HookAttribute { public EndAttribute(string method) : base(method) { } }
-		
 		[Signal] public delegate void Described();
 		[Signal] public delegate void TestExecuted();
 		private string Executed => nameof(TestExecuted);
 		private const int Recorder = 0; // Apparently we require the C# Version
 		private Godot.Collections.Array _methods = new Godot.Collections.Array();
-		private Object? _case;
+		private Object _case;
+		private static readonly GDScript TestCase = GD.Load<GDScript>("res://addons/WAT/test/case.gd");
 		private static readonly GDScript Any = GD.Load<GDScript>("res://addons/WAT/test/any.gd");
 		private readonly Reference _watcher = (Reference) GD.Load<GDScript>("res://addons/WAT/test/watcher.gd").New();
 		private readonly Object _registry = (Object) GD.Load<GDScript>("res://addons/WAT/double/registry.gd").New();
@@ -75,6 +38,24 @@ namespace WAT
 			
 		}
 
+		public Test(string directory, string filepath, Array methods)
+		{
+			Type = GetType();
+			_case = (Object) TestCase.New(directory, filepath, Title(), this);
+			_methods = methods;
+		}
+		
+		// public Test setup(Godot.Collections.Dictionary<string, object> metadata)
+		// {
+		// 	_methods = metadata["method_names"] is string[] method
+		// 		? new Array{string.Join("", method) }
+		// 		: (Array) metadata["method_names"];
+		// 	
+		// 	GD.Print(_methods.Count);
+		// 	_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(this, metadata);
+		// 	return this;
+		// }
+
 		private void Blank() { }
 
 		public override void _Ready()
@@ -86,7 +67,7 @@ namespace WAT
 			AddChild(Yielder);
 		}
 
-		public async void run()
+		private async Task Run()
 		{
 			// Can we do this in _Ready?
 			MethodInfo start = GetTestHook(typeof(StartAttribute));
@@ -94,7 +75,7 @@ namespace WAT
 			MethodInfo post = GetTestHook(typeof(PostAttribute));
 			MethodInfo end = GetTestHook(typeof(EndAttribute));
 			await CallTestHook(start);
-			foreach (ExecutableTest test in GenerateTestMethods())
+			foreach (Executable test in GenerateTestMethods())
 			{
 				_case.Call("add_method", test.Method.Name);
 				await CallTestHook(pre);
@@ -105,6 +86,13 @@ namespace WAT
 			await CallTestHook(end);
 			EmitSignal(Executed);
 		}
+		
+		private string Title()
+		{
+			if (!Attribute.IsDefined(GetType(), typeof(TitleAttribute))) return GetType().Name;
+			TitleAttribute title = (TitleAttribute) Attribute.GetCustomAttribute(GetType(), typeof(TitleAttribute));
+			return title.Title;
+		}
 
 		private MethodInfo GetTestHook(Type attributeType)
 		{
@@ -112,9 +100,9 @@ namespace WAT
 			return GetType().GetMethod(hook.Method)!;
 		}
 
-		private async Task CallTestHook(MethodInfo? hook) { if (hook?.Invoke(this, null) is Task task) { await task; } }
+		private async Task CallTestHook(MethodInfo hook) { if (hook.Invoke(this, null) is Task task) { await task; } }
 
-		private async Task Execute(ExecutableTest test)
+		private async Task Execute(Executable test)
 		{
 			if (test.Method.GetCustomAttribute(typeof(DescriptionAttribute)) is DescriptionAttribute description) { EmitSignal(nameof(Described), description.Description); }
 			if (test.Method.Invoke(this, test.Arguments) is Task task) { await task; }
@@ -140,68 +128,25 @@ namespace WAT
 			}
 		}
 
-		private IEnumerable<ExecutableTest> GenerateTestMethods()
+		private IEnumerable<Executable> GenerateTestMethods()
 		{
 			return (from methodInfo in GetType().GetMethods().Where(info => _methods.Contains(info.Name))
 				let tests = Attribute.GetCustomAttributes(methodInfo)
 					.OfType<TestAttribute>()
 				from attribute in tests
-				select new ExecutableTest(methodInfo, attribute.Arguments)).ToList();
+				select new Executable(methodInfo, attribute.Arguments)).ToList();
 		}
 		
-		private class ExecutableTest
+		private class Executable
 		{
 			public readonly MethodInfo Method;
 			public readonly object[] Arguments;
 
-			public ExecutableTest(MethodInfo method, object[] arguments)
+			public Executable(MethodInfo method, object[] arguments)
 			{
 				Method = method;
 				Arguments = arguments;
 			}
 		}
-		
-		[UsedImplicitly]
-		public Array get_test_methods()
-		{
-			return new Array
-			(GetType().GetMethods().
-				Where(m => m.IsDefined(typeof(TestAttribute))).
-				Select(m => (string) m.Name).ToList());
-		}
-		
-		public Dictionary get_results()
-		{
-			_case.Call("calculate"); // #")
-			Dictionary results = (Dictionary) _case.Call("to_dictionary");
-			_case.Free();
-			return results;
-		}
-		
-		[UsedImplicitly]
-		public Test setup(Godot.Collections.Dictionary<string, object> metadata)
-		{
-			_methods = metadata["method_names"] is string[] method
-				? new Array{string.Join("", method) }
-				: (Array) metadata["method_names"];
-			
-			GD.Print(_methods.Count);
-			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(this, metadata);
-			return this;
-		}
-
-		[UsedImplicitly]
-		private string title()
-		{
-			if (!Attribute.IsDefined(GetType(), typeof(TitleAttribute))) return GetType().Name;
-			TitleAttribute title = (TitleAttribute) Attribute.GetCustomAttribute(GetType(), typeof(TitleAttribute));
-			return title.Title;
-
-		}
-		
-		[Signal] public delegate void executed();
-		private static bool _is_wat_test() => true;
-
-
 	}
 }
