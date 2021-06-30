@@ -1,7 +1,6 @@
-extends PanelContainer
 tool
+extends PanelContainer
 
-const Log: Script = preload("res://addons/WAT/log.gd")
 
 # Resources require tool to work inside the editor whereas..
 # ..scripts objects without tool can be called from tool based scripts
