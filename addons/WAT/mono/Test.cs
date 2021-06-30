@@ -1,6 +1,7 @@
 #nullable enable
 using Godot;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -19,11 +20,9 @@ namespace WAT
 	public partial class Test : Node
 	{
 		[Signal] public delegate void Described();
-		[Signal] public delegate void TestExecuted();
-		private string Executed => nameof(TestExecuted);
 		private const int Recorder = 0; // Apparently we require the C# Version
-		private Godot.Collections.Array _methods = new Godot.Collections.Array();
-		private Object _case;
+		private IEnumerable<Executable> _methods = null!;
+		private Object _case = null!;
 		private static readonly GDScript TestCase = GD.Load<GDScript>("res://addons/WAT/test/case.gd");
 		private static readonly GDScript Any = GD.Load<GDScript>("res://addons/WAT/test/any.gd");
 		private readonly Reference _watcher = (Reference) GD.Load<GDScript>("res://addons/WAT/test/watcher.gd").New();
@@ -31,30 +30,19 @@ namespace WAT
 		//protected readonly Node Direct = (Node) GD.Load<GDScript>("res://addons/WAT/double/factory.gd").New();
 		protected readonly Timer Yielder = (Timer) GD.Load<GDScript>("res://addons/WAT/test/yielder.gd").New();
 		protected readonly Assertions Assert = new Assertions();
-		private Type Type;
+		private readonly Type _type;
 
-		public Test()
-		{
-			
-		}
-
-		public Test(string directory, string filepath, Array methods)
-		{
-			Type = GetType();
-			_case = (Object) TestCase.New(directory, filepath, Title(), this);
-			_methods = methods;
-		}
-		
+		protected Test() { _type = GetType(); }
 		private void Blank() { }
 
-		public override async void _Ready()
+		public override void _Ready()
 		{
 			//Direct.Set("registry", _registry);
 			Assert.Connect(nameof(Assertions.asserted), _case, "_on_asserted");
 			Connect(nameof(Described), _case, "_on_test_method_described");
 			//AddChild(Direct);
 			AddChild(Yielder);
-			CallDeferred(nameof(Run)); //Run();
+			CallDeferred(nameof(Run));
 		}
 
 		private async void Run()
@@ -65,7 +53,7 @@ namespace WAT
 			MethodInfo post = GetTestHook(typeof(PostAttribute));
 			MethodInfo end = GetTestHook(typeof(EndAttribute));
 			await CallTestHook(start);
-			foreach (Executable test in GenerateTestMethods())
+			foreach (Executable test in _methods)
 			{
 				_case.Call("add_method", test.Method.Name);
 				await CallTestHook(pre);
@@ -74,20 +62,20 @@ namespace WAT
 			}
 
 			await CallTestHook(end);
-			EmitSignal(Executed, GetResults());
+			GetParent().Call("get_results", GetResults());
 		}
 		
 		private string Title()
 		{
-			if (!Attribute.IsDefined(GetType(), typeof(TitleAttribute))) return GetType().Name;
-			TitleAttribute title = (TitleAttribute) Attribute.GetCustomAttribute(GetType(), typeof(TitleAttribute));
+			if (!Attribute.IsDefined(_type, typeof(TitleAttribute))) return _type.Name;
+			TitleAttribute title = (TitleAttribute) Attribute.GetCustomAttribute(_type, typeof(TitleAttribute));
 			return title.Title;
 		}
 
 		private MethodInfo GetTestHook(Type attributeType)
 		{
-			HookAttribute hook = (HookAttribute) Attribute.GetCustomAttribute(GetType(), attributeType);
-			return GetType().GetMethod(hook.Method)!;
+			HookAttribute hook = (HookAttribute) Attribute.GetCustomAttribute(_type, attributeType);
+			return _type.GetMethod(hook.Method)!;
 		}
 
 		private async Task CallTestHook(MethodInfo hook)
@@ -123,9 +111,9 @@ namespace WAT
 			}
 		}
 
-		private IEnumerable<Executable> GenerateTestMethods()
+		private IEnumerable<Executable> GenerateTestMethods(IEnumerable<string> names)
 		{
-			return (from methodInfo in GetType().GetMethods().Where(info => _methods.Contains(info.Name))
+			return (from methodInfo in _type.GetMethods().Where(info => names.Contains(info.Name))
 				let tests = Attribute.GetCustomAttributes(methodInfo)
 					.OfType<TestAttribute>()
 				from attribute in tests

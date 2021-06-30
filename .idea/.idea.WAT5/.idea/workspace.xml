@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Node2D.gd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Node2D.tscn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/WAT/mono/GDScriptWrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/GDScriptWrapper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" afterDir="false" />
@@ -148,7 +150,7 @@
       <workItem from="1624990549442" duration="6589000" />
       <workItem from="1625003290099" duration="3229000" />
       <workItem from="1625040986642" duration="6134000" />
-      <workItem from="1625056430392" duration="1126000" />
+      <workItem from="1625056430392" duration="2915000" />
     </task>
     <servers />
   </component>

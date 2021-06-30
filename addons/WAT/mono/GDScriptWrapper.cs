@@ -1,18 +1,16 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Godot;
-using Godot.Collections;
-using JetBrains.Annotations;
 using Array = Godot.Collections.Array;
 using Object = Godot.Object;
+// ReSharper disable InconsistentNaming
 
 namespace WAT
 {
 	public partial class Test: Node
 	{
-		[Signal] public delegate void executed();
-
 		public Array get_test_methods()
 		{
 			return new Array
@@ -21,9 +19,9 @@ namespace WAT
 				Select(m => (string) m.Name).ToList());
 		}
 		
-		public Test setup(string directory, string filepath, Array methods)
+		public Test setup(string directory, string filepath, IEnumerable<string> methods)
 		{
-			_methods = methods;
+			_methods = GenerateTestMethods(methods);
 			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(directory, filepath, Title(), this);
 			return this;
 		}

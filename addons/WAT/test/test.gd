@@ -7,7 +7,6 @@ const YIELD: String = "finished"
 const Executed: String = "executed"
 signal described
 signal completed
-signal executed
 
 var rerun_method: bool
 var p: Dictionary
@@ -38,7 +37,7 @@ func run():
 		for hook in ["pre", "execute", "post"]:
 			yield(call_function(hook, cursor), COMPLETED)
 	yield(call_function("end"), COMPLETED)
-	emit_signal(Executed, get_results())
+	get_parent().get_results(get_results())
 	
 func call_function(function, cursor = 0):
 	var s = call(function) if function != "execute" else execute(cursor)
