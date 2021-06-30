@@ -12,6 +12,10 @@ using Object = Godot.Object;
 
 namespace WAT 
 {
+	[Start(nameof(Blank))]
+	[Pre(nameof(Blank))]
+	[Post(nameof(Blank))]
+	[End(nameof(Blank))]
 	public class Test : Node
 	{
 		[AttributeUsage(AttributeTargets.Class)]
@@ -70,7 +74,9 @@ namespace WAT
 		{
 			
 		}
-		
+
+		private void Blank() { }
+
 		public override void _Ready()
 		{
 			//Direct.Set("registry", _registry);
@@ -83,10 +89,10 @@ namespace WAT
 		public async void run()
 		{
 			// Can we do this in _Ready?
-			MethodInfo? start = GetTestHook(typeof(StartAttribute));
-			MethodInfo? pre = GetTestHook(typeof(PreAttribute));
-			MethodInfo? post = GetTestHook(typeof(PostAttribute));
-			MethodInfo? end = GetTestHook(typeof(EndAttribute));
+			MethodInfo start = GetTestHook(typeof(StartAttribute));
+			MethodInfo pre = GetTestHook(typeof(PreAttribute));
+			MethodInfo post = GetTestHook(typeof(PostAttribute));
+			MethodInfo end = GetTestHook(typeof(EndAttribute));
 			await CallTestHook(start);
 			foreach (ExecutableTest test in GenerateTestMethods())
 			{
@@ -100,14 +106,10 @@ namespace WAT
 			EmitSignal(Executed);
 		}
 
-		private MethodInfo? GetTestHook(Type attributeType)
+		private MethodInfo GetTestHook(Type attributeType)
 		{
-			if (Attribute.IsDefined(GetType(), attributeType) && 
-				Attribute.GetCustomAttribute(GetType(), attributeType) is HookAttribute hookAttribute)
-			{
-				return GetType().GetMethod(hookAttribute.Method);
-			}
-			return null;
+			HookAttribute hook = (HookAttribute) Attribute.GetCustomAttribute(GetType(), attributeType);
+			return GetType().GetMethod(hook.Method)!;
 		}
 
 		private async Task CallTestHook(MethodInfo? hook) { if (hook?.Invoke(this, null) is Task task) { await task; } }

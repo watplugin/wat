@@ -67,7 +67,7 @@
 		<testcase name="WhenCallingDoesNotHaveMeta" time="0"></testcase>
 		<testcase name="WhenCallingDoesNotHaveMetalRealKeyButNullValue" time="0"></testcase>
 		<testcase name="WhenCallingHasMethodTitle" time="0">
-			<failure message="EXPECTED: [Node:3709] has method Title but GOT [Node:3709] does not have method Title"></failure></testcase>
+			<failure message="EXPECTED: [Node:3853] has method Title but GOT [Node:3853] does not have method Title"></failure></testcase>
 		<testcase name="WhenCallingDoesNotHaveMethodFalseMethod" time="0"></testcase>
 		<testcase name="WhenCallingHasUserSignalAfterAddingASignal" time="0"></testcase>
 		<testcase name="WhenCallingDoesNotHaveUserSignal" time="0"></testcase>
