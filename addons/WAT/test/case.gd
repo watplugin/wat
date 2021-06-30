@@ -12,7 +12,6 @@ var _test: Node
 var _names: Array = []
 
 func _init(directory, filepath, title, test) -> void:
-	print("case created")
 	_test = test
 	_title = title
 	_path = filepath

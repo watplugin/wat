@@ -26,7 +26,6 @@ func _add_result_tree(results: Array) -> void:
 		var result_tree = ResultTree.new(self)
 		result_tree._setup_editor_assets(_assets_registry)
 		result_tree.connect("button_pressed", self, "_on_function_selected")
-		print(path)
 		result_tree.name = path
 		add_child(result_tree)
 		set_tab_title(tab_count, path)

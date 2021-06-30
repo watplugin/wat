@@ -5,7 +5,6 @@ func run(metadata: Dictionary) -> void:
 	var directory = metadata["directory"]
 	var path = metadata["path"]
 	var methods = metadata["method_names"]
-	print(methods)
 	var test: Node = load(path).new().setup(directory, path, methods)
 
 	# We need to wait for the object itself to emit the signal (since we..

@@ -62,7 +62,6 @@ func _ready() -> void:
 	asserts.connect("asserted", self, "_on_last_assertion")
 	add_child(direct)
 	add_child(_yielder)
-	print(_yielder)
 	connect("described", _case, "_on_test_method_described")
 	asserts.connect("asserted", _case, "_on_asserted")
 	run()
