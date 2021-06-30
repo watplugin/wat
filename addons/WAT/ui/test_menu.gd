@@ -66,7 +66,7 @@ func update() -> void:
 				add_menu(test_menu, method, Icon.FUNCTION)
 
 				
-func add_menu(parent: PopupMenu, data: Reference, ico: Texture) -> PopupMenu:
+func add_menu(parent: PopupMenu, data, ico: Texture) -> PopupMenu:
 	var child: PopupMenu = PopupMenu.new()
 	child.connect("index_pressed", self, "_on_idx_pressed", [child])
 	parent.add_child(child)
@@ -94,7 +94,7 @@ func _add_tag_menu(run: String, tags: Dictionary, run_type: int, id: int) -> voi
 	_menu.set_item_icon(id, Icon.TAG)
 	_tag_menu.connect("index_pressed", self, "_on_idx_pressed", [_tag_menu])
 
-func _add_tag_editor(script_menu: PopupMenu, test: Reference) -> void:
+func _add_tag_editor(script_menu: PopupMenu, test) -> void:
 	var _tag_editor: PopupMenu = PopupMenu.new()
 	var idx = 0
 	for tag in Settings.tags():
@@ -125,9 +125,9 @@ func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 	var data: Metadata = menu.get_item_metadata(idx)
 	match data.run_type:
 		RUN:
-			emit_signal("tests_selected", data.tests.get_ref().get_tests())
+			emit_signal("tests_selected", data.get_tests())
 		DEBUG:
-			emit_signal("tests_selected_debug", data.tests.get_ref().get_tests())
+			emit_signal("tests_selected_debug", data.get_tests())
 		NONE:
 			pass
 
@@ -135,6 +135,15 @@ class Metadata extends Reference:
 	var run_type: int
 	var tests
 	
-	func _init(_run_type: int, _tests: Object) -> void:
+	func _init(_run_type: int, _tests) -> void:
 		run_type = _run_type
-		tests = weakref(_tests)
+		if _tests is Dictionary:
+			tests = _tests
+		else:
+			tests = weakref(_tests)
+		
+	func get_tests() -> Array:
+		if tests is Dictionary:
+			return tests["tests"]
+		else:
+			return tests.get_ref().get_tests()

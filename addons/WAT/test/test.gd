@@ -25,7 +25,7 @@ var _case
 var _methods = []
 
 func setup(metadata: Dictionary) -> Node:
-	_methods = metadata["methods"]
+	_methods = metadata["method_names"]
 	_case = preload("res://addons/WAT/test/case.gd").new(self, metadata)
 	return self
 

@@ -172,9 +172,9 @@ namespace WAT
 		
 		public Test setup(Godot.Collections.Dictionary<string, object> metadata)
 		{
-			_methods = metadata["methods"] is string[] method
+			_methods = metadata["method_names"] is string[] method
 				? new Array{string.Join("", method) }
-				: (Array) metadata["methods"];
+				: (Array) metadata["method_names"];
 			
 			GD.Print(_methods.Count);
 			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(this, metadata);

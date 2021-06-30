@@ -1,6 +1,8 @@
 extends Node
 
 func run(metadata: Dictionary) -> void:
+	print("data: ", metadata)
+	print("tests: ", metadata["tests"])
 	var test = load(metadata["path"]).new().setup(metadata)
 	add_child(test)
 	# We need to wait for the object itself to emit the signal (since we..
