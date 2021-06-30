@@ -7,7 +7,6 @@ const FileObjects: GDScript = preload("res://addons/WAT/filesystem/objects.gd")
 const TestTag: GDScript = FileObjects.TestTag
 const TestFailures: GDScript = FileObjects.TestFailures
 var has_been_changed: bool = false
-var primary: Dictionary
 var dirs: Array = []
 var _all_tests: Array = []
 var _tag_metadata: Dictionary = {} # resource path, script,
@@ -26,12 +25,10 @@ func set_failed(results: Array) -> void:
 				if test.path == result.path:
 					failed.tests.append(test)
 			
-
 func _init() -> void:
 	failed = TestFailures.new()
 	update()
 
-	
 func _initialize_tags() -> void:
 	for tag in Settings.tags():
 		tags[tag] = TestTag.new(tag)
@@ -40,16 +37,9 @@ func update() -> void:
 	tags.clear()
 	dirs.clear()
 	_all_tests.clear()
-	
 	_initialize_tags()
-	# PRIMARY DIR
 	var absolute_path = Settings.test_directory()
-	var directory: Dictionary = {}
-	directory["name"] = absolute_path
-	directory["path"] = absolute_path
-	directory["tests"] = []
-			
-	primary = directory
+	var primary = {"name": absolute_path, "path": absolute_path, "tests": []}
 	dirs.append(primary)
 	_update(primary)
 	has_been_changed = true
@@ -85,6 +75,20 @@ func _update(testdir: Dictionary) -> void:
 			script["yield_time"] = YieldCalculator.calculate_yield_time(instance, script["method_names"].size())
 			script["tests"] = [script]
 			
+			# We load our saved tags
+			# We check if our saved tags exist
+			# If they don't, we don't add them
+			# If they do, we do add them
+			# However we do not delete old tags, we just hide them..
+			# ..so that when a tag is re-added, the old tests pop up again
+			
+			#for tag in test.tags:
+#				if tag in Settings.tags(): # Seems this may be unnecessary if we just initialize them first
+#					tags[tag].tests.append(test)
+#				else:
+#					push_warning("Tag %s does not exist in WAT Settings")
+#					# Push an add check here to auto-add it?
+			
 			for name in script["method_names"]:
 				var method: Dictionary = {}
 				method["directory"] = testdir["path"]
@@ -95,14 +99,6 @@ func _update(testdir: Dictionary) -> void:
 				method["tests"] = [method]
 				script["methods"].append(method)
 				
-	
-#			for tag in test.tags:
-#				if tag in Settings.tags():
-#					tags[tag].tests.append(test)
-#				else:
-#					push_warning("Tag %s does not exist in WAT Settings")
-#					# Push an add check here to auto-add it?
-					
 			if not script["method_names"].empty():
 				testdir["tests"].append(script)
 				_all_tests.append(script)

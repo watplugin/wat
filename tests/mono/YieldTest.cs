@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Threading.Tasks;
 using GodotArray = Godot.Collections.Array;
-
+[Title( "Given a Yield")]
 [Start(nameof(Start))]
 [Pre(nameof(Pre))]
 public class YieldTest : WAT.Test
@@ -15,12 +15,6 @@ public class YieldTest : WAT.Test
 	private bool e;
 	private bool f;
 	[Signal] public delegate void abc();
-
-	public override string Title()
-	{
-		return "Given a Yield";
-	}
-
 	
 	public async Task Start()
 	{

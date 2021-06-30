@@ -1,13 +1,9 @@
  using Godot;
 using System;
-
+ 
+ [Title("Given A Boolean Assertion")]
 public class BooleanTest : WAT.Test
 {
-	public override string Title()
-	{
-		return "Given A Boolean Assertion";
-	}
-	
 	[Test]
 	public void TrueIsTrue()
 	{

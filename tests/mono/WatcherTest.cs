@@ -11,17 +11,12 @@ using GDArray = Godot.Collections.Array;
 // BEGIN NOTE - BOUNDED VARIABLES
 // We currently cannot track bound arguments.
 // END NOTE
-
+[Title("Given A Signal Watcher")]
 [Start(nameof(Start))]
 [Pre(nameof(Pre))]
 [Post(nameof(Post))]
 public class WatcherTest : WAT.Test
 {
-	public override string Title()
-	{
-		return "Given A Signal Watcher";
-	}
-	
 	public void Start()
 	{
 		// There is no RemoveUserSignal Method apparently.

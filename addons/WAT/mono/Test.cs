@@ -1,11 +1,9 @@
 #nullable enable
 using Godot;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Godot.Collections;
 using JetBrains.Annotations;
@@ -16,6 +14,17 @@ namespace WAT
 {
 	public class Test : Node
 	{
+		[AttributeUsage(AttributeTargets.Class)]
+		protected class TitleAttribute : Attribute
+		{
+			public readonly string Title;
+
+			public TitleAttribute(string title)
+			{
+				Title = title;
+			}
+		}
+		
 		[AttributeUsage(AttributeTargets.Class)] 
 		protected class HookAttribute : Attribute
 		{
@@ -42,8 +51,6 @@ namespace WAT
 		protected class PreAttribute : HookAttribute { public PreAttribute(string method) : base(method) { } }
 		protected class PostAttribute : HookAttribute { public PostAttribute(string method) : base(method) { } }
 		protected class EndAttribute : HookAttribute { public EndAttribute(string method) : base(method) { } }
-		
-		
 		
 		[Signal] public delegate void Described();
 		[Signal] public delegate void TestExecuted();
@@ -75,6 +82,7 @@ namespace WAT
 
 		public async void run()
 		{
+			// Can we do this in _Ready?
 			MethodInfo? start = GetTestHook(typeof(StartAttribute));
 			MethodInfo? pre = GetTestHook(typeof(PreAttribute));
 			MethodInfo? post = GetTestHook(typeof(PostAttribute));
@@ -109,8 +117,6 @@ namespace WAT
 			if (test.Method.GetCustomAttribute(typeof(DescriptionAttribute)) is DescriptionAttribute description) { EmitSignal(nameof(Described), description.Description); }
 			if (test.Method.Invoke(this, test.Arguments) is Task task) { await task; }
 		}
-		public virtual string Title() { return GetType().Name; }
-
 		protected SignalAwaiter UntilTimeout(double time) { return ToSignal((Timer) Yielder.Call("until_timeout", time), "finished"); }
 
 		protected SignalAwaiter UntilSignal(Godot.Object emitter, string signal, double time)
@@ -170,6 +176,7 @@ namespace WAT
 			return results;
 		}
 		
+		[UsedImplicitly]
 		public Test setup(Godot.Collections.Dictionary<string, object> metadata)
 		{
 			_methods = metadata["method_names"] is string[] method
@@ -180,8 +187,15 @@ namespace WAT
 			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(this, metadata);
 			return this;
 		}
-		
-		private string title() { return Title(); }
+
+		[UsedImplicitly]
+		private string title()
+		{
+			if (!Attribute.IsDefined(GetType(), typeof(TitleAttribute))) return GetType().Name;
+			TitleAttribute title = (TitleAttribute) Attribute.GetCustomAttribute(GetType(), typeof(TitleAttribute));
+			return title.Title;
+
+		}
 		
 		[Signal] public delegate void executed();
 		private static bool _is_wat_test() => true;

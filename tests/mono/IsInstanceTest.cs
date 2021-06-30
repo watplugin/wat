@@ -3,13 +3,9 @@ using System;
 using Godot.Collections;
 using Array = System.Array;
 
+[Title("Is Instance ( class / type ) Assertions")]
 public class IsInstanceTest : WAT.Test
 {
-	public override string Title()
-	{
-		return "Is Instance ( class / type ) Assertions";
-	}
-	
 	[Test]
 	public void IsAABB()
 	{

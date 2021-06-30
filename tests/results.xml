@@ -1,7 +1,126 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0">
-	<testsuite name="Example" failures="0"  tests="1" time="0">
-		<testcase name=" simple" time="0"></testcase>
+<testsuites failures="1" name="TestXML" tests="13" time="0">
+	<testsuite name="AttributeTest" failures="0"  tests="1" time="0">
+		<testcase name="SimpleTest" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="AttributeYieldTest" failures="0"  tests="1" time="0">
+		<testcase name="SimpleTest" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="BasicCSharpTest" failures="0"  tests="2" time="0">
+		<testcase name="CSharpTestsWorking" time="0"></testcase>
+		<testcase name="CSXharpTestsWorking" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="Given A Boolean Assertion" failures="0"  tests="2" time="0">
+		<testcase name="TrueIsTrue" time="0"></testcase>
+		<testcase name="FalseIsFalse" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="Is Instance ( class / type ) Assertions" failures="0"  tests="19" time="0">
+		<testcase name="IsAABB" time="0"></testcase>
+		<testcase name="IsArray" time="0"></testcase>
+		<testcase name="IsBasis" time="0"></testcase>
+		<testcase name="IsBool" time="0"></testcase>
+		<testcase name="IsColor" time="0"></testcase>
+		<testcase name="IsDictionary" time="0"></testcase>
+		<testcase name="IsFloat" time="0"></testcase>
+		<testcase name="IsInt" time="0"></testcase>
+		<testcase name="IsNodePath" time="0"></testcase>
+		<testcase name="IsObject" time="0"></testcase>
+		<testcase name="IsPlane" time="0"></testcase>
+		<testcase name="IsQuat" time="0"></testcase>
+		<testcase name="IsRect2" time="0"></testcase>
+		<testcase name="IsRid" time="0"></testcase>
+		<testcase name="IsString" time="0"></testcase>
+		<testcase name="IsTransform" time="0"></testcase>
+		<testcase name="IsTransform2D" time="0"></testcase>
+		<testcase name="IsVector2" time="0"></testcase>
+		<testcase name="IsVector3" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="IsNotInstanceTest" failures="0"  tests="19" time="0">
+		<testcase name="IsNotAABB" time="0"></testcase>
+		<testcase name="IsNotArray" time="0"></testcase>
+		<testcase name="IsNotBasis" time="0"></testcase>
+		<testcase name="IsNotBool" time="0"></testcase>
+		<testcase name="IsNotColor" time="0"></testcase>
+		<testcase name="IsNotDictionary" time="0"></testcase>
+		<testcase name="IsNotFloat" time="0"></testcase>
+		<testcase name="IsNotInt" time="0"></testcase>
+		<testcase name="IsNotNodePath" time="0"></testcase>
+		<testcase name="IsNotObject" time="0"></testcase>
+		<testcase name="IsNotPlane" time="0"></testcase>
+		<testcase name="IsNotQuat" time="0"></testcase>
+		<testcase name="IsNotRect2" time="0"></testcase>
+		<testcase name="IsNotRID" time="0"></testcase>
+		<testcase name="IsNotString" time="0"></testcase>
+		<testcase name="IsNotTransform" time="0"></testcase>
+		<testcase name="IsNotTransform2D" time="0"></testcase>
+		<testcase name="IsNotVector2" time="0"></testcase>
+		<testcase name="IsNotVector3" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="Object Assertions" failures="1"  tests="14" time="0">
+		<testcase name="WhenCallingHasMetaAfterAddingMetadata" time="0"></testcase>
+		<testcase name="WhenCallingDoesNotHaveMeta" time="0"></testcase>
+		<testcase name="WhenCallingDoesNotHaveMetalRealKeyButNullValue" time="0"></testcase>
+		<testcase name="WhenCallingHasMethodTitle" time="0">
+			<failure message="EXPECTED: [Node:3709] has method Title but GOT [Node:3709] does not have method Title"></failure></testcase>
+		<testcase name="WhenCallingDoesNotHaveMethodFalseMethod" time="0"></testcase>
+		<testcase name="WhenCallingHasUserSignalAfterAddingASignal" time="0"></testcase>
+		<testcase name="WhenCallingDoesNotHaveUserSignal" time="0"></testcase>
+		<testcase name="WhenCallingDoesNotHaveUserSignalWithClassSignalConstant" time="0"></testcase>
+		<testcase name="WhenCallingObjectIsQueuedForDeletionAfterCallingQueueFree" time="0"></testcase>
+		<testcase name="WhenCallingObjectIsNotQueuedForDeletionAfterNotCallingQueueFree" time="0"></testcase>
+		<testcase name="WhenCallingObjIsConnectedWithARealConnection" time="0"></testcase>
+		<testcase name="WhenCallingObjIsNotConnectedWithAnInvalidConnection" time="0"></testcase>
+		<testcase name="TestIsBlockingSignals" time="0"></testcase>
+		<testcase name="IsNotBlockingSignals" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="Range Assertions" failures="0"  tests="2" time="0">
+		<testcase name="WhenCallingIsInRange" time="0"></testcase>
+		<testcase name="WhenCallingIsNotInRange" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="RepeatTests" failures="0"  tests="2" time="0">
+		<testcase name="SimpleTest" time="0"></testcase>
+		<testcase name="AdditionTest" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="SimpleTest" failures="0"  tests="1" time="0">
+		<testcase name="IsTrue" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="Given A String Assertion" failures="0"  tests="6" time="0">
+		<testcase name="WhenCallingStringBeginWith" time="0"></testcase>
+		<testcase name="WhenCallingStringDoesNotBeginWith" time="0"></testcase>
+		<testcase name="WhenCallingStringContains" time="0"></testcase>
+		<testcase name="WhenCallingStringDoesNotContain" time="0"></testcase>
+		<testcase name="WhenCallingStringEndsWith" time="0"></testcase>
+		<testcase name="WhenCallingStringDoesNotEndWith" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="Given A Signal Watcher" failures="0"  tests="4" time="0">
+		<testcase name="WhenWeWatchASignalFromAnObjectWithNoBoundVariables" time="0"></testcase>
+		<testcase name="When we watch and emit a signal xxx" time="0"></testcase>
+		<testcase name="When we watch and do not emit a signal xxxx" time="0"></testcase>
+		<testcase name="WhenWeWatchASignalAndEmitItMultipleTimes" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="Given a Yield" failures="0"  tests="10" time="0">
+		<testcase name="WhenWeYieldInStart" time="0"></testcase>
+		<testcase name="WhenWeYieldInPre" time="0"></testcase>
+		<testcase name="WhenWeYieldInExecute" time="0"></testcase>
+		<testcase name="YielderIsNotActiveDuringAssertions" time="0"></testcase>
+		<testcase name="WhenASignalBeingYieldedOnIsEmittedTheYielderIsStopped" time="0"></testcase>
+		<testcase name="WhenTheYielderIsFinishedSignalsAreDisconnected" time="0"></testcase>
+		<testcase name="WhenWeCallUntilTimeout" time="0"></testcase>
+		<testcase name="WhenWeCallUntilSignal" time="0"></testcase>
+		<testcase name="WhenTheYielderTimesOut" time="0"></testcase>
+		<testcase name="WhenTheYielderHearsOurSignal" time="0"></testcase>
 	</testsuite>
 
 </testsuites>
