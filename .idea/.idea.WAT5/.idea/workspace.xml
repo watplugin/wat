@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Node.tscn" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/addons/WAT/cli.gd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/addons/WAT/oldCli.tscn" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/addons/WAT/ui/oldCLI.gd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/cli.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/cli.tscn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/mono/GDScriptWrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/GDScriptWrapper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/runner/TestRunner.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/runner/TestRunner.tscn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/ui/cli.gd" beforeDir="false" />
-    </list>
+    <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -152,7 +142,7 @@
       <workItem from="1625003290099" duration="3229000" />
       <workItem from="1625040986642" duration="6134000" />
       <workItem from="1625056430392" duration="2915000" />
-      <workItem from="1625158439159" duration="2110000" />
+      <workItem from="1625158439159" duration="2133000" />
     </task>
     <servers />
   </component>
