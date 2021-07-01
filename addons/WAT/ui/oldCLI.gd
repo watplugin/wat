@@ -1,6 +1,8 @@
 extends Node
 
-
+const XML: GDScript = preload("res://addons/WAT/editor/junit_xml.gd")
+const FileSystem: GDScript = preload("res://addons/WAT/filesystem/filesystem.gd")
+const TestRunner: GDScript = preload("res://addons/WAT/runner/TestRunner.gd")
 const RUN_ALL: String = "-run_all"
 const RUN_DIRECTORY: String = "-run_dir"
 const RUN_SCRIPT: String = "-run_script"
@@ -12,7 +14,6 @@ const LIST_DIR: String = "-list_dir"
 const PASSED: int = 0
 const FAILED: int = 1
 var test
-const TestRunner: PackedScene = preload("res://addons/WAT/runner/TestRunner.tscn")
 
 var _runner: Node
 var _start_time: float
@@ -24,7 +25,8 @@ func arguments() -> Array:
 	return Array(OS.get_cmdline_args()).pop_back().split("=") as Array
 
 func parse(arguments: Array) -> void:
-	test = load("res://addons/WAT/editor/test_gatherer.gd").new().discover()
+	var tests = FileSystem.new().get_tests()
+	#print(tests)
 	var command: String = arguments.pop_front()
 	match command:
 		RUN_ALL:
@@ -37,7 +39,7 @@ func parse(arguments: Array) -> void:
 				OS.set_exit_code(1)
 				get_tree().quit()
 				return
-			_run(test.all, repeat, threads)
+			_run(test, repeat, threads)
 		RUN_DIRECTORY:
 			var dir: String = arguments.pop_front()
 			var repeat = arguments.pop_front()

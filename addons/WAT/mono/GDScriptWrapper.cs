@@ -7,8 +7,10 @@ using Array = Godot.Collections.Array;
 using Object = Godot.Object;
 // ReSharper disable InconsistentNaming
 
+
 namespace WAT
 {
+	
 	public partial class Test: Node
 	{
 		public Array get_test_methods()
