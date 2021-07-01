@@ -106,7 +106,7 @@ func _update(testdir: Dictionary) -> void:
 		relative_path = dir.get_next()
 	dir.list_dir_end()
 	
-	dirs.append_array(subdirs)
+	dirs += subdirs
 	for subdir in subdirs:
 		_update(subdir)
 			
