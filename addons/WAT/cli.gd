@@ -28,7 +28,8 @@ func _ready() -> void:
 			_display_failures(cases)
 	_display(cases)
 	filesystem.set_failed(results)
-	OS.exit_code = int(cases.total > 0 and cases.total == cases.passed)
+	OS.exit_code = not int(cases.total > 0 and cases.total == cases.passed)
+	print("exit code is? ", OS.exit_code)
 	get_tree().quit()
 	
 func _run() -> void:
