@@ -12,6 +12,7 @@ var _all_tests: Array = []
 var _tag_metadata: Dictionary = {} # resource path, script,
 var tags: Dictionary = {} 
 var failed
+var indexed: Dictionary = {}
 
 func get_tests() -> Array:
 	return _all_tests
@@ -37,6 +38,7 @@ func update() -> void:
 	tags.clear()
 	dirs.clear()
 	_all_tests.clear()
+	indexed.clear()
 	_initialize_tags()
 	var absolute_path = Settings.test_directory()
 	var primary = {"name": absolute_path, "path": absolute_path, "tests": []}
@@ -62,6 +64,7 @@ func _update(testdir: Dictionary) -> void:
 			directory["name"] = absolute_path
 			directory["tests"] = []
 			subdirs.append(directory)
+			indexed[absolute_path] = directory
 		
 		elif _is_valid_test(absolute_path):
 			var instance: Script = load(absolute_path)
@@ -74,6 +77,7 @@ func _update(testdir: Dictionary) -> void:
 			script["tags"] = _tag_metadata.get(instance.resource_path, [])
 			script["yield_time"] = YieldCalculator.calculate_yield_time(instance, script["method_names"].size())
 			script["tests"] = [script]
+			indexed[absolute_path] = script
 			
 			# We load our saved tags
 			# We check if our saved tags exist
@@ -98,6 +102,7 @@ func _update(testdir: Dictionary) -> void:
 				method["yield_time"] = 0
 				method["tests"] = [method]
 				script["methods"].append(method)
+				indexed[absolute_path + name] = method
 				
 			if not script["method_names"].empty():
 				testdir["tests"].append(script)

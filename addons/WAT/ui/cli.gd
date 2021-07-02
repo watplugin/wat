@@ -1,6 +1,8 @@
 extends Node
 
-
+const XML: GDScript = preload("res://addons/WAT/editor/junit_xml.gd")
+const FileSystem: GDScript = preload("res://addons/WAT/filesystem/filesystem.gd")
+const TestRunner: GDScript = preload("res://addons/WAT/runner/TestRunner.gd")
 const RUN_ALL: String = "-run_all"
 const RUN_DIRECTORY: String = "-run_dir"
 const RUN_SCRIPT: String = "-run_script"
@@ -9,75 +11,49 @@ const RUN_METHOD: String = "-run_method"
 const RUN_FAILURES: String = "-rerun_failed"
 const LIST_ALL: String = "-list_all"
 const LIST_DIR: String = "-list_dir"
-const PASSED: int = 0
-const FAILED: int = 1
-var test
-const TestRunner: PackedScene = preload("res://addons/WAT/runner/TestRunner.tscn")
 
-var _runner: Node
-var _start_time: float
 
 func _ready() -> void:
-	parse(arguments())
-	
-func arguments() -> Array:
-	return Array(OS.get_cmdline_args()).pop_back().split("=") as Array
-
-func parse(arguments: Array) -> void:
-	test = load("res://addons/WAT/editor/test_gatherer.gd").new().discover()
+	var arguments: Array = Array(OS.get_cmdline_args()).pop_back().split("=") as Array
 	var command: String = arguments.pop_front()
+	var filesystem = FileSystem.new()
 	match command:
 		RUN_ALL:
 			var repeat = arguments.pop_front()
 			var threads = arguments.pop_front()
 			repeat = 0 if repeat == null else int(repeat) 
 			threads = 1 if threads == null else int(threads)
-			if test.all.empty():
+			var tests: Array = filesystem.get_tests()
+			if tests.empty():
 				push_warning("No Tests Found")
 				OS.set_exit_code(1)
 				get_tree().quit()
 				return
-			_run(test.all, repeat, threads)
+			_run(tests, repeat, threads)
 		RUN_DIRECTORY:
 			var dir: String = arguments.pop_front()
 			var repeat = arguments.pop_front()
 			var threads = arguments.pop_front()
 			repeat = 0 if repeat == null else int(repeat) 
 			threads = 1 if threads == null else int(threads)
-			if test[dir].empty():
+			if not filesystem.indexed.has(dir) or filesystem.indexed[dir].empty():
 				push_warning("No Tests Found")
 				OS.set_exit_code(1)
 				get_tree().quit()
 				return
-			_run(test[dir], repeat, threads)
+			_run(filesystem.indexed[dir]["tests"], repeat, threads)
 		RUN_SCRIPT:
 			var script: String = arguments.pop_front()
 			var repeat = arguments.pop_front()
 			var threads = arguments.pop_front()
 			repeat = 0 if repeat == null else int(repeat) 
 			threads = 1 if threads == null else int(threads)
-			if not test.script.has(script):
+			if not filesystem.indexed.has(script):
 				push_warning("No Tests Found")
 				OS.set_exit_code(1)
 				get_tree().quit()
 				return
-			_run([test.scripts[script]], repeat, threads)
-		RUN_TAG:
-			var tag: String = arguments.pop_front()
-			var repeat = arguments.pop_front()
-			var threads = arguments.pop_front()
-			repeat = 0 if repeat == null else int(repeat) 
-			threads = 1 if threads == null else int(threads)
-			var t = []
-			for container in test.all:
-				if container["tags"].has(tag):
-					t.append(container)
-			if t.empty():
-				push_warning("No Tests Found")
-				OS.set_exit_code(1)
-				get_tree().quit()
-				return
-			_run(t, repeat, threads)
+			_run(filesystem.indexed[script]["tests"], repeat, threads)
 		RUN_METHOD:
 			var script: String = arguments.pop_front()
 			var method: String = arguments.pop_front()
@@ -85,61 +61,30 @@ func parse(arguments: Array) -> void:
 			var threads = arguments.pop_front()
 			repeat = 0 if repeat == null else int(repeat) 
 			threads = 1 if threads == null else int(threads)
-			if not test.scripts.has(script):
+			if not filesystem.indexed.has(script + method):
 				push_warning("No Tests Found")
 				OS.set_exit_code(1)
 				get_tree().quit()
 				return
-			var container = test.scripts[script].duplicate()
-			container["method"] = method
-			_run([container], repeat, threads)
+			_run(filesystem.indexed[script + method]["tests"], repeat, threads)
+		RUN_TAG:
+			push_warning("Run Tag Not Implemented")
+			get_tree().quit()
 		RUN_FAILURES:
-			var toRun = []
-			for container in test.all:
-				if container.has("passing") and not container["passing"]:
-					toRun.append(container)
-			if toRun.empty():
-				push_warning("No Tests Found")
-				OS.set_exit_code(1)
-				get_tree().quit()
-				return
-			var repeat = arguments.pop_front()
-			var threads = arguments.pop_front()
-			repeat = 0 if repeat == null else int(repeat) 
-			threads = 1 if threads == null else int(threads)
-			_run(toRun, repeat, threads)
+			push_warning("Run Failures Not Implemented")
+			get_tree().quit()
 		LIST_ALL:
-			print(test.scripts.keys())
-			get_tree().quit()
+			var list = []
+			for test in filesystem.get_tests():
+				print(test["path"])
 		LIST_DIR:
-			var dirlist: Array = []
-			for container in test[arguments.pop_front()]:
-				dirlist.append(container.path)
-			print(dirlist)
+			var dir: String = arguments.pop_front()
+			var list = []
+			for test in filesystem.indexed[dir]["tests"]:
+				print(test["path"].replace(dir + "/", ""))
 			get_tree().quit()
-		_:
-			push_error("Invalid Argument")
-			get_tree().quit()
-			
-func test_directory() -> String:
-	return ProjectSettings.get_setting("WAT/Test_Directory")
-	
-func set_last_run_success(results) -> void:
-	for result in results:
-		test.scripts[result["path"]]["passing"] = result.success
-	load("res://addons/WAT/editor/test_gatherer.gd").new().save(test)
 
-func _run(tests: Array, repeats: int = 0, threads: int = 0) -> void:
-	var toRun = repeat(tests, repeats)
-	#_runner = TestRunner.new(toRun, threads)
-	_runner = TestRunner.instance()
-#	_runner.connect("run_completed", self, "_on_run_completed")
-	_start_time = OS.get_ticks_msec()
-	add_child(_runner)
-	var results: Array = yield(_runner.run(tests, threads), "completed")
-	_on_run_completed(results)
-
-func repeat(tests: Array, repeat: int) -> Array:
+func _repeat(tests: Array, repeat: int) -> Array:
 	var duplicates: Array = []
 	for idx in repeat:
 		for test in tests:
@@ -147,22 +92,40 @@ func repeat(tests: Array, repeat: int) -> Array:
 	duplicates += tests
 	return duplicates
 
-func _on_run_completed(caselist: Array) -> void:
-	_runner.queue_free()
+func _run(tests: Array, repeat: int, threads: int) -> void:
+	tests = _repeat(tests, repeat)
+	var runner = TestRunner.new()
+	add_child(runner)
+	var results = yield(runner.run(tests, threads), "completed")
+	runner.queue_free()
+	
+	# Calculate Failures
+	# This is likely best suited to be in a seperate object
 	var cases = {passed = 0, total = 0, crashed = 0}
-	for case in caselist:
+	for case in results:
 		cases.total += 1
 		if case.success:
 			cases.passed += 1
 		else:
-			display_failures(case)
-	display_summary(cases)
-	load("res://addons/WAT/editor/junit_xml.gd").write(caselist, cases.seconds)
-	set_last_run_success(caselist)
-	set_exit_code(cases)
+			_display_failures(cases)
+			
+	_display(cases)
+#	filesystem.set_failed(results)
+	OS.exit_code = not int(cases.total > 0 and cases.total == cases.passed)
 	get_tree().quit()
+	
+func _display(cases: Dictionary) -> void:
+	cases.seconds = OS.get_ticks_msec() / 1000
+	print("""
+	-------RESULTS-------
+	Took {seconds} second(s)
+	{crashed} Tests Crashed
+	{passed} / {total} Tests Passed
+	-------RESULTS-------
+	""".format(cases).dedent())
 
-func display_failures(case) -> void:
+func _display_failures(case) -> void:
+	# We could create this somewhere else?
 	print("%s (%s)" % [case.context, case.path])
 	for method in case.methods:
 		if not method.success:
@@ -170,17 +133,3 @@ func display_failures(case) -> void:
 			for assertion in method.assertions:
 				if not assertion.success:
 					print("\t%s" % assertion.context, "\n\t  (EXPECTED: %s) | (RESULTED: %s)" % [assertion.expected, assertion.actual])
-
-
-func display_summary(cases: Dictionary) -> void:
-	cases.seconds = (OS.get_ticks_msec() - _start_time) / 1000
-	print("""
-	-------RESULTS-------
-	Took {seconds} seconds
-	{crashed} Tests Crashed
-	{passed} / {total} Tests Passed
-	-------RESULTS-------
-	""".format(cases).dedent())
-
-func set_exit_code(cases: Dictionary) -> void:
-	OS.exit_code = PASSED if cases.total > 0 and cases.total == cases.passed and cases.crashed == 0 else FAILED
