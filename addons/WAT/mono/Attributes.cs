@@ -22,20 +22,25 @@ namespace WAT
 			public readonly string Method;
 			protected HookAttribute(string method) => Method = method;
 		}
-
-		[AttributeUsage(AttributeTargets.Method)]
-		protected class DescriptionAttribute : Attribute
-		{
-			public readonly string Description;
-			public DescriptionAttribute(string description) { Description = description; }
-		}
 		
 		[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 		protected class TestAttribute : Attribute
 		{
-			public readonly object[] Arguments = new object[0];
-			public TestAttribute() {}
+			public readonly string Description = "";
+			public readonly object[] Arguments = { };
+			
 			public TestAttribute(params object[] args) { Arguments = args; }
+
+			public TestAttribute(string description)
+			{
+				Description = description;
+			}
+
+			public TestAttribute(string description = "", object[] args = default)
+			{
+				Description = description;
+				Arguments = args;
+			}
 		}
 		
 		protected class StartAttribute : HookAttribute { public StartAttribute(string method) : base(method) { } }

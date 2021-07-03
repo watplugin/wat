@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <testsuites failures="0" name="TestXML" tests="1" time="0">
-	<testsuite name="AttributeYieldTest" failures="0"  tests="1" time="0">
-		<testcase name="SimpleTest" time="0"></testcase>
+	<testsuite name="RepeatTests" failures="0"  tests="1" time="0">
+		<testcase name="This is a description" time="0"></testcase>
 	</testsuite>
 
 </testsuites>

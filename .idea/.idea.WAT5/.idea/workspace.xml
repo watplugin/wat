@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="" />
+    <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/addons/WAT/test/logs/godot_2021-07-03_10.27.20.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addons/WAT/test/logs/godot_2021-07-03_10.59.52.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Node.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/Node.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/gui.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/gui.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/mono/Attributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/Attributes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/test/logs/godot.log" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/test/logs/godot.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/project.godot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/mono/RepeatTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/mono/RepeatTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/mono/WatcherTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/mono/WatcherTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/results.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -11,6 +24,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/04C5C85C-7E5E-4A4A-B66D-06C5A6DEE283/a9/eab03a2e/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CD6B08EA-F252-4ECE-B580-488B249D3E36/6d/9a1fd388/Dictionary.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -30,7 +44,6 @@
       <option value="$PROJECT_DIR$/Nodex.cs" />
       <option value="$PROJECT_DIR$/tests/mono/Attribute.Test.cs" />
       <option value="$PROJECT_DIR$/tests/mono/AttributeTest.cs" />
-      <option value="$PROJECT_DIR$/tests/mono/RepeatTests.cs" />
       <option value="$PROJECT_DIR$/tests/mono/AttributeYieldTest.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/ui/gui.gd" />
       <option value="$PROJECT_DIR$/addons/WAT/filesystem/objects.gd" />
@@ -42,16 +55,17 @@
       <option value="$PROJECT_DIR$/tests/mono/ObjectTest.cs" />
       <option value="$PROJECT_DIR$/tests/mono/RangeTest.cs" />
       <option value="$PROJECT_DIR$/tests/mono/StringTest.cs" />
-      <option value="$PROJECT_DIR$/tests/mono/WatcherTest.cs" />
       <option value="$PROJECT_DIR$/tests/mono/YieldTest.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/mono/TestAttributes.cs" />
-      <option value="$PROJECT_DIR$/addons/WAT/mono/Attributes.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/test/case.gd" />
       <option value="$PROJECT_DIR$/addons/WAT/runner/test_controller.gd" />
       <option value="$PROJECT_DIR$/addons/WAT/test/test.gd" />
-      <option value="$PROJECT_DIR$/addons/WAT/mono/Test.cs" />
       <option value="$PROJECT_DIR$/addons/WAT/mono/GDScriptWrapper.cs" />
       <option value="$PROJECT_DIR$/Node.gd" />
+      <option value="$PROJECT_DIR$/tests/mono/WatcherTest.cs" />
+      <option value="$PROJECT_DIR$/addons/WAT/mono/Test.cs" />
+      <option value="$PROJECT_DIR$/addons/WAT/mono/Attributes.cs" />
+      <option value="$PROJECT_DIR$/tests/mono/RepeatTests.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1uUfeRRvNHRfBeX2hqDT0vIRWyt" />
@@ -81,7 +95,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Editor" type="GODOT_DEBUG_RUN_CONFIGURATION" factoryName="Start and Debug">
-      <option name="EXE_PATH" value="$USER_HOME$/GameEngines/Godot/3.3_Mono/3.3_Mono.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/GameEngines/GodotSharp.exe" />
       <option name="PROGRAM_PARAMETERS" value="--path &quot;$PROJECT_DIR$&quot; --editor" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -91,7 +105,7 @@
       </method>
     </configuration>
     <configuration name="Player" type="GODOT_DEBUG_RUN_CONFIGURATION" factoryName="Start and Debug">
-      <option name="EXE_PATH" value="$USER_HOME$/GameEngines/Godot/3.3_Mono/3.3_Mono.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/GameEngines/GodotSharp.exe" />
       <option name="PROGRAM_PARAMETERS" value="--path &quot;$PROJECT_DIR$&quot;" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -101,7 +115,7 @@
       </method>
     </configuration>
     <configuration name="WATSharpGui" type="GODOT_DEBUG_RUN_CONFIGURATION" factoryName="Start and Debug">
-      <option name="EXE_PATH" value="$USER_HOME$/GameEngines/Godot/3.3_Mono/3.3_Mono.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/GameEngines/GodotSharp.exe" />
       <option name="PROGRAM_PARAMETERS" value="--path &quot;$PROJECT_DIR$&quot; &quot;res://addons/WAT/gui.tscn&quot;" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -143,6 +157,7 @@
       <workItem from="1625040986642" duration="6134000" />
       <workItem from="1625056430392" duration="2915000" />
       <workItem from="1625158439159" duration="2133000" />
+      <workItem from="1625304402011" duration="3147000" />
     </task>
     <servers />
   </component>

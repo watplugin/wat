@@ -1,0 +1,6 @@
+Godot Engine v3.3.stable.official - https://godotengine.org
+OpenGL ES 3.0 Renderer: NVIDIA GeForce GTX 1060 6GB/PCIe/SSE2
+OpenGL ES Batching: ON
+ 
+**ERROR**: Can't load the script "test.gd" as it doesn't inherit from SceneTree or MainLoop.
+   At: main/main.cpp:1675:start() - Method failed. Returning: false

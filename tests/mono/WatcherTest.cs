@@ -42,8 +42,7 @@ public class WatcherTest : WAT.Test
 			"Then it captures any arguments that where passed when the signal was emitted");
 	}
 	
-	[Test]
-	[Description("When we watch and emit a signal xxx")]
+	[Test("When we watch and emit a signal xxx")]
 	public void WhenWeWatchAndEmitASignal()
 	{
 		EmitSignal("Example");
@@ -51,8 +50,7 @@ public class WatcherTest : WAT.Test
 		
 	}
 	
-	[Test]
-	[Description("When we watch and do not emit a signal xxxx")]
+	[Test("When we watch and do not emit a signal xxxx")]
 	public void WhenWeWatchAndDoNotEmitASignal()
 	{
 		Assert.SignalWasNotEmitted(this, "Example", "Then it does not capture the non-emitted signal");
