@@ -97,20 +97,20 @@ namespace WAT
 		}
 
 		private Stack<TestEventData> EventData { get; } = new Stack<TestEventData>();
+		
 		protected async Task<object[]> UntilEvent(object sender, string handle, double time)
 		{
-			// Create Suitable Delegate
 			EventInfo eventInfo = sender.GetType().GetEvent(handle);
-			EventHandler handler = OnEventRaised;
+			MethodInfo methodInfo = GetType().GetMethod("OnEventRaised");
+			Delegate handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, methodInfo!);
 			eventInfo.AddEventHandler(sender, handler);
 			object[] results = await UntilSignal(this, nameof(EventRaised), time);
 			eventInfo.RemoveEventHandler(sender, handler);
 			return results;
 		}
 		
-		private void OnEventRaised(object sender, EventArgs args = null)
+		public void OnEventRaised(object sender, EventArgs args)
 		{
-			Console.WriteLine("Event Raised");
 			EventData.Push(new TestEventData(sender, args));
 			EmitSignal(nameof(EventRaised));
 		}

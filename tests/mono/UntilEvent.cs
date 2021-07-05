@@ -5,8 +5,10 @@ namespace WAT
 {
     public class UntilEvent: WAT.Test
     {
-        public event EventHandler Event = (sender, args) => { }; 
+        // This should really work with any delegate that matches method(sender), method(sender, args) or method(sender, customargs)
+        public event EventHandler Event;
         public event EventHandler<EventArgs> EventWithArguments;
+        public event EventHandler<CustomEventArgs> EventWithCustomArguments;
         
         [Test()]
         public async Task EventReached()
@@ -24,26 +26,76 @@ namespace WAT
         public async Task EventTimedOut()
         {
             Watch(this, "EventRaised");
-            object[] result = await UntilEvent(this, nameof(Event), 3.0);
+            object[] result = await UntilEvent(this, nameof(Event), 0.5);
             TestEventData eventData = GetTestEventData();
             Assert.IsTrue(eventData.Sender is null, "Event data has no sender (because it was never invoked)");
             Assert.SignalWasNotEmitted(this, "EventRaised", "EventRaised was not Emitted");
             UnWatch(this, "EventRaised");
         }
         
-        // [Test()]
-        // public async Task EventWithArgsReached()
-        // {
-        //     Watch(this, "EventRaised");
-        //     CallDeferred("InvokeEventWithEventArgs");
-        //     object[] result = await UntilEvent(this, nameof(EventWithArguments), 10.0);
-        //     //TestEventData eventData = (TestEventData) result[0];
-        //     //Assert.IsType<TestEventData>(eventData, "TestEventData Object Returned on EventWithArguments.Invoke(this, new EventArgs())");
-        //     Assert.SignalWasEmitted(this, "EventRaised", "EventRaised Emitted");
-        //     UnWatch(this, "EventRaised");
-        // }
+        [Test()]
+        public async Task EventWithArgsReached()
+        {
+            Watch(this, "EventRaised");
+            CallDeferred("InvokeEventWithEventArgs");
+            object[] result = await UntilEvent(this, nameof(EventWithArguments), 10.0);
+            TestEventData eventData = GetTestEventData();
+            Assert.IsEqual(eventData.Sender, this, "This test invoked EventWithEventArgs");
+            Assert.SignalWasEmitted(this, "EventRaised", "EventRaised Emitted");
+            UnWatch(this, "EventRaised");
+        }
+        
+        [Test()]
+        public async Task EventWithArgsTimedOut()
+        {
+            Watch(this, "EventRaised");
+            object[] result = await UntilEvent(this, nameof(EventWithArguments), 0.5);
+            TestEventData eventData = GetTestEventData();
+            Assert.IsTrue(eventData.Sender is null, "Event data has no sender (because it was never invoked)");
+            Assert.SignalWasNotEmitted(this, "EventRaised", "EventRaised was not Emitted");
+            UnWatch(this, "EventRaised");
+        }
+        
+        [Test()]
+        public async Task EventWithCustomArgsReached()
+        {
+            Watch(this, "EventRaised");
+            CallDeferred("InvokeEventWithCustomArgs", 10, "hello", true);
+            object[] result = await UntilEvent(this, nameof(EventWithCustomArguments), 10.0);
+            TestEventData eventData = GetTestEventData();
+            Assert.IsEqual(eventData.Sender, this, "This test invoked EventWithEventArgs");
+            Assert.SignalWasEmitted(this, "EventRaised", "EventRaised Emitted");
+            Assert.IsType<CustomEventArgs>(eventData.Arguments, "Args are Custom Event Args");
+            UnWatch(this, "EventRaised");
+        }
+        
+        [Test()]
+        public async Task EventWithCustomArgsTimedOut()
+        {
+            Watch(this, "EventRaised");
+            object[] result = await UntilEvent(this, nameof(EventWithCustomArguments), 0.5);
+            TestEventData eventData = GetTestEventData();
+            Assert.IsTrue(eventData.Sender is null, "Event data has no sender (because it was never invoked)");
+            Assert.SignalWasNotEmitted(this, "EventRaised", "EventRaised Was Not Emitted");
+            UnWatch(this, "EventRaised");
+        }
         
         private void InvokeEvent() { Event?.Invoke(this, null); }
         private void InvokeEventWithEventArgs() { EventWithArguments?.Invoke(this, new EventArgs()); }
+        private void InvokeEventWithCustomArgs(int a, string b, bool c) { EventWithCustomArguments?.Invoke(this, new CustomEventArgs(a, b, c)); }
+    }
+
+    public class CustomEventArgs: EventArgs
+    {
+        public int A { get; }
+        public string B { get; }
+        public bool C { get; }
+            
+        public CustomEventArgs(int a, string b, bool c)
+        {
+            A = a;
+            B = b;
+            C = c;
+        }
     }
 }
