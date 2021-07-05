@@ -15,8 +15,7 @@ namespace WAT
         {
             Watch(this, "EventRaised");
             CallDeferred("InvokeEvent");
-            object[] result = await UntilEvent(this, nameof(Event), 10.0);
-            TestEventData eventData = GetTestEventData();
+            TestEventData eventData = await UntilEvent(this, nameof(Event), 10.0);
             Assert.IsEqual(eventData.Sender, this, "This test invoked Event");
             Assert.SignalWasEmitted(this, "EventRaised", "EventRaised Emitted");
             UnWatch(this, "EventRaised");
@@ -26,8 +25,7 @@ namespace WAT
         public async Task EventTimedOut()
         {
             Watch(this, "EventRaised");
-            object[] result = await UntilEvent(this, nameof(Event), 0.5);
-            TestEventData eventData = GetTestEventData();
+            TestEventData eventData = await UntilEvent(this, nameof(Event), 0.5);
             Assert.IsTrue(eventData.Sender is null, "Event data has no sender (because it was never invoked)");
             Assert.SignalWasNotEmitted(this, "EventRaised", "EventRaised was not Emitted");
             UnWatch(this, "EventRaised");
@@ -38,8 +36,7 @@ namespace WAT
         {
             Watch(this, "EventRaised");
             CallDeferred("InvokeEventWithEventArgs");
-            object[] result = await UntilEvent(this, nameof(EventWithArguments), 10.0);
-            TestEventData eventData = GetTestEventData();
+            TestEventData eventData  = await UntilEvent(this, nameof(EventWithArguments), 10.0);
             Assert.IsEqual(eventData.Sender, this, "This test invoked EventWithEventArgs");
             Assert.SignalWasEmitted(this, "EventRaised", "EventRaised Emitted");
             UnWatch(this, "EventRaised");
@@ -49,8 +46,7 @@ namespace WAT
         public async Task EventWithArgsTimedOut()
         {
             Watch(this, "EventRaised");
-            object[] result = await UntilEvent(this, nameof(EventWithArguments), 0.5);
-            TestEventData eventData = GetTestEventData();
+            TestEventData eventData = await UntilEvent(this, nameof(EventWithArguments), 0.5);
             Assert.IsTrue(eventData.Sender is null, "Event data has no sender (because it was never invoked)");
             Assert.SignalWasNotEmitted(this, "EventRaised", "EventRaised was not Emitted");
             UnWatch(this, "EventRaised");
@@ -61,8 +57,7 @@ namespace WAT
         {
             Watch(this, "EventRaised");
             CallDeferred("InvokeEventWithCustomArgs", 10, "hello", true);
-            object[] result = await UntilEvent(this, nameof(EventWithCustomArguments), 10.0);
-            TestEventData eventData = GetTestEventData();
+            TestEventData eventData = await UntilEvent(this, nameof(EventWithCustomArguments), 10.0);
             Assert.IsEqual(eventData.Sender, this, "This test invoked EventWithEventArgs");
             Assert.SignalWasEmitted(this, "EventRaised", "EventRaised Emitted");
             Assert.IsType<CustomEventArgs>(eventData.Arguments, "Args are Custom Event Args");
@@ -73,8 +68,7 @@ namespace WAT
         public async Task EventWithCustomArgsTimedOut()
         {
             Watch(this, "EventRaised");
-            object[] result = await UntilEvent(this, nameof(EventWithCustomArguments), 0.5);
-            TestEventData eventData = GetTestEventData();
+            TestEventData eventData = await UntilEvent(this, nameof(EventWithCustomArguments), 0.5);
             Assert.IsTrue(eventData.Sender is null, "Event data has no sender (because it was never invoked)");
             Assert.SignalWasNotEmitted(this, "EventRaised", "EventRaised Was Not Emitted");
             UnWatch(this, "EventRaised");
