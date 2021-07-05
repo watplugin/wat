@@ -15,6 +15,7 @@ namespace WAT
 	[End(nameof(Blank))]
 	public partial class Test : Node
 	{
+		[Signal] private delegate void EventRaised();
 		[Signal] public delegate void Described();
 		private const int Recorder = 0; // Apparently we require the C# Version
 		private IEnumerable<Executable> _methods = null!;
@@ -93,6 +94,38 @@ namespace WAT
 		{
 			_watcher.Call("watch", emitter, signal);
 			return ToSignal((Timer) Yielder.Call("until_signal", time, emitter, signal), "finished");
+		}
+
+		private Stack<TestEventData> EventData { get; } = new Stack<TestEventData>();
+		protected async Task<object[]> UntilEvent(object sender, string handle, double time)
+		{
+			// Create Suitable Delegate
+			EventInfo eventInfo = sender.GetType().GetEvent(handle);
+			EventHandler handler = OnEventRaised;
+			eventInfo.AddEventHandler(sender, handler);
+			object[] results = await UntilSignal(this, nameof(EventRaised), time);
+			eventInfo.RemoveEventHandler(sender, handler);
+			return results;
+		}
+		
+		private void OnEventRaised(object sender, EventArgs args = null)
+		{
+			Console.WriteLine("Event Raised");
+			EventData.Push(new TestEventData(sender, args));
+			EmitSignal(nameof(EventRaised));
+		}
+
+		protected TestEventData GetTestEventData() { return EventData.Count == 0 ? new TestEventData(null, null) : EventData.Pop(); }
+		protected class TestEventData: Godot.Object
+		{
+			public object Sender { get; }
+			public EventArgs Arguments { get; }
+
+			public TestEventData(object sender, EventArgs arguments)
+			{
+				Sender = sender;
+				Arguments = arguments;
+			}
 		}
 		
 		protected void Watch(Godot.Object emitter, string signal) { _watcher.Call("watch", emitter, signal); }
