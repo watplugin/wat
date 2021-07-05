@@ -26,21 +26,8 @@ namespace WAT
 		[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 		protected class TestAttribute : Attribute
 		{
-			public readonly string Description = "";
-			public readonly object[] Arguments = { };
-			
+			public readonly object[] Arguments;
 			public TestAttribute(params object[] args) { Arguments = args; }
-
-			public TestAttribute(string description)
-			{
-				Description = description;
-			}
-
-			public TestAttribute(string description = "", object[] args = default)
-			{
-				Description = description;
-				Arguments = args;
-			}
 		}
 		
 		protected class StartAttribute : HookAttribute { public StartAttribute(string method) : base(method) { } }

@@ -85,10 +85,11 @@ namespace WAT
 
 		private async Task Execute(Executable test)
 		{
-			if (test.Description != "") { EmitSignal(nameof(Described), test.Description );}
 			if (test.Method.Invoke(this, test.Arguments) is Task task) { await task; }
 			else { await Task.Run((() => { })); }
 		}
+		
+		protected void Describe(string description) { EmitSignal(nameof(Described), description);}
 
 		protected SignalAwaiter UntilTimeout(double time) { return ToSignal((Timer) Yielder.Call("until_timeout", time), "finished"); }
 
@@ -117,7 +118,7 @@ namespace WAT
 				let tests = Attribute.GetCustomAttributes(methodInfo)
 					.OfType<TestAttribute>()
 				from attribute in tests
-				select new Executable(methodInfo, attribute.Description, attribute.Arguments)).ToList();
+				select new Executable(methodInfo, attribute.Arguments)).ToList();
 		}
 		
 		private Dictionary GetResults()
@@ -132,12 +133,10 @@ namespace WAT
 		{
 			public readonly MethodInfo Method;
 			public readonly object[] Arguments;
-			public readonly string Description;
 
-			public Executable(MethodInfo method, string description, object[] arguments)
+			public Executable(MethodInfo method, object[] arguments)
 			{
 				Method = method;
-				Description = description;
 				Arguments = arguments;
 			}
 		}
