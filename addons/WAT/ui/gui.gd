@@ -93,9 +93,6 @@ func _launch_runner(tests: Array = filesystem.get_tests(), threads: int = Thread
 	instance.queue_free()
 	_on_run_completed(results)
 	
-	
-const RUN_CURRENT_SCENE_GODOT_3_2: int = 39
-const RUN_CURRENT_SCENE_GODOT_3_1: int = 33
 func _launch_debugger(tests: Array = filesystem.get_tests(), threads: int = Threads.value) -> void:
 	
 	if tests.empty():
@@ -107,14 +104,8 @@ func _launch_debugger(tests: Array = filesystem.get_tests(), threads: int = Thre
 	
 	var version = Engine.get_version_info()
 	var editor = _plugin.get_editor_interface()
-	if editor.has_method("play_custom_scene"):
-		editor.play_custom_scene("res://addons/WAT/runner/TestRunner.tscn")
-	else:
-		var run = RUN_CURRENT_SCENE_GODOT_3_1 if version.minor == 1 else RUN_CURRENT_SCENE_GODOT_3_2
-		editor.open_scene_from_path("res://addons/WAT/runner/TestRunner.tscn")
-		editor.get_parent()._menu_option(RUN_CURRENT_SCENE_GODOT_3_2)
+	editor.play_custom_scene("res://addons/WAT/runner/TestRunner.tscn")
 	_plugin.make_bottom_panel_item_visible(self)
-	
 	yield(Server, "network_peer_connected")
 	Server.send_tests(tests, threads)
 	var results = yield(Server, "results_received")

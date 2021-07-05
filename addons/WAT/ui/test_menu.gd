@@ -66,7 +66,7 @@ func update() -> void:
 				add_menu(test_menu, method, Icon.FUNCTION)
 
 				
-func add_menu(parent: PopupMenu, data, ico: Texture) -> PopupMenu:
+func add_menu(parent: PopupMenu, data: Reference, ico: Texture) -> PopupMenu:
 	var child: PopupMenu = PopupMenu.new()
 	child.connect("index_pressed", self, "_on_idx_pressed", [child])
 	parent.add_child(child)
@@ -135,15 +135,9 @@ class Metadata extends Reference:
 	var run_type: int
 	var tests
 	
-	func _init(_run_type: int, _tests) -> void:
+	func _init(_run_type: int, _tests: Reference) -> void:
 		run_type = _run_type
-		if _tests is Dictionary:
-			tests = _tests
-		else:
-			tests = weakref(_tests)
+		tests = weakref(_tests)
 		
 	func get_tests() -> Array:
-		if tests is Dictionary:
-			return tests["tests"]
-		else:
-			return tests.get_ref().get_tests()
+		return tests.get_ref().get_tests()
