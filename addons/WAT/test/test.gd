@@ -2,7 +2,7 @@ extends Node
 class_name WATTest
 
 const COMPLETED: String = "completed"
-const TEST: bool = true
+const IS_WAT_TEST: bool = true
 const YIELD: String = "finished"
 const Executed: String = "executed"
 signal described

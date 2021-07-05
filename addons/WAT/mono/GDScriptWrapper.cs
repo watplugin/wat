@@ -12,6 +12,7 @@ namespace WAT
 	
 	public partial class Test: Node
 	{
+		private const bool IS_WAT_TEST = true;
 		public Array get_test_methods()
 		{
 			return new Array
@@ -26,7 +27,5 @@ namespace WAT
 			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(directory, filepath, Title(), this);
 			return this;
 		}
-		
-		private static bool _is_wat_test() => true;
 	}
 }
