@@ -16,5 +16,12 @@ func test_when_calling_asserts_is_false():
 		
 
 ## Only used sometimes
+func test_when_calling_asserts_is_true_after_10s():
+	describe("When a test runs for 10 seconds and then calls asserts.is_true(true)")
+	
+	OS.delay_msec(10000)
+	asserts.is_true(true, "Then it passes")
+
+## Only used sometimes
 #func test_intentional_failure():
 #	asserts.is_false(true)
