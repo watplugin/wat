@@ -8,7 +8,6 @@ var filesystem: FileSystem = FileSystem.new()
 func _get_tests(filepath) -> Array:
 	if not filesystem.indexed.has(filepath):
 		return []
-	print(filepath)
 	return filesystem.indexed[filepath].get_tests()
 
 func _ready() -> void:
@@ -29,15 +28,12 @@ func _ready() -> void:
 		"-rerun_failed":
 			push_warning("Run Failures Not Implemented")
 			get_tree().quit()
-		"-list_all":
-			var list = []
-			for test in filesystem.get_tests():
-				print(test["path"])
-		"-list_dir":
-			var dir: String = arguments.pop_front()
-			var list = []
-			for test in filesystem.indexed[dir]["tests"]:
-				print(test["path"].replace(dir + "/", ""))
+		"-list":
+			var path = "all" if arguments.empty() else arguments.pop_front()
+			print("\nAll Tests in %s\n" % (path if path != "all" else WAT.Settings.test_directory()))
+			for test in _get_tests(path):
+				print("", test.path.substr(test.path.find_last("/") + 1).replace("res://", ""))
+			print("\nEnd of test list\n")
 			get_tree().quit()
 			
 func _run(path: String, arguments) -> void:
