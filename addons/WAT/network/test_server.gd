@@ -20,5 +20,4 @@ func send_tests(testdir: Array, thread_count: int) -> void:
 	rpc_id(_peer_id, "_on_tests_received_from_server", testdir, thread_count)
 
 master func _on_results_received_from_client(results: Array = []) -> void:
-	rpc_id(_peer_id, "quit")
 	emit_signal("results_received", results)

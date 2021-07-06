@@ -11,8 +11,5 @@ func _on_connection_failed() -> void:
 puppet func _on_tests_received_from_server(tests: Array, thread_count: int) -> void:
 	var results: Array = yield(get_parent().run(tests, thread_count), "completed")
 	rpc_id(MASTER, "_on_results_received_from_client", results)
-	
-puppet func quit() -> void:
-	get_tree().quit()
 
 

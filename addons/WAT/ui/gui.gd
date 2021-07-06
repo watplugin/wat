@@ -109,6 +109,7 @@ func _launch_debugger(tests: Array = filesystem.get_tests(), threads: int = Thre
 	yield(Server, "network_peer_connected")
 	Server.send_tests(tests, threads)
 	var results = yield(Server, "results_received")
+	_plugin.get_editor_interface().stop_playing_scene()
 	_on_run_completed(results)
 	
 func _on_run_completed(results: Array) -> void:
