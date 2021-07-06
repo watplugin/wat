@@ -64,7 +64,7 @@ namespace WAT
 		
 		private string Title()
 		{
-			if (Attribute.IsDefined(_type, typeof(TitleAttribute))) return _type.Name;
+			if (!Attribute.IsDefined(_type, typeof(TitleAttribute))) return _type.Name;
 			TitleAttribute title = (TitleAttribute) Attribute.GetCustomAttribute(_type, typeof(TitleAttribute));
 			return title.Title;
 		}
