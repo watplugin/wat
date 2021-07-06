@@ -1,8 +1,23 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0">
-	<testsuite name="BasicCSharpTest" failures="0"  tests="2" time="0">
-		<testcase name="CSharpTestsWorking" time="0"></testcase>
-		<testcase name="CSXharpTestsWorking" time="0"></testcase>
+<testsuites failures="0" name="TestXML" tests="5" time="0">
+	<testsuite name="Example" failures="0"  tests="1" time="0">
+		<testcase name=" simple" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="Example" failures="0"  tests="1" time="0">
+		<testcase name=" simple" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="Example" failures="0"  tests="1" time="0">
+		<testcase name=" simple" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="Example" failures="0"  tests="1" time="0">
+		<testcase name=" simple" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="Example" failures="0"  tests="1" time="0">
+		<testcase name=" simple" time="0"></testcase>
 	</testsuite>
 
 </testsuites>
