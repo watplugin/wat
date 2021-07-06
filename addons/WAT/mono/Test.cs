@@ -95,7 +95,6 @@ namespace WAT
 			_watcher.Call("watch", emitter, signal);
 			return ToSignal((Timer) Yielder.Call("until_signal", time, emitter, signal), "finished");
 		}
-
 		
 		protected async Task<TestEventData> UntilEvent(object sender, string handle, double time)
 		{

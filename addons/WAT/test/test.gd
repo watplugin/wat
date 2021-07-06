@@ -145,6 +145,3 @@ func _notification(what: int) -> void:
 		_registry.clear()
 		_registry.free()
 		_watcher.clear()
-
-static func _is_wat_test():
-	return true
