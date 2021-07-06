@@ -35,16 +35,17 @@ func _init() -> void:
 
 func _initialize_tags() -> void:
 	for tag in Settings.tags():
-		tags[tag] = TestTag.new(tag)
+		indexed[tag] = TestTag.new(tag)
 
 func update() -> void:
-	tags.clear()
 	dirs.clear()
 	_all_tests.clear()
 	indexed.clear()
 	_initialize_tags()
 	var absolute_path = Settings.test_directory()
 	var primary = TestDirectory.new(absolute_path)
+	indexed["all"] = self
+	indexed[absolute_path] = primary
 	dirs.append(primary)
 	_update(primary)
 	has_been_changed = true
@@ -71,7 +72,7 @@ func _update(testdir: TestDirectory) -> void:
 			indexed[absolute_path] = test
 			for tag in test.tags:
 				if tag in Settings.tags():
-					tags[tag].tests.append(test)
+					indexed[tag].tests.append(test)
 				else:
 					# Push an add check here to auto-add it?
 					push_warning("Tag %s does not exist in WAT Settings")
@@ -125,10 +126,10 @@ func _get_test_script(dir: String, path: String) -> TestScript:
 	return test
 	
 func add_test_to_tag(test, tag: String) -> void:
-	tags[tag].tests.append(test)
+	indexed[tag].tests.append(test)
 	
 func remove_test_from_tag(test, tag: String) -> void:
-	tags[tag].tests.erase(test)
+	indexed[tag].tests.erase(test)
 	
 func _on_file_moved(source: String, destination: String) -> void:
 	var key: String = source.rstrip("/")

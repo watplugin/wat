@@ -44,8 +44,8 @@ func update() -> void:
 	
 	
 	# We need to update the tag menus when changing tags
-	_add_tag_menu("Run %s", filesystem.tags, RUN, 4)
-	_add_tag_menu("Debug %s", filesystem.tags, DEBUG, 5)
+	_add_tag_menu("Run %s", filesystem.indexed, RUN, 4)
+	_add_tag_menu("Debug %s", filesystem.indexed, DEBUG, 5)
 	
 	_menu.set_item_metadata(0, Metadata.new(RUN, filesystem))
 	_menu.set_item_metadata(1, Metadata.new(DEBUG, filesystem))

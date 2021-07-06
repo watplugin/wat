@@ -1,17 +1,5 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="4" time="0">
-	<testsuite name="Example" failures="0"  tests="1" time="0">
-		<testcase name=" simple" time="0"></testcase>
-	</testsuite>
-
-	<testsuite name="Example" failures="0"  tests="1" time="0">
-		<testcase name=" simple" time="0"></testcase>
-	</testsuite>
-
-	<testsuite name="Example" failures="0"  tests="1" time="0">
-		<testcase name=" simple" time="0"></testcase>
-	</testsuite>
-
+<testsuites failures="0" name="TestXML" tests="1" time="0">
 	<testsuite name="Example" failures="0"  tests="1" time="0">
 		<testcase name=" simple" time="0"></testcase>
 	</testsuite>
