@@ -16,8 +16,8 @@ func _on_network_peer_connected(id: int) -> void:
 	_peer_id = id
 	emit_signal("network_peer_connected")
 	
-func send_tests(testdir: Array, thread_count: int) -> void:
-	rpc_id(_peer_id, "_on_tests_received_from_server", testdir, thread_count)
+func send_tests(testdir: Array, repeat: int, thread_count: int) -> void:
+	rpc_id(_peer_id, "_on_tests_received_from_server", testdir, repeat, thread_count)
 
 master func _on_results_received_from_client(results: Array = []) -> void:
 	emit_signal("results_received", results)

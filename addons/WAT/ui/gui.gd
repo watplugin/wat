@@ -71,43 +71,35 @@ func _on_function_selected(path: String, function: String) -> void:
 			script_editor.goto_line(idx)
 			return
 
-func _repeat(tests: Array, repeat: int) -> Array:
-	var duplicates: Array = []
-	for idx in repeat:
-		for test in tests:
-			duplicates.append(test)
-	duplicates += tests
-	return duplicates
 
-func _launch_runner(tests: Array = filesystem.get_tests(), threads: int = Threads.value) -> void:
+
+func _launch_runner(tests: Array = filesystem.get_tests(), repeat: int = Repeats.value, threads: int = Threads.value) -> void:
 	# This is also the launch method used for exported scenes
 	if tests.empty():
 		push_warning("Tests Are Empty!")
 		return
 	Results.clear()
 	Summary.time()
-	tests = _repeat(tests, Repeats.value)
 	instance = TestRunner.instance()
 	add_child(instance)
-	var results = yield(instance.run(tests, threads), "completed")
+	var results = yield(instance.run(tests, repeat, threads), "completed")
 	instance.queue_free()
 	_on_run_completed(results)
 	
-func _launch_debugger(tests: Array = filesystem.get_tests(), threads: int = Threads.value) -> void:
+func _launch_debugger(tests: Array = filesystem.get_tests(), repeat: int = Repeats.value, threads: int = Threads.value) -> void:
 	
 	if tests.empty():
 		push_warning("Tests Are Empty!")
 		return
 	Results.clear()
 	Summary.time()
-	tests = _repeat(tests, Repeats.value)
 	
 	var version = Engine.get_version_info()
 	var editor = _plugin.get_editor_interface()
 	editor.play_custom_scene("res://addons/WAT/runner/TestRunner.tscn")
 	_plugin.make_bottom_panel_item_visible(self)
 	yield(Server, "network_peer_connected")
-	Server.send_tests(tests, threads)
+	Server.send_tests(tests, repeat, threads)
 	var results = yield(Server, "results_received")
 	_plugin.get_editor_interface().stop_playing_scene()
 	_on_run_completed(results)

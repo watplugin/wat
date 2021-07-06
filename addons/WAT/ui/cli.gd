@@ -53,7 +53,7 @@ func _ready() -> void:
 				OS.set_exit_code(1)
 				get_tree().quit()
 				return
-			_run(filesystem.indexed[script]["tests"], repeat, threads)
+			_run(filesystem.indexed[script].get_tests(), repeat, threads)
 		RUN_METHOD:
 			var script: String = arguments.pop_front()
 			var method: String = arguments.pop_front()
@@ -84,19 +84,10 @@ func _ready() -> void:
 				print(test["path"].replace(dir + "/", ""))
 			get_tree().quit()
 
-func _repeat(tests: Array, repeat: int) -> Array:
-	var duplicates: Array = []
-	for idx in repeat:
-		for test in tests:
-			duplicates.append(test)
-	duplicates += tests
-	return duplicates
-
 func _run(tests: Array, repeat: int, threads: int) -> void:
-	tests = _repeat(tests, repeat)
 	var runner = TestRunner.new()
 	add_child(runner)
-	var results = yield(runner.run(tests, threads), "completed")
+	var results = yield(runner.run(tests, repeat, threads), "completed")
 	runner.queue_free()
 	
 	# Calculate Failures
