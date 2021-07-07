@@ -45,10 +45,8 @@ func update() -> void:
 	for tag in Settings.tags():
 		add_menu(_tag_menu, filesystem.indexed[tag], Icon.TAG)
 
-	_menu.set_item_metadata(0, WAT.TestParcel.new(WAT.RUN, filesystem.failed))
-	_menu.set_item_metadata(1, WAT.TestParcel.new(WAT.DEBUG, filesystem.failed))
 	_menu.connect("index_pressed", self, "_on_idx_pressed", [_menu])
-	_id = 6
+	_id = 1
 	for dir in filesystem.dirs:
 		if dir.tests.empty():
 			continue
