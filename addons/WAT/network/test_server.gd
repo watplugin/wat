@@ -14,6 +14,7 @@ func _ready() -> void:
 	
 func _on_network_peer_connected(id: int) -> void:
 	_peer_id = id
+	_peer.set_peer_timeout(id, 59000, 60000, 61000)
 	emit_signal("network_peer_connected")
 	
 func send_tests(testdir: Array, repeat: int, thread_count: int) -> void:
