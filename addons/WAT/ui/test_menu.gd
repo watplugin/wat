@@ -42,10 +42,14 @@ func update() -> void:
 	_menu.add_icon_item(Icon.FAILED, "Run Failed", 2)
 	_menu.add_icon_item(Icon.FAILED, "Debug Failed", 3)
 	
-	
-	# We need to update the tag menus when changing tags
-	_add_tag_menu("Run %s", filesystem.indexed, RUN, 4)
-	_add_tag_menu("Debug %s", filesystem.indexed, DEBUG, 5)
+	# Do people actual run/debug all tags? Seems like a weird use case
+	var _tag_menu = PopupMenu.new()
+	_menu.add_child(_tag_menu)
+	_menu.add_submenu_item("Run Tagged", _tag_menu.name, 4)
+	_menu.set_item_icon(4, Icon.TAG)
+	for tag in Settings.tags():
+		add_menu(_tag_menu, filesystem.indexed[tag], Icon.TAG)
+
 	
 	_menu.set_item_metadata(0, Metadata.new(RUN, filesystem))
 	_menu.set_item_metadata(1, Metadata.new(DEBUG, filesystem))
@@ -65,7 +69,6 @@ func update() -> void:
 			for method in test.methods:
 				add_menu(test_menu, method, Icon.FUNCTION)
 
-				
 func add_menu(parent: PopupMenu, data: Reference, ico: Texture) -> PopupMenu:
 	var child: PopupMenu = PopupMenu.new()
 	child.connect("index_pressed", self, "_on_idx_pressed", [child])
@@ -81,18 +84,6 @@ func add_menu(parent: PopupMenu, data: Reference, ico: Texture) -> PopupMenu:
 	child.set_item_metadata(1, Metadata.new(DEBUG, data))
 	_id += 1
 	return child
-	
-func _add_tag_menu(run: String, tags: Dictionary, run_type: int, id: int) -> void:
-	var _tag_menu: PopupMenu = PopupMenu.new()
-	var idx: int = 0
-	for tag in Settings.tags():
-		_tag_menu.add_icon_item(Icon.TAG, run % tag)
-		_tag_menu.set_item_metadata(idx, Metadata.new(run_type, tags[tag]))
-		idx += 1
-	_menu.add_child(_tag_menu)
-	_menu.add_submenu_item(run % "Tagged", _tag_menu.name, id)
-	_menu.set_item_icon(id, Icon.TAG)
-	_tag_menu.connect("index_pressed", self, "_on_idx_pressed", [_tag_menu])
 
 func _add_tag_editor(script_menu: PopupMenu, test) -> void:
 	var _tag_editor: PopupMenu = PopupMenu.new()
