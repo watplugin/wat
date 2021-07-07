@@ -37,24 +37,19 @@ func update() -> void:
 	_menu.free()
 	_menu = PopupMenu.new()
 	add_child(_menu)
-	_menu.add_icon_item(Icon.PLAY, "Run All", 0)
-	_menu.add_icon_item(Icon.DEBUG, "Debug All", 1)
-	_menu.add_icon_item(Icon.FAILED, "Run Failed", 2)
-	_menu.add_icon_item(Icon.FAILED, "Debug Failed", 3)
+	_menu.add_icon_item(Icon.FAILED, "Run Failed", 0)
+	_menu.add_icon_item(Icon.FAILED, "Debug Failed", 1)
 	
 	# Do people actual run/debug all tags? Seems like a weird use case
 	var _tag_menu = PopupMenu.new()
 	_menu.add_child(_tag_menu)
-	_menu.add_submenu_item("Run Tagged", _tag_menu.name, 4)
-	_menu.set_item_icon(4, Icon.TAG)
+	_menu.add_submenu_item("Run Tagged", _tag_menu.name, 2)
+	_menu.set_item_icon(2, Icon.TAG)
 	for tag in Settings.tags():
 		add_menu(_tag_menu, filesystem.indexed[tag], Icon.TAG)
 
-	
-	_menu.set_item_metadata(0, Metadata.new(RUN, filesystem))
-	_menu.set_item_metadata(1, Metadata.new(DEBUG, filesystem))
-	_menu.set_item_metadata(2, Metadata.new(RUN, filesystem.failed))
-	_menu.set_item_metadata(3, Metadata.new(DEBUG, filesystem.failed))
+	_menu.set_item_metadata(0, Metadata.new(RUN, filesystem.failed))
+	_menu.set_item_metadata(1, Metadata.new(DEBUG, filesystem.failed))
 	_menu.connect("index_pressed", self, "_on_idx_pressed", [_menu])
 	_id = 6
 	for dir in filesystem.dirs:
