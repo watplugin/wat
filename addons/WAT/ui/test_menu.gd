@@ -17,8 +17,7 @@ var filesystem: Reference # Set by GUI
 var _menu: PopupMenu = PopupMenu.new()
 var _id: int = 0
 signal tests_selected
-signal tests_selected_debug
-enum { NONE, RUN, DEBUG } # This may be unnecessary
+
 
 func _pressed() -> void:
 	if filesystem.has_been_changed:
@@ -37,19 +36,17 @@ func update() -> void:
 	_menu.free()
 	_menu = PopupMenu.new()
 	add_child(_menu)
-	_menu.add_icon_item(Icon.FAILED, "Run Failed", 0)
-	_menu.add_icon_item(Icon.FAILED, "Debug Failed", 1)
 	
-	# Do people actual run/debug all tags? Seems like a weird use case
+	# Tags could honestly exist as their own menu
 	var _tag_menu = PopupMenu.new()
 	_menu.add_child(_tag_menu)
-	_menu.add_submenu_item("Run Tagged", _tag_menu.name, 2)
-	_menu.set_item_icon(2, Icon.TAG)
+	_menu.add_submenu_item("Run Tagged", _tag_menu.name, 0)
+	_menu.set_item_icon(0, Icon.TAG)
 	for tag in Settings.tags():
 		add_menu(_tag_menu, filesystem.indexed[tag], Icon.TAG)
 
-	_menu.set_item_metadata(0, Metadata.new(RUN, filesystem.failed))
-	_menu.set_item_metadata(1, Metadata.new(DEBUG, filesystem.failed))
+	_menu.set_item_metadata(0, WAT.TestParcel.new(WAT.RUN, filesystem.failed))
+	_menu.set_item_metadata(1, WAT.TestParcel.new(WAT.DEBUG, filesystem.failed))
 	_menu.connect("index_pressed", self, "_on_idx_pressed", [_menu])
 	_id = 6
 	for dir in filesystem.dirs:
@@ -73,10 +70,10 @@ func add_menu(parent: PopupMenu, data: Reference, ico: Texture) -> PopupMenu:
 	parent.set_item_icon(parent.get_item_index(_id), ico)
 	_id += 1
 	child.add_icon_item(Icon.PLAY, "Run All", _id)
-	child.set_item_metadata(0, Metadata.new(RUN, data))
+	child.set_item_metadata(0, WAT.TestParcel.new(WAT.RUN, data))
 	_id += 1
 	child.add_icon_item(Icon.DEBUG, "Debug All", _id)
-	child.set_item_metadata(1, Metadata.new(DEBUG, data))
+	child.set_item_metadata(1, WAT.TestParcel.new(WAT.DEBUG, data))
 	_id += 1
 	return child
 
@@ -108,22 +105,4 @@ func _on_tagged(idx: int, tag_editor: PopupMenu, test: Reference) -> void:
 		push_warning("Adding Tag %s To %s" % [tag, test.gdscript])
 
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
-	var data: Metadata = menu.get_item_metadata(idx)
-	match data.run_type:
-		RUN:
-			emit_signal("tests_selected", data.get_tests())
-		DEBUG:
-			emit_signal("tests_selected_debug", data.get_tests())
-		NONE:
-			pass
-
-class Metadata extends Reference:
-	var run_type: int
-	var tests
-	
-	func _init(_run_type: int, _tests: Reference) -> void:
-		run_type = _run_type
-		tests = weakref(_tests)
-		
-	func get_tests() -> Array:
-		return tests.get_ref().get_tests()
+	emit_signal("tests_selected", menu.get_item_metadata(idx))
