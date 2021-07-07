@@ -4,7 +4,7 @@ extends PanelContainer
 
 # Resources require tool to work inside the editor whereas..
 # ..scripts objects without tool can be called from tool based scripts
-const TestRunner: PackedScene = preload("res://addons/WAT/runner/TestRunner.tscn")
+
 const XML: Script = preload("res://addons/WAT/editor/junit_xml.gd")
 const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/plugin_assets_registry.gd")
 
@@ -24,13 +24,12 @@ onready var ViewMenu: PopupMenu = $Core/Menu/ResultsMenu.get_popup()
 onready var Menu: HBoxContainer = $Core/Menu
 onready var Server: Node = $Server
 
-var filesystem = preload("res://addons/WAT/filesystem/filesystem.gd").new()
-var instance: Node
+var filesystem: WAT.FileSystem = WAT.FileSystem.new()
 var _plugin: Node
 
 func _ready() -> void:
-	TestMenu.filesystem = filesystem
 	setup_game_context()
+	TestMenu.filesystem = filesystem
 	Threads.max_value = OS.get_processor_count() - 1
 	Threads.min_value = 1
 	Results.connect("function_selected", self, "_on_function_selected")
@@ -73,39 +72,32 @@ func _launch(parcel: WAT.TestParcel) -> void:
 	Results.display(results)
 	filesystem.set_failed(results)
 
+
 func _launch_runner(tests: Array, repeat: int, threads: int) -> Array:
-	instance = TestRunner.instance()
+	var instance: WAT.TestRunner = WAT.TestRunner.new()
 	add_child(instance)
-	var results = yield(instance.run(tests, repeat, threads), "completed")
+	var results: Array = yield(instance.run(tests, repeat, threads), "completed")
 	instance.queue_free()
 	return results
 	
 func _launch_debugger(tests: Array, repeat: int, threads: int) -> Array:
-	# Likely best to replace run/play these with signals
 	_plugin.get_editor_interface().play_custom_scene("res://addons/WAT/runner/TestRunner.tscn")
 	_plugin.make_bottom_panel_item_visible(self)
 	yield(Server, "network_peer_connected")
 	Server.send_tests(tests, repeat, threads)
-	var results = yield(Server, "results_received")
+	var results: Array = yield(Server, "results_received")
 	_plugin.get_editor_interface().stop_playing_scene()
 	return results
 	
 # TO BE MOVED SOMEWHERE MORE PROPER
 func setup_editor_context(plugin: Node) -> void:
-	# Seems like this would be better in plugin.gd?
-	# Maybe even a seperate script?
 	_plugin = plugin
-	var file_dock: Node = plugin.get_editor_interface().get_file_system_dock()
-	for event in ["folder_removed", "folder_moved", "file_removed"]:
-		file_dock.connect(event, filesystem, "_on_filesystem_changed", [], CONNECT_DEFERRED)
-	file_dock.connect("files_moved", filesystem, "_on_file_moved")
-	_plugin.connect("resource_saved", filesystem, "_on_resource_saved", [], CONNECT_DEFERRED)
-	
+
 # Loads scaled assets like icons and fonts
 func _setup_editor_assets(assets_registry):
 	Summary._setup_editor_assets(assets_registry)
 	Results._setup_editor_assets(assets_registry)
-#	TestMenu._setup_editor_assets(assets_registry)
+	TestMenu._setup_editor_assets(assets_registry)
 	RunAll.icon = assets_registry.load_asset(RunAll.icon)
 	DebugAll.icon = assets_registry.load_asset(DebugAll.icon)
 	RunFailed.icon = assets_registry.load_asset(RunFailed.icon)

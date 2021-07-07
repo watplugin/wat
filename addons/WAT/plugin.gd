@@ -21,14 +21,22 @@ func _enter_tree():
 	Settings.initialize()
 	_initialize_metadata()
 	instance = GUI.instance()
-	docker = Docker.new(self, instance)
 	instance.setup_editor_context(self)
+	docker = Docker.new(self, instance)
+	_track_files(instance.filesystem)
 	add_child(docker)
 	yield(get_tree().create_timer(0.5), "timeout")
 	
 func _exit_tree():
 	docker.free()
 	instance.free()
+	
+func _track_files(filesystem: WAT.FileSystem) -> void:
+	var file_dock: Node = get_editor_interface().get_file_system_dock()
+	for event in ["folder_removed", "folder_moved", "file_removed"]:
+		file_dock.connect(event, filesystem, "_on_filesystem_changed", [], CONNECT_DEFERRED)
+	file_dock.connect("files_moved", filesystem, "_on_file_moved")
+	connect("resource_saved", filesystem, "_on_resource_saved", [], CONNECT_DEFERRED)
 	
 func _initialize_metadata() -> void:
 	# Check if file exists!

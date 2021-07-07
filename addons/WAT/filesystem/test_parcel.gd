@@ -3,7 +3,7 @@ extends Reference
 var run_type: int
 var tests
 
-func _init(_run_type: int, _tests: Reference) -> void:
+func _init(_run_type: int, _tests) -> void:
 	run_type = _run_type
 	tests = weakref(_tests)
 	

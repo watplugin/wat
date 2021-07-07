@@ -1,3 +1,4 @@
+tool
 extends Reference
 
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
@@ -22,7 +23,7 @@ func get_tests() -> Array:
 	
 func set_failed(results: Array) -> void:
 	# TODO: Cache for better performance
-	failed.tests = []
+	failed.tests.clear()
 	for result in results:
 		if not result.success:
 			for test in _all_tests:
