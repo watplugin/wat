@@ -116,7 +116,7 @@ func _get_test_script(dir: String, path: String) -> TestScript:
 	for m in methods:
 		test.method_names.append(m)
 		test.methods.append(TestMethod.new(dir, test.path, test.gdscript, m))
-		test.yield_time = YieldCalculator.calculate_yield_time(test.gdscript, test.method_names.size())
+	test.yield_time = YieldCalculator.calculate_yield_time(test.gdscript, test.method_names.size())
 	return test
 	
 func add_test_to_tag(test, tag: String) -> void:
