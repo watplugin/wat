@@ -1,6 +1,7 @@
 extends TabContainer
 tool
 
+var FUNCTION: Texture
 var PASSED_ICON: Texture
 var FAILED_ICON: Texture
 const ResultTree = preload("res://addons/WAT/ui/result_tree.gd")
@@ -76,6 +77,3 @@ func expand_failures():
 	collapse_all()
 	for item in failures:
 		item.collapsed = false
-
-func _setup_editor_assets(reg) -> void:
-	_assets_registry = reg

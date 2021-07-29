@@ -95,13 +95,8 @@ func setup_editor_context(plugin: Node) -> void:
 
 # Loads scaled assets like icons and fonts
 func _setup_editor_assets(assets_registry):
-	Summary._setup_editor_assets(assets_registry)
-	Results._setup_editor_assets(assets_registry)
-	TestMenu._setup_editor_assets(assets_registry)
-	RunAll.icon = assets_registry.load_asset(RunAll.icon)
-	DebugAll.icon = assets_registry.load_asset(DebugAll.icon)
-	RunFailed.icon = assets_registry.load_asset(RunFailed.icon)
-	DebugFailed.icon = assets_registry.load_asset(DebugFailed.icon)
+	load("res://addons/WAT/ui/setup_editor_assets.gd").new().setup(self, assets_registry)
+
 
 func _on_function_selected(path: String, function: String) -> void:
 	if not _plugin:

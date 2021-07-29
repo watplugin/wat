@@ -1,9 +1,9 @@
 extends Tree
 tool
 
-var FUNCTION: Texture
-var PASSED_ICON: Texture
-var FAILED_ICON: Texture
+var FUNCTION
+var PASSED_ICON
+var FAILED_ICON
 const PASSED: Color = Color(0.34375, 1, 0.34375)
 const FAILED: Color = Color(1, 0.425781, 0.425781)
 signal calculated
@@ -80,9 +80,3 @@ func _color(success: bool) -> Color:
 	
 func _icon(success: bool) -> Texture:
 	return PASSED_ICON if success else FAILED_ICON
-
-# Loads scaled assets like icons and fonts
-func _setup_editor_assets(assets_registry):
-	FUNCTION = assets_registry.load_asset("assets/function.png")
-	PASSED_ICON = assets_registry.load_asset("assets/passed.png")
-	FAILED_ICON = assets_registry.load_asset("assets/failed.png")
