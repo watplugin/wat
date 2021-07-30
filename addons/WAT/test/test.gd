@@ -14,7 +14,7 @@ var _last_assertion_passed: bool = false
 
 var recorder: Script = preload("res://addons/WAT/test/recorder.gd")
 var any: Script = preload("res://addons/WAT/test/any.gd")
-var asserts = preload("res://addons/WAT/assertions/assertions.gd").new()
+var asserts := preload("res://addons/WAT/assertions/assertions.gd").new()
 var direct = preload("res://addons/WAT/double/factory.gd").new()
 var _parameters = preload("res://addons/WAT/test/parameters.gd").new()
 var _watcher = preload("res://addons/WAT/test/watcher.gd").new()
