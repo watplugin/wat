@@ -128,7 +128,7 @@ func remove_test_from_tag(test, tag: String) -> void:
 	
 func _on_file_moved(source: String, destination: String) -> void:
 	var key: String = source.rstrip("/")
-	var tags: Array = _tag_metadata[key]
+	var tags: Array = _tag_metadata.get(key, [])
 	var dest: Resource = load(destination)
 	if _is_in_test_directory(source) or _is_in_test_directory(destination):
 		# Swapping Tags
