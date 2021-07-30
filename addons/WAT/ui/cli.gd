@@ -30,7 +30,7 @@ func _ready() -> void:
 			get_tree().quit()
 		"-list":
 			var path = "all" if arguments.empty() else arguments.pop_front()
-			print("\nAll Tests in %s\n" % (path if path != "all" else WAT.Settings.test_directory()))
+			print("\nAll Tests in %s\n" % (path if path != "all" else _watSettings.test_directory()))
 			for test in _get_tests(path):
 				print("", test.path.substr(test.path.find_last("/") + 1).replace("res://", ""))
 			print("\nEnd of test list\n")

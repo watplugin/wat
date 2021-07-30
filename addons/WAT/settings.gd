@@ -1,5 +1,6 @@
-extends Reference
 tool
+extends Reference
+class_name _watSettings
 
 static func initialize() -> void:
 	push_warning("You may change any setting for WAT in Project -> ProjectSettings -> General -> WAT")

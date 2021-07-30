@@ -25,7 +25,7 @@ func _add_result_tree(results: Array) -> void:
 	var sorted = sort(results)
 	for path in sorted:
 		var result_tree = ResultTree.new(self)
-		result_tree._setup_editor_assets(_assets_registry)
+#		result_tree._setup_editor_assets(_assets_registry)
 		result_tree.connect("button_pressed", self, "_on_function_selected")
 		result_tree.name = path
 		add_child(result_tree)

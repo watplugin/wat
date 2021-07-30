@@ -1,4 +1,5 @@
 extends Reference
+class_name _watTestParcel
 
 var run_type: int
 var tests

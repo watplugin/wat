@@ -24,7 +24,7 @@ onready var ViewMenu: PopupMenu = $Core/Menu/ResultsMenu.get_popup()
 onready var Menu: HBoxContainer = $Core/Menu
 onready var Server: Node = $Server
 
-var filesystem: WAT.FileSystem = WAT.FileSystem.new()
+var filesystem: _watFileSystem = _watFileSystem.new()
 var _plugin: Node
 
 func _ready() -> void:
@@ -41,7 +41,7 @@ func _ready() -> void:
 	_connect_run_button(DebugFailed, WAT.DEBUG, filesystem.failed)
 
 func _connect_run_button(run: Button, run_type: int, source: Reference) -> void:
-	run.connect("pressed", self, "_launch", [WAT.TestParcel.new(run_type, source)])
+	run.connect("pressed", self, "_launch", [_watTestParcel.new(run_type, source)])
 
 func setup_game_context() -> void:
 	if Engine.is_editor_hint():
@@ -54,7 +54,7 @@ func setup_game_context() -> void:
 	DebugFailed.disabled = true
 	_setup_editor_assets(PluginAssetsRegistry.new())
 	
-func _launch(parcel: WAT.TestParcel) -> void:
+func _launch(parcel: _watTestParcel) -> void:
 	var tests: Array = parcel.get_tests()
 	if tests.empty():
 		push_warning("Tests not found")
@@ -74,7 +74,7 @@ func _launch(parcel: WAT.TestParcel) -> void:
 
 
 func _launch_runner(tests: Array, repeat: int, threads: int) -> Array:
-	var instance: WAT.TestRunner = WAT.TestRunner.new()
+	var instance: _watTestRunner = _watTestRunner.new()
 	add_child(instance)
 	var results: Array = yield(instance.run(tests, repeat, threads), "completed")
 	instance.queue_free()
