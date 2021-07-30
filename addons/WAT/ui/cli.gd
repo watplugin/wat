@@ -61,7 +61,7 @@ func _run(path: String, arguments) -> void:
 		if case.success:
 			cases.passed += 1
 		else:
-			_display_failures(cases)
+			_display_failures(case)
 			
 	_display(cases)
 #	filesystem.set_failed(results)
