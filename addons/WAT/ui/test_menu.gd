@@ -66,10 +66,10 @@ func add_menu(parent: PopupMenu, data: Reference, ico: Texture) -> PopupMenu:
 	parent.set_item_icon(parent.get_item_index(_id), ico)
 	_id += 1
 	child.add_icon_item(PLAY, "Run All", _id)
-	child.set_item_metadata(0, WAT.TestParcel.new(WAT.RUN, data))
+	child.set_item_metadata(0, _watTestParcel.new(WAT.RUN, data))
 	_id += 1
 	child.add_icon_item(DEBUG, "Debug All", _id)
-	child.set_item_metadata(1, WAT.TestParcel.new(WAT.DEBUG, data))
+	child.set_item_metadata(1, _watTestParcel.new(WAT.DEBUG, data))
 	_id += 1
 	return child
 
