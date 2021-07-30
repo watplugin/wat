@@ -1,14 +1,9 @@
 using Godot;
 using System;
 
+[Title("Range Assertions")]
 public class RangeTest : WAT.Test
-
 {
-	public override String Title()
-	{
-		return "Range Assertions";
-	}
-	
 	[Test]
 	public void WhenCallingIsInRange()
 	{

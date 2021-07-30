@@ -1,115 +1,92 @@
-#nullable enable
 using Godot;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Godot.Collections;
-using JetBrains.Annotations;
-using Array = Godot.Collections.Array;
 using Object = Godot.Object;
 
 namespace WAT 
 {
-	public class Test : Node
+	[Start(nameof(Blank))]
+	[Pre(nameof(Blank))]
+	[Post(nameof(Blank))]
+	[End(nameof(Blank))]
+	public partial class Test : Node
 	{
-		[AttributeUsage(AttributeTargets.Class)] 
-		protected class HookAttribute : Attribute
-		{
-			public readonly string Method;
-			protected HookAttribute(string method) => Method = method;
-		}
-
-		[AttributeUsage(AttributeTargets.Method)]
-		protected class DescriptionAttribute : Attribute
-		{
-			public readonly string Description;
-			public DescriptionAttribute(string description) { Description = description; }
-		}
-		
-		[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-		protected class TestAttribute : Attribute
-		{
-			public readonly object[] Arguments = new object[0];
-			public TestAttribute() {}
-			public TestAttribute(params object[] args) { Arguments = args; }
-		}
-		
-		protected class StartAttribute : HookAttribute { public StartAttribute(string method) : base(method) { } }
-		protected class PreAttribute : HookAttribute { public PreAttribute(string method) : base(method) { } }
-		protected class PostAttribute : HookAttribute { public PostAttribute(string method) : base(method) { } }
-		protected class EndAttribute : HookAttribute { public EndAttribute(string method) : base(method) { } }
-		
-		
-		
+		[Signal] private delegate void EventRaised();
 		[Signal] public delegate void Described();
-		[Signal] public delegate void TestExecuted();
-		private string Executed => nameof(TestExecuted);
 		private const int Recorder = 0; // Apparently we require the C# Version
-		private Godot.Collections.Array _methods = new Godot.Collections.Array();
-		private Object? _case;
+		private IEnumerable<Executable> _methods = null;
+		private Object _case = null;
+		private static readonly GDScript TestCase = GD.Load<GDScript>("res://addons/WAT/test/case.gd");
 		private static readonly GDScript Any = GD.Load<GDScript>("res://addons/WAT/test/any.gd");
 		private readonly Reference _watcher = (Reference) GD.Load<GDScript>("res://addons/WAT/test/watcher.gd").New();
 		private readonly Object _registry = (Object) GD.Load<GDScript>("res://addons/WAT/double/registry.gd").New();
-		//protected readonly Node Direct = (Node) GD.Load<GDScript>("res://addons/WAT/double/factory.gd").New();
+		protected readonly Node Direct = (Node) GD.Load<GDScript>("res://addons/WAT/double/factory.gd").New();
 		protected readonly Timer Yielder = (Timer) GD.Load<GDScript>("res://addons/WAT/test/yielder.gd").New();
 		protected readonly Assertions Assert = new Assertions();
-		private Type Type;
+		private readonly Type _type;
 
-		public Test()
-		{
-			
-		}
-		
+		protected Test() { _type = GetType(); }
+		public void Blank() { }
+
 		public override void _Ready()
 		{
-			//Direct.Set("registry", _registry);
+			Direct.Set("registry", _registry);
 			Assert.Connect(nameof(Assertions.asserted), _case, "_on_asserted");
 			Connect(nameof(Described), _case, "_on_test_method_described");
-			//AddChild(Direct);
+			AddChild(Direct);
 			AddChild(Yielder);
+			CallDeferred(nameof(Run));
 		}
 
-		public async void run()
+		private async void Run()
 		{
-			MethodInfo? start = GetTestHook(typeof(StartAttribute));
-			MethodInfo? pre = GetTestHook(typeof(PreAttribute));
-			MethodInfo? post = GetTestHook(typeof(PostAttribute));
-			MethodInfo? end = GetTestHook(typeof(EndAttribute));
+			// Can we do this in _Ready
+			MethodInfo start = GetTestHook(typeof(StartAttribute));
+			MethodInfo pre = GetTestHook(typeof(PreAttribute));
+			MethodInfo post = GetTestHook(typeof(PostAttribute));
+			MethodInfo end = GetTestHook(typeof(EndAttribute));
 			await CallTestHook(start);
-			foreach (ExecutableTest test in GenerateTestMethods())
+			foreach (Executable test in _methods)
 			{
 				_case.Call("add_method", test.Method.Name);
 				await CallTestHook(pre);
-				await Execute(test)!;
+				await Execute(test);
 				await CallTestHook(post);
 			}
 
 			await CallTestHook(end);
-			EmitSignal(Executed);
+			GetParent().Call("get_results", GetResults());
+		}
+		
+		private string Title()
+		{
+			if (!Attribute.IsDefined(_type, typeof(TitleAttribute))) return _type.Name;
+			TitleAttribute title = (TitleAttribute) Attribute.GetCustomAttribute(_type, typeof(TitleAttribute));
+			return title.Title;
 		}
 
-		private MethodInfo? GetTestHook(Type attributeType)
+		private MethodInfo GetTestHook(Type attributeType)
 		{
-			if (Attribute.IsDefined(GetType(), attributeType) && 
-				Attribute.GetCustomAttribute(GetType(), attributeType) is HookAttribute hookAttribute)
-			{
-				return GetType().GetMethod(hookAttribute.Method);
-			}
-			return null;
+			HookAttribute hook = (HookAttribute) Attribute.GetCustomAttribute(_type, attributeType);
+			return _type.GetMethod(hook.Method);
 		}
 
-		private async Task CallTestHook(MethodInfo? hook) { if (hook?.Invoke(this, null) is Task task) { await task; } }
-
-		private async Task Execute(ExecutableTest test)
+		private async Task CallTestHook(MethodInfo hook)
 		{
-			if (test.Method.GetCustomAttribute(typeof(DescriptionAttribute)) is DescriptionAttribute description) { EmitSignal(nameof(Described), description.Description); }
+			if (hook.Invoke(this, null) is Task task) { await task; } else { await Task.Run((() => { })); }
+		}
+
+		private async Task Execute(Executable test)
+		{
 			if (test.Method.Invoke(this, test.Arguments) is Task task) { await task; }
+			else { await Task.Run((() => { })); }
 		}
-		public virtual string Title() { return GetType().Name; }
+		
+		protected void Describe(string description) { EmitSignal(nameof(Described), description);}
 
 		protected SignalAwaiter UntilTimeout(double time) { return ToSignal((Timer) Yielder.Call("until_timeout", time), "finished"); }
 
@@ -117,6 +94,35 @@ namespace WAT
 		{
 			_watcher.Call("watch", emitter, signal);
 			return ToSignal((Timer) Yielder.Call("until_signal", time, emitter, signal), "finished");
+		}
+		
+		protected async Task<TestEventData> UntilEvent(object sender, string handle, double time)
+		{
+			EventInfo eventInfo = sender.GetType().GetEvent(handle);
+			MethodInfo methodInfo = GetType().GetMethod("OnEventRaised");
+			Delegate handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, methodInfo);
+			eventInfo.AddEventHandler(sender, handler);
+			object[] results = await UntilSignal(this, nameof(EventRaised), time);
+			eventInfo.RemoveEventHandler(sender, handler);
+			Godot.Collections.Array ourResults = (Godot.Collections.Array) results[0];
+			return (TestEventData) ourResults[0] ?? new TestEventData(null, null);
+		}
+		
+		public void OnEventRaised(object sender = null, EventArgs args = null)
+		{
+			EmitSignal(nameof(EventRaised), new TestEventData(sender, args));
+		}
+
+		protected class TestEventData: Godot.Object
+		{
+			public object Sender { get; }
+			public EventArgs Arguments { get; }
+
+			public TestEventData(object sender, EventArgs arguments)
+			{
+				Sender = sender;
+				Arguments = arguments;
+			}
 		}
 		
 		protected void Watch(Godot.Object emitter, string signal) { _watcher.Call("watch", emitter, signal); }
@@ -132,37 +138,16 @@ namespace WAT
 			}
 		}
 
-		private IEnumerable<ExecutableTest> GenerateTestMethods()
+		private IEnumerable<Executable> GenerateTestMethods(IEnumerable<string> names)
 		{
-			return (from methodInfo in GetType().GetMethods().Where(info => _methods.Contains(info.Name))
+			return (from methodInfo in _type.GetMethods().Where(info => names.Contains(info.Name))
 				let tests = Attribute.GetCustomAttributes(methodInfo)
 					.OfType<TestAttribute>()
 				from attribute in tests
-				select new ExecutableTest(methodInfo, attribute.Arguments)).ToList();
+				select new Executable(methodInfo, attribute.Arguments)).ToList();
 		}
 		
-		private class ExecutableTest
-		{
-			public readonly MethodInfo Method;
-			public readonly object[] Arguments;
-
-			public ExecutableTest(MethodInfo method, object[] arguments)
-			{
-				Method = method;
-				Arguments = arguments;
-			}
-		}
-		
-		[UsedImplicitly]
-		public Array get_test_methods()
-		{
-			return new Array
-			(GetType().GetMethods().
-				Where(m => m.IsDefined(typeof(TestAttribute))).
-				Select(m => (string) m.Name).ToList());
-		}
-		
-		public Dictionary get_results()
+		private Dictionary GetResults()
 		{
 			_case.Call("calculate"); // #")
 			Dictionary results = (Dictionary) _case.Call("to_dictionary");
@@ -170,22 +155,16 @@ namespace WAT
 			return results;
 		}
 		
-		public Test setup(Godot.Collections.Dictionary<string, object> metadata)
+		private class Executable
 		{
-			_methods = metadata["methods"] is string[] method
-				? new Array{string.Join("", method) }
-				: (Array) metadata["methods"];
-			
-			GD.Print(_methods.Count);
-			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(this, metadata);
-			return this;
+			public readonly MethodInfo Method;
+			public readonly object[] Arguments;
+
+			public Executable(MethodInfo method, object[] arguments)
+			{
+				Method = method;
+				Arguments = arguments;
+			}
 		}
-		
-		private string title() { return Title(); }
-		
-		[Signal] public delegate void executed();
-		private static bool _is_wat_test() => true;
-
-
 	}
 }

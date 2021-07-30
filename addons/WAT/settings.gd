@@ -1,7 +1,10 @@
-extends Reference
 tool
+extends Reference
+class_name _watSettings
 
 static func initialize() -> void:
+	if not ProjectSettings.has_setting("WAT/Test_Directory"):
+		push_warning("You may change any setting for WAT in Project -> ProjectSettings -> General -> WAT")
 	_add_setting("Test_Directory", TYPE_STRING, "res://tests")
 	_add_setting("Results_Directory", TYPE_STRING, "res://tests")
 	_add_setting("Test_Metadata_Directory", TYPE_STRING, "res://tests")
@@ -16,7 +19,6 @@ static func initialize() -> void:
 	_add_setting("Run_All_Tests", TYPE_OBJECT, InputEventKey.new())
 	
 	# Set this to true if using external editors
-	_add_setting("Auto_Refresh_Tests", TYPE_BOOL, false)
 	ProjectSettings.save()
 	
 static func _add_setting(title: String, type: int, value, hint_type: int = -1, hint_string = "") -> void:

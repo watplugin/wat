@@ -66,7 +66,6 @@
     <Content Include="addons\WAT\filesystem\objects.gd" />
     <Content Include="addons\WAT\filesystem\yield_calculator.gd" />
     <Content Include="addons\WAT\gui.tscn" />
-    <Content Include="addons\WAT\log.gd" />
     <Content Include="addons\WAT\namespace.gd" />
     <Content Include="addons\WAT\network\test_client.gd" />
     <Content Include="addons\WAT\network\test_network.gd" />

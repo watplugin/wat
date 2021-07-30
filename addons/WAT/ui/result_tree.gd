@@ -1,13 +1,15 @@
 extends Tree
 tool
 
-var FUNCTION: Texture
-var PASSED_ICON: Texture
-var FAILED_ICON: Texture
+var FUNCTION
+var PASSED_ICON
+var FAILED_ICON
 const PASSED: Color = Color(0.34375, 1, 0.34375)
 const FAILED: Color = Color(1, 0.425781, 0.425781)
 signal calculated
 var _parent: TabContainer
+var _results: Array = []
+var _failures: Array = []
 
 func _init(parent: TabContainer) -> void:
 	_parent = parent
@@ -26,9 +28,11 @@ func display(cases: Array) -> void:
 		script.set_text(0, "(%s/%s) %s" % [c.passed, c.total, c.context])
 		script.set_custom_color(0, _color(c.success))
 		script.set_icon(0, _icon(c.success))
-		_parent.results.append(script)
+		_results.append(script)
 		if not c.success:
-			_parent.failures.append(script)
+			_failures.append(script)
+			
+		_results.append(script)
 		
 		for m in c.methods:
 			var method = create_item(script)
@@ -41,9 +45,9 @@ func display(cases: Array) -> void:
 			method.set_meta("path", c.path)
 			method.set_meta("context", m.context)
 			method.set_meta("fullname", m.fullname)
-			_parent.results.append(method)
+			_results.append(method)
 			if not m.success:
-				_parent.failures.append(method)
+				_failures.append(method)
 
 			for a in m.assertions:
 				if a.context != "":
@@ -58,7 +62,7 @@ func display(cases: Array) -> void:
 					expected.set_text(0, "EXPECTED: %s" % a.expected)
 					actual.set_text(0, "RESULTED: %s" % a.actual)
 					if not a.success:
-						_parent.failures.append(assertion)
+						_failures.append(assertion)
 				else:
 					method.collapsed = true
 					var expected = create_item(method)
@@ -80,9 +84,16 @@ func _color(success: bool) -> Color:
 	
 func _icon(success: bool) -> Texture:
 	return PASSED_ICON if success else FAILED_ICON
-
-# Loads scaled assets like icons and fonts
-func _setup_editor_assets(assets_registry):
-	FUNCTION = assets_registry.load_asset("assets/function.png")
-	PASSED_ICON = assets_registry.load_asset("assets/passed.png")
-	FAILED_ICON = assets_registry.load_asset("assets/failed.png")
+	
+func expand_all():
+	for item in _results:
+		item.collapsed = false
+		
+func collapse_all():
+	for item in _results:
+		item.collapsed = true
+		
+func expand_failures():
+	collapse_all()
+	for item in _failures:
+		item.collapsed = false

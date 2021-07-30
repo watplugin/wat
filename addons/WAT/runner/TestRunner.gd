@@ -1,5 +1,6 @@
 tool
 extends Node
+class_name _watTestRunner
 
 const Settings: GDScript = preload("res://addons/WAT/settings.gd")
 const Splitter: GDScript = preload("splitter.gd")
@@ -12,8 +13,9 @@ func _ready() -> void:
 		OS.window_size = Settings.window_size()
 		OS.window_minimized = Settings.minimize_window_when_running_tests()
 
-func run(tests, threads) -> void:
+func run(tests, repeat, threads) -> Array:
 	var results: Array = []
+	tests = _repeat(tests, repeat)
 	var testthreads = Splitter.split(tests, threads)
 	for thread in testthreads:
 		add_child(thread.controller)
@@ -31,5 +33,11 @@ func _run(thread: Thread) -> void:
 	thread.controller.queue_free()
 	emit_signal(COMPLETED, results)
 
-
+func _repeat(tests: Array, repeat: int) -> Array:
+	var duplicates: Array = []
+	for idx in repeat:
+		for test in tests:
+			duplicates.append(test)
+	duplicates += tests
+	return duplicates
 

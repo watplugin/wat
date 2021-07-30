@@ -1,12 +1,9 @@
 using Godot;
 using System;
 
+[Title("Given A String Assertion")]
 public class StringTest : WAT.Test
 {
-	public override String Title()
-	{
-		return "Given A String Assertion";
-	}
 	
 	[Test]
 	public void WhenCallingStringBeginWith()

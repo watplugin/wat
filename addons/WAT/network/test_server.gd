@@ -1,9 +1,11 @@
 tool
 extends "res://addons/WAT/network/test_network.gd"
 
+enum STATE { SENDING, RECEIVING }
 signal network_peer_connected
 signal results_received
 var _peer_id: int
+
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
@@ -14,11 +16,12 @@ func _ready() -> void:
 	
 func _on_network_peer_connected(id: int) -> void:
 	_peer_id = id
+	_peer.set_peer_timeout(id, 59000, 60000, 61000)
 	emit_signal("network_peer_connected")
 	
-func send_tests(testdir: Array, thread_count: int) -> void:
-	rpc_id(_peer_id, "_on_tests_received_from_server", testdir, thread_count)
+func send_tests(testdir: Array, repeat: int, thread_count: int) -> void:
+	rpc_id(_peer_id, "_on_tests_received_from_server", testdir, repeat, thread_count)
 
 master func _on_results_received_from_client(results: Array = []) -> void:
-	rpc_id(_peer_id, "quit")
 	emit_signal("results_received", results)
+	_peer.disconnect_peer(_peer_id, true)

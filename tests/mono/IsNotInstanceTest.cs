@@ -3,13 +3,9 @@ using System;
 using Godot.Collections;
 using Array = System.Array;
 
+[Title("IsNotInstanceTest")]
 public class IsNotInstanceTest : WAT.Test
 {
-	public override string Title()
-	{
-		return "IsNotInstanceTest";
-	}
-	
 	[Test]
 	public void IsNotAABB()
 	{

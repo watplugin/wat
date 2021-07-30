@@ -11,11 +11,11 @@ var _time_taken: float = 0.0
 var _test: Node
 var _names: Array = []
 
-func _init(test: Node, data: Dictionary) -> void:
+func _init(directory, filepath, title, test) -> void:
 	_test = test
-	_title = test.title()
-	_path = data.path
-	_directory = data.directory
+	_title = title
+	_path = filepath
+	_directory = directory
 
 func add_method(name: String) -> void:
 	if name in _names:

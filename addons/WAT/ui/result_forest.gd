@@ -1,14 +1,13 @@
 extends TabContainer
 tool
 
+var FUNCTION: Texture
 var PASSED_ICON: Texture
 var FAILED_ICON: Texture
 const ResultTree = preload("res://addons/WAT/ui/result_tree.gd")
 var _results: Array
 var _tabs = {}
 signal function_selected
-var results: Array = []
-var failures: Array = []
 
 # Stores asset_registry so that result_tree can be configured with scaled icons
 var _assets_registry
@@ -24,9 +23,8 @@ func _add_result_tree(results: Array) -> void:
 	var sorted = sort(results)
 	for path in sorted:
 		var result_tree = ResultTree.new(self)
-		result_tree._setup_editor_assets(_assets_registry)
+#		result_tree._setup_editor_assets(_assets_registry)
 		result_tree.connect("button_pressed", self, "_on_function_selected")
-		print(path)
 		result_tree.name = path
 		add_child(result_tree)
 		set_tab_title(tab_count, path)
@@ -66,17 +64,14 @@ func _on_view_pressed(option: int) -> void:
 
 # We could add another option to make non-failures invisible?
 func expand_all():
-	for item in results:
-		item.collapsed = false
+	for child in get_children():
+		child.expand_all()
 		
 func collapse_all():
-	for item in results:
-		item.collapsed = true
+	for child in get_children():
+		child.collapse_all()
 		
 func expand_failures():
 	collapse_all()
-	for item in failures:
-		item.collapsed = false
-
-func _setup_editor_assets(reg) -> void:
-	_assets_registry = reg
+	for child in get_children():
+		child.expand_failures()

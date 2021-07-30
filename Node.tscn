@@ -1,15 +1,27 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://addons/WAT/gui.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Node.gd" type="Script" id=2]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
 
-[node name="Node" type="TextEdit"]
-margin_right = 500.0
-margin_bottom = 500.0
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Tests" parent="." instance=ExtResource( 1 )]
-visible = false
+func _ready() -> void:
+	var csharp: CSharpScript = CSharpScript.new()
+	var source = \"\"
+	source += \"using System;\"
+	source += \"\\nusing Godot;\"
+	source += \"\\n\"
+	source += \"\\npublic class TestNode\"
+	source += \"\\n{\"
+	source += \"\\n\\tpublic TestNode()\"
+	source += \"\\n\\t{\"
+	source += \"\\n\\t\\tSystem.Console.WriteLine('Hello World');\"
+	source += \"\\n\\t}\"
+	source += \"\\n}\"
+	csharp.source_code = source
+	csharp.reload()
+
+	csharp.new()
+"
+
+[node name="Node" type="Node"]
+script = SubResource( 1 )

@@ -1,13 +1,9 @@
 using Godot;
 using System;
 
+[Title("Object Assertions")]
 public class ObjectTest : WAT.Test
 {
-	public override string Title()
-	{
-		return "Object Assertions";
-	}
-	
 	/*
 	IsFreed and & IsNotFreed don't work correctly in CSharp
 	[Test]

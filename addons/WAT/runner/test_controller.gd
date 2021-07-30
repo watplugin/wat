@@ -1,12 +1,21 @@
 extends Node
 
+signal results_received
 func run(metadata: Dictionary) -> void:
-	var test = load(metadata["path"]).new().setup(metadata)
-	add_child(test)
+	var directory = metadata["directory"]
+	var path = metadata["path"]
+	var methods = metadata["method_names"]
+	var test: Node = load(path).new().setup(directory, path, methods)
+
 	# We need to wait for the object itself to emit the signal (since we..
 	# ..cannot yield for C# so we defer the call to run so we have time to..
 	# ..to setup our yielding rather than deal with a race condition)
-	test.call_deferred("run")
-	yield(test, test.Executed)
+	call_deferred("add_child", test)
+	var results = yield(self, "results_received")
 	test.queue_free()
-	return test.get_results()
+	return results
+
+func get_results(results) -> void:
+	# Called by Tests as our children
+	emit_signal("results_received", results)
+	

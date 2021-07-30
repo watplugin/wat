@@ -1,4 +1,3 @@
-
 name: "  Godot 3.2.3  "
 
 on: [push, pull_request]
@@ -7,9 +6,16 @@ jobs:
   Tests:
     name: Run All Tests on 3.2.3
     runs-on:  ubuntu-latest
-    container: barichello/godot-ci:3.2.3
+    container: barichello/godot-ci:mono-3.2.3
     steps:
       - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          nuget restore
+          mkdir -p .mono/assemblies/Debug
+          cp /usr/local/bin/GodotSharp/Api/Release/* .mono/assemblies/Debug
+      - name: Compile
+        run: msbuild
       - name: Run
         run: godot addons/WAT/cli.tscn -run_all
       - name: Upload Test Results
