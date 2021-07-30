@@ -8,8 +8,6 @@ const ResultTree = preload("res://addons/WAT/ui/result_tree.gd")
 var _results: Array
 var _tabs = {}
 signal function_selected
-var results: Array = []
-var failures: Array = []
 
 # Stores asset_registry so that result_tree can be configured with scaled icons
 var _assets_registry
@@ -66,14 +64,14 @@ func _on_view_pressed(option: int) -> void:
 
 # We could add another option to make non-failures invisible?
 func expand_all():
-	for item in results:
-		item.collapsed = false
+	for child in get_children():
+		child.expand_all()
 		
 func collapse_all():
-	for item in results:
-		item.collapsed = true
+	for child in get_children():
+		child.collapse_all()
 		
 func expand_failures():
 	collapse_all()
-	for item in failures:
-		item.collapsed = false
+	for child in get_children():
+		child.expand_failures()

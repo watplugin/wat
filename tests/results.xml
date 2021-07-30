@@ -1,7 +1,9 @@
 <?xml version="1.0" ?>
 <testsuites failures="0" name="TestXML" tests="1" time="0">
-	<testsuite name="Assertthat" failures="0"  tests="1" time="0">
-		<testcase name=" assert that" time="0"></testcase>
+	<testsuite name="Given a Boolean Assertion" failures="0"  tests="3" time="0">
+		<testcase name="When calling asserts.is_true(true)" time="0"></testcase>
+		<testcase name="When calling asserts.is_false(false)" time="0"></testcase>
+		<testcase name="When a test runs for 10 seconds and then calls asserts.is_true(true)" time="0"></testcase>
 	</testsuite>
 
 </testsuites>
