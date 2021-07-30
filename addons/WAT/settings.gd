@@ -19,7 +19,6 @@ static func initialize() -> void:
 	_add_setting("Run_All_Tests", TYPE_OBJECT, InputEventKey.new())
 	
 	# Set this to true if using external editors
-	_add_setting("Auto_Refresh_Tests", TYPE_BOOL, false)
 	ProjectSettings.save()
 	
 static func _add_setting(title: String, type: int, value, hint_type: int = -1, hint_string = "") -> void:
