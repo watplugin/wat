@@ -12,6 +12,8 @@ const TestMethod: GDScript = FileObjects.TestMethod
 const TestTag: GDScript = FileObjects.TestTag
 const TestFailures: GDScript = FileObjects.TestFailures
 var has_been_changed: bool = false
+var resource
+
 var dirs: Array = []
 var _all_tests: Array = []
 var _tag_metadata: Dictionary = {} # resource path, script,
@@ -29,11 +31,20 @@ func set_failed(results: Array) -> void:
 		if not result.success:
 			for test in _all_tests:
 				if test.path == result.path:
+					print(test)
 					failed.tests.append(test)
+					resource.scripts[test.path] = {"failed": true, "tags": test.tags}
 			
 func _init() -> void:
+	resource = load(ProjectSettings.get_setting("WAT/Test_Metadata_Directory") + "/test_metadata.tres")
 	failed = TestFailures.new()
+	# add failures from resource script
 	update()
+	
+	# Initialize old failures
+	for test in _all_tests:
+		if resource.scripts.has(test.path) and resource.scripts[test.path]["failed"]:
+			failed.tests.append(test)
 
 func _initialize_tags() -> void:
 	for tag in Settings.tags():
@@ -113,6 +124,18 @@ func _get_test_script(dir: String, path: String) -> TestScript:
 	var test: TestScript = TestScript.new(dir, path, load(path))
 	if _tag_metadata.has(test.gdscript.resource_path):
 		test.tags = _tag_metadata[test.gdscript.resource_path]
+		
+	# Check if it had failed
+	var failed = false if not resource.scripts.has(path) else resource.scripts[path]["failed"] 
+	# get tags from resource
+	if resource.scripts.has(path):
+		for tag in resource.scripts[path]["tags"]:
+			if not tag in test.tags:
+				test.tags.append(tag)
+		resource.scripts[path] = {"failed": failed, "tags": test.tags}
+	else:
+		resource.scripts[path] = {"failed": false, "tags": test.tags}
+		
 	var methods = test.gdscript.new().get_test_methods()
 	for m in methods:
 		test.method_names.append(m)

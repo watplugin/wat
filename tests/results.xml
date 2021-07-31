@@ -1,7 +1,9 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0">
-	<testsuite name="Example" failures="0"  tests="1" time="0">
+<testsuites failures="1" name="TestXML" tests="1" time="0">
+	<testsuite name="Example" failures="1"  tests="2" time="0">
 		<testcase name=" simple" time="0"></testcase>
+		<testcase name=" fail" time="0">
+			<failure message="EXPECTED: N/A but GOT N/A"></failure></testcase>
 	</testsuite>
 
 </testsuites>

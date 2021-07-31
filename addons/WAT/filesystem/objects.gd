@@ -38,7 +38,8 @@ class TestScript extends Reference:
 		path = path,
 		name = path,
 		yield_time = 0, # Yield Time is set by the runner
-		directory = directory
+		directory = directory,
+		tags = tags
 	}]
 		
 class TestMethod extends Reference:
