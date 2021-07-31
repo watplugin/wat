@@ -3,6 +3,7 @@ extends Node
 const XML: GDScript = preload("res://addons/WAT/editor/junit_xml.gd")
 const TestRunner: GDScript = preload("res://addons/WAT/runner/TestRunner.gd")
 const FileSystem = preload("res://addons/WAT/filesystem/filesystem.gd")
+const Settings = preload("res://addons/WAT/settings.gd")
 var filesystem = FileSystem.new()
 
 func _get_tests(filepath) -> Array:
@@ -35,7 +36,7 @@ func _ready() -> void:
 			_run("failed", arguments)
 		"-list":
 			var path = "all" if arguments.empty() else arguments.pop_front()
-			print("\nAll Tests in %s\n" % (path if path != "all" else _watSettings.test_directory()))
+			print("\nAll Tests in %s\n" % (path if path != "all" else Settings.test_directory()))
 			for test in _get_tests(path):
 				print("", test.path.substr(test.path.find_last("/") + 1).replace("res://", ""))
 			print("\nEnd of test list\n")
