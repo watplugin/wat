@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://addons/WAT/ui/gui.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/assets/play.png" type="Texture" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://addons/WAT/ui/links.gd" type="Script" id=4]
 [ext_resource path="res://addons/WAT/ui/dynamic_size_spinbox.gd" type="Script" id=5]
 [ext_resource path="res://addons/WAT/ui/result_forest.gd" type="Script" id=6]
+[ext_resource path="res://addons/WAT/ui/core.gd" type="Script" id=7]
+[ext_resource path="res://addons/WAT/ui/menu.gd" type="Script" id=8]
 [ext_resource path="res://addons/WAT/ui/test_menu.gd" type="Script" id=9]
 [ext_resource path="res://addons/WAT/assets/play_debug.png" type="Texture" id=10]
 [ext_resource path="res://addons/WAT/assets/timer.png" type="Texture" id=11]
@@ -50,6 +52,7 @@ margin_right = 1017.0
 margin_bottom = 593.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -59,6 +62,7 @@ margin_right = 617.0
 margin_bottom = 24.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

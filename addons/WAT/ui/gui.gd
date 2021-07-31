@@ -22,6 +22,8 @@ onready var ViewMenu: PopupMenu = $Core/Menu/ResultsMenu.get_popup()
 onready var Menu: HBoxContainer = $Core/Menu
 onready var Server: Node = $Server
 
+onready var Core = $Core
+
 var filesystem: _watFileSystem = _watFileSystem.new()
 var _plugin: Node
 
@@ -90,7 +92,7 @@ func setup_editor_context(plugin: Node) -> void:
 
 # Loads scaled assets like icons and fonts
 func _setup_editor_assets(assets_registry):
-	load("res://addons/WAT/ui/setup_editor_assets.gd").new().setup(self, assets_registry)
+	Core._setup_editor_assets(assets_registry)
 
 
 func _on_function_selected(path: String, function: String) -> void:

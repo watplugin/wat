@@ -108,3 +108,12 @@ func _on_tagged(idx: int, tag_editor: PopupMenu, test: Reference) -> void:
 
 func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 	emit_signal("tests_selected", menu.get_item_metadata(idx))
+
+func _setup_editor_assets(assets_registry):
+	FOLDER = assets_registry.load_asset("assets/folder.png")
+	FAILED = assets_registry.load_asset("assets/failed.png")
+	SCRIPT = assets_registry.load_asset("assets/script.png")
+	PLAY = assets_registry.load_asset("assets/play.png")
+	DEBUG = assets_registry.load_asset("assets/play_debug.png")
+	TAG = assets_registry.load_asset("assets/label.png")
+	FUNCTION = assets_registry.load_asset("assets/function.png")

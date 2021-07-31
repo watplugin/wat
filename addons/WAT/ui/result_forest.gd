@@ -1,7 +1,6 @@
 extends TabContainer
 tool
 
-var FUNCTION: Texture
 var PASSED_ICON: Texture
 var FAILED_ICON: Texture
 const ResultTree = preload("res://addons/WAT/ui/result_tree.gd")
@@ -23,7 +22,7 @@ func _add_result_tree(results: Array) -> void:
 	var sorted = sort(results)
 	for path in sorted:
 		var result_tree = ResultTree.new(self)
-#		result_tree._setup_editor_assets(_assets_registry)
+		result_tree._setup_editor_assets(_assets_registry)
 		result_tree.connect("button_pressed", self, "_on_function_selected")
 		result_tree.name = path
 		add_child(result_tree)
@@ -75,3 +74,8 @@ func expand_failures():
 	collapse_all()
 	for child in get_children():
 		child.expand_failures()
+		
+func _setup_editor_assets(assets_registry):
+	_assets_registry = assets_registry
+	PASSED_ICON = assets_registry.load_asset("assets/passed.png")
+	FAILED_ICON = assets_registry.load_asset("assets/failed.png")

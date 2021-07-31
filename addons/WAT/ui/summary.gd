@@ -37,3 +37,10 @@ func summarize(caselist: Array) -> void:
 	Passing.text = passed as String
 	Failing.text = failed as String
 	Runs.text = runcount as String
+	
+func _setup_editor_assets(assets_registry):
+	Time.icon = assets_registry.load_asset(Time.icon)
+	Tests.icon = assets_registry.load_asset(Tests.icon)
+	Passing.icon = assets_registry.load_asset(Passing.icon)
+	Failing.icon = assets_registry.load_asset(Failing.icon)
+	Runs.icon = assets_registry.load_asset(Runs.icon)

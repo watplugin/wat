@@ -97,3 +97,8 @@ func expand_failures():
 	collapse_all()
 	for item in _failures:
 		item.collapsed = false
+
+func _setup_editor_assets(assets_registry):
+	FUNCTION = assets_registry.load_asset("assets/function.png")
+	PASSED_ICON = assets_registry.load_asset("assets/passed.png")
+	FAILED_ICON = assets_registry.load_asset("assets/failed.png")
