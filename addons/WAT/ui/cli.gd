@@ -1,11 +1,13 @@
 extends Node
 
 const XML: GDScript = preload("res://addons/WAT/editor/junit_xml.gd")
-const FileSystem: GDScript = preload("res://addons/WAT/filesystem/filesystem.gd")
 const TestRunner: GDScript = preload("res://addons/WAT/runner/TestRunner.gd")
-var filesystem: FileSystem = FileSystem.new()
+const FileSystem = preload("res://addons/WAT/filesystem/filesystem.gd")
+var filesystem = FileSystem.new()
 
 func _get_tests(filepath) -> Array:
+	if filepath == "failed":
+		return filesystem.failed.get_tests()
 	if not filesystem.indexed.has(filepath):
 		return []
 	return filesystem.indexed[filepath].get_tests()
@@ -15,19 +17,22 @@ func _ready() -> void:
 	var command: String = arguments.pop_front()
 	match command:
 		"-run_all":
+			print("Running All Tests")
 			_run("all", arguments) # ???????????? Index primary I guess?
 		"-run_dir", "-run_script", "-run_tag":
 			# Saved Tag data isn't implemented yet but it should work here when it is
 			var dir: String = arguments.pop_front()
+			print("Running Tests of %s" % dir)
 			_run(dir, arguments)
 		"-run_method":
 			# Change documentation to have script and method be added together via a + rather than an = so they don't split in parsing
 			var script: String = arguments.pop_front()
 			var method: String = arguments.pop_front()
+			print("Running %s from %s" % [method, script])
 			_run(script + method, arguments)
 		"-rerun_failed":
-			push_warning("Run Failures Not Implemented")
-			get_tree().quit()
+			print("Rerunning Failed Tests")
+			_run("failed", arguments)
 		"-list":
 			var path = "all" if arguments.empty() else arguments.pop_front()
 			print("\nAll Tests in %s\n" % (path if path != "all" else _watSettings.test_directory()))
@@ -64,7 +69,7 @@ func _run(path: String, arguments) -> void:
 			_display_failures(case)
 			
 	_display(cases)
-#	filesystem.set_failed(results)
+	filesystem.set_failed(results)
 	OS.exit_code = not int(cases.total > 0 and cases.total == cases.passed)
 	get_tree().quit()
 	
