@@ -5,9 +5,6 @@ func setup(runner, assets_registry) -> void:
 
 	runner.RunAll.icon = assets_registry.load_asset(runner.RunAll.icon)
 	runner.DebugAll.icon = assets_registry.load_asset(runner.DebugAll.icon)
-	runner.RunFailed.icon = assets_registry.load_asset(runner.RunFailed.icon)
-	runner.DebugFailed.icon = assets_registry.load_asset(runner.DebugFailed.icon)
-
 
 	# Setup Summary
 	runner.Summary.Time.icon = assets_registry.load_asset(runner.Summary.Time.icon)

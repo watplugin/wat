@@ -29,22 +29,27 @@ func _pressed() -> void:
 	_menu.popup()
 	
 func update() -> void:
-	# We still require tags as well
 	filesystem.update()
 	_menu.free()
 	_menu = PopupMenu.new()
 	add_child(_menu)
+	_menu.add_icon_item(FAILED, "Run Failed", 0)
+	_menu.add_icon_item(FAILED, "Debug Failed", 1)
+	if not Engine.is_editor_hint():
+		_menu.set_item_disabled(1, true)
 	
-	# Tags could honestly exist as their own menu
+	# Do people actual run/debug all tags? Seems like a weird use case
 	var _tag_menu = PopupMenu.new()
 	_menu.add_child(_tag_menu)
-	_menu.add_submenu_item("Run Tagged", _tag_menu.name, 0)
-	_menu.set_item_icon(0, TAG)
+	_menu.add_submenu_item("Run Tagged", _tag_menu.name, 2)
+	_menu.set_item_icon(2, TAG)
 	for tag in Settings.tags():
 		add_menu(_tag_menu, filesystem.indexed[tag], TAG)
 
+	_menu.set_item_metadata(0, _watTestParcel.new(WAT.RUN, filesystem.failed))
+	_menu.set_item_metadata(1, _watTestParcel.new(WAT.DEBUG, filesystem.failed))
 	_menu.connect("index_pressed", self, "_on_idx_pressed", [_menu])
-	_id = 1
+	_id = 6
 	for dir in filesystem.dirs:
 		if dir.tests.empty():
 			continue
@@ -70,6 +75,7 @@ func add_menu(parent: PopupMenu, data: Reference, ico: Texture) -> PopupMenu:
 	_id += 1
 	child.add_icon_item(DEBUG, "Debug All", _id)
 	child.set_item_metadata(1, _watTestParcel.new(WAT.DEBUG, data))
+	child.set_item_disabled(1, not Engine.is_editor_hint())
 	_id += 1
 	return child
 

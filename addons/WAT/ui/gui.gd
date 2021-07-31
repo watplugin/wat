@@ -17,8 +17,6 @@ onready var Repeats: SpinBox = $Core/Menu/RunSettings/Repeats
 # Buttons
 onready var RunAll: Button = $Core/Menu/RunAll
 onready var DebugAll: Button = $Core/Menu/DebugAll
-onready var RunFailed: Button = $Core/Menu/RunFailed
-onready var DebugFailed: Button = $Core/Menu/DebugFailed
 
 onready var ViewMenu: PopupMenu = $Core/Menu/ResultsMenu.get_popup()
 onready var Menu: HBoxContainer = $Core/Menu
@@ -37,8 +35,6 @@ func _ready() -> void:
 	TestMenu.connect("tests_selected", self, "_launch")	
 	_connect_run_button(RunAll, WAT.RUN, filesystem)
 	_connect_run_button(DebugAll, WAT.DEBUG, filesystem)
-	_connect_run_button(RunFailed, WAT.RUN, filesystem.failed)
-	_connect_run_button(DebugFailed, WAT.DEBUG, filesystem.failed)
 
 func _connect_run_button(run: Button, run_type: int, source: Reference) -> void:
 	run.connect("pressed", self, "_launch", [_watTestParcel.new(run_type, source)])
@@ -51,7 +47,6 @@ func setup_game_context() -> void:
 	# should make every icon look normal when the Tests UI launches
 	# outside of the editor.
 	DebugAll.disabled = true
-	DebugFailed.disabled = true
 	_setup_editor_assets(PluginAssetsRegistry.new())
 	
 func _launch(parcel: _watTestParcel) -> void:

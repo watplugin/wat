@@ -1,8 +1,7 @@
 <?xml version="1.0" ?>
 <testsuites failures="0" name="TestXML" tests="1" time="0">
-	<testsuite name="Property Member Test" failures="0"  tests="2" time="0">
-		<testcase name="When we double a scene via path with exported values" time="0"></testcase>
-		<testcase name="When we double a scene via PackedScene with exported values" time="0"></testcase>
+	<testsuite name="Example" failures="0"  tests="1" time="0">
+		<testcase name=" simple" time="0"></testcase>
 	</testsuite>
 
 </testsuites>
