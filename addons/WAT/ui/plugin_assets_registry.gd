@@ -65,7 +65,7 @@ func get_editor_scale() -> float:
 				_cached_editor_scale = _calculate_current_editor_scale_3_0()
 		return _cached_editor_scale
 	else:
-		push_error("AssetsRegistry is not supported for version: " % Engine.get_version_info().string)
+		push_error("PluginAssetsRegistry is not supported for version: " % Engine.get_version_info().string)
 		return 1.0
 
 func _calculate_current_editor_scale_3_1() -> float:
