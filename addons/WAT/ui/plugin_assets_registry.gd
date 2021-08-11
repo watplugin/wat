@@ -1,4 +1,3 @@
-class_name PluginAssetsRegistry
 extends Reference
 # Stores and scales editor related UI assets according to the user's editor scale.
 # Repo: https://github.com/Atlinx/Godot-PluginAssetsRegistry
