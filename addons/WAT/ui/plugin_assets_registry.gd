@@ -1,6 +1,7 @@
-# Repo: https://github.com/Atlinx/Godot-PluginAssetsRegistry
-
+class_name PluginAssetsRegistry
 extends Reference
+# Stores and scales editor related UI assets according to the user's editor scale.
+# Repo: https://github.com/Atlinx/Godot-PluginAssetsRegistry
 
 # Replace 'demo_plugin' with your plugin's name
 const PLUGIN_ABSOLUTE_PATH_PREFIX = "res://addons/WAT/"
@@ -51,20 +52,23 @@ func _load_scaled_font(font: Font) -> DynamicFont:
 	duplicate.size *= get_editor_scale()
 	return duplicate
 
-func get_editor_scale():
+func get_editor_scale() -> float:
 	if plugin == null:
-		return 1
-	if Engine.get_version_info().minor >= 3:
+		return 1.0
+	if Engine.get_version_info().major > 3 or (Engine.get_version_info().major == 3 and Engine.get_version_info().minor >= 3):
 		return plugin.get_editor_interface().get_editor_scale()
-	else:
+	elif Engine.get_version_info().major == 3:
 		if _cached_editor_scale == -1:
 			if Engine.get_version_info().minor >= 1:
 				_cached_editor_scale = _calculate_current_editor_scale_3_1()
 			else:
 				_cached_editor_scale = _calculate_current_editor_scale_3_0()
 		return _cached_editor_scale
+	else:
+		push_error("AssetsRegistry is not supported for version: " % Engine.get_version_info().string)
+		return 1.0
 
-func _calculate_current_editor_scale_3_1():
+func _calculate_current_editor_scale_3_1() -> float:
 	var editor_settings = plugin.get_editor_interface().get_editor_settings()
 	
 	var display_scale: int = editor_settings.get_setting("interface/editor/display_scale")
@@ -95,7 +99,7 @@ func _calculate_current_editor_scale_3_1():
 		_:
 			return custom_display_scale
 
-func _calculate_current_editor_scale_3_0():
+func _calculate_current_editor_scale_3_0() -> float:
 	var editor_settings = plugin.get_editor_interface().get_editor_settings()
 	
 	var dpi_mode = editor_settings.get_settings("interface/editor/hidpi_mode")
@@ -115,3 +119,5 @@ func _calculate_current_editor_scale_3_0():
 			return 1.5
 		4:
 			return 2.0
+		_:
+			return 1.0
