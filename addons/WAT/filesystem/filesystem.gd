@@ -1,6 +1,7 @@
 tool
 extends Reference
 
+const Validator = preload("res://addons/WAT/filesystem/validator.gd")
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 const Settings: Script = preload("res://addons/WAT/settings.gd")
 const YieldCalculator: GDScript = preload("res://addons/WAT/filesystem/yield_calculator.gd")
@@ -80,7 +81,7 @@ func _update(testdir: TestDirectory) -> void:
 			subdirs.append(directory)
 			indexed[absolute_path] = directory
 		
-		elif _is_valid_test(absolute_path):
+		elif Validator.is_valid_test(absolute_path):
 			var test: TestScript = _get_test_script(testdir.path, absolute_path)
 			indexed[absolute_path] = test
 			for tag in test.tags:
@@ -109,16 +110,7 @@ func _update(testdir: TestDirectory) -> void:
 	dirs += subdirs
 	for subdir in subdirs:
 		_update(subdir)
-			
-func _is_valid_test(p: String) -> bool:
-	if not (p.ends_with(".gd") or p.ends_with(".cs") or p.ends_with(".gdc")):
-		return false
-	if (p == "res://addons/WAT/test/test.gd" or p == "res://addons/WAT/test/test.gdc" or p == "res://addons/WAT/mono/Test.cs"
-	or p == ProjectSettings.get_setting("WAT/Test_Metadata_Directory") + "/test_metadata.tres"):
-		return false
-	if not (load(p).get("IS_WAT_TEST") or (not load(p) is CSharpScript  or load(p).new().get("IS_WAT_TEST"))):
-		return false 
-	return true
+		
 		
 func _get_test_script(dir: String, path: String) -> TestScript:
 	var gdscript: Script = load(path)
