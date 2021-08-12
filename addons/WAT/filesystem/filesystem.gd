@@ -117,7 +117,7 @@ func _is_valid_test(p: String) -> bool:
 	if (p == "res://addons/WAT/test/test.gd" or p == "res://addons/WAT/test/test.gdc" or p == "res://addons/WAT/mono/Test.cs"
 	or p == ProjectSettings.get_setting("WAT/Test_Metadata_Directory") + "/test_metadata.tres"):
 		return false
-	if not (load(p).get("IS_WAT_TEST") or load(p).new().get("IS_WAT_TEST")):
+	if not (load(p).get("IS_WAT_TEST") or (not load(p) is CSharpScript  or load(p).new().get("IS_WAT_TEST"))):
 		return false 
 	return true
 		
