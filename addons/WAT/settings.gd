@@ -1,6 +1,6 @@
 tool
 extends Reference
-class_name _watSettings
+
 
 static func initialize() -> void:
 	if not ProjectSettings.has_setting("WAT/Test_Directory"):

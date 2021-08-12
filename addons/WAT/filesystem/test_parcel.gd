@@ -1,5 +1,6 @@
-extends Reference
-class_name _watTestParcel
+tool
+extends Object
+
 
 var run_type: int
 var tests

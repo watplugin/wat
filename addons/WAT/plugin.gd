@@ -32,7 +32,7 @@ func _exit_tree():
 	docker.free()
 	instance.free()
 	
-func _track_files(filesystem: _watFileSystem) -> void:
+func _track_files(filesystem) -> void:
 	var file_dock: Node = get_editor_interface().get_file_system_dock()
 	for event in ["folder_removed", "folder_moved", "file_removed"]:
 		file_dock.connect(event, filesystem, "_on_filesystem_changed", [], CONNECT_DEFERRED)

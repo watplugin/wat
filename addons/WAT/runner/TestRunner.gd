@@ -1,6 +1,6 @@
 tool
 extends Node
-class_name _watTestRunner
+
 
 const Settings: GDScript = preload("res://addons/WAT/settings.gd")
 const Splitter: GDScript = preload("splitter.gd")

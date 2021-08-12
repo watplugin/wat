@@ -33,37 +33,13 @@ _global_script_classes=[ {
 "class": "WATTest",
 "language": "GDScript",
 "path": "res://addons/WAT/test/test.gd"
-}, {
-"base": "Reference",
-"class": "_watFileSystem",
-"language": "GDScript",
-"path": "res://addons/WAT/filesystem/filesystem.gd"
-}, {
-"base": "Reference",
-"class": "_watSettings",
-"language": "GDScript",
-"path": "res://addons/WAT/settings.gd"
-}, {
-"base": "Reference",
-"class": "_watTestParcel",
-"language": "GDScript",
-"path": "res://addons/WAT/filesystem/test_parcel.gd"
-}, {
-"base": "Node",
-"class": "_watTestRunner",
-"language": "GDScript",
-"path": "res://addons/WAT/runner/TestRunner.gd"
 } ]
 _global_script_class_icons={
 "BaseLogin": "",
 "Calculator": "",
 "Login": "",
 "WAT": "",
-"WATTest": "",
-"_watFileSystem": "",
-"_watSettings": "",
-"_watTestParcel": "",
-"_watTestRunner": ""
+"WATTest": ""
 }
 
 [WAT]

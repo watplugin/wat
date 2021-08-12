@@ -1,6 +1,5 @@
 tool
 extends Reference
-class_name _watFileSystem
 
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 const Settings: Script = preload("res://addons/WAT/settings.gd")

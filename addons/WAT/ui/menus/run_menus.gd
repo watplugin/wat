@@ -4,7 +4,7 @@ var _dirs: PopupMenu = PopupMenu.new()
 var _scripts: PopupMenu = PopupMenu.new()
 var _failed: PopupMenu = PopupMenu.new()
 var _tagged: PopupMenu = PopupMenu.new()
-var filesystem: _watFileSystem
+var filesystem
 
 
 func _ready() -> void:

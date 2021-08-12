@@ -7,7 +7,7 @@ extends PanelContainer
 
 const XML: Script = preload("res://addons/WAT/editor/junit_xml.gd")
 const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/plugin_assets_registry.gd")
-
+const PARCEL = preload("res://addons/WAT/filesystem/test_parcel.gd")
 onready var TestMenu: Button = $Core/Menu/TestMenu
 onready var Results: TabContainer = $Core/Results
 onready var Summary: HBoxContainer = $Core/Summary
@@ -24,7 +24,7 @@ onready var Server: Node = $Server
 
 onready var Core = $Core
 
-var filesystem: _watFileSystem = _watFileSystem.new()
+var filesystem = load("res://addons/WAT/filesystem/filesystem.gd").new()
 var _plugin: Node
 
 func _ready() -> void:
@@ -39,7 +39,7 @@ func _ready() -> void:
 	_connect_run_button(DebugAll, WAT.DEBUG, filesystem)
 
 func _connect_run_button(run: Button, run_type: int, source: Reference) -> void:
-	run.connect("pressed", self, "_launch", [_watTestParcel.new(run_type, source)])
+	run.connect("pressed", self, "_launch", [PARCEL.new(run_type, source)])
 
 func setup_game_context() -> void:
 	if Engine.is_editor_hint():
@@ -51,7 +51,7 @@ func setup_game_context() -> void:
 	DebugAll.disabled = true
 	_setup_editor_assets(PluginAssetsRegistry.new())
 	
-func _launch(parcel: _watTestParcel) -> void:
+func _launch(parcel: Object) -> void:
 	var tests: Array = parcel.get_tests()
 	if tests.empty():
 		push_warning("Tests not found")
@@ -71,7 +71,7 @@ func _launch(parcel: _watTestParcel) -> void:
 
 
 func _launch_runner(tests: Array, repeat: int, threads: int) -> Array:
-	var instance: _watTestRunner = _watTestRunner.new()
+	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
 	add_child(instance)
 	var results: Array = yield(instance.run(tests, repeat, threads), "completed")
 	instance.queue_free()
