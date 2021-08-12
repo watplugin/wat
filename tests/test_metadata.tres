@@ -93,6 +93,10 @@ scripts = {
 "failed": false,
 "tags": [  ]
 },
+"res://tests/new_script.cs": {
+"failed": false,
+"tags": [  ]
+},
 "res://tests/unit/assertthat.test.gd": {
 "failed": false,
 "tags": [ "32" ]
@@ -122,7 +126,7 @@ scripts = {
 "tags": [  ]
 },
 "res://tests/unit/null.test.gd": {
-"failed": false,
+"failed": true,
 "tags": [  ]
 },
 "res://tests/unit/object.test.gd": {

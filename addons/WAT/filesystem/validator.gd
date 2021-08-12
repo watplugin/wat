@@ -38,4 +38,6 @@ static func _is_gdscript_wat_test(path: String) -> bool:
 	return load(path).get("IS_WAT_TEST")
 	
 static func _is_csharp_wat_test(path: String) -> bool:
-	return load(path) is CSharpScript and load(path).new().get("IS_WAT_TEST")
+	var script: CSharpScript = load(path)
+	script.reload(true)
+	return script.new().get("IS_WAT_TEST")
