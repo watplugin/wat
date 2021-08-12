@@ -11,7 +11,7 @@ static func is_valid_gdscript(path: String) -> bool:
 	return _is_gdscript(path) and not _is_base_gdscript_test(path) and _is_gdscript_wat_test(path)
 
 static func is_valid_csharp(path: String) -> bool:
-	return _is_csharp(path) and not _is_base_csharp_test(path) and _is_csharp_wat_test(path)
+	return _is_csharp(path) and not _is_base_csharp_test(path) and not _is_in_wat_addon_dir(path) and not _is_in_dot_mono(path) and _is_csharp_wat_test(path)
 	
 static func is_valid_compiled_gdscript(path: String) -> bool:
 	return _is_compiled_gdscript(path) and not _is_base_compiled_gdscript_test(path) and _is_gdscript_wat_test(path)
@@ -40,3 +40,9 @@ static func _is_gdscript_wat_test(path: String) -> bool:
 static func _is_csharp_wat_test(path: String) -> bool:
 	# Dreadful but Godot is not great from GDScript for this
 	return load(path).new().get("IS_WAT_TEST")
+
+static func _is_in_wat_addon_dir(path) -> bool:
+	return "addons/WAT" in path
+	
+static func _is_in_dot_mono(path) -> bool:
+	return ".mono/" in path

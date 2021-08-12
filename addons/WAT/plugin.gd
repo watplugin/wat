@@ -28,7 +28,7 @@ func _enter_tree():
 	get_editor_interface().play_custom_scene("res://addons/WAT/Empty.tscn")
 	while get_editor_interface().get_playing_scene() == "res://addons/WAT/Empty.tscn":
 		yield(get_tree(), "idle_frame")
-	instance.filesystem.initialize()
+	instance.filesystem.call_deferred("initialize")
 	
 func _exit_tree():
 	_save_metadata()
