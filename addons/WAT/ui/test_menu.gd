@@ -21,8 +21,9 @@ signal build
 func _pressed() -> void:
 	if filesystem.has_been_changed:
 		if(ClassDB.class_exists("CSharpScript")) and Engine.is_editor_hint():
-			emit_signal("build")
-		filesystem.has_been_changed = false
+			emit_signal("build", get_global_mouse_position())
+			filesystem.has_been_changed = false
+			return
 		update()
 	var position: Vector2 = rect_global_position
 	position.y += rect_size.y
@@ -31,10 +32,20 @@ func _pressed() -> void:
 	_menu.grab_focus()
 	_menu.popup()
 
+func display(position):
+	update()
+	#var position: Vector2 = rect_global_position
+	position.y -= rect_size.y
+	_menu.rect_global_position = position
+	_menu.rect_size = Vector2(rect_size.x, 0)
+	_menu.grab_focus()
+	_menu.popup()
 	
 func update() -> void:
+	filesystem.has_been_changed = false
 	filesystem.update()
-	_menu.free()
+	if is_instance_valid(_menu):
+		_menu.queue_free()
 	_menu = PopupMenu.new()
 	add_child(_menu)
 	_menu.add_icon_item(FAILED, "Run Failed", 0)

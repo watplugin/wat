@@ -13,6 +13,10 @@ scripts = {
 "failed": true,
 "tags": [ "64" ]
 },
+"res://tests/gdhfyj.cs": {
+"failed": false,
+"tags": [  ]
+},
 "res://tests/integration/default_args.test.gd": {
 "failed": false,
 "tags": [  ]

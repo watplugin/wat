@@ -97,10 +97,11 @@ func setup_editor_context(plugin: Node) -> void:
 func _setup_editor_assets(assets_registry):
 	Core._setup_editor_assets(assets_registry)
 
-func _on_build() -> void:
+func _on_build(pos) -> void:
 	_plugin.get_editor_interface().play_custom_scene("res://addons/WAT/Empty.tscn")
 	while(_plugin.get_editor_interface().get_playing_scene() == "res://addons/WAT/Empty.tscn"):
 		yield(get_tree(), "idle_frame")
+	TestMenu.display(pos)
 	if ProjectSettings.get_setting("WAT/Display") == 8:
 		_plugin.make_bottom_panel_item_visible(self)
 		
