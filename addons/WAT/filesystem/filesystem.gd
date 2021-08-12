@@ -143,6 +143,10 @@ func remove_test_from_tag(test, tag: String) -> void:
 	indexed[tag].tests.erase(test)
 	
 func _on_file_moved(source: String, destination: String) -> void:
+	if(source.ends_with(".sln") or source.ends_with(".csproj") or ".mono" in source or ".import" in source):
+		return
+	if(destination.ends_with(".sln") or destination.ends_with(".csproj") or ".mono" in destination or ".import" in destination):
+		return
 	var key: String = source.rstrip("/")
 	var tags: Array = _tag_metadata.get(key, [])
 	var dest: Resource = load(destination)
@@ -153,6 +157,8 @@ func _on_file_moved(source: String, destination: String) -> void:
 		has_been_changed = true
 	
 func _on_resource_saved(resource: Resource) -> void:
+	if("res://addons/WAT/" in resource.resource_path):
+		return
 	if _is_in_test_directory(resource.resource_path):
 		has_been_changed = true
 		

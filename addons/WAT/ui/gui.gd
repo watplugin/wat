@@ -99,9 +99,11 @@ func _setup_editor_assets(assets_registry):
 
 func _on_build() -> void:
 	_plugin.get_editor_interface().play_custom_scene("res://addons/WAT/Empty.tscn")
+	while(_plugin.get_editor_interface().get_playing_scene() == "res://addons/WAT/Empty.tscn"):
+		yield(get_tree(), "idle_frame")
 	if ProjectSettings.get_setting("WAT/Display") == 8:
-		_plugin.make_bottom_panel_item_visible(self) 
-
+		_plugin.make_bottom_panel_item_visible(self)
+		
 func _on_function_selected(path: String, function: String) -> void:
 	if not _plugin:
 		return
