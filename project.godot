@@ -8,40 +8,6 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "Node",
-"class": "BaseLogin",
-"language": "GDScript",
-"path": "res://Examples/Scripts/base_login.gd"
-}, {
-"base": "Node",
-"class": "Calculator",
-"language": "GDScript",
-"path": "res://Examples/Scripts/calculator.gd"
-}, {
-"base": "BaseLogin",
-"class": "Login",
-"language": "GDScript",
-"path": "res://Examples/Scripts/login.gd"
-}, {
-"base": "Reference",
-"class": "WAT",
-"language": "GDScript",
-"path": "res://addons/WAT/namespace.gd"
-}, {
-"base": "Node",
-"class": "WATTest",
-"language": "GDScript",
-"path": "res://addons/WAT/test/test.gd"
-} ]
-_global_script_class_icons={
-"BaseLogin": "",
-"Calculator": "",
-"Login": "",
-"WAT": "",
-"WATTest": ""
-}
-
 [WAT]
 
 Test_Directory="res://tests"
