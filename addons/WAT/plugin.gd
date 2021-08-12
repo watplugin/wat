@@ -26,7 +26,8 @@ func _enter_tree():
 	_track_files(instance.filesystem)
 	add_child(docker)
 	get_editor_interface().play_custom_scene("res://addons/WAT/Empty.tscn")
-	yield(get_tree().create_timer(0.5), "timeout")
+	while get_editor_interface().get_playing_scene() == "res://addons/WAT/Empty.tscn":
+		yield(get_tree(), "idle_frame")
 	instance.filesystem.initialize()
 	
 func _exit_tree():
