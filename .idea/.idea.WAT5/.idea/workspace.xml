@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/Test.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WAT5.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WAT5.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/assertions/boolean.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/assertions/boolean.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/filesystem/validator.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/filesystem/validator.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/results.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/null.test.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit/null.test.gd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,10 +16,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/04C5C85C-7E5E-4A4A-B66D-06C5A6DEE283/a9/eab03a2e/Object.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CD6B08EA-F252-4ECE-B580-488B249D3E36/6d/9a1fd388/Dictionary.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -78,7 +78,7 @@
     <property name="settings.editor.selected.configurable" value="ReSpellerSettingsId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Godot.test">
+  <component name="RunManager" selected="Start and Debug.Player">
     <configuration name="Attach to Player" type="ConnectRemote" factoryName="Mono Remote" show_console_on_std_err="false" show_console_on_std_out="false" port="23685" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
@@ -89,7 +89,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Editor" type="GODOT_DEBUG_RUN_CONFIGURATION" factoryName="Start and Debug">
-      <option name="EXE_PATH" value="$USER_HOME$/GameEngines/GodotSharp.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/IDEs/GodotMono.exe" />
       <option name="PROGRAM_PARAMETERS" value="--path &quot;$PROJECT_DIR$&quot; --editor" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -99,7 +99,7 @@
       </method>
     </configuration>
     <configuration name="Player" type="GODOT_DEBUG_RUN_CONFIGURATION" factoryName="Start and Debug">
-      <option name="EXE_PATH" value="$USER_HOME$/GameEngines/GodotSharp.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/IDEs/GodotMono.exe" />
       <option name="PROGRAM_PARAMETERS" value="--path &quot;$PROJECT_DIR$&quot;" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -109,7 +109,7 @@
       </method>
     </configuration>
     <configuration name="WATSharpGui" type="GODOT_DEBUG_RUN_CONFIGURATION" factoryName="Start and Debug">
-      <option name="EXE_PATH" value="$USER_HOME$/GameEngines/GodotSharp.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/IDEs/GodotMono.exe" />
       <option name="PROGRAM_PARAMETERS" value="--path &quot;$PROJECT_DIR$&quot; &quot;res://addons/WAT/gui.tscn&quot;" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -157,6 +157,8 @@
       <workItem from="1625568546656" duration="1103000" />
       <workItem from="1625578278696" duration="216000" />
       <workItem from="1625578624517" duration="69000" />
+      <workItem from="1628786146653" duration="140000" />
+      <workItem from="1628786809854" duration="554000" />
     </task>
     <servers />
   </component>
