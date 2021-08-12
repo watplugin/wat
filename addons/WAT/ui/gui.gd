@@ -37,6 +37,7 @@ func _ready() -> void:
 	TestMenu.connect("tests_selected", self, "_launch")	
 	_connect_run_button(RunAll, WAT.RUN, filesystem)
 	_connect_run_button(DebugAll, WAT.DEBUG, filesystem)
+	TestMenu.connect("build", self, "_on_build")
 
 func _connect_run_button(run: Button, run_type: int, source: Reference) -> void:
 	run.connect("pressed", self, "_launch", [PARCEL.new(run_type, source)])
@@ -79,7 +80,8 @@ func _launch_runner(tests: Array, repeat: int, threads: int) -> Array:
 	
 func _launch_debugger(tests: Array, repeat: int, threads: int) -> Array:
 	_plugin.get_editor_interface().play_custom_scene("res://addons/WAT/runner/TestRunner.tscn")
-	_plugin.make_bottom_panel_item_visible(self)
+	if ProjectSettings.get_setting("WAT/Display") == 8:
+		_plugin.make_bottom_panel_item_visible(self)
 	yield(Server, "network_peer_connected")
 	Server.send_tests(tests, repeat, threads)
 	var results: Array = yield(Server, "results_received")
@@ -94,6 +96,10 @@ func setup_editor_context(plugin: Node) -> void:
 func _setup_editor_assets(assets_registry):
 	Core._setup_editor_assets(assets_registry)
 
+func _on_build() -> void:
+	_plugin.get_editor_interface().play_custom_scene("res://addons/WAT/Empty.tscn")
+	if ProjectSettings.get_setting("WAT/Display") == 8:
+		_plugin.make_bottom_panel_item_visible(self) 
 
 func _on_function_selected(path: String, function: String) -> void:
 	if not _plugin:

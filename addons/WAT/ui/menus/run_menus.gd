@@ -16,6 +16,8 @@ func _ready() -> void:
 
 func _pressed(pressed) -> void:
 	if filesystem.has_been_changed:
+		# Hack way of initializing CSharpScripts
+		
 		update()
 		# debug won't capture this
 	

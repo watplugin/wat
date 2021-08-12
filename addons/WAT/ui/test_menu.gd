@@ -15,18 +15,25 @@ var filesystem: Reference # Set by GUI
 var _menu: PopupMenu = PopupMenu.new()
 var _id: int = 0
 signal tests_selected
-
+signal build
+var _csharp_compiled = false
 
 func _pressed() -> void:
 	if filesystem.has_been_changed:
+		if(ClassDB.class_exists("CSharpScript")) and Engine.is_editor_hint() and not _csharp_compiled:
+			_csharp_compiled = true
+			emit_signal("build")
+			return
 		update()
 		filesystem.has_been_changed = false
+		_csharp_compiled = false
 	var position: Vector2 = rect_global_position
 	position.y += rect_size.y
 	_menu.rect_global_position = position
 	_menu.rect_size = Vector2(rect_size.x, 0)
 	_menu.grab_focus()
 	_menu.popup()
+
 	
 func update() -> void:
 	filesystem.update()

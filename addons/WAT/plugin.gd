@@ -16,7 +16,7 @@ func _ready():
 	# ready themselves first and store references to other nodes, which will be 
 	# needed to call_setup_editor_assets() on.
 	instance._setup_editor_assets(assets_registry)
-
+	
 func _enter_tree():
 	Settings.initialize()
 	_initialize_metadata()
@@ -49,6 +49,7 @@ func _initialize_metadata() -> void:
 	if err != OK:
 		push_warning("Error saving test metadata to %s : %s" % [path, err as String])
 		return
+		
 		
 func _save_metadata() -> void:
 	var path = ProjectSettings.get_setting("WAT/Test_Metadata_Directory") + "/test_metadata.tres"

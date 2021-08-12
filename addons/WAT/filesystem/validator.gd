@@ -39,4 +39,4 @@ static func _is_gdscript_wat_test(path: String) -> bool:
 	
 static func _is_csharp_wat_test(path: String) -> bool:
 	# Dreadful but Godot is not great from GDScript for this
-	return "[Test" in load(path).source_code
+	return load(path).new().get("IS_WAT_TEST")
