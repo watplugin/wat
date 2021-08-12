@@ -4,10 +4,10 @@ extends Reference
 
 static func initialize() -> void:
 	if not ProjectSettings.has_setting("WAT/Test_Directory"):
-		push_warning("You may change any setting for WAT in Project -> ProjectSettings -> General -> WAT")
-	_add_setting("Test_Directory", TYPE_STRING, "res://tests")
-	_add_setting("Results_Directory", TYPE_STRING, "res://tests")
-	_add_setting("Test_Metadata_Directory", TYPE_STRING, "res://tests")
+		push_warning("Test Directory was set to project root.\nYou may change any setting for WAT in Project -> ProjectSettings -> General -> WAT")
+	_add_setting("Test_Directory", TYPE_STRING, "res://")
+	_add_setting("Results_Directory", TYPE_STRING, "res://")
+	_add_setting("Test_Metadata_Directory", TYPE_STRING, "res://")
 	_add_setting("Tags", TYPE_STRING_ARRAY, PoolStringArray())
 	_add_setting("Window_Size", TYPE_VECTOR2, Vector2(1280, 720))
 	_add_setting("Minimize_Window_When_Running_Tests", TYPE_BOOL, false)
