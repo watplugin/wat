@@ -45,6 +45,7 @@ func _connect_run_button(run: Button, run_type: int, source: Reference) -> void:
 func setup_game_context() -> void:
 	if Engine.is_editor_hint():
 		return
+	filesystem.initialize()
 	OS.window_size = ProjectSettings.get_setting("WAT/Window_Size")
 	# No argument makes the AssetsRegistry default to a scale of 1, which
 	# should make every icon look normal when the Tests UI launches

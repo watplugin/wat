@@ -25,7 +25,9 @@ func _enter_tree():
 	docker = Docker.new(self, instance)
 	_track_files(instance.filesystem)
 	add_child(docker)
+	get_editor_interface().play_custom_scene("res://addons/WAT/Empty.tscn")
 	yield(get_tree().create_timer(0.5), "timeout")
+	instance.filesystem.initialize()
 	
 func _exit_tree():
 	_save_metadata()

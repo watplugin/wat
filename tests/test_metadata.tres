@@ -5,6 +5,10 @@
 [resource]
 script = ExtResource( 1 )
 scripts = {
+"res://tests/XYZ.cs": {
+"failed": false,
+"tags": [  ]
+},
 "res://tests/example.gd": {
 "failed": true,
 "tags": [ "64" ]

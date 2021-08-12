@@ -35,7 +35,7 @@ func set_failed(results: Array) -> void:
 					failed.tests.append(test)
 					resource.scripts[test.path] = {"failed": true, "tags": test.tags}
 			
-func _init() -> void:
+func initialize() -> void:
 	resource = load(ProjectSettings.get_setting("WAT/Test_Metadata_Directory") + "/test_metadata.tres")
 	failed = TestFailures.new()
 	indexed["failed"] = failed
