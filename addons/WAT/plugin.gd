@@ -11,13 +11,11 @@ var instance
 var docker: Docker
 var assets_registry = PluginAssetsRegistry.new(self)
 
+
 func _ready():
-	# Editor assets must be setup at ready time to give GUI scripts a chance to 
-	# ready themselves first and store references to other nodes, which will be 
-	# needed to call_setup_editor_assets() on.
-	instance._setup_editor_assets(assets_registry)
+	call_deferred("setup")
 	
-func _enter_tree():
+func setup():
 	Settings.initialize()
 	_initialize_metadata()
 	instance = GUI.instance()
@@ -25,10 +23,11 @@ func _enter_tree():
 	docker = Docker.new(self, instance)
 	_track_files(instance.filesystem)
 	add_child(docker)
-	get_editor_interface().play_custom_scene("res://addons/WAT/Empty.tscn")
-	while get_editor_interface().get_playing_scene() == "res://addons/WAT/Empty.tscn":
-		yield(get_tree(), "idle_frame")
+#	get_editor_interface().play_custom_scene("res://addons/WAT/Empty.tscn")
+#	while get_editor_interface().get_playing_scene() == "res://addons/WAT/Empty.tscn":
+#		yield(get_tree(), "idle_frame")
 	instance.filesystem.call_deferred("initialize")
+	instance._setup_editor_assets(assets_registry)
 	
 func _exit_tree():
 	_save_metadata()
