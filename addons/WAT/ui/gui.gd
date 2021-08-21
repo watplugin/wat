@@ -90,12 +90,13 @@ func _launch_debugger(tests: Array, repeat: int, threads: int) -> Array:
 	return results
 	
 # TO BE MOVED SOMEWHERE MORE PROPER
-func setup_editor_context(plugin: Node) -> void:
+func setup_editor_context(plugin = null) -> void:
 	_plugin = plugin
 
 # Loads scaled assets like icons and fonts
-func _setup_editor_assets(assets_registry):
-	Core._setup_editor_assets(assets_registry)
+func _setup_editor_assets(assets_registry = null):
+	pass
+	#Core._setup_editor_assets(assets_registry)
 
 func _on_build(pos) -> void:
 	_plugin.get_editor_interface().play_custom_scene("res://addons/WAT/Empty.tscn")

@@ -7,7 +7,7 @@ const Settings: Script = preload("res://addons/WAT/settings.gd")
 const GUI: PackedScene = preload("res://addons/WAT/gui.tscn")
 const Docker: Script = preload("res://addons/WAT/ui/docker.gd")
 const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/plugin_assets_registry.gd")
-var instance: Control
+var instance
 var docker: Docker
 var assets_registry = PluginAssetsRegistry.new(self)
 

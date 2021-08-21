@@ -11,7 +11,7 @@ var TAG = preload("res://addons/WAT/assets/label.png")
 var FUNCTION = preload("res://addons/WAT/assets/function.png")
 
 const Settings: GDScript = preload("res://addons/WAT/settings.gd")
-var filesystem # Set by GUI
+var filesystem: Reference # Set by GUI
 var _menu: PopupMenu = PopupMenu.new()
 var _id: int = 0
 signal tests_selected
