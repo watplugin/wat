@@ -5,6 +5,7 @@ extends PanelContainer
 # Resources require tool to work inside the editor whereas..
 # ..scripts objects without tool can be called from tool based scripts
 
+enum { RUN, DEBUG, NONE }
 const XML: Script = preload("res://addons/WAT/editor/junit_xml.gd")
 const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/plugin_assets_registry.gd")
 const PARCEL = preload("res://addons/WAT/filesystem/test_parcel.gd")
@@ -35,8 +36,8 @@ func _ready() -> void:
 	Results.connect("function_selected", self, "_on_function_selected")
 	ViewMenu.connect("index_pressed", Results, "_on_view_pressed")
 	TestMenu.connect("tests_selected", self, "_launch")	
-	_connect_run_button(RunAll, WAT.RUN, filesystem)
-	_connect_run_button(DebugAll, WAT.DEBUG, filesystem)
+	_connect_run_button(RunAll, RUN, filesystem)
+	_connect_run_button(DebugAll, DEBUG, filesystem)
 	TestMenu.connect("build", self, "_on_build")
 
 func _connect_run_button(run: Button, run_type: int, source: Reference) -> void:
@@ -62,10 +63,10 @@ func _launch(parcel: Object) -> void:
 	Summary.time()
 	var results: Array = []
 	match parcel.run_type:
-		WAT.RUN:
-			results = yield(_launch_runner(tests, Repeats.value, Threads.value), WAT.COMPLETED)
-		WAT.DEBUG:
-			results = yield(_launch_debugger(tests, Repeats.value, Threads.value), WAT.COMPLETED)
+		RUN:
+			results = yield(_launch_runner(tests, Repeats.value, Threads.value), "completed")
+		DEBUG:
+			results = yield(_launch_debugger(tests, Repeats.value, Threads.value), "completed")
 	Summary.summarize(results)
 	XML.write(results)
 	Results.display(results)

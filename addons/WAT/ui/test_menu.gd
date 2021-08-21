@@ -1,12 +1,13 @@
 tool
 extends Button
 
+enum { RUN, DEBUG, NONE }
 const Parcel = preload("res://addons/WAT/filesystem/test_parcel.gd")
 var FOLDER = preload("res://addons/WAT/assets/folder.png")
 var FAILED = preload("res://addons/WAT/assets/failed.png")
 var SCRIPT = preload("res://addons/WAT/assets/script.png")
 var PLAY = preload("res://addons/WAT/assets/play.png")
-var DEBUG = preload("res://addons/WAT/assets/play_debug.png")
+var DEBUGI = preload("res://addons/WAT/assets/play_debug.png")
 var TAG = preload("res://addons/WAT/assets/label.png")
 var FUNCTION = preload("res://addons/WAT/assets/function.png")
 
@@ -61,8 +62,8 @@ func update() -> void:
 	for tag in Settings.tags():
 		add_menu(_tag_menu, filesystem.indexed[tag], TAG)
 
-	_menu.set_item_metadata(0, Parcel.new(WAT.RUN, filesystem.failed))
-	_menu.set_item_metadata(1, Parcel.new(WAT.DEBUG, filesystem.failed))
+	_menu.set_item_metadata(0, Parcel.new(RUN, filesystem.failed))
+	_menu.set_item_metadata(1, Parcel.new(DEBUG, filesystem.failed))
 	_menu.connect("index_pressed", self, "_on_idx_pressed", [_menu])
 	_id = 6
 	for dir in filesystem.dirs:
@@ -86,10 +87,10 @@ func add_menu(parent: PopupMenu, data: Reference, ico: Texture) -> PopupMenu:
 	parent.set_item_icon(parent.get_item_index(_id), ico)
 	_id += 1
 	child.add_icon_item(PLAY, "Run All", _id)
-	child.set_item_metadata(0, Parcel.new(WAT.RUN, data))
+	child.set_item_metadata(0, Parcel.new(RUN, data))
 	_id += 1
-	child.add_icon_item(DEBUG, "Debug All", _id)
-	child.set_item_metadata(1, Parcel.new(WAT.DEBUG, data))
+	child.add_icon_item(DEBUGI, "Debug All", _id)
+	child.set_item_metadata(1, Parcel.new(DEBUG, data))
 	child.set_item_disabled(1, not Engine.is_editor_hint())
 	_id += 1
 	return child
@@ -129,6 +130,6 @@ func _setup_editor_assets(assets_registry):
 	FAILED = assets_registry.load_asset("assets/failed.png")
 	SCRIPT = assets_registry.load_asset("assets/script.png")
 	PLAY = assets_registry.load_asset("assets/play.png")
-	DEBUG = assets_registry.load_asset("assets/play_debug.png")
+	DEBUGI = assets_registry.load_asset("assets/play_debug.png")
 	TAG = assets_registry.load_asset("assets/label.png")
 	FUNCTION = assets_registry.load_asset("assets/function.png")
