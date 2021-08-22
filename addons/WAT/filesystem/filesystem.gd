@@ -31,6 +31,7 @@ func update(testdir: TestDirectory = root) -> void:
 		elif dir.file_exists(absolute) and Validator.is_valid_test(absolute):
 			var test_script: TestScript = _get_test_script(absolute)
 			testdir.tests.append(test_script)
+			test_script.dir = testdir.path
 			
 		relative = dir.get_next()
 		
@@ -55,10 +56,15 @@ func _get_test_script(p: String) -> TestScript:
 	
 # Include sanitized dir names here?
 class TestDirectory:
+	var name: String setget ,_get_sanitized_name
 	var path: String
 	var relative_subdirs: Array
 	var nested_subdirs: Array
 	var tests: Array
+	
+	func _get_sanitized_name() -> String:
+		# Required for interface compability
+		return path
 	
 	func get_tests() -> Array:
 		var requested: Array = []
@@ -68,6 +74,7 @@ class TestDirectory:
 		
 class TestScript:
 	var name: String setget ,_get_sanitized_name
+	var dir: String
 	var path: String
 	var methods: Array # TestMethods
 	var names: Array # MethodNames
@@ -80,14 +87,15 @@ class TestScript:
 		return n
 	
 	func get_tests() -> Array:
-		return [{"path": path, "methods": names, "time": time}]
+		return [{"dir": dir, "path": path, "methods": names, "time": time}]
 		
 class TestMethod:
 	var path: String
+	var dir: String
 	var name: String setget ,_get_sanitized_name
 	
 	func get_tests() -> Array:
-		return [{"path": path, "methods": [name], "time": 0.0}]
+		return [{"dir": dir ,"path": path, "methods": [name], "time": 0.0}]
 		
 	func _get_sanitized_name() -> String:
 		var n: String = name.replace("test_", "").replace("_", " ")

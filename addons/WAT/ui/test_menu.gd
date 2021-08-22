@@ -1,8 +1,12 @@
 tool
 extends Button
 
+enum { RUN, DEBUG }
 var _menu: PopupMenu
 var filesystem
+signal run_pressed
+signal debug_pressed
+
 
 func _init() -> void:
 	_menu = PopupMenu.new()
@@ -22,33 +26,44 @@ func update_menus() -> void:
 	text = "Updating"
 	
 	for dir in [filesystem.root] + filesystem.root.nested_subdirs:
-		var dir_menu: PopupMenu = PopupMenu.new()
-		_menu.add_child(dir_menu)
-		dir_menu.name = dir_menu.get_index() as String
-		_menu.add_submenu_item(dir.path, dir_menu.name, dir_menu.get_index())
+		var dir_menu = _add_menu(_menu, dir)
+		_add_run_callback(dir_menu, dir)
 		
 		for script in dir.tests:
-			var script_menu: PopupMenu = PopupMenu.new()
-			dir_menu.add_child(script_menu)
-			script_menu.name = script_menu.get_index() as String
-			dir_menu.add_submenu_item(script.name, script_menu.name, script_menu.get_index())
+			var script_menu = _add_menu(dir_menu, script)
+			_add_run_callback(script_menu, script)
 		
 			for method in script.methods:
-				var method_menu: PopupMenu = PopupMenu.new()
-				script_menu.add_child(method_menu)
-				method_menu.name = method_menu.get_index() as String
-				script_menu.add_item(method.name, method_menu.get_index())
-		
-		
-#class Menu extends PopupMenu:
-#	var title: String
-#	var id setget ,get_index
-#	icon
-	
-	
-	# Add Directories
-	# Add Scripts
-	# Add Methods
+				var method_menu = _add_menu(script_menu, method)
+				_add_run_callback(method_menu, method)
+				
+func _add_menu(parent: PopupMenu, data: Object):
+		var child: PopupMenu = PopupMenu.new()
+		parent.add_child(child)
+		child.name = child.get_index() as String
+		parent.add_submenu_item(data.name, child.name, child.get_index())
+		return child
+				
+func _add_run_callback(menu: PopupMenu, data: Object) -> void:
+	menu.add_item("Run", -2)
+	menu.add_item("Debug", -1)
+	menu.set_item_metadata(0, data)
+	menu.set_item_metadata(1, data)
+	menu.connect("index_pressed", self, "_on_idx_pressed", [menu])
+				
+func _on_idx_pressed(idx: int, dir_menu) -> void:
+	match idx:
+		0:
+			emit_signal("run_pressed", dir_menu.get_item_metadata(idx))
+		1:
+			emit_signal("debug_pressed", dir_menu.get_item_metadata(idx))
+		_:
+			print("bad click (TestMenu.gd)")
+
+# TODO:
+#	Add Tag Editor
+#	Add Tag Runner
+#	Add Icons
 	
 	
 	#text = filesystem.changed as String

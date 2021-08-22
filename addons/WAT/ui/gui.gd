@@ -3,10 +3,24 @@ extends PanelContainer
 
 var filesystem setget set_fs
 
+onready var Results = $Core/Results
+
 func set_fs(f):
 	filesystem = f
 	$Core/Menu/TestMenu.filesystem = f
 	$Core/Menu/TestMenu.update_menus()
+	
+func _ready() -> void:
+	$Core/Menu/TestMenu.connect("run_pressed", self, "_on_run_pressed")
+	$Core/Menu/TestMenu.connect("debug_pressed", self, "_on_debug_pressed")
+	
+func _on_run_pressed(data = filesystem.root) -> void:
+	var tests: Array = data.get_tests()
+	Results.display(tests)
+	print("run pressed: ", data.path)
+	
+func _on_debug_pressed(data = filesystem.root) -> void:
+	print("debug pressed: ", data.path)
 
 # Resources require tool to work inside the editor whereas..
 # ..scripts objects without tool can be called from tool based scripts
