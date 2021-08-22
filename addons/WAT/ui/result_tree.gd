@@ -4,14 +4,36 @@ extends Tree
 var tests = []
 var root: TreeItem
 var scripts: Dictionary = {}
+var current_method: MethodTreeItem
 
 func _ready() -> void:
 	hide_root = true
 	root = create_item()
+	add_constant_override("Scroll Speed", 24)
 	
 const PASSED: Color = Color(0.34375, 1, 0.34375)
 const FAILED: Color = Color(1, 0.425781, 0.425781)
 
+func add_result(result) -> void:
+	# This triggers too late
+	var script: ScriptTreeItem = scripts[result["path"]]
+	var success: bool = result["success"]
+	script.component.set_custom_color(0, PASSED if success else FAILED)
+	scroll_to_item(root)
+	
+#	func to_dictionary() -> Dictionary:
+#	return { total = _total, 
+#			 passed = _passed, 
+#			 context = _title, 
+#			 methods = _methods, 
+#			 success = _success,
+#			 path = _path,
+#			 time_taken = _time_taken,
+#			 directory = _directory,
+#			}
+
+# TODO: All of these dict values should be serialized and unserialized at server points
+# ..or sent directly if run in the editor but point is objects > dicts
 func add_test(test) -> void:
 	print("adding test")
 	var script: ScriptTreeItem = ScriptTreeItem.new(create_item(root), test)
@@ -24,26 +46,37 @@ func add_method(data: Dictionary) -> void:
 	var method = MethodTreeItem.new(create_item(script.component), data["method"])
 	script.methods[method.path] = method
 	scroll_to_item(method.component)
+	current_method = method
 
 func add_assertion(data: Dictionary) -> void:
 	# TODO: Still track assertion data, just don't give it a tree item
 	# (or give it data info)
-	if data["assertion"]["context"].empty():
-		return
 	var method: MethodTreeItem = scripts[data["path"]].methods[data["method"]]
-	var assertion_item = create_item(method.component)
-	assertion_item.set_text(0, data["assertion"]["context"])
-	var passed = data["assertion"]["success"]
-	var color = PASSED if passed else FAILED
-	assertion_item.set_custom_color(0, color)
-	scroll_to_item(assertion_item)
-	# path
-	# method
-	# assertion
-	# context
-	# pass / fail
-	# bump method
-	pass
+	var assertion: AssertionTreeItem = AssertionTreeItem.new(create_item(method.component), data["assertion"])
+	assertion.component.set_custom_color(0, PASSED if assertion.success else FAILED)
+	scroll_to_item(assertion.component)
+	
+func change_script_color(data: Dictionary) -> void:
+	# On a finished test, change its color
+	var script: ScriptTreeItem = scripts[data["path"]]
+	var success: bool = data["success"]
+	script.component.set_custom_color(0, PASSED if success else FAILED)
+	
+func change_method_color(data: Dictionary) -> void:
+	# On a finished method, change its color
+	var method: MethodTreeItem = scripts[data["path"]].methods[data["method"]]
+	var success: bool = data["success"]
+	method.component.set_custom_color(0, PASSED if success else FAILED)
+	current_method.component.collapsed = true
+#
+#func change_method_text() -> void:
+#	# When a method is described
+#
+#	pass
+#
+#func set_method_color(method) -> void:
+#	# When a method is finished
+#	pass
 
 class ScriptTreeItem:
 	var component: TreeItem
@@ -71,12 +104,30 @@ class MethodTreeItem:
 		_component.set_text(0, title)
 	
 class AssertionTreeItem:
-	# Assertions have to wait until results are finished
-	const x = 0
+	var component: TreeItem
+	var context: String = ""
+	var success: bool = false
+	
+	func _init(_component: TreeItem, data: Dictionary) -> void:
+		component = _component
+		context = data["context"]
+		success = data["success"]
+		if context != "":
+			component.set_text(0, context)
+			
 #	print("\n")
 #	print(result)
-#	print("\n")
-	
+##	print("\n")
+#if data["assertion"]["context"].empty():
+#		return
+#	var method: MethodTreeItem = scripts[data["path"]].methods[data["method"]]
+#	var assertion_item = create_item(method.component)
+#	assertion_item.set_text(0, data["assertion"]["context"])
+#	var passed = data["assertion"]["success"]
+#	var color = PASSED if passed else FAILED
+#	assertion_item.set_custom_color(0, color)
+#	scroll_to_item(assertion_item)
+#
 #class ScriptTreeItem:
 #	var instance: TreeItem
 #	var methods: Array = [] # TreeItems

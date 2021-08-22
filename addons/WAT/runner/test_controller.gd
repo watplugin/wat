@@ -29,11 +29,18 @@ func on_test_method(method) -> void:
 	var x = {"dir" : _dir, "path": _path, "method": method}
 	get_parent().emit_signal("method_started", x) # What about "described" methods?
 	_current_method = method
+
+func on_method_finished(method) -> void:
+	var count = method["total"]
+	var passed = method["passed"]
+	var success = count > 0 and count == passed
+	var x = {"dir": _dir, "path": _path, "method": _current_method, "success": success, "total": count, "passed": passed}
+	get_parent().emit_signal("method_finished", x)
 	
-#signal asserted
-#signal test_started
-#signal method_started
-#
+#func on_method_described(desc: String) -> void:
+#	var x = {"dir" : _dir, "path": _path, "method": _current_method, "description": desc}
+#	get_parent().emit_signal("method_described", x)
+
 func _on_assertion(assertion) -> void:
 	var x = {"dir" : _dir, "path": _path, "method": _current_method, "assertion": assertion}
 	get_parent().emit_signal("asserted", x)

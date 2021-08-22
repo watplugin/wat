@@ -268,15 +268,5 @@ text = "0"
 icon = ExtResource( 11 )
 flat = true
 
-[node name="CurrentAction" type="Label" parent="Core/Summary"]
-margin_left = 270.0
-margin_right = 1010.0
-margin_bottom = 22.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Idle"
-align = 2
-valign = 1
-
 [node name="Server" type="Node" parent="."]
 script = ExtResource( 19 )

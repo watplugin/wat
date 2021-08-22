@@ -10,7 +10,6 @@ onready var Tests: Button = $Tests
 onready var Passing: Button = $Passing
 onready var Failing: Button = $Failing
 onready var Runs: Button = $Runs
-onready var CurrentAction: Label = $CurrentAction
 
 func time() -> void:
 	runcount += 1
@@ -38,10 +37,6 @@ func summarize(caselist: Array) -> void:
 	Passing.text = passed as String
 	Failing.text = failed as String
 	Runs.text = runcount as String
-	show_current_action("Idle")
-	
-func show_current_action(action: String) -> void:
-	CurrentAction.text = action
 	
 func _setup_editor_assets(assets_registry):
 	Time.icon = assets_registry.load_asset(Time.icon)

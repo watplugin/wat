@@ -13,6 +13,7 @@ func _ready():
 	var x = create_item()
 	x.set_text(0, "Text")
 	x.set_icon(0, load("res://icon.svg"))
+	get_scroll()
 	
 func _process(delta) -> void:
 	pass

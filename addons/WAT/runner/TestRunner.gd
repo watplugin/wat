@@ -8,6 +8,7 @@ signal completed
 signal asserted
 signal test_started
 signal method_started
+signal method_finished
 
 func _ready() -> void:
 	name = "TestRunner"

@@ -36,6 +36,10 @@ func run():
 			cursor += 1
 		for hook in ["pre", "execute", "post"]:
 			yield(call_function(hook, cursor), COMPLETED)
+			# Post-yield so this should be correct
+			# What about repeated methods?
+			if hook == "execute":
+				get_parent().on_method_finished(_case._methods.back())
 	yield(call_function("end"), COMPLETED)
 	get_parent().get_results(get_results())
 	
@@ -107,6 +111,7 @@ func simulate(obj, times, delta):
 			simulate(kid, 1, delta)
 	
 func describe(message: String) -> void:
+	#get_parent().on_method_described(message)
 	emit_signal("described", message)
 	
 func title() -> String:

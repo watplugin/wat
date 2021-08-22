@@ -33,6 +33,8 @@ func _on_asserted(assertion: Dictionary) -> void:
 	assertion["method"] = _methods.back()["fullname"]
 	assertion["script"] = _path
 	_methods.back().assertions.append(assertion)
+	_methods.back()["total"] += 1
+	_methods.back()["passed"] += assertion["success"] as int # false = 0, true = 1
 	
 func calculate() -> void:
 	for method in _methods:
