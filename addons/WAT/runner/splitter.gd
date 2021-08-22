@@ -42,6 +42,6 @@ class TestThread extends Thread:
 class YieldTimeSorter:
 	
 	static func sort_ascending(a: Dictionary, b: Dictionary) -> bool:
-		return a["yield_time"] < b["yield_time"]
+		return a["time"] < b["time"]
 
 

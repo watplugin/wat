@@ -2,9 +2,9 @@ extends Node
 
 signal results_received
 func run(metadata: Dictionary) -> void:
-	var directory = metadata["directory"]
+	var directory = metadata["dir"]
 	var path = metadata["path"]
-	var methods = metadata["method_names"]
+	var methods = metadata["methods"]
 	var test: Node = load(path).new().setup(directory, path, methods)
 
 	# We need to wait for the object itself to emit the signal (since we..

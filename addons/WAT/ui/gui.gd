@@ -22,9 +22,22 @@ func _on_run_pressed(data = filesystem.root) -> void:
 	var tests: Array = data.get_tests()
 	Results.display(tests)
 	print("run pressed: ", data.path)
+	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
+	add_child(instance)
+	var results: Array = yield(instance.run(tests, 0, 1), "completed")
+	instance.queue_free()
+	print(results)
 	
 func _on_debug_pressed(data = filesystem.root) -> void:
 	print("debug pressed: ", data.path)
+	
+	
+#func _launch_runner(tests: Array, repeat: int, threads: int) -> Array:
+#	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
+#	add_child(instance)
+#	var results: Array = yield(instance.run(tests, repeat, threads), "completed")
+#	instance.queue_free()
+#	return results
 
 # Resources require tool to work inside the editor whereas..
 # ..scripts objects without tool can be called from tool based scripts
