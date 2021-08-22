@@ -1,6 +1,11 @@
-#tool
+tool
 extends PanelContainer
 
+var filesystem setget set_fs
+
+func set_fs(f):
+	filesystem = f
+	$Core/Menu/TestMenu.filesystem = f
 
 # Resources require tool to work inside the editor whereas..
 # ..scripts objects without tool can be called from tool based scripts

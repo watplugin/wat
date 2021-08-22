@@ -1,6 +1,10 @@
-#tool
+tool
 extends Button
 
+var filesystem
+
+func _pressed():
+	text = filesystem.changed as String
 #enum { RUN, DEBUG, NONE }
 #const Parcel = preload("res://addons/WAT/filesystem/test_parcel.gd")
 #var FOLDER = preload("res://addons/WAT/assets/folder.png")

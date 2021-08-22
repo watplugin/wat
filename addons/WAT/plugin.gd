@@ -4,22 +4,32 @@ extends EditorPlugin
 const Title: String = "Tests"
 const GUI: PackedScene = preload("res://addons/WAT/gui.tscn")
 const TestPanel: GDScript = preload("res://addons/WAT/ui/gui.gd")
+const FileSystem: GDScript = preload("res://addons/WAT/filesystem/filesystem.gd")
+const FileTracker: GDScript = preload("res://addons/WAT/filesystem/tracker.gd")
+const Settings: GDScript = preload("res://addons/WAT/settings.gd")
 var _test_panel: TestPanel
+var _file_system: FileSystem
+var _file_tracker: FileTracker
 
 func _enter_tree() -> void:
+	_file_system = FileSystem.new()
+	_file_tracker = FileTracker.new()
+	
+	_file_tracker.connect("filesystem_changed", _file_system, "set", ["changed", true])
+	_file_system.update()
+	_file_tracker.start_tracking_files(self)
+	
 	_test_panel = GUI.instance()
+	_test_panel.filesystem = _file_system
 	add_control_to_bottom_panel(_test_panel, Title)
 
 func _exit_tree() -> void:
 	remove_control_from_bottom_panel(_test_panel)
 	_test_panel.queue_free()
+	
 
-#const Title: String = "Tests"
-#const Settings: Script = preload("res://addons/WAT/settings.gd")
-#const GUI: PackedScene = preload("res://addons/WAT/gui.tscn")
 #const Docker: Script = preload("res://addons/WAT/ui/docker.gd")
 #const PluginAssetsRegistry: Script = preload("res://addons/WAT/ui/plugin_assets_registry.gd")
-#var instance
 #var docker: Docker
 #var assets_registry = PluginAssetsRegistry.new(self)
 #
@@ -29,10 +39,8 @@ func _exit_tree() -> void:
 #func setup():
 #	Settings.initialize()
 #	_initialize_metadata()
-#	instance = GUI.instance()
 #	instance.setup_editor_context(self)
 #	docker = Docker.new(self, instance)
-#	_track_files(instance.filesystem)
 #	add_child(docker)
 ##	get_editor_interface().play_custom_scene("res://addons/WAT/Empty.tscn")
 ##	while get_editor_interface().get_playing_scene() == "res://addons/WAT/Empty.tscn":

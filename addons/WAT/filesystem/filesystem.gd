@@ -1,8 +1,78 @@
 #tool
 extends Reference
-#
-#const Validator = preload("res://addons/WAT/filesystem/validator.gd")
-#const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
+
+const Validator: GDScript = preload("validator.gd")
+const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
+var root: TestDirectory
+var changed: bool = false
+
+func _init() -> void:
+	root = TestDirectory.new()
+	root.path = load("res://addons/WAT/settings.gd").test_directory()
+	
+func update(testdir: TestDirectory = root) -> void:
+	var dir: Directory = Directory.new()
+	var err: int = dir.open(root.path)
+	if err != OK:
+		push_warning("WAT: Could not update filesystem")
+		return
+	
+	var subdirs: Array = []
+	dir.list_dir_begin(DO_NOT_SEARCH_PARENT_DIRECTORIES)
+	var absolute: String = ""
+	var relative: String = dir.get_next()
+	while relative != "":
+		absolute = "%s/%s" % [testdir.path, relative]
+		
+		if dir.current_is_dir():
+			var sub_testdir: TestDirectory = TestDirectory.new()
+			sub_testdir.path = absolute
+			
+		elif Validator.is_valid_test(absolute):
+			var test_script: TestScript = TestScript.new()
+			test_script.path = absolute
+			
+		relative = dir.get_next()
+		
+	dir.list_dir_end()
+			
+	testdir.relative_subdirs += subdirs
+	testdir.nested_subdirs += subdirs
+	for subdir in subdirs:
+		update(subdir)
+		testdir.nested_subdirs += subdir.nested_subdirs
+	
+### BEGIN VALIDATOR CLASS ###
+
+### BEGIN FACTORY CLASS ###
+class TestDirectory:
+	var path: String
+	var relative_subdirs: Array
+	var nested_subdirs: Array
+	
+	func _init() -> void:
+		pass
+		
+class TestScript:
+	var path: String
+	var methods: Array # TestMethods
+	
+	func _init() -> void:
+		pass
+		
+class TestMethod:
+	var path: String
+	var method: String
+		
+class TestTag:
+	var tag: String
+	var tagged: Array
+	
+	func _init() -> void:
+		pass
+### END VALIDATOR CLASS ###
+
+
 #const Settings: Script = preload("res://addons/WAT/settings.gd")
 #const YieldCalculator: GDScript = preload("res://addons/WAT/filesystem/yield_calculator.gd")
 #const FileObjects: GDScript = preload("res://addons/WAT/filesystem/objects.gd")
