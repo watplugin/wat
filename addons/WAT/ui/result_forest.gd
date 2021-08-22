@@ -23,22 +23,32 @@ func display(tests: Array) -> void:
 			tabs[test.dir] = tab
 			add_child(tree)
 			idx += 1
+			set_tab_title(tab.idx, "%s ( 0 / %s )" % [tab.title, tab.count])
 		
-		var tab: Tab = tabs[test.dir]
-		tab.tree.add_test(test)
-		tab.count += 1
-		set_tab_title(tab.idx, "%s ( 0 / %s )" % [tab.title, tab.count])
+#		var tab: Tab = tabs[test.dir]
+#		tab.tree.add_test(test)
+#		tab.count += 1
+#		set_tab_title(tab.idx, "%s ( 0 / %s )" % [tab.title, tab.count])
 		
 	update()
 		
 func add_results(results: Array) -> void:
 	for result in results:
 		var tab: Tab = tabs[result["directory"]]
-		tab.tree.add_result(result)
+	#	tab.tree.add_result(result)
 		yield(get_tree(), "idle_frame") # Prevent a very bad freeze
 		
-func _on_assertion(assertion):
-	tabs[assertion["dir"]].tree.add_assertion(assertion)
+func _on_test_started(data: Dictionary) -> void:
+	print("started test ??????????")
+	tabs[data["dir"]].tree.add_test(data)
+	print("finished adding test")
+	
+func _on_method_started(data: Dictionary) -> void:
+	print("started method?!")
+	tabs[data["dir"]].tree.add_method(data)
+		
+func _on_assertion(data: Dictionary):
+	tabs[data["dir"]].tree.add_assertion(data)
 # Could just be the tree itself
 class Tab:
 	var tree: Tree

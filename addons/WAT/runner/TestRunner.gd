@@ -6,6 +6,8 @@ const Splitter: GDScript = preload("splitter.gd")
 const COMPLETED: String = "completed"
 signal completed
 signal asserted
+signal test_started
+signal method_started
 
 func _ready() -> void:
 	name = "TestRunner"
@@ -25,7 +27,6 @@ func run(tests, repeat, threads) -> Array:
 		results += yield(self, COMPLETED)
 	return results
 
-	
 func _run(thread: Thread) -> void:
 	var results: Array = []
 	for test in thread.tests:

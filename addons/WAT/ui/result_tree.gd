@@ -9,19 +9,27 @@ func _ready() -> void:
 	hide_root = true
 	root = create_item()
 	
-func add_test(test: Dictionary) -> void: # Script
-	var script: ScriptTreeItem = ScriptTreeItem.new(create_item(root), test)
-	scripts[script.path] = script
-	for title in script.method_names:
-		var method: MethodTreeItem = MethodTreeItem.new(create_item(script.component), title)
-		script.methods[method.path] = method
-		
-func add_result(result) -> void:
-	pass
-	
 const PASSED: Color = Color(0.34375, 1, 0.34375)
 const FAILED: Color = Color(1, 0.425781, 0.425781)
+
+func add_test(test) -> void:
+	print("adding test")
+	var script: ScriptTreeItem = ScriptTreeItem.new(create_item(root), test)
+	scripts[script.path] = script
+	# Scrolling to a Script Component hides the scroll bar so don't
+
+func add_method(data: Dictionary) -> void:
+	print("adding method")
+	var script: ScriptTreeItem = scripts[data["path"]]
+	var method = MethodTreeItem.new(create_item(script.component), data["method"])
+	script.methods[method.path] = method
+	scroll_to_item(method.component)
+
 func add_assertion(data: Dictionary) -> void:
+	# TODO: Still track assertion data, just don't give it a tree item
+	# (or give it data info)
+	if data["assertion"]["context"].empty():
+		return
 	var method: MethodTreeItem = scripts[data["path"]].methods[data["method"]]
 	var assertion_item = create_item(method.component)
 	assertion_item.set_text(0, data["assertion"]["context"])
