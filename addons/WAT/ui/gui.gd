@@ -37,6 +37,7 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	var tests: Array = data.get_tests()
 	Results.display(tests)
 	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
+	instance.connect("asserted", Results, "_on_assertion")
 	add_child(instance)
 	var results: Array = yield(instance.run(tests, 0, 1), "completed")
 	instance.queue_free()

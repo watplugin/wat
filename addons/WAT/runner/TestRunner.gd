@@ -5,6 +5,7 @@ const Settings: GDScript = preload("res://addons/WAT/settings.gd")
 const Splitter: GDScript = preload("splitter.gd")
 const COMPLETED: String = "completed"
 signal completed
+signal asserted
 
 func _ready() -> void:
 	name = "TestRunner"

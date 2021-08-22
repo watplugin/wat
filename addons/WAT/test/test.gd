@@ -46,6 +46,7 @@ func call_function(function, cursor = 0):
 
 func execute(cursor: int):
 	var _current_method: String = _methods[cursor]
+	get_parent().on_test_method(_current_method)
 	_case.add_method(_current_method)
 	return call(_current_method)
 
@@ -60,6 +61,7 @@ func _ready() -> void:
 	direct.registry = _registry
 	# May be better just as a property on asserts itself
 	asserts.connect("asserted", self, "_on_last_assertion")
+	asserts.connect("asserted", get_parent(), "_on_assertion")
 	add_child(direct)
 	add_child(_yielder)
 	connect("described", _case, "_on_test_method_described")

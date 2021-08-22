@@ -37,6 +37,8 @@ func add_results(results: Array) -> void:
 		tab.tree.add_result(result)
 		yield(get_tree(), "idle_frame") # Prevent a very bad freeze
 		
+func _on_assertion(assertion):
+	tabs[assertion["dir"]].tree.add_assertion(assertion)
 # Could just be the tree itself
 class Tab:
 	var tree: Tree

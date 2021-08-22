@@ -17,10 +17,24 @@ func add_test(test: Dictionary) -> void: # Script
 		script.methods[method.path] = method
 		
 func add_result(result) -> void:
-	print(result)
+	pass
 	
-func add_assertion(assertion) -> void:
-	#
+const PASSED: Color = Color(0.34375, 1, 0.34375)
+const FAILED: Color = Color(1, 0.425781, 0.425781)
+func add_assertion(data: Dictionary) -> void:
+	var method: MethodTreeItem = scripts[data["path"]].methods[data["method"]]
+	var assertion_item = create_item(method.component)
+	assertion_item.set_text(0, data["assertion"]["context"])
+	var passed = data["assertion"]["success"]
+	var color = PASSED if passed else FAILED
+	assertion_item.set_custom_color(0, color)
+	scroll_to_item(assertion_item)
+	# path
+	# method
+	# assertion
+	# context
+	# pass / fail
+	# bump method
 	pass
 
 class ScriptTreeItem:
