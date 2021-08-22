@@ -1,7 +1,6 @@
 tool
 extends Node
 
-
 const Settings: GDScript = preload("res://addons/WAT/settings.gd")
 const Splitter: GDScript = preload("splitter.gd")
 const COMPLETED: String = "completed"

@@ -22,7 +22,6 @@ func update(testdir: TestDirectory = root) -> void:
 	var relative: String = dir.get_next()
 	while relative != "":
 		absolute = "%s/%s" % [testdir.path, relative]
-		print(absolute)
 		if dir.current_is_dir():
 			var sub_testdir: TestDirectory = TestDirectory.new()
 			sub_testdir.path = absolute

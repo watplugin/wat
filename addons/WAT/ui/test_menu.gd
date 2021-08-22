@@ -42,6 +42,8 @@ func _add_menu(parent: PopupMenu, data: Object):
 		parent.add_child(child)
 		child.name = child.get_index() as String
 		parent.add_submenu_item(data.name, child.name, child.get_index())
+		parent.hide_on_item_selection = true
+		child.hide_on_item_selection = true
 		return child
 				
 func _add_run_callback(menu: PopupMenu, data: Object) -> void:

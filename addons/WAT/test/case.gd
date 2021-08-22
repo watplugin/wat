@@ -28,7 +28,10 @@ func add_method(name: String) -> void:
 func _on_test_method_described(description: String) -> void:
 	_methods.back().context = description
 	
+	# We pass this to the controller who passes it to the runner who passes 
 func _on_asserted(assertion: Dictionary) -> void:
+	assertion["method"] = _methods.back()["fullname"]
+	assertion["script"] = _path
 	_methods.back().assertions.append(assertion)
 	
 func calculate() -> void:

@@ -2,33 +2,57 @@ tool
 extends TabContainer
 
 const ResultTree: GDScript = preload("result_tree.gd")
-var dirs: Dictionary = {}
+var tabs: Dictionary = {} # of Tabs
 var idx: int = 0
 
 func clear() -> void:
+	tabs = {}
+	idx = 0
 	for child in get_children():
-		child.queue_free()
-	dirs.clear()
+		child.free()
 
 func display(tests: Array) -> void:
 	clear()
 	for test in tests:
 		
-		if not dirs.has(test["dir"]):
+		if not tabs.has(test["dir"]):
 			var tree: ResultTree = ResultTree.new()
 			var title: String = test.dir.substr(test.dir.find_last("/") + 1)
 			title = title.capitalize()
-			var tab: Dictionary = {"tree": tree, "title": title, "idx": idx, "count": 0}
-			dirs[test.dir] = tab
+			var tab: Tab = Tab.new(tree, title, idx, 0)
+			tabs[test.dir] = tab
 			add_child(tree)
 			idx += 1
 		
-			
-		var tab: Dictionary = dirs[test["dir"]]
-		tab["tree"].add_test(test)
-		tab["count"] += 1
-		set_tab_title(tab["idx"], "%s (0 / %s)" % [tab["title"], tab["count"]])
-			
+		var tab: Tab = tabs[test.dir]
+		tab.tree.add_test(test)
+		tab.count += 1
+		set_tab_title(tab.idx, "%s ( 0 / %s )" % [tab.title, tab.count])
+		
+	update()
+		
+func add_results(results: Array) -> void:
+	for result in results:
+		var tab: Tab = tabs[result["directory"]]
+		tab.tree.add_result(result)
+		yield(get_tree(), "idle_frame") # Prevent a very bad freeze
+		
+# Could just be the tree itself
+class Tab:
+	var tree: Tree
+	var title: String
+	var idx: int
+	var count: int = 0
+	
+	func _init(_tree: Tree, _title: String, _idx: int, _count: int) -> void:
+		tree = _tree
+		title = _title
+		idx = _idx
+		count = _count
+
+#
+
+
 # 1. Sort Tests Into Directories
 # 2. 
 	
@@ -36,52 +60,19 @@ func display(tests: Array) -> void:
 #var FAILED_ICON: Texture
 #const ResultTree = preload("res://addons/WAT/ui/result_tree.gd")
 #var _results: Array
-#var _tabs = {}
 #signal function_selected
 #
 ## Stores asset_registry so that result_tree can be configured with scaled icons
 #var _assets_registry
+
 #
-#func display(results: Array) -> void:
-#	clear()
-#	_results = results
-#	_add_result_tree(results)
-#
-#func _add_result_tree(results: Array) -> void:
-#	_tabs = {}
-#	var tab_count: int = 0
-#	var sorted = sort(results)
-#	for path in sorted:
-#		var result_tree = ResultTree.new(self)
 #		result_tree._setup_editor_assets(_assets_registry)
 #		result_tree.connect("button_pressed", self, "_on_function_selected")
-#		result_tree.name = path
-#		add_child(result_tree)
-#		set_tab_title(tab_count, path)
-#		_tabs[result_tree] = tab_count
-#		result_tree.display(sorted[path])
-#		tab_count += 1
 #
 #func _on_function_selected(item, column, id) -> void:
 #	emit_signal("function_selected", item.get_meta("path"), item.get_meta("fullname"))
 #
-#func sort(results: Array) -> Dictionary:
-#	var sorted: Dictionary = {}
-#	for result in results:
-#		# Note to self: If we're already sorting by directory, maybe we should..
-#		# ..do it earlier in the first place?
-#		if sorted.has(result.directory):
-#			sorted[result.directory].append(result)
-#		else:
-#			sorted[result.directory] = [result]
-#	return sorted
-#
-#func clear() -> void:
-#	var children: Array = get_children()
-#	while not children.empty():
-#		var child: Tree = children.pop_back()
-#		child.free()
-#
+
 #enum { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
 #func _on_view_pressed(option: int) -> void:
 #	match option:

@@ -1,36 +1,57 @@
 tool
 extends PanelContainer
 
-var filesystem setget set_fs
 
-onready var Results = $Core/Results
+onready var TestMenu: Button = $Core/Menu/TestMenu
+onready var Results: TabContainer = $Core/Results
+onready var Summary: HBoxContainer = $Core/Summary
 
-func set_fs(f):
-	filesystem = f
-	$Core/Menu/TestMenu.filesystem = f
-	$Core/Menu/TestMenu.update_menus()
-	
+var _filesystem
+var _plugin = null
+
 func _ready() -> void:
 	if not Engine.is_editor_hint():
-		var fs = load("res://addons/WAT/filesystem/filesystem.gd").new()
-		fs.update()
-		self.filesystem = fs
-	$Core/Menu/TestMenu.connect("run_pressed", self, "_on_run_pressed")
-	$Core/Menu/TestMenu.connect("debug_pressed", self, "_on_debug_pressed")
+		_setup_scene_context()
+	TestMenu.connect("run_pressed", self, "_on_run_pressed", [], CONNECT_DEFERRED)
+	TestMenu.connect("debug_pressed", self, "_on_debug_pressed", [], CONNECT_DEFERRED)
 	
-func _on_run_pressed(data = filesystem.root) -> void:
+func _setup_scene_context() -> void:
+	_filesystem = load("res://addons/WAT/filesystem/filesystem.gd").new()
+	TestMenu.filesystem = _filesystem
+	_filesystem.update()
+	TestMenu.update_menus()
+	
+func setup_editor_context(plugin, filesystem: Reference) -> void:
+	yield(self, "ready")
+	_plugin = plugin
+	_filesystem = filesystem
+	TestMenu.filesystem = _filesystem
+	_filesystem.update()
+	TestMenu.update_menus()
+	
+func _on_run_pressed(data = _filesystem.root) -> void:
+	Summary.set_process(true)
+	Summary.time()
+	yield(get_tree(), "idle_frame")
+	Summary.show_current_action("Running %s" % data.path)
 	var tests: Array = data.get_tests()
 	Results.display(tests)
-	print("run pressed: ", data.path)
 	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
 	add_child(instance)
 	var results: Array = yield(instance.run(tests, 0, 1), "completed")
 	instance.queue_free()
-	print(results)
+	Results.add_results(results)
+	# add a yield here to check results finished
+	Summary.summarize(results)
 	
-func _on_debug_pressed(data = filesystem.root) -> void:
+func _on_debug_pressed(data = _filesystem.root) -> void:
 	print("debug pressed: ", data.path)
 	
+	
+# LiveWire Calls
+# We want the WAT experience to smooth and have tests change as they're updated
+# _on_test_method()
+# _on_assertion()
 	
 #func _launch_runner(tests: Array, repeat: int, threads: int) -> Array:
 #	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()

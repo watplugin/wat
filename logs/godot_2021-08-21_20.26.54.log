@@ -1,7 +1,0 @@
-Godot Engine v3.3.2.stable.mono.official - https://godotengine.org
-OpenGL ES 3.0 Renderer: NVIDIA GeForce GTX 1060 6GB/PCIe/SSE2
-OpenGL ES Batching: ON
- 
-Mono: Log file is: 'C:\Users\Alex\AppData\Roaming/Godot/mono/mono_logs/2021-08-21_20.21.08_16128.log'
-**ERROR**: Cannot instance script because the project assembly is not loaded. Script: 'res://addons/WAT/Empty.cs'.
-   At: modules/mono/csharp_script.cpp:2902:can_instance() - Method failed. Returning: __null

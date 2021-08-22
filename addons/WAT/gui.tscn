@@ -201,9 +201,9 @@ __meta__ = {
 
 [node name="Summary" type="HBoxContainer" parent="Core"]
 margin_top = 564.0
-margin_right = 266.0
+margin_right = 1010.0
 margin_bottom = 586.0
-size_flags_horizontal = 2
+size_flags_horizontal = 3
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -267,6 +267,16 @@ enabled_focus_mode = 0
 text = "0"
 icon = ExtResource( 11 )
 flat = true
+
+[node name="CurrentAction" type="Label" parent="Core/Summary"]
+margin_left = 270.0
+margin_right = 1010.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Idle"
+align = 2
+valign = 1
 
 [node name="Server" type="Node" parent="."]
 script = ExtResource( 19 )

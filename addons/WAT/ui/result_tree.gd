@@ -9,19 +9,58 @@ func _ready() -> void:
 	hide_root = true
 	root = create_item()
 	
-func add_test(test: Dictionary) -> void:
-	var script = create_item(root)
-	script.set_text(0, test["name"])
-	var cache: Dictionary = {"item": script, "methods": []}
-	scripts[test["path"]] = cache
-	for m in test["methods"]:
-		var method = create_item(script)
-		cache["methods"].append(method)
-		var t = m.replace("test_", "").replace("_", " ")
-		method.set_text(0, t)
+func add_test(test: Dictionary) -> void: # Script
+	var script: ScriptTreeItem = ScriptTreeItem.new(create_item(root), test)
+	scripts[script.path] = script
+	for title in script.method_names:
+		var method: MethodTreeItem = MethodTreeItem.new(create_item(script.component), title)
+		script.methods[method.path] = method
 		
-func add_result() -> void:
+func add_result(result) -> void:
+	print(result)
+	
+func add_assertion(assertion) -> void:
+	#
 	pass
+
+class ScriptTreeItem:
+	var component: TreeItem
+	var path: String
+	var title: String
+	var methods: Dictionary = {}
+	var method_names: PoolStringArray
+	
+	func _init(_component: TreeItem, data: Dictionary) -> void:
+		component = _component
+		title = data["name"]
+		path = data["path"]
+		method_names = data["methods"]
+		_component.set_text(0, title)
+	
+class MethodTreeItem:
+	var component: TreeItem
+	var path: String
+	var title: String
+	
+	func _init(_component: TreeItem, _title: String) -> void:
+		component = _component
+		path = _title
+		title = _title.replace("test_", "").replace("_", " ")
+		_component.set_text(0, title)
+	
+class AssertionTreeItem:
+	# Assertions have to wait until results are finished
+	const x = 0
+#	print("\n")
+#	print(result)
+#	print("\n")
+	
+#class ScriptTreeItem:
+#	var instance: TreeItem
+#	var methods: Array = [] # TreeItems
+#
+#	func _init():
+#		pass
 
 #var FUNCTION
 #var PASSED_ICON

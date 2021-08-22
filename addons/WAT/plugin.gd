@@ -14,13 +14,10 @@ var _file_tracker: FileTracker
 func _enter_tree() -> void:
 	_file_system = FileSystem.new()
 	_file_tracker = FileTracker.new()
-	
 	_file_tracker.connect("filesystem_changed", _file_system, "set", ["changed", true])
-	_file_system.update()
 	_file_tracker.start_tracking_files(self)
-	
 	_test_panel = GUI.instance()
-	_test_panel.filesystem = _file_system
+	_test_panel.setup_editor_context(self, _file_system)
 	add_control_to_bottom_panel(_test_panel, Title)
 
 func _exit_tree() -> void:
