@@ -1,4 +1,3 @@
-#tool
 extends Reference
 
 const Validator: GDScript = preload("validator.gd")
@@ -12,7 +11,7 @@ func _init() -> void:
 	
 func update(testdir: TestDirectory = root) -> void:
 	var dir: Directory = Directory.new()
-	var err: int = dir.open(root.path)
+	var err: int = dir.open(testdir.path)
 	if err != OK:
 		push_warning("WAT: Could not update filesystem")
 		return
@@ -27,10 +26,11 @@ func update(testdir: TestDirectory = root) -> void:
 		if dir.current_is_dir():
 			var sub_testdir: TestDirectory = TestDirectory.new()
 			sub_testdir.path = absolute
+			subdirs.append(sub_testdir)
 			
-		elif Validator.is_valid_test(absolute):
-			var test_script: TestScript = TestScript.new()
-			test_script.path = absolute
+		elif dir.file_exists(absolute) and Validator.is_valid_test(absolute):
+			var test_script: TestScript = _get_test_script(absolute)
+			testdir.tests.append(test_script)
 			
 		relative = dir.get_next()
 		
@@ -41,36 +41,64 @@ func update(testdir: TestDirectory = root) -> void:
 	for subdir in subdirs:
 		update(subdir)
 		testdir.nested_subdirs += subdir.nested_subdirs
+		
+func _get_test_script(p: String) -> TestScript:
+	var test_script: TestScript = TestScript.new()
+	test_script.path = p
+	test_script.names = load(p).new().get_test_methods()
+	for m in test_script.names:
+		var test_method: TestMethod = TestMethod.new()
+		test_method.path = p
+		test_method.name = m
+		test_script.methods.append(test_method)
+	return test_script
 	
-### BEGIN VALIDATOR CLASS ###
-
-### BEGIN FACTORY CLASS ###
+# Include sanitized dir names here?
 class TestDirectory:
 	var path: String
 	var relative_subdirs: Array
 	var nested_subdirs: Array
+	var tests: Array
 	
-	func _init() -> void:
-		pass
+	func get_tests() -> Array:
+		var requested: Array = []
+		for script in tests:
+			requested += script.get_tests()
+		return requested
 		
 class TestScript:
+	var name: String setget ,_get_sanitized_name
 	var path: String
 	var methods: Array # TestMethods
+	var names: Array # MethodNames
+	var time: float = 0.0 # YieldTime
 	
-	func _init() -> void:
-		pass
+	func _get_sanitized_name() -> String:
+		var n: String = path.substr(path.find_last("/") + 1)
+		n = n.replace(".gd", "").replace(".gdc", "").replace(".cs", "")
+		n = n.replace(".test", "").replace("test", "").replace("_", " ")
+		return n
+	
+	func get_tests() -> Array:
+		return [{"path": path, "methods": names, "time": time}]
 		
 class TestMethod:
 	var path: String
-	var method: String
+	var name: String setget ,_get_sanitized_name
+	
+	func get_tests() -> Array:
+		return [{"path": path, "methods": [name], "time": 0.0}]
+		
+	func _get_sanitized_name() -> String:
+		var n: String = name.replace("test_", "").replace("_", " ")
+		return n
 		
 class TestTag:
 	var tag: String
 	var tagged: Array
 	
-	func _init() -> void:
-		pass
-### END VALIDATOR CLASS ###
+	func get_tests() -> Dictionary:
+		return {}
 
 
 #const Settings: Script = preload("res://addons/WAT/settings.gd")

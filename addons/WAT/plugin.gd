@@ -24,6 +24,7 @@ func _enter_tree() -> void:
 	add_control_to_bottom_panel(_test_panel, Title)
 
 func _exit_tree() -> void:
+	_file_tracker.disconnect("filesystem_changed", _file_system, "set")
 	remove_control_from_bottom_panel(_test_panel)
 	_test_panel.queue_free()
 	

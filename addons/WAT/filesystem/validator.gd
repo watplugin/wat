@@ -12,4 +12,4 @@ static func _is_valid_compiled_gdscript(p: String) -> bool:
 static func _is_valid_csharp(p: String) -> bool:
 	# TODO: This requires extra checking for invalid or uncompiled csharp scripts
 	# Any errors about no method or new function new found exists here
-	return p.ends_with(".cs") and p != "res://addons/WAT/mono/Test.cs" and load(p).get("IS_WAT_TEST")
+	return p.ends_with(".cs") and p != "res://addons/WAT/mono/Test.cs" and load(p).new().get("IS_WAT_TEST")

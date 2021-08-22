@@ -1,10 +1,57 @@
 tool
 extends Button
 
+var _menu: PopupMenu
 var filesystem
 
+func _init() -> void:
+	_menu = PopupMenu.new()
+	add_child(_menu)
+
 func _pressed():
-	text = filesystem.changed as String
+	if filesystem.changed:
+		update_menus()
+	var position: Vector2 = rect_global_position
+	position.y += rect_size.y
+	_menu.rect_global_position = position
+	_menu.rect_size = Vector2(rect_size.x, 0)
+	_menu.grab_focus()
+	_menu.popup()
+	
+func update_menus() -> void:
+	text = "Updating"
+	
+	for dir in [filesystem.root] + filesystem.root.nested_subdirs:
+		var dir_menu: PopupMenu = PopupMenu.new()
+		_menu.add_child(dir_menu)
+		dir_menu.name = dir_menu.get_index() as String
+		_menu.add_submenu_item(dir.path, dir_menu.name, dir_menu.get_index())
+		
+		for script in dir.tests:
+			var script_menu: PopupMenu = PopupMenu.new()
+			dir_menu.add_child(script_menu)
+			script_menu.name = script_menu.get_index() as String
+			dir_menu.add_submenu_item(script.name, script_menu.name, script_menu.get_index())
+		
+			for method in script.methods:
+				var method_menu: PopupMenu = PopupMenu.new()
+				script_menu.add_child(method_menu)
+				method_menu.name = method_menu.get_index() as String
+				script_menu.add_item(method.name, method_menu.get_index())
+		
+		
+#class Menu extends PopupMenu:
+#	var title: String
+#	var id setget ,get_index
+#	icon
+	
+	
+	# Add Directories
+	# Add Scripts
+	# Add Methods
+	
+	
+	#text = filesystem.changed as String
 #enum { RUN, DEBUG, NONE }
 #const Parcel = preload("res://addons/WAT/filesystem/test_parcel.gd")
 #var FOLDER = preload("res://addons/WAT/assets/folder.png")
