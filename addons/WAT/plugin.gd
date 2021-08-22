@@ -1,6 +1,18 @@
-#tool
+tool
 extends EditorPlugin
 
+const Title: String = "Tests"
+const GUI: PackedScene = preload("res://addons/WAT/gui.tscn")
+const TestPanel: GDScript = preload("res://addons/WAT/ui/gui.gd")
+var _test_panel: TestPanel
+
+func _enter_tree() -> void:
+	_test_panel = GUI.instance()
+	add_control_to_bottom_panel(_test_panel, Title)
+
+func _exit_tree() -> void:
+	remove_control_from_bottom_panel(_test_panel)
+	_test_panel.queue_free()
 
 #const Title: String = "Tests"
 #const Settings: Script = preload("res://addons/WAT/settings.gd")
