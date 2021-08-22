@@ -10,17 +10,6 @@ public class ASMBut : Button
 	// private string b = "text";
 
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		Connect("pressed", this, nameof(OnPressed));
-	}
-	
-	public void OnPressed()
-	{
-		Assembly assembly = new MeshInstance().invoke
-		CSharpScript script = new CSharpScript();
-		var x = script.DynamicObject;
-		GD.Print("Hello, World");
-	}
+
 
 }

@@ -22,7 +22,7 @@ func update(testdir: TestDirectory = root) -> void:
 	var relative: String = dir.get_next()
 	while relative != "":
 		absolute = "%s/%s" % [testdir.path, relative]
-		
+		print(absolute)
 		if dir.current_is_dir():
 			var sub_testdir: TestDirectory = TestDirectory.new()
 			sub_testdir.path = absolute
@@ -84,18 +84,20 @@ class TestScript:
 		var n: String = path.substr(path.find_last("/") + 1)
 		n = n.replace(".gd", "").replace(".gdc", "").replace(".cs", "")
 		n = n.replace(".test", "").replace("test", "").replace("_", " ")
+		n[0] = n[0].to_upper()
 		return n
 	
 	func get_tests() -> Array:
-		return [{"dir": dir, "path": path, "methods": names, "time": time}]
+		return [{"dir": dir, "name": self.name, "path": path, "methods": names, "time": time}]
 		
 class TestMethod:
 	var path: String
 	var dir: String
 	var name: String setget ,_get_sanitized_name
 	
+	# Method Name != test name
 	func get_tests() -> Array:
-		return [{"dir": dir ,"path": path, "methods": [name], "time": 0.0}]
+		return [{"dir": dir, "name": name, "path": path, "methods": [name], "time": 0.0}]
 		
 	func _get_sanitized_name() -> String:
 		var n: String = name.replace("test_", "").replace("_", " ")

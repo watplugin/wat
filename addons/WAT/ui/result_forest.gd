@@ -1,7 +1,37 @@
 tool
 extends TabContainer
 
-#
+const ResultTree: GDScript = preload("result_tree.gd")
+var dirs: Dictionary = {}
+var idx: int = 0
+
+func clear() -> void:
+	for child in get_children():
+		child.queue_free()
+	dirs.clear()
+
+func display(tests: Array) -> void:
+	clear()
+	for test in tests:
+		
+		if not dirs.has(test["dir"]):
+			var tree: ResultTree = ResultTree.new()
+			var title: String = test.dir.substr(test.dir.find_last("/") + 1)
+			title = title.capitalize()
+			var tab: Dictionary = {"tree": tree, "title": title, "idx": idx, "count": 0}
+			dirs[test.dir] = tab
+			add_child(tree)
+			idx += 1
+		
+			
+		var tab: Dictionary = dirs[test["dir"]]
+		tab["tree"].add_test(test)
+		tab["count"] += 1
+		set_tab_title(tab["idx"], "%s (0 / %s)" % [tab["title"], tab["count"]])
+			
+# 1. Sort Tests Into Directories
+# 2. 
+	
 #var PASSED_ICON: Texture
 #var FAILED_ICON: Texture
 #const ResultTree = preload("res://addons/WAT/ui/result_tree.gd")

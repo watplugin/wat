@@ -11,6 +11,10 @@ func set_fs(f):
 	$Core/Menu/TestMenu.update_menus()
 	
 func _ready() -> void:
+	if not Engine.is_editor_hint():
+		var fs = load("res://addons/WAT/filesystem/filesystem.gd").new()
+		fs.update()
+		self.filesystem = fs
 	$Core/Menu/TestMenu.connect("run_pressed", self, "_on_run_pressed")
 	$Core/Menu/TestMenu.connect("debug_pressed", self, "_on_debug_pressed")
 	
