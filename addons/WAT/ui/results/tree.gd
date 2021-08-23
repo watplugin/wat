@@ -44,13 +44,11 @@ func add_result(result) -> void:
 # TODO: All of these dict values should be serialized and unserialized at server points
 # ..or sent directly if run in the editor but point is objects > dicts
 func add_test(test) -> void:
-	print("adding test")
 	var script: ScriptTreeItem = ScriptTreeItem.new(create_item(root), test)
 	scripts[script.path] = script
 	# Scrolling to a Script Component hides the scroll bar so don't
 
 func add_method(data: Dictionary) -> void:
-	print("adding method")
 	var script: ScriptTreeItem = scripts[data["path"]]
 	var method = MethodTreeItem.new(create_item(script.component), data["method"])
 	script.methods[method.path] = method
@@ -58,18 +56,30 @@ func add_method(data: Dictionary) -> void:
 	current_method = method
 
 func add_assertion(data: Dictionary) -> void:
-	# TODO: Still track assertion data, just don't give it a tree item
-	# (or give it data info)
 	var method: MethodTreeItem = scripts[data["path"]].methods[data["method"]]
-	var assertion: AssertionTreeItem = AssertionTreeItem.new(create_item(method.component), data["assertion"])
-	assertion.component.set_custom_color(0, PASSED if assertion.success else FAILED)
-	scroll_to_item(assertion.component)
+	if data["assertion"]["context"] == "":
+		method.component.collapsed = true
+		var expected: TreeItem = create_item(method.component)
+		var actual: TreeItem = create_item(method.component)
+		expected.set_text(0, "EXPECTED: %s" % data["assertion"]["expected"])
+		actual.set_text(0, "RESULTED: %s" % data["assertion"]["actual"])
+	else:
+		var assertion: AssertionTreeItem = AssertionTreeItem.new(create_item(method.component), data["assertion"])
+		assertion.component.collapsed = true
+		var expected: TreeItem = create_item(assertion.component)
+		var actual: TreeItem = create_item(assertion.component)
+		expected.set_text(0, "EXPECTED: %s" % data["assertion"]["expected"])
+		actual.set_text(0, "RESULTED: %s" % data["assertion"]["actual"])
+		assertion.component.set_custom_color(0, PASSED if assertion.success else FAILED)
+		scroll_to_item(assertion.component)
+	
+func on_test_method_described(data: Dictionary) -> void:
+	scripts[data["path"]].methods[data["method"]].component.set_text(0, data["description"])
 	
 func on_test_script_finished(data: Dictionary) -> void:
 	# On a finished test, change its color
 	var script: ScriptTreeItem = scripts[data["path"]]
 	var success: bool = data["success"]
-	print(success)
 	script.component.set_custom_color(0, PASSED if success else FAILED)
 	
 func change_method_color(data: Dictionary) -> void:
@@ -91,9 +101,6 @@ func change_method_color(data: Dictionary) -> void:
 
 
 			
-#	print("\n")
-#	print(result)
-##	print("\n")
 #if data["assertion"]["context"].empty():
 #		return
 #	var method: MethodTreeItem = scripts[data["path"]].methods[data["method"]]

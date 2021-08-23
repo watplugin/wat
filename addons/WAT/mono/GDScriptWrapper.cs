@@ -16,9 +16,17 @@ namespace WAT
 		[Signal] public delegate void test_method_started();
 		[Signal] public delegate void asserted();
 		[Signal] public delegate void test_method_finished();
-		[Signal] public delegate void results_received();
+		[Signal] public delegate void test_script_finished();
 		
 		private const bool IS_WAT_TEST = true;
+		
+		private void OnAssertion(Godot.Collections.Dictionary assertion)
+		{
+			EmitSignal(nameof(asserted), assertion);
+		}
+		
+		public String title() { return Title(); }
+		
 		public Array get_test_methods()
 		{
 			return new Array

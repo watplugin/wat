@@ -26,6 +26,7 @@ var _methods = []
 signal test_method_started
 signal asserted
 signal test_method_finished
+signal test_script_finished
 signal results_received
 		
 func setup(directory = "", filepath = "", methods = []):
@@ -44,9 +45,9 @@ func run():
 			# Post-yield so this should be correct
 			# What about repeated methods?
 			if hook == "execute":
-				emit_signal("test_method_finished", _case._methods.back())
+				emit_signal("test_method_finished")
 	yield(call_function("end"), COMPLETED)
-	get_parent().get_results(get_results())
+	emit_signal("test_script_finished", get_results())
 	
 func call_function(function, cursor = 0):
 	var s = call(function) if function != "execute" else execute(cursor)

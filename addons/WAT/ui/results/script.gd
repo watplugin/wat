@@ -8,7 +8,7 @@ var method_names: PoolStringArray
 
 func _init(_component: TreeItem, data: Dictionary) -> void:
 	component = _component
-	title = data["name"]
+	title = data["name"] if data["title"] == "" else data["title"]
 	path = data["path"]
 	method_names = data["methods"]
 	_component.set_text(0, title)

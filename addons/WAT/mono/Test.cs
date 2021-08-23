@@ -16,7 +16,7 @@ namespace WAT
 	public partial class Test : Node
 	{
 		[Signal] private delegate void EventRaised();
-		[Signal] public delegate void Described();
+		[Signal] public delegate void described();
 		private const int Recorder = 0; // Apparently we require the C# Version
 		private IEnumerable<Executable> _methods = null;
 		private Object _case = null;
@@ -36,7 +36,8 @@ namespace WAT
 		{
 			Direct.Set("registry", _registry);
 			Assert.Connect(nameof(Assertions.asserted), _case, "_on_asserted");
-			Connect(nameof(Described), _case, "_on_test_method_described");
+			Assert.Connect(nameof(Assertions.asserted), this, nameof(OnAssertion));
+			Connect(nameof(described), _case, "_on_test_method_described");
 			AddChild(Direct);
 			AddChild(Yielder);
 			CallDeferred(nameof(Run));
@@ -53,13 +54,15 @@ namespace WAT
 			foreach (Executable test in _methods)
 			{
 				_case.Call("add_method", test.Method.Name);
+				EmitSignal(nameof(test_method_started), test.Method.Name);
 				await CallTestHook(pre);
 				await Execute(test);
+				EmitSignal(nameof(test_method_finished));
 				await CallTestHook(post);
 			}
 
 			await CallTestHook(end);
-			GetParent().Call("get_results", GetResults());
+			EmitSignal(nameof(test_script_finished), GetResults());
 		}
 		
 		private string Title()
@@ -86,7 +89,7 @@ namespace WAT
 			else { await Task.Run((() => { })); }
 		}
 		
-		protected void Describe(string description) { EmitSignal(nameof(Described), description);}
+		protected void Describe(string description) { EmitSignal(nameof(described), description);}
 
 		protected SignalAwaiter UntilTimeout(double time) { return ToSignal((Timer) Yielder.Call("until_timeout", time), "finished"); }
 
