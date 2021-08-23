@@ -6,18 +6,25 @@ onready var DebugAll: Button = $Core/Menu/DebugAll
 onready var TestMenu: Button = $Core/Menu/TestMenu
 onready var Results: TabContainer = $Core/Results
 onready var Summary: HBoxContainer = $Core/Summary
+onready var Threads: SpinBox = $Core/Menu/RunSettings/Threads
+onready var Repeats: SpinBox = $Core/Menu/RunSettings/Repeats
 
 var _icons: Reference 
 var _filesystem
 var _plugin = null
 
+#	TestMenu.filesystem = filesystem
+#	Threads.max_value = OS.get_processor_count() - 1
+#	Threads.min_value = 1
+
 func _ready() -> void:
 	_icons = preload("res://addons/WAT/ui/scaling/icons.gd").new()
 	TestMenu.icons = _icons
 	Results.icons = _icons 
+
 	if not Engine.is_editor_hint():
 		_setup_scene_context()
-		
+	Threads.max_value = OS.get_processor_count() - 1
 	RunAll.connect("pressed", self, "_on_run_pressed", [], CONNECT_DEFERRED)
 	DebugAll.connect("pressed", self, "_on_debug_pressed", [], CONNECT_DEFERRED)
 	TestMenu.connect("run_pressed", self, "_on_run_pressed", [], CONNECT_DEFERRED)
@@ -45,11 +52,11 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	Summary.time()
 	yield(get_tree(), "idle_frame")
 	var tests: Array = data.get_tests()
-	Results.display(tests)
+	Results.display(tests) # Too early?
 	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
 	add_child(instance)
 	print(tests)
-	var results: Array = yield(instance.run(tests, 0, 1, Results), "completed")
+	var results: Array = yield(instance.run(tests, Repeats.value, Threads.value, Results), "completed")
 	instance.queue_free()
 	Results.add_results(results)
 	# add a yield here to check results finished
