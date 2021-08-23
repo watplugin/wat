@@ -15,6 +15,7 @@ func _init(icons: Reference) -> void:
 	_icons = icons
 
 func _ready() -> void:
+	visible = false
 	hide_root = true
 	root = create_item()
 	add_constant_override("Scroll Speed", 24)

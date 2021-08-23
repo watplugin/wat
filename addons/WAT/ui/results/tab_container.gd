@@ -21,11 +21,8 @@ func display(tests: Array) -> void:
 			var tree: ResultTree = ResultTree.new(icons)
 			var title: String = test.dir.substr(test.dir.find_last("/") + 1)
 			title = title.capitalize()
-			var tab: Tab = Tab.new(tree, title, idx, 0)
+			var tab: Tab = Tab.new(tree, title)
 			tabs[test.dir] = tab
-			add_child(tree)
-			idx += 1
-			set_tab_title(tab.idx, "%s ( 0 / %s )" % [tab.title, tab.count])
 	update()
 		
 func add_results(results: Array) -> void:
@@ -35,7 +32,17 @@ func add_results(results: Array) -> void:
 		yield(get_tree(), "idle_frame") # Prevent a very bad freeze
 		
 func on_test_script_started(data: Dictionary) -> void:
-	tabs[data["dir"]].tree.add_test(data)
+	var tab: Tab = tabs[data["dir"]]
+	if not tab.tree.is_inside_tree():
+		tab.idx = idx
+		add_child(tab.tree, true)
+		set_tab_title(tab.idx, "%s ( 0 / %s )" % [tab.title, tab.count])
+		idx += 1
+	else:
+		tab.count += 1
+		set_tab_title(tab.idx, "%s ( 0 / %s )" % [tab.title, tab.count])
+	current_tab = tab.idx
+	tab.tree.add_test(data)
 	
 func on_test_method_started(data: Dictionary) -> void:
 	tabs[data["dir"]].tree.add_method(data)
