@@ -38,7 +38,6 @@ func build():
 		return
 	
 func update_menus() -> void:
-	text = "Updating"
 	
 	_menu.queue_free()
 	_menu = PopupMenu.new()
