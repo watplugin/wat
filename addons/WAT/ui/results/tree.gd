@@ -9,6 +9,10 @@ var tests = []
 var root: TreeItem
 var scripts: Dictionary = {}
 var current_method: MethodTreeItem
+var _icons: Reference
+
+func _init(icons: Reference) -> void:
+	_icons = icons
 
 func _ready() -> void:
 	hide_root = true

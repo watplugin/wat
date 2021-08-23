@@ -6,28 +6,33 @@ onready var TestMenu: Button = $Core/Menu/TestMenu
 onready var Results: TabContainer = $Core/Results
 onready var Summary: HBoxContainer = $Core/Summary
 
+var _icons: Reference 
 var _filesystem
 var _plugin = null
 
 func _ready() -> void:
+	_icons = preload("res://addons/WAT/ui/scaling/icons.gd").new()
 	if not Engine.is_editor_hint():
 		_setup_scene_context()
+	TestMenu.icons = _icons
+	Results.icons = _icons 
+	TestMenu.filesystem = _filesystem
+	_filesystem.update()
+	TestMenu.update_menus()
 	TestMenu.connect("run_pressed", self, "_on_run_pressed", [], CONNECT_DEFERRED)
 	TestMenu.connect("debug_pressed", self, "_on_debug_pressed", [], CONNECT_DEFERRED)
 	
 func _setup_scene_context() -> void:
+	load("res://addons/WAT/ui/scaling/scene_tree_adjuster.gd").adjust(self, _icons)
 	_filesystem = load("res://addons/WAT/filesystem/filesystem.gd").new()
 	TestMenu.filesystem = _filesystem
-	_filesystem.update()
-	TestMenu.update_menus()
 	
 func setup_editor_context(plugin, filesystem: Reference) -> void:
 	yield(self, "ready")
+	load("res://addons/WAT/ui/scaling/scene_tree_adjuster.gd").adjust(self, _icons, plugin)
 	_plugin = plugin
 	_filesystem = filesystem
-	TestMenu.filesystem = _filesystem
-	_filesystem.update()
-	TestMenu.update_menus()
+	
 	
 func _on_run_pressed(data = _filesystem.root) -> void:
 	Summary.time()

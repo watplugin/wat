@@ -4,8 +4,10 @@ extends Button
 enum { RUN, DEBUG }
 var _menu: PopupMenu
 var filesystem
+var icons
 signal run_pressed
 signal debug_pressed
+
 
 
 func _init() -> void:
@@ -26,22 +28,23 @@ func update_menus() -> void:
 	text = "Updating"
 	
 	for dir in [filesystem.root] + filesystem.root.nested_subdirs:
-		var dir_menu = _add_menu(_menu, dir)
+		var dir_menu = _add_menu(_menu, dir, icons.folder, -1)
 		_add_run_callback(dir_menu, dir)
 		
 		for script in dir.tests:
-			var script_menu = _add_menu(dir_menu, script)
+			var script_menu = _add_menu(dir_menu, script, icons.scriptx)
 			_add_run_callback(script_menu, script)
 		
 			for method in script.methods:
-				var method_menu = _add_menu(script_menu, method)
+				var method_menu = _add_menu(script_menu, method, icons.function)
 				_add_run_callback(method_menu, method)
 				
-func _add_menu(parent: PopupMenu, data: Object):
+func _add_menu(parent: PopupMenu, data: Object, icon, offset: int = 1):
 		var child: PopupMenu = PopupMenu.new()
 		parent.add_child(child)
 		child.name = child.get_index() as String
 		parent.add_submenu_item(data.name, child.name, child.get_index())
+		parent.set_item_icon(child.get_index() + offset, icon)
 		parent.hide_on_item_selection = true
 		child.hide_on_item_selection = true
 		return child
@@ -51,6 +54,8 @@ func _add_run_callback(menu: PopupMenu, data: Object) -> void:
 	menu.add_item("Debug", -1)
 	menu.set_item_metadata(0, data)
 	menu.set_item_metadata(1, data)
+	menu.set_item_icon(0, icons.play)
+	menu.set_item_icon(1, icons.play_debug)
 	menu.connect("index_pressed", self, "_on_idx_pressed", [menu])
 				
 func _on_idx_pressed(idx: int, dir_menu) -> void:

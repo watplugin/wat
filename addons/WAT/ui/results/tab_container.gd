@@ -5,6 +5,7 @@ const Tab: GDScript = preload("res://addons/WAT/ui/results/tab.gd")
 const ResultTree: GDScript = preload("res://addons/WAT/ui/results/tree.gd")
 var tabs: Dictionary = {} # of Tabs
 var idx: int = 0
+var icons
 
 func clear() -> void:
 	tabs = {}
@@ -17,7 +18,7 @@ func display(tests: Array) -> void:
 	for test in tests:
 		
 		if not tabs.has(test["dir"]):
-			var tree: ResultTree = ResultTree.new()
+			var tree: ResultTree = ResultTree.new(icons)
 			var title: String = test.dir.substr(test.dir.find_last("/") + 1)
 			title = title.capitalize()
 			var tab: Tab = Tab.new(tree, title, idx, 0)

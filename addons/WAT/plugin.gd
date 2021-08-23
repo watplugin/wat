@@ -7,13 +7,16 @@ const TestPanel: GDScript = preload("res://addons/WAT/ui/gui.gd")
 const FileSystem: GDScript = preload("res://addons/WAT/filesystem/filesystem.gd")
 const FileTracker: GDScript = preload("res://addons/WAT/filesystem/tracker.gd")
 const Settings: GDScript = preload("res://addons/WAT/settings.gd")
+const PluginAssetsRegistry: GDScript = preload("res://addons/WAT/ui/scaling/plugin_assets_registry.gd")
 var _test_panel: TestPanel
 var _file_system: FileSystem
 var _file_tracker: FileTracker
+var _assets_registiry: PluginAssetsRegistry
 
 func _enter_tree() -> void:
 	_file_system = FileSystem.new()
 	_file_tracker = FileTracker.new()
+	_assets_registiry = PluginAssetsRegistry.new(self)
 	_file_tracker.connect("filesystem_changed", _file_system, "set", ["changed", true])
 	_file_tracker.start_tracking_files(self)
 	_test_panel = GUI.instance()
