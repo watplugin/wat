@@ -35,14 +35,8 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	var tests: Array = data.get_tests()
 	Results.display(tests)
 	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
-	instance.connect("asserted", Results, "_on_assertion")
-	instance.connect("method_started", Results, "_on_method_started")
-	instance.connect("test_started", Results, "_on_test_started")
-	instance.connect("method_finished", Results, "_on_method_finished")
-#	instance.connect("test_finished", Results, "_on_test_finished")
-#	instance.connect("test_described", Results, "_on_test_described")
 	add_child(instance)
-	var results: Array = yield(instance.run(tests, 0, 1), "completed")
+	var results: Array = yield(instance.run(tests, 0, 1, Results), "completed")
 	instance.queue_free()
 	Results.add_results(results)
 	# add a yield here to check results finished
@@ -50,6 +44,8 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	
 func _on_debug_pressed(data = _filesystem.root) -> void:
 	print("debug pressed: ", data.path)
+
+	
 	
 	
 # LiveWire Calls

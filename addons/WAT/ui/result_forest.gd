@@ -38,25 +38,27 @@ func add_results(results: Array) -> void:
 		tab.tree.add_result(result)
 		yield(get_tree(), "idle_frame") # Prevent a very bad freeze
 		
-func _on_test_started(data: Dictionary) -> void:
+func on_test_script_started(data: Dictionary) -> void:
 	print("started test ??????????")
 	tabs[data["dir"]].tree.add_test(data)
 	print("finished adding test")
 	
-func _on_method_started(data: Dictionary) -> void:
+func on_test_method_started(data: Dictionary) -> void:
 	print("started method?!")
 	tabs[data["dir"]].tree.add_method(data)
 #
 #func _on_method_described(data: Dictionary) -> void:
 #	print("described")
 #
-func _on_method_finished(data: Dictionary) -> void:
+func on_test_method_finished(data: Dictionary) -> void:
 	#	var x = {"dir": _dir, "path": _path, "method": _current_method, "success": success, "count": count, "passed": passed}
 	tabs[data["dir"]].tree.change_method_color(data)
 	print("finished")
 		
-func _on_assertion(data: Dictionary):
+func on_asserted(data: Dictionary):
 	tabs[data["dir"]].tree.add_assertion(data)
+	
+	
 # Could just be the tree itself
 class Tab:
 	var tree: Tree
