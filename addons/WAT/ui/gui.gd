@@ -18,9 +18,6 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		_setup_scene_context()
 		
-	
-	
-	
 	RunAll.connect("pressed", self, "_on_run_pressed", [], CONNECT_DEFERRED)
 	DebugAll.connect("pressed", self, "_on_debug_pressed", [], CONNECT_DEFERRED)
 	TestMenu.connect("run_pressed", self, "_on_run_pressed", [], CONNECT_DEFERRED)

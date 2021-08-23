@@ -13,6 +13,11 @@ namespace WAT
 	
 	public partial class Test: Node
 	{
+		[Signal] public delegate void test_method_started();
+		[Signal] public delegate void asserted();
+		[Signal] public delegate void test_method_finished();
+		[Signal] public delegate void results_received();
+		
 		private const bool IS_WAT_TEST = true;
 		public Array get_test_methods()
 		{
