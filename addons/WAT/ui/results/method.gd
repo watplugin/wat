@@ -1,11 +1,36 @@
 extends Reference
 
+const AssertionTreeItem: GDScript = preload("res://addons/WAT/ui/results/assertion.gd")
+
 var component: TreeItem
 var path: String
 var title: String
+var passed: int = 0
+var total: int = 0
 
 func _init(_component: TreeItem, _title: String) -> void:
 	component = _component
 	path = _title
 	title = _title.replace("test_", "").replace("_", " ")
-	_component.set_text(0, title)
+	_component.set_text(0, title) 
+	
+func add_assertion(tree: Tree, data: Dictionary) -> void:
+	total += 1
+	if data["assertion"]["success"]:
+		passed += 1
+	component.set_text(0, "(%s/%s) %s" % [passed, total, title])
+	if data["assertion"]["context"] == "":
+		component.collapsed = true
+		var expected: TreeItem = tree.create_item(component)
+		var actual: TreeItem = tree.create_item(component)
+		expected.set_text(0, "EXPECTED: %s" % data["assertion"]["expected"])
+		actual.set_text(0, "RESULTED: %s" % data["assertion"]["actual"])
+	else:
+		var assertion: AssertionTreeItem = AssertionTreeItem.new(tree.create_item(component), data["assertion"])
+		assertion.component.collapsed = true
+		var expected: TreeItem = tree.create_item(assertion.component)
+		var actual: TreeItem = tree.create_item(assertion.component)
+		expected.set_text(0, "EXPECTED: %s" % data["assertion"]["expected"])
+		actual.set_text(0, "RESULTED: %s" % data["assertion"]["actual"])
+		assertion.component.set_custom_color(0, tree.PASSED if assertion.success else tree.FAILED)
+		tree.scroll_to_item(assertion.component)

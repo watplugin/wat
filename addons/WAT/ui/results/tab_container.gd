@@ -57,7 +57,10 @@ func on_test_method_finished(data: Dictionary) -> void:
 	tabs[data["dir"]].tree.change_method_color(data)
 	
 func on_test_script_finished(data: Dictionary) -> void:
-	tabs[data["dir"]].tree.on_test_script_finished(data)
+	var tab: Tab = tabs[data["dir"]]
+	tab.tree.on_test_script_finished(data)
+	if data["success"]:
+		set_tab_title(tab.idx, "( %s / %s ) %s" % [tab.title, tab.passed, tab.count])
 		
 func on_asserted(data: Dictionary):
 	tabs[data["dir"]].tree.add_assertion(data)
