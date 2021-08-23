@@ -22,3 +22,14 @@ static func adjust(runner: PanelContainer, icons: Reference, plugin = null) -> v
 	icons.request_docs = registry.load_asset("assets/request_docs.svg")
 	icons.scriptx = registry.load_asset("assets/script.png")
 	icons.timer = registry.load_asset("assets/timer.png")
+	
+	# Scale Icons already in the editor
+	runner.RunAll.icon = registry.load_asset(runner.RunAll.icon)
+	runner.DebugAll.icon = registry.load_asset(runner.DebugAll.icon)
+
+	# Scale summary icons
+	runner.Summary.Time.icon = registry.load_asset(runner.Summary.Time.icon)
+	runner.Summary.Tests.icon = registry.load_asset(runner.Summary.Tests.icon)
+	runner.Summary.Passing.icon = registry.load_asset(runner.Summary.Passing.icon)
+	runner.Summary.Failing.icon = registry.load_asset(runner.Summary.Failing.icon)
+	runner.Summary.Runs.icon = registry.load_asset(runner.Summary.Runs.icon)

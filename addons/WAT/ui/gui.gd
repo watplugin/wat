@@ -1,7 +1,8 @@
 tool
 extends PanelContainer
 
-
+onready var RunAll: Button = $Core/Menu/RunAll
+onready var DebugAll: Button = $Core/Menu/DebugAll
 onready var TestMenu: Button = $Core/Menu/TestMenu
 onready var Results: TabContainer = $Core/Results
 onready var Summary: HBoxContainer = $Core/Summary
@@ -14,11 +15,15 @@ func _ready() -> void:
 	_icons = preload("res://addons/WAT/ui/scaling/icons.gd").new()
 	if not Engine.is_editor_hint():
 		_setup_scene_context()
+		
 	TestMenu.icons = _icons
 	Results.icons = _icons 
 	TestMenu.filesystem = _filesystem
 	_filesystem.update()
 	TestMenu.update_menus()
+	
+	RunAll.connect("pressed", self, "_on_run_pressed", [], CONNECT_DEFERRED)
+	DebugAll.connect("pressed", self, "_on_debug_pressed", [], CONNECT_DEFERRED)
 	TestMenu.connect("run_pressed", self, "_on_run_pressed", [], CONNECT_DEFERRED)
 	TestMenu.connect("debug_pressed", self, "_on_debug_pressed", [], CONNECT_DEFERRED)
 	
