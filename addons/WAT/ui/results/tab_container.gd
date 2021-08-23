@@ -1,7 +1,8 @@
 tool
 extends TabContainer
 
-const ResultTree: GDScript = preload("result_tree.gd")
+const Tab: GDScript = preload("res://addons/WAT/ui/results/tab.gd")
+const ResultTree: GDScript = preload("res://addons/WAT/ui/results/tree.gd")
 var tabs: Dictionary = {} # of Tabs
 var idx: int = 0
 
@@ -60,17 +61,7 @@ func on_asserted(data: Dictionary):
 	
 	
 # Could just be the tree itself
-class Tab:
-	var tree: Tree
-	var title: String
-	var idx: int
-	var count: int = 0
-	
-	func _init(_tree: Tree, _title: String, _idx: int, _count: int) -> void:
-		tree = _tree
-		title = _title
-		idx = _idx
-		count = _count
+
 
 #
 

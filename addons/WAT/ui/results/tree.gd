@@ -1,6 +1,10 @@
 tool
 extends Tree
 
+const ScriptTreeItem: GDScript = preload("res://addons/WAT/ui/results/script.gd")
+const MethodTreeItem: GDScript = preload("res://addons/WAT/ui/results/method.gd")
+const AssertionTreeItem: GDScript = preload("res://addons/WAT/ui/results/assertion.gd")
+
 var tests = []
 var root: TreeItem
 var scripts: Dictionary = {}
@@ -78,42 +82,8 @@ func change_method_color(data: Dictionary) -> void:
 #	# When a method is finished
 #	pass
 
-class ScriptTreeItem:
-	var component: TreeItem
-	var path: String
-	var title: String
-	var methods: Dictionary = {}
-	var method_names: PoolStringArray
-	
-	func _init(_component: TreeItem, data: Dictionary) -> void:
-		component = _component
-		title = data["name"]
-		path = data["path"]
-		method_names = data["methods"]
-		_component.set_text(0, title)
-	
-class MethodTreeItem:
-	var component: TreeItem
-	var path: String
-	var title: String
-	
-	func _init(_component: TreeItem, _title: String) -> void:
-		component = _component
-		path = _title
-		title = _title.replace("test_", "").replace("_", " ")
-		_component.set_text(0, title)
-	
-class AssertionTreeItem:
-	var component: TreeItem
-	var context: String = ""
-	var success: bool = false
-	
-	func _init(_component: TreeItem, data: Dictionary) -> void:
-		component = _component
-		context = data["context"]
-		success = data["success"]
-		if context != "":
-			component.set_text(0, context)
+
+
 			
 #	print("\n")
 #	print(result)
