@@ -9,10 +9,11 @@ var tests = []
 var root: TreeItem
 var scripts: Dictionary = {}
 var current_method: MethodTreeItem
-var _icons: Reference
+var icons: Reference
+var failed: bool = false
 
-func _init(icons: Reference) -> void:
-	_icons = icons
+func _init(_icons: Reference) -> void:
+	icons = _icons
 
 func _ready() -> void:
 	visible = false
@@ -27,24 +28,9 @@ func add_result(result) -> void:
 	var script: ScriptTreeItem = scripts[result["path"]]
 	var success: bool = result["success"]
 	script.component.set_custom_color(0, PASSED if success else FAILED)
+	script.component.set_icon(0, icons.passed if success else icons.failed)
+	failed = not success
 	scroll_to_item(root)
-# This triggers too late
-	pass
-#	var script: ScriptTreeItem = scripts[result["path"]]
-#	var success: bool = result["success"]
-#	script.component.set_custom_color(0, PASSED if success else FAILED)
-#	scroll_to_item(root)
-	
-#	func to_dictionary() -> Dictionary:
-#	return { total = _total, 
-#			 passed = _passed, 
-#			 context = _title, 
-#			 methods = _methods, 
-#			 success = _success,
-#			 path = _path,
-#			 time_taken = _time_taken,
-#			 directory = _directory,
-#			}
 
 # TODO: All of these dict values should be serialized and unserialized at server points
 # ..or sent directly if run in the editor but point is objects > dicts
@@ -57,8 +43,15 @@ func add_method(data: Dictionary) -> void:
 	var script: ScriptTreeItem = scripts[data["path"]].add_method(self, data)
 
 func add_assertion(data: Dictionary) -> void:
-	var method: MethodTreeItem = scripts[data["path"]].methods[data["method"]]
+	var script: ScriptTreeItem = scripts[data["path"]]
+	var method: MethodTreeItem = script.methods[data["method"]]
 	method.add_assertion(self, data)
+	if not data["assertion"]["success"]:
+		script.component.set_custom_color(0, FAILED)
+		script.component.set_icon(0, icons.failed)
+		method.component.set_custom_color(0, FAILED)
+		method.component.set_icon(0, icons.failed)
+		failed = true
 	
 func on_test_method_described(data: Dictionary) -> void:
 	scripts[data["path"]].methods[data["method"]].component.set_text(0, data["description"])
@@ -68,35 +61,23 @@ func on_test_script_finished(data: Dictionary) -> void:
 	var script: ScriptTreeItem = scripts[data["path"]]
 	var success: bool = data["success"]
 	script.component.set_custom_color(0, PASSED if success else FAILED)
+	script.component.set_icon(0, icons.passed if success else icons.failed)
 	
-func change_method_color(data: Dictionary) -> void:
+func on_test_method_finished(data: Dictionary) -> void:
 	# On a finished method, change its color
 	var script: ScriptTreeItem = scripts[data["path"]]
 	var method: MethodTreeItem = script.methods[data["method"]]
 	script.on_method_finished(data)
+	if not data["success"]:
+		script.component.set_custom_color(0, FAILED)
+		script.component.set_icon(0, icons.failed)
+		failed = true
 	method.component.set_custom_color(0, PASSED if data["success"] else FAILED)
+	method.component.set_icon(0, icons.passed if data["success"] else icons.failed)
 	method.component.collapsed = true
-#
-#func change_method_text() -> void:
-#	# When a method is described
-#
-#	pass
-#
-#func set_method_color(method) -> void:
-#	# When a method is finished
-#	pass
+	scroll_to_item(method.component)
 
 
-
-			
-#if data["assertion"]["context"].empty():
-#		return
-#	var method: MethodTreeItem = scripts[data["path"]].methods[data["method"]]
-#	var assertion_item = create_item(method.component)
-#	assertion_item.set_text(0, data["assertion"]["context"])
-#	var passed = data["assertion"]["success"]
-#	var color = PASSED if passed else FAILED
-#	assertion_item.set_custom_color(0, color)
 #	scroll_to_item(assertion_item)
 #
 #class ScriptTreeItem:

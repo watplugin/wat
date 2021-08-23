@@ -52,12 +52,11 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	Summary.time()
 	yield(get_tree(), "idle_frame")
 	var tests: Array = data.get_tests()
-	Results.display(tests) # Too early?
+	Results.display(tests, Repeats.value)
 	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
 	add_child(instance)
 	var results: Array = yield(instance.run(tests, Repeats.value, Threads.value, Results), "completed")
 	instance.queue_free()
-	Results.add_results(results)
 	# add a yield here to check results finished
 	Summary.summarize(results)
 	

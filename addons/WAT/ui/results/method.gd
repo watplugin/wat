@@ -18,7 +18,7 @@ func add_assertion(tree: Tree, data: Dictionary) -> void:
 	total += 1
 	if data["assertion"]["success"]:
 		passed += 1
-	component.set_text(0, "(%s/%s) %s" % [passed, total, title])
+	component.set_text(0, "%s" % title)
 	if data["assertion"]["context"] == "":
 		component.collapsed = true
 		var expected: TreeItem = tree.create_item(component)
@@ -33,4 +33,5 @@ func add_assertion(tree: Tree, data: Dictionary) -> void:
 		expected.set_text(0, "EXPECTED: %s" % data["assertion"]["expected"])
 		actual.set_text(0, "RESULTED: %s" % data["assertion"]["actual"])
 		assertion.component.set_custom_color(0, tree.PASSED if assertion.success else tree.FAILED)
+		assertion.component.set_icon(0, tree.icons.passed if assertion.success else tree.icons.failed)
 		tree.scroll_to_item(assertion.component)

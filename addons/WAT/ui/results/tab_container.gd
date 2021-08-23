@@ -13,23 +13,23 @@ func clear() -> void:
 	for child in get_children():
 		child.free()
 
-func display(tests: Array) -> void:
+func display(tests: Array, multiplier: int) -> void:
 	clear()
 	for test in tests:
 		
 		if not tabs.has(test["dir"]):
 			var tree: ResultTree = ResultTree.new(icons)
-			var title: String = test.dir.substr(test.dir.find_last("/") + 1)
-			title = title.capitalize()
-			var tab: Tab = Tab.new(tree, title)
+			var tab: Tab = Tab.new(tree, test.dir, multiplier)
 			tabs[test.dir] = tab
+		tabs[test.dir].increment_expected_total()
 	update()
 		
-func add_results(results: Array) -> void:
-	for result in results:
-		var tab: Tab = tabs[result["dir"]]
-		tab.tree.add_result(result)
-		yield(get_tree(), "idle_frame") # Prevent a very bad freeze
+#func add_results(results: Array) -> void:
+#	for result in results:
+#		var tab: Tab = tabs[result["dir"]]
+##		tab.tree.add_result(result)
+#		yield(get_tree(), "idle_frame")
+
 		
 func on_test_script_started(data: Dictionary) -> void:
 	var tab: Tab = tabs[data["dir"]]
@@ -37,10 +37,10 @@ func on_test_script_started(data: Dictionary) -> void:
 	if not tab.tree.is_inside_tree():
 		tab.idx = idx
 		add_child(tab.tree, true)
-		set_tab_title(tab.idx, "( %s / %s ) %s" % [tab.passed, tab.count, tab.title])
+		set_tab_title(tab.idx, "( %s / %s ) %s" % [tab.passed, tab.expected, tab.title])
 		idx += 1
 	else:
-		set_tab_title(tab.idx, "( %s / %s ) %s" % [tab.passed, tab.count, tab.title])
+		set_tab_title(tab.idx, "( %s / %s ) %s" % [tab.passed, tab.expected, tab.title])
 	current_tab = tab.idx
 	tab.tree.add_test(data)
 	
@@ -49,45 +49,33 @@ func on_test_method_started(data: Dictionary) -> void:
 	
 func on_test_method_described(data: Dictionary) -> void:
 	tabs[data["dir"]].tree.on_test_method_described(data)
-#func _on_method_described(data: Dictionary) -> void:
-#	print("described")
-#
+
 func on_test_method_finished(data: Dictionary) -> void:
-	#	var x = {"dir": _dir, "path": _path, "method": _current_method, "success": success, "count": count, "passed": passed}
-	tabs[data["dir"]].tree.change_method_color(data)
+	var tab: Tab = tabs[data["dir"]]
+	tab.tree.on_test_method_finished(data)
+	if tab.tree.failed:
+		set_tab_icon(tab.idx, icons.failed)
 	
 func on_test_script_finished(data: Dictionary) -> void:
 	var tab: Tab = tabs[data["dir"]]
 	tab.tree.on_test_script_finished(data)
+	tab.on_test_script_finished(data["success"])
 	if data["success"]:
-		tab.passed += 1
-		set_tab_title(tab.idx, "( %s / %s ) %s" % [tab.passed, tab.count, tab.title])
+		set_tab_title(tab.idx, "( %s / %s ) %s" % [tab.passed, tab.expected, tab.title])
+	else:
+		set_tab_icon(tab.idx, icons.failed)
+	if tab.success:
+		set_tab_icon(tab.idx, icons.passed)
 		
 func on_asserted(data: Dictionary):
-	tabs[data["dir"]].tree.add_assertion(data)
+	var tab: Tab = tabs[data["dir"]]
+	tab.tree.add_assertion(data)
+	if tab.tree.failed:
+		set_tab_icon(tab.idx, icons.failed)
 	
 	
-# Could just be the tree itself
-
-
-#
-
-
-# 1. Sort Tests Into Directories
-# 2. 
-	
-#var PASSED_ICON: Texture
-#var FAILED_ICON: Texture
-#const ResultTree = preload("res://addons/WAT/ui/result_tree.gd")
-#var _results: Array
 #signal function_selected
-#
-## Stores asset_registry so that result_tree can be configured with scaled icons
-#var _assets_registry
 
-#
-#		result_tree._setup_editor_assets(_assets_registry)
-#		result_tree.connect("button_pressed", self, "_on_function_selected")
 #
 #func _on_function_selected(item, column, id) -> void:
 #	emit_signal("function_selected", item.get_meta("path"), item.get_meta("fullname"))
@@ -116,8 +104,3 @@ func on_asserted(data: Dictionary):
 #	collapse_all()
 #	for child in get_children():
 #		child.expand_failures()
-#
-#func _setup_editor_assets(assets_registry):
-#	_assets_registry = assets_registry
-#	PASSED_ICON = assets_registry.load_asset("assets/passed.png")
-#	FAILED_ICON = assets_registry.load_asset("assets/failed.png")
