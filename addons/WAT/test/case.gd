@@ -54,5 +54,5 @@ func to_dictionary() -> Dictionary:
 			 success = _success,
 			 path = _path,
 			 time_taken = _time_taken,
-			 directory = _directory,
+			 dir = _directory,
 			}

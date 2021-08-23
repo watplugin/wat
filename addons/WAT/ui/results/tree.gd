@@ -20,10 +20,11 @@ const FAILED: Color = Color(1, 0.425781, 0.425781)
 
 func add_result(result) -> void:
 	# This triggers too late
-	var script: ScriptTreeItem = scripts[result["path"]]
-	var success: bool = result["success"]
-	script.component.set_custom_color(0, PASSED if success else FAILED)
-	scroll_to_item(root)
+	pass
+#	var script: ScriptTreeItem = scripts[result["path"]]
+#	var success: bool = result["success"]
+#	script.component.set_custom_color(0, PASSED if success else FAILED)
+#	scroll_to_item(root)
 	
 #	func to_dictionary() -> Dictionary:
 #	return { total = _total, 
@@ -60,10 +61,11 @@ func add_assertion(data: Dictionary) -> void:
 	assertion.component.set_custom_color(0, PASSED if assertion.success else FAILED)
 	scroll_to_item(assertion.component)
 	
-func change_script_color(data: Dictionary) -> void:
+func on_test_script_finished(data: Dictionary) -> void:
 	# On a finished test, change its color
 	var script: ScriptTreeItem = scripts[data["path"]]
 	var success: bool = data["success"]
+	print(success)
 	script.component.set_custom_color(0, PASSED if success else FAILED)
 	
 func change_method_color(data: Dictionary) -> void:

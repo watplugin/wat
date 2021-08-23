@@ -25,17 +25,11 @@ func display(tests: Array) -> void:
 			add_child(tree)
 			idx += 1
 			set_tab_title(tab.idx, "%s ( 0 / %s )" % [tab.title, tab.count])
-		
-#		var tab: Tab = tabs[test.dir]
-#		tab.tree.add_test(test)
-#		tab.count += 1
-#		set_tab_title(tab.idx, "%s ( 0 / %s )" % [tab.title, tab.count])
-		
 	update()
 		
 func add_results(results: Array) -> void:
 	for result in results:
-		var tab: Tab = tabs[result["directory"]]
+		var tab: Tab = tabs[result["dir"]]
 		tab.tree.add_result(result)
 		yield(get_tree(), "idle_frame") # Prevent a very bad freeze
 		
@@ -55,6 +49,9 @@ func on_test_method_finished(data: Dictionary) -> void:
 	#	var x = {"dir": _dir, "path": _path, "method": _current_method, "success": success, "count": count, "passed": passed}
 	tabs[data["dir"]].tree.change_method_color(data)
 	print("finished")
+	
+func on_test_script_finished(data: Dictionary) -> void:
+	tabs[data["dir"]].tree.on_test_script_finished(data)
 		
 func on_asserted(data: Dictionary):
 	tabs[data["dir"]].tree.add_assertion(data)

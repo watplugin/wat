@@ -22,6 +22,11 @@ var _registry = preload("res://addons/WAT/double/registry.gd").new()
 var _yielder: Timer = preload("res://addons/WAT/test/yielder.gd").new()
 var _case
 var _methods = []
+
+signal test_method_started
+signal asserted
+signal test_method_finished
+signal results_received
 		
 func setup(directory = "", filepath = "", methods = []):
 	_methods = methods
@@ -39,7 +44,7 @@ func run():
 			# Post-yield so this should be correct
 			# What about repeated methods?
 			if hook == "execute":
-				get_parent().on_method_finished(_case._methods.back())
+				emit_signal("test_method_finished", _case._methods.back())
 	yield(call_function("end"), COMPLETED)
 	get_parent().get_results(get_results())
 	
@@ -50,12 +55,13 @@ func call_function(function, cursor = 0):
 
 func execute(cursor: int):
 	var _current_method: String = _methods[cursor]
-	get_parent().on_test_method(_current_method)
+	emit_signal("test_method_started", _current_method)
 	_case.add_method(_current_method)
 	return call(_current_method)
 
-func _on_last_assertion(assertion: Dictionary) -> void:
+func _on_assertion(assertion: Dictionary) -> void:
 	_last_assertion_passed = assertion["success"]
+	emit_signal("asserted", assertion)
 
 func previous_assertion_failed() -> bool:
 	return not _last_assertion_passed
@@ -64,8 +70,7 @@ func _ready() -> void:
 	p = _parameters.parameters
 	direct.registry = _registry
 	# May be better just as a property on asserts itself
-	asserts.connect("asserted", self, "_on_last_assertion")
-	asserts.connect("asserted", get_parent(), "_on_assertion")
+	asserts.connect("asserted", self, "_on_assertion")
 	add_child(direct)
 	add_child(_yielder)
 	connect("described", _case, "_on_test_method_described")
