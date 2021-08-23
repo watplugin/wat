@@ -5,7 +5,7 @@ const Tab: GDScript = preload("res://addons/WAT/ui/results/tab.gd")
 const ResultTree: GDScript = preload("res://addons/WAT/ui/results/tree.gd")
 var tabs: Dictionary = {} # of Tabs
 var idx: int = 0
-var icons
+var icons: Reference
 
 func clear() -> void:
 	tabs = {}
