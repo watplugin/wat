@@ -32,15 +32,13 @@ func _on_test_method_described(description: String) -> void:
 func _on_asserted(assertion: Dictionary) -> void:
 	assertion["method"] = _methods.back()["fullname"]
 	assertion["script"] = _path
+	# Handle on demand so we can pass it on to live updaters
 	_methods.back().assertions.append(assertion)
 	_methods.back()["total"] += 1
 	_methods.back()["passed"] += assertion["success"] as int # false = 0, true = 1
 	
 func calculate() -> void:
 	for method in _methods:
-		for assertion in method.assertions:
-			method.passed += assertion.success as int
-		method.total = method.assertions.size()
 		method.success = method.total > 0 and method.total == method.passed
 		_passed += method.success as int
 	_total = _methods.size()

@@ -24,7 +24,11 @@ const PASSED: Color = Color(0.34375, 1, 0.34375)
 const FAILED: Color = Color(1, 0.425781, 0.425781)
 
 func add_result(result) -> void:
-	# This triggers too late
+	var script: ScriptTreeItem = scripts[result["path"]]
+	var success: bool = result["success"]
+	script.component.set_custom_color(0, PASSED if success else FAILED)
+	scroll_to_item(root)
+# This triggers too late
 	pass
 #	var script: ScriptTreeItem = scripts[result["path"]]
 #	var success: bool = result["success"]

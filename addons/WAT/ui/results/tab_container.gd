@@ -33,14 +33,14 @@ func add_results(results: Array) -> void:
 		
 func on_test_script_started(data: Dictionary) -> void:
 	var tab: Tab = tabs[data["dir"]]
+	tab.count += 1
 	if not tab.tree.is_inside_tree():
 		tab.idx = idx
 		add_child(tab.tree, true)
-		set_tab_title(tab.idx, "%s ( 0 / %s )" % [tab.title, tab.count])
+		set_tab_title(tab.idx, "( %s / %s ) %s" % [tab.passed, tab.count, tab.title])
 		idx += 1
 	else:
-		tab.count += 1
-		set_tab_title(tab.idx, "%s ( 0 / %s )" % [tab.title, tab.count])
+		set_tab_title(tab.idx, "( %s / %s ) %s" % [tab.passed, tab.count, tab.title])
 	current_tab = tab.idx
 	tab.tree.add_test(data)
 	
@@ -60,7 +60,8 @@ func on_test_script_finished(data: Dictionary) -> void:
 	var tab: Tab = tabs[data["dir"]]
 	tab.tree.on_test_script_finished(data)
 	if data["success"]:
-		set_tab_title(tab.idx, "( %s / %s ) %s" % [tab.title, tab.passed, tab.count])
+		tab.passed += 1
+		set_tab_title(tab.idx, "( %s / %s ) %s" % [tab.passed, tab.count, tab.title])
 		
 func on_asserted(data: Dictionary):
 	tabs[data["dir"]].tree.add_assertion(data)
