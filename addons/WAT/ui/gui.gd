@@ -12,6 +12,7 @@ onready var Repeats: SpinBox = $Core/Menu/RunSettings/Repeats
 var _icons: Reference 
 var _filesystem
 var _plugin = null
+var _build: FuncRef
 
 #	TestMenu.filesystem = filesystem
 #	Threads.max_value = OS.get_processor_count() - 1
@@ -25,8 +26,8 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		_setup_scene_context()
 	Threads.max_value = OS.get_processor_count() - 1
-	RunAll.connect("pressed", self, "_on_run_pressed", [], CONNECT_DEFERRED)
-	DebugAll.connect("pressed", self, "_on_debug_pressed", [], CONNECT_DEFERRED)
+	RunAll.connect("pressed", self, "_on_run_pressed")
+	DebugAll.connect("pressed", self, "_on_debug_pressed")
 	TestMenu.connect("run_pressed", self, "_on_run_pressed", [], CONNECT_DEFERRED)
 	TestMenu.connect("debug_pressed", self, "_on_debug_pressed", [], CONNECT_DEFERRED)
 	
@@ -38,17 +39,25 @@ func _setup_scene_context() -> void:
 	TestMenu.update_menus()
 	DebugAll.disabled = true
 	
-func setup_editor_context(plugin, filesystem: Reference) -> void:
+func setup_editor_context(plugin, build: FuncRef, filesystem: Reference) -> void:
 	yield(self, "ready")
 	load("res://addons/WAT/ui/scaling/scene_tree_adjuster.gd").adjust(self, _icons, plugin)
 	_plugin = plugin
 	_filesystem = filesystem
+	_build = build
 	TestMenu.filesystem = _filesystem
 	_filesystem.update()
 	TestMenu.update_menus()
 	
-	
 func _on_run_pressed(data = _filesystem.root) -> void:
+	if _filesystem.changed:
+		if not _filesystem.built and ClassDB.class_exists("CSharpScript") and Engine.is_editor_hint():
+			Results.clear()
+			_filesystem.built = yield(_filesystem.build_function.call_func(), "completed")
+			return
+		if data == _filesystem.root:
+			_filesystem.update()
+			data = _filesystem.root # New Root
 	Summary.time()
 	yield(get_tree(), "idle_frame")
 	var tests: Array = data.get_tests()
@@ -62,8 +71,10 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	
 func _on_debug_pressed(data = _filesystem.root) -> void:
 	print("debug pressed: ", data.path)
-
-	
+#
+#func _update_filesystem() -> void:
+#	if _filesystem.changed:
+#		if ClassDB.exists("CSharpScript") and Engine.is_editor_hint():
 	
 	
 # LiveWire Calls

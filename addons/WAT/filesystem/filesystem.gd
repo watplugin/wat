@@ -3,11 +3,19 @@ extends Reference
 const Validator: GDScript = preload("validator.gd")
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 var root: TestDirectory
-var changed: bool = false
-#
-#func _init() -> void:
-#
-	
+var changed: bool = false setget _set_filesystem_changed
+var built: bool = false # CSharpScript
+var build_function: FuncRef
+
+
+func _init(_build_function = null) -> void:
+	build_function = _build_function
+
+func _set_filesystem_changed(has_changed: bool) -> void:
+	if has_changed:
+		changed = true
+		built = false
+
 func update(testdir: TestDirectory = _get_root()) -> void:
 	var dir: Directory = Directory.new()
 	var err: int = dir.open(testdir.path)

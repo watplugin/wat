@@ -8,14 +8,16 @@ var icons
 signal run_pressed
 signal debug_pressed
 
-
-
 func _init() -> void:
 	_menu = PopupMenu.new()
 	add_child(_menu)
 
 func _pressed():
 	if filesystem.changed:
+		if not filesystem.built:
+			build()
+			return
+		filesystem.update()
 		update_menus()
 	var position: Vector2 = rect_global_position
 	position.y += rect_size.y
@@ -24,8 +26,20 @@ func _pressed():
 	_menu.grab_focus()
 	_menu.popup()
 	
+func clear() -> void:
+	_menu.queue_free()
+	
+func build():
+	if not filesystem.built and ClassDB.class_exists("CSharpScript") and Engine.is_editor_hint():
+		filesystem.built = yield(filesystem.build_function.call_func(), "completed")
+		return
+	
 func update_menus() -> void:
 	text = "Updating"
+	
+	_menu.queue_free()
+	_menu = PopupMenu.new()
+	add_child(_menu)
 	
 	for dir in [filesystem.root] + filesystem.root.nested_subdirs:
 		var dir_menu = _add_menu(_menu, dir, icons.folder, -1)

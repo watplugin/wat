@@ -14,19 +14,35 @@ var _file_tracker: FileTracker
 var _assets_registiry: PluginAssetsRegistry
 
 func _enter_tree() -> void:
-	_file_system = FileSystem.new()
+	var build: FuncRef = funcref(self, "_build_function")
+	_file_system = FileSystem.new(build)
 	_file_tracker = FileTracker.new()
 	_assets_registiry = PluginAssetsRegistry.new(self)
 	_file_tracker.connect("filesystem_changed", _file_system, "set", ["changed", true])
 	_file_tracker.start_tracking_files(self)
 	_test_panel = GUI.instance()
-	_test_panel.setup_editor_context(self, _file_system)
+	_test_panel.setup_editor_context(self, build, _file_system)
 	add_control_to_bottom_panel(_test_panel, Title)
 
 func _exit_tree() -> void:
 	_file_tracker.disconnect("filesystem_changed", _file_system, "set")
 	remove_control_from_bottom_panel(_test_panel)
 	_test_panel.queue_free()
+	
+func _build_function() -> bool:
+	var text: String = "FileSystem has been changed since last build."
+	text += "\nTriggering a Build by launching an Empty Scene."
+	text += "\nPlease select your option again after the scene quits."
+	OS.alert(text, "Build Required")
+	var editor: EditorInterface = get_editor_interface()
+	editor.play_custom_scene("res://addons/WAT/mono/BuildScene.tscn")
+	while editor.is_playing_scene():
+		yield(get_tree(), "idle_frame")
+	yield(get_tree(), "idle_frame")
+	_file_system.update()
+	_file_system.changed = false
+	make_bottom_panel_item_visible(_test_panel)
+	return true
 	
 
 #const Docker: Script = preload("res://addons/WAT/ui/docker.gd")
