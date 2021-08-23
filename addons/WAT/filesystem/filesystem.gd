@@ -4,12 +4,11 @@ const Validator: GDScript = preload("validator.gd")
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 var root: TestDirectory
 var changed: bool = false
-
-func _init() -> void:
-	root = TestDirectory.new()
-	root.path = load("res://addons/WAT/settings.gd").test_directory()
+#
+#func _init() -> void:
+#
 	
-func update(testdir: TestDirectory = root) -> void:
+func update(testdir: TestDirectory = _get_root()) -> void:
 	var dir: Directory = Directory.new()
 	var err: int = dir.open(testdir.path)
 	if err != OK:
@@ -42,6 +41,12 @@ func update(testdir: TestDirectory = root) -> void:
 		update(subdir)
 		testdir.nested_subdirs += subdir.nested_subdirs
 		
+func _get_root() -> TestDirectory:
+	root = TestDirectory.new()
+	root.path = load("res://addons/WAT/settings.gd").test_directory()
+	root.is_root = true
+	return root
+		
 func _get_test_script(p: String) -> TestScript:
 	var test_script: TestScript = TestScript.new()
 	test_script.path = p
@@ -55,6 +60,7 @@ func _get_test_script(p: String) -> TestScript:
 	
 # Include sanitized dir names here?
 class TestDirectory:
+	var is_root: bool = false
 	var name: String setget ,_get_sanitized_name
 	var path: String
 	var relative_subdirs: Array
@@ -67,8 +73,12 @@ class TestDirectory:
 	
 	func get_tests() -> Array:
 		var requested: Array = []
-		for script in tests:
-			requested += script.get_tests()
+		if is_root:
+			for subdir in nested_subdirs:
+				requested += subdir.get_tests()
+		else:
+			for script in tests:
+				requested += script.get_tests()
 		return requested
 		
 class TestScript:
