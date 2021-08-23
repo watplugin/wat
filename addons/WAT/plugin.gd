@@ -21,7 +21,7 @@ func _enter_tree() -> void:
 	_file_tracker.connect("filesystem_changed", _file_system, "set", ["changed", true])
 	_file_tracker.start_tracking_files(self)
 	_test_panel = GUI.instance()
-	_test_panel.setup_editor_context(self, build, _file_system)
+	_test_panel.setup_editor_context(self, build, funcref(self, "goto_function"), _file_system)
 	add_control_to_bottom_panel(_test_panel, Title)
 
 func _exit_tree() -> void:
@@ -43,6 +43,17 @@ func _build_function() -> bool:
 	_file_system.changed = false
 	make_bottom_panel_item_visible(_test_panel)
 	return true
+	
+func goto_function(path: String, function: String) -> void:
+	var script: Script = load(path)
+	var script_editor: ScriptEditor = get_editor_interface().get_script_editor()
+	get_editor_interface().edit_resource(script)
+	var idx: int = 0
+	for line in script.source_code.split("\n"):
+		idx += 1
+		if function in line and line.begins_with("func"):
+			script_editor.goto_line(idx)
+			return
 	
 
 #const Docker: Script = preload("res://addons/WAT/ui/docker.gd")

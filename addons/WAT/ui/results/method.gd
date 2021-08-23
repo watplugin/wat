@@ -2,15 +2,19 @@ extends Reference
 
 const AssertionTreeItem: GDScript = preload("res://addons/WAT/ui/results/assertion.gd")
 
+var scriptpath: String
 var component: TreeItem
 var path: String
 var title: String
 var passed: int = 0
 var total: int = 0
+var name: String
 
-func _init(_component: TreeItem, _title: String) -> void:
+func _init(_component: TreeItem, _title: String, _script: String) -> void:
+	scriptpath = _script
 	component = _component
 	path = _title
+	name = _title # func name
 	title = _title.replace("test_", "").replace("_", " ")
 	_component.set_text(0, title) 
 	

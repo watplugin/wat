@@ -6,6 +6,7 @@ const ResultTree: GDScript = preload("res://addons/WAT/ui/results/tree.gd")
 var tabs: Dictionary = {} # of Tabs
 var idx: int = 0
 var icons: Reference
+var goto_function: FuncRef
 
 func clear() -> void:
 	tabs = {}
@@ -21,15 +22,9 @@ func display(tests: Array, multiplier: int) -> void:
 			var tree: ResultTree = ResultTree.new(icons)
 			var tab: Tab = Tab.new(tree, test.dir, multiplier)
 			tabs[test.dir] = tab
+			tree.goto_function = goto_function
 		tabs[test.dir].increment_expected_total()
 	update()
-		
-#func add_results(results: Array) -> void:
-#	for result in results:
-#		var tab: Tab = tabs[result["dir"]]
-##		tab.tree.add_result(result)
-#		yield(get_tree(), "idle_frame")
-
 		
 func on_test_script_started(data: Dictionary) -> void:
 	var tab: Tab = tabs[data["dir"]]

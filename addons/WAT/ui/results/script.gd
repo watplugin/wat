@@ -17,7 +17,7 @@ func _init(_component: TreeItem, data: Dictionary) -> void:
 	_component.set_text(0, title)
 
 func add_method(tree: Tree, data: Dictionary) -> void:
-	var method = MethodTreeItem.new(tree.create_item(component), data["method"])
+	var method = MethodTreeItem.new(tree.create_item(component), data["method"], path)
 	methods[method.path] = method
 	total += 1
 	component.set_text(0, "(%s/%s) %s" % [passed, total, title])

@@ -11,9 +11,16 @@ var scripts: Dictionary = {}
 var current_method: MethodTreeItem
 var icons: Reference
 var failed: bool = false
+var goto_function: FuncRef
 
 func _init(_icons: Reference) -> void:
 	icons = _icons
+	if Engine.is_editor_hint():
+		connect("button_pressed", self, "_on_button_pressed")
+	
+func _on_button_pressed(item: TreeItem, col: int = 0, id: int = 0) -> void:
+	var data: MethodTreeItem = item.get_meta("data")
+	goto_function.call_func(data.scriptpath, data.name)
 
 func _ready() -> void:
 	visible = false
@@ -40,7 +47,13 @@ func add_test(test) -> void:
 	# Scrolling to a Script Component hides the scroll bar so don't
 
 func add_method(data: Dictionary) -> void:
-	var script: ScriptTreeItem = scripts[data["path"]].add_method(self, data)
+	var script: ScriptTreeItem = scripts[data["path"]]
+	script.add_method(self, data)
+	var method: MethodTreeItem = script.methods.values().back()
+	if Engine.is_editor_hint():
+		method.component.add_button(0, icons.function)
+		method.component.set_tooltip(0, "Click function icon to show test method in editor")
+		method.component.set_meta("data", method)
 
 func add_assertion(data: Dictionary) -> void:
 	var script: ScriptTreeItem = scripts[data["path"]]

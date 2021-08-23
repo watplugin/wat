@@ -1,5 +1,6 @@
 extends Reference
 
+const YieldCalculator: GDScript = preload("yield_calculator.gd")
 const Validator: GDScript = preload("validator.gd")
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 var root: TestDirectory
@@ -64,6 +65,8 @@ func _get_test_script(p: String) -> TestScript:
 		test_method.path = p
 		test_method.name = m
 		test_script.methods.append(test_method)
+	if p.ends_with(".gd") or p.ends_with(".gdc"):
+		test_script.time = YieldCalculator.calculate_yield_time(load(p), test_script.names.size())
 	return test_script
 	
 # Include sanitized dir names here?
