@@ -21,10 +21,7 @@ namespace WAT
 		private IEnumerable<Executable> _methods = null;
 		private Object _case = null;
 		private static readonly GDScript TestCase = GD.Load<GDScript>("res://addons/WAT/test/case.gd");
-		private static readonly GDScript Any = GD.Load<GDScript>("res://addons/WAT/test/any.gd");
 		private readonly Reference _watcher = (Reference) GD.Load<GDScript>("res://addons/WAT/test/watcher.gd").New();
-		private readonly Object _registry = (Object) GD.Load<GDScript>("res://addons/WAT/double/registry.gd").New();
-		protected readonly Node Direct = (Node) GD.Load<GDScript>("res://addons/WAT/double/factory.gd").New();
 		protected readonly Timer Yielder = (Timer) GD.Load<GDScript>("res://addons/WAT/test/yielder.gd").New();
 		protected readonly Assertions Assert = new Assertions();
 		private readonly Type _type;
@@ -34,11 +31,9 @@ namespace WAT
 
 		public override void _Ready()
 		{
-			Direct.Set("registry", _registry);
 			Assert.Connect(nameof(Assertions.asserted), _case, "_on_asserted");
 			Assert.Connect(nameof(Assertions.asserted), this, nameof(OnAssertion));
 			Connect(nameof(described), _case, "_on_test_method_described");
-			AddChild(Direct);
 			AddChild(Yielder);
 			CallDeferred(nameof(Run));
 		}
