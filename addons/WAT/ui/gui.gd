@@ -1,6 +1,7 @@
 tool
 extends PanelContainer
 
+const Settings: GDScript = preload("res://addons/WAT/settings.gd")
 onready var RunAll: Button = $Core/Menu/RunAll
 onready var DebugAll: Button = $Core/Menu/DebugAll
 onready var TestMenu: Button = $Core/Menu/TestMenu
@@ -72,9 +73,9 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 func _on_debug_pressed(data = _filesystem.root) -> void:
 	print("debug pressed: ", data.path)
 
-
+#
 #const XML: Script = preload("res://addons/WAT/editor/junit_xml.gd")
-#onready var ViewMenu: PopupMenu = $Core/Menu/ResultsMenu.get_popup()
+#onready var ViewMenu: PopupMenu = $Core/MenAu/ResultsMenu.get_popup()
 #onready var Server: Node = $Server
 
 #

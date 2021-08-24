@@ -13,8 +13,6 @@ static func initialize() -> void:
 	_add_setting("Minimize_Window_When_Running_Tests", TYPE_BOOL, false)
 	_add_setting("Port", TYPE_INT, 6008)
 	_add_setting("Tags", TYPE_STRING_ARRAY, PoolStringArray())
-	_add_setting("Run_All_Tests", TYPE_OBJECT, InputEventKey.new())
-	_add_setting("Debug_All_Tests", TYPE_OBJECT, InputEventKey.new())
 	
 	# Set this to true if using external editors
 	ProjectSettings.save()
@@ -46,10 +44,3 @@ static func minimize_window_when_running_tests() -> bool:
 	
 static func port() -> int:
 	return ProjectSettings.get_setting("WAT/Port")
-	
-static func run_all_shortcut() -> ShortCut:
-	return ProjectSettings.get_setting("Run_All_Tests")
-	
-static func debug_all_short() -> ShortCut:
-	return ProjectSettings.get_setting("Debug_All_Tests")
-
