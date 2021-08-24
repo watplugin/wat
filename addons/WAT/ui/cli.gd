@@ -20,13 +20,11 @@ func _ready() -> void:
 	_load_tests()
 	_run = {}
 	var arguments: Array = Array(OS.get_cmdline_args())
-	print(arguments)
 	arguments = arguments.slice(1, arguments.size())
 	var run: Dictionary = {}
 	for arg in arguments:
 		var split = arg.split("=")
 		_run[split[0]] = split[1]
-	print(_run)
 	_parse()
 	
 func _load_tests() -> void:
