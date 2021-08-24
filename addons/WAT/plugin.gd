@@ -4,6 +4,7 @@ extends EditorPlugin
 const Title: String = "Tests"
 const GUI: PackedScene = preload("res://addons/WAT/gui.tscn")
 const TestPanel: GDScript = preload("res://addons/WAT/ui/gui.gd")
+const TestPanelDocker: GDScript = preload("res://addons/WAT/ui/docker.gd")
 const FileSystem: GDScript = preload("res://addons/WAT/filesystem/filesystem.gd")
 const FileTracker: GDScript = preload("res://addons/WAT/filesystem/tracker.gd")
 const Settings: GDScript = preload("res://addons/WAT/settings.gd")
@@ -12,6 +13,7 @@ var _test_panel: TestPanel
 var _file_system: FileSystem
 var _file_tracker: FileTracker
 var _assets_registiry: PluginAssetsRegistry
+var _panel_docker:  TestPanelDocker
 
 func _enter_tree() -> void:
 	Settings.initialize()
@@ -23,11 +25,12 @@ func _enter_tree() -> void:
 	_file_tracker.start_tracking_files(self)
 	_test_panel = GUI.instance()
 	_test_panel.setup_editor_context(self, build, funcref(self, "goto_function"), _file_system)
-	add_control_to_bottom_panel(_test_panel, Title)
+	_panel_docker = TestPanelDocker.new(self, _test_panel)
+	add_child(_panel_docker)
 
 func _exit_tree() -> void:
 	_file_tracker.disconnect("filesystem_changed", _file_system, "set")
-	remove_control_from_bottom_panel(_test_panel)
+	_panel_docker.queue_free()
 	_test_panel.queue_free()
 	
 func _build_function() -> bool:
