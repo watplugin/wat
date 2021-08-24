@@ -44,6 +44,8 @@ func update_menus() -> void:
 	add_child(_menu)
 	
 	for dir in [filesystem.root] + filesystem.root.nested_subdirs:
+		if dir.tests.empty():
+			continue
 		var dir_menu = _add_menu(_menu, dir, icons.folder, -1)
 		_add_run_callback(dir_menu, dir)
 		

@@ -44,18 +44,17 @@ _global_script_class_icons={
 
 [WAT]
 
-Test_Directory="res://tests"
-Results_Directory="res://tests"
-Test_Metadata_Directory="res://tests"
-Tags=PoolStringArray( "64", "32" )
+Test_Directory="res://"
+Results_Directory="res://"
+Test_Metadata_Directory="res://"
+Tags=PoolStringArray(  )
 Window_Size=Vector2( 1280, 720 )
 Minimize_Window_When_Running_Tests=false
 Port=6008
-Default_Launch=0
 Run_All_Tests=Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"unicode":0,"echo":false,"script":null)
 
-Auto_Refresh_Tests=false
-Display=8
+Debug_All_Tests=Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"unicode":0,"echo":false,"script":null)
+
 
 [application]
 

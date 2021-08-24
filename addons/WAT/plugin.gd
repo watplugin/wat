@@ -14,6 +14,7 @@ var _file_tracker: FileTracker
 var _assets_registiry: PluginAssetsRegistry
 
 func _enter_tree() -> void:
+	Settings.initialize()
 	var build: FuncRef = funcref(self, "_build_function")
 	_file_system = FileSystem.new(build)
 	_file_tracker = FileTracker.new()

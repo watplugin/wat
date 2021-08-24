@@ -12,11 +12,9 @@ static func initialize() -> void:
 	_add_setting("Window_Size", TYPE_VECTOR2, Vector2(1280, 720))
 	_add_setting("Minimize_Window_When_Running_Tests", TYPE_BOOL, false)
 	_add_setting("Port", TYPE_INT, 6008)
-
-	# DEFAULT LAUNCH IS A REDUNDANT SETTING. DELETE IT.
-	#_add_setting("Default_Launch", TYPE_INT, 0, PROPERTY_HINT_ENUM, "Launch via Editor, Launch In Editor")
 	_add_setting("Tags", TYPE_STRING_ARRAY, PoolStringArray())
 	_add_setting("Run_All_Tests", TYPE_OBJECT, InputEventKey.new())
+	_add_setting("Debug_All_Tests", TYPE_OBJECT, InputEventKey.new())
 	
 	# Set this to true if using external editors
 	ProjectSettings.save()
@@ -51,4 +49,7 @@ static func port() -> int:
 	
 static func run_all_shortcut() -> ShortCut:
 	return ProjectSettings.get_setting("Run_All_Tests")
+	
+static func debug_all_short() -> ShortCut:
+	return ProjectSettings.get_setting("Debug_All_Tests")
 

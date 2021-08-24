@@ -30,7 +30,9 @@ func update(testdir: TestDirectory = _get_root()) -> void:
 	var relative: String = dir.get_next()
 	while relative != "":
 		absolute = "%s/%s" % [testdir.path, relative]
-		if dir.current_is_dir():
+		
+		# /. deals with most things like .git, .import, .mono etc
+		if dir.current_is_dir() and not "/." in absolute and not "/addons" in absolute:
 			var sub_testdir: TestDirectory = TestDirectory.new()
 			sub_testdir.path = absolute
 			subdirs.append(sub_testdir)
@@ -43,7 +45,10 @@ func update(testdir: TestDirectory = _get_root()) -> void:
 		relative = dir.get_next()
 		
 	dir.list_dir_end()
-			
+	
+	# Range is expensive so we're doing it old-school
+	# NOTE - They're all empty?
+	
 	testdir.relative_subdirs += subdirs
 	testdir.nested_subdirs += subdirs
 	for subdir in subdirs:
@@ -76,7 +81,7 @@ class TestDirectory:
 	var path: String
 	var relative_subdirs: Array
 	var nested_subdirs: Array
-	var tests: Array
+	var tests: Array = []
 	
 	func _get_sanitized_name() -> String:
 		# Required for interface compability
@@ -91,6 +96,9 @@ class TestDirectory:
 			for script in tests:
 				requested += script.get_tests()
 		return requested
+		
+	func is_empty() -> bool:
+		return tests.empty()
 		
 class TestScript:
 	var name: String setget ,_get_sanitized_name

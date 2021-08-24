@@ -41,5 +41,6 @@ namespace WAT
 			_case = (Object) GD.Load<GDScript>("res://addons/WAT/test/case.gd").New(directory, filepath, Title(), this);
 			return this;
 		}
+		
 	}
 }
