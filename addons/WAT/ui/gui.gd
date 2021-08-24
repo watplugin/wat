@@ -1,6 +1,8 @@
 tool
 extends PanelContainer
 
+const FileSystem: GDScript = preload("res://addons/WAT/filesystem/filesystem.gd")
+const SceneTreeAdjuster: GDScript = preload("res://addons/WAT/ui/scaling/scene_tree_adjuster.gd")
 const Settings: GDScript = preload("res://addons/WAT/settings.gd")
 const JUnitXML: GDScript = preload("res://addons/WAT/io/junit_xml.gd")
 onready var RunAll: Button = $Core/Menu/RunAll
@@ -10,9 +12,10 @@ onready var Results: TabContainer = $Core/Results
 onready var Summary: HBoxContainer = $Core/Summary
 onready var Threads: SpinBox = $Core/Menu/RunSettings/Threads
 onready var Repeats: SpinBox = $Core/Menu/RunSettings/Repeats
+onready var Server: Node = $Server
 
 var _icons: Reference 
-var _filesystem
+var _filesystem: FileSystem
 var _plugin = null
 var _build: FuncRef
 
@@ -31,7 +34,8 @@ func _ready() -> void:
 	$Core/Menu/ResultsMenu.get_popup().connect("index_pressed", Results, "_on_view_pressed")
 	
 func _setup_scene_context() -> void:
-	load("res://addons/WAT/ui/scaling/scene_tree_adjuster.gd").adjust(self, _icons)
+	OS.window_size = ProjectSettings.get_setting("WAT/Window_Size")
+	SceneTreeAdjuster.adjust(self, _icons)
 	_filesystem = load("res://addons/WAT/filesystem/filesystem.gd").new()
 	TestMenu.filesystem = _filesystem
 	_filesystem.update()
@@ -40,7 +44,7 @@ func _setup_scene_context() -> void:
 	
 func setup_editor_context(plugin, build: FuncRef, goto_func: FuncRef, filesystem: Reference) -> void:
 	yield(self, "ready")
-	load("res://addons/WAT/ui/scaling/scene_tree_adjuster.gd").adjust(self, _icons, plugin)
+	SceneTreeAdjuster.adjust(self, _icons, plugin)
 	_plugin = plugin
 	_filesystem = filesystem
 	_build = build
@@ -58,6 +62,8 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 		if data == _filesystem.root:
 			_filesystem.update()
 			data = _filesystem.root # New Root
+	
+	# Run
 	var tests: Array = data.get_tests()
 	if tests.empty():
 		push_warning("WAT: No tests found. Terminating run")
@@ -67,6 +73,8 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
 	add_child(instance)
 	var results: Array = yield(instance.run(tests, Repeats.value, Threads.value, Results), "completed")
+	
+	# Finishing
 	instance.queue_free()
 	Summary.summarize(results)
 	JUnitXML.write(results, Settings, Summary.time_taken)
@@ -75,39 +83,6 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 func _on_debug_pressed(data = _filesystem.root) -> void:
 	print("debug pressed: ", data.path)
 
-#
-#const XML: Script = preload("res://addons/WAT/editor/junit_xml.gd")
-#onready var ViewMenu: PopupMenu = $Core/MenAu/ResultsMenu.get_popup()
-#onready var Server: Node = $Server
-
-#
-#func _ready() -> void:
-#	Results.connect("function_selected", self, "_on_function_selected")
-#	ViewMenu.connect("index_pressed", Results, "_on_view_pressed")
-#
-
-#func setup_game_context() -> void:
-#	OS.window_size = ProjectSettings.get_setting("WAT/Window_Size")
-#	# No argument makes the AssetsRegistry default to a scale of 1, which
-#	# should make every icon look normal when the Tests UI launches
-#	# outside of the editor.
-#	DebugAll.disabled = true
-#	_setup_editor_assets(PluginAssetsRegistry.new())
-#
-#func _launch(parcel: Object) -> void:
-#	var tests: Array = parcel.get_tests()
-#	if tests.empty():
-#		push_warning("Tests not found")
-#		return
-#	Results.clear()
-#	Summary.time()
-
-#	Summary.summarize(results)
-#	XML.write(results)
-#	Results.display(results)
-#	filesystem.set_failed(results)
-#
-#
 #func _launch_debugger(tests: Array, repeat: int, threads: int) -> Array:
 #	_plugin.get_editor_interface().play_custom_scene("res://addons/WAT/runner/TestRunner.tscn")
 #	if ProjectSettings.get_setting("WAT/Display") == 8:
@@ -117,31 +92,3 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 #	var results: Array = yield(Server, "results_received")
 #	_plugin.get_editor_interface().stop_playing_scene()
 #	return results
-#
-## TO BE MOVED SOMEWHERE MORE PROPER
-#func setup_editor_context(plugin = null) -> void:
-#	_plugin = plugin
-
-#func _on_build(pos) -> void:
-#	_plugin.get_editor_interface().play_custom_scene("res://addons/WAT/Empty.tscn")
-#	while(_plugin.get_editor_interface().get_playing_scene() == "res://addons/WAT/Empty.tscn"):
-#		yield(get_tree(), "idle_frame")
-#	TestMenu.display(pos)
-#	if ProjectSettings.get_setting("WAT/Display") == 8:
-#		_plugin.make_bottom_panel_item_visible(self)
-#
-#func _on_function_selected(path: String, function: String) -> void:
-#	if not _plugin:
-#		return
-#	var script: Script = load(path)
-#	var script_editor = _plugin.get_editor_interface().get_script_editor()
-#	_plugin.get_editor_interface().edit_resource(script)
-#
-#	# We could add this as metadata information when looking for yield times
-#	# ..in scripts?
-#	var idx: int = 0
-#	for line in script.source_code.split("\n"):
-#		idx += 1
-#		if function in line and line.begins_with("func"):
-#			script_editor.goto_line(idx)
-#			return
