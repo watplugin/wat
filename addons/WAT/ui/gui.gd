@@ -60,9 +60,11 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 		if data == _filesystem.root:
 			_filesystem.update()
 			data = _filesystem.root # New Root
-	Summary.time()
-	yield(get_tree(), "idle_frame")
 	var tests: Array = data.get_tests()
+	if tests.empty():
+		push_warning("WAT: No tests found. Terminating run")
+		return
+	Summary.time()
 	Results.display(tests, Repeats.value)
 	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
 	add_child(instance)
