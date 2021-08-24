@@ -32,6 +32,7 @@ func _exit_tree() -> void:
 	_test_panel.queue_free()
 	
 func _build_function() -> bool:
+	_test_panel.Results.clear()
 	var text: String = "FileSystem has been changed since last build."
 	text += "\nTriggering a Build by launching an Empty Scene."
 	text += "\nPlease select your option again after the scene quits."

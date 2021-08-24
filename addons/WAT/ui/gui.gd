@@ -71,6 +71,7 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	var results: Array = yield(instance.run(tests, Repeats.value, Threads.value, Results), "completed")
 	instance.queue_free()
 	Summary.summarize(results)
+	_filesystem.failed.update(results)
 	
 func _on_debug_pressed(data = _filesystem.root) -> void:
 	print("debug pressed: ", data.path)

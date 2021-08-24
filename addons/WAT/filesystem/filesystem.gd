@@ -6,18 +6,17 @@ const Validator: GDScript = preload("validator.gd")
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 var root: TestDirectory
 var tagged: TaggedTests
+var failed: FailedTests
 var changed: bool = false setget _set_filesystem_changed
 var built: bool = false # CSharpScript
 var build_function: FuncRef
 
-# TODO
-# Add TestFailures
 # Initialize/Save meta
-
 
 func _init(_build_function = null) -> void:
 	build_function = _build_function
 	tagged = TaggedTests.new(Settings)
+	failed = FailedTests.new()
 
 func _set_filesystem_changed(has_changed: bool) -> void:
 	if has_changed:
@@ -85,7 +84,7 @@ func _get_test_script(p: String) -> TestScript:
 class TestDirectory:
 	var is_root: bool = false
 	var name: String setget ,_get_sanitized_name
-	var path: String
+	var path: String setget ,_get_path
 	var relative_subdirs: Array
 	var nested_subdirs: Array
 	var tests: Array = []
@@ -93,6 +92,10 @@ class TestDirectory:
 	func _get_sanitized_name() -> String:
 		# Required for interface compability
 		return path
+		
+	func _get_path() -> String:
+		# res:/// should be res://f
+		return path.replace("///", "//") # 
 	
 	func get_tests() -> Array:
 		var requested: Array = []
@@ -123,7 +126,7 @@ class TestScript:
 		return n
 		
 	func _get_path() -> String:
-		# res:/// should be res://f
+		# res:/// should be res://
 		return path.replace("///", "//") # 
 	
 	func get_tests() -> Array:
@@ -131,16 +134,39 @@ class TestScript:
 		
 class TestMethod:
 	var path: String
-	var dir: String
+	var dir: String setget ,_get_path
 	var name: String setget ,_get_sanitized_name
 	
 	# Method Name != test name
 	func get_tests() -> Array:
-		return [{"dir": dir, "name": name, "path": path, "methods": [name], "time": 0.0}]
+		return [{"dir": dir, "name": name, "path": self.path, "methods": [name], "time": 0.0}]
 		
 	func _get_sanitized_name() -> String:
 		var n: String = name.replace("test_", "").replace("_", " ")
 		return n
+		
+	func _get_path() -> String:
+		# res:/// should be res://
+		return path.replace("///", "//") # 
+		
+class FailedTests:
+	var _failed_paths: Array = []
+	var _tests: Array = []
+	
+	func update(results: Array) -> void:
+		_failed_paths.clear()
+		for result in results:
+			if not result["success"]:
+				_failed_paths.append(result["path"])
+				
+	func set_tests(root: TestDirectory) -> void:
+		_tests.clear()
+		for test in root.get_tests():
+			if _failed_paths.has(test["path"]):
+				_tests.append(test)
+		
+	func get_tests() -> Array:
+		return _tests
 		
 class TaggedTests:
 	# Tag / Resource Path

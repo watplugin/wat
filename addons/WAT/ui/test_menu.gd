@@ -11,6 +11,7 @@ var filesystem
 var icons
 signal run_pressed
 signal debug_pressed
+signal built
 
 func _init() -> void:
 	_menu = PopupMenu.new()
@@ -43,6 +44,7 @@ func update_menus() -> void:
 	_menu = PopupMenu.new()
 	add_child(_menu)
 	
+	_add_failed_run_menu()
 	_add_tag_run_menu()
 	
 	for dir in [filesystem.root] + filesystem.root.nested_subdirs:
@@ -79,11 +81,24 @@ func _add_run_callback(menu: PopupMenu, data: Object) -> void:
 	menu.set_item_icon(1, icons.play_debug)
 	menu.connect("index_pressed", self, "_on_idx_pressed", [menu])
 	
+func _add_failed_run_menu() -> void:
+	var failed_menu: PopupMenu = PopupMenu.new()
+	_menu.add_child(failed_menu)
+	_menu.add_submenu_item("Failed", failed_menu.name)
+	_menu.set_item_icon(failed_menu.get_index() - 1, icons.failed)
+	failed_menu.add_item("Run")
+	failed_menu.add_item("Debug")
+	failed_menu.set_item_icon(0, icons.play)
+	failed_menu.set_item_icon(1, icons.play_debug)
+	failed_menu.set_item_metadata(0, filesystem.failed)
+	failed_menu.set_item_metadata(1, filesystem.failed)
+	failed_menu.connect("index_pressed", self, "_on_failed_menu_pressed")
+	
 func _add_tag_run_menu() -> void:
 	var tag_menu: PopupMenu = PopupMenu.new()
 	_menu.add_child(tag_menu)
 	_menu.add_submenu_item("Tagged", tag_menu.name)
-	_menu.set_item_icon(0, icons.label)
+	_menu.set_item_icon(tag_menu.get_index() - 1, icons.label)
 	for tag in Settings.tags():
 		var options: PopupMenu = PopupMenu.new()
 		tag_menu.add_child(options)
@@ -94,7 +109,7 @@ func _add_tag_run_menu() -> void:
 		options.set_item_icon(0, icons.play)
 		options.set_item_icon(1, icons.play_debug)
 		options.connect("index_pressed", self, "_on_tag_pressed", [tag])
-	
+
 func _add_tag_editor(script_menu: PopupMenu, script: Object) -> void:
 	var tagger: PopupMenu = PopupMenu.new()
 	tagger.hide_on_checkable_item_selection = false
@@ -126,14 +141,22 @@ func _on_tagged(index: int, tagger: PopupMenu, script: Object) -> void:
 		filesystem.tagged.tag(tag, script.path)
 		tagger.set_item_checked(index, true)
 
-func _on_idx_pressed(idx: int, dir_menu) -> void:
+func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 	match idx:
 		0:
-			emit_signal("run_pressed", dir_menu.get_item_metadata(idx))
+			emit_signal("run_pressed", menu.get_item_metadata(idx))
 		1:
-			emit_signal("debug_pressed", dir_menu.get_item_metadata(idx))
+			emit_signal("debug_pressed", menu.get_item_metadata(idx))
 		_:
 			print("bad click (TestMenu.gd)")
+			
+func _on_failed_menu_pressed(idx: int) -> void:
+	filesystem.failed.set_tests(filesystem.root)
+	match idx:
+		0:
+			emit_signal("run_pressed", filesystem.failed)
+		1:
+			emit_signal("debug_pressed", filesystem.failed)
 			
 func _on_tag_pressed(idx: int, tag: String) -> void:
 	filesystem.tagged.set_tests(tag, filesystem.root)
