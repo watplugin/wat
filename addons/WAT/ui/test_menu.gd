@@ -73,12 +73,13 @@ func _add_menu(parent: PopupMenu, data: Object, icon, offset: int = 1) -> PopupM
 		return child
 				
 func _add_run_callback(menu: PopupMenu, data: Object) -> void:
-	menu.add_item("Run", -2)
-	menu.add_item("Debug", -1)
+	menu.add_item("Run")
+	menu.add_item("Debug")
 	menu.set_item_metadata(0, data)
 	menu.set_item_metadata(1, data)
 	menu.set_item_icon(0, icons.play)
 	menu.set_item_icon(1, icons.play_debug)
+	menu.set_item_disabled(1, not Engine.is_editor_hint())
 	menu.connect("index_pressed", self, "_on_idx_pressed", [menu])
 	
 func _add_failed_run_menu() -> void:
@@ -92,6 +93,7 @@ func _add_failed_run_menu() -> void:
 	failed_menu.set_item_icon(1, icons.play_debug)
 	failed_menu.set_item_metadata(0, filesystem.failed)
 	failed_menu.set_item_metadata(1, filesystem.failed)
+	failed_menu.set_item_disabled(1, not Engine.is_editor_hint())
 	failed_menu.connect("index_pressed", self, "_on_failed_menu_pressed")
 	
 func _add_tag_run_menu() -> void:
@@ -108,6 +110,7 @@ func _add_tag_run_menu() -> void:
 		options.add_item("Debug")
 		options.set_item_icon(0, icons.play)
 		options.set_item_icon(1, icons.play_debug)
+		options.set_item_disabled(1, not Engine.is_editor_hint())
 		options.connect("index_pressed", self, "_on_tag_pressed", [tag])
 
 func _add_tag_editor(script_menu: PopupMenu, script: Object) -> void:
