@@ -1,0 +1,21 @@
+{
+	"Async": [
+		"res://tests/small/boolean.test.gd",
+		"res://tests/async/watcher.test.gd"
+	],
+	"Fast": [
+		"res://tests/async/watcher.test.gd"
+	],
+	"Linux": [
+		"res://tests/async/watcher.test.gd"
+	],
+	"Windows": [
+		"res://tests/small/boolean.test.gd",
+		"res://tests/mono/BasicCSharpTest.cs"
+	],
+	"failed": [
+		"res://Examples/Bootstrap/empty_test.gd",
+		"res://Examples/Bootstrap/failing_test.gd",
+		"res://Examples/Bootstrap/one_test_method_no_asserts.gd"
+	]
+}

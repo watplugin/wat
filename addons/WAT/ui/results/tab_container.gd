@@ -68,34 +68,25 @@ func on_asserted(data: Dictionary):
 	if tab.tree.failed:
 		set_tab_icon(tab.idx, icons.failed)
 	
+func _collapse_all() -> void:
+	for child in get_children():
+		child.collapse_all()
+		
+func _expand_all() -> void:
+	for child in get_children():
+		child.expand_all()
 	
-#signal function_selected
+func _expand_failures() -> void:
+	for child in get_children():
+		child.expand_failures()
 
-#
-#func _on_function_selected(item, column, id) -> void:
-#	emit_signal("function_selected", item.get_meta("path"), item.get_meta("fullname"))
-#
+enum { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
+func _on_view_pressed(option: int) -> void:
+	match option:
+		EXPAND_ALL:
+			_expand_all()
+		COLLAPSE_ALL:
+			_collapse_all()
+		EXPAND_FAILURES:
+			_expand_failures()
 
-#enum { EXPAND_ALL, COLLAPSE_ALL, EXPAND_FAILURES }
-#func _on_view_pressed(option: int) -> void:
-#	match option:
-#		EXPAND_ALL:
-#			expand_all()
-#		COLLAPSE_ALL:
-#			collapse_all()
-#		EXPAND_FAILURES:
-#			expand_failures()
-#
-## We could add another option to make non-failures invisible?
-#func expand_all():
-#	for child in get_children():
-#		child.expand_all()
-#
-#func collapse_all():
-#	for child in get_children():
-#		child.collapse_all()
-#
-#func expand_failures():
-#	collapse_all()
-#	for child in get_children():
-#		child.expand_failures()

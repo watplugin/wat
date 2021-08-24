@@ -16,10 +16,6 @@ var _filesystem
 var _plugin = null
 var _build: FuncRef
 
-#	TestMenu.filesystem = filesystem
-#	Threads.max_value = OS.get_processor_count() - 1
-#	Threads.min_value = 1
-
 func _ready() -> void:
 	_icons = preload("res://addons/WAT/ui/scaling/icons.gd").new()
 	TestMenu.icons = _icons
@@ -32,6 +28,7 @@ func _ready() -> void:
 	DebugAll.connect("pressed", self, "_on_debug_pressed")
 	TestMenu.connect("run_pressed", self, "_on_run_pressed", [], CONNECT_DEFERRED)
 	TestMenu.connect("debug_pressed", self, "_on_debug_pressed", [], CONNECT_DEFERRED)
+	$Core/Menu/ResultsMenu.get_popup().connect("index_pressed", Results, "_on_view_pressed")
 	
 func _setup_scene_context() -> void:
 	load("res://addons/WAT/ui/scaling/scene_tree_adjuster.gd").adjust(self, _icons)

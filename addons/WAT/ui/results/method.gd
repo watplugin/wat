@@ -9,6 +9,7 @@ var title: String
 var passed: int = 0
 var total: int = 0
 var name: String
+var assertions: Array = []
 
 func _init(_component: TreeItem, _title: String, _script: String) -> void:
 	scriptpath = _script
@@ -18,7 +19,7 @@ func _init(_component: TreeItem, _title: String, _script: String) -> void:
 	title = _title.replace("test_", "").replace("_", " ")
 	_component.set_text(0, title) 
 	
-func add_assertion(tree: Tree, data: Dictionary) -> void:
+func add_assertion(tree: Tree, data: Dictionary):
 	total += 1
 	if data["assertion"]["success"]:
 		passed += 1
@@ -39,3 +40,5 @@ func add_assertion(tree: Tree, data: Dictionary) -> void:
 		assertion.component.set_custom_color(0, tree.PASSED if assertion.success else tree.FAILED)
 		assertion.component.set_icon(0, tree.icons.passed if assertion.success else tree.icons.failed)
 		tree.scroll_to_item(assertion.component)
+		assertions.append(assertion)
+		return assertion

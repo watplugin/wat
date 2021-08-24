@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<testsuites failures="3" name="TestXML" tests="4" time="0.014">
+	<testsuite name="Empty" failures="0"  tests="0" time="0">
+		<testcase name="Not Found" time="0"><failure message="No Tests Found On Suite res://Examples/Bootstrap/empty_test.gd"></failure></testcase>
+	</testsuite>
+
+	<testsuite name="TestCalculator" failures="1"  tests="1" time="0">
+		<testcase name="add 2 plus 2" time="0">
+			<failure message="EXPECTED: |int| 10 is equal to |int| 4 but GOT |int| 10 is not equal to |int| 4"></failure></testcase>
+	</testsuite>
+
+	<testsuite name="One Method No Asserts" failures="1"  tests="1" time="0">
+		<testcase name=" method" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="TestCalculator" failures="0"  tests="1" time="0">
+		<testcase name="add 2 plus 2" time="0"></testcase>
+	</testsuite>
+
+</testsuites>
