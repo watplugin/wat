@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<testsuites failures="1" name="TestXML" tests="37" time="21.022">
+<testsuites failures="1" name="TestXML" tests="37" time="21.04">
 	<testsuite name="Given A String Assertion" failures="0"  tests="6" time="0">
 		<testcase name="WhenCallingStringBeginWith" time="0"></testcase>
 		<testcase name="WhenCallingStringDoesNotBeginWith" time="0"></testcase>

@@ -1,5 +1,10 @@
 extends Reference
 
+const TestDirectory: GDScript = preload("directory.gd")
+const TestScript: GDScript = preload("script.gd")
+const TestMethod: GDScript = preload("method.gd")
+const FailedTests: GDScript = preload("failed.gd")
+const TaggedTests: GDScript = preload("tagged.gd")
 const Settings: GDScript = preload("res://addons/WAT/settings.gd")
 const YieldCalculator: GDScript = preload("yield_calculator.gd")
 const Validator: GDScript = preload("validator.gd")
@@ -76,137 +81,3 @@ func _get_test_script(p: String) -> TestScript:
 	if p.ends_with(".gd") or p.ends_with(".gdc"):
 		test_script.time = YieldCalculator.calculate_yield_time(load(p), test_script.names.size())
 	return test_script
-	
-# Include sanitized dir names here?
-class TestDirectory:
-	var is_root: bool = false
-	var name: String setget ,_get_sanitized_name
-	var path: String setget ,_get_path
-	var relative_subdirs: Array
-	var nested_subdirs: Array
-	var tests: Array = []
-	
-	func _get_sanitized_name() -> String:
-		# Required for interface compability
-		return path
-		
-	func _get_path() -> String:
-		# res:/// should be res://f
-		return path.replace("///", "//") # 
-	
-	func get_tests() -> Array:
-		var requested: Array = []
-		if is_root:
-			for subdir in nested_subdirs:
-				requested += subdir.get_tests()
-		else:
-			for script in tests:
-				requested += script.get_tests()
-		return requested
-		
-	func is_empty() -> bool:
-		return tests.empty()
-		
-class TestScript:
-	var name: String setget ,_get_sanitized_name
-	var dir: String
-	var path: String setget ,_get_path
-	var methods: Array # TestMethods
-	var names: Array # MethodNames
-	var time: float = 0.0 # YieldTime
-	
-	func _get_sanitized_name() -> String:
-		var n: String = path.substr(path.find_last("/") + 1)
-		n = n.replace(".gd", "").replace(".gdc", "").replace(".cs", "")
-		n = n.replace(".test", "").replace("test", "").replace("_", " ")
-		n[0] = n[0].to_upper()
-		return n
-		
-	func _get_path() -> String:
-		# res:/// should be res://
-		return path.replace("///", "//") # 
-	
-	func get_tests() -> Array:
-		return [{"dir": dir, "name": self.name, "path": self.path, "methods": names, "time": time}]
-		
-class TestMethod:
-	var path: String
-	var dir: String setget ,_get_path
-	var name: String setget ,_get_sanitized_name
-	
-	# Method Name != test name
-	func get_tests() -> Array:
-		return [{"dir": dir, "name": name, "path": self.path, "methods": [name], "time": 0.0}]
-		
-	func _get_sanitized_name() -> String:
-		var n: String = name.replace("test_", "").replace("_", " ")
-		return n
-		
-	func _get_path() -> String:
-		# res:/// should be res://
-		return path.replace("///", "//") # 
-		
-class FailedTests:
-	var paths: Array = []
-	var _tests: Array = []
-	
-	func update(results: Array) -> void:
-		paths.clear()
-		for result in results:
-			if not result["success"]:
-				paths.append(result["path"])
-				
-	func set_tests(root: TestDirectory) -> void:
-		_tests.clear()
-		for test in root.get_tests():
-			if paths.has(test["path"]):
-				_tests.append(test)
-		
-	func get_tests() -> Array:
-		return _tests
-		
-class TaggedTests:
-	# Tag / Resource Path
-	var tagged: Dictionary = {}
-	var _settings: GDScript
-	var _tests: Array = []
-	
-	func _init(settings: GDScript) -> void:
-		_settings = settings
-		update()
-	
-	func tag(tag: String, path: String) -> void:
-		update()
-		if not tagged[tag].has(path):
-			tagged[tag].append(path)
-		
-	func untag(tag: String, path: String) -> void:
-		update()
-		if tagged[tagged].has(path):
-			tagged[tag].erase(path)
-			
-	func is_tagged(tag: String, path: String) -> bool:
-		update()
-		return tagged[tag].has(path)
-		
-	func swap(old: String, new: String) -> void:
-		for tag in tagged:
-			if tagged[tag].has(old):
-				tagged[tag].erase(old)
-				tagged[tag].append(new)
-		
-	func update() -> void:
-		for tag in Settings.tags():
-			if not tagged.has(tag):
-				tagged[tag] = []
-				
-	func set_tests(tag: String, root: TestDirectory) -> void:
-		_tests.clear()
-		for test in root.get_tests():
-			if tagged[tag].has(test["path"]):
-				_tests.append(test)
-		
-	func get_tests() -> Array:
-		return _tests
-
-
