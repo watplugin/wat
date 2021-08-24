@@ -5,6 +5,7 @@ extends Button
 # Add RunTag
 # Add EditTag
 #
+const Settings: GDScript = preload("res://addons/WAT/settings.gd")
 var _menu: PopupMenu
 var filesystem
 var icons
@@ -52,6 +53,7 @@ func update_menus() -> void:
 		for script in dir.tests:
 			var script_menu = _add_menu(dir_menu, script, icons.scriptx)
 			_add_run_callback(script_menu, script)
+			_add_tag_editor(script_menu, script)
 		
 			for method in script.methods:
 				var method_menu = _add_menu(script_menu, method, icons.function)
@@ -75,7 +77,39 @@ func _add_run_callback(menu: PopupMenu, data: Object) -> void:
 	menu.set_item_icon(0, icons.play)
 	menu.set_item_icon(1, icons.play_debug)
 	menu.connect("index_pressed", self, "_on_idx_pressed", [menu])
-				
+	
+func _add_tag_editor(script_menu: PopupMenu, script: Object) -> void:
+	var tagger: PopupMenu = PopupMenu.new()
+	tagger.hide_on_checkable_item_selection = false
+	tagger.connect("about_to_show", self, "_on_tag_editor_about_to_show", [tagger, script])
+	tagger.connect("index_pressed", self, "_on_tagged", [tagger, script])
+	# Unnecessary since we change per access
+	for tag in Settings.tags():
+		tagger.add_check_item(tag)
+	script_menu.add_child(tagger)
+	script_menu.add_submenu_item("Edit Tags", tagger.name)
+	script_menu.set_item_icon(2, icons.label)
+	
+func _on_tag_editor_about_to_show(tagger: PopupMenu, script: Object) -> void:
+	tagger.clear()
+	tagger.set_as_minsize()
+	var idx: int = 0
+	for tag in Settings.tags():
+		tagger.add_check_item(tag)
+		if filesystem.tagged.is_tagged(tag, script.path):
+			tagger.set_item_checked(idx, true)
+		idx += 1
+		# if script has tag, check it
+	
+func _on_tagged(index: int, tagger: PopupMenu, script: Object) -> void:
+	var tag: String = tagger.get_item_text(index)
+	if tagger.is_item_checked(index):
+		filesystem.tagged.untag(tag, script.path)
+		tagger.set_item_checked(index, false)
+	else:
+		filesystem.tagged.tag(tag, script.path)
+		tagger.set_item_checked(index, true)
+
 func _on_idx_pressed(idx: int, dir_menu) -> void:
 	match idx:
 		0:

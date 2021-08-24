@@ -19,9 +19,8 @@ func _enter_tree() -> void:
 	Settings.initialize()
 	var build: FuncRef = funcref(self, "_build_function")
 	_file_system = FileSystem.new(build)
-	_file_tracker = FileTracker.new()
+	_file_tracker = FileTracker.new(_file_system)
 	_assets_registiry = PluginAssetsRegistry.new(self)
-	_file_tracker.connect("filesystem_changed", _file_system, "set", ["changed", true])
 	_file_tracker.start_tracking_files(self)
 	_test_panel = GUI.instance()
 	_test_panel.setup_editor_context(self, build, funcref(self, "goto_function"), _file_system)
@@ -29,7 +28,6 @@ func _enter_tree() -> void:
 	add_child(_panel_docker)
 
 func _exit_tree() -> void:
-	_file_tracker.disconnect("filesystem_changed", _file_system, "set")
 	_panel_docker.queue_free()
 	_test_panel.queue_free()
 	

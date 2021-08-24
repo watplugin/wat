@@ -1,9 +1,11 @@
 extends Reference
 
+const Settings: GDScript = preload("res://addons/WAT/settings.gd")
 const YieldCalculator: GDScript = preload("yield_calculator.gd")
 const Validator: GDScript = preload("validator.gd")
 const DO_NOT_SEARCH_PARENT_DIRECTORIES: bool = true
 var root: TestDirectory
+var tagged: TaggedTests
 var changed: bool = false setget _set_filesystem_changed
 var built: bool = false # CSharpScript
 var build_function: FuncRef
@@ -11,6 +13,7 @@ var build_function: FuncRef
 
 func _init(_build_function = null) -> void:
 	build_function = _build_function
+	tagged = TaggedTests.new(Settings)
 
 func _set_filesystem_changed(has_changed: bool) -> void:
 	if has_changed:
@@ -103,7 +106,7 @@ class TestDirectory:
 class TestScript:
 	var name: String setget ,_get_sanitized_name
 	var dir: String
-	var path: String
+	var path: String setget ,_get_path
 	var methods: Array # TestMethods
 	var names: Array # MethodNames
 	var time: float = 0.0 # YieldTime
@@ -114,6 +117,10 @@ class TestScript:
 		n = n.replace(".test", "").replace("test", "").replace("_", " ")
 		n[0] = n[0].to_upper()
 		return n
+		
+	func _get_path() -> String:
+		# Happens when dealing with tests directly in godot
+		return path.replace("///", "//") # 
 	
 	func get_tests() -> Array:
 		return [{"dir": dir, "name": self.name, "path": path, "methods": names, "time": time}]
@@ -131,12 +138,42 @@ class TestMethod:
 		var n: String = name.replace("test_", "").replace("_", " ")
 		return n
 		
-class TestTag:
-	var tag: String
-	var tagged: Array
+class TaggedTests:
+	# Tag / Resource Path
+	var tagged: Dictionary = {}
+	var _settings: GDScript
 	
-	func get_tests() -> Dictionary:
-		return {}
+	func _init(settings: GDScript) -> void:
+		_settings = settings
+		update()
+	
+	func tag(tag: String, path: String) -> void:
+		update()
+		if not tagged[tag].has(path):
+			tagged[tag].append(path)
+		
+	func untag(tag: String, path: String) -> void:
+		update()
+		if tagged[tagged].has(path):
+			tagged[tag].erase(path)
+			
+	func is_tagged(tag: String, path: String) -> bool:
+		update()
+		return tagged[tag].has(path)
+		
+	func swap(old: String, new: String) -> void:
+		for tag in tagged:
+			if tagged[tag].has(old):
+				tagged[tag].erase(old)
+				tagged[tag].append(new)
+		
+	func update() -> void:
+		for tag in Settings.tags():
+			if not tagged.has(tag):
+				tagged[tag] = []
+		
+	func get_tests(tag: String) -> void:
+		pass
 
 
 #const Settings: Script = preload("res://addons/WAT/settings.gd")
