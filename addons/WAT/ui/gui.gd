@@ -2,6 +2,7 @@ tool
 extends PanelContainer
 
 const Settings: GDScript = preload("res://addons/WAT/settings.gd")
+const JUnitXML: GDScript = preload("res://addons/WAT/io/junit_xml.gd")
 onready var RunAll: Button = $Core/Menu/RunAll
 onready var DebugAll: Button = $Core/Menu/DebugAll
 onready var TestMenu: Button = $Core/Menu/TestMenu
@@ -71,6 +72,7 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	var results: Array = yield(instance.run(tests, Repeats.value, Threads.value, Results), "completed")
 	instance.queue_free()
 	Summary.summarize(results)
+	JUnitXML.write(results, Settings, Summary.time_taken)
 	_filesystem.failed.update(results)
 	
 func _on_debug_pressed(data = _filesystem.root) -> void:

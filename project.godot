@@ -44,9 +44,9 @@ _global_script_class_icons={
 
 [WAT]
 
-Test_Directory="res://"
-Results_Directory="res://"
-Test_Metadata_Directory="res://"
+Test_Directory="res://tests"
+Results_Directory="res://tests"
+Test_Metadata_Directory="res://tests"
 Tags=PoolStringArray( "Windows", "Linux", "Fast", "Async", "A", "B" )
 Window_Size=Vector2( 1280, 720 )
 Minimize_Window_When_Running_Tests=false

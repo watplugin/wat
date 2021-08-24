@@ -51,10 +51,7 @@ func update(testdir: TestDirectory = _get_root()) -> void:
 		relative = dir.get_next()
 		
 	dir.list_dir_end()
-	
-	# Range is expensive so we're doing it old-school
-	# NOTE - They're all empty?
-	
+
 	testdir.relative_subdirs += subdirs
 	testdir.nested_subdirs += subdirs
 	for subdir in subdirs:
@@ -63,7 +60,7 @@ func update(testdir: TestDirectory = _get_root()) -> void:
 		
 func _get_root() -> TestDirectory:
 	root = TestDirectory.new()
-	root.path = load("res://addons/WAT/settings.gd").test_directory()
+	root.path = Settings.test_directory()
 	root.is_root = true
 	return root
 		
@@ -150,19 +147,19 @@ class TestMethod:
 		return path.replace("///", "//") # 
 		
 class FailedTests:
-	var _failed_paths: Array = []
+	var paths: Array = []
 	var _tests: Array = []
 	
 	func update(results: Array) -> void:
-		_failed_paths.clear()
+		paths.clear()
 		for result in results:
 			if not result["success"]:
-				_failed_paths.append(result["path"])
+				paths.append(result["path"])
 				
 	func set_tests(root: TestDirectory) -> void:
 		_tests.clear()
 		for test in root.get_tests():
-			if _failed_paths.has(test["path"]):
+			if paths.has(test["path"]):
 				_tests.append(test)
 		
 	func get_tests() -> Array:
@@ -211,3 +208,5 @@ class TaggedTests:
 		
 	func get_tests() -> Array:
 		return _tests
+
+

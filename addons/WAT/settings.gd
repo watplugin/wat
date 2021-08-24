@@ -33,6 +33,12 @@ static func _add_setting(title: String, type: int, value, hint_type: int = -1, h
 static func test_directory() -> String:
 	return ProjectSettings.get_setting("WAT/Test_Directory")
 	
+static func results_directory() -> String:
+	return ProjectSettings.get_setting("WAT/Results_Directory")
+	
+static func metadata_directory() -> String:
+	return ProjectSettings.get_setting("WAT/Test_Metadata_Directory")
+	
 static func window_size() -> Vector2:
 	return ProjectSettings.get_setting("WAT/Window_Size")
 	

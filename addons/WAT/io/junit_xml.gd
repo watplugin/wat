@@ -1,10 +1,12 @@
 extends Script
 
-static func write(results, time: float = 0.0) -> void:
-	if not ProjectSettings.has_setting("WAT/Results_Directory"):
-		print("cannot find directory")
-		return
-	var path: String = ProjectSettings.get_setting("WAT/Results_Directory")
+static func write(results, settings: Reference, time: float = 0.0) -> void:
+	var path: String
+	if not settings.results_directory():
+		push_warning("WAT: Cannot find results directory. Defaulting to root to write Junit XML")
+		path = "res://"
+	else:
+		path = settings.test_directory()
 	if not Directory.new().dir_exists(path):
 		Directory.new().make_dir_recursive(path)
 	var tests: int = results.size()
