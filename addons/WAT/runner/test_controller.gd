@@ -31,17 +31,20 @@ func run(metadata: Dictionary) -> void:
 	
 func _on_test_script_started(data: Dictionary) -> void:
 	data["title"] = _test.title()
-	results.on_test_script_started(data)
+	if results != null:
+		results.on_test_script_started(data)
 
 # Results broker doesn't make any sense
 func _on_test_script_finished(data: Dictionary) -> void:
-	results.on_test_script_finished(data)
+	if results != null:
+		results.on_test_script_finished(data)
 	emit_signal("results_received", data)
 	
 func _on_test_method_started(method) -> void:
 	var x = {"dir" : _dir, "path": _path, "method": method}
 	#emit_signal("method_started", x) # What about "described" methods?
-	results.on_test_method_started(x)
+	if results != null:
+		results.on_test_method_started(x)
 	_current_method = method
 
 func _on_test_method_finished() -> void:
@@ -50,12 +53,15 @@ func _on_test_method_finished() -> void:
 	var passed = method["passed"]
 	var success = count > 0 and count == passed
 	var x = {"dir": _dir, "path": _path, "method": _current_method, "success": success, "total": count, "passed": passed}
-	results.on_test_method_finished(x)
+	if results != null:
+		results.on_test_method_finished(x)
 	
 func _on_asserted(assertion) -> void:
 	var x = {"dir" : _dir, "path": _path, "method": _current_method, "assertion": assertion}
-	results.on_asserted(x) #emit_signal("asserted", x)
+	if results != null:
+		results.on_asserted(x) #emit_signal("asserted", x)
 	
 func _on_test_method_described(desc: String) -> void:
 	var x = {"dir": _dir, "path": _path, "method": _current_method, "description": desc}
-	results.on_test_method_described(x)
+	if results != null:
+		results.on_test_method_described(x)

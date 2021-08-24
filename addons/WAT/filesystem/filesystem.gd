@@ -15,6 +15,7 @@ var failed: FailedTests
 var changed: bool = false setget _set_filesystem_changed
 var built: bool = false # CSharpScript
 var build_function: FuncRef
+var index = {} # Path / Object
 
 # Initialize/Save meta
 
@@ -47,11 +48,13 @@ func update(testdir: TestDirectory = _get_root()) -> void:
 			var sub_testdir: TestDirectory = TestDirectory.new()
 			sub_testdir.path = absolute
 			subdirs.append(sub_testdir)
+			index[sub_testdir.path] = sub_testdir
 			
 		elif dir.file_exists(absolute) and Validator.is_valid_test(absolute):
 			var test_script: TestScript = _get_test_script(absolute)
 			testdir.tests.append(test_script)
 			test_script.dir = testdir.path
+			index[test_script.path] = test_script
 			
 		relative = dir.get_next()
 		
@@ -64,6 +67,7 @@ func update(testdir: TestDirectory = _get_root()) -> void:
 		testdir.nested_subdirs += subdir.nested_subdirs
 		
 func _get_root() -> TestDirectory:
+	index = {}
 	root = TestDirectory.new()
 	root.path = Settings.test_directory()
 	root.is_root = true
@@ -78,6 +82,7 @@ func _get_test_script(p: String) -> TestScript:
 		test_method.path = p
 		test_method.name = m
 		test_script.methods.append(test_method)
+		index[test_script.path+m] = test_method
 	if p.ends_with(".gd") or p.ends_with(".gdc"):
 		test_script.time = YieldCalculator.calculate_yield_time(load(p), test_script.names.size())
 	return test_script

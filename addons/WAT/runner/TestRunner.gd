@@ -12,7 +12,7 @@ func _ready() -> void:
 		OS.window_size = Settings.window_size()
 		OS.window_minimized = Settings.minimize_window_when_running_tests()
 
-func run(tests: Array, repeat: int, threads: int, results_view: Node) -> Array:
+func run(tests: Array, repeat: int, threads: int, results_view: Node = null) -> Array:
 	var results: Array = []
 	tests = _repeat(tests, repeat)
 	var testthreads = Splitter.split(tests, threads)
