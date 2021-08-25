@@ -1,5 +1,5 @@
 # ![Icon](./icon.svg) WAT 
-![3.2.3](https://github.com/CodeDarigan/WAT-GDScript/workflows/%20%20Godot%203.2.3%20%20/badge.svg)
+![3.3.2](https://github.com/CodeDarigan/WAT-GDScript/workflows/%20%20Godot%203.3.2%20%20/badge.svg)
 
 
 [Documentation](https://wat.readthedocs.io/en/latest/index.html)
