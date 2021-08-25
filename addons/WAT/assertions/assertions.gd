@@ -327,3 +327,6 @@ func is_not_PoolColorArray(value, context: String = "") -> void:
 		
 func fail(context: String = "Unimplemented Test") -> void:
 		output(Utility.fail(context))
+
+func auto_pass(context: String = "") -> void:
+		output(Utility.auto_pass(context))

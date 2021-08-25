@@ -1,22 +1,8 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0.866">
-	<testsuite name="Object Assertions" failures="0"  tests="16" time="0">
-		<testcase name="When calling IsInstanceValid(node)" time="0"></testcase>
-		<testcase name="When calling IsInstanceValid(freed node)" time="0"></testcase>
-		<testcase name="WhenCallingHasMetaAfterAddingMetadata" time="0"></testcase>
-		<testcase name="WhenCallingDoesNotHaveMeta" time="0"></testcase>
-		<testcase name="WhenCallingDoesNotHaveMetalRealKeyButNullValue" time="0"></testcase>
-		<testcase name="WhenCallingHasMethodTitle" time="0"></testcase>
-		<testcase name="WhenCallingDoesNotHaveMethodFalseMethod" time="0"></testcase>
-		<testcase name="WhenCallingHasUserSignalAfterAddingASignal" time="0"></testcase>
-		<testcase name="WhenCallingDoesNotHaveUserSignal" time="0"></testcase>
-		<testcase name="WhenCallingDoesNotHaveUserSignalWithClassSignalConstant" time="0"></testcase>
-		<testcase name="WhenCallingObjectIsQueuedForDeletionAfterCallingQueueFree" time="0"></testcase>
-		<testcase name="WhenCallingObjectIsNotQueuedForDeletionAfterNotCallingQueueFree" time="0"></testcase>
-		<testcase name="WhenCallingObjIsConnectedWithARealConnection" time="0"></testcase>
-		<testcase name="WhenCallingObjIsNotConnectedWithAnInvalidConnection" time="0"></testcase>
-		<testcase name="TestIsBlockingSignals" time="0"></testcase>
-		<testcase name="IsNotBlockingSignals" time="0"></testcase>
+<testsuites failures="0" name="TestXML" tests="1" time="0.015">
+	<testsuite name="Assert That" failures="0"  tests="2" time="0">
+		<testcase name=" auto pass" time="0"></testcase>
+		<testcase name=" assert that" time="0"></testcase>
 	</testsuite>
 
 </testsuites>

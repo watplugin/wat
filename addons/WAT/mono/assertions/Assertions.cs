@@ -220,5 +220,10 @@ namespace WAT {
 		{
 			Output(Utility.Fail(context));
 		}
+		
+		public void AutoPass(string context = "")
+		{
+			Output(Utility.AutoPass(context));
+		}
 	}
 }
