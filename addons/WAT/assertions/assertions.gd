@@ -115,46 +115,46 @@ func file_does_not_exist(path: String, context: String = "") -> void:
 func that(obj: Object, method: String, arguments: Array = [], context: String = "", passed: String = "", failed: String = "") -> void:
 	output(Utility.that(obj, method, arguments, context, passed, failed))
 	
-func is_valid_instance(obj: Object, context: String) -> void:
+func is_valid_instance(obj: Object, context: String = "") -> void:
 	output(ObjectX.o_is_valid_instance(obj, context))
 	
-func is_not_valid_instance(obj: Object, context: String) -> void:
+func is_not_valid_instance(obj: Object, context: String = "") -> void:
 	output(ObjectX.o_is_not_valid_instance(obj, context))
 	 
-func object_has_meta(obj: Object, meta: String, context: String) -> void:
+func object_has_meta(obj: Object, meta: String, context: String = "") -> void:
 	output(ObjectX.o_has_meta(obj, meta, context))
 	
-func object_does_not_have_meta(obj: Object, meta: String, context: String) -> void:
+func object_does_not_have_meta(obj: Object, meta: String, context: String = "") -> void:
 	output(ObjectX.does_not_have_meta(obj, meta, context))
 	
-func object_has_method(obj: Object, method: String, context: String) -> void:
+func object_has_method(obj: Object, method: String, context: String = "") -> void:
 	output(ObjectX.o_has_method(obj, method, context))
 	
-func object_does_not_have_method(obj: Object, method: String, context: String) -> void:
+func object_does_not_have_method(obj: Object, method: String, context: String = "") -> void:
 	output(ObjectX.does_not_have_method(obj, method, context))
 	
-func object_is_queued_for_deletion(obj: Object, context: String) -> void:
+func object_is_queued_for_deletion(obj: Object, context: String = "") -> void:
 	output(ObjectX.o_is_queued_for_deletion(obj, context))
 	
-func object_is_not_queued_for_deletion(obj: Object, context: String) -> void:
+func object_is_not_queued_for_deletion(obj: Object, context: String = "") -> void:
 	output(ObjectX.o_is_not_queued_for_deletion(obj, context))
 	
-func object_is_connected(sender: Object, _signal: String, receiver: Object, method: String, context: String) -> void:
+func object_is_connected(sender: Object, _signal: String, receiver: Object, method: String, context: String = "") -> void:
 	output(ObjectX.o_is_connected(sender, _signal, receiver, method, context))
 	
-func object_is_not_connected(sender: Object, _signal: String, receiver: Object, method: String, context: String) -> void:
+func object_is_not_connected(sender: Object, _signal: String, receiver: Object, method: String, context: String = "") -> void:
 	output(ObjectX.o_is_not_connected(sender, _signal, receiver, method, context))
 	
-func object_is_blocking_signals(obj: Object, context: String) -> void:
+func object_is_blocking_signals(obj: Object, context: String = "") -> void:
 	output(ObjectX.o_is_blocking_signals(obj, context))
 	
-func object_is_not_blocking_signals(obj: Object, context: String) -> void:
+func object_is_not_blocking_signals(obj: Object, context: String = "") -> void:
 	output(ObjectX.o_is_not_blocking_signals(obj, context))
 	
-func object_has_user_signal(obj: Object, _signal: String, context: String) -> void:
+func object_has_user_signal(obj: Object, _signal: String, context: String = "") -> void:
 	output(ObjectX.o_has_user_signal(obj, _signal, context))
 	
-func object_does_not_have_user_signal(obj: Object, _signal: String, context: String) -> void:
+func object_does_not_have_user_signal(obj: Object, _signal: String, context: String = "") -> void:
 	output(ObjectX.does_not_have_user_signal(obj, _signal, context))
 	
 func is_freed(obj: Object, context: String = "") -> void:
