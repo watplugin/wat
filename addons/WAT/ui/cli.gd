@@ -1,13 +1,5 @@
 extends Node
 
-# run_all
-# run_dir
-# run_method
-# run_tag
-# run_failed
-# repeats
-# threads
-
 const JUnitXML: GDScript = preload("res://addons/WAT/io/junit_xml.gd")
 const Metadata: GDScript = preload("res://addons/WAT/io/metadata.gd")
 const FileSystem: GDScript = preload("res://addons/WAT/filesystem/filesystem.gd")
@@ -36,19 +28,24 @@ func _parse() -> void:
 	var split: Array = _run["run"].split("+")
 	match split[0]:
 		"all":
+			# run=all
 			run(_filesystem.root)
 		"dir":
+			# run=dir+dirpath
 			run(_filesystem.index[split[1]])
 		"script":
+			# run=script+scriptpath
 			run(_filesystem.index[split[1]])
 		"method":
+			# run=method+scriptpath+methodname
 			run(_filesystem.index[split[1] + split[2]])
 		"failed":
+			# run=failed
 			run(_filesystem.failed)
 		"tag":
+			# run=tag+tagname
 			_filesystem.tagged.set_tests(split[1], _filesystem.root)
 			run(_filesystem.tagged)
-			print("tagged")
 		_:
 			get_tree().quit()
 	
@@ -85,19 +82,12 @@ func run(data: Reference) -> void:
 	
 	get_tree().quit()
 	
-func _get_directory():
-	pass
-	
-func _get_script():
-	pass
-	
-func _get_method():
-	pass
-	
-	
+
 func _repeats() -> int:
+	# r=X where X is a number
 	if _run.has("r"):
 		return _run["r"] as int
+	# r=X where X is a number
 	elif _run.has("repeat"):
 		return _run.has("repeat") as int
 	else:
@@ -105,8 +95,10 @@ func _repeats() -> int:
 		
 func _threads() -> int:
 	var threads: int = 0
+	# t=X where X is a number
 	if _run.has("t"):
 		threads = _run["t"] as int
+	# thread=X where X is a number
 	elif _run.has("thread"):
 		threads = _run.has("thread") as int
 	else:
