@@ -4,24 +4,26 @@ using System;
 [Title("Object Assertions")]
 public class ObjectTest : WAT.Test
 {
-	/*
-	IsFreed and & IsNotFreed don't work correctly in CSharp
+
 	[Test]
-	public void WhenCallingFreedObjectIsFreed()
+	public void WhenCallingIsValidInstance()
 	{
-		Node N = new Node();
-		N.Free();
-		Assert.IsFreed(N, "Then it passes");
+		Describe("When calling IsInstanceValid(node)");
+		
+		Node node = new Node();
+		Assert.IsValidInstance(node, "Then it passes");
+		node.Free();
 	}
 	
 	[Test]
-	public void WhenCallingUnfreedObjectIsNotFreed()
+	public void WhenCallingIsNotValidInstance()
 	{
-		Node N = new Node();
-		Assert.IsNotFreed(N, "Then it passes");
-		N.Free();
+		Describe("When calling IsInstanceValid(freed node)");
+		
+		Node node = new Node();
+		node.Free();
+		Assert.IsNotValidInstance(node, "Then it passes");
 	}
-	*/
 	
 	[Test]
 	public void WhenCallingHasMetaAfterAddingMetadata()

@@ -59,7 +59,6 @@
     <Content Include="addons\WAT\double\scene_director.gd" />
     <Content Include="addons\WAT\double\script_director.gd" />
     <Content Include="addons\WAT\double\script_writer.gd" />
-    <Content Include="addons\WAT\editor\junit_xml.gd" />
     <Content Include="addons\WAT\filesystem\filesystem.gd" />
     <Content Include="addons\WAT\filesystem\index.gd" />
     <Content Include="addons\WAT\filesystem\metadata.gd" />
@@ -113,5 +112,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2021.2.0-eap3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="addons\WAT\editor\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="addons\WAT\editor\**" />
   </ItemGroup>
 </Project>

@@ -111,4 +111,19 @@ static func o_is_queued_for_deletion(obj: Object, context: String) -> Dictionary
 	var success = obj.is_queued_for_deletion()
 	var result = passed if success else failed
 	return _result(success, expected, result, context)
-
+	
+static func o_is_valid_instance(obj: Object, context: String) -> Dictionary:
+	var passed: String = "%s is a valid instance" % obj
+	var failed: String = "%s is not a valid instance" % obj
+	var expected = passed
+	var success = is_instance_valid(obj)
+	var result = passed if success else failed
+	return _result(success, expected, result, context)
+	
+static func o_is_not_valid_instance(obj: Object, context: String) -> Dictionary:
+	var passed: String = "%s is not a valid instance" % obj
+	var failed: String = "%s is a valid instance" % obj
+	var expected = passed
+	var success = !is_instance_valid(obj)
+	var result = passed if success else failed
+	return _result(success, expected, result, context)

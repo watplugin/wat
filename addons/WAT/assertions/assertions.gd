@@ -114,6 +114,12 @@ func file_does_not_exist(path: String, context: String = "") -> void:
 	
 func that(obj: Object, method: String, arguments: Array = [], context: String = "", passed: String = "", failed: String = "") -> void:
 	output(Utility.that(obj, method, arguments, context, passed, failed))
+	
+func is_valid_instance(obj: Object, context: String) -> void:
+	output(ObjectX.o_is_valid_instance(obj, context))
+	
+func is_not_valid_instance(obj: Object, context: String) -> void:
+	output(ObjectX.o_is_not_valid_instance(obj, context))
 	 
 func object_has_meta(obj: Object, meta: String, context: String) -> void:
 	output(ObjectX.o_has_meta(obj, meta, context))

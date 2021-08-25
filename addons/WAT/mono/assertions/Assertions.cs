@@ -136,6 +136,16 @@ namespace WAT {
 			Output(File.DoesNotExist(path, context));
 		}
 		
+		public void IsValidInstance(Object obj = null, string context = "")
+		{
+			Output(ObjectX.IsValidInstance(obj, context));
+		}
+		
+		public void IsNotValidInstance(Object obj = null, string context = "")
+		{
+			Output(ObjectX.IsNotValidInstance(obj, context));
+		}
+		
 		public void ObjectHasMeta(Godot.Object obj, string meta, string context = "")
 		{
 			Output(ObjectX.HasMeta(obj, meta, context));
