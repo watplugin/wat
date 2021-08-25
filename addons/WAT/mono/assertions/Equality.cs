@@ -10,18 +10,18 @@ namespace WAT
     {
         public static Dictionary IsEqual(object a, object b, string context)
         {
-            var passed = $"|{a.GetType()}| {a} is equal to |{b.GetType()}|{b}";
-            var failed = $"|{a.GetType()}| {a} is not equal to |{b.GetType()}|{b}";
-            var success = (a.Equals(b));
-            var result = success ? passed : failed;
+            string passed = $"|{a?.GetType()}| {a} is equal to |{b?.GetType()}|{b}";
+            string failed = $"|{a?.GetType()}| {a} is not equal to |{b?.GetType()}|{b}";
+            bool success = a != null && b!= null && a.Equals(b);
+            string result = success ? passed : failed;
             return Result(success, passed, result, context);
         }
 
         public static Dictionary IsNotEqual(object a, object b, string context)
         {
-            var passed = $"|{a.GetType()}| {a} is not equal to |{b.GetType()}|{b}";
-            var failed = $"|{a.GetType()}| {a} is equal to |{b.GetType()}|{b}";
-            var success = !(a.Equals(b));
+            var passed = $"|{a?.GetType()}| {a} is not equal to |{b?.GetType()}|{b}";
+            var failed = $"|{a?.GetType()}| {a} is equal to |{b?.GetType()}|{b}";
+            var success = a != null && b!= null && !(a.Equals(b));
             var result = success ? passed : failed;
             return Result(success, passed, result, context);
         }
