@@ -22,7 +22,7 @@ func run(tests: Array, repeat: int, threads: int, results_view: Node = null) -> 
 		thread.start(self, "_run", thread)
 		thread.wait_to_finish()
 	for count in testthreads:
-		results += yield(self, COMPLETED) # 
+		results += yield(self, COMPLETED)
 	return results
 
 func _run(thread: Thread) -> void:

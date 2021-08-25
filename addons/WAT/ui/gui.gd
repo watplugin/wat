@@ -29,8 +29,8 @@ func _ready() -> void:
 	Threads.max_value = OS.get_processor_count() - 1
 	RunAll.connect("pressed", self, "_on_run_pressed")
 	DebugAll.connect("pressed", self, "_on_debug_pressed")
-	TestMenu.connect("run_pressed", self, "_on_run_pressed", [], CONNECT_DEFERRED)
-	TestMenu.connect("debug_pressed", self, "_on_debug_pressed", [], CONNECT_DEFERRED)
+	TestMenu.connect("run_pressed", self, "_on_run_pressed")
+	TestMenu.connect("debug_pressed", self, "_on_debug_pressed")
 	$Core/Menu/ResultsMenu.get_popup().connect("index_pressed", Results, "_on_view_pressed")
 	
 func _setup_scene_context() -> void:
@@ -52,11 +52,13 @@ func setup_editor_context(plugin, build: FuncRef, goto_func: FuncRef, filesystem
 	TestMenu.filesystem = _filesystem
 	_filesystem.update()
 	TestMenu.update_menus()
+	Server.results_view = Results
 	
 func _on_run_pressed(data = _filesystem.root) -> void:
+	Results.clear()
+	
 	if _filesystem.changed:
 		if not _filesystem.built and ClassDB.class_exists("CSharpScript") and Engine.is_editor_hint():
-			Results.clear()
 			_filesystem.built = yield(_filesystem.build_function.call_func(), "completed")
 			return
 		if data == _filesystem.root:
@@ -73,22 +75,38 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
 	add_child(instance)
 	var results: Array = yield(instance.run(tests, Repeats.value, Threads.value, Results), "completed")
-	
-	# Finishing
 	instance.queue_free()
-	Summary.summarize(results)
-	JUnitXML.write(results, Settings, Summary.time_taken)
-	_filesystem.failed.update(results)
+	_on_test_run_finished(results)
 	
 func _on_debug_pressed(data = _filesystem.root) -> void:
 	print("debug pressed: ", data.path)
-
-#func _launch_debugger(tests: Array, repeat: int, threads: int) -> Array:
-#	_plugin.get_editor_interface().play_custom_scene("res://addons/WAT/runner/TestRunner.tscn")
-#	if ProjectSettings.get_setting("WAT/Display") == 8:
-#		_plugin.make_bottom_panel_item_visible(self)
-#	yield(Server, "network_peer_connected")
-#	Server.send_tests(tests, repeat, threads)
-#	var results: Array = yield(Server, "results_received")
-#	_plugin.get_editor_interface().stop_playing_scene()
-#	return results
+	Results.clear()
+	
+	if _filesystem.changed:
+		if not _filesystem.built and ClassDB.class_exists("CSharpScript") and Engine.is_editor_hint():
+			_filesystem.built = yield(_filesystem.build_function.call_func(), "completed")
+			return
+		if data == _filesystem.root:
+			_filesystem.update()
+			data = _filesystem.root # New Root
+			
+	var tests: Array = data.get_tests()
+	if tests.empty():
+		push_warning("WAT: No tests found. Terminating run")
+		return
+	Summary.time()
+	Results.display(tests, Repeats.value)
+	_plugin.get_editor_interface().play_custom_scene("res://addons/WAT/runner/TestRunner.tscn")
+	if Settings.is_bottom_panel():
+		_plugin.make_bottom_panel_item_visible(self)
+	yield(Server, "network_peer_connected")
+	Server.send_tests(tests, Repeats.value, Threads.value)
+	var results: Array = yield(Server, "results_received") #results_received
+	_plugin.get_editor_interface().stop_playing_scene() # Check if this works exported
+	_on_test_run_finished(results)
+	
+func _on_test_run_finished(results: Array) -> void:
+	print("finished")
+	Summary.summarize(results)
+	JUnitXML.write(results, Settings, Summary.time_taken)
+	_filesystem.failed.update(results)

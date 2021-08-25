@@ -50,3 +50,6 @@ static func minimize_window_when_running_tests() -> bool:
 	
 static func port() -> int:
 	return ProjectSettings.get_setting("WAT/Port")
+
+static func is_bottom_panel() -> int:
+	return ProjectSettings.get_setting("WAT/Display") == 8

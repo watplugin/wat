@@ -6,7 +6,6 @@ signal network_peer_connected
 signal results_received
 var _peer_id: int
 
-
 func _ready() -> void:
 	if not Engine.is_editor_hint():
 		return
@@ -20,8 +19,30 @@ func _on_network_peer_connected(id: int) -> void:
 	emit_signal("network_peer_connected")
 	
 func send_tests(testdir: Array, repeat: int, thread_count: int) -> void:
+	print("sending tests")
+	print(custom_multiplayer.has_network_peer())
 	rpc_id(_peer_id, "_on_tests_received_from_server", testdir, repeat, thread_count)
 
 master func _on_results_received_from_client(results: Array = []) -> void:
+	print("results received")
 	emit_signal("results_received", results)
 	_peer.disconnect_peer(_peer_id, true)
+	
+var results_view: TabContainer
+master func _on_test_script_started(data: Dictionary) -> void:
+	results_view.on_test_script_started(data)
+	
+master func _on_test_script_finished(data: Dictionary) -> void:
+	results_view.on_test_script_finished(data)
+
+master func _on_test_method_started(data: Dictionary) -> void:
+	results_view.on_test_method_started(data)
+	
+master func _on_test_method_finished(data: Dictionary) -> void:
+	results_view.on_test_method_finished(data)
+
+master func _on_asserted(data: Dictionary) -> void:
+	results_view.on_asserted(data)
+	
+master func _on_test_method_described(data: Dictionary) -> void:
+	results_view.on_test_method_described(data)
