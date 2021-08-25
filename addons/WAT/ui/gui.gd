@@ -79,7 +79,6 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	_on_test_run_finished(results)
 	
 func _on_debug_pressed(data = _filesystem.root) -> void:
-	print("debug pressed: ", data.path)
 	Results.clear()
 	
 	if _filesystem.changed:
@@ -106,7 +105,6 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 	_on_test_run_finished(results)
 	
 func _on_test_run_finished(results: Array) -> void:
-	print("finished")
 	Summary.summarize(results)
 	JUnitXML.write(results, Settings, Summary.time_taken)
 	_filesystem.failed.update(results)

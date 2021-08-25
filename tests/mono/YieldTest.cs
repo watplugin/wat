@@ -14,7 +14,9 @@ public class YieldTest : WAT.Test
 	private bool d;
 	private bool e;
 	private bool f;
-	[Signal] public delegate void abc();
+	
+	[Signal] 
+	public delegate void abc();
 	
 	public async Task Start()
 	{
@@ -115,7 +117,9 @@ public class YieldTest : WAT.Test
 	{
 		CallDeferred("emit_signal", nameof(abc));
 		await UntilSignal(this, nameof(abc), 0.1);
+		GD.Print(10);
 		Assert.IsTrue((bool) Yielder.Call("is_stopped"), "Then the yielder is stopped");
-		Assert.IsTrue(! Yielder.IsConnected(nameof(abc), Yielder, "_on_resume"), "Then our signal to the yielder is disconnected");
+		Assert.IsTrue(!IsConnected(nameof(abc), Yielder, "_on_resume"), "Then our signal to the yielder is disconnected");
+		GD.Print(11);
 	}
 }

@@ -150,8 +150,6 @@ func _on_idx_pressed(idx: int, menu: PopupMenu) -> void:
 			emit_signal("run_pressed", menu.get_item_metadata(idx))
 		1:
 			emit_signal("debug_pressed", menu.get_item_metadata(idx))
-		_:
-			print("bad click (TestMenu.gd)")
 			
 func _on_failed_menu_pressed(idx: int) -> void:
 	filesystem.failed.set_tests(filesystem.root)
@@ -166,7 +164,5 @@ func _on_tag_pressed(idx: int, tag: String) -> void:
 	match idx:
 		0:
 			emit_signal("run_pressed", filesystem.tagged)
-			print("run %s" % tag)
 		1:
 			emit_signal("debug_pressed", filesystem.tagged)
-			print("debug %s" % tag)

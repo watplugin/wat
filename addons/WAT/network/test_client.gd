@@ -9,9 +9,7 @@ func _on_connection_failed() -> void:
 	push_warning("TestClient could not connect to TestServer")
 	
 puppet func _on_tests_received_from_server(tests: Array, repeat: int, thread_count: int) -> void:
-	print("received tests")
 	var results: Array = yield(get_parent().run(tests, repeat, thread_count, self), "completed")
-	print("runner done")
 	rpc_id(MASTER, "_on_results_received_from_client", results)
 
 # LiveWire Functions

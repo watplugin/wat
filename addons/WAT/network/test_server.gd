@@ -19,12 +19,9 @@ func _on_network_peer_connected(id: int) -> void:
 	emit_signal("network_peer_connected")
 	
 func send_tests(testdir: Array, repeat: int, thread_count: int) -> void:
-	print("sending tests")
-	print(custom_multiplayer.has_network_peer())
 	rpc_id(_peer_id, "_on_tests_received_from_server", testdir, repeat, thread_count)
 
 master func _on_results_received_from_client(results: Array = []) -> void:
-	print("results received")
 	emit_signal("results_received", results)
 	_peer.disconnect_peer(_peer_id, true)
 	
