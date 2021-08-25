@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using GDArray = Godot.Collections.Array;
 using Object = Godot.Object;
@@ -224,6 +225,26 @@ namespace WAT {
 		public void AutoPass(string context = "")
 		{
 			Output(Utility.AutoPass(context));
+		}
+
+		public void Throws(Action function, string context = "")
+		{
+			Output(Utility.Throws(function, context));
+		}
+
+		public void DoesNotThrow(Action function, string context = "")
+		{
+			Output(Utility.DoesNotThrow(function, context));
+		}
+		
+		public void Throws<T>(Action function, string context = "")
+		{
+			Output(Utility.Throws<T>(function, context));
+		}
+		
+		public void DoesNotThrow<T>(Action function, string context = "")
+		{
+			Output(Utility.DoesNotThrow<T>(function, context));
 		}
 	}
 }

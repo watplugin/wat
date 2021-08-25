@@ -1,8 +1,11 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0.015">
-	<testsuite name="Assert That" failures="0"  tests="2" time="0">
-		<testcase name=" auto pass" time="0"></testcase>
-		<testcase name=" assert that" time="0"></testcase>
+<testsuites failures="0" name="TestXML" tests="1" time="0.353">
+	<testsuite name="ExceptionTests" failures="0"  tests="5" time="0">
+		<testcase name="AnExceptionWasThrown" time="0"></testcase>
+		<testcase name="AnExceptionWasNotThrown" time="0"></testcase>
+		<testcase name="AnExceptionOfNullReferenceWasThrown" time="0"></testcase>
+		<testcase name="AnExceptionOfNullReferenceWasNotThrown" time="0"></testcase>
+		<testcase name="AnExceptionOfTypeWasNotThrown" time="0"></testcase>
 	</testsuite>
 
 </testsuites>

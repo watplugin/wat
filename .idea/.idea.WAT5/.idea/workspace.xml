@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a222607-6793-4366-a8d8-03644a186572" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/tests/mono/ExceptionTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WAT5/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WAT5.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WAT5.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/assertions/assertions.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/assertions/assertions.gd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/assertions/object.gd" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/assertions/object.gd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/gui.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/gui.tscn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/WAT/mono/assertions/Assertions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/Assertions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/WAT/mono/assertions/ObjectX.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/ObjectX.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/project.godot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/mono/ObjectTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/mono/ObjectTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/WAT/mono/assertions/Utility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/addons/WAT/mono/assertions/Utility.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/results.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/null.test.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit/null.test.gd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +77,7 @@
     <property name="settings.editor.selected.configurable" value="ReSpellerSettingsId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Start and Debug.Player">
+  <component name="RunManager" selected="Start and Debug.WATSharpGui">
     <configuration name="Attach to Player" type="ConnectRemote" factoryName="Mono Remote" show_console_on_std_err="false" show_console_on_std_out="false" port="23685" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
@@ -164,7 +158,7 @@
       <workItem from="1625578624517" duration="69000" />
       <workItem from="1628786146653" duration="140000" />
       <workItem from="1628786809854" duration="554000" />
-      <workItem from="1629891270041" duration="606000" />
+      <workItem from="1629891270041" duration="3514000" />
     </task>
     <servers />
   </component>
