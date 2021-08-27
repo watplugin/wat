@@ -2,6 +2,7 @@ extends MenuButton
 tool
 
 func _ready() -> void:
+	set_focus_mode(FOCUS_ALL)
 	var p: PopupMenu = get_popup()
 	p.set_item_metadata(0, "https://ko-fi.com/alexanddraw")
 	p.set_item_metadata(1, "https://wat.readthedocs.io/en/latest/")

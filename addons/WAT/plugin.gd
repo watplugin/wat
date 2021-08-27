@@ -32,7 +32,8 @@ func _enter_tree() -> void:
 func _exit_tree() -> void:
 	Metadata.save_metadata(_file_system)
 	_panel_docker.queue_free()
-	_test_panel.queue_free()
+	if(is_instance_valid(_test_panel)):
+		_test_panel.queue_free()
 	
 func _build_function() -> bool:
 	_test_panel.Results.clear()

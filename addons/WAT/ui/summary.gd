@@ -12,6 +12,10 @@ onready var Passing: Button = $Passing
 onready var Failing: Button = $Failing
 onready var Runs: Button = $Runs
 
+func _ready() -> void:
+	for child in get_children():
+		child.set_focus_mode(FOCUS_NONE)
+
 func time() -> void:
 	time_taken = 0.0
 	runcount += 1

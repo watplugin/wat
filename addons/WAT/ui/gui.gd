@@ -22,7 +22,11 @@ var _build: FuncRef
 func _ready() -> void:
 	_icons = preload("res://addons/WAT/ui/scaling/icons.gd").new()
 	TestMenu.icons = _icons
-	Results.icons = _icons 
+	Results.icons = _icons
+	RunAll.set_focus_mode(FOCUS_ALL)
+	DebugAll.set_focus_mode(FOCUS_ALL)
+	TestMenu.set_focus_mode(FOCUS_ALL)
+	$Core/Menu.set_focus_mode(FOCUS_ALL) 
 
 	if not Engine.is_editor_hint():
 		_setup_scene_context()

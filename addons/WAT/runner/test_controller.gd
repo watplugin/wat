@@ -64,7 +64,6 @@ func _on_asserted(assertion) -> void:
 		results.on_asserted(x) #emit_signal("asserted", x)
 	
 func _on_test_method_described(desc: String) -> void:
-	print(desc)
 	var x = {"dir": _dir, "path": _path, "method": _current_method, "description": desc}
 	if results != null:
 		results.on_test_method_described(x)

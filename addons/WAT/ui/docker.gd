@@ -32,9 +32,9 @@ func construct() -> void:
 		_plugin.add_control_to_dock(_state, _scene)
 	
 func deconstruct() -> void:
-	if _state == BOTTOM_PANEL:
+	if _state == BOTTOM_PANEL and is_instance_valid(_scene):
 		_plugin.remove_control_from_bottom_panel(_scene)
-	else:
+	elif is_instance_valid(_scene):
 		_plugin.remove_control_from_docks(_scene)
 
 func _notification(what) -> void:
