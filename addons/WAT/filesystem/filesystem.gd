@@ -42,20 +42,21 @@ func update(testdir: TestDirectory = _get_root()) -> void:
 	var relative: String = dir.get_next()
 	while relative != "":
 		absolute = "%s/%s" % [testdir.path, relative]
-		
+
 		# /. deals with most things like .git, .import, .mono etc
 		if dir.current_is_dir() and not "/." in absolute and not "/addons" in absolute:
 			var sub_testdir: TestDirectory = TestDirectory.new()
 			sub_testdir.path = absolute
 			subdirs.append(sub_testdir)
 			index[sub_testdir.path] = sub_testdir
-			
+			pass
+
 		elif dir.file_exists(absolute) and Validator.is_valid_test(absolute):
 			var test_script: TestScript = _get_test_script(absolute)
 			testdir.tests.append(test_script)
 			test_script.dir = testdir.path
 			index[test_script.path] = test_script
-			
+#
 		relative = dir.get_next()
 		
 	dir.list_dir_end()
@@ -74,9 +75,10 @@ func _get_root() -> TestDirectory:
 	return root
 		
 func _get_test_script(p: String) -> TestScript:
+	var test: Node = load(p).new()
 	var test_script: TestScript = TestScript.new()
 	test_script.path = p
-	test_script.names = load(p).new().get_test_methods()
+	test_script.names = test.get_test_methods()
 	for m in test_script.names:
 		var test_method: TestMethod = TestMethod.new()
 		test_method.path = p
@@ -85,4 +87,8 @@ func _get_test_script(p: String) -> TestScript:
 		index[test_script.path+m] = test_method
 	if p.ends_with(".gd") or p.ends_with(".gdc"):
 		test_script.time = YieldCalculator.calculate_yield_time(load(p), test_script.names.size())
+	test.free()
 	return test_script
+	
+func clear() -> void:
+	pass

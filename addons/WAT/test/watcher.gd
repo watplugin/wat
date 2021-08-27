@@ -34,7 +34,10 @@ func get_data(event: String) -> Dictionary:
 	return watching[event]
 		
 func clear() -> void:
-	pass
 	for object in _objects:
 		if is_instance_valid(object):
 			object.set_meta("watcher", null)
+
+#func _notification(what):
+#	if what == NOTIFICATION_PREDELETE:
+#		clear()

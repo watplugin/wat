@@ -69,6 +69,7 @@ func add_assertion(data: Dictionary) -> void:
 		failed = true
 	
 func on_test_method_described(data: Dictionary) -> void:
+	print(data["description"], " ........")
 	scripts[data["path"]].methods[data["method"]].component.set_text(0, data["description"])
 	
 func on_test_script_finished(data: Dictionary) -> void:

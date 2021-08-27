@@ -20,17 +20,20 @@ namespace WAT
 		private const int Recorder = 0; // Apparently we require the C# Version
 		private IEnumerable<Executable> _methods = null;
 		private Object _case = null;
-		private static readonly GDScript TestCase = GD.Load<GDScript>("res://addons/WAT/test/case.gd");
-		private readonly Reference _watcher = (Reference) GD.Load<GDScript>("res://addons/WAT/test/watcher.gd").New();
-		protected readonly Timer Yielder = (Timer) GD.Load<GDScript>("res://addons/WAT/test/yielder.gd").New();
-		protected readonly Assertions Assert = new Assertions();
-		private readonly Type _type;
+		private static GDScript TestCase { get; } = GD.Load<GDScript>("res://addons/WAT/test/case.gd");
+		private Reference _watcher { get; set; }
+		protected Timer Yielder { get; private set; }
+		protected Assertions Assert { get; private set; }
+		protected Type _type;
 
 		protected Test() { _type = GetType(); }
 		public void Blank() { }
 
 		public override void _Ready()
 		{
+			_watcher = (Reference) GD.Load<GDScript>("res://addons/WAT/test/watcher.gd").New();
+			Yielder = (Timer) GD.Load<GDScript>("res://addons/WAT/test/yielder.gd").New();
+			Assert = new Assertions();
 			Assert.Connect(nameof(Assertions.asserted), _case, "_on_asserted");
 			Assert.Connect(nameof(Assertions.asserted), this, nameof(OnAssertion));
 			Connect(nameof(described), _case, "_on_test_method_described");
@@ -84,7 +87,10 @@ namespace WAT
 			else { await Task.Run((() => { })); }
 		}
 		
-		protected void Describe(string description) { EmitSignal(nameof(described), description);}
+		protected void Describe(string description) 
+		{ 
+			EmitSignal(nameof(described), description);
+		}
 
 		protected SignalAwaiter UntilTimeout(double time) { return ToSignal((Timer) Yielder.Call("until_timeout", time), "finished"); }
 

@@ -27,4 +27,3 @@ func get_tests() -> Array:
 	
 func is_empty() -> bool:
 	return tests.empty()
-	

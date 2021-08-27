@@ -1,6 +1,7 @@
 extends Node
 class_name WATTest
 
+const Assertions: GDScript = preload("res://addons/WAT/assertions/assertions.gd")
 const COMPLETED: String = "completed"
 const IS_WAT_TEST: bool = true
 const YIELD: String = "finished"
@@ -14,12 +15,12 @@ var _last_assertion_passed: bool = false
 
 var recorder: Script = preload("res://addons/WAT/test/recorder.gd")
 var any: Script = preload("res://addons/WAT/test/any.gd")
-var asserts := preload("res://addons/WAT/assertions/assertions.gd").new()
-var direct = preload("res://addons/WAT/double/factory.gd").new()
-var _parameters = preload("res://addons/WAT/test/parameters.gd").new()
-var _watcher = preload("res://addons/WAT/test/watcher.gd").new()
-var _registry = preload("res://addons/WAT/double/registry.gd").new()
-var _yielder: Timer = preload("res://addons/WAT/test/yielder.gd").new()
+var asserts: Assertions
+var direct
+var _parameters
+var _watcher
+var _registry
+var _yielder: Timer
 var _case
 var _methods = []
 
@@ -68,6 +69,13 @@ func previous_assertion_failed() -> bool:
 	return not _last_assertion_passed
 
 func _ready() -> void:
+	asserts = preload("res://addons/WAT/assertions/assertions.gd").new()
+	direct = preload("res://addons/WAT/double/factory.gd").new()
+	_parameters = preload("res://addons/WAT/test/parameters.gd").new()
+	_watcher = preload("res://addons/WAT/test/watcher.gd").new()
+	_registry = preload("res://addons/WAT/double/registry.gd").new()
+	_yielder = preload("res://addons/WAT/test/yielder.gd").new()
+
 	p = _parameters.parameters
 	direct.registry = _registry
 	# May be better just as a property on asserts itself
@@ -152,9 +160,3 @@ func get_test_methods() -> Array:
 		if method.name.begins_with("test"):
 			methods.append(method.name)
 	return methods
-
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_PREDELETE:
-		_registry.clear()
-		_registry.free()
-		_watcher.clear()

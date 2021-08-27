@@ -15,6 +15,8 @@ func run(metadata: Dictionary) -> void:
 	var methods = metadata["methods"]
 	_test = load(_path).new().setup(_dir, _path, methods)
 	
+	# Signals leak in C# so we're just using a direct connection and GetParent Calls
+	
 	_test.connect("test_method_started", self, "_on_test_method_started")
 	_test.connect("described", self, "_on_test_method_described")
 	_test.connect("asserted", self, "_on_asserted")
@@ -62,6 +64,7 @@ func _on_asserted(assertion) -> void:
 		results.on_asserted(x) #emit_signal("asserted", x)
 	
 func _on_test_method_described(desc: String) -> void:
+	print(desc)
 	var x = {"dir": _dir, "path": _path, "method": _current_method, "description": desc}
 	if results != null:
 		results.on_test_method_described(x)

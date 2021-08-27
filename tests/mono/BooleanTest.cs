@@ -7,6 +7,7 @@ public class BooleanTest : WAT.Test
 	[Test]
 	public void TrueIsTrue()
 	{
+		Describe("A Tautology");
 		Assert.IsTrue(true, "True is True");
 	}
 	

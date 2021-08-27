@@ -7,6 +7,7 @@ const TestRunner: GDScript = preload("res://addons/WAT/runner/TestRunner.gd")
 var _filesystem: FileSystem
 var _run: Dictionary = {}
 var _time_taken: float = 0.0
+var _runner
 
 func _ready() -> void:
 	_load_tests()
@@ -47,7 +48,7 @@ func _parse() -> void:
 			_filesystem.tagged.set_tests(split[1], _filesystem.root)
 			run(_filesystem.tagged)
 		_:
-			get_tree().quit()
+			_quit()
 	
 func run(data: Reference) -> void:
 	var repeats: int = _repeats()
@@ -57,13 +58,13 @@ func run(data: Reference) -> void:
 	if tests.empty():
 		push_warning("WAT: No tests found")
 		OS.exit_code = 1
-		get_tree().quit()
+		_quit()
 	
-	var runner = TestRunner.new()
-	add_child(runner)
+	_runner = TestRunner.new()
+	add_child(_runner)
 	var x = load("res://addons/WAT/ui/results/tab_container.gd").new()
-	var results: Array = yield(runner.run(tests, _repeats(), _threads()), "completed")
-	runner.queue_free()
+	var results: Array = yield(_runner.run(tests, _repeats(), _threads()), "completed")
+	_runner.queue_free()
 	
 	var cases = {passed = 0, total = 0, crashed = 0}
 	for case in results:
@@ -80,8 +81,7 @@ func run(data: Reference) -> void:
 	Metadata.save_metadata(_filesystem)
 	JUnitXML.write(results, _filesystem.Settings, _time_taken)
 	
-	get_tree().quit()
-	
+	_quit()
 
 func _repeats() -> int:
 	# r=X where X is a number
@@ -128,3 +128,7 @@ func _display_failures(case) -> void:
 			for assertion in method.assertions:
 				if not assertion.success:
 					print("\t%s" % assertion.context, "\n\t  (EXPECTED: %s) | (RESULTED: %s)" % [assertion.expected, assertion.actual])
+
+func _quit() -> void:
+	get_tree().quit()
+	

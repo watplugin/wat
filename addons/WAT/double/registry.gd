@@ -20,3 +20,7 @@ func clear() -> void:
 	while not directors.empty():
 		var director = directors.pop_back()
 		director.clear()
+
+func _notification(what):
+	if what == NOTIFICATION_PREDELETE:
+		clear()

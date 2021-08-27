@@ -20,4 +20,3 @@ func _get_path() -> String:
 
 func get_tests() -> Array:
 	return [{"dir": dir, "name": self.name, "path": self.path, "methods": names, "time": time}]
-	
