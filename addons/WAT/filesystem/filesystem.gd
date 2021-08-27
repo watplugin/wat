@@ -91,4 +91,4 @@ func _get_test_script(p: String) -> TestScript:
 	return test_script
 	
 func clear() -> void:
-	pass
+	index.clear()

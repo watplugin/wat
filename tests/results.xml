@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0.184">
-	<testsuite name="Given A Boolean Assertion" failures="0"  tests="2" time="0">
-		<testcase name="A Tautology" time="0"></testcase>
-		<testcase name="FalseIsFalse" time="0"></testcase>
+<testsuites failures="0" name="TestXML" tests="1" time="9">
+	<testsuite name="Given a Boolean Assertion" failures="0"  tests="2" time="0">
+		<testcase name="When calling asserts.is_true(true)" time="0"></testcase>
+		<testcase name="When calling asserts.is_false(false)" time="0"></testcase>
 	</testsuite>
 
 </testsuites>

@@ -12,8 +12,12 @@ static func _is_valid_compiled_gdscript(p: String) -> bool:
 static func _is_valid_csharp(p: String) -> bool:
 	# TODO: This requires extra checking for invalid or uncompiled csharp scripts
 	# Any errors about no method or new function new found exists here
-	return (
-		p.ends_with(".cs") 
-		and not "addons/WAT" in p 
-		and load(p).has_method("new") #
-		and load(p).new().get("IS_WAT_TEST"))
+	if p.ends_with(".cs") and not "addons/WAT" in p and load(p).has_method("new"):
+		var test = load(p).new()
+		if test.get("IS_WAT_TEST"):
+			test.free()
+			return true
+		else:
+			test.free()
+			return false
+	return false

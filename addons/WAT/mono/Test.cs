@@ -31,6 +31,7 @@ namespace WAT
 
 		public override void _Ready()
 		{
+		
 			_watcher = (Reference) GD.Load<GDScript>("res://addons/WAT/test/watcher.gd").New();
 			Yielder = (Timer) GD.Load<GDScript>("res://addons/WAT/test/yielder.gd").New();
 			Assert = new Assertions();

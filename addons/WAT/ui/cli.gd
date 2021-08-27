@@ -64,7 +64,7 @@ func run(data: Reference) -> void:
 	add_child(_runner)
 	var x = load("res://addons/WAT/ui/results/tab_container.gd").new()
 	var results: Array = yield(_runner.run(tests, _repeats(), _threads()), "completed")
-	_runner.queue_free()
+	_runner.free()
 	
 	var cases = {passed = 0, total = 0, crashed = 0}
 	for case in results:
@@ -80,7 +80,8 @@ func run(data: Reference) -> void:
 	
 	Metadata.save_metadata(_filesystem)
 	JUnitXML.write(results, _filesystem.Settings, _time_taken)
-	
+	#cases.clear()
+	#results.clear()
 	_quit()
 
 func _repeats() -> int:
@@ -130,5 +131,6 @@ func _display_failures(case) -> void:
 					print("\t%s" % assertion.context, "\n\t  (EXPECTED: %s) | (RESULTED: %s)" % [assertion.expected, assertion.actual])
 
 func _quit() -> void:
+	_filesystem.clear()
 	get_tree().quit()
 	
