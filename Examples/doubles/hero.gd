@@ -1,4 +1,5 @@
 extends Reference
+class_name Hero
 
 var title: String
 var faction: String
@@ -8,3 +9,4 @@ func _init(_title: String, _faction: String, _health: int) -> void:
 	title = _title
 	faction = _faction
 	health = _health
+
