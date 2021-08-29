@@ -6,7 +6,7 @@ func title() -> String:
 func test_stubbing_is_on_floor_method_from_user_defined_class() -> void:
 	describe("From a user-defined script")
 
-	var bodydirector = direct.script("res://Examples/Scripts/body.gd")
+	var bodydirector = direct.script("res://OldExamples/Scripts/body.gd")
 	bodydirector.method("is_on_floor").stub(true)
 	var bodydouble = bodydirector.double()
 
@@ -24,7 +24,7 @@ func test_stubbing_is_on_floor_method_from_builtin_class2() -> void:
 func test_stubbing_is_on_floor_as_child_node_with_no_script() -> void:
 	describe("From a child node of a scene without scripts")
 
-	var bodydirector = direct.scene("res://Examples/Scene/NoScriptScene.tscn")
+	var bodydirector = direct.scene("res://OldExamples/Scene/NoScriptScene.tscn")
 	bodydirector.get_node("KinematicBody2D").method("is_on_floor").stub(true)
 	var bodydouble = bodydirector.double()
 

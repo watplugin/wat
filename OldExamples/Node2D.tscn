@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://OldExamples/Scene/NoScriptScene.tscn" type="PackedScene" id=1]
+
+
+[node name="Node2D" instance=ExtResource( 1 )]

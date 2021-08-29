@@ -7,7 +7,7 @@ func title():
 	return "Given a Test Double"
 
 func pre():
-	director = direct.script("res://Examples/Scripts/calculator.gd")
+	director = direct.script("res://OldExamples/Scripts/calculator.gd")
 
 func post():
 	director = null
@@ -96,7 +96,7 @@ func test_When_we_call_a_method_that_we_stubbed_to_call_its_super_implementation
 func test_When_we_add_a_doubled_inner_class_to_it():
 	describe("When we add an doubled inner class to it")
 
-	var inner = direct.script("res://Examples/Scripts/calculator.gd")
+	var inner = direct.script("res://OldExamples/Scripts/calculator.gd")
 	director.add_inner_class(inner, "Algebra")
 
 	asserts.is_equal(TAU, director.double().Algebra.get_tau(), "Then we can call the static methods of that inner double")
@@ -105,7 +105,7 @@ func test_When_we_add_a_doubled_inner_class_to_it():
 func test_When_we_stub_a_method_of_a_double_inner_class():
 	describe("When we stub a method of a doubled inner class")
 
-	director = direct.script("res://Examples/Scripts/calculator.gd", "Algebra")
+	director = direct.script("res://OldExamples/Scripts/calculator.gd", "Algebra")
 	director.method("scale").dummy()
 
 	asserts.is_null(director.double().scale(0, 0), "Then we get the stubbed value back")
@@ -113,7 +113,7 @@ func test_When_we_stub_a_method_of_a_double_inner_class():
 func test_When_we_double_an_inner_class() -> void:
 	describe("When we double an inner class")
 
-	var inner = direct.script("res://Examples/Scripts/calculator.gd", "Algebra")
+	var inner = direct.script("res://OldExamples/Scripts/calculator.gd", "Algebra")
 	var double = inner.double()
 	asserts.is_Vector2(double.scale(Vector2(1, 1), 1), "Then we can call methods on it")
 
@@ -127,7 +127,7 @@ func test_When_we_stubbed_a_keyword_method_by_passing_in_the_correct_keyword():
 func test_When_we_pass_in_deps_on_double() -> void:
 	describe("When we pass in dependecies on double")
 
-	director = direct.script("res://Examples/Scripts/user.gd")
+	director = direct.script("res://OldExamples/Scripts/user.gd")
 	var double = director.double(["Jackie"])
 
 	asserts.is_equal(double.username, "Jackie", "Then we can double the object successfully")
@@ -135,7 +135,7 @@ func test_When_we_pass_in_deps_on_double() -> void:
 func test_When_we_pass_in_deps_on_direct() -> void:
 	describe("When we pass in dependecies on direct")
 
-	director = direct.script("res://Examples/Scripts/user.gd", "", ["Jackie"])
+	director = direct.script("res://OldExamples/Scripts/user.gd", "", ["Jackie"])
 	var double = director.double()
 
 	asserts.is_equal(double.username, "Jackie", "Then we can double the object successfully")
@@ -143,7 +143,7 @@ func test_When_we_pass_in_deps_on_direct() -> void:
 func test_When_we_pass_a_funcref_as_a_subcall():
 	describe("When we pass a funcref as a subcall")
 
-	director = direct.script(load("res://Examples/Scripts/calculator.gd"))
+	director = direct.script(load("res://OldExamples/Scripts/calculator.gd"))
 	var callable: FuncRef = funcref(self, "set_sum")
 	director.method("add").subcall(callable)
 	var double = director.double()
@@ -153,7 +153,7 @@ func test_When_we_pass_a_funcref_as_a_subcall():
 func test_When_we_pass_a_funcref_as_a_subcall_that_returns_a_value():
 	describe("When we pass a funcref as a subcall that returns")
 
-	director = direct.script(load("res://Examples/Scripts/calculator.gd"))
+	director = direct.script(load("res://OldExamples/Scripts/calculator.gd"))
 	var callable: FuncRef = funcref(self, "set_sum")
 	var returns_value: bool = true
 	director.method("add").subcall(callable, returns_value)
@@ -162,7 +162,7 @@ func test_When_we_pass_a_funcref_as_a_subcall_that_returns_a_value():
 func test_When_we_pass_an_object_with_callfunc_method_as_a_subcall():
 	describe("When we pass an Object with a call_func function")
 
-	director = direct.script(load("res://Examples/Scripts/calculator.gd"))
+	director = direct.script(load("res://OldExamples/Scripts/calculator.gd"))
 	var callable: Object = Callable.new()
 	var returns_value: bool = true
 	director.method("add").subcall(callable, returns_value)

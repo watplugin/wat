@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Examples/Scene/Main.gd" type="Script" id=1]
-[ext_resource path="res://Examples/Scene/A.gd" type="Script" id=2]
-[ext_resource path="res://Examples/Scene/B.gd" type="Script" id=3]
-[ext_resource path="res://Examples/Scene/C.gd" type="Script" id=4]
-[ext_resource path="res://Examples/Scene/D.gd" type="Script" id=5]
+[ext_resource path="res://OldExamples/Scene/Main.gd" type="Script" id=1]
+[ext_resource path="res://OldExamples/Scene/A.gd" type="Script" id=2]
+[ext_resource path="res://OldExamples/Scene/B.gd" type="Script" id=3]
+[ext_resource path="res://OldExamples/Scene/C.gd" type="Script" id=4]
+[ext_resource path="res://OldExamples/Scene/D.gd" type="Script" id=5]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )

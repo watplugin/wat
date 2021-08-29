@@ -14,7 +14,7 @@ func test_subtract():
 	parameters([["addend", "augend", "result"], [2, 2, 0], [5, 3, 2], [7, 6, 1]])
 	describe("When we subtract %s from %s we get %s" % [p.addend as String, p.augend as String, p.result as String])
 	var expected = p.result
-	var actual = calculator.sub(p.addend, p.augend)
+	var actual = calculator.sub(p["addend"], p.augend)
 	asserts.is_equal(actual, expected)
 
 class calculator:

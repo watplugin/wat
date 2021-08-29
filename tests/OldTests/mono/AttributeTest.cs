@@ -14,7 +14,7 @@ public class AttributeTest : WAT.Test
 		Console.WriteLine("Calling Start X in Non Yield");
 		_calledStart = true;
 	}
-
+	
 	public void PreX()
 	{
 		Console.WriteLine("Calling Pre Y");

@@ -1,17 +1,19 @@
 extends WAT.Test
 
+const x = preload("res://Control.tscn")
 var director
 
 func title():
 	return "Given a Scene Director"
 
 func pre():
-	director = direct.scene("res://Examples/Scene/Main.tscn")
+	director = direct.scene("res://OldExamples/Scene/Main.tscn")
+	var d = direct.scene(x)
 
 func test_When_we_create_two_of_it_for_the_same_scene():
 	describe("When we create two of it for the same scene")
 
-	var director_b = direct.scene("res://Examples/Scene/Main.tscn")
+	var director_b = direct.scene("res://OldExamples/Scene/Main.tscn")
 
 	asserts.is_not_equal(director.nodes, director_b.nodes, "Then they do not share resources")
 

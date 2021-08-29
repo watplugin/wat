@@ -6,7 +6,7 @@ func title() -> String:
 func test_when_calling_file_exists_when_file_is_self() -> void:
 	describe("When calling asserts.file_exists when the file is this suite")
 	
-	asserts.file_exists("res://tests/unit/file.test.gd", "Then it passes")
+	asserts.file_exists("res://tests/OldTests/unit/file.test.gd", "Then it passes")
 	
 func test_when_calling_file_does_not_exist_when_there_is_no_file() -> void:
 	describe("When calling asserts.file_does_not_exist when there is no file")
