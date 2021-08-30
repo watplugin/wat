@@ -11,29 +11,29 @@ namespace WAT
 		// so they may still be valid instances
 		public static Dictionary IsNull(object obj, string context)
 		{
-			var passed = "object is null";
-			var failed = "object is not null";
-			var success = obj is null;
+			const string passed = "object is null";
+			const string failed = "object is not null";
+			bool success = obj is null;
 			if (!success)
 			{
 				//failed = $"{obj} is not null";
 			}
 
-			var result = success ? passed : failed;
+			string result = success ? passed : failed;
 			return Result(success, passed, result, context);
 		}
 		
 		public static Dictionary IsNotNull(object obj, string context)
 		{
-			var passed = "object is not null";
-			var failed = "object is null";
-			var success = !(obj is null);
+			string passed = "object is not null";
+			const string failed = "object is null";
+			bool success = !(obj is null);
 			if (success)
 			{
 				passed = $"{obj} is not null";
 			}
 
-			var result = success ? passed : failed;
+			string result = success ? passed : failed;
 			return Result(success, passed, result, context);
 		}
 	}

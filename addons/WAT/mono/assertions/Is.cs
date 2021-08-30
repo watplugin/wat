@@ -8,19 +8,19 @@ namespace WAT {
 	{
 		public static Dictionary IsType<T>(object value, string context)
 		{
-			var passed = $"{value} is builtin {typeof(T)}";
-			var failed = $"{value} is not builtin {typeof(T)}";
-			var success = value is T;
-			var result = success ? passed : failed;
+			string passed = $"{value} is builtin {typeof(T)}";
+			string failed = $"{value} is not builtin {typeof(T)}";
+			bool success = value is T;
+			string result = success ? passed : failed;
 			return Result(success, passed, result, context);
 		}
 
 		public static Dictionary IsNotType<T>(object value, string context)
 		{
-			var passed = $"{value} is builtin {typeof(T)}";
-			var failed = $"{value} is not builtin {typeof(T)}";
-			var success = !(value is T);
-			var result = success ? passed : failed;
+			string passed = $"{value} is builtin {typeof(T)}";
+			string failed = $"{value} is not builtin {typeof(T)}";
+			bool success = !(value is T);
+			string result = success ? passed : failed;
 			return Result(success, passed, result, context);
 		}
 	}
