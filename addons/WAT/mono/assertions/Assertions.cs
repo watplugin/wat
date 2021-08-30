@@ -207,6 +207,16 @@ namespace WAT {
 			Output(ObjectX.DoesNotHaveUserSignal(obj, signal, context));
 		}
 
+		public void IsNull(object obj, string context = "")
+		{
+			Output(Null.IsNull(obj, context));
+		}
+		
+		public void IsNotNull(object obj, string context = "")
+		{
+			Output(Null.IsNotNull(obj, context));
+		}
+
 		public void IsType<T>(object value, string context = "")
 		{
 			Output(Is.IsType<T>(value, context));
