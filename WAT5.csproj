@@ -93,6 +93,7 @@
     <Content Include="addons\WAT\ui\result_tree.gd" />
     <Content Include="addons\WAT\ui\summary.gd" />
     <Content Include="addons\WAT\ui\test_menu.gd" />
+    <Content Include="README.md" />
     <Content Include="tests\unit\assertthat.test.gd" />
     <Content Include="tests\unit\boolean.test.gd" />
     <Content Include="tests\unit\equality.test.gd" />

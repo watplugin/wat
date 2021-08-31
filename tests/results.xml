@@ -1,8 +1,7 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0.834">
-	<testsuite name="My Example Test" failures="0"  tests="2" time="0">
-		<testcase name="This Is My Simple Test" time="0"></testcase>
-		<testcase name="MyParameterizedTest" time="0"></testcase>
+<testsuites failures="0" name="TestXML" tests="1" time="0.039">
+	<testsuite name="Given the Addition Operator" failures="0"  tests="1" time="0">
+		<testcase name="When we add 5 to 3 we get 8" time="0"></testcase>
 	</testsuite>
 
 </testsuites>

@@ -1,4 +1,15 @@
 # ![Icon](./icon.svg) WAT 
+
+# Getting Started
+
+[Example GDScript Test]
+[Example C# Test]
+[Example of GDScript Test Doubles]
+
+# Example Test in GDScript
+# Example Test in C#
+
+
 ![3.3.2](https://github.com/CodeDarigan/WAT-GDScript/workflows/%20%20Godot%203.3.2%20%20/badge.svg)
 
 
