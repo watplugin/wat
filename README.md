@@ -3,7 +3,7 @@
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q51D9K5)
 
-1. [Getting Started](#Install)
+1. [Install](#Install)
 2. [Project Settings](#ProjectSettings)
 3. [GUI](#GUI)
 4. [CLI](#CLI)
