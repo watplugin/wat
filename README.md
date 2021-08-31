@@ -11,6 +11,7 @@
 
 ## Install
 <a name="Install"></a>
+
 0. It is advised to download WAT from the Godot Asset Library.
 1. You may download WAT or WAT Mono from the release page.
 2. Extract the downloaded zip file.
