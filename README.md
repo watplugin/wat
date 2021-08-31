@@ -60,7 +60,8 @@ need to close the project settings and then re-open.
 
 ## Graphical User Interface
 <a name="GUI"></a>
-TODO
+
+![Image](/images/gui.png)
 
 ## Command Line Interface
 <a name="CLI"></a>

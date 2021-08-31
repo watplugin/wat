@@ -1,6 +1,6 @@
 extends WAT.Test
 
-const x = preload("res://Control.tscn")
+const x = preload("res://OldExamples/Control.tscn")
 var director
 
 func title():
@@ -8,7 +8,7 @@ func title():
 
 func pre():
 	director = direct.scene("res://OldExamples/Scene/Main.tscn")
-	var d = direct.scene(x)
+	var _d = direct.scene(x)
 
 func test_When_we_create_two_of_it_for_the_same_scene():
 	describe("When we create two of it for the same scene")

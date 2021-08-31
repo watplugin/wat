@@ -10,6 +10,7 @@ func test_yield_until_timeout() -> void:
 	yield(until_timeout(0.2), YIELD)
 	asserts.auto_pass("Yielding On Timeout")
 	
+# warning-ignore:unused_signal
 signal my_signal
 func test_yield_until_signal() -> void:
 	watch(self, "my_signal")
@@ -23,5 +24,5 @@ func test_yield_until_signal() -> void:
 	
 	yield(until_signal(self, "my_signal", 0.2), YIELD)
 	asserts.auto_pass("Yielding on Signal")
-	asserts.was_emitted(self, "my_signal")
+	asserts.signal_was_emitted(self, "my_signal")
 	unwatch(self, "my_signal")

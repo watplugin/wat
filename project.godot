@@ -86,7 +86,7 @@ Display=8
 [application]
 
 config/name="WAT5"
-run/main_scene="res://Node.tscn"
+run/main_scene="res://OldExamples/Node.tscn"
 config/icon="res://icon.svg"
 
 [editor_plugins]
