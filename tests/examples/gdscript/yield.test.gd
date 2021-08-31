@@ -12,6 +12,7 @@ func test_yield_until_timeout() -> void:
 	
 signal my_signal
 func test_yield_until_signal() -> void:
+	watch(self, "my_signal")
 	call_deferred("emit_signal", "my_signal")
 	
 	# Developers can yield on a custom signal by passing in the..
@@ -19,5 +20,8 @@ func test_yield_until_signal() -> void:
 	# ..a float time limit and waits for the returned yielder object to..
 	# ..emit the built-in YIELD Signal (which will be emitted either when..
 	# ..the emitter emits the signal or the time limit has run out).
+	
 	yield(until_signal(self, "my_signal", 0.2), YIELD)
 	asserts.auto_pass("Yielding on Signal")
+	asserts.was_emitted(self, "my_signal")
+	unwatch(self, "my_signal")

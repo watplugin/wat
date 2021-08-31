@@ -9,6 +9,11 @@ public class AwaitTest : WAT.Test
     public event EventHandler MyEvent;
     public event EventHandler MyEventWithArgs;
     
+    // In Addition to the Tests below, Developers may also await..
+    // ..any method that is targeted by the the [Start], [Pre]..
+    // ..[Post], [End] attributes provided they change the..
+    // ..targeted method's signature to async task.
+
     [Test]
     public async Task AwaitUntilTimeout()
     {

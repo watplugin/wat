@@ -1,10 +1,22 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0.401">
+<testsuites failures="0" name="TestXML" tests="3" time="0.901">
 	<testsuite name="AwaitTest" failures="0"  tests="4" time="0">
 		<testcase name="AwaitUntilTimeout" time="0"></testcase>
 		<testcase name="AwaitUntilSignal" time="0"></testcase>
 		<testcase name="AwaitUntilEvent" time="0"></testcase>
 		<testcase name="AwaitUntilEventWithArgs" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="My Example Test" failures="0"  tests="2" time="0">
+		<testcase name="This Is My Simple Test" time="0"></testcase>
+		<testcase name="MyParameterizedTest" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="WatchSignalsTest" failures="0"  tests="4" time="0">
+		<testcase name="SignalWasEmitted" time="0"></testcase>
+		<testcase name="SignalWasNotEmitted" time="0"></testcase>
+		<testcase name="SignalWasEmittedXTimes" time="0"></testcase>
+		<testcase name="SignalWasEmittedWithArguments" time="0"></testcase>
 	</testsuite>
 
 </testsuites>
