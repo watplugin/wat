@@ -62,6 +62,53 @@ need to close the project settings and then re-open.
 ## Graphical User Interface
 <a name="GUI"></a>
 
+Top Left Menu (Left To Right):
+
+__Run All Tests__
+
+    Runs all tests directly in the Editor. WAT does not have access to the
+    debugger when run this way.
+
+    Note: A Rebuild might be required by any User who is using WAT Mono.
+
+__Debug All Tests__
+
+    Runs all tests in the Scene. WAT does have access to the debugger when
+    run this way.
+
+__Select Tests__
+
+    Users may select to Run (in editor) or Debug (in scene): previously failed tests, a set of tagged tests, a Directory, Script or a Method.
+
+    Note: Users may organize their tests into nested directories but this is only
+    for organizational purposes. WAT will *only* run the top-level tests of any directory.
+
+    Note: To edit the tags of a script, navigate to the script and then to Edit Tags. Check which tags you want the script to have (or uncheck those which you
+    don't want it to have)/
+
+__Filter Results__
+
+    Users can choose to collapse all results, expand all results or expand only failures (which will collapse all results but expand the failed methods).
+
+__Repeat X Times__
+
+    Users can choose to repeat a Test Run immediatly so many times. This can help
+    when testing erratic bugs where the problem only exists sometimes. Choose 0
+    to run the tests once.
+
+__Run on X Thread(s)__
+
+    Users can set the count of threads to run their tests on (to the limit of their
+    processor core count - 1 for WAT itself otherwise it will stall).
+
+    Use 1 thread to not run on any additional threads.
+
+    Note: Do not use Repeats & Threads together. There is currently a bug.
+
+__Links__
+
+    A Set of links that may or may not be useful to you.
+
 ![Image](/images/gui.png)
 
 ## Command Line Interface
