@@ -204,8 +204,8 @@ __Run on X Threads__
 
 ## Assertions
 <a name="Assertions"></a>
-[GDScript Assertions](/addons/WAT/assertions/assertions.gd)
-[C# Assertions](/addons/WAT/mono/assertions/Assertions.cs)
+- [GDScript Assertions](/addons/WAT/assertions/assertions.gd)
+- [C# Assertions](/addons/WAT/mono/assertions/Assertions.cs)
 
 
 
