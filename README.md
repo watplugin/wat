@@ -8,6 +8,7 @@
 3. [GUI](#GUI)
 4. [CLI](#CLI)
 5. [Example Tests](#Examples)
+6. [Assertions](#Assertions)
 
 ## Install
 <a name="Install"></a>
@@ -201,7 +202,10 @@ __Run on X Threads__
     - [Awaiting in Tests](/test/examples/csharp/AwaitTest.cs)
     - [Watching Signals in Tests](/test/examples/csharp/WatchingSignalsTest.cs)
 
-
+## Assertions
+<a name="Assertions"></a>
+[GDScript Assertions](/addons/WAT/assertions/assertions.gd)
+[C# Assertions](/addons/WAT/mono/assertions/Assertions.cs)
 
 
 
