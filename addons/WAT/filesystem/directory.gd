@@ -20,9 +20,8 @@ func get_tests() -> Array:
 	if is_root:
 		for subdir in nested_subdirs:
 			requested += subdir.get_tests()
-	else:
-		for script in tests:
-			requested += script.get_tests()
+	for script in tests:
+		requested += script.get_tests()
 	return requested
 	
 func is_empty() -> bool:
