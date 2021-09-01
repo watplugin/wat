@@ -62,7 +62,10 @@ need to close the project settings and then re-open.
 ## Graphical User Interface
 <a name="GUI"></a>
 
-Top Left Menu (Left To Right):
+![Image](/images/gui.png)
+
+
+### Top Left Menu ( Left To Right )
 
 __Run All Tests__
 
@@ -109,7 +112,29 @@ __Links__
 
     A Set of links that may or may not be useful to you.
 
-![Image](/images/gui.png)
+### Bottom Left Labels ( Left to Right )
+
+__Runs__
+
+    The number of times tests have been run since WAT was open.
+
+__Total Tests__
+
+    The number of total tests scripts ran in the previous Test Run.
+
+__Passed Tests__
+
+    The number of total test scripts that passed in the previous Test Run.
+
+__Failed Tests__
+
+    The number of total test scripts that failed in the previous Test Run.
+
+__Times__
+
+    The time the Test Run is taking (or has taken if finished). This updates
+    live.
+
 
 ## Command Line Interface
 <a name="CLI"></a>
