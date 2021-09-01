@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://addons/WAT/ui/gui.gd" type="Script" id=1]
 [ext_resource path="res://addons/WAT/assets/play.png" type="Texture" id=2]
@@ -9,10 +9,8 @@
 [ext_resource path="res://addons/WAT/ui/test_menu.gd" type="Script" id=9]
 [ext_resource path="res://addons/WAT/assets/play_debug.png" type="Texture" id=10]
 [ext_resource path="res://addons/WAT/assets/timer.png" type="Texture" id=11]
-[ext_resource path="res://addons/WAT/assets/request_docs.svg" type="Texture" id=12]
 [ext_resource path="res://addons/WAT/assets/kofi.png" type="Texture" id=13]
 [ext_resource path="res://addons/WAT/assets/script.png" type="Texture" id=14]
-[ext_resource path="res://addons/WAT/assets/docs.svg" type="Texture" id=15]
 [ext_resource path="res://addons/WAT/assets/issue.svg" type="Texture" id=16]
 [ext_resource path="res://addons/WAT/assets/failed.png" type="Texture" id=17]
 [ext_resource path="res://addons/WAT/assets/passed.png" type="Texture" id=18]
@@ -179,7 +177,7 @@ focus_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 5
 text = "Links"
-items = [ "Support WAT", ExtResource( 13 ), 0, false, false, 0, 0, "https://ko-fi.com/alexanddraw", "", false, "Documentation", ExtResource( 15 ), 0, false, false, 3, 0, "https://wat.readthedocs.io/en/latest/", "", false, "Request Docs", ExtResource( 12 ), 0, false, false, 2, 0, "https://github.com/CodeDarigan/WAT-Documentation/issues/new", "", false, "Report an Issue", ExtResource( 16 ), 0, false, false, 1, 0, "https://github.com/CodeDarigan/WAT-GDScript/issues/new", "", false ]
+items = [ "Support WAT", ExtResource( 13 ), 0, false, false, 0, 0, "https://ko-fi.com/alexanddraw", "", false, "Report an Issue", ExtResource( 16 ), 0, false, false, 1, 0, "https://github.com/AlexDarigan/WAT/issues/new", "", false ]
 script = ExtResource( 4 )
 
 [node name="Results" type="TabContainer" parent="Core"]
