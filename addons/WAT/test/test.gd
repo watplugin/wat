@@ -38,14 +38,14 @@ func setup(directory = "", filepath = "", methods = []):
 func run():
 	var cursor = -1
 	yield(call_function("start"), COMPLETED)
-	for function in _methods:
+	while cursor < _methods.size() - 1 or rerun_method:
 		if not rerun_method:
 			cursor += 1
 		for hook in ["pre", "execute", "post"]:
 			yield(call_function(hook, cursor), COMPLETED)
 			# Post-yield so this should be correct
 			# What about repeated methods?
-			if hook == "execute":
+			if hook == "execute" and not rerun_method:
 				emit_signal("test_method_finished")
 	yield(call_function("end"), COMPLETED)
 	emit_signal("test_script_finished", get_results())
@@ -57,8 +57,9 @@ func call_function(function, cursor = 0):
 
 func execute(cursor: int):
 	var _current_method: String = _methods[cursor]
-	emit_signal("test_method_started", _current_method)
-	_case.add_method(_current_method)
+	if not rerun_method:
+		emit_signal("test_method_started", _current_method)
+		_case.add_method(_current_method)
 	return call(_current_method)
 
 func _on_assertion(assertion: Dictionary) -> void:
