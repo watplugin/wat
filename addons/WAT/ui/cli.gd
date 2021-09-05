@@ -115,8 +115,8 @@ func _display(cases: Dictionary) -> void:
 	print("""
 	-------RESULTS-------
 	Took {seconds} second(s)
-	{crashed} Tests Crashed
-	{passed} / {total} Tests Passed
+	{crashed} Test Scripts Crashed
+	{passed} / {total} Test Scripts Passed
 	-------RESULTS-------
 	""".format(cases).dedent())
 
