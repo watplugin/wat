@@ -193,8 +193,8 @@ __Run on X Threads__
 - GDScript Examples
     - [Basic Test](/tests/examples/gdscript/example.test.gd)
     - [Yielding in Tests](/tests/examples/gdscript/yield.test.gd)
-    - [Watching Signals in Tests](/test/examples/gdscript/watch_signals.test.gd)
-    - [Test Doubles](/test/examples/gd/script/doubles)
+    - [Watching Signals in Tests](/tests/examples/gdscript/watch_signals.test.gd)
+    - [Test Doubles](/tests/examples/gdscript/doubles)
 
 <a name="CSharpExamples"></a>
 - C# Examples
