@@ -6,7 +6,7 @@ static func write(results, settings: Reference, time: float = 0.0) -> void:
 		push_warning("WAT: Cannot find results directory. Defaulting to root to write Junit XML")
 		path = "res://"
 	else:
-		path = settings.test_directory()
+		path = settings.results_directory()
 	if not Directory.new().dir_exists(path):
 		Directory.new().make_dir_recursive(path)
 	var tests: int = results.size()
