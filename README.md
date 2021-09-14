@@ -199,8 +199,8 @@ __Run on X Threads__
 <a name="CSharpExamples"></a>
 - C# Examples
     - [Basic Test](/tests/examples/csharp/ExampleTest.cs)
-    - [Awaiting in Tests](/test/examples/csharp/AwaitTest.cs)
-    - [Watching Signals in Tests](/test/examples/csharp/WatchingSignalsTest.cs)
+    - [Awaiting in Tests](/tests/examples/csharp/AwaitTest.cs)
+    - [Watching Signals in Tests](/tests/examples/csharp/WatchingSignalsTest.cs)
 
 ## Assertions
 <a name="Assertions"></a>
