@@ -48,6 +48,10 @@ need to close the project settings and then re-open.
     You can add string tags to your test so that you can run tests that are split across different folders in a group. You
     define which tags can be added in this setting but you do the actual adding via the GUI.
 
+- *Cache Tests*
+
+    Will avoid rescanning your test directory unless changes to them are detected. Disable this if you're using an external editor, since not all changes from an external editor are detected.
+
 - *Window Size*
 
     Defines the window size when running Tests.

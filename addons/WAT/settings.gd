@@ -9,6 +9,7 @@ static func initialize() -> void:
 	_add_setting("Results_Directory", TYPE_STRING, "res://")
 	_add_setting("Test_Metadata_Directory", TYPE_STRING, "res://")
 	_add_setting("Tags", TYPE_STRING_ARRAY, PoolStringArray())
+	_add_setting("Cache_Tests", TYPE_BOOL, true)
 	_add_setting("Window_Size", TYPE_VECTOR2, Vector2(1280, 720))
 	_add_setting("Minimize_Window_When_Running_Tests", TYPE_BOOL, false)
 	_add_setting("Port", TYPE_INT, 6008)
@@ -44,6 +45,9 @@ static func window_size() -> Vector2:
 	
 static func tags() -> PoolStringArray:
 	return ProjectSettings.get_setting("WAT/Tags")
+
+static func cache_tests() -> bool:
+	return ProjectSettings.get_setting("Cache_Tests")
 	
 static func minimize_window_when_running_tests() -> bool:
 	return ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests")
