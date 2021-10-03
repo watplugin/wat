@@ -25,7 +25,7 @@ func _init(_build_function = null) -> void:
 	failed = FailedTests.new()
 
 func _set_filesystem_changed(has_changed: bool) -> void:
-	if has_changed:
+	if has_changed or ClassDB.class_exists("CSharpScript"):
 		changed = true
 		built = false
 
