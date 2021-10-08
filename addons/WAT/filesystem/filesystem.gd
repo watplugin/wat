@@ -31,7 +31,7 @@ func _set_filesystem_changed(has_changed: bool) -> void:
 
 func _get_filesystem_built() -> bool:
 	# If it is not Mono, automatically return true because it is irrelevant to GDScript.
-	return built and Engine.is_editor_hint() or not ClassDB.class_exists("CSharpScript")
+	return built or not Engine.is_editor_hint() or not ClassDB.class_exists("CSharpScript")
 
 func _recursive_update(testdir: TestDirectory) -> void:
 	var dir: Directory = Directory.new()
