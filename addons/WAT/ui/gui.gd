@@ -62,7 +62,7 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	Results.clear()
 	
 	if _filesystem.changed or not Settings.cache_tests():
-		if not _filesystem.built and ClassDB.class_exists("CSharpScript") and Engine.is_editor_hint():
+		if not _filesystem.built:
 			_filesystem.built = yield(_filesystem.build_function.call_func(), "completed")
 			return
 		if data == _filesystem.root:
@@ -86,7 +86,7 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 	Results.clear()
 	
 	if _filesystem.changed or not Settings.cache_tests():
-		if not _filesystem.built and ClassDB.class_exists("CSharpScript") and Engine.is_editor_hint():
+		if not _filesystem.built:
 			_filesystem.built = yield(_filesystem.build_function.call_func(), "completed")
 			return
 		if data == _filesystem.root:

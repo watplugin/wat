@@ -35,7 +35,7 @@ func clear() -> void:
 	_menu.queue_free()
 	
 func build():
-	if not filesystem.built and ClassDB.class_exists("CSharpScript") and Engine.is_editor_hint():
+	if not filesystem.built:
 		filesystem.built = yield(filesystem.build_function.call_func(), "completed")
 		return
 	
