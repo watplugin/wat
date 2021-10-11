@@ -13,7 +13,7 @@ var root: TestDirectory
 var tagged: TaggedTests
 var failed: FailedTests
 var changed: bool = false setget _set_filesystem_changed
-var built: bool = false # CSharpScript
+var built: bool = false setget ,_get_filesystem_built # CSharpScript
 var build_function: FuncRef
 var index = {} # Path / Object
 
@@ -25,11 +25,15 @@ func _init(_build_function = null) -> void:
 	failed = FailedTests.new()
 
 func _set_filesystem_changed(has_changed: bool) -> void:
+	changed = has_changed
 	if has_changed or ClassDB.class_exists("CSharpScript"):
-		changed = true
 		built = false
 
-func update(testdir: TestDirectory = _get_root()) -> void:
+func _get_filesystem_built() -> bool:
+	# If it is not Mono, automatically return true because it is irrelevant to GDScript.
+	return built or not Engine.is_editor_hint() or not ClassDB.class_exists("CSharpScript")
+
+func _recursive_update(testdir: TestDirectory) -> void:
 	var dir: Directory = Directory.new()
 	var err: int = dir.open(testdir.path)
 	if err != OK:
@@ -56,7 +60,7 @@ func update(testdir: TestDirectory = _get_root()) -> void:
 			testdir.tests.append(test_script)
 			test_script.dir = testdir.path
 			index[test_script.path] = test_script
-#
+
 		relative = dir.get_next()
 		
 	dir.list_dir_end()
@@ -64,8 +68,13 @@ func update(testdir: TestDirectory = _get_root()) -> void:
 	testdir.relative_subdirs += subdirs
 	testdir.nested_subdirs += subdirs
 	for subdir in subdirs:
-		update(subdir)
+		_recursive_update(subdir)
 		testdir.nested_subdirs += subdir.nested_subdirs
+
+func update(testdir: TestDirectory = _get_root()) -> void:
+	_recursive_update(testdir)
+	# The changed attribute should be set to false after the update otherwise it is redundant.
+	changed = false
 		
 func _get_root() -> TestDirectory:
 	index = {}
