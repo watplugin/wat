@@ -26,7 +26,7 @@ func _init(_build_function = null) -> void:
 
 func _set_filesystem_changed(has_changed: bool) -> void:
 	changed = has_changed
-	if has_changed:
+	if has_changed or ClassDB.class_exists("CSharpScript"):
 		built = false
 
 func _get_filesystem_built() -> bool:
