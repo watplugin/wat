@@ -23,7 +23,6 @@ func add_assertion(tree: Tree, data: Dictionary):
 	total += 1
 	if data["assertion"]["success"]:
 		passed += 1
-	component.set_text(0, "%s" % title)
 	if data["assertion"]["context"] == "":
 		component.collapsed = true
 		var expected: TreeItem = tree.create_item(component)
