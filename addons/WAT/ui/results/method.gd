@@ -1,28 +1,22 @@
-extends Reference
+extends "res://addons/WAT/ui/results/counter.gd"
 
 const AssertionTreeItem: GDScript = preload("res://addons/WAT/ui/results/assertion.gd")
 
 var scriptpath: String
-var component: TreeItem
-var path: String
-var title: String
-var passed: int = 0
-var total: int = 0
 var name: String
 var assertions: Array = []
 
-func _init(_component: TreeItem, _title: String, _script: String) -> void:
+func _init(_component: TreeItem, _title: String, _script: String).(_component) -> void:
 	scriptpath = _script
-	component = _component
 	path = _title
 	name = _title # func name
-	title = _title.replace("test_", "").replace("_", " ")
-	_component.set_text(0, title) 
+	set_title(_title.replace("test_", "").replace("_", " "))
+	show = false # Modify if test method results should display number of assertions passed.
 	
 func add_assertion(tree: Tree, data: Dictionary):
-	total += 1
+	set_total(total + 1)
 	if data["assertion"]["success"]:
-		passed += 1
+		set_passed(passed + 1)
 	if data["assertion"]["context"] == "":
 		component.collapsed = true
 		var expected: TreeItem = tree.create_item(component)
