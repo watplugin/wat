@@ -43,6 +43,9 @@ func is_equal_or_greater_than(a, b, context: String = "") -> void:
 func is_equal_or_less_than(a, b, context: String = "") -> void:
 	output(Equality.is_equal_or_less_than(a, b, context))
 
+func is_equal_approx_(a, b, context: String = "") -> void:
+	output(Equality.is_equal_approx_(a, b, context))
+
 func is_in_range(value, low, high, context: String = "") -> void:
 	output(RangeX.is_in_range(value, low, high, context))
 

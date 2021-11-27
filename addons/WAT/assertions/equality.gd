@@ -56,4 +56,17 @@ static func is_equal_or_greater_than(a, b, context: String) -> Dictionary:
 	var result = passed if success else failed
 	return _result(success, expected, result, context)
 
+static func is_equal_approx_(a, b, context: String) -> Dictionary:
+	var typeofa = type2str(a)
+	var typeofb = type2str(b)
+	var passed: String = "|%s| %s is approx. equal to |%s| %s" % [typeofa, a, typeofb, b]
+	var failed: String = "|%s| %s is not approx. equal to |%s| %s" % [typeofa, a, typeofb, b]
+	var success
+	if a is int or a is float:
+		success = is_equal_approx(a, b)
+	else:
+		success = a.is_equal_approx(b)
+	var expected = passed
+	var result = passed if success else failed
+	return _result(success, expected, result, context)
 
