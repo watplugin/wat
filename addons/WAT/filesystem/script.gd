@@ -6,6 +6,7 @@ var path: String setget ,_get_path
 var methods: Array # TestMethods
 var names: Array # MethodNames
 var time: float = 0.0 # YieldTime
+var parse: int # stores Error code (int)
 
 func _get_sanitized_name() -> String:
 	var n: String = path.substr(path.find_last("/") + 1)
@@ -19,4 +20,4 @@ func _get_path() -> String:
 	return path.replace("///", "//") # 
 
 func get_tests() -> Array:
-	return [{"dir": dir, "name": self.name, "path": self.path, "methods": names, "time": time}]
+	return [{"dir": dir, "name": self.name, "path": self.path, "methods": names, "time": time, "parse": parse}]
