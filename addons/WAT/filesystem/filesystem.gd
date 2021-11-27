@@ -89,11 +89,10 @@ func _get_test_script(p: String) -> TestScript:
 	var test_script: TestScript = TestScript.new()
 	test_script.parse = script.reload(true)
 	test_script.path = p
-	if test_script.parse == OK:
-		if script.get("IS_WAT_TEST"):
-			var test: Node = script.new()
+	if test_script.parse == OK and script.has_method("new"):
+		var test: Node = script.new()
+		if script.get("IS_WAT_TEST") or test.get("IS_WAT_TEST"):
 			test_script.names = test.get_test_methods()
-			test.free()
 			for m in test_script.names:
 				var test_method: TestMethod = TestMethod.new()
 				test_method.path = p
@@ -101,9 +100,10 @@ func _get_test_script(p: String) -> TestScript:
 				test_script.methods.append(test_method)
 				index[test_script.path+m] = test_method
 			if p.ends_with(".gd") or p.ends_with(".gdc"):
-				test_script.time = YieldCalculator.calculate_yield_time(load(p), test_script.names.size())
+				test_script.time = YieldCalculator.calculate_yield_time(script, test_script.names.size())
 		else:
 			test_script = null
+		test.free()
 	return test_script
 
 func clear() -> void:
