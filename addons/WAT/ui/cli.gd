@@ -110,7 +110,7 @@ func _threads() -> int:
 	
 
 func _display(cases: Dictionary) -> void:
-	cases.seconds = OS.get_ticks_msec() / 1000
+	cases.seconds = stepify(OS.get_ticks_msec() / 1000.0, 0.001)
 	_time_taken = cases.seconds
 	print("""
 	-------RESULTS-------
