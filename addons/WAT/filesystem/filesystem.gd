@@ -18,7 +18,6 @@ var build_function: FuncRef
 var index = {} # Path / Object
 
 # Initialize/Save meta
-
 func _init(_build_function = null) -> void:
 	build_function = _build_function
 	tagged = TaggedTests.new(Settings)
@@ -30,7 +29,7 @@ func _set_filesystem_changed(has_changed: bool) -> void:
 		built = false
 
 func _get_filesystem_built() -> bool:
-	# If it is not Mono, automatically return true because it is irrelevant to GDScript.
+	# If not Mono, return true because it is irrelevant to GDScript.
 	return built or not Engine.is_editor_hint() or not ClassDB.class_exists("CSharpScript")
 
 func _recursive_update(testdir: TestDirectory) -> void:
@@ -74,7 +73,7 @@ func _recursive_update(testdir: TestDirectory) -> void:
 
 func update(testdir: TestDirectory = _get_root()) -> void:
 	_recursive_update(testdir)
-	# The changed attribute should be set to false after the update otherwise it is redundant.
+	# Set "changed" to false after the update, otherwise it is redundant.
 	changed = false
 		
 func _get_root() -> TestDirectory:
@@ -87,6 +86,7 @@ func _get_root() -> TestDirectory:
 func _get_test_script(p: String) -> TestScript:
 	var script = load(p)
 	if not script:
+		# If script is null, then it means it wasn't loaded, so exclude it.
 		return null
 	var test_script: TestScript = TestScript.new()
 	# reload() needed because load() still loads broken script, but the error..
@@ -108,10 +108,15 @@ func _get_test_script(p: String) -> TestScript:
 					test_script.time = YieldCalculator.calculate_yield_time(
 							script, test_script.names.size())
 			else:
+				# If the script has no load errors, yet it doesn't have the..
+				# ..IS_WAT_TEST attribute, then it should be excluded.
 				test_script = null
 			test.free()
 		else:
+			# The script has no load errors, yet it doesn't have the "new()"..
+			# ..method, so it is an invalid object that should be excluded.
 			test_script = null
+	# Loaded scripts with errors are still included.
 	return test_script
 
 func clear() -> void:
