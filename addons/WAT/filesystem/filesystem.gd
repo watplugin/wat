@@ -86,6 +86,8 @@ func _get_root() -> TestDirectory:
 		
 func _get_test_script(p: String) -> TestScript:
 	var script = load(p)
+	if not script:
+		return null
 	var test_script: TestScript = TestScript.new()
 	test_script.parse = script.reload(true)
 	test_script.path = p

@@ -52,7 +52,7 @@ func run(metadata: Dictionary) -> void:
 	return test_results
 	
 func _on_test_script_started(data: Dictionary) -> void:
-	data["title"] = _test.title() if _test else data["name"]
+	data["title"] = _test.title() if is_instance_valid(_test) else data["name"]
 	if results != null:
 		results.on_test_script_started(data)
 
