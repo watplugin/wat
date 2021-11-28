@@ -89,23 +89,29 @@ func _get_test_script(p: String) -> TestScript:
 	if not script:
 		return null
 	var test_script: TestScript = TestScript.new()
+	# reload() needed because load() still loads broken script, but the error..
+	# .. is not in our control, so reload() will help us identify parse errors.
 	test_script.parse = script.reload(true)
 	test_script.path = p
-	if test_script.parse == OK and script.has_method("new"):
-		var test: Node = script.new()
-		if script.get("IS_WAT_TEST") or test.get("IS_WAT_TEST"):
-			test_script.names = test.get_test_methods()
-			for m in test_script.names:
-				var test_method: TestMethod = TestMethod.new()
-				test_method.path = p
-				test_method.name = m
-				test_script.methods.append(test_method)
-				index[test_script.path+m] = test_method
-			if p.ends_with(".gd") or p.ends_with(".gdc"):
-				test_script.time = YieldCalculator.calculate_yield_time(script, test_script.names.size())
+	if test_script.parse == OK:
+		if script.has_method("new"):
+			var test: Node = script.new()
+			if script.get("IS_WAT_TEST") or test.get("IS_WAT_TEST"):
+				test_script.names = test.get_test_methods()
+				for m in test_script.names:
+					var test_method: TestMethod = TestMethod.new()
+					test_method.path = p
+					test_method.name = m
+					test_script.methods.append(test_method)
+					index[test_script.path+m] = test_method
+				if p.ends_with(".gd") or p.ends_with(".gdc"):
+					test_script.time = YieldCalculator.calculate_yield_time(
+							script, test_script.names.size())
+			else:
+				test_script = null
+			test.free()
 		else:
 			test_script = null
-		test.free()
 	return test_script
 
 func clear() -> void:
