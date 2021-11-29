@@ -84,19 +84,14 @@ func _get_root() -> TestDirectory:
 	return root
 		
 func _get_test_script(p: String) -> TestScript:
+	var test_script: TestScript = null
 	var script = load(p)
-	if not script:
-		# If script is null, then it means it wasn't loaded, so exclude it.
-		return null
-	var test_script: TestScript = TestScript.new()
-	# reload() needed because load() still loads broken script, but the error..
-	# .. is not in our control, so reload() will help us identify parse errors.
-	test_script.parse = script.reload(true)
-	test_script.path = p
-	if test_script.parse == OK:
-		if script.has_method("new"):
+	if script:
+		var parse = script.reload(true)
+		if parse == OK and script.has_method("new"):
 			var test: Node = script.new()
 			if script.get("IS_WAT_TEST") or test.get("IS_WAT_TEST"):
+				test_script = TestScript.new(p, parse)
 				test_script.names = test.get_test_methods()
 				for m in test_script.names:
 					var test_method: TestMethod = TestMethod.new()
@@ -107,16 +102,9 @@ func _get_test_script(p: String) -> TestScript:
 				if p.ends_with(".gd") or p.ends_with(".gdc"):
 					test_script.time = YieldCalculator.calculate_yield_time(
 							script, test_script.names.size())
-			else:
-				# If the script has no load errors, yet it doesn't have the..
-				# ..IS_WAT_TEST attribute, then it should be excluded.
-				test_script = null
 			test.free()
 		else:
-			# The script has no load errors, yet it doesn't have the "new()"..
-			# ..method, so it is an invalid object that should be excluded.
-			test_script = null
-	# Loaded scripts with errors are still included.
+			test_script = TestScript.new(p, parse)
 	return test_script
 
 func clear() -> void:
