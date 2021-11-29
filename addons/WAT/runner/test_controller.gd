@@ -44,6 +44,8 @@ func run(metadata: Dictionary) -> void:
 		call_deferred("add_child", _test)
 		test_results = yield(self, "results_received") # test_script_finished
 		_test.queue_free()
+		# Reset for the next case.
+		_test = null
 	else:
 		_on_test_script_started(metadata)
 		# Nothing to call_deferred here, so just yield for next idle_frame.
