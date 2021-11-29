@@ -89,6 +89,11 @@ func _get_test_script(p: String) -> TestScript:
 	if script:
 		var parse = script.reload(true)
 		if parse == OK and script.has_method("new"):
+			# TODO: Needs extra checking for invalid/uncompiled csharp scripts.
+			# Any errors about no method or new function new found exists here.
+			# has_method("new") returns true even for invalid csharp scripts,
+			# but when script.new() is called, it's says non-existent function.
+			# This is something that needs to be addressed at the engine level.
 			var test: Node = script.new()
 			if script.get("IS_WAT_TEST") or test.get("IS_WAT_TEST"):
 				test_script = TestScript.new(p, parse)
