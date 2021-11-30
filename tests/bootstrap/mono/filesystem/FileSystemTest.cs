@@ -5,7 +5,8 @@ using Godot;
 public class FileSystemTest : WAT.Test
 {
 	private string TemporaryPath = Godot.ProjectSettings
-		.GlobalizePath("res://") + "\\tests\\bootstrap\\filesystem\\temp\\";
+		.GlobalizePath("res://") + 
+		"\\tests\\bootstrap\\mono\\filesystem\\temp\\";
 	private GDScript FileSystem;
 
 
