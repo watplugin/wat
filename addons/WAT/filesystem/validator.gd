@@ -7,19 +7,22 @@ const REGEX_PATTERN = "(\\bextends\\s+WAT.Test\\b)" + \
 
 var path: String
 var script_resource: Script setget ,get_script_resource
-var script_instance: Node setget ,get_script_instance
+var script_instance setget ,get_script_instance
 # If true, test scripts with 0 defined test methods should be skipped.
 var skip_empty: bool = true
 
-func _init(resource_path: String):
+func _init(resource_path: String, refresh: bool = true):
 	path = resource_path
 	if _is_valid_file():
-		script_resource = ResourceLoader.load(path, "Script")
+		# .cs scripts should load from cache due to how it is compiled.
+		# .gd scripts need to be reloaded on filesystem update.
+		script_resource = ResourceLoader.load(path, "Script",
+				refresh and not _is_valid_csharp())
 
 # Frees the script_instance on destroy.
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE and is_instance_valid(script_instance):
-		script_instance.queue_free()
+		script_instance.free()
 
 # Checks if the Script's source has "extends WAT.Test"
 func _is_extending_wat_test() -> bool:

@@ -84,7 +84,7 @@ func _get_root() -> TestDirectory:
 	return root
 		
 func _get_test_script(p: String) -> TestScript:
-	var test_validator = Validator.new(p)
+	var test_validator = Validator.new(p, changed)
 	var test_script: TestScript = null
 	if test_validator.is_valid_test():
 		test_script = TestScript.new(p, test_validator.get_load_error())
