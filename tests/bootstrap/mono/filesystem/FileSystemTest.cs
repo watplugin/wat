@@ -1,12 +1,14 @@
 using Godot;
+using GDObject = Godot.Object;
+using System;
+using IO = System.IO;
 
 [Start(nameof(Initialize))]
 [End(nameof(CleanUp))]
 public class FileSystemTest : WAT.Test
 {
 	private string TemporaryPath = Godot.ProjectSettings
-		.GlobalizePath("res://") + 
-		"\\tests\\bootstrap\\mono\\filesystem\\temp\\";
+		.GlobalizePath("res://tests/bootstrap/mono/filesystem/temp/");
 	private GDScript FileSystem;
 
 
@@ -34,11 +36,12 @@ public class FileSystemTest : WAT.Test
 		Describe(context);
 		// Generate test script file.
 		string path = TemporaryPath + name;
-		System.IO.File.WriteAllText(path, content);
+		IO.File.WriteAllText(path, content);
 
 		// Perform test.
-		Object instance = (Godot.Object) FileSystem.New();
+		GDObject instance = (GDObject) FileSystem.New();
 		var result = instance.Call("_get_test_script", path);
+
 		if (expected)
 		{
 			Assert.IsNotNull(result);
@@ -49,19 +52,19 @@ public class FileSystemTest : WAT.Test
 		}
 
 		// Cleanup generated test script file.
-		System.IO.File.Delete(path);
+		IO.File.Delete(path);
 	}
 
 	public void Initialize()
 	{
-		System.IO.Directory.CreateDirectory(TemporaryPath);
+		IO.Directory.CreateDirectory(TemporaryPath);
 		FileSystem = (GDScript) GD.Load(
 			"res://addons/WAT/filesystem/filesystem.gd");
 	}
 
 	public void CleanUp()
 	{
-		System.IO.Directory.Delete(TemporaryPath, true);
+		IO.Directory.Delete(TemporaryPath, true);
 	}
 
 }
