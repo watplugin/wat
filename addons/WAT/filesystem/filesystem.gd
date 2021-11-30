@@ -88,9 +88,12 @@ func _get_test_script(p: String) -> TestScript:
 	var test_script: TestScript = null
 	if test_validator.is_valid_test():
 		test_script = TestScript.new(p, test_validator.get_load_error())
-		var script_instance = test_validator.get_script_instance()
+		var script_instance = test_validator.script_instance
 		if script_instance:
 			test_script.names = script_instance.get_test_methods()
+			# Skip scripts with 0 defined test methods if validator allows.
+			if test_validator.skip_empty and test_script.names.empty():
+				return null
 			for m in test_script.names:
 				var test_method: TestMethod = TestMethod.new()
 				test_method.path = p
@@ -99,7 +102,7 @@ func _get_test_script(p: String) -> TestScript:
 				index[test_script.path+m] = test_method
 			if p.ends_with(".gd") or p.ends_with(".gdc"):
 				test_script.time = YieldCalculator.calculate_yield_time(
-						test_validator.get_script_resource(), test_script.names.size())
+						test_validator.script_resource, test_script.names.size())
 	return test_script
 
 func clear() -> void:

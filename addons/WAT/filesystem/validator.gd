@@ -8,6 +8,8 @@ const REGEX_PATTERN = "(\\bextends\\s+WAT.Test\\b)" + \
 var path: String
 var script_resource: Script setget ,get_script_resource
 var script_instance: Node setget ,get_script_instance
+# If true, test scripts with 0 defined test methods should be skipped.
+var skip_empty: bool = true
 
 func _init(resource_path: String):
 	path = resource_path
