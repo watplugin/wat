@@ -54,7 +54,7 @@ func _recursive_update(testdir: TestDirectory) -> void:
 			index[sub_testdir.path] = sub_testdir
 			pass
 
-		elif dir.file_exists(absolute) and Validator.is_valid_test(absolute):
+		elif dir.file_exists(absolute):
 			var test_script: TestScript = _get_test_script(absolute)
 			if test_script:
 				testdir.tests.append(test_script)
@@ -84,29 +84,22 @@ func _get_root() -> TestDirectory:
 	return root
 		
 func _get_test_script(p: String) -> TestScript:
+	var test_validator = Validator.new(p)
 	var test_script: TestScript = null
-	var script = load(p)
-	if script:
-		# Script resource with 0 methods signify parse error / uncompiled.
-		# Loaded scripts always have at least one method from its base class.
-		var parse = OK if not script.get_script_method_list().empty() else ERR_PARSE_ERROR
-		if parse == OK:
-			var test: Node = script.new()
-			if script.get("IS_WAT_TEST") or test.get("IS_WAT_TEST"):
-				test_script = TestScript.new(p, parse)
-				test_script.names = test.get_test_methods()
-				for m in test_script.names:
-					var test_method: TestMethod = TestMethod.new()
-					test_method.path = p
-					test_method.name = m
-					test_script.methods.append(test_method)
-					index[test_script.path+m] = test_method
-				if p.ends_with(".gd") or p.ends_with(".gdc"):
-					test_script.time = YieldCalculator.calculate_yield_time(
-							script, test_script.names.size())
-			test.free()
-		else:
-			test_script = TestScript.new(p, parse)
+	if test_validator.is_valid_test():
+		test_script = TestScript.new(p, test_validator.get_load_error())
+		var script_instance = test_validator.get_script_instance()
+		if script_instance:
+			test_script.names = script_instance.get_test_methods()
+			for m in test_script.names:
+				var test_method: TestMethod = TestMethod.new()
+				test_method.path = p
+				test_method.name = m
+				test_script.methods.append(test_method)
+				index[test_script.path+m] = test_method
+			if p.ends_with(".gd") or p.ends_with(".gdc"):
+				test_script.time = YieldCalculator.calculate_yield_time(
+						test_validator.get_script_resource(), test_script.names.size())
 	return test_script
 
 func clear() -> void:
