@@ -47,10 +47,7 @@ func _is_valid_file() -> bool:
 			(ClassDB.class_exists("CSharpScript") and _is_valid_csharp())
 
 func is_valid_test() -> bool:
-	var resource = get_script_resource()
-	var instance = get_script_instance()
-	return resource and resource.get("IS_WAT_TEST") or \
-			instance and instance.get("IS_WAT_TEST") or \
+	return get_script_resource() and get_script_instance() or \
 			get_load_error() == ERR_PARSE_ERROR and _is_extending_wat_test()
 
 # Returns error code during resource load.
@@ -63,9 +60,11 @@ func get_load_error() -> int:
 				else ERR_PARSE_ERROR
 	return error
 
-func get_script_instance() -> Node:
+func get_script_instance():
 	# Create script_instance if no errors are found. Performed once and stored.
-	if not script_instance and get_load_error() == OK:
+	if not script_instance and get_load_error() == OK and \
+			(script_resource.get("IS_WAT_TEST") if not _is_valid_csharp() \
+			else _is_extending_wat_test()):
 		script_instance = script_resource.new()
 	return script_instance
 
