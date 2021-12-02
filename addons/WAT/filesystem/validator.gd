@@ -1,37 +1,38 @@
 extends Reference
 
 # To search broken script source for WAT.Test usage.
-const REGEX_PATTERN = "(\\bextends\\s+WAT.Test\\b)" + \
+const WAT_TEST_PATTERN = "(\\bextends\\s+WAT.Test\\b)" + \
 	"|(\\bextends\\b\\s+\\\"res:\\/\\/addons\\/WAT\\/test\\/test.gd\\\")" + \
 	"|(class\\s\\w[\\w<>]+\\s*:\\s*WAT.Test[\\s\\{])"
 
-var path: String
+var path: String setget load_path
+var regex: RegEx
 var script_resource: Script setget ,get_script_resource
 var script_instance setget ,get_script_instance
 # If true, test scripts with 0 defined test methods should be skipped.
 var skip_empty: bool = true
 
-func _init(resource_path: String, refresh: bool = true):
-	path = resource_path
-	if _is_valid_file():
-		# .cs scripts should load from cache due to how it is compiled.
-		# .gd scripts need to be reloaded on filesystem update.
-		script_resource = ResourceLoader.load(path, "Script",
-				refresh and not _is_valid_csharp())
+func _init(regex_pattern = WAT_TEST_PATTERN):
+	regex = RegEx.new()
+	regex.compile(regex_pattern)
 
 # Frees the script_instance on destroy.
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE and is_instance_valid(script_instance):
+		# Cannot call _clear_resource() at predelete stage.
 		script_instance.free()
 
-# Checks if the Script's source has "extends WAT.Test"
-func _is_extending_wat_test() -> bool:
-	var result = null
-	if script_resource:
-		var regex = RegEx.new()
-		regex.compile(REGEX_PATTERN)
-		result = regex.search(script_resource.source_code)
-	return result != null
+# Clears the script resource and frees the script instance.
+func _clear_resource() -> void:
+	if is_instance_valid(script_instance):
+		script_instance.free()
+	script_instance = null
+	script_resource = null
+
+# Checks if the Script's source code is matching the compiled regex pattern.
+func _is_matching_regex_pattern() -> bool:
+	return true if script_resource and \
+			regex.search(script_resource.source_code) else false
 
 func _is_valid_gdscript() -> bool:
 	return path.ends_with(".gd") and path != "res://addons/WAT/test/test.gd"
@@ -48,7 +49,7 @@ func _is_valid_file() -> bool:
 
 func is_valid_test() -> bool:
 	return get_script_resource() and get_script_instance() or \
-			get_load_error() == ERR_PARSE_ERROR and _is_extending_wat_test()
+			get_load_error() == ERR_PARSE_ERROR and _is_matching_regex_pattern()
 
 # Returns error code during resource load.
 func get_load_error() -> int:
@@ -64,9 +65,18 @@ func get_script_instance():
 	# Create script_instance if no errors are found. Performed once and stored.
 	if not script_instance and get_load_error() == OK and \
 			(script_resource.get("IS_WAT_TEST") if not _is_valid_csharp() \
-			else _is_extending_wat_test()):
+			else _is_matching_regex_pattern()):
 		script_instance = script_resource.new()
 	return script_instance
 
 func get_script_resource() -> Script:
 	return script_resource
+
+func load_path(resource_path: String, refresh: bool = true) -> void:
+	_clear_resource()
+	path = resource_path
+	if _is_valid_file():
+		# .cs scripts should load from cache due to how it is compiled.
+		# .gd scripts need to be reloaded on filesystem update.
+		script_resource = ResourceLoader.load(path, "Script",
+				refresh and not _is_valid_csharp())
