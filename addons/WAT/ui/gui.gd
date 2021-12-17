@@ -57,6 +57,7 @@ func setup_editor_context(plugin, build: FuncRef, goto_func: FuncRef, filesystem
 	_filesystem.update()
 	TestMenu.update_menus()
 	Server.results_view = Results
+	Server.connect("results_received", self, "_on_test_run_finished")
 	
 func _on_run_pressed(data = _filesystem.root) -> void:
 	Results.clear()
@@ -102,13 +103,14 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 	_plugin.get_editor_interface().play_custom_scene("res://addons/WAT/runner/TestRunner.tscn")
 	if Settings.is_bottom_panel():
 		_plugin.make_bottom_panel_item_visible(self)
-	yield(Server, "network_peer_connected")
-	Server.send_tests(tests, Repeats.value, Threads.value)
-	var results: Array = yield(Server, "results_received") #results_received
-	_plugin.get_editor_interface().stop_playing_scene() # Check if this works exported
-	_on_test_run_finished(results)
+	# Reconnect peer connected signal to send current tests.
+	if Server.is_connected("network_peer_connected", Server, "send_tests"):
+		Server.disconnect("network_peer_connected", Server, "send_tests")
+	Server.connect("network_peer_connected", Server, "send_tests", 
+			[tests, Repeats.value, Threads.value])
 	
 func _on_test_run_finished(results: Array) -> void:
+	_plugin.get_editor_interface().stop_playing_scene() # Check if this works exported
 	Summary.summarize(results)
 	JUnitXML.write(results, Settings, Summary.time_taken)
 	_filesystem.failed.update(results)
