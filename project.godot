@@ -82,6 +82,7 @@ Window_Size=Vector2( 1280, 720 )
 Minimize_Window_When_Running_Tests=false
 Port=6008
 Display=8
+Cache_Tests=true
 
 [application]
 
