@@ -33,6 +33,10 @@ func test_when_calling_is_equal_or_less_than_with_equal_values():
 	
 	asserts.is_equal_or_less_than(1, 1, "Then it passes!")
 	
+func test_when_calling_is_equal_approx_with_equal_values():
+	describe("When calling asserts.is_equal_approx_(1, 0.999999)")
+	asserts.is_equal_approx_(1, 0.999999, "Then it passes!")
+	
 func test_when_calling_is_not_equal():
 	describe("When callign asserts.is_not_equal(5, 6)")
 	
