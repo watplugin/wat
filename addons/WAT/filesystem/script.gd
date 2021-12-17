@@ -6,6 +6,14 @@ var path: String setget ,_get_path
 var methods: Array # TestMethods
 var names: Array # MethodNames
 var time: float = 0.0 # YieldTime
+var parse: int # stores error code (int) of last load()
+
+# Constructor for script.gd reference.
+# script_path: Resource path of the script.
+# load_result: Error code when resource path is reloaded.
+func _init(script_path: String = "", load_result: int = OK):
+	path = script_path
+	parse = load_result
 
 func _get_sanitized_name() -> String:
 	var n: String = path.substr(path.find_last("/") + 1)
@@ -19,4 +27,4 @@ func _get_path() -> String:
 	return path.replace("///", "//") # 
 
 func get_tests() -> Array:
-	return [{"dir": dir, "name": self.name, "path": self.path, "methods": names, "time": time}]
+	return [{"dir": dir, "name": self.name, "path": self.path, "methods": names, "time": time, "parse": parse}]
