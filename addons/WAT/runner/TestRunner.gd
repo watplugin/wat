@@ -10,7 +10,8 @@ func _ready() -> void:
 	name = "TestRunner"
 	if not Engine.is_editor_hint():
 		OS.window_size = Settings.window_size()
-		OS.window_minimized = Settings.minimize_window_when_running_tests()
+		if Settings.minimize_window_when_running_tests():
+			OS.window_minimized = true
 
 func run(tests: Array, repeat: int, threads: int, results_view: Node = null) -> Array:
 	var results: Array = []

@@ -6,6 +6,7 @@ const Boolean: Script = preload("boolean.gd")
 const Double: Script = preload("double.gd")
 const Equality: Script = preload("equality.gd")
 const FileX: Script = preload("file.gd")
+const Folder: Script = preload("folder.gd")
 const Null: Script = preload("null.gd")
 const RangeX: Script = preload("range.gd")
 const Signal: Script = preload("signal.gd")
@@ -42,6 +43,9 @@ func is_equal_or_greater_than(a, b, context: String = "") -> void:
 
 func is_equal_or_less_than(a, b, context: String = "") -> void:
 	output(Equality.is_equal_or_less_than(a, b, context))
+
+func is_equal_approx_(a, b, context: String = "") -> void:
+	output(Equality.is_equal_approx_(a, b, context))
 
 func is_in_range(value, low, high, context: String = "") -> void:
 	output(RangeX.is_in_range(value, low, high, context))
@@ -111,7 +115,13 @@ func file_exists(path: String, context: String = "") -> void:
 
 func file_does_not_exist(path: String, context: String = "") -> void:
 	output(FileX.does_not_exist(path, context))
-	
+
+func folder_exists(path: String, context: String = "") -> void:
+	output(Folder.exists(path, context))
+
+func folder_does_not_exist(path: String, context: String = "") -> void:
+	output(Folder.does_not_exist(path, context))
+
 func that(obj: Object, method: String, arguments: Array = [], context: String = "", passed: String = "", failed: String = "") -> void:
 	output(Utility.that(obj, method, arguments, context, passed, failed))
 	
