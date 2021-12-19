@@ -1,5 +1,6 @@
 using Godot;
 using Array = Godot.Collections.Array;
+using System;
 
 // Developers can call Watch(emitter, signal) to check if a signal..
 // ..was emitted, not emitted, emitted so many times or was emitted..

@@ -79,13 +79,21 @@ namespace WAT
 
 		private async Task CallTestHook(MethodInfo hook)
 		{
-			if (hook.Invoke(this, null) is Task task) { await task; } else { await Task.Run((() => { })); }
+			try {
+				if (hook.Invoke(this, null) is Task task) { await task; } else { await Task.Run((() => { })); }
+			} catch (Exception e) {
+				GD.PushError($"WAT: {e}");
+			}
 		}
 
 		private async Task Execute(Executable test)
 		{
-			if (test.Method.Invoke(this, test.Arguments) is Task task) { await task; }
-			else { await Task.Run((() => { })); }
+			try {
+				if (test.Method.Invoke(this, test.Arguments) is Task task) { await task; }
+				else { await Task.Run((() => { })); }
+			} catch (Exception e) {
+				GD.PushError($"WAT: {e}");
+			}
 		}
 		
 		protected void Describe(string description) 
