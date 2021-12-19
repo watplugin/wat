@@ -47,7 +47,7 @@ static func tags() -> PoolStringArray:
 	return ProjectSettings.get_setting("WAT/Tags")
 
 static func cache_tests() -> bool:
-	return ProjectSettings.get_setting("Cache_Tests")
+	return ProjectSettings.get_setting("WAT/Cache_Tests")
 	
 static func minimize_window_when_running_tests() -> bool:
 	return ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests")
