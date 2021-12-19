@@ -4,6 +4,12 @@ const ScriptDirector = preload("script_director.gd")
 const SceneDirector = preload("scene_director.gd")
 var registry
 
+func clear() -> void:
+	# Allow users to clear registry in the post hook if they want fresh values between runs
+	registry.clear()
+	for director in registry.test_directors.values() :
+		director.free()
+	registry.test_directors.clear() 
 
 func script(path, inner: String = "", deps: Array = []) -> ScriptDirector:
 	if path is GDScript: path = path.resource_path
