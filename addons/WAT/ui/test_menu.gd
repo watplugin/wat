@@ -11,33 +11,29 @@ var filesystem
 var icons
 signal run_pressed
 signal debug_pressed
-signal built
 
 func _init() -> void:
 	_menu = PopupMenu.new()
 	add_child(_menu)
 
 func _pressed():
+	var current_build = true
 	if filesystem.changed:
 		if not filesystem.built:
-			build()
-			return
+			current_build = false
+			filesystem.built = yield(filesystem.build_function.call_func(), "completed")
 		filesystem.update()
 		update_menus()
-	var position: Vector2 = rect_global_position
-	position.y += rect_size.y
-	_menu.rect_global_position = position
-	_menu.rect_size = Vector2(rect_size.x, 0)
-	_menu.grab_focus()
-	_menu.popup()
+	if current_build:
+		var position: Vector2 = rect_global_position
+		position.y += rect_size.y
+		_menu.rect_global_position = position
+		_menu.rect_size = Vector2(rect_size.x, 0)
+		_menu.grab_focus()
+		_menu.popup()
 	
 func clear() -> void:
 	_menu.queue_free()
-	
-func build():
-	if not filesystem.built:
-		filesystem.built = yield(filesystem.build_function.call_func(), "completed")
-		return
 	
 func update_menus() -> void:
 	_menu.queue_free()
