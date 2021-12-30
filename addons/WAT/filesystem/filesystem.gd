@@ -16,13 +16,14 @@ var changed: bool = false setget _set_filesystem_changed
 var built: bool = false setget ,_get_filesystem_built # CSharpScript
 var build_function: FuncRef
 var index = {} # Path / Object
+var test_validator: Reference
 
 # Initialize/Save meta
-
 func _init(_build_function = null) -> void:
 	build_function = _build_function
 	tagged = TaggedTests.new(Settings)
 	failed = FailedTests.new()
+	test_validator = Validator.new()
 
 func _set_filesystem_changed(has_changed: bool) -> void:
 	changed = has_changed
@@ -30,7 +31,7 @@ func _set_filesystem_changed(has_changed: bool) -> void:
 		built = false
 
 func _get_filesystem_built() -> bool:
-	# If it is not Mono, automatically return true because it is irrelevant to GDScript.
+	# If not Mono, return true because it is irrelevant to GDScript.
 	return built or not Engine.is_editor_hint() or not ClassDB.class_exists("CSharpScript")
 
 func _recursive_update(testdir: TestDirectory) -> void:
@@ -55,11 +56,12 @@ func _recursive_update(testdir: TestDirectory) -> void:
 			index[sub_testdir.path] = sub_testdir
 			pass
 
-		elif dir.file_exists(absolute) and Validator.is_valid_test(absolute):
+		elif dir.file_exists(absolute):
 			var test_script: TestScript = _get_test_script(absolute)
-			testdir.tests.append(test_script)
-			test_script.dir = testdir.path
-			index[test_script.path] = test_script
+			if test_script:
+				testdir.tests.append(test_script)
+				test_script.dir = testdir.path
+				index[test_script.path] = test_script
 
 		relative = dir.get_next()
 		
@@ -73,7 +75,7 @@ func _recursive_update(testdir: TestDirectory) -> void:
 
 func update(testdir: TestDirectory = _get_root()) -> void:
 	_recursive_update(testdir)
-	# The changed attribute should be set to false after the update otherwise it is redundant.
+	# Set "changed" to false after the update, otherwise it is redundant.
 	changed = false
 		
 func _get_root() -> TestDirectory:
@@ -84,20 +86,26 @@ func _get_root() -> TestDirectory:
 	return root
 		
 func _get_test_script(p: String) -> TestScript:
-	var test: Node = load(p).new()
-	var test_script: TestScript = TestScript.new()
-	test_script.path = p
-	test_script.names = test.get_test_methods()
-	for m in test_script.names:
-		var test_method: TestMethod = TestMethod.new()
-		test_method.path = p
-		test_method.name = m
-		test_script.methods.append(test_method)
-		index[test_script.path+m] = test_method
-	if p.ends_with(".gd") or p.ends_with(".gdc"):
-		test_script.time = YieldCalculator.calculate_yield_time(load(p), test_script.names.size())
-	test.free()
+	test_validator.load_path(p, changed)
+	var test_script: TestScript = null
+	if test_validator.is_valid_test():
+		test_script = TestScript.new(p, test_validator.get_load_error())
+		var script_instance = test_validator.script_instance
+		if script_instance:
+			test_script.names = script_instance.get_test_methods()
+			# Skip scripts with 0 defined test methods if validator allows.
+			if test_validator.skip_empty and test_script.names.empty():
+				return null
+			for m in test_script.names:
+				var test_method: TestMethod = TestMethod.new()
+				test_method.path = p
+				test_method.name = m
+				test_script.methods.append(test_method)
+				index[test_script.path+m] = test_method
+			if p.ends_with(".gd") or p.ends_with(".gdc"):
+				test_script.time = YieldCalculator.calculate_yield_time(
+						test_validator.script_resource, test_script.names.size())
 	return test_script
-	
+
 func clear() -> void:
 	index.clear()

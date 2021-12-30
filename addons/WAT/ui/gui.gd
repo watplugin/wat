@@ -57,58 +57,68 @@ func setup_editor_context(plugin, build: FuncRef, goto_func: FuncRef, filesystem
 	_filesystem.update()
 	TestMenu.update_menus()
 	Server.results_view = Results
-	
+
+
+# Setup tests for display. Returns false if run should be terminated.
+func _setup_display(tests: Array) -> bool:
+	if tests.empty():
+		push_warning("WAT: No tests found. Terminating run")
+		return false
+	Summary.time()
+	Results.display(tests, Repeats.value)
+	return true
+
+
 func _on_run_pressed(data = _filesystem.root) -> void:
 	Results.clear()
-	
+	var current_build = true
 	if _filesystem.changed or not Settings.cache_tests():
 		if not _filesystem.built:
+			current_build = false
 			_filesystem.built = yield(_filesystem.build_function.call_func(), "completed")
-			return
 		if data == _filesystem.root:
 			_filesystem.update()
 			data = _filesystem.root # New Root
-	
-	# Run
-	var tests: Array = data.get_tests()
-	if tests.empty():
-		push_warning("WAT: No tests found. Terminating run")
-		return
-	Summary.time()
-	Results.display(tests, Repeats.value)
-	var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
-	add_child(instance)
-	var results: Array = yield(instance.run(tests, Repeats.value, Threads.value, Results), "completed")
-	instance.queue_free()
-	_on_test_run_finished(results)
-	
+			TestMenu.update_menus() # Also update the "Select Tests" dropdown
+	# Only run if the build is current and up to date.
+	if current_build:
+		var tests: Array = data.get_tests()
+		if _setup_display(tests):
+			var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
+			add_child(instance)
+			var results: Array = yield(instance.run(tests, Repeats.value,
+					Threads.value, Results), "completed")
+			instance.queue_free()
+			_on_test_run_finished(results)
+
 func _on_debug_pressed(data = _filesystem.root) -> void:
 	Results.clear()
-	
+	var current_build = true
 	if _filesystem.changed or not Settings.cache_tests():
 		if not _filesystem.built:
+			current_build = false
 			_filesystem.built = yield(_filesystem.build_function.call_func(), "completed")
-			return
 		if data == _filesystem.root:
 			_filesystem.update()
 			data = _filesystem.root # New Root
-			
-	var tests: Array = data.get_tests()
-	if tests.empty():
-		push_warning("WAT: No tests found. Terminating run")
-		return
-	Summary.time()
-	Results.display(tests, Repeats.value)
-	_plugin.get_editor_interface().play_custom_scene("res://addons/WAT/runner/TestRunner.tscn")
-	if Settings.is_bottom_panel():
-		_plugin.make_bottom_panel_item_visible(self)
-	yield(Server, "network_peer_connected")
-	Server.send_tests(tests, Repeats.value, Threads.value)
-	var results: Array = yield(Server, "results_received") #results_received
-	_plugin.get_editor_interface().stop_playing_scene() # Check if this works exported
-	_on_test_run_finished(results)
-	
+			TestMenu.update_menus()
+
+	if current_build:
+		var tests: Array = data.get_tests()
+		if _setup_display(tests):
+			_plugin.get_editor_interface().play_custom_scene(
+					"res://addons/WAT/runner/TestRunner.tscn")
+			if Settings.is_bottom_panel():
+				_plugin.make_bottom_panel_item_visible(self)
+			yield(Server, "network_peer_connected")
+			Server.send_tests(tests, Repeats.value, Threads.value)
+			var results: Array = yield(Server, "results_received")
+			_plugin.get_editor_interface().stop_playing_scene() # Check if this works exported
+			_on_test_run_finished(results)
+
+
 func _on_test_run_finished(results: Array) -> void:
+	_plugin.get_editor_interface().stop_playing_scene() # Check if this works exported
 	Summary.summarize(results)
 	JUnitXML.write(results, Settings, Summary.time_taken)
 	_filesystem.failed.update(results)

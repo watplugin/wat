@@ -80,6 +80,13 @@ func on_test_script_finished(data: Dictionary) -> void:
 	_results.append(script.component)
 	if not success:
 		_failures.append(script.component)
+
+	if data["total"] < 0:
+		var message: TreeItem = create_item(script.component)
+		message.set_text(0, "Error parsing test script, check for syntax errors or broken dependencies")
+	elif data["total"] == 0:
+		var message: TreeItem = create_item(script.component)
+		message.set_text(0, "No test methods implemented")
 	
 func on_test_method_finished(data: Dictionary) -> void:
 	# On a finished method, change its color

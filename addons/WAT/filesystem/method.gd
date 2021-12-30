@@ -4,6 +4,10 @@ var path: String
 var dir: String setget ,_get_path
 var name: String setget ,_get_sanitized_name
 
+func _init(method_path: String = "", method_name: String = ""):
+	path = method_path
+	name = method_name
+
 # Method Name != test name
 func get_tests() -> Array:
 	return [{"dir": dir, "name": name, "path": self.path, "methods": [name], "time": 0.0}]

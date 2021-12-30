@@ -110,7 +110,7 @@ func _threads() -> int:
 	
 
 func _display(cases: Dictionary) -> void:
-	cases.seconds = OS.get_ticks_msec() / 1000
+	cases.seconds = stepify(OS.get_ticks_msec() / 1000.0, 0.001)
 	_time_taken = cases.seconds
 	print("""
 	-------RESULTS-------
@@ -122,14 +122,21 @@ func _display(cases: Dictionary) -> void:
 func _display_failures(case) -> void:
 	# We could create this somewhere else?
 	print("%s (%s)" % [case.context, case.path])
-	for method in case.methods:
-		if not method.success:
-			print("\n  %s" % method.context)
-			for assertion in method.assertions:
-				if not assertion.success:
-					print("\t%s" % assertion.context, "\n\t  (EXPECTED: %s) | (RESULTED: %s)" % [assertion.expected, assertion.actual])
+	match case.total:
+		-1:
+			print("\n  Parse Error (check syntax or broken dependencies)")
+		0:
+			print("\n  No Test Methods Defined")
+		_:
+			for method in case.methods:
+				if not method.success:
+					print("\n  %s" % method.context)
+					for assertion in method.assertions:
+						if not assertion.success:
+							print("\t%s" % assertion.context, 
+								"\n\t  (EXPECTED: %s) | (RESULTED: %s)" % \
+								[assertion.expected, assertion.actual])
 
 func _quit() -> void:
 	_filesystem.clear()
 	get_tree().quit()
-	
