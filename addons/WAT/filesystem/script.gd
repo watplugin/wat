@@ -18,7 +18,7 @@ func _init(script_path: String = "", load_result: int = OK):
 func _get_sanitized_name() -> String:
 	var n: String = path.substr(path.find_last("/") + 1)
 	n = n.replace(".gd", "").replace(".gdc", "").replace(".cs", "")
-	n = n.replace(".test", "").replace("test", "").replace("_", " ")
+	n = n.replace(".test", "").replace("_", " ")
 	n[0] = n[0].to_upper()
 	return n
 	
