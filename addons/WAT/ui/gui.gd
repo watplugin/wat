@@ -58,7 +58,6 @@ func setup_editor_context(plugin, build: FuncRef, goto_func: FuncRef, filesystem
 	TestMenu.update_menus()
 	Server.results_view = Results
 
-
 # Setup tests for display. Returns false if run should be terminated.
 func _setup_display(tests: Array) -> bool:
 	if tests.empty():
@@ -67,7 +66,6 @@ func _setup_display(tests: Array) -> bool:
 	Summary.time()
 	Results.display(tests, Repeats.value)
 	return true
-
 
 func _on_run_pressed(data = _filesystem.root) -> void:
 	Results.clear()
@@ -104,6 +102,8 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 			TestMenu.update_menus()
 
 	if current_build:
+		if Server.kick_current_peer():
+				_plugin.get_editor_interface().stop_playing_scene()
 		var tests: Array = data.get_tests()
 		if _setup_display(tests):
 			_plugin.get_editor_interface().play_custom_scene(
@@ -113,12 +113,10 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 			yield(Server, "network_peer_connected")
 			Server.send_tests(tests, Repeats.value, Threads.value)
 			var results: Array = yield(Server, "results_received")
-			_plugin.get_editor_interface().stop_playing_scene() # Check if this works exported
+			_plugin.get_editor_interface().stop_playing_scene()
 			_on_test_run_finished(results)
 
-
 func _on_test_run_finished(results: Array) -> void:
-	_plugin.get_editor_interface().stop_playing_scene() # Check if this works exported
 	Summary.summarize(results)
 	JUnitXML.write(results, Settings, Summary.time_taken)
 	_filesystem.failed.update(results)

@@ -22,7 +22,8 @@ func _ready() -> void:
 	
 func _on_network_peer_connected(id: int) -> void:
 	_peer_id = id
-	_peer.set_peer_timeout(id, 1000, 2000, 3000)
+	# Timeout is 10 minutes.
+	_peer.set_peer_timeout(id, 600000, 601000, 602000)
 	emit_signal("network_peer_connected")
 
 func _on_network_peer_disconnected(_id: int) -> void:
@@ -30,6 +31,13 @@ func _on_network_peer_disconnected(_id: int) -> void:
 		emit_signal("results_received", caselist)
 	caselist.clear()
 	status = STATE.DISCONNECTED
+
+func kick_current_peer():
+	var kicked = false
+	if _peer_id in custom_multiplayer.get_network_connected_peers():
+		_on_results_received_from_client([])
+		kicked = true
+	return kicked
 
 func send_tests(testdir: Array, repeat: int, thread_count: int) -> void:
 	status = STATE.SENDING
