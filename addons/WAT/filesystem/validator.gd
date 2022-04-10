@@ -3,7 +3,8 @@ extends Reference
 # To search broken script source for WAT.Test usage.
 const WAT_TEST_PATTERN = "(\\bextends\\s+WAT.Test\\b)" + \
 	"|(\\bextends\\b\\s+\\\"res:\\/\\/addons\\/WAT\\/test\\/test.gd\\\")" + \
-	"|(class\\s\\w[\\w<>]+\\s*:\\s*WAT.Test[\\s\\{])"
+	"|(class\\s\\w[\\w<>]+\\s*:\\s*WAT.Test[\\s\\{])" + \
+	"|(?s)(using\\s+WAT\\s*;).*(class\\s\\w[\\w<>]+\\s*:\\s*Test[\\s\\{])(?-s)"
 
 var path: String setget load_path
 var regex: RegEx
