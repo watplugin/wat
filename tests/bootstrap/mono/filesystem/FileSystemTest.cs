@@ -34,6 +34,11 @@ public class FileSystemTest : WAT.Test
 			"UncompiledIgnore : SceneTree {\n\t[Test]\n" +
 			"public void ATest(){Assert.Fail();}}",
 			false, "Uncompiled C# not extending WAT.Test excluded")]
+	[Test("NamespaceTest.cs",
+			"using Godot;\nusing WAT;using System;\n\npublic class " +
+			"NamespaceTest : Test {\n\t[Test]\n}" +
+			"public void ATest(){Assert.Fail();}}",
+			true, "Uncompiled C# script using WAT; extending Test included")]
 	public void GetScript(string name, string content, 
 		bool expected, string context)
 	{
