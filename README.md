@@ -157,7 +157,7 @@ __Run Directory__
 __Run Script__
 
     // Where X is the project path of the script you want to run
-    godot addons/WAT/cli.tscn run=res://script+X
+    godot addons/WAT/cli.tscn run=script+X
 
 __Run Method__
 
