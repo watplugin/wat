@@ -12,8 +12,8 @@ func watch(emitter, event: String) -> void:
 	watching[event] = {emit_count = 0, calls = []}
 
 
-func _add_emit(a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null, j = null, k = null):
-	var arguments: Array = [a, b, c, d, e, f, g, h, i, j, k]
+func _add_emit(a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null, j = null, k = null, l = null, m = null, n = null, o = null, p = null, q = null, r = null, s = null, t = null, u = null, v = null, w = null, x = null, y = null, z = null):
+	var arguments: Array = [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z]
 	var event
 	while not event:
 		event = arguments.pop_back()

@@ -87,7 +87,7 @@ Cache_Tests=true
 [application]
 
 config/name="WAT5"
-run/main_scene="res://OldExamples/Node.tscn"
+run/main_scene="res://addons/WAT/gui.tscn"
 config/icon="res://icon.svg"
 
 [editor_plugins]
