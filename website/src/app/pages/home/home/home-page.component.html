@@ -7,7 +7,7 @@
 <app-section color="foreground-accent-200">
   <app-column-layout>
     <div>
-      <h1 class="mat-display-2 mb-16">Let's meet up!</h1>
+      <h1 class="mat-display-2" style="margin-bottom: 0.75em;">Let's meet up!</h1>
       <p class="mb-0">
          Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
       </p>
@@ -18,16 +18,20 @@
   </app-column-layout>
 </app-section>
 <app-section title="FAQ" color="primary" textColor="white" last>
-  <mat-accordion>
-    <app-question-panel title="Where can I download it?">
-      <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ipsum Lorem ipsum Lorem ipsum ipsum Lorem ipsum Lorem ipsum ipsum Lorem ipsum Lorem ipsum </p>
-    </app-question-panel>
-    <app-question-panel title="Where can I download it?">
-      <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </p>
-    </app-question-panel>
-    <app-question-panel title="Where can I download it?">
-      <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </p>
-    </app-question-panel>
-  </mat-accordion>
+  <app-column-layout>
+    <mat-accordion>
+      <app-question-panel title="Can I unit test GDScript?">
+        <p>Yes! WAT comes out of the box with GDScript support.</p>
+      </app-question-panel>
+      <app-question-panel title="Can I unit test C# scripts?">
+        <p>Yes! With the mono version, WAT comes with C# wrappers that let you test</p>
+      </app-question-panel>
+    </mat-accordion>
+    <mat-accordion>
+      <app-question-panel title="How do I use WAT with Github Actions and/or other CI pipelines?">
+        <p>See the <a href="https://github.com/AlexDarigan/WAT#ContinuousIntegration">Continuous Integration</a> section of the README.</p>
+      </app-question-panel>
+    </mat-accordion>
+  </app-column-layout>
   <div style="margin-top: 3em;"></div>
 </app-section>

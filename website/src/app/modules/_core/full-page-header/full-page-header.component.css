@@ -21,6 +21,6 @@
 .scroll-button {
 	position: absolute;
 	left: calc(50% - 21px);
-	bottom: 10%;
+	bottom: 20%;
 	filter: drop-shadow(0 0 1rem black);
 }

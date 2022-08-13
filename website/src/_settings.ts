@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import arrowDownCircleFill from '@iconify/icons-bi/arrow-down-circle-fill';
 import github from '@iconify/icons-simple-icons/github';
 import kofi from '@iconify/icons-simple-icons/ko-fi';
 import { PageLink } from '@src/app/classes/pagelink';
@@ -29,6 +30,7 @@ export class SettingsService {
     public icons = {
       github,
       kofi,
+      arrowDownCircleFill,
     };
   })();
 }

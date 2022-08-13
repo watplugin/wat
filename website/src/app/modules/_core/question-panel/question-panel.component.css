@@ -8,6 +8,7 @@
 	display: flex;  
 	align-items: center;
 	justify-content: left;
+	font-size: 1.25em;
 }
 
 .expansion-panel {

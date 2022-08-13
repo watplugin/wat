@@ -279,11 +279,11 @@ $misc: define-basic-palette((
 
 $site-typography: mat.define-typography-config(
 	$font-family: 'Urbanist',
-	$display-4:    mat.define-typography-level($font-family: 'Varela Round', $font-size: 2.75em, $line-height: 1em, $font-weight: 900),
-	$display-3:    mat.define-typography-level($font-family: 'Varela Round', $font-size: 2.5em, $line-height: 1em, $font-weight: 900),
-	$display-2:    mat.define-typography-level($font-family: 'Varela Round', $font-size: 2.25em, $line-height: 1em, $font-weight: 900),
-	$display-1:    mat.define-typography-level($font-family: 'Varela Round', $font-size: 2em, $line-height: 1em, $font-weight: 900),
-	$headline:     mat.define-typography-level($font-family: 'Varela Round', $font-size: 2em, $line-height: 1em, $font-weight: 800),
+	$display-4:    mat.define-typography-level($font-family: 'Varela Round', $font-size: 2.5em, $line-height: 1em, $font-weight: 900),
+	$display-3:    mat.define-typography-level($font-family: 'Varela Round', $font-size: 2.25em, $line-height: 1em, $font-weight: 900),
+	$display-2:    mat.define-typography-level($font-family: 'Varela Round', $font-size: 2em, $line-height: 1em, $font-weight: 900),
+	$display-1:    mat.define-typography-level($font-family: 'Varela Round', $font-size: 1.8em, $line-height: 1em, $font-weight: 900),
+	$headline:     mat.define-typography-level($font-family: 'Varela Round', $font-size: 1.75em, $line-height: 1em, $font-weight: 800),
 	$title:        mat.define-typography-level($font-family: 'Varela Round', $font-size: 1.5em, $line-height: 1em, $font-weight: 800),
 	$subheading-2: mat.define-typography-level($font-family: 'Varela Round', $font-size: 1em, $line-height: 1em, $font-weight: 700),
 	$subheading-1: mat.define-typography-level($font-family: 'Varela Round', $font-size: 1em, $line-height: 1em, $font-weight: 700),

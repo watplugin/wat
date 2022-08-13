@@ -30,6 +30,7 @@
     "@angular-devkit/build-angular": "^14.0.3",
     "@angular/cli": "~14.0.3",
     "@angular/compiler-cli": "^14.0.0",
+    "@iconify/icons-bi": "^1.2.7",
     "@iconify/icons-simple-icons": "^1.2.21",
     "@types/jasmine": "~4.0.0",
     "jasmine-core": "~4.1.0",
