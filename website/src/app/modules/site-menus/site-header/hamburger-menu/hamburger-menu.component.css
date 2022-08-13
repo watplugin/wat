@@ -43,6 +43,6 @@ app-cogs-logo-text-button {
 
 .hamburger-icon {
 	position: relative;
-	top: -2px;
+	top: 2px;
 	z-index: 10;
 }
