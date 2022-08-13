@@ -37,9 +37,6 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Core" type="VBoxContainer" parent="."]
 margin_left = 7.0
@@ -162,7 +159,7 @@ rect_min_size = Vector2( 160, 0 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
 min_value = 1.0
-max_value = 7.0
+max_value = 15.0
 value = 1.0
 align = 1
 prefix = "Run on"

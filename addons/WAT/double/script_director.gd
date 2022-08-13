@@ -59,7 +59,7 @@ func add_call(method: String, args: Array = []) -> void:
 	methods[method].add_call(args)
 	
 func set_methods() -> void:
-	var params: String = "abcdefghij"
+	var params: String = "abcdefghijklmnopqrstuvwxyz"
 	for m in method_list():
 		var arguments: String = ""
 		# m.args.size() causes crashes in release exports

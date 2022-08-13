@@ -10,3 +10,10 @@ data_*/
 
 # Rider
 .idea/
+
+# Visual Studio
+.vs/
+
+# Stub project
+bin/
+obj/
