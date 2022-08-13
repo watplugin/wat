@@ -1,7 +1,9 @@
-# ![Icon](./icon.svg) WAT
-![3.3.2](https://github.com/CodeDarigan/WAT-GDScript/workflows/%20%20Godot%203.3.2%20%20/badge.svg)
+![WAT Banner](images/banner.png)
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q51D9K5)
+# WAT 
+![3.3.2](https://github.com/CodeDarigan/WAT-GDScript/workflows/%20%20Godot%203.3.2%20%20/badge.svg) [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q51D9K5)
+
+A Godot unit-testing framework for GDScript and C#. It includes an inspector window for manually running tests, and a command-line interface for easy automated testing.
 
 1. [Install](#Install)
 2. [Project Settings](#ProjectSettings)
@@ -211,8 +213,49 @@ __Run on X Threads__
 - [GDScript Assertions](/addons/WAT/assertions/assertions.gd)
 - [C# Assertions](/addons/WAT/mono/assertions/Assertions.cs)
 
+## Continous Integration Templates
 
+**Github**
 
+Paste the text below into `.github/workflows/tests.yml`
 
+```yaml
+name: 🧪 Run Unit Tests
 
+on: [push, pull_request]
 
+env:
+  IMPORT_TIME: 10s   # Controls how long we wait to import our assets
+
+jobs:
+  Tests:
+    name: Run All Tests on 3.5
+    runs-on: ubuntu-latest
+    container: barichello/godot-ci:mono-3.5
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Install Dependencies
+        run: |
+          nuget restore
+          mkdir -p .mono/assemblies/Debug
+          cp /usr/local/bin/GodotSharp/Api/Release/* .mono/assemblies/Debug
+      - name: Compile
+        run: msbuild
+
+      - name: Reimport Assets
+        run: timeout $IMPORT_TIME godot --editor || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
+
+      - name: Run
+        run: godot addons/WAT/cli.tscn run=all 
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test Results
+          path: tests/results.xml
+```
