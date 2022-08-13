@@ -126,6 +126,34 @@ namespace WAT
 			EmitSignal(nameof(EventRaised), new TestEventData(sender, args));
 		}
 
+		protected async Task UntilEvent(object sender, string handle, double time, Delegate callback)
+		{
+			EventInfo eventInfo = sender.GetType().GetEvent(handle);
+			var parameters = eventInfo.EventHandlerType
+				.GetMethod("Invoke")
+				.GetParameters()
+				.Select(parameter => Expression.Parameter(parameter.ParameterType))
+				.ToArray();
+
+			var handler = Expression.Lambda(
+					eventInfo.EventHandlerType,
+					Expression.Block(
+						Expression.Invoke(Expression.Constant(callback), parameters),
+						Expression.Call(Expression.Constant(this), GetType().GetMethod(nameof(OnEventWithCallbackRaised)))
+					),
+					parameters
+				)
+				.Compile();
+			eventInfo.AddEventHandler(sender, handler);
+			await UntilSignal(this, nameof(EventRaised), time);
+			eventInfo.RemoveEventHandler(sender, handler);
+		}
+		
+		public void OnEventWithCallbackRaised()
+		{
+			EmitSignal(nameof(EventRaised));
+		}
+
 		protected class TestEventData: Godot.Object
 		{
 			public object Sender { get; }
