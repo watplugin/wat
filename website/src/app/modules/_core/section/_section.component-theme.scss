@@ -1,0 +1,92 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin styles($background, $color) {
+  &.app-section.bg {
+	  --background-color: #{$background};
+	  --transparent-background-color: #{rgba($background, 0.7)};
+    background-color: var(--background-color);
+    color: $color;
+  }
+}
+
+@mixin level-palette-styles($palette, $level) {
+  @include styles(
+    mat.get-color-from-palette($palette, $level), 
+    mat.get-color-from-palette($palette, #{$level}-contrast)
+  )
+}
+
+@mixin palette-styles($palette) {
+  @include level-palette-styles($palette, 500);
+}
+
+@mixin color($config) {
+  $primary: map.get($config, primary);
+  $accent: map.get($config, accent);
+  $warn: map.get($config, warn);
+  $background: map.get($config, background);
+  $foreground: map.get($config, foreground);
+  $foreground-accent: map.get($config, foreground-accent);
+
+  .blank {
+    @include styles(
+      mat.get-color-from-palette($background, background),
+      mat.get-color-from-palette($foreground, text)
+    )
+  }
+
+  $levels: (50, 100, 200, 300, 400, 500, 600, 700, 800, 900);
+
+  @each $level in $levels {
+    .primary-#{$level} {
+      @include level-palette-styles($primary, $level);
+    }
+    
+    .accent-#{$level} {
+      @include level-palette-styles($accent, $level);
+    }
+
+    .foreground-accent-#{$level} {
+      @include level-palette-styles($foreground-accent, $level);
+    }
+
+    .warn-#{$level} {
+      @include level-palette-styles($warn, $level);
+    }
+  }
+
+	.primary {
+    @include palette-styles($primary)
+	}
+  
+	.accent {
+    @include palette-styles($accent)
+	}
+
+  .foreground-accent {
+    @include palette-styles($foreground-accent);
+  }
+
+	.warn {
+    @include palette-styles($warn)
+	}
+}
+
+@mixin typography($config) {
+  .app-section.bg {
+    font-family: mat.font-family($config);
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($color-config);
+  }
+
+  $typography-config: mat.get-typography-config($theme);
+  @if $typography-config != null {
+    @include typography($typography-config);
+  }
+}

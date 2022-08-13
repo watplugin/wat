@@ -1,0 +1,20 @@
+.button {
+	border: none;
+	background-color: transparent;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+  white-space: nowrap;
+	height: 2.5em;
+	font-size: 1.2em;
+  width: 100%;
+	display: flex;  
+  align-items: center;
+  justify-content: center;
+	outline: 0px;
+}
+
+.text {
+  margin: auto;
+	margin-left: 0px;
+}

@@ -1,0 +1,31 @@
+<div class="app-hamburger-menu bg">
+  <div class="app-hamburger-menu content">
+    <div class="app-hamburger-menu dropdown-bg" [@openClose]="openCloseTrigger">
+      <div class="app-hamburger-menu dropdown-content">
+        <div *ngFor="let pageLink of pageLinks">
+          <app-text-button [link]="pageLink.link" (click)="expanded = false" route>{{pageLink.name}}</app-text-button>
+        </div>
+        <div style="display: flex; flex-direction: row; height: 50px; align-items: center;">
+          <!-- SUPER HACKY!!! :( -->
+          <div style="margin-left: 8px;"></div>
+          <app-dark-mode-toggle></app-dark-mode-toggle>
+        </div>
+      </div>
+    </div>
+    <app-logo-text-button></app-logo-text-button>
+    <div style="
+      position: absolute; 
+      right: 0;
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+      align-items: center;
+    ">
+      <button mat-icon-button (click)="expanded = !expanded">
+        <mat-icon class="app-hamburger-menu hamburger-icon" *ngIf="!expanded">menu</mat-icon>
+        <mat-icon class="app-hamburger-menu hamburger-icon" *ngIf="expanded">close</mat-icon>
+      </button>
+    </div>
+    <ng-content></ng-content>
+  </div>
+</div>

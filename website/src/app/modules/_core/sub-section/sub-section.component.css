@@ -1,0 +1,7 @@
+:host > div {
+    margin-bottom: 4em;
+}
+
+:host > div.last {
+    margin-bottom: 0em;
+}

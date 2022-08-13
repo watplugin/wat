@@ -1,0 +1,8 @@
+
+@use './site-footer/site-footer' as site-footer;
+@use './site-header/site-header' as site-header;
+
+@mixin theme($theme) {
+	@include site-footer.theme($theme);
+	@include site-header.theme($theme);
+}

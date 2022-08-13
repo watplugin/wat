@@ -1,0 +1,9 @@
+<div class="app-bg-container bg" class="{{color}}" [ngClass]="{'full-page': fullPage}">
+  <div class="app-bg-container content">
+    <ng-content></ng-content>
+  </div>
+  <!-- Fills up space to keep the page full -->
+  <div *ngIf="fullPage" style="
+    flex: 1;
+  "></div>
+</div>

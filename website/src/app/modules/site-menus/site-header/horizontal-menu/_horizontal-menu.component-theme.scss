@@ -1,0 +1,28 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin color($config) {
+  $primary: map.get($config, primary);
+  $accent: map.get($config, accent);
+
+  .app-horizontal-menu.bg {
+	  background-color: mat.get-color-from-palette($primary, 500);
+    outline: solid 1px mat.get-color-from-palette($primary, 500);
+  }
+}
+
+@mixin typography($config) {
+  
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($color-config);
+  }
+
+  $typography-config: mat.get-typography-config($theme);
+  @if $typography-config != null {
+    @include typography($typography-config);
+  }
+}

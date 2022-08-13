@@ -1,0 +1,6 @@
+div.outlet-container {
+	display:flex; 
+	flex-flow: column;
+	position: relative;
+	flex: 1;
+}

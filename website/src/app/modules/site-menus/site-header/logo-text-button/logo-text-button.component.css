@@ -1,0 +1,27 @@
+:host {
+	background-color: transparent;
+}
+
+.icon {
+	float: left;
+	margin-right: 6px;
+}
+
+.button {
+  position: relative;
+  display: flex;  
+	flex: row;
+  justify-content: left;
+	background-color: transparent;
+	border: 0px;
+	align-items: center;
+}
+
+.button > * {
+  pointer-events: none;
+}
+
+.logo-title {
+	margin-top: auto;
+	margin-bottom: auto;
+}

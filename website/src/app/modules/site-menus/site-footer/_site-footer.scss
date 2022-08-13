@@ -1,0 +1,5 @@
+@use './site-footer/site-footer.component-theme' as site-footer;
+
+@mixin theme($theme) {
+	@include site-footer.theme($theme);
+}

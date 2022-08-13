@@ -1,0 +1,61 @@
+@use 'sass:map';
+@use 'sass:color';
+@use '@angular/material' as mat;
+
+@mixin styles($color) {
+  &.app-text-button.button {
+    color: $color;
+
+    &:hover {
+      color: darken($color, 20%);
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    &:active {
+      color: darken($color, 30%);
+    }
+  }
+}
+
+@mixin palette-styles($palette) {
+  @include styles(
+    mat.get-color-from-palette($palette, 500-contrast)
+  );
+}
+
+@mixin color($config) {
+  $primary: map.get($config, primary);
+  $accent: map.get($config, accent);
+  $warn: map.get($config, warn);
+
+  .primary {
+    @include palette-styles($primary);
+  }
+
+  .accent {
+    @include palette-styles($accent);
+  }
+
+  .warn {
+    @include palette-styles($warn);
+  }
+}
+
+@mixin typography($config) {
+  .app-text-button.button {
+    @include mat.typography-level($config, button);
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($color-config);
+  }
+
+  $typography-config: mat.get-typography-config($theme);
+  @if $typography-config != null {
+    @include typography($typography-config);
+  }
+}

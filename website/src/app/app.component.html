@@ -1,0 +1,24 @@
+<div style="
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+">
+  <app-site-header></app-site-header>
+  <div style="
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    min-height: 100vh;
+  ">
+    <div class="outlet-container" [ngStyle]="getOutletContainerStyle()" style="
+      display: flex;
+    ">
+      <div style="height: var(--site-header-height);"></div>
+      <div style="flex: 1;">
+        <router-outlet></router-outlet>
+      </div>
+      <app-site-footer></app-site-footer> 
+    </div>
+  </div>
+</div>

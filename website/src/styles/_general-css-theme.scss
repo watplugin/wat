@@ -1,0 +1,92 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+
+	$primary: map.get($color-config, primary);
+	$accent: map.get($color-config, accent);
+	$warn: map.get($color-config, warn);
+	$background: map.get($color-config, background);
+	$foreground: map.get($color-config, foreground);
+	
+	// Fix calendar height being too short
+	.mat-calendar {
+		height: 23.2em !important;
+	}
+	
+	a:link {
+		color: mat.get-color-from-palette($primary, 100);
+	}
+
+	a:visited {
+		color: mat.get-color-from-palette($primary, 100);
+	}
+
+	a:hover {
+		color: mat.get-color-from-palette($primary, 50);
+	}
+
+	a:active {
+		color: mat.get-color-from-palette($primary, 100);
+	}
+
+	@include colorStyles(disabled, mat.get-color-from-palette($foreground, disabled-button));
+	@include colorStyles(faded, mat.get-color-from-palette($foreground, disabled-text));
+	@include colorStyles(foreground, mat.get-color-from-palette($foreground, text));
+	@include colorStyles(background, mat.get-color-from-palette($background, background));
+	@include colorStyles(card, mat.get-color-from-palette($background, card));
+	@include colorStyles(divider, mat.get-color-from-palette($foreground, divider));
+	@include colorStyles(primary, mat.get-color-from-palette($primary, 500));
+	@include colorStyles(accent, mat.get-color-from-palette($accent, 500));
+	@include colorStyles(warn, mat.get-color-from-palette($warn, 500));
+
+	b {
+		color: mat.get-color-from-palette($accent, 500);
+	}
+
+	// Loading styles for skeletons
+	.loading {
+		color: transparent;
+		background: linear-gradient(
+			100deg, 
+			mat.get-color-from-palette($background, loading) 30%, 
+			mat.get-color-from-palette($background, loading-mid) 50%,
+			mat.get-color-from-palette($background, loading) 70%);
+		background-size: 400%;
+		animation: loading 1.2s ease-in-out infinite;
+	}
+
+	@keyframes loading {
+		0% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0 50%;
+		}
+	}
+}
+
+@mixin colorStyles($selectorName, $color) {
+	.background-color-#{$selectorName} {
+		background-color: $color;
+	}
+	.text-#{$selectorName},
+	.color-#{$selectorName} {
+		// Force color change in button. This is used primarily for buttons in table headers, 
+		// because by default they have a disabled text color.
+		&.mat-button,
+		&.mat-stroked-button,
+		&.mat-flat-button,
+		&.mat-raised-button {
+			color: $color;	
+		}
+		color: $color;
+	}
+	.outline-color-#{$selectorName} {
+		outline-color: $color;
+	}
+	.border-color-#{$selectorName} {
+		border-color: $color;
+	}
+}

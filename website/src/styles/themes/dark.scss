@@ -1,0 +1,40 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use '../modules-theme' as modules;
+@use '../general-css-theme' as general-css;
+@import '../shared-palettes';
+
+$site-theme-dark: create-complete-theme((
+	color: (
+		primary: $site-deep-blue, 
+		accent: $site-lime,
+		foreground-accent: $site-grey-reverse,
+		warn: mat.define-palette(mat.$red-palette),
+		misc: $misc,
+		is-dark: true, 
+		foreground: $dark-theme-foreground-palette, 
+		background: $dark-theme-background-palette,
+	),
+	typography: $site-typography,
+));
+
+// $site-theme-dark-bright-color: (
+// 	primary: $bright-red, 
+// 	accent: $cogs-grey,
+// 	warn: mat.define-palette(mat.$red-palette),
+// 	misc: $misc,
+// 	is-dark: true, 
+// 	foreground: $dark-theme-foreground-palette, 
+// 	background: $dark-theme-background-palette,
+// );
+
+
+@include modules.theme($site-theme-dark);
+@include general-css.theme($site-theme-dark);
+@include mat.all-component-themes($site-theme-dark);
+
+// Darkmode form fields are unreadable using the regular cogs-red color for primary.
+// Therefore we use cogs-bright-red to make it readable, and we have to manually
+// override the form-field's colors.
+// @include mat.form-field-color($site-theme-dark-bright-color);
+// @include mat.option-color($site-theme-dark-bright-color);

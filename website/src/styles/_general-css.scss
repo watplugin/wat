@@ -1,0 +1,207 @@
+@import 'variables';
+
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+/* use viewport-relative units to cover page fully */
+body {
+	height: 100%;
+	width: 100%;
+}
+	
+button {
+	padding: 0.0625em 0.375em;
+	background: inherit;
+  border: none; 
+  font: inherit;
+  color: inherit;
+}
+
+.page {
+	flex: 1 1 auto; 
+	display:flex; 
+	flex-flow: column;
+}
+
+b {
+	font-weight: 900;
+}
+
+ic-icon {
+	display: flex; 
+	align-items: center;
+	flex: 0;
+}
+
+.mat-override-custom {
+	&.mat-h2, 
+	&.mat-title, 
+	&.mat-typography h2 {
+		margin-bottom: 0.5em;
+	}
+	
+
+	.mat-tooltip {
+		font-size: 0.8em;
+	}
+
+	.mat-button-toggle-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.mat-button-wrapper {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5em;
+		padding: 0;
+	}
+
+	.mat-input-padding {
+		padding-bottom: 1.25em;
+	}
+
+	.mat-input-margin {
+		margin-bottom: 1.25em;
+	}
+
+	// Class that removes bottom padding of a mat-form-field
+	.no-padding .mat-form-field-wrapper {
+		padding-bottom: 0em;
+	}
+
+	.mat-tab-label {
+		min-width: 6em;
+		height: 3em;
+		padding: 0 1.5em;
+	}
+
+	.mat-menu-panel {
+		min-width: 7em;
+	}
+
+	.mat-badge-medium .mat-badge-content {
+		height: 1.375em;
+		width: 1.375em;
+		line-height: 1.375em;
+	}
+	.mat-badge-medium.mat-badge-after .mat-badge-content {
+		right: -1.375em;
+	}
+	.mat-badge-medium.mat-badge-above .mat-badge-content {
+		top: -0.6875em;
+	}
+
+	.mat-menu-item {
+		padding: 0 1em;
+		height: 2.625em;
+		line-height: 2.625em;
+	}
+
+	.mat-button,
+	.mat-flat-button,
+	.mat-flat-button,
+	.mat-stroked-button {
+		line-height: 2.125em;
+		padding: 0 1em;
+		min-width: 4em;
+	}
+
+	.mat-icon-button {
+		width: 2.125em;
+		height: 2.125em;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&.mat-icon {
+			line-height: 1em;
+		}
+	}
+
+	.material-icons {
+		font-size: 1.5em;
+		&.mat-icon {
+			line-height: 1em;
+			height: 1em;
+			width: 1em;
+		}
+	}
+
+	// Make <mat-error> s take up space
+	.mat-form-field {
+		.mat-form-field-wrapper {
+			padding-bottom: 0;
+
+			.mat-form-field-underline {
+				position: initial;
+				display: block;
+				margin-top: -1px;
+			}
+
+			.mat-form-field-subscript-wrapper,
+			.mat-form-field-ripple {
+				position: initial;
+				display: table;
+			}
+
+			.mat-form-field-subscript-wrapper {
+				min-height: calc(1em + 1px);
+			}
+		}
+	}
+
+	// Custom mat-tab-group fade transition
+	.mat-tab-body {
+			animation: fade-out 0.5s;
+			opacity: 0;
+	}
+	.mat-tab-body.mat-tab-body-active {
+			animation: fade-in 0.5s;
+			opacity: 1;
+	}
+
+	@keyframes fade-in {
+			0% {
+					opacity: 0;
+			}
+			50% {
+					opacity: 0;
+			}
+			100% {
+					opacity: 1;
+			}
+	}
+
+	@keyframes fade-out {
+			0% {
+					opacity: 1;
+			}
+			50% {
+					opacity: 0;
+			}
+			100% {
+					opacity: 0;
+			}
+	}
+
+	th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+		padding-left: 1.5em;
+	}
+
+	tr.mat-header-row {
+		height: 3.5em;
+	}
+	
+	tr.mat-row, tr.mat-footer-row {
+		height: 3em;
+	}
+}

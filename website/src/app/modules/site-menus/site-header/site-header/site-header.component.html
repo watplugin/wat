@@ -1,0 +1,4 @@
+<div class="container" [ngClass]="{detached: scrolled}">
+  <app-horizontal-menu *ngIf="!breakpointManager.matchedBreakpointOrBelow('MOBILE')" [pageLinks]="settings.General.pageLinks"></app-horizontal-menu>
+  <app-hamburger-menu *ngIf="breakpointManager.matchedBreakpointOrBelow('MOBILE')" [pageLinks]="settings.General.pageLinks"></app-hamburger-menu>
+</div>
