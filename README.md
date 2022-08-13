@@ -11,6 +11,7 @@ A Godot unit-testing framework for GDScript and C#. It includes an inspector win
 4. [CLI](#CLI)
 5. [Example Tests](#Examples)
 6. [Assertions](#Assertions)
+6. [Continuous Integration](#ContinuousIntegration)
 
 ## Install
 <a name="Install"></a>
@@ -213,7 +214,8 @@ __Run on X Threads__
 - [GDScript Assertions](/addons/WAT/assertions/assertions.gd)
 - [C# Assertions](/addons/WAT/mono/assertions/Assertions.cs)
 
-## Continous Integration
+## Continuous Integration
+<a name="ContinuousIntegration"></a>
 
 You can automatically run your unit tests every time you push changes to your game's repository. Here's some automation templates for popular git hosting services.
 
