@@ -213,11 +213,13 @@ __Run on X Threads__
 - [GDScript Assertions](/addons/WAT/assertions/assertions.gd)
 - [C# Assertions](/addons/WAT/mono/assertions/Assertions.cs)
 
-## Continous Integration Templates
+## Continous Integration
+
+You can automatically run your unit tests every time you push changes to your game's repository. Here's some automation templates for popular git hosting services.
 
 **Github**
 
-Paste the text below into `.github/workflows/tests.yml`
+Paste the stuff below into `.github/workflows/tests.yml`
 
 ```yaml
 name: 🧪 Run Unit Tests
