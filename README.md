@@ -1,6 +1,6 @@
-[![WAT Banner](images/banner.png)](https://atlinx.github.io/WAT/)
+[![WAT Banner](images/banner.png)](https://alexdarigan.github.io/WAT/)
 
-# WAT 
+# [WAT](https://alexdarigan.github.io/WAT/) 
 ![3.3.2](https://github.com/CodeDarigan/WAT-GDScript/workflows/%20%20Godot%203.3.2%20%20/badge.svg) [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q51D9K5)
 
 A Godot unit-testing framework for GDScript and C#. It includes an inspector window for manually running tests, and a command-line interface for easy automated testing.
