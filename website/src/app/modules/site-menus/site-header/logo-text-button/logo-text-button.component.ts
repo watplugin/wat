@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class LogoTextButtonComponent implements OnInit {
   hover: boolean = false;
   active: boolean = false;
+  scrolled: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -16,5 +17,10 @@ export class LogoTextButtonComponent implements OnInit {
 
   onClick() {
     this.router.navigateByUrl('home');
+  }
+
+  @HostListener('window:scroll', ['$event']) // for window scroll events
+  onScroll() {
+    this.scrolled = window.pageYOffset != 0;
   }
 }

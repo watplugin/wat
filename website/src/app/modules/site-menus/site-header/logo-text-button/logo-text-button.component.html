@@ -1,4 +1,4 @@
-<button (click)="onClick()" class="app-logo-text-button button" (mouseenter)="hover = true" (mouseleave)="hover = false" (mousedown)="active = true" (mouseup)="active = false">
+<button (click)="onClick()" [ngClass]="{detached: scrolled}" class="app-logo-text-button button" (mouseenter)="hover = true" (mouseleave)="hover = false" (mousedown)="active = true" (mouseup)="active = false">
   <svg class="app-logo-text-button icon" [ngClass]="{hover: hover, active: active}" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
     <g>
       <path d="M255.179,326.473c-10.219,0-20.035-4.171-27.139-11.612l-71.243-74.614

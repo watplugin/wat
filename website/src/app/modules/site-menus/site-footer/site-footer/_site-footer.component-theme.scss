@@ -3,11 +3,11 @@
 @use '@angular/material' as mat;
 
 @mixin color($config) {
-  $accent: map.get($config, accent);
+  $foreground-accent-dark: map.get($config, foreground-accent-dark);
 
   .app-site-footer.bg {
-    background-color: mat.get-color-from-palette($accent, 800);
-    color: mat.get-color-from-palette($accent, 400);
+    background-color: mat.get-color-from-palette($foreground-accent-dark, 800);
+    color: mat.get-color-from-palette($foreground-accent-dark, 400);
   }
 }
 

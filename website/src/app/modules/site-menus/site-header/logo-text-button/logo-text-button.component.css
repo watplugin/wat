@@ -15,6 +15,14 @@
 	background-color: transparent;
 	border: 0px;
 	align-items: center;
+	opacity: 0;
+	visibility: hidden;
+	transition-duration: 0.2s;
+}
+
+.button.detached {
+	visibility: visible;
+	opacity: 1;
 }
 
 .button > * {

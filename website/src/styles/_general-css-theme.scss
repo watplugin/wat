@@ -7,6 +7,7 @@
 	$primary: map.get($color-config, primary);
 	$accent: map.get($color-config, accent);
 	$warn: map.get($color-config, warn);
+	$misc: map.get($color-config, misc);
 	$background: map.get($color-config, background);
 	$foreground: map.get($color-config, foreground);
 	
@@ -15,20 +16,22 @@
 		height: 23.2em !important;
 	}
 	
-	a:link {
-		color: mat.get-color-from-palette($primary, 100);
-	}
+	a:not(.mat-button):not(.mat-raised-button):not(.mat-stroked-button):not(.mat-flat-button):not(.mat-icon-button):not(.mat-fab):not(.mat-mini-fab) {
+		&:link {
+			color: mat.get-color-from-palette($accent, 100);
+		}
 
-	a:visited {
-		color: mat.get-color-from-palette($primary, 100);
-	}
+		&:visited {
+			color: mat.get-color-from-palette($accent, 100);
+		}
 
-	a:hover {
-		color: mat.get-color-from-palette($primary, 50);
-	}
+		&:hover {
+			color: mat.get-color-from-palette($accent, 50);
+		}
 
-	a:active {
-		color: mat.get-color-from-palette($primary, 100);
+		&:active {
+			color: mat.get-color-from-palette($accent, 100);
+		}
 	}
 
 	@include colorStyles(disabled, mat.get-color-from-palette($foreground, disabled-button));
@@ -40,6 +43,11 @@
 	@include colorStyles(primary, mat.get-color-from-palette($primary, 500));
 	@include colorStyles(accent, mat.get-color-from-palette($accent, 500));
 	@include colorStyles(warn, mat.get-color-from-palette($warn, 500));
+	@include colorStyles(discord, mat.get-color-from-palette($misc, discord));
+	@include colorStyles(kofi, mat.get-color-from-palette($misc, kofi));
+	@include colorStyles(light, mat.get-color-from-palette($misc, light));
+	@include colorStyles(dark, mat.get-color-from-palette($misc, dark));
+	
 
 	b {
 		color: mat.get-color-from-palette($accent, 500);
@@ -69,7 +77,18 @@
 
 @mixin colorStyles($selectorName, $color) {
 	.background-color-#{$selectorName} {
+		// Force color change in button. This is used primarily for buttons in table headers, 
+		// because by default they have a disabled text color.
+		&.mat-button,
+		&.mat-stroked-button,
+		&.mat-flat-button,
+		&.mat-raised-button {
+			background-color: $color;	
+		}
 		background-color: $color;
+	}
+	.fill-#{$selectorName} {
+		fill: $color;
 	}
 	.text-#{$selectorName},
 	.color-#{$selectorName} {

@@ -9,6 +9,7 @@ $site-theme: create-complete-theme((
 		primary: $site-deep-blue, 
 		accent: $site-lime, 
 		foreground-accent: $site-grey,
+		foreground-accent-dark: $site-grey,
 		warn: mat.define-palette(mat.$red-palette),
 		misc: $misc,
 		is-dark: false, 

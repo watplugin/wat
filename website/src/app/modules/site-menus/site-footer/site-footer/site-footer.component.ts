@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SettingsService } from '@src/_settings';
 
 @Component({
   selector: 'app-site-footer',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./site-footer.component.css'],
 })
 export class SiteFooterComponent implements OnInit {
-  constructor() {}
+  constructor(public settings: SettingsService) {}
 
   ngOnInit(): void {}
 }

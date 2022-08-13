@@ -3,9 +3,9 @@
 	--content-padding: 4em;
 	--dog-ear: 4em;
 	--dog-ear-padding: 4em;
-	--content-width: min(80%, 1080px);
+	--content-width: min(80%, 1480px);
 	--main-width: var(--content-width);
-	--markdown-content-width: 1080px;
+	--markdown-content-width: 1480px;
 }
 
 $small-desktop-width: 1280px;
@@ -25,7 +25,7 @@ $tiny-mobile-width: 400px;
 		font-size: 100%;
 		--content-width: 100%;
 		--markdown-content-width: 100%;
-		--content-padding: 2em;
+		--content-padding: 3em;
 		--dog-ear-padding: 2.625em;
 		--dog-ear: 2em;
 	}
@@ -40,7 +40,7 @@ $tiny-mobile-width: 400px;
 /* Tiny mobile values */
 @media screen and (max-width: $tiny-mobile-width) {
 	:root { 
-		--content-padding: 1em;
+		--content-padding: 2em;
 		font-size: 80%;
 	}
 }
