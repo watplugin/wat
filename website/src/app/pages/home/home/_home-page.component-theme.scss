@@ -6,7 +6,14 @@
   $primary: map.get($config, primary);
 
   .app-home-page.header {
-		color: mat.get-color-from-palette($primary, 500-contrast)
+		color: mat.get-color-from-palette($primary, 500-contrast);
+    &.subtitle {
+      font-family: 'Urbanist';
+      font-weight: 300;
+      b {
+       font-weight: 600; 
+      }
+    }
   }
 }
 

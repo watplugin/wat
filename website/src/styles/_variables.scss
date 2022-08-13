@@ -1,3 +1,5 @@
+$font-scale: 0.9;
+
 :root {
 	--site-header-height: 4em;
 	--content-padding: 4em;
@@ -6,6 +8,7 @@
 	--content-width: min(80%, 1480px);
 	--main-width: var(--content-width);
 	--markdown-content-width: 1480px;
+	font-size: 100% * $font-scale;
 }
 
 $small-desktop-width: 1280px;
@@ -15,14 +18,14 @@ $tiny-mobile-width: 400px;
 
 @media screen and (max-width: $small-desktop-width) {
 	:root {
-		font-size: 90%
+		font-size: 90% * $font-scale
 	}
 }
 
 /* Mobile values */
 @media screen and (max-width: $mobile-width) {
 	:root {
-		font-size: 100%;
+		font-size: 100% * $font-scale;
 		--content-width: 100%;
 		--markdown-content-width: 100%;
 		--content-padding: 3em;
@@ -33,7 +36,7 @@ $tiny-mobile-width: 400px;
 
 @media screen and (max-width: $medium-mobile-width) {
 	:root {
-		font-size: 90%;
+		font-size: 90% * $font-scale;
 	}
 }
 
@@ -41,6 +44,6 @@ $tiny-mobile-width: 400px;
 @media screen and (max-width: $tiny-mobile-width) {
 	:root { 
 		--content-padding: 2em;
-		font-size: 80%;
+		font-size: 80% * $font-scale;
 	}
 }
