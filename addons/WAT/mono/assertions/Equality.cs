@@ -61,5 +61,40 @@ namespace WAT
             string result = success ? passed : failed;
             return Result(success, passed, result, context);
         }
+
+        public static Dictionary CollectionsAreEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual, string context)
+        {
+            if (actual is null)
+            {
+                return Result(
+                    false,
+                    "collection is not null",
+                    "collection is null",
+                    context);
+            }
+
+            if (expected.Count() != actual.Count())
+            {
+                return Result(
+                    false,
+                    $"length {expected.Count()}",
+                    $"length {actual.Count()}",
+                    context);
+            }
+
+            for (int i = 0; i < actual.Count(); i++)
+            {
+                if (!expected.ElementAt(i).Equals(actual.ElementAt(i)))
+                {
+                    return Result(
+                        false,
+                        $"element at {i} is {expected.ElementAt(i)}",
+                        $"element at {i} is {actual.ElementAt(i)}",
+                        context);
+                }
+            }
+
+            return Result(true, expected.ToString(), actual.ToString(), context);
+        }
     }
 }

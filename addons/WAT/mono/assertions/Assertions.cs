@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 using GDArray = Godot.Collections.Array;
 using Object = Godot.Object;
@@ -255,6 +256,11 @@ namespace WAT {
 		public void DoesNotThrow<T>(Action function, string context = "")
 		{
 			Output(Utility.DoesNotThrow<T>(function, context));
+		}
+
+		public void CollectionsAreEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual, string context = "")
+		{
+			Output(Equality.CollectionsAreEqual(expected, actual, context));
 		}
 	}
 }
