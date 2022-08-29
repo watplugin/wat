@@ -44,7 +44,7 @@ namespace WAT
 			catch (Exception e)
 			{
 				string fail = $"Threw {e} with Message: {e.Message}";
-				return Result(true, "No Exception was thrown", fail, context);
+				return Result(false, "No Exception was thrown", fail, context);
 			}
 		}
 		
