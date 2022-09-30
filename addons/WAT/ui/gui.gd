@@ -102,8 +102,8 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 			TestMenu.update_menus()
 
 	if current_build:
-		if Server.kick_current_peer():
-				_plugin.get_editor_interface().stop_playing_scene()
+#		if Server.kick_current_peer():
+#				_plugin.get_editor_interface().stop_playing_scene()
 		var tests: Array = data.get_tests()
 		if _setup_display(tests):
 			_plugin.get_editor_interface().play_custom_scene(

@@ -6,7 +6,7 @@ extends "res://addons/WAT/network/test_network.gd"
 var socket: WebSocketServer 
 var peer_id: int
 
-func _new_server_ready():
+func _ready():
 	print("NEW SERVER READY")
 	socket = WebSocketServer.new()
 	socket.connect("client_connected", self, "_on_web_client_connected")
@@ -49,102 +49,23 @@ func _on_data_received(id):
 		
 # END WEBSOCKET SERVER
 
-const IPAddress: String = "127.0.0.1"
-const PORT: int = 6019
-const MAXCLIENTS: int = 1
-const MASTER: int = 1
-var _peer: NetworkedMultiplayerENet
-var _id: int
 
 signal web_network_peer_connected
-signal network_peer_connected
 signal results_received
-
-enum STATE { SENDING, RECEIVING, DISCONNECTED }
-
-var _peer_id: int
 # Store incoming cases from client in case of abrupt termination.
 var caselist: Array = []
 var results_view: TabContainer
-var status: int = STATE.DISCONNECTED
 
-func _init() -> void:
-	_old_server_init()
-	
-func _ready() -> void:
-	_new_server_ready()
-	_old_server_ready()
-
-	
 func _process(delta):
-	_old_server_process()
 	if socket:
 		socket.poll()
-	
-func _old_server_init():
-	_close()
-	custom_multiplayer = MultiplayerAPI.new()
-	custom_multiplayer.root_node = self
-	custom_multiplayer.allow_object_decoding = true
-	_peer = NetworkedMultiplayerENet.new()
-	
-func _old_server_ready():
-	if not Engine.is_editor_hint():
-		return
-	custom_multiplayer.connect("network_peer_connected", self, "_on_network_peer_connected")
-	custom_multiplayer.connect("network_peer_disconnected", self, "_on_network_peer_disconnected")
-	if _error(_peer.create_server(PORT, MAXCLIENTS)) == OK:
-		custom_multiplayer.network_peer = _peer
-		
-func _old_server_process():
-	if custom_multiplayer.has_network_peer():
-		custom_multiplayer.poll()
-	
-func _old_server_exit():
-	pass
 
-func _close() -> void:
-	if is_instance_valid(_peer):
-		if _is_connected():
-			_peer.close_connection()
-		_peer = null
-		
-func _error(err: int) -> int:
-	if err != OK:
-		match err:
-			ERR_ALREADY_IN_USE:
-				push_warning("Network Peer is already in use")
-			ERR_CANT_CREATE:
-				push_warning("Network Peer cannot be created")
-			_:
-				push_warning(err as String)
-	return err
-	
-func _is_connected() -> bool:
-	return _peer.get_connection_status() == NetworkedMultiplayerENet.CONNECTION_CONNECTED
-
-func _exit_tree() -> void:
-	_close()
-
-	
-func _on_network_peer_connected(id: int) -> void:
-	_peer_id = id
-	# Timeout is 10 minutes.
-	_peer.set_peer_timeout(id, 600000, 601000, 602000)
-	emit_signal("network_peer_connected")
-
-func _on_network_peer_disconnected(_id: int) -> void:
-	if status == STATE.SENDING:
-		emit_signal("results_received", caselist)
-	caselist.clear()
-	status = STATE.DISCONNECTED
-
-func kick_current_peer():
-	var kicked = false
-	if _peer_id in custom_multiplayer.get_network_connected_peers():
-		_on_results_received_from_client([])
-		kicked = true
-	return kicked
+# Note 1 - Close any possible open connections before creating new ones
+# Note 2 - Don't bother if this is not an Engine (or allow all things use it)
+# Note 3 - Check Connection Errors
+# Note 4 - Close on Exit
+# Note 5 - Managing timed out peers (send caselist on abrupt stop)
+# Note 6 - Kick Current Peers
 	
 func send_web(method, data):
 	var json = {"method": method, "data": data}
@@ -153,7 +74,6 @@ func send_web(method, data):
 	socket.get_peer(peer_id).put_packet(string_json.to_utf8())
 
 func send_tests(testdir: Array, repeat: int, thread_count: int) -> void:
-	status = STATE.SENDING
 	send_web("_on_tests_received_from_server", 
 		{
 			"testdir": testdir, 
@@ -162,9 +82,7 @@ func send_tests(testdir: Array, repeat: int, thread_count: int) -> void:
 		})
 
 func _on_results_received_from_client(results: Array = []) -> void:
-	status = STATE.RECEIVING
 	emit_signal("results_received", results)
-	_peer.disconnect_peer(_peer_id, true)
 
 func _on_test_script_started(data: Dictionary) -> void:
 	results_view.on_test_script_started(data)
