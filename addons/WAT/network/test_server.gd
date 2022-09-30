@@ -24,8 +24,29 @@ func _on_client_disconnected(id, clean):
 	print("client disconnected: %s, %s" % [id, clean])
 	
 func _on_data_received(id):
-	print(socket.get_peer(id).get_packet().get_string_from_ascii())
-
+#	print(socket.get_peer(id).get_packet().get_string_from_ascii())
+	var json_string = socket.get_peer(id).get_packet().get_string_from_ascii()
+	print("got data")
+	var res: JSONParseResult = JSON.parse(json_string)
+	print(res.result)
+	match res.result["method"]:
+		"_on_test_script_started":
+			_on_test_script_started(res.result["data"])
+		"_on_test_script_finished":
+			_on_test_script_finished(res.result["data"])
+		"_on_test_method_started":
+			_on_test_method_started(res.result["data"])
+		"_on_test_method_finished":
+			_on_test_method_finished(res.result["data"])
+		"_on_asserted":
+			_on_asserted(res.result["data"])
+		"_on_test_method_described":
+			_on_test_method_described(res.result["data"])
+		"_on_results_received_from_client":
+			_on_results_received_from_client(res.result["data"])
+		_:
+			print("Fallthrough")
+		
 # END WEBSOCKET SERVER
 
 const IPAddress: String = "127.0.0.1"
@@ -129,26 +150,27 @@ func send_tests(testdir: Array, repeat: int, thread_count: int) -> void:
 	status = STATE.SENDING
 	rpc_id(_peer_id, "_on_tests_received_from_server", testdir, repeat, thread_count)
 
-master func _on_results_received_from_client(results: Array = []) -> void:
+func _on_results_received_from_client(results: Array = []) -> void:
 	status = STATE.RECEIVING
 	emit_signal("results_received", results)
 	_peer.disconnect_peer(_peer_id, true)
 
-master func _on_test_script_started(data: Dictionary) -> void:
+func _on_test_script_started(data: Dictionary) -> void:
 	results_view.on_test_script_started(data)
 	
-master func _on_test_script_finished(data: Dictionary) -> void:
+func _on_test_script_finished(data: Dictionary) -> void:
 	results_view.on_test_script_finished(data)
 	caselist.append(data)
 
-master func _on_test_method_started(data: Dictionary) -> void:
+func _on_test_method_started(data: Dictionary) -> void:
 	results_view.on_test_method_started(data)
 	
-master func _on_test_method_finished(data: Dictionary) -> void:
+func _on_test_method_finished(data: Dictionary) -> void:
 	results_view.on_test_method_finished(data)
 
-master func _on_asserted(data: Dictionary) -> void:
+func _on_asserted(data: Dictionary) -> void:
 	results_view.on_asserted(data)
 	
-master func _on_test_method_described(data: Dictionary) -> void:
+func _on_test_method_described(data: Dictionary) -> void:
 	results_view.on_test_method_described(data)
+

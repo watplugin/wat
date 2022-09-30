@@ -84,23 +84,29 @@ func _on_connection_failed() -> void:
 	
 puppet func _on_tests_received_from_server(tests: Array, repeat: int, thread_count: int) -> void:
 	var results: Array = yield(get_parent().run(tests, repeat, thread_count, self), "completed")
-	rpc_id(MASTER, "_on_results_received_from_client", results)
+	send_web("_on_results_received_from_client", results)
 
 # LiveWire Functions
+func send_web(method, data):
+	var json = {"method": method, "data": data}
+	var string_json = to_json(json)
+	socket.get_peer(1).put_packet(string_json.to_utf8())
+
+
 func on_test_script_started(data: Dictionary) -> void:
-	rpc_id(MASTER, "_on_test_script_started", data)
+	send_web("_on_test_script_started", data)
 	
 func on_test_script_finished(data: Dictionary) -> void:
-	rpc_id(MASTER, "_on_test_script_finished", data)
+	send_web("_on_test_script_finished", data)
 
 func on_test_method_started(data: Dictionary) -> void:
-	rpc_id(MASTER, "_on_test_method_started", data)
-	
+	send_web("_on_test_method_started", data)
+
 func on_test_method_finished(data: Dictionary) -> void:
-	rpc_id(MASTER, "_on_test_method_finished", data)
+	send_web("_on_test_method_finished", data)
 
 func on_asserted(data: Dictionary) -> void:
-	rpc_id(MASTER, "_on_asserted", data)
+	send_web("_on_asserted", data)	
 	
 func on_test_method_described(data: Dictionary) -> void:
-	rpc_id(MASTER, "_on_test_method_described", data)
+	send_web("_on_test_method_described", data)
