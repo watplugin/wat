@@ -1,6 +1,15 @@
 tool
 extends "res://addons/WAT/network/test_network.gd"
 
+
+const IPAddress: String = "127.0.0.1"
+const PORT: int = 6019
+const MAXCLIENTS: int = 1
+const MASTER: int = 1
+var _peer: NetworkedMultiplayerENet
+var _id: int
+
+
 signal network_peer_connected
 signal results_received
 
@@ -12,6 +21,13 @@ var caselist: Array = []
 var results_view: TabContainer
 var status: int = STATE.DISCONNECTED
 
+func _init() -> void:
+	_close()
+	custom_multiplayer = MultiplayerAPI.new()
+	custom_multiplayer.root_node = self
+	custom_multiplayer.allow_object_decoding = true
+	_peer = NetworkedMultiplayerENet.new()
+
 func _ready() -> void:
 	if not Engine.is_editor_hint():
 		return
@@ -19,6 +35,34 @@ func _ready() -> void:
 	custom_multiplayer.connect("network_peer_disconnected", self, "_on_network_peer_disconnected")
 	if _error(_peer.create_server(PORT, MAXCLIENTS)) == OK:
 		custom_multiplayer.network_peer = _peer
+		
+func _process(delta):
+	if custom_multiplayer.has_network_peer():
+		custom_multiplayer.poll()
+	
+func _close() -> void:
+	if is_instance_valid(_peer):
+		if _is_connected():
+			_peer.close_connection()
+		_peer = null
+		
+func _error(err: int) -> int:
+	if err != OK:
+		match err:
+			ERR_ALREADY_IN_USE:
+				push_warning("Network Peer is already in use")
+			ERR_CANT_CREATE:
+				push_warning("Network Peer cannot be created")
+			_:
+				push_warning(err as String)
+	return err
+	
+func _is_connected() -> bool:
+	return _peer.get_connection_status() == NetworkedMultiplayerENet.CONNECTION_CONNECTED
+
+func _exit_tree() -> void:
+	_close()
+
 	
 func _on_network_peer_connected(id: int) -> void:
 	_peer_id = id
