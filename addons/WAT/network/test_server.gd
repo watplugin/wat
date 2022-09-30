@@ -22,13 +22,22 @@ var results_view: TabContainer
 var status: int = STATE.DISCONNECTED
 
 func _init() -> void:
+	_old_server_init()
+	
+func _ready() -> void:
+	_old_server_ready()
+	
+func _process(delta):
+	_old_server_process()
+	
+func _old_server_init():
 	_close()
 	custom_multiplayer = MultiplayerAPI.new()
 	custom_multiplayer.root_node = self
 	custom_multiplayer.allow_object_decoding = true
 	_peer = NetworkedMultiplayerENet.new()
-
-func _ready() -> void:
+	
+func _old_server_ready():
 	if not Engine.is_editor_hint():
 		return
 	custom_multiplayer.connect("network_peer_connected", self, "_on_network_peer_connected")
@@ -36,10 +45,13 @@ func _ready() -> void:
 	if _error(_peer.create_server(PORT, MAXCLIENTS)) == OK:
 		custom_multiplayer.network_peer = _peer
 		
-func _process(delta):
+func _old_server_process():
 	if custom_multiplayer.has_network_peer():
 		custom_multiplayer.poll()
 	
+func _old_server_exit():
+	pass
+
 func _close() -> void:
 	if is_instance_valid(_peer):
 		if _is_connected():

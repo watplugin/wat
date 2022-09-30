@@ -7,20 +7,31 @@ const MASTER: int = 1
 var _peer: NetworkedMultiplayerENet
 var _id: int
 
+func _init():
+	_old_client_init()
+	
+func _ready():
+	_old_client_ready()
+	
+func _process(delta):
+	_old_client_process(delta)
+	
+func _exit_tree():
+	_old_client_exit_tree()
 
-func _init() -> void:
+func _old_client_init() -> void:
 	_close()
 	custom_multiplayer = MultiplayerAPI.new()
 	custom_multiplayer.root_node = self
 	custom_multiplayer.allow_object_decoding = true
 	_peer = NetworkedMultiplayerENet.new()
 
-func _ready() -> void:
+func _old_client_ready() -> void:
 	custom_multiplayer.connect("connection_failed", self, "_on_connection_failed")
 	if _error(_peer.create_client(IPAddress, PORT)) == OK:
 		custom_multiplayer.network_peer = _peer
 		
-func _process(delta: float) -> void:
+func _old_client_process(delta: float) -> void:
 	if custom_multiplayer.has_network_peer():
 		custom_multiplayer.poll()
 		
@@ -44,7 +55,7 @@ func _error(err: int) -> int:
 func _is_connected() -> bool:
 	return _peer.get_connection_status() == NetworkedMultiplayerENet.CONNECTION_CONNECTED
 
-func _exit_tree() -> void:
+func _old_client_exit_tree() -> void:
 	_close()
 
 	
