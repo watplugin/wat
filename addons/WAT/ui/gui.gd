@@ -110,7 +110,8 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 					"res://addons/WAT/runner/TestRunner.tscn")
 			if Settings.is_bottom_panel():
 				_plugin.make_bottom_panel_item_visible(self)
-			yield(Server, "network_peer_connected")
+			#yield(Server, "network_peer_connected")
+			yield(Server, "web_network_peer_connected")
 			Server.send_tests(tests, Repeats.value, Threads.value)
 			var results: Array = yield(Server, "results_received")
 			_plugin.get_editor_interface().stop_playing_scene()

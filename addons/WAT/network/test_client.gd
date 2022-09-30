@@ -14,6 +14,16 @@ func _new_client_ready():
 func _on_connection_established(protocol):
 	print("PROTOCOL: ", protocol)
 	
+
+func _on_data_received():
+	var json_string = socket.get_peer(1).get_packet().get_string_from_ascii()
+	var res: JSONParseResult = JSON.parse(json_string)
+	match res.result["method"]:
+		"_on_tests_received_from_server":
+			var tests = res.result["data"]["testdir"]
+			var repeat = res.result["data"]["repeat"]
+			var count = res.result["data"]["thread_count"]
+			_on_tests_received_from_server(tests, repeat, count)
 # END WEBSOCKET CLIENT
 
 
@@ -82,8 +92,9 @@ func _old_client_exit_tree() -> void:
 func _on_connection_failed() -> void:
 	push_warning("TestClient could not connect to TestServer")
 	
-puppet func _on_tests_received_from_server(tests: Array, repeat: int, thread_count: int) -> void:
+func _on_tests_received_from_server(tests: Array, repeat: int, thread_count: int) -> void:
 	var results: Array = yield(get_parent().run(tests, repeat, thread_count, self), "completed")
+	print("TESTS FINISHED")
 	send_web("_on_results_received_from_client", results)
 
 # LiveWire Functions

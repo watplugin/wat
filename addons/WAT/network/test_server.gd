@@ -4,6 +4,7 @@ extends "res://addons/WAT/network/test_network.gd"
 # BEGIN WEBSOCKET SERVER
 
 var socket: WebSocketServer 
+var peer_id: int
 
 func _new_server_ready():
 	print("NEW SERVER READY")
@@ -15,7 +16,9 @@ func _new_server_ready():
 	socket.listen(80, ["JSON-RPC"], false)
 	
 func _on_web_client_connected(id, protocol):
+	peer_id = id
 	print("%s connected with protocol %s" % [id, protocol])
+	emit_signal("web_network_peer_connected")
 	
 func _on_client_close_request(id, code, reason):
 	print("client close request: %s, %s, %s" % [id, code, reason])
@@ -24,11 +27,8 @@ func _on_client_disconnected(id, clean):
 	print("client disconnected: %s, %s" % [id, clean])
 	
 func _on_data_received(id):
-#	print(socket.get_peer(id).get_packet().get_string_from_ascii())
 	var json_string = socket.get_peer(id).get_packet().get_string_from_ascii()
-	print("got data")
 	var res: JSONParseResult = JSON.parse(json_string)
-	print(res.result)
 	match res.result["method"]:
 		"_on_test_script_started":
 			_on_test_script_started(res.result["data"])
@@ -56,7 +56,7 @@ const MASTER: int = 1
 var _peer: NetworkedMultiplayerENet
 var _id: int
 
-
+signal web_network_peer_connected
 signal network_peer_connected
 signal results_received
 
@@ -145,10 +145,21 @@ func kick_current_peer():
 		_on_results_received_from_client([])
 		kicked = true
 	return kicked
+	
+func send_web(method, data):
+	var json = {"method": method, "data": data}
+	var string_json = to_json(json)
+	print("sending data to ", peer_id)
+	socket.get_peer(peer_id).put_packet(string_json.to_utf8())
 
 func send_tests(testdir: Array, repeat: int, thread_count: int) -> void:
 	status = STATE.SENDING
-	rpc_id(_peer_id, "_on_tests_received_from_server", testdir, repeat, thread_count)
+	send_web("_on_tests_received_from_server", 
+		{
+			"testdir": testdir, 
+			"repeat": repeat, 
+			"thread_count": thread_count
+		})
 
 func _on_results_received_from_client(results: Array = []) -> void:
 	status = STATE.RECEIVING
