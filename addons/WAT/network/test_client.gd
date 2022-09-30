@@ -1,5 +1,22 @@
 extends "res://addons/WAT/network/test_network.gd"
 
+# BEGIN WEBSOCKET CLIENT
+
+var socket: WebSocketClient
+
+func _new_client_ready():
+	print("NEW CLIENT READY")
+	socket = WebSocketClient.new()
+	socket.connect("connection_established", self, "_on_connection_established")
+	socket.connect("data_received", self, "_on_data_received")
+	socket.connect_to_url("http://127.0.0.1:80", ["JSON-RPC"])
+	
+func _on_connection_established(protocol):
+	print("PROTOCOL: ", protocol)
+	
+# END WEBSOCKET CLIENT
+
+
 const IPAddress: String = "127.0.0.1"
 const PORT: int = 6019
 const MAXCLIENTS: int = 1
@@ -11,10 +28,13 @@ func _init():
 	_old_client_init()
 	
 func _ready():
+	_new_client_ready()
 	_old_client_ready()
 	
 func _process(delta):
 	_old_client_process(delta)
+	if socket:
+		socket.poll()
 	
 func _exit_tree():
 	_old_client_exit_tree()

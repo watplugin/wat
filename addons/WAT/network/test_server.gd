@@ -1,6 +1,32 @@
 tool
 extends "res://addons/WAT/network/test_network.gd"
 
+# BEGIN WEBSOCKET SERVER
+
+var socket: WebSocketServer 
+
+func _new_server_ready():
+	print("NEW SERVER READY")
+	socket = WebSocketServer.new()
+	socket.connect("client_connected", self, "_on_web_client_connected")
+	socket.connect("client_close_request", self, "_on_client_close_request")
+	socket.connect("client_disconnected", self, "_on_client_disconnected")
+	socket.connect("data_received", self, "_on_data_received")
+	socket.listen(80, ["JSON-RPC"], false)
+	
+func _on_web_client_connected(id, protocol):
+	print("%s connected with protocol %s" % [id, protocol])
+	
+func _on_client_close_request(id, code, reason):
+	print("client close request: %s, %s, %s" % [id, code, reason])
+	
+func _on_client_disconnected(id, clean):
+	print("client disconnected: %s, %s" % [id, clean])
+	
+func _on_data_received(id):
+	print(socket.get_peer(id).get_packet().get_string_from_ascii())
+
+# END WEBSOCKET SERVER
 
 const IPAddress: String = "127.0.0.1"
 const PORT: int = 6019
@@ -25,10 +51,14 @@ func _init() -> void:
 	_old_server_init()
 	
 func _ready() -> void:
+	_new_server_ready()
 	_old_server_ready()
+
 	
 func _process(delta):
 	_old_server_process()
+	if socket:
+		socket.poll()
 	
 func _old_server_init():
 	_close()
