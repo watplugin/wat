@@ -26,6 +26,8 @@ func _on_client_close_request(id, code, reason):
 func _on_client_disconnected(id, clean):
 	print("client disconnected: %s, %s" % [id, clean])
 	
+var results: Array = []
+	
 func _on_data_received(id):
 	var json_string = socket.get_peer(id).get_packet().get_string_from_ascii()
 	var res: JSONParseResult = JSON.parse(json_string)
@@ -42,11 +44,20 @@ func _on_data_received(id):
 			_on_asserted(res.result["data"])
 		"_on_test_method_described":
 			_on_test_method_described(res.result["data"])
+		"_results_incoming":
+			results = []
+		"_append_result":
+			results.append(res.result["data"])
 		"_on_results_received_from_client":
-			_on_results_received_from_client(res.result["data"])
+			_on_results_received_from_client(results)
 		_:
 			print("Fallthrough")
 		
+#
+#			send_web("results_incoming", {})
+#	for result in results:
+#		send_web("append_result", result)
+#	send_web("_on_results_received_from_client", {})
 # END WEBSOCKET SERVER
 
 

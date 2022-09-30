@@ -33,7 +33,12 @@ func _process(delta):
 func _on_tests_received_from_server(tests: Array, repeat: int, thread_count: int) -> void:
 	var results: Array = yield(get_parent().run(tests, repeat, thread_count, self), "completed")
 	print("TESTS FINISHED")
-	send_web("_on_results_received_from_client", results)
+	# We're trying to send too many at once, it would best if we just looped through this instead
+	send_web("results_incoming", {})
+	for result in results:
+		send_web("append_result", result)
+	send_web("_on_results_received_from_client", {})
+
 
 # LiveWire Functions
 func send_web(method, data):
