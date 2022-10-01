@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/WAT/runner/TestRunner.gd" type="Script" id=1]
-[ext_resource path="res://addons/WAT/network/test_client.gd" type="Script" id=2]
+[ext_resource path="res://addons/WAT/client/client.gd" type="Script" id=2]
+
 
 [node name="TestRunner" type="Node"]
 script = ExtResource( 1 )

@@ -1,5 +1,5 @@
 tool
-extends "res://addons/WAT/network/test_network.gd"
+extends Node
 
 # BEGIN WEBSOCKET SERVER
 

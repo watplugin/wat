@@ -14,7 +14,7 @@
 [ext_resource path="res://addons/WAT/assets/issue.svg" type="Texture" id=16]
 [ext_resource path="res://addons/WAT/assets/failed.png" type="Texture" id=17]
 [ext_resource path="res://addons/WAT/assets/passed.png" type="Texture" id=18]
-[ext_resource path="res://addons/WAT/network/test_server.gd" type="Script" id=19]
+[ext_resource path="res://addons/WAT/server/server.gd" type="Script" id=19]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
