@@ -8,6 +8,10 @@ var peer_id: int
 
 func _ready():
 	print("NEW SERVER READY")
+	host()
+	
+	
+func host():
 	socket = WebSocketServer.new()
 	socket.connect("client_connected", self, "_on_web_client_connected")
 	socket.connect("client_close_request", self, "_on_client_close_request")
@@ -18,6 +22,7 @@ func _ready():
 func _on_web_client_connected(id, protocol):
 	peer_id = id
 	print("%s connected with protocol %s" % [id, protocol])
+	print("emitting signal")
 	emit_signal("web_network_peer_connected")
 	
 func _on_client_close_request(id, code, reason):

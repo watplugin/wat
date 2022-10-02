@@ -82,23 +82,21 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	if current_build:
 		var tests: Array = data.get_tests()
 		if _setup_display(tests):
+			Server.host()
+			Server.results_view = Results
 			var client = preload("res://addons/WAT/client/Client.tscn").instance()
 			add_child(client)
-			yield(Server, "web_network_peer_connected")
-			Server.send_tests(tests, Repeats.value, Threads.value) # Is Actually a client
-			var results: Array = yield(Server, "results_received")
+			yield(_run(tests), "completed")
 			client.queue_free()
-			_on_test_run_finished(results)
-			
-#			_plugin.get_editor_interface().play_custom_scene(
-#					"res://addons/WAT/runner/TestRunner.tscn")
-#			if Settings.is_bottom_panel():
-##				_plugin.make_bottom_panel_item_visible(self)
-#			yield(Server, "web_network_peer_connected")
-#			Server.send_tests(tests, Repeats.value, Threads.value)
-#			var results: Array = yield(Server, "results_received")
-#			_plugin.get_editor_interface().stop_playing_scene()
-#			_on_test_run_finished(results)
+
+
+func _run(tests) -> void:
+	print("hey?")
+	yield(Server, "web_network_peer_connected")
+	print("connected")
+	Server.send_tests(tests, Repeats.value, Threads.value) # Is Actually a client
+	var results: Array = yield(Server, "results_received")
+	_on_test_run_finished(results)
 
 func _on_debug_pressed(data = _filesystem.root) -> void:
 	Results.clear()
@@ -117,17 +115,14 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 #				_plugin.get_editor_interface().stop_playing_scene()
 		var tests: Array = data.get_tests()
 		if _setup_display(tests):
-			
+			Server.host()
 			# Debug is implicit when running as a GUI
 			_plugin.get_editor_interface().play_custom_scene(
-					"res://addons/WAT/runner/TestRunner.tscn")
+					"res://addons/WAT/client/Client.tscn")
 			if Settings.is_bottom_panel():
 				_plugin.make_bottom_panel_item_visible(self)
-			yield(Server, "web_network_peer_connected")
-			Server.send_tests(tests, Repeats.value, Threads.value)
-			var results: Array = yield(Server, "results_received")
+			yield(_run(tests), "completed")
 			_plugin.get_editor_interface().stop_playing_scene()
-			_on_test_run_finished(results)
 
 func _on_test_run_finished(results: Array) -> void:
 	Summary.summarize(results)

@@ -7,11 +7,16 @@ var runner
 
 func _ready():
 	runner = get_node("TestRunner")
+	join()
+	
+func join():
+	set_process(true)
 	print("NEW CLIENT READY")
 	socket = WebSocketClient.new()
 	socket.connect("connection_established", self, "_on_connection_established")
 	socket.connect("data_received", self, "_on_data_received")
 	socket.connect_to_url("http://127.0.0.1:80", ["JSON-RPC"])
+	print("Joined - client")
 	
 func _on_connection_established(protocol):
 	print("PROTOCOL: ", protocol)
