@@ -11,6 +11,8 @@ func _ready():
 	
 	
 func host():
+	caselist = []
+	results = []
 	socket = WebSocketServer.new()
 	socket.connect("client_connected", self, "_on_web_client_connected")
 	socket.connect("client_close_request", self, "_on_client_close_request")
