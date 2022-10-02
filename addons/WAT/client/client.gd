@@ -1,10 +1,12 @@
 extends Node
-
+tool
 # BEGIN WEBSOCKET CLIENT
 
 var socket: WebSocketClient
+var runner
 
 func _ready():
+	runner = get_node("TestRunner")
 	print("NEW CLIENT READY")
 	socket = WebSocketClient.new()
 	socket.connect("connection_established", self, "_on_connection_established")
@@ -31,7 +33,7 @@ func _process(delta):
 		socket.poll()
 	
 func _on_tests_received_from_server(tests: Array, repeat: int, thread_count: int) -> void:
-	var results: Array = yield(get_parent().run(tests, repeat, thread_count, self), "completed")
+	var results: Array = yield(get_child(0).run(tests, repeat, thread_count, self), "completed")
 	print("TESTS FINISHED")
 	# We're trying to send too many at once, it would best if we just looped through this instead
 	send_web("results_incoming", {})

@@ -82,12 +82,23 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	if current_build:
 		var tests: Array = data.get_tests()
 		if _setup_display(tests):
-			var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
-			add_child(instance)
-			var results: Array = yield(instance.run(tests, Repeats.value,
-					Threads.value, Results), "completed")
-			instance.queue_free()
+			var client = preload("res://addons/WAT/client/Client.tscn").instance()
+			add_child(client)
+			yield(Server, "web_network_peer_connected")
+			Server.send_tests(tests, Repeats.value, Threads.value) # Is Actually a client
+			var results: Array = yield(Server, "results_received")
+			client.queue_free()
 			_on_test_run_finished(results)
+			
+#			_plugin.get_editor_interface().play_custom_scene(
+#					"res://addons/WAT/runner/TestRunner.tscn")
+#			if Settings.is_bottom_panel():
+##				_plugin.make_bottom_panel_item_visible(self)
+#			yield(Server, "web_network_peer_connected")
+#			Server.send_tests(tests, Repeats.value, Threads.value)
+#			var results: Array = yield(Server, "results_received")
+#			_plugin.get_editor_interface().stop_playing_scene()
+#			_on_test_run_finished(results)
 
 func _on_debug_pressed(data = _filesystem.root) -> void:
 	Results.clear()
@@ -106,11 +117,12 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 #				_plugin.get_editor_interface().stop_playing_scene()
 		var tests: Array = data.get_tests()
 		if _setup_display(tests):
+			
+			# Debug is implicit when running as a GUI
 			_plugin.get_editor_interface().play_custom_scene(
 					"res://addons/WAT/runner/TestRunner.tscn")
 			if Settings.is_bottom_panel():
 				_plugin.make_bottom_panel_item_visible(self)
-			#yield(Server, "network_peer_connected")
 			yield(Server, "web_network_peer_connected")
 			Server.send_tests(tests, Repeats.value, Threads.value)
 			var results: Array = yield(Server, "results_received")
