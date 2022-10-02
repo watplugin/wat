@@ -8,7 +8,6 @@ var peer_id: int
 
 func _ready():
 	print("NEW SERVER READY")
-	host()
 	
 	
 func host():
@@ -18,6 +17,10 @@ func host():
 	socket.connect("client_disconnected", self, "_on_client_disconnected")
 	socket.connect("data_received", self, "_on_data_received")
 	socket.listen(80, ["JSON-RPC"], false)
+	
+func close():
+	socket = null
+	peer_id = -1
 	
 func _on_web_client_connected(id, protocol):
 	peer_id = id

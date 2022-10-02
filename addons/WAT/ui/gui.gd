@@ -88,12 +88,11 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 			add_child(client)
 			yield(_run(tests), "completed")
 			client.queue_free()
+			Server.close()
 
 
 func _run(tests) -> void:
-	print("hey?")
 	yield(Server, "web_network_peer_connected")
-	print("connected")
 	Server.send_tests(tests, Repeats.value, Threads.value) # Is Actually a client
 	var results: Array = yield(Server, "results_received")
 	_on_test_run_finished(results)
@@ -123,6 +122,7 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 				_plugin.make_bottom_panel_item_visible(self)
 			yield(_run(tests), "completed")
 			_plugin.get_editor_interface().stop_playing_scene()
+			Server.close()
 
 func _on_test_run_finished(results: Array) -> void:
 	Summary.summarize(results)
