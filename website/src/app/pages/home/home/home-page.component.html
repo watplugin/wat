@@ -1,0 +1,158 @@
+<app-full-page-header color="primary" bgImage="assets/images/gui.png" gradient="var(--background-color) 20%, #009A8E3F">
+  <div style="
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 60vh;
+  ">
+    <div style="
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2em;
+    ">
+      <svg style="width: 10em;" class="fill-accent" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+        <g>
+          <path d="M255.179,326.473c-10.219,0-20.035-4.171-27.139-11.612l-71.243-74.614
+            c-14.324-14.992-13.768-38.752,1.217-53.068c14.999-14.311,38.758-13.768,53.076,1.225l40.804,42.732L387.101,52.698
+            c12.521-16.517,36.053-19.765,52.584-7.243c16.524,12.521,19.771,36.062,7.251,52.585L285.104,311.605
+            c-6.642,8.768-16.803,14.178-27.784,14.809C256.609,326.451,255.898,326.473,255.179,326.473z"/>
+          <path d="M456.759,134.749l-24.878,32.831c11.813,23.612,19.028,49.949,20.464,77.85h-51.851
+            c-6.921,0.014-12.522,5.622-12.536,12.543c-0.022,6.942,5.593,12.594,12.536,12.609h51.58
+            c-4.663,63.039-38.854,117.684-88.822,150.255l-24.748-42.894c-2.347-4.047-6.73-6.451-11.4-6.26v-0.016
+            c-2.038,0.088-4.025,0.675-5.784,1.701c-6.012,3.475-8.057,11.172-4.574,17.169l24.646,42.666
+            c-25.879,12.478-54.924,19.456-85.626,19.456c-31.361,0-60.957-7.294-87.223-20.27l24.148-41.853
+            c3.475-5.997,1.43-13.694-4.575-17.169c-2.052-1.181-4.398-1.76-6.766-1.672v-0.014c-0.946,0.028-1.877,0.183-2.786,0.432
+            c-3.189,0.873-5.916,2.962-7.573,5.828l-24.207,41.926c-49.162-32.674-82.701-86.879-87.312-149.294h49.469
+            c6.965,0.028,12.609-5.646,12.595-12.603c-0.015-6.942-5.66-12.558-12.595-12.543H59.194
+            c3.27-63.494,36.435-118.916,85.743-152.492l26.054,45.071c3.468,5.989,11.128,8.042,17.125,4.589
+            c5.982-3.475,8.021-11.135,4.575-17.125L166.577,80.16c26.758-13.584,57.05-21.237,89.188-21.237
+            c27.4,0,53.463,5.571,77.137,15.628l23.359-30.827C325.78,29.215,291.705,21.08,255.766,21.08
+            C126.375,21.08,21.08,126.375,21.08,255.766c0,129.392,105.294,234.679,234.686,234.679c129.385,0,234.679-105.287,234.679-234.679
+            C490.444,211.527,478.13,170.109,456.759,134.749z"/>
+        </g>
+      </svg>
+      <h1 class="mat-display-4 app-home-page header" style="margin-bottom: 0; margin-left: 0.5em;">WAT</h1>
+    </div>
+    <h1 class="mat-display-2 app-home-page header subtitle" style="
+      text-align: center; 
+      margin-bottom: 1em;
+    "><b>Godot</b> unit testing <b>framework</b></h1>
+    <div style="
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 1em;
+      flex-wrap: wrap;
+    ">
+      <a mat-flat-button color="accent" style="padding: 0.5em 2em;" [href]="settings.General.githubLink" target="_blank">
+        <ic-icon icon="github" size="1.5em"></ic-icon>
+        GitHub
+      </a >
+      <a mat-flat-button style="
+        padding: 0.5em 2em;
+      " class="background-color-kofi color-light" [href]="settings.General.kofiLink" target="_blank">
+        <ic-icon icon="kofi" size="1.5em"></ic-icon>
+        Support WAT on Ko-fi
+      </a>
+    </div>
+  </div>
+</app-full-page-header>
+<app-section color="blank">
+  <app-column-layout>
+    <div style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    ">
+      <h1 class="mat-display-2" style="margin-bottom: 0.5em">💻 CLI</h1>
+      <p>
+        WAT comes with an command line interface that lets you run tests. You can specify various options, such as the number of threads to use, which tests to run, and how many repeats.
+      </p>
+    </div>
+    <img src="assets/images/cli.png" style="width: 100%; height: 20em; object-fit: cover; object-position: 0 0;">
+  </app-column-layout>
+  <mat-divider style="margin: 2em 0;"></mat-divider> 
+  <app-column-layout>
+    <img src="assets/images/ci-gh-light.png" style="width: 100%; height: 20em; object-fit: cover; object-position: 0 0;">
+    <div style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center
+    ">
+      <h1 class="mat-display-2" style="margin-bottom: 0.5em">🧪 Continuous Integration</h1>
+      <p>
+        With the CLI, you can easily create workflows to automate unit testing. Test results for each workflow can then be saved for future reference. Our github repository contains unit-testing templates for most popular repository hosting platforms.   
+      </p>
+    </div>
+  </app-column-layout>
+  <mat-divider style="margin: 2em 0;"></mat-divider> 
+  <app-column-layout>
+    <div style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    ">
+      <h1 class="mat-display-2" style="margin-bottom: 0.5em">🔍 Inspector Window</h1>
+      <p>
+        WAT comes with an inspector window to manage all your tests. You can run specific tests from the drop-down window, re-run failed tests, and tag tests which you can then run as an entire group. WAT lets you run tests both in editor and in standalone builds.
+      </p>
+    </div>
+    <img src="assets/images/gui.png" style="width: 100%; height: 20em; object-fit: cover; object-position: 0 0;">
+  </app-column-layout>
+  <mat-divider style="margin: 2em 0;"></mat-divider> 
+  <app-column-layout>
+    <img src="assets/images/features.png" style="width: 100%; height: 20em; object-fit: cover; object-position: 0 0;">
+    <div style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center
+    ">
+      <h1 class="mat-display-2" style="margin-bottom: 0.5em">🧫 Testing Features</h1>
+      <p>WAT supports</p>
+      <li>Test doubles, stubs,</li>
+      <li>Await/yield in tests</li>
+      <li>Watching signals</li>
+      <li>Watching C# events</li>
+      <li>Test lifecycle hooks (Start, Pre, Post)</li>
+      <li>Variety of assertions</li>
+    </div>
+  </app-column-layout>
+</app-section>
+<app-section title="💬 GDScript and C# Support" color="foreground-accent-200">
+  <p style="margin-bottom: 2em;">WAT comes out of the box with GDScript support, and the special WAT Mono version comes with added C# support. No matter what language you use, you'll be able to test!</p>
+  <app-column-layout>
+    <div>
+      <h2>GDScript</h2>
+      <img src="assets/images/gdscript-tests.png" style="width: 100%; height: 20em; object-fit: cover; object-position: 0 0;">
+    </div>
+    <div>
+      <h2>C#</h2>
+      <img src="assets/images/csharp-tests.png" style="width: 100%; height: 20em; object-fit: cover; object-position: 0 0;">
+    </div>
+  </app-column-layout>
+</app-section>
+<app-section title="FAQ" color="primary" textColor="white" last>
+  <app-column-layout>
+    <mat-accordion>
+      <app-question-panel title="How do I debug my unit tests?">
+        <p>Run the <b>gui.tscn</b> scene with debugging, and then run the tests you'd like to debug.</p>
+      </app-question-panel>
+      <app-question-panel title="What's the difference between WAT and GUT?">
+        <p>GUT currently doesn't have C# support, which makes it difficult to unit test any C# scripts. Other than that, both frameworks are on-par with one another.</p>
+      </app-question-panel>
+    </mat-accordion>
+    <mat-accordion>
+      <app-question-panel title="What Godot versions does WAT support?">
+        <p>WAT currently supports all 3.x versions. 4.0 support is currently in the works.</p>
+      </app-question-panel>
+      <app-question-panel title="How do I use WAT with Github Actions and/or other CI pipelines?">
+        <p>See the <a href="https://github.com/AlexDarigan/WAT#ContinuousIntegration">Continuous Integration</a> section of the README.</p>
+      </app-question-panel>
+    </mat-accordion>
+  </app-column-layout>
+  <div style="margin-top: 3em;"></div>
+</app-section>

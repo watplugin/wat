@@ -1,0 +1,30 @@
+:host {
+	background-color: transparent;
+}
+
+.icon {
+	float: left;
+	margin-right: 6px;
+}
+
+.button {
+  position: relative;
+  display: flex;  
+	flex: row;
+  justify-content: left;
+	background-color: transparent;
+	border: 0px;
+	align-items: center;
+	opacity: 0;
+	visibility: hidden;
+	transition-duration: 0.2s;
+}
+
+.button.detached {
+	visibility: visible;
+	opacity: 1;
+}
+
+.button > * {
+  pointer-events: none;
+}

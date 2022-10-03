@@ -1,0 +1,11 @@
+@use './bg-container/bg-container.component-theme' as bg-container;
+@use './full-page-header/full-page-header.component-theme' as full-page-header;
+@use './page-header/page-header.component-theme' as page-header;
+@use './section/section.component-theme' as section;
+
+@mixin theme($theme) {
+	@include bg-container.theme($theme);
+	@include full-page-header.theme($theme);
+	@include page-header.theme($theme);
+	@include section.theme($theme);
+}

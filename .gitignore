@@ -17,3 +17,7 @@ data_*/
 # Stub project
 bin/
 obj/
+
+dist/
+
+.vscode/

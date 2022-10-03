@@ -1,0 +1,26 @@
+.bg {
+ 	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+
+.content {
+	display: flex;  
+	align-items: center;
+	justify-content: left;
+	margin: auto;
+	height: 100%;
+	width: var(--main-width);
+}
+
+.content > * {
+  padding-right: 1.25em;
+}
+
+.cogs-title {
+	float: left; 
+	margin-top: auto; 
+	margin-bottom: auto; 
+	height: 100%; 
+	vertical-align: middle;
+}

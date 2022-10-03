@@ -1,0 +1,13 @@
+:host {
+	overflow: visible;
+}
+
+.bg {
+	padding: var(--content-padding);
+}
+
+.content {
+	display: block;
+	margin: auto;
+	max-width: var(--content-width);
+}

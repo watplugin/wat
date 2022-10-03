@@ -1,0 +1,7 @@
+<div class="app-section bg main-bg {{color}}" [ngClass]="{'dog-ear': dogEar, 'full-page': fullPage, 'shadow': shadow, 'full-width': fullWidth }" [ngStyle]="getBgStyle()">
+  <div class="content">
+    <h1 class="mat-display-2 app-section" style="margin-bottom: 0.75em" [hidden]="title === ''">{{title}}</h1>
+    <ng-content></ng-content>
+  </div>
+</div>
+<div class="app-section bg bottom {{color}}" [ngClass]="{'last': last}"></div>

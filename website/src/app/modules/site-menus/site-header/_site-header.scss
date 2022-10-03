@@ -1,0 +1,13 @@
+@use './logo-text-button/logo-text-button.component-theme' as logo-button;
+@use './hamburger-menu/hamburger-menu.component-theme' as hamburger-menu;
+@use './horizontal-menu/horizontal-menu.component-theme' as horz-menu;
+@use './dark-mode-toggle/dark-mode-toggle.component-theme' as dark-mode-toggle;
+@use './text-button/text-button.component-theme' as text-button;
+
+@mixin theme($theme) {
+	@include text-button.theme($theme);
+	@include logo-button.theme($theme);
+	@include hamburger-menu.theme($theme);
+	@include horz-menu.theme($theme);
+	@include dark-mode-toggle.theme($theme);
+}

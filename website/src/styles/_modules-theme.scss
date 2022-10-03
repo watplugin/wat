@@ -1,0 +1,9 @@
+@use '../app/modules/_core/core' as core;
+@use '../app/modules/site-menus/site-menus' as site-menus;
+@use '../app/pages/pages' as pages;
+
+@mixin theme($theme) {
+  @include core.theme($theme);
+  @include site-menus.theme($theme);
+  @include pages.theme($theme);
+}

@@ -1,0 +1,67 @@
+@use 'sass:map';
+@use 'sass:color';
+@use '@angular/material' as mat;
+@use 'styles/variables' as variables;
+
+@mixin color($config) {
+  $primary: map.get($config, primary);
+  $accent: map.get($config, accent);
+
+  .app-logo-text-button.button {
+    color: mat.get-color-from-palette($primary, 500-contrast);
+    
+    &:hover {
+      color: darken(mat.get-color-from-palette($primary, 500-contrast), 20%);
+      cursor: pointer;
+      transition: 0.1s;
+    }
+
+    &:active {
+      color: darken(mat.get-color-from-palette($primary, 500-contrast), 30%);
+    }
+  }
+
+  .app-logo-text-button.button {
+	  font-size: 1em;
+  }
+
+	// Technicaly recoloration of icon doesn't work right now
+	// because we have to use a <path> element to recolor
+	//
+	// See https://css-tricks.com/change-color-of-svg-on-hover/
+  .app-logo-text-button.icon {
+	  height: 2.5em;
+    & * {
+      fill: mat.get-color-from-palette($accent, 500);
+    }
+
+    &.hover {
+      & * {
+        fill: darken(mat.get-color-from-palette($accent, 500), 10%);
+        transition: 0.1s;
+      }
+    }
+
+    &.active {
+      & * {
+        fill: darken(mat.get-color-from-palette($accent, 500), 20%);
+      }
+    }
+  }
+}
+
+@mixin typography($config) {
+  
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($color-config);
+  }
+
+  $typography-config: mat.get-typography-config($theme);
+  @if $typography-config != null {
+    @include typography($typography-config);
+  }
+}

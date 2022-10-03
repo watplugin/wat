@@ -1,0 +1,5 @@
+@use './home/home-page' as home;
+
+@mixin theme($theme) {
+	@include home.theme($theme);
+}

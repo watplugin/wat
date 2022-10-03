@@ -1,0 +1,298 @@
+@use "sass:map" as map;
+@use '@angular/material' as mat;
+
+// Custom functions to define a basic palette. The define-palette function
+// provided by angular material has changed, so now we can't use it
+// to make our custom palettes that don't contain number levels (ie. 400, 200, 900, etc.).
+@function define-basic-palette($base-palette) {
+  $result: $base-palette;
+
+  // For each hue in the palette, add a "-contrast" color to the map.
+  @each $hue, $color in $base-palette {
+    $result: map.merge($result, (
+      '#{$hue}-contrast': get-contrast-color-from-palette($base-palette, $hue)
+    ));
+  }
+
+  @return $result;
+}
+
+@function get-contrast-color-from-palette($palette, $hue) {
+  @return map.get(map.get($palette, contrast), $hue);
+}
+
+// General Dark/Light Themining //
+
+$dark-primary-text: rgba(black, 0.87);
+$dark-secondary-text: rgba(black, 0.54);
+$dark-disabled-text: rgba(black, 0.38);
+$dark-dividers: rgba(black, 0.12);
+$dark-focused: rgba(black, 0.12);
+
+$light-primary-text: white;
+$light-secondary-text: rgba(white, 0.7);
+$light-disabled-text: rgba(white, 0.5);
+$light-dividers: rgba(white, 0.12);
+$light-focused: rgba(white, 0.12);
+
+$grey-palette: (
+	50: #fafafa,
+	100: #f5f5f5,
+	200: #eeeeee,
+	300: #e0e0e0,
+	400: #bdbdbd,
+	500: #9e9e9e,
+	600: #757575,
+	700: #616161,
+	800: #424242,
+	900: #212121,
+	A100: #ffffff,
+	A200: #eeeeee,
+	A400: #bdbdbd,
+	A700: #616161,
+	contrast: (
+		50: $dark-primary-text,
+		100: $dark-primary-text,
+		200: $dark-primary-text,
+		300: $dark-primary-text,
+		400: $dark-primary-text,
+		500: $dark-primary-text,
+		600: $light-primary-text,
+		700: $light-primary-text,
+		800: $light-primary-text,
+		900: $light-primary-text,
+		A100: $dark-primary-text,
+		A200: $dark-primary-text,
+		A400: $dark-primary-text,
+		A700: $light-primary-text,
+	)
+);
+
+// Background palette for light themes.
+$light-theme-background-palette: (
+	status-bar: map.get($grey-palette, 300),
+	app-bar:    map.get($grey-palette, 100),
+	background: map.get($grey-palette, 50),
+	hover:      rgba(black, 0.04),
+	card:       white,
+	dialog:     white,
+	disabled-button: rgba(black, 0.12),
+	raised-button: white,
+	focused-button: $dark-focused,
+	selected-button: map.get($grey-palette, 300),
+	selected-disabled-button: map.get($grey-palette, 400),
+	disabled-button-toggle: map.get($grey-palette, 200),
+	unselected-chip: map.get($grey-palette, 300),
+	disabled-list-option: map.get($grey-palette, 200),
+	tooltip: map.get($grey-palette, 700),
+
+	loading: map.get($grey-palette, 300),
+	loading-mid: map.get($grey-palette, 200),
+);
+
+// Foreground palette for light themes.
+$light-theme-foreground-palette: (
+	base:              black,
+	divider:           $dark-dividers,
+	dividers:          $dark-dividers,
+	disabled:          $dark-disabled-text,
+	disabled-button:   rgba(black, 0.26),
+	disabled-text:     $dark-disabled-text,
+	elevation:         black,
+	hint-text:         $dark-disabled-text,
+	secondary-text:    $dark-secondary-text,
+	icon:              rgba(black, 0.54),
+	icons:             rgba(black, 0.54),
+	text:              rgba(black, 0.87),
+	slider-min:        rgba(black, 0.87),
+	slider-off:        rgba(black, 0.26),
+	slider-off-active: rgba(black, 0.38),
+);
+
+// Background palette for dark themes.
+$dark-theme-background-palette: (
+	status-bar: black,
+	app-bar:    map.get($grey-palette, 900),
+	background: #303030,
+	hover:      rgba(white, 0.04),
+	card:       map.get($grey-palette, 800),
+	dialog:     map.get($grey-palette, 800),
+	disabled-button: rgba(white, 0.12),
+	raised-button: map.get($grey-palette, 800),
+	focused-button: $light-focused,
+	selected-button: map.get($grey-palette, 900),
+	selected-disabled-button: map.get($grey-palette, 800),
+	disabled-button-toggle: black,
+	unselected-chip: map.get($grey-palette, 700),
+	disabled-list-option: black,
+	tooltip: map.get($grey-palette, 700),
+
+	loading: map.get($grey-palette, 800),
+	loading-mid: map.get($grey-palette, 700),
+);
+
+// Foreground palette for dark themes.
+$dark-theme-foreground-palette: (
+	base:              white,
+	divider:           $light-dividers,
+	dividers:          $light-dividers,
+	disabled:          $light-disabled-text,
+	disabled-button:   rgba(white, 0.3),
+	disabled-text:     $light-disabled-text,
+	elevation:         black,
+	hint-text:         $light-disabled-text,
+	secondary-text:    $light-secondary-text,
+	icon:              white,
+	icons:             white,
+	text:              $light-primary-text,
+	slider-min:        white,
+	slider-off:        rgba(white, 0.3),
+	slider-off-active: rgba(white, 0.3),
+);
+
+// Creates a theme, with optional arguement for foreground and background
+@function create-complete-theme($theme) {
+	@if not map.get($theme, color) {
+		@return $theme;
+	}
+	$color: map.get($theme, color);
+	@return map.merge($theme, $color);
+}
+
+
+
+// COGS Themining //
+
+$site-grey: mat.define-palette((
+	50: #FFFFFF,
+	100: #FFFFFF,
+	200: #D7D5D5,
+	300: #D7D5D5,
+	400: #aaa5a4,
+	500: #817c7b,
+	600: #726D6D,
+	700: #726D6D,
+	800: #3A3737,
+	900: #3A3737,
+	contrast: (
+		50: $dark-primary-text,
+		100: $dark-primary-text,
+		200: $dark-primary-text,
+		300: $dark-primary-text,
+		400: $dark-primary-text,
+		500: $light-primary-text,
+		600: $light-primary-text,
+		700: $light-primary-text,
+		800: $light-primary-text,
+		900: $light-primary-text,
+	)
+));
+
+$site-grey-reverse: mat.define-palette((
+	900: #9F9A99,
+	800: #726D6D,
+	700: #5c5858,
+	600: #5c5858,
+	500: #524e4e,
+	400: #524e4e,
+	300: #423e3e,
+	200: #423e3e,
+	100: #3A3737,
+	50: #3A3737,
+	contrast: (
+		900: $dark-primary-text,
+		800: $dark-primary-text,
+		700: $dark-primary-text,
+		600: $dark-primary-text,
+		500: $light-primary-text,
+		400: $light-primary-text,
+		300: $light-primary-text,
+		200: $light-primary-text,
+		100: $light-primary-text,
+		50: $light-primary-text,
+	)
+));
+
+// 0B273A
+$site-deep-blue: mat.define-palette((
+	50: #2e5250,
+	100: #1d3f47,
+	200: #0B273A,
+	300: #0B273A,
+	400: #0B273A,	// START
+	500: #0B273A,
+	600: #0B273A,
+	700: #0B273A,
+	800: #0B273A,
+	900: #66001A,
+	contrast: (
+		50: $light-primary-text,
+		100: $light-primary-text,
+		200: $light-primary-text,
+		300: $light-primary-text,
+		400: $light-primary-text,
+		500: $light-primary-text,
+		600: $light-primary-text,
+		700: $light-primary-text,
+		800: $light-primary-text,
+		900: $light-primary-text,
+	)
+));
+
+// A8CE38
+$site-lime: mat.define-palette((
+	50: #bcd64a,
+	100: #bcd64a,
+	200: #A8CE38,
+	300: #A8CE38,
+	400: #A8CE38, // START
+	500: #A8CE38,
+	600: #82a83c,
+	700: #82a83c,
+	800: #577a3f,
+	900: #577a3f,
+	contrast: (
+		50: $dark-primary-text,
+		100: $dark-primary-text,
+		200: $dark-primary-text,
+		300: $dark-primary-text,
+		400: $dark-primary-text,
+		500: $dark-primary-text,
+		600: $light-primary-text,
+		700: $light-primary-text,
+		800: $light-primary-text,
+		900: $light-primary-text,
+	)
+));
+
+$misc: define-basic-palette((
+	discord: #5865F2,
+	form: #7248b9,
+	kofi: #FF5E5B,
+	contrast: (
+		500: $dark-primary-text,
+		discord: $light-primary-text,
+		form: $light-primary-text,
+	),
+	light: $light-primary-text,
+	dark: $dark-primary-text
+));
+
+$site-typography: mat.define-typography-config(
+	$font-family: 'Urbanist',
+	$display-4:    mat.define-typography-level($font-family: 'Varela Round', $font-size: 4em, $line-height: 2em, $font-weight: 900),
+	$display-3:    mat.define-typography-level($font-family: 'Varela Round', $font-size: 3em, $line-height: 1.5em, $font-weight: 900),
+	$display-2:    mat.define-typography-level($font-family: 'Varela Round', $font-size: 2em, $line-height: 1.25em, $font-weight: 900),
+	$display-1:    mat.define-typography-level($font-family: 'Varela Round', $font-size: 1.8em, $line-height: 1em, $font-weight: 900),
+	$headline:     mat.define-typography-level($font-family: 'Varela Round', $font-size: 1.75em, $line-height: 1em, $font-weight: 800),
+	$title:        mat.define-typography-level($font-family: 'Varela Round', $font-size: 1.5em, $line-height: 1em, $font-weight: 800),
+	$subheading-2: mat.define-typography-level($font-family: 'Varela Round', $font-size: 1em, $line-height: 1em, $font-weight: 700),
+	$subheading-1: mat.define-typography-level($font-family: 'Varela Round', $font-size: 1em, $line-height: 1em, $font-weight: 700),
+	$body-1:       mat.define-typography-level($font-family: 'Urbanist', $font-size: 1em, $line-height: 1.5em, $font-weight: 600),
+	$body-2:       mat.define-typography-level($font-family: 'Urbanist', $font-size: 1em, $line-height: 1.5em, $font-weight: 600),
+	$caption:      mat.define-typography-level($font-family: 'Urbanist', $font-size: 1em, $line-height: 1.5em, $font-weight: 500),
+	$button:       mat.define-typography-level($font-family: 'Urbanist', $font-size: 1em, $line-height: 1.5em, $font-weight: 800),
+	$input:		  	 mat.define-typography-level($font-family: 'Urbanist', $font-size: 1em, $line-height: 1em, $font-weight: 600)
+);
+
+@include mat.core($site-typography);

@@ -1,0 +1,26 @@
+.bg {
+	position: relative;
+  	display: -webkit-box;
+  	display: -webkit-flex;
+  	display: -ms-flexbox;
+  	display: flex;
+	box-sizing: border-box;
+	min-height: calc(100vh - var(--site-header-height)); /* Accounting for header */
+	padding: var(--content-padding);
+	background-size: cover;
+	background-position: center;
+}
+
+.content {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: var(--content-width);
+}
+
+.scroll-button {
+	position: absolute;
+	left: calc(50% - 21px);
+	bottom: 20%;
+	filter: drop-shadow(0 0 1rem black);
+}

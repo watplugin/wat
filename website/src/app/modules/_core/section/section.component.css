@@ -1,0 +1,56 @@
+:host {
+	display: block;
+	overflow: hidden;
+}
+
+.main-bg {
+	height: 100%;
+	position: relative;
+  	display: -webkit-box;
+  	display: -webkit-flex;
+  	display: -ms-flexbox;
+  	display: flex;
+  	-webkit-box-align: center;
+  	-webkit-align-items: center;
+  	-ms-flex-align: center;
+  	align-items: center;
+	box-sizing: border-box;
+	padding: var(--content-padding);
+	padding-top: var(--dog-ear-padding);
+	padding-bottom: var(--dog-ear-padding);
+	background-size: cover;
+	background-position: center;
+}
+
+.dog-ear {
+	border-top-left-radius: var(--dog-ear);
+}
+
+.full-page {
+	min-height: 100vh;
+}
+
+.main-bg.full-width {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.main-bg.full-width .content {
+	width: 100%;
+}
+
+div.last {
+	height: 0px;
+}
+
+.bottom {
+	position: absolute;
+	height: 128px;
+	width: 100%;
+}
+
+.content {
+	margin: auto;
+	max-width: var(--content-width);
+}
