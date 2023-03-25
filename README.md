@@ -1,3 +1,5 @@
+THIS REPO IS NOT 4.0 COMPATIABLE!
+
 # ![Icon](./icon.svg) WAT
 ![3.3.2](https://github.com/CodeDarigan/WAT-GDScript/workflows/%20%20Godot%203.3.2%20%20/badge.svg)
 
