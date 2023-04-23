@@ -137,6 +137,7 @@ func _display_failures(case) -> void:
 							print("\t%s" % assertion.context, 
 								"\n\t  (EXPECTED: %s) | (RESULTED: %s)" % \
 								[assertion.expected, assertion.actual])
+							print("\t", assertion.stack)
 
 func _quit() -> void:
 	_filesystem.clear()

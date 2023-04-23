@@ -11,8 +11,15 @@ static func _result(success: bool, expected: String, actual: String, context: St
 			 "success": success,
 			 "expected": expected,
 			 "actual": actual,
-			 "context": context
+			 "context": context,
+			 "stack": get_sanitized_stack()
 			}
+			
+static func get_sanitized_stack():
+	var stack = get_stack()
+	if stack.empty():
+		return ""
+	return stack[2]
 			
 static func type2str(property) -> String:
 	match typeof(property):
