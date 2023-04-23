@@ -73,21 +73,21 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 	if _filesystem.changed or not Settings.cache_tests():
 		if not _filesystem.built:
 			current_build = false
-			_filesystem.built = yield(_filesystem.build_function.call_func(), "completed")
+			_filesystem.built = _filesystem.build_function.call_func()
 		if data == _filesystem.root:
 			_filesystem.update()
 			data = _filesystem.root # New Root
 			TestMenu.update_menus() # Also update the "Select Tests" dropdown
 	# Only run if the build is current and up to date.
-	if current_build:
-		var tests: Array = data.get_tests()
-		if _setup_display(tests):
-			var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
-			add_child(instance)
-			var results: Array = yield(instance.run(tests, Repeats.value,
-					Threads.value, Results), "completed")
-			instance.queue_free()
-			_on_test_run_finished(results)
+	#if current_build:
+	var tests: Array = data.get_tests()
+	if _setup_display(tests):
+		var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
+		add_child(instance)
+		var results: Array = yield(instance.run(tests, Repeats.value,
+				Threads.value, Results), "completed")
+		instance.queue_free()
+		_on_test_run_finished(results)
 
 func _on_debug_pressed(data = _filesystem.root) -> void:
 	Results.clear()
@@ -95,26 +95,26 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 	if _filesystem.changed or not Settings.cache_tests():
 		if not _filesystem.built:
 			current_build = false
-			_filesystem.built = yield(_filesystem.build_function.call_func(), "completed")
+			_filesystem.built = _filesystem.build_function.call_func()
 		if data == _filesystem.root:
 			_filesystem.update()
 			data = _filesystem.root # New Root
 			TestMenu.update_menus()
 
-	if current_build:
-		if Server.kick_current_peer():
-				_plugin.get_editor_interface().stop_playing_scene()
-		var tests: Array = data.get_tests()
-		if _setup_display(tests):
-			_plugin.get_editor_interface().play_custom_scene(
-					"res://addons/WAT/runner/TestRunner.tscn")
-			if Settings.is_bottom_panel():
-				_plugin.make_bottom_panel_item_visible(self)
-			yield(Server, "network_peer_connected")
-			Server.send_tests(tests, Repeats.value, Threads.value)
-			var results: Array = yield(Server, "results_received")
+	#if current_build:
+	if Server.kick_current_peer():
 			_plugin.get_editor_interface().stop_playing_scene()
-			_on_test_run_finished(results)
+	var tests: Array = data.get_tests()
+	if _setup_display(tests):
+		_plugin.get_editor_interface().play_custom_scene(
+				"res://addons/WAT/runner/TestRunner.tscn")
+		if Settings.is_bottom_panel():
+			_plugin.make_bottom_panel_item_visible(self)
+		yield(Server, "network_peer_connected")
+		Server.send_tests(tests, Repeats.value, Threads.value)
+		var results: Array = yield(Server, "results_received")
+		_plugin.get_editor_interface().stop_playing_scene()
+		_on_test_run_finished(results)
 
 func _on_test_run_finished(results: Array) -> void:
 	Summary.summarize(results)

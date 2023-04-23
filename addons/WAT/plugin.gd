@@ -34,20 +34,18 @@ func _exit_tree() -> void:
 	_panel_docker.queue_free()
 	if(is_instance_valid(_test_panel)):
 		_test_panel.queue_free()
-	
+
+
 func _build_function() -> bool:
+	if not ClassDB.class_exists("CSharpScript"):
+		return true
 	_test_panel.Results.clear()
-	var text: String = "FileSystem has been changed since last build."
-	text += "\nTriggering a Build by launching an Empty Scene."
-	text += "\nPlease select your option again after the scene quits."
-	OS.alert(text, "Build Required")
-	var editor: EditorInterface = get_editor_interface()
-	editor.play_custom_scene("res://addons/WAT/mono/BuildScene.tscn")
-	while editor.is_playing_scene():
-		yield(get_tree(), "idle_frame")
-	yield(get_tree(), "idle_frame")
-	_file_system.update()
-	_file_system.changed = false
+	var build_tool = get_editor_interface().get_editor_settings().get("mono/builds/build_tool")
+	if build_tool == 3: # DOTNET
+		var output = []
+		OS.execute("DOTNET", ["build"], true, output, true, true)
+	else:
+		print("MSBuild not supported yet")
 	make_bottom_panel_item_visible(_test_panel)
 	return true
 	
