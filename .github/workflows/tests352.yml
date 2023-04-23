@@ -1,12 +1,12 @@
-name: "  Godot 3.3.2  "
+name: "  Godot 3.5.1  "
 
 on: [push, pull_request]
 
 jobs:
   Tests:
-    name: Run All Tests on 3.3.2
+    name: Run All Tests on 3.5.1
     runs-on:  ubuntu-latest
-    container: barichello/godot-ci:mono-3.3.2
+    container: barichello/godot-ci:mono-3.5.1
     steps:
       - uses: actions/checkout@v2
       - name: Install Dependencies
