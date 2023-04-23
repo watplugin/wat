@@ -13,26 +13,17 @@ var root: TestDirectory
 var tagged: TaggedTests
 var failed: FailedTests
 var changed: bool = false setget _set_filesystem_changed
-var built: bool = false setget ,_get_filesystem_built # CSharpScript
-var build_function: FuncRef
 var index = {} # Path / Object
 var test_validator: Reference
 
 # Initialize/Save meta
-func _init(_build_function = null) -> void:
-	build_function = _build_function
+func _init() -> void:
 	tagged = TaggedTests.new(Settings)
 	failed = FailedTests.new()
 	test_validator = Validator.new()
 
 func _set_filesystem_changed(has_changed: bool) -> void:
 	changed = has_changed
-	if has_changed or ClassDB.class_exists("CSharpScript"):
-		built = false
-
-func _get_filesystem_built() -> bool:
-	# If not Mono, return true because it is irrelevant to GDScript.
-	return built or not Engine.is_editor_hint() or not ClassDB.class_exists("CSharpScript")
 
 func _recursive_update(testdir: TestDirectory) -> void:
 	var dir: Directory = Directory.new()

@@ -1,7 +1,24 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0.035">
-	<testsuite name="Params" failures="0"  tests="1" time="0">
-		<testcase name=" simple" time="0"></testcase>
+<testsuites failures="0" name="TestXML" tests="2" time="4.04">
+	<testsuite name="Given a Signal Watcher" failures="0"  tests="4" time="0">
+		<testcase name="When we watch and signal and emit it multiple times" time="0"></testcase>
+		<testcase name="When we watch and do not emit a signal" time="0"></testcase>
+		<testcase name="When we watch a signal from an object with no bound variables" time="0"></testcase>
+		<testcase name="When we watch and emit a signal" time="0"></testcase>
+	</testsuite>
+
+	<testsuite name="Given a Yield" failures="0"  tests="11" time="0">
+		<testcase name="When we yield in pre thrice" time="0"></testcase>
+		<testcase name="When the yielder times out on until_timeout(0.1)" time="0"></testcase>
+		<testcase name="When we call until_timeout (with 1.0)" time="0"></testcase>
+		<testcase name="When asserting against a test" time="0"></testcase>
+		<testcase name="When we yield twice in execute" time="0"></testcase>
+		<testcase name="When a signal being yielded on is emitted" time="0"></testcase>
+		<testcase name="When we yield in start twice" time="0"></testcase>
+		<testcase name="When yield(self.yield_value()) returns" time="0"></testcase>
+		<testcase name="When the yielder heres our signal" time="0"></testcase>
+		<testcase name="When it is finished" time="0"></testcase>
+		<testcase name="When we call until signal" time="0"></testcase>
 	</testsuite>
 
 </testsuites>

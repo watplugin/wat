@@ -18,14 +18,13 @@ var _panel_docker:  TestPanelDocker
 
 func _enter_tree() -> void:
 	Settings.initialize()
-	var build: FuncRef = funcref(self, "_build_function")
-	_file_system = FileSystem.new(build)
+	_file_system = FileSystem.new()
 	_file_tracker = FileTracker.new(_file_system)
 	Metadata.load_metadata(_file_system)
 	_assets_registiry = PluginAssetsRegistry.new(self)
 	_file_tracker.start_tracking_files(self)
 	_test_panel = GUI.instance()
-	_test_panel.setup_editor_context(self, build, funcref(self, "goto_function"), _file_system)
+	_test_panel.setup_editor_context(self, funcref(self, "goto_function"), _file_system)
 	_panel_docker = TestPanelDocker.new(self, _test_panel)
 	add_child(_panel_docker)
 
@@ -35,19 +34,6 @@ func _exit_tree() -> void:
 	if(is_instance_valid(_test_panel)):
 		_test_panel.queue_free()
 
-
-func _build_function() -> bool:
-	if not ClassDB.class_exists("CSharpScript"):
-		return true
-	_test_panel.Results.clear()
-	var build_tool = get_editor_interface().get_editor_settings().get("mono/builds/build_tool")
-	if build_tool == 3: # DOTNET
-		var output = []
-		OS.execute("DOTNET", ["build"], true, output, true, true)
-	else:
-		print("MSBuild not supported yet")
-	make_bottom_panel_item_visible(_test_panel)
-	return true
 	
 func goto_function(path: String, function: String) -> void:
 	var script: Script = load(path)

@@ -17,7 +17,6 @@ onready var Server: Node = $Server
 var _icons: Reference 
 var _filesystem: FileSystem
 var _plugin = null
-var _build: FuncRef
 
 func _ready() -> void:
 	_icons = preload("res://addons/WAT/ui/scaling/icons.gd").new()
@@ -46,12 +45,11 @@ func _setup_scene_context() -> void:
 	TestMenu.update_menus()
 	DebugAll.disabled = true
 	
-func setup_editor_context(plugin, build: FuncRef, goto_func: FuncRef, filesystem: Reference) -> void:
+func setup_editor_context(plugin, goto_func: FuncRef, filesystem: Reference) -> void:
 	yield(self, "ready")
 	SceneTreeAdjuster.adjust(self, _icons, plugin)
 	_plugin = plugin
 	_filesystem = filesystem
-	_build = build
 	Results.goto_function = goto_func
 	TestMenu.filesystem = _filesystem
 	_filesystem.update()
@@ -69,17 +67,7 @@ func _setup_display(tests: Array) -> bool:
 
 func _on_run_pressed(data = _filesystem.root) -> void:
 	Results.clear()
-	var current_build = true
-	if _filesystem.changed or not Settings.cache_tests():
-		if not _filesystem.built:
-			current_build = false
-			_filesystem.built = _filesystem.build_function.call_func()
-		if data == _filesystem.root:
-			_filesystem.update()
-			data = _filesystem.root # New Root
-			TestMenu.update_menus() # Also update the "Select Tests" dropdown
-	# Only run if the build is current and up to date.
-	#if current_build:
+	data = build(data)
 	var tests: Array = data.get_tests()
 	if _setup_display(tests):
 		var instance = preload("res://addons/WAT/runner/TestRunner.gd").new()
@@ -91,17 +79,8 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 
 func _on_debug_pressed(data = _filesystem.root) -> void:
 	Results.clear()
-	var current_build = true
-	if _filesystem.changed or not Settings.cache_tests():
-		if not _filesystem.built:
-			current_build = false
-			_filesystem.built = _filesystem.build_function.call_func()
-		if data == _filesystem.root:
-			_filesystem.update()
-			data = _filesystem.root # New Root
-			TestMenu.update_menus()
+	data = build(data)
 
-	#if current_build:
 	if Server.kick_current_peer():
 			_plugin.get_editor_interface().stop_playing_scene()
 	var tests: Array = data.get_tests()
@@ -115,6 +94,25 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 		var results: Array = yield(Server, "results_received")
 		_plugin.get_editor_interface().stop_playing_scene()
 		_on_test_run_finished(results)
+
+func build(data):
+	if not Engine.is_editor_hint():
+		# Can't build as game
+		return data
+	if not _filesystem.changed and Settings.cache_tests():
+		return data
+	var build_tool = _plugin.get_editor_interface().get_editor_settings().get("mono/builds/build_tool")
+	if build_tool == 3: # DOTNET
+		var output = []
+		OS.execute("DOTNET", ["build"], true, output, true, false)
+	else:
+		print("MSBuild not supported yet")
+	if data == _filesystem.root:
+		_filesystem.update()
+		data = _filesystem.root # New Root
+		TestMenu.update_menus() # Also update the "Select Tests" dropdown
+	return data
+	
 
 func _on_test_run_finished(results: Array) -> void:
 	Summary.summarize(results)
