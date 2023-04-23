@@ -10,7 +10,22 @@ func watch(emitter, event: String) -> void:
 	emitter.set_meta("watcher", self)
 	emitter.connect(event, self, "_add_emit", [emitter, event])
 	watching[event] = {emit_count = 0, calls = []}
-
+	
+func watch_all(emitter) -> void:
+	_objects.append(emitter)
+	emitter.set_meta("watcher", self)
+	for event in emitter.get_signal_list():
+		if emitter.is_connected(event.name, self, "_add_emit"):
+			continue
+		emitter.connect(event.name, self, "_add_emit", [emitter, event.name])
+		watching[event.name] = { emit_count = 0, calls = []}
+	
+func unwatch_all(emitter) -> void:
+	for event in emitter.get_signal_list():
+		if emitter.is_connected(event.name, self, "_add_emit"):
+			emitter.disconnect(event.name, self, "_add_emit")
+			watching.erase(event.name)
+	emitter.set_meta("watcher", null)
 
 func _add_emit(a = null, b = null, c = null, d = null, e = null, f = null, g = null, h = null, i = null, j = null, k = null, l = null, m = null, n = null, o = null, p = null, q = null, r = null, s = null, t = null, u = null, v = null, w = null, x = null, y = null, z = null):
 	var arguments: Array = [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z]

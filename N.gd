@@ -1,10 +1,10 @@
 extends Node
 
+signal custom
 
-func opt_(v, b = null): 
-	pass
+func _ready():
+#	print(get_signal_list())
+	add_user_signal("customX")
+	for s in get_signal_list():
+		print(s.name)
 	
-func _ready() -> void:
-	for method in get_script().get_script_method_list():
-		if method.name == "opt_":
-			print(method)

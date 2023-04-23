@@ -102,6 +102,12 @@ func end():
 func any():
 	return any.new()
 	
+func watch_all(emitter) -> void:
+	_watcher.watch_all(emitter)
+	
+func unwatch_all(emitter) -> void:
+	_watcher.unwatch_all(emitter)
+	
 func watch(emitter, event: String) -> void:
 	_watcher.watch(emitter, event)
 	

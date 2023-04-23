@@ -1,5 +1,5 @@
 {
 	"failed": [
-
+		"res://tests/bootstrap/async/watch_all.test.gd"
 	]
 }
