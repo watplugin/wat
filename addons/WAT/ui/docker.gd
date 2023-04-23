@@ -15,11 +15,11 @@ func _init(plugin: EditorPlugin, scene: Control) -> void:
 	_plugin = plugin
 	_scene = scene
 	add_setting()
-	_state = ProjectSettings.get_setting("WAT/Display")
+	_state = ProjectSettings.get_setting("Test/Config/Display")
 	construct()
 	
 func _process(delta: float) -> void:
-	var state = ProjectSettings.get_setting("WAT/Display")
+	var state = ProjectSettings.get_setting("Test/Config/Display")
 	if state != _state:
 		deconstruct()
 		_state = state
@@ -39,16 +39,16 @@ func deconstruct() -> void:
 
 func _notification(what) -> void:
 	if what == NOTIFICATION_PREDELETE:
-		ProjectSettings.set_setting("WAT/Display", _state)
+		ProjectSettings.set_setting("Test/Config/Display", _state)
 		ProjectSettings.save()
 		deconstruct()
 
 func add_setting() -> void:
-	if not ProjectSettings.has_setting("WAT/Display"):
-		ProjectSettings.set_setting("WAT/Display", BOTTOM_PANEL)
+	if not ProjectSettings.has_setting("Test/Config/Display"):
+		ProjectSettings.set_setting("Test/Config/Display", BOTTOM_PANEL)
 		ProjectSettings.save()
 	var property = {}
-	property.name = "WAT/Display"
+	property.name = "Test/Config/Display"
 	property.type = TYPE_INT
 	property.hint = PROPERTY_HINT_ENUM
 	property.hint_string = PoolStringArray(displays.values()).join(",")

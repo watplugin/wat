@@ -3,7 +3,7 @@ extends Reference
 
 
 static func initialize() -> void:
-	if not ProjectSettings.has_setting("WAT/Test_Directory"):
+	if not ProjectSettings.has_setting("Test/Config/Test_Directory"):
 		push_warning("Test Directory was set to project root.\nYou may change any setting for WAT in Project -> ProjectSettings -> General -> WAT")
 	_add_setting("Test_Directory", TYPE_STRING, "res://")
 	_add_setting("Results_Directory", TYPE_STRING, "res://")
@@ -19,7 +19,7 @@ static func initialize() -> void:
 	ProjectSettings.save()
 	
 static func _add_setting(title: String, type: int, value, hint_type: int = -1, hint_string = "") -> void:
-	title = title.insert(0, "WAT/")
+	title = title.insert(0, "Test/Config/")
 	if ProjectSettings.has_setting(title):
 		return
 	ProjectSettings.set(title, value)
@@ -32,28 +32,28 @@ static func _add_setting(title: String, type: int, value, hint_type: int = -1, h
 	ProjectSettings.add_property_info(prop)
 
 static func test_directory() -> String:
-	return ProjectSettings.get_setting("WAT/Test_Directory")
+	return ProjectSettings.get_setting("Test/Config/Test_Directory")
 	
 static func results_directory() -> String:
-	return ProjectSettings.get_setting("WAT/Results_Directory")
+	return ProjectSettings.get_setting("Test/Config/Results_Directory")
 	
 static func metadata_directory() -> String:
-	return ProjectSettings.get_setting("WAT/Test_Metadata_Directory")
+	return ProjectSettings.get_setting("Test/Config/Test_Metadata_Directory")
 	
 static func window_size() -> Vector2:
-	return ProjectSettings.get_setting("WAT/Window_Size")
+	return ProjectSettings.get_setting("Test/Config/Window_Size")
 	
 static func tags() -> PoolStringArray:
-	return ProjectSettings.get_setting("WAT/Tags")
+	return ProjectSettings.get_setting("Test/Config/Tags")
 
 static func cache_tests() -> bool:
-	return ProjectSettings.get_setting("WAT/Cache_Tests")
+	return ProjectSettings.get_setting("Test/Config/Cache_Tests")
 	
 static func minimize_window_when_running_tests() -> bool:
-	return ProjectSettings.get_setting("WAT/Minimize_Window_When_Running_Tests")
+	return ProjectSettings.get_setting("Test/Config/Minimize_Window_When_Running_Tests")
 	
 static func port() -> int:
-	return ProjectSettings.get_setting("WAT/Port")
+	return ProjectSettings.get_setting("Test/Config/Port")
 
 static func is_bottom_panel() -> int:
-	return ProjectSettings.get_setting("WAT/Display") == 8
+	return ProjectSettings.get_setting("Test/Config/Display") == 8
