@@ -21,7 +21,9 @@ func _init() -> void:
 func _pressed():
 	if filesystem.changed:
 		emit_signal("update")
+		filesystem.update()
 		update_menus()
+		filesystem.changed = false
 
 	var position: Vector2 = rect_global_position
 	position.y += rect_size.y

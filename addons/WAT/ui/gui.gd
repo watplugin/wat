@@ -106,7 +106,6 @@ func build(data = null):
 	if build_tool == 3: # DOTNET
 		var output = []
 		OS.execute("DOTNET", ["build"], true, output, true, false)
-		_filesystem.changed = false
 	else:
 		print("MSBuild not supported yet")
 	if data == _filesystem.root:
