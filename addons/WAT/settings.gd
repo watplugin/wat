@@ -14,6 +14,7 @@ static func initialize() -> void:
 	_add_setting("Minimize_Window_When_Running_Tests", TYPE_BOOL, false)
 	_add_setting("Port", TYPE_INT, 6008)
 	_add_setting("Tags", TYPE_STRING_ARRAY, PoolStringArray())
+	_add_setting("Pass_Test_Methods_With_No_Assertions", TYPE_BOOL, false)
 	
 	# Set this to true if using external editors
 	ProjectSettings.save()
@@ -57,3 +58,6 @@ static func port() -> int:
 
 static func is_bottom_panel() -> int:
 	return ProjectSettings.get_setting("Test/Config/Display") == 8
+	
+static func pass_test_methods_with_no_assertions() -> bool:
+	return ProjectSettings.get_setting("Test/Config/Pass_Test_Methods_With_No_Assertions")

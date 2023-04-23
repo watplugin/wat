@@ -83,6 +83,7 @@ Config/Window_Size=Vector2( 1280, 720 )
 Config/Minimize_Window_When_Running_Tests=false
 Config/Port=6008
 Config/Display=8
+Config/Pass_Test_Methods_With_No_Assertions=true
 
 [application]
 

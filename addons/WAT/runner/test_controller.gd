@@ -75,7 +75,10 @@ func _on_test_method_finished() -> void:
 	var method = _test._case._methods.back()
 	var count = method["total"]
 	var passed = method["passed"]
+	var pass_on_empty = load("res://addons/WAT/settings.gd").pass_test_methods_with_no_assertions()
 	var success = count > 0 and count == passed
+	if count == 0:
+		success = pass_on_empty
 	var x = {"dir": _dir, "path": _path, "method": _current_method, "success": success, "total": count, "passed": passed}
 	if results != null:
 		results.on_test_method_finished(x)
