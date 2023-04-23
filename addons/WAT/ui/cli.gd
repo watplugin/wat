@@ -10,6 +10,7 @@ var _time_taken: float = 0.0
 var _runner
 
 func _ready() -> void:
+	load("res://addons/WAT/settings.gd").initialize()
 	_load_tests()
 	_run = {}
 	var arguments: Array = Array(OS.get_cmdline_args())
