@@ -5,6 +5,8 @@ extends Button
 # Add RunTag
 # Add RunFailures
 
+signal update
+
 const Settings: GDScript = preload("res://addons/WAT/settings.gd")
 var _menu: PopupMenu
 var filesystem
@@ -17,20 +19,16 @@ func _init() -> void:
 	add_child(_menu)
 
 func _pressed():
-	var current_build = true
 	if filesystem.changed:
-		if not filesystem.built:
-			current_build = false
-			filesystem.built = yield(filesystem.build_function.call_func(), "completed")
-		filesystem.update()
+		emit_signal("update")
 		update_menus()
-	if current_build:
-		var position: Vector2 = rect_global_position
-		position.y += rect_size.y
-		_menu.rect_global_position = position
-		_menu.rect_size = Vector2(rect_size.x, 0)
-		_menu.grab_focus()
-		_menu.popup()
+
+	var position: Vector2 = rect_global_position
+	position.y += rect_size.y
+	_menu.rect_global_position = position
+	_menu.rect_size = Vector2(rect_size.x, 0)
+	_menu.grab_focus()
+	_menu.popup()
 	
 func clear() -> void:
 	_menu.queue_free()

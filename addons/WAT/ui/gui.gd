@@ -26,6 +26,7 @@ func _ready() -> void:
 	DebugAll.set_focus_mode(FOCUS_ALL)
 	TestMenu.set_focus_mode(FOCUS_ALL)
 	$Core/Menu.set_focus_mode(FOCUS_ALL) 
+	TestMenu.connect("update", self, "build")
 
 	if not Engine.is_editor_hint():
 		_setup_scene_context()
@@ -95,7 +96,7 @@ func _on_debug_pressed(data = _filesystem.root) -> void:
 		_plugin.get_editor_interface().stop_playing_scene()
 		_on_test_run_finished(results)
 
-func build(data):
+func build(data = null):
 	if not Engine.is_editor_hint():
 		# Can't build as game
 		return data
@@ -105,6 +106,7 @@ func build(data):
 	if build_tool == 3: # DOTNET
 		var output = []
 		OS.execute("DOTNET", ["build"], true, output, true, false)
+		_filesystem.changed = false
 	else:
 		print("MSBuild not supported yet")
 	if data == _filesystem.root:
