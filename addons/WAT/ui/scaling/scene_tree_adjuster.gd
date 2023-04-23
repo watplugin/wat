@@ -28,7 +28,7 @@ static func adjust(runner: PanelContainer, icons: Reference, plugin = null) -> v
 	runner.DebugAll.icon = registry.load_asset(runner.DebugAll.icon)
 
 	# Scale summary icons
-	runner.Summary.Time.icon = registry.load_asset(runner.Summary.Time.icon)
+	runner.Summary.TimeCounter.icon = registry.load_asset(runner.Summary.TimeCounter.icon)
 	runner.Summary.Tests.icon = registry.load_asset(runner.Summary.Tests.icon)
 	runner.Summary.Passing.icon = registry.load_asset(runner.Summary.Passing.icon)
 	runner.Summary.Failing.icon = registry.load_asset(runner.Summary.Failing.icon)

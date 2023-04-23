@@ -243,7 +243,7 @@ text = "0"
 icon = ExtResource( 17 )
 flat = true
 
-[node name="Time" type="Button" parent="Core/Summary"]
+[node name="TimeCounter" type="Button" parent="Core/Summary"]
 margin_left = 216.0
 margin_right = 266.0
 margin_bottom = 22.0
