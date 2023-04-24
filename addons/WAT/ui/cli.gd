@@ -66,15 +66,29 @@ func run(data: Reference) -> void:
 	var results: Array = yield(_runner.run(tests, _repeats(), _threads()), "completed")
 	_runner.queue_free()
 	
-	var cases = {passed = 0, total = 0, crashed = 0}
+	var cases = {passed = 0, total = 0, failed = 0, passed_methods = 0, failed_methods = 0, total_methods = 0}
+	var failed = []
 	for case in results:
 		cases.total += 1
+		cases.total_methods += case.methods.size()
 		if case.success:
 			cases.passed += 1
+			cases.passed_methods += case.methods.size() # all methods are passed
 		else:
-			_display_failures(case)
-
+			cases.failed += 1
+			for method in case.methods:
+				if method.success:
+					cases.passed_methods += 1
+				else:
+					cases.failed_methods += 1
+			failed.append(case)
 	_display(cases)
+	var r_count = 1
+	print("Details:")
+	for result in failed:
+		_display_failures(result, r_count)
+		r_count += 1
+	print("\n-------RESULTS-------\n")
 	_filesystem.failed.update(results)
 	OS.exit_code = not int(cases.total > 0 and cases.total == cases.passed)
 	
@@ -114,14 +128,26 @@ func _display(cases: Dictionary) -> void:
 	_time_taken = cases.seconds
 	print("""
 	-------RESULTS-------
+	
 	Took {seconds} second(s)
-	{passed} / {total} Test Scripts Passed
-	-------RESULTS-------
+	
+	Test Scripts:
+	
+	{passed} / {total} Passed
+	{failed} / {total} Failed
+	
+	Tests:
+		
+	{passed_methods} / {total_methods} Passed
+	{failed_methods} / {total_methods} Failed
+		
 	""".format(cases).dedent())
 
-func _display_failures(case) -> void:
+func _display_failures(case, count = 0) -> void:
 	# We could create this somewhere else?
-	print("%s (%s)" % [case.context, case.path])
+	#print("%s (%s)" % [case.context, case.path])
+	print("\n%s. FAILED TEST SCRIPT: %s" % [count, case.path])
+	var m_count = 1
 	match case.total:
 		-1:
 			print("\n  Parse Error (check syntax or broken dependencies)")
@@ -130,13 +156,18 @@ func _display_failures(case) -> void:
 		_:
 			for method in case.methods:
 				if not method.success:
-					print("\n  %s" % method.context)
+					print("    %s. FAILED TEST: %s" % [m_count, method.context])
+					#print("\n  %s" % method.context)
+					var assert_count = 1
 					for assertion in method.assertions:
 						if not assertion.success:
-							print("\t%s" % assertion.context, 
-								"\n\t  (EXPECTED: %s) | (RESULTED: %s)" % \
-								[assertion.expected, assertion.actual])
-							print("\t", assertion.stack)
+							print("\t%s. FAILED ASSERTION: %s " % [assert_count, assertion.context])
+							print("\t\tEXPECT: %s" % assertion.expected)
+							print("\t\tRESULT: %s" % assertion.actual)
+							if not assertion.stack.empty():
+								print("\t\tScript Line: %s" % assertion.stack["line"])
+							assert_count += 1
+					m_count += 1
 
 func _quit() -> void:
 	_filesystem.clear()

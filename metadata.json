@@ -1,5 +1,7 @@
 {
 	"failed": [
-
+		"res://tests/pre_test.gd",
+		"res://tests/test_size.gd",
+		"res://tests/bootstrap/small/boolean.test.gd"
 	]
 }

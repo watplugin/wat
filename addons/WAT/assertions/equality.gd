@@ -10,6 +10,7 @@ static func is_equal(a, b, context: String) -> Dictionary:
 	var result = passed if success else failed
 	return _result(success, expected, result, context)
 	
+	
 static func is_not_equal(a, b, context: String) -> Dictionary:
 	var success = (a != b)
 	var expected = "|%s| %s != |%s| %s" % [type2str(a), a, type2str(b), b]

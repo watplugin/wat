@@ -6,4 +6,4 @@ func test_one():
 	var arr2 = [1, 2]
 	asserts.is_size(arr2, 2)
 	var x = []
-	asserts.is_size(x, 0)
+	asserts.is_size(x, 5)
