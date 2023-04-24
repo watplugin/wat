@@ -38,7 +38,7 @@ func _ready() -> void:
 	$Core/Menu/ResultsMenu.get_popup().connect("index_pressed", Results, "_on_view_pressed")
 	
 func _setup_scene_context() -> void:
-	OS.window_size = ProjectSettings.get_setting("WAT/Window_Size")
+	OS.window_size = ProjectSettings.get_setting("Test/Config/Window_Size")
 	SceneTreeAdjuster.adjust(self, _icons)
 	_filesystem = load("res://addons/WAT/filesystem/filesystem.gd").new()
 	TestMenu.filesystem = _filesystem
