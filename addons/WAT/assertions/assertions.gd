@@ -178,6 +178,9 @@ func is_empty(value, context: String = "") -> void:
 		output(StringX.is_empty(value, context))
 	else:
 		output(Collections.is_empty(value, context))
+		
+func is_size(collection, size: int, context: String = "") -> void:
+	output(Collections.is_size(collection, size, context))
 
 func is_bool(value, context: String = "") -> void:
 		output(Is.is_bool(value, context))

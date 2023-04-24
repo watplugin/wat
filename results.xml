@@ -1,8 +1,7 @@
 <?xml version="1.0" ?>
-<testsuites failures="1" name="TestXML" tests="1" time="3.868">
-	<testsuite name="Pre" failures="1"  tests="1" time="0">
-		<testcase name=" x" time="0">
-			<failure message="EXPECTED: |bool| False == true but GOT |bool| False != true"></failure></testcase>
+<testsuites failures="0" name="TestXML" tests="1" time="0.022">
+	<testsuite name="Size" failures="0"  tests="1" time="0">
+		<testcase name=" one" time="0"></testcase>
 	</testsuite>
 
 </testsuites>
