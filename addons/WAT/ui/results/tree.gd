@@ -44,6 +44,7 @@ func add_result(result) -> void:
 func add_test(test) -> void:
 	var script: ScriptTreeItem = ScriptTreeItem.new(create_item(root), test)
 	scripts[script.path] = script
+	script.component.collapsed = _unfold_on_run_all()
 	# Scrolling to a Script Component hides the scroll bar so don't
 
 func add_method(data: Dictionary) -> void:
@@ -54,6 +55,7 @@ func add_method(data: Dictionary) -> void:
 		method.component.add_button(0, icons.function)
 		method.component.set_tooltip(0, "Click function icon to show test method in editor")
 		method.component.set_meta("data", method)
+	script.component.collapsed = not _unfold_on_run_all()
 
 func add_assertion(data: Dictionary) -> void:
 	var script: ScriptTreeItem = scripts[data["path"]]
@@ -78,6 +80,7 @@ func on_test_script_finished(data: Dictionary) -> void:
 	script.component.set_custom_color(0, PASSED if success else FAILED)
 	script.component.set_icon(0, icons.passed if success else icons.failed)
 	_results.append(script.component)
+	script.component.collapsed = not _unfold_on_run_all()
 	if not success:
 		_failures.append(script.component)
 
@@ -102,10 +105,17 @@ func on_test_method_finished(data: Dictionary) -> void:
 	method.component.set_custom_color(0, PASSED if data["success"] else FAILED)
 	method.component.set_icon(0, icons.passed if data["success"] else icons.failed)
 	method.component.collapsed = true
-	scroll_to_item(method.component)
+	if _unfold_on_run_all():
+		scroll_to_item(method.component)
+	
 
 var _results: Array = []
 var _failures: Array = []
+
+func _unfold_on_run_all() -> bool:
+	var setting: bool = load("res://addons/WAT/settings.gd").unfold_tests_on_run_all()
+	var run_all: int = OS.get_environment("WAT_RUN_ALL_MODE") as int
+	return setting or run_all == 0 # unfold if setting or if not run all
 
 func expand_all() -> void:
 	for item in _results:

@@ -15,6 +15,7 @@ static func initialize() -> void:
 	_add_setting("Port", TYPE_INT, 6008)
 	_add_setting("Tags", TYPE_STRING_ARRAY, PoolStringArray())
 	_add_setting("Pass_Test_Methods_With_No_Assertions", TYPE_BOOL, false)
+	_add_setting("Unfold_Tests_On_Run_All", TYPE_BOOL, true)
 	
 	# Set this to true if using external editors
 	ProjectSettings.save()
@@ -61,3 +62,6 @@ static func is_bottom_panel() -> int:
 	
 static func pass_test_methods_with_no_assertions() -> bool:
 	return ProjectSettings.get_setting("Test/Config/Pass_Test_Methods_With_No_Assertions")
+	
+static func unfold_tests_on_run_all() -> bool:
+	return ProjectSettings.get_setting("Test/Config/Unfold_Tests_On_Run_All")

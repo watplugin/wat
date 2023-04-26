@@ -84,6 +84,7 @@ Config/Minimize_Window_When_Running_Tests=false
 Config/Port=6008
 Config/Display=8
 Config/Pass_Test_Methods_With_No_Assertions=true
+Config/Unfold_Tests_On_Run_All=false
 
 [application]
 
