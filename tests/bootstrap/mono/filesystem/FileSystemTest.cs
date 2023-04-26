@@ -18,12 +18,6 @@ public class FileSystemTest : WAT.Test
 			false, "GDScript not extending WAT.Test is invalid")]
 	[Test("zero.test.gd", "extends WAT.Test", false,
 			"GDScript WAT.Test with 0 test methods are excluded by default")]
-// These only work for in-editor tests, the crash debug tests and we don't have features to enable
-// that yet, so we're just going to comment them out for now
-//	[Test("broken_ignore.test.gd", "nothingextends WAT.Test",
-//			false, "Irrelevant GDScript with parse error is ignored")]
-//	[Test("broken_accept.test.gd", "100 extends WAT.Test   : {abcd",
-//			true, "GDScript error but extending WAT.Test is accepted")]
 	[Test("UncompiledWATTest.cs",
 			"using Godot;\nusing System;\n\npublic class " +
 			"UncompiledTest:WAT.Test{\n\t[Test]\n" +
@@ -62,6 +56,20 @@ public class FileSystemTest : WAT.Test
 
 		// Cleanup generated test script file.
 		IO.File.Delete(path);
+	}
+	
+	// These only work for in-editor tests, the crash debug tests
+	// - Now using flag methods to manage these features, so we've re-enabled them.
+	[Test("broken_ignore.test.gd", "nothingextends WAT.Test",
+			false, "Irrelevant GDScript with parse error is ignored")]
+	[Test("broken_accept.test.gd", "100 extends WAT.Test   : {abcd",
+		true, "GDScript error but extending WAT.Test is accepted")]
+	public void GetScriptEditorOnly(string name, string content, bool expected, string context) {
+		if(IsNormalRunAll()) {
+			Assert.AutoPass("Test does not run in this context");
+			return;
+		}
+		GetScript(name, content, expected, context);
 	}
 
 	public void Initialize()
