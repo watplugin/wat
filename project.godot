@@ -93,7 +93,7 @@ config/icon="res://icon.svg"
 
 [editor_plugins]
 
-enabled=PoolStringArray(  )
+enabled=PoolStringArray( "res://addons/WAT/plugin.cfg" )
 
 [mono]
 

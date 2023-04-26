@@ -29,6 +29,24 @@ signal asserted
 signal test_method_finished
 signal test_script_finished
 signal results_received
+
+enum RUN_ALL {
+	NOT_RUN_ALL
+	NORMAL_RUN_ALL
+	DEBUG_RUN_ALL
+}
+
+func is_any_run_all() -> bool:
+	var result: int = OS.get_environment("WAT_RUN_ALL_MODE") as int
+	return (result == RUN_ALL.NORMAL_RUN_ALL or result == RUN_ALL.DEBUG_RUN_ALL)
+	
+func is_normal_run_all() -> bool:
+	var result: int = OS.get_environment("WAT_RUN_ALL_MODE") as int
+	return result == RUN_ALL.NORMAL_RUN_ALL
+
+func is_debug_run_all() -> bool:
+	var result: int = OS.get_environment("WAT_RUN_ALL_MODE") as int
+	return result == RUN_ALL.DEBUG_RUN_ALL
 		
 func setup(directory = "", filepath = "", methods = []):
 	_methods = methods

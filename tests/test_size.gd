@@ -7,3 +7,9 @@ func test_one():
 	asserts.is_size(arr2, 2)
 	var x = []
 	asserts.is_size(x, 5)
+
+func test_run_all_mode():
+	is_any_run_all()
+	is_normal_run_all()
+	is_debug_run_all()
+	asserts.is_true(true, "run_all_test")

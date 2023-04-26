@@ -31,8 +31,8 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		_setup_scene_context()
 	Threads.max_value = OS.get_processor_count() - 1
-	RunAll.connect("pressed", self, "_on_run_pressed")
-	DebugAll.connect("pressed", self, "_on_debug_pressed")
+	RunAll.connect("pressed", self, "_on_run_all_pressed")
+	DebugAll.connect("pressed", self, "_on_debug_all_pressed")
 	TestMenu.connect("run_pressed", self, "_on_run_pressed")
 	TestMenu.connect("debug_pressed", self, "_on_debug_pressed")
 	$Core/Menu/ResultsMenu.get_popup().connect("index_pressed", Results, "_on_view_pressed")
@@ -66,7 +66,24 @@ func _setup_display(tests: Array) -> bool:
 	Results.display(tests, Repeats.value)
 	return true
 
-func _on_run_pressed(data = _filesystem.root) -> void:
+
+enum RUN_ALL {
+	NOT_RUN_ALL
+	NORMAL_RUN_ALL
+	DEBUG_RUN_ALL
+}
+
+func set_run_mode(run_mode: int):
+	OS.set_environment("WAT_RUN_ALL_MODE", run_mode as String)
+	
+func _on_run_all_pressed():
+	_on_run_pressed(_filesystem.root, RUN_ALL.NORMAL_RUN_ALL)
+	
+func _on_debug_all_pressed():
+	_on_debug_pressed(_filesystem.root, RUN_ALL.DEBUG_RUN_ALL)
+
+func _on_run_pressed(data = _filesystem.root, run_mode = RUN_ALL.NOT_RUN_ALL) -> void:
+	set_run_mode(run_mode)
 	Results.clear()
 	data = build(data)
 	var tests: Array = data.get_tests()
@@ -78,7 +95,8 @@ func _on_run_pressed(data = _filesystem.root) -> void:
 		instance.queue_free()
 		_on_test_run_finished(results)
 
-func _on_debug_pressed(data = _filesystem.root) -> void:
+func _on_debug_pressed(data = _filesystem.root, run_mode: int = RUN_ALL.NOT_RUN_ALL) -> void:
+	set_run_mode(run_mode)
 	Results.clear()
 	data = build(data)
 

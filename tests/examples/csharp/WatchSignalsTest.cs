@@ -47,5 +47,12 @@ public class WatchSignalsTest : WAT.Test
 		UnWatch(this, nameof(MySignal));
 	}
 	
+	[Test]
+	public void TestRunAllMode() {
+		IsAnyRunAll();
+		IsNormalRunAll();
+		IsDebugRunAll();
+		Assert.IsTrue(true, "RatTestX");
+	}
 	
 }

@@ -25,11 +25,21 @@ func _load_tests() -> void:
 	Metadata.load_metadata(_filesystem)
 	_filesystem.update()
 	
+enum RUN_ALL {
+	NOT_RUN_ALL
+	NORMAL_RUN_ALL
+	DEBUG_RUN_ALL
+}
+
 func _parse() -> void:
+	OS.set_environment("WAT_RUN_ALL_MODE", RUN_ALL.NOT_RUN_ALL as String)
 	var split: Array = _run["run"].split("+")
 	match split[0]:
 		"all":
 			# run=all
+			# Stacks are empty in non-debug builds
+			var run_mode = RUN_ALL.NORMAL_RUN_ALL if get_stack().empty() else RUN_ALL.DEBUG_RUN_ALL
+			OS.set_environment("WAT_RUN_ALL_MODE", run_mode as String)
 			run(_filesystem.root)
 		"dir":
 			# run=dir+dirpath
