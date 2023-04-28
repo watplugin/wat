@@ -4,6 +4,7 @@
     <LangVersion>7</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="tests\**"/>
     <Content Include="addons\WAT\assertions\.idea\.idea.assertions.dir\.idea\encodings.xml" />
     <Content Include="addons\WAT\assertions\.idea\.idea.assertions.dir\.idea\indexLayout.xml" />
     <Content Include="addons\WAT\assertions\.idea\.idea.assertions.dir\.idea\projectSettingsUpdater.xml" />
