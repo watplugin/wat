@@ -13,12 +13,32 @@ func _ready() -> void:
 	_load_tests()
 	_run = {}
 	var arguments: Array = Array(OS.get_cmdline_args())
-	arguments = arguments.slice(1, arguments.size())
-	var run: Dictionary = {}
-	for arg in arguments:
-		var split = arg.split("=")
-		_run[split[0]] = split[1]
-	_parse()
+	#arguments = arguments.slice(1, arguments.size())
+	print(arguments)
+	var threads: int = get_thread_count(arguments)
+	var repeat: int = get_repeat_count(arguments)
+	print("thread: ", threads)
+	print("repeat: ", repeat)
+	get_tree().quit()
+	
+	
+#	var run: Dictionary = {}
+#	for arg in arguments:
+#		var split = arg.split("=")
+#		_run[split[0]] = split[1]
+#	_parse()
+
+func get_thread_count(args: Array) -> int:
+	for idx in args.size() - 1:
+		if args[idx] == '-td' or args[idx] == '--thread':
+			return int(args[idx + 1])
+	return 1
+	
+func get_repeat_count(args: Array) -> int:
+	for idx in args.size() - 1:
+		if args[idx] == '-r' or args[idx] == '--repeat':
+			return int(args[idx + 1])
+	return 1
 	
 func _load_tests() -> void:
 	_filesystem = FileSystem.new()
