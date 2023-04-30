@@ -19,14 +19,46 @@ func _ready() -> void:
 	var repeat: int = get_repeat_count(arguments)
 	print("thread: ", threads)
 	print("repeat: ", repeat)
-	get_tree().quit()
+	get_run(arguments, repeat, threads)
+	#get_tree().quit()
 	
-	
-#	var run: Dictionary = {}
-#	for arg in arguments:
-#		var split = arg.split("=")
-#		_run[split[0]] = split[1]
-#	_parse()
+func get_run(args: Array, repeat: int = 0, threads: int = 0):
+	for idx in args.size() - 1:
+		if args[idx] == "run":
+			match args[idx + 1]:
+				"all":
+					# Works fine
+					print("run all")
+					var run_mode = RUN_ALL.NORMAL_RUN_ALL if get_stack().empty() else RUN_ALL.DEBUG_RUN_ALL
+					OS.set_environment("WAT_RUN_ALL_MODE", run_mode as String)
+					run(_filesystem.root, repeat, threads)
+				"dir":
+					# TODO: Seems to fail on primary folder and can't find nested tests
+					# ..which means a folder of folders will fail
+					run(_filesystem.index[args[idx + 2]], repeat, threads)
+				"script":
+					# Works fine
+					run(_filesystem.index[args[idx + 2]], repeat, threads)
+				"method":
+					# run method <script> <name>
+					# seems to run fine but not return any tests
+					run(_filesystem.index[args[idx + 2] + args[idx + 3]])
+				"tag":
+					# We can reach here but the filesystem isn't being set correctly for whatever reasons
+					_filesystem.tagged.set_tests(args[idx + 2], _filesystem.root)
+					run(_filesystem.tagged)
+				"failed":
+					# Works fine
+					run(_filesystem.failed, repeat, threads)
+				_:
+					_quit()
+					
+
+#		"method":
+#			# run=method+scriptpath+methodname
+#			run(_filesystem.index[split[1] + split[2]])
+#
+					
 
 func get_thread_count(args: Array) -> int:
 	for idx in args.size() - 1:
@@ -38,7 +70,7 @@ func get_repeat_count(args: Array) -> int:
 	for idx in args.size() - 1:
 		if args[idx] == '-r' or args[idx] == '--repeat':
 			return int(args[idx + 1])
-	return 1
+	return 0
 	
 func _load_tests() -> void:
 	_filesystem = FileSystem.new()
@@ -51,39 +83,8 @@ enum RUN_ALL {
 	DEBUG_RUN_ALL
 }
 
-func _parse() -> void:
-	OS.set_environment("WAT_RUN_ALL_MODE", RUN_ALL.NOT_RUN_ALL as String)
-	var split: Array = _run["run"].split("+")
-	match split[0]:
-		"all":
-			# run=all
-			# Stacks are empty in non-debug builds
-			var run_mode = RUN_ALL.NORMAL_RUN_ALL if get_stack().empty() else RUN_ALL.DEBUG_RUN_ALL
-			OS.set_environment("WAT_RUN_ALL_MODE", run_mode as String)
-			run(_filesystem.root)
-		"dir":
-			# run=dir+dirpath
-			run(_filesystem.index[split[1]])
-		"script":
-			# run=script+scriptpath
-			run(_filesystem.index[split[1]])
-		"method":
-			# run=method+scriptpath+methodname
-			run(_filesystem.index[split[1] + split[2]])
-		"failed":
-			# run=failed
-			run(_filesystem.failed)
-		"tag":
-			# run=tag+tagname
-			_filesystem.tagged.set_tests(split[1], _filesystem.root)
-			run(_filesystem.tagged)
-		_:
-			_quit()
-	
-func run(data: Reference) -> void:
-	var repeats: int = _repeats()
-	var threads: int = _threads()
-	
+func run(data: Reference, repeats: int = 0, threads: int = 0) -> void:
+
 	var tests: Array = data.get_tests()
 	if tests.empty():
 		push_warning("WAT: No tests found")
@@ -93,7 +94,7 @@ func run(data: Reference) -> void:
 	_runner = TestRunner.new()
 	add_child(_runner)
 	var x = load("res://addons/WAT/ui/results/tab_container.gd").new()
-	var results: Array = yield(_runner.run(tests, _repeats(), _threads()), "completed")
+	var results: Array = yield(_runner.run(tests, repeats, threads), "completed")
 	_runner.queue_free()
 	
 	var cases = {passed = 0, total = 0, failed = 0, passed_methods = 0, failed_methods = 0, total_methods = 0}

@@ -1,29 +1,8 @@
 {
+	"SampleTag": [
+		"res://tests/params.gd"
+	],
 	"failed": [
-		"res://tests/bootstrap/mono/filesystem/FileSystemTest.cs",
-		"res://tests/examples/csharp/AwaitTest.cs",
-		"res://tests/examples/csharp/ExampleTest.cs",
-		"res://tests/examples/csharp/WatchSignalsTest.cs",
-		"res://tests/pre_test.gd",
-		"res://tests/test_size.gd",
-		"res://tests/bootstrap/mono/AttributeTest.cs",
-		"res://tests/bootstrap/mono/AttributeYieldTest.cs",
-		"res://tests/bootstrap/mono/BasicCSharpTest.cs",
-		"res://tests/bootstrap/mono/BooleanTest.cs",
-		"res://tests/bootstrap/mono/ExceptionTests.cs",
-		"res://tests/bootstrap/mono/IsInstanceTest.cs",
-		"res://tests/bootstrap/mono/IsNotInstanceTest.cs",
-		"res://tests/bootstrap/mono/MyTest.cs",
-		"res://tests/bootstrap/mono/NullChecksTest.cs",
-		"res://tests/bootstrap/mono/ObjectTest.cs",
-		"res://tests/bootstrap/mono/RangeTest.cs",
-		"res://tests/bootstrap/mono/RepeatTests.cs",
-		"res://tests/bootstrap/mono/SimpleTest.cs",
-		"res://tests/bootstrap/mono/StringTest.cs",
-		"res://tests/bootstrap/mono/UntilEvent.cs",
-		"res://tests/bootstrap/mono/UntilEventHandlerEvent.cs",
-		"res://tests/bootstrap/mono/WatcherTest.cs",
-		"res://tests/bootstrap/mono/YieldTest.cs",
-		"res://tests/bootstrap/small/boolean.test.gd"
+		"res://tests/test_size.gd"
 	]
 }

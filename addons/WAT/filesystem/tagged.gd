@@ -1,3 +1,4 @@
+tool
 extends Reference
 # Tag / Resource Path
 var tagged: Dictionary = {}
@@ -34,6 +35,7 @@ func update() -> void:
 			tagged[tag] = []
 			
 func set_tests(tag: String, root: Reference) -> void:
+	print(tag)
 	_tests.clear()
 	for test in root.get_tests():
 		if tagged[tag].has(test["path"]):
