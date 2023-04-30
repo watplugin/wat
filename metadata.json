@@ -1,8 +1,17 @@
 {
+	"NotSoSample": [
+		"res://tests/bootstrap/unit/folder.test.gd"
+	],
 	"SampleTag": [
 		"res://tests/params.gd"
 	],
 	"failed": [
-		"res://tests/test_size.gd"
+		"res://tests/bootstrap/small/boolean.test.gd",
+		"res://tests/pre_test.gd"
+	],
+	"simple": [
+		"res://tests/pre_test.gd",
+		"res://tests/bootstrap/small/boolean.test.gd",
+		"res://tests/examples/gdscript/yield.test.gd"
 	]
 }

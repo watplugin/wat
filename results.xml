@@ -1,9 +1,20 @@
 <?xml version="1.0" ?>
-<testsuites failures="1" name="TestXML" tests="1" time="5.334">
-	<testsuite name="Size" failures="1"  tests="2" time="0">
-		<testcase name=" one" time="0">
-			<failure message="EXPECTED: Collection size is 5 but GOT Collection size is not 5 (Actual size is 0)"></failure></testcase>
-		<testcase name=" run all mode" time="0"></testcase>
+<testsuites failures="2" name="TestXML" tests="3" time="0.192">
+	<testsuite name="Given a Boolean Assertion" failures="2"  tests="2" time="0">
+		<testcase name="When calling asserts.is_true(true)" time="0">
+			<failure message="EXPECTED: |bool| False == true but GOT |bool| False != true"></failure></testcase>
+		<testcase name="When calling asserts.is_false(false)" time="0">
+			<failure message="EXPECTED: |bool| True == false but GOT |bool| True != false"></failure></testcase>
+	</testsuite>
+
+	<testsuite name="Pre" failures="1"  tests="1" time="0">
+		<testcase name=" x" time="0">
+			<failure message="EXPECTED: |bool| False == true but GOT |bool| False != true"></failure></testcase>
+	</testsuite>
+
+	<testsuite name="Yield" failures="0"  tests="2" time="0">
+		<testcase name=" yield until timeout" time="0"></testcase>
+		<testcase name=" yield until signal" time="0"></testcase>
 	</testsuite>
 
 </testsuites>
