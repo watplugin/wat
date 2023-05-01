@@ -16,6 +16,7 @@ func _ready() -> void:
 func run(tests: Array, repeat: int, threads: int, results_view: Node = null) -> Array:
 	var results: Array = []
 	tests = _repeat(tests, repeat)
+	print("threads inside run ", threads)
 	var testthreads = Splitter.split(tests, threads)
 	for thread in testthreads:
 		thread.controller.results = results_view

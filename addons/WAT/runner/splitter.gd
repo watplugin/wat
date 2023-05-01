@@ -1,6 +1,7 @@
 extends Node
 
 static func split(tests: Array, threads: int = 1) -> Array:
+	# What happens if only one test?
 	tests.sort_custom(YieldTimeSorter, "sort_ascending")
 	threads = calibrate_threads(tests.size(), threads)
 	return _testthreads(_distribute(_testpools(threads), tests, threads))
@@ -12,8 +13,9 @@ static func calibrate_threads(tests: int, threads: int) -> int:
 	return threads
 	
 static func _testpools(count: int) -> Array:
+	print("threads: ", count)
 	var pools: Array = []
-	for pool in count:
+	for pool in count: # Here is the problem
 		pools.append([])
 	return pools
 

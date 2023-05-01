@@ -42,11 +42,11 @@ func get_run(args: Array, repeat: int = 0, threads: int = 0):
 				"method":
 					# run method <script> <name>
 					# seems to run fine but not return any tests
-					run(_filesystem.index[args[idx + 2] + args[idx + 3]])
+					run(_filesystem.index[args[idx + 2] + args[idx + 3]], repeat, threads)
 				"tag":
 					# We can reach here but the filesystem isn't being set correctly for whatever reasons
 					_filesystem.tagged.set_tests(args[idx + 2], _filesystem.root)
-					run(_filesystem.tagged)
+					run(_filesystem.tagged, repeat, threads)
 				"failed":
 					# Works fine
 					run(_filesystem.failed, repeat, threads)
@@ -94,6 +94,7 @@ func run(data: Reference, repeats: int = 0, threads: int = 0) -> void:
 	_runner = TestRunner.new()
 	add_child(_runner)
 	var x = load("res://addons/WAT/ui/results/tab_container.gd").new()
+	print("threads before run: ", threads)
 	var results: Array = yield(_runner.run(tests, repeats, threads), "completed")
 	_runner.queue_free()
 	
