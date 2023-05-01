@@ -17,34 +17,24 @@ func _ready() -> void:
 	print(arguments)
 	var threads: int = get_thread_count(arguments)
 	var repeat: int = get_repeat_count(arguments)
-	print("thread: ", threads)
-	print("repeat: ", repeat)
 	get_run(arguments, repeat, threads)
-	#get_tree().quit()
+
 	
 func get_run(args: Array, repeat: int = 0, threads: int = 0):
 	for idx in args.size() - 1:
 		if args[idx] == "run":
 			match args[idx + 1]:
 				"all":
-					# Works fine
-					print("run all")
 					var run_mode = RUN_ALL.NORMAL_RUN_ALL if get_stack().empty() else RUN_ALL.DEBUG_RUN_ALL
 					OS.set_environment("WAT_RUN_ALL_MODE", run_mode as String)
 					run(_filesystem.root, repeat, threads)
 				"dir":
-					# TODO: Seems to fail on primary folder and can't find nested tests
-					# ..which means a folder of folders will fail
 					run(_filesystem.index[args[idx + 2]], repeat, threads)
 				"script":
-					# Works fine
 					run(_filesystem.index[args[idx + 2]], repeat, threads)
 				"method":
-					# run method <script> <name>
-					# seems to run fine but not return any tests
 					run(_filesystem.index[args[idx + 2] + args[idx + 3]], repeat, threads)
 				"tag":
-					# We can reach here but the filesystem isn't being set correctly for whatever reasons
 					_filesystem.tagged.set_tests(args[idx + 2], _filesystem.root)
 					run(_filesystem.tagged, repeat, threads)
 				"failed":
@@ -52,12 +42,6 @@ func get_run(args: Array, repeat: int = 0, threads: int = 0):
 					run(_filesystem.failed, repeat, threads)
 				_:
 					_quit()
-					
-
-#		"method":
-#			# run=method+scriptpath+methodname
-#			run(_filesystem.index[split[1] + split[2]])
-#
 					
 
 func get_thread_count(args: Array) -> int:
@@ -94,7 +78,6 @@ func run(data: Reference, repeats: int = 0, threads: int = 0) -> void:
 	_runner = TestRunner.new()
 	add_child(_runner)
 	var x = load("res://addons/WAT/ui/results/tab_container.gd").new()
-	print("threads before run: ", threads)
 	var results: Array = yield(_runner.run(tests, repeats, threads), "completed")
 	_runner.queue_free()
 	
@@ -126,34 +109,8 @@ func run(data: Reference, repeats: int = 0, threads: int = 0) -> void:
 	
 	Metadata.save_metadata(_filesystem)
 	JUnitXML.write(results, _filesystem.Settings, _time_taken)
-	#cases.clear()
-	#results.clear()
 	_quit()
 
-func _repeats() -> int:
-	# r=X where X is a number
-	if _run.has("r"):
-		return _run["r"] as int
-	# r=X where X is a number
-	elif _run.has("repeat"):
-		return _run.has("repeat") as int
-	else:
-		return 0
-		
-func _threads() -> int:
-	var threads: int = 0
-	# t=X where X is a number
-	if _run.has("t"):
-		threads = _run["t"] as int
-	# thread=X where X is a number
-	elif _run.has("thread"):
-		threads = _run.has("thread") as int
-	else:
-		return 1
-	if threads > OS.get_processor_count():
-		threads = OS.get_processor_count() - 1
-	return threads
-	
 
 func _display(cases: Dictionary) -> void:
 	cases.seconds = stepify(OS.get_ticks_msec() / 1000.0, 0.001)
