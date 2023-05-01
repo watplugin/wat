@@ -74,6 +74,7 @@ func _get_root() -> TestDirectory:
 	root = TestDirectory.new()
 	root.path = Settings.test_directory()
 	root.is_root = true
+	index[root.path] = root
 	return root
 		
 func _get_test_script(p: String) -> TestScript:
