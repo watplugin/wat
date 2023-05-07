@@ -31,14 +31,14 @@ func _constructor_to_string(parameters: String) -> String:
 
 func _method_to_string(id: int, method: Object) -> String:
 	var text: String
-	text += "{keyword}func {name}({args}):"
+	text += "{keyword}func {name}({args}){retval}:"
 	text += "\n\tvar args = [{args}]"
 	text += "\n\tvar method = WATRegistry[0].method({id}, '{name}')"
 	text += "\n\tmethod.add_call(args)"
 	text += "\n\tif method.executes(args):"
 	text += "\n\t\treturn .{name}({args})"  # We may want to add a retval check here
 	text += "\n\treturn method.primary(args)\n\n"
-	text = text.format({"id": id, "keyword": method.keyword, "name": method.name, "args": method.args})
+	text = text.format({"id": id, "keyword": method.keyword, "name": method.name, "args": method.args, "retval": method.retval})
 	return text
 
 func _inner_class(klass: Dictionary) -> String:

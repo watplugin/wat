@@ -8,6 +8,7 @@ var calls_super: bool = false
 #var args_with_defaults: String = ""
 var args: String = ""
 var keyword: String = ""
+var retval: String = ""
 var calls: Array = []
 var stubs: Array = []
 var supers: Array = []
@@ -15,10 +16,11 @@ var callables: Array = []
 var default
 var double
 
-func _init(name: String, keyword: String, args: String) -> void:
+func _init(name: String, keyword: String, args: String, retval: String = "") -> void:
 	self.name = name
 	self.keyword = keyword
 	self.args = args
+	self.retval = retval
 #	self.args_with_defaults = defaults
 
 func dummy() -> Reference:

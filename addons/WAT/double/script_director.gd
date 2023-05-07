@@ -34,7 +34,8 @@ func _init(_registry, _klass: String, _inner_klass: String, deps: Array = []) ->
 	
 func method(name: String) -> Method:
 	if not methods.has(name):
-		methods[name] = Method.new(name, base_methods[name].keyword, base_methods[name].args)
+		var base: Dictionary = base_methods[name]
+		methods[name] = Method.new(name, base.keyword, base.args, base.return_type)
 	return methods[name]
 
 func clear():
