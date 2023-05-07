@@ -161,85 +161,6 @@ func parse_function(line: String, keyword: String = "") -> Dictionary:
 	
 	return function
 	
-# Replace SetMethods, MethodList & get_args_with_default with the following
-
-# If not built in OR inner class
-	# get_script_method_list() // does this only get the immediate script code?
-	# parse source-code by new line
-	# if line contains func, parse for {keyword}{name}{args,def-args} -> {return type}
-	# after all parsed, get base script, check if base script is is user-defined
-	# repeat until base script
-# parse base script (def-args with normally here)
-
-#func generate_methods():
-#	var functions = [] # {keyword}{name}{arg}{ret}
-#	var script: GDScript = null
-#	if not is_built_in or not inner_klass:
-#		script = load(klass)
-#		functions += get_functions(script.source_code)
-#
-#func get_functions(source_code: String):
-#	for line in source_code.split("\n"):
-#		if "func" in line:
-#			var f = {"keyword": "", "name": "", "args": }
-#			print(line)
-
-#func set_methods() -> void:
-#	var params: String = "abcdefghijklmnopqrstuvwxyz"
-#	for m in method_list():
-#		var arguments: String = ""
-#		# m.args.size() causes crashes in release exports
-#		var idx = 0
-#		for i in m.args:
-#			arguments = arguments + params[idx] + ", "
-#			idx += 1
-#		var sanitized = arguments.replace(", ", "")
-#		arguments = arguments.rstrip(", ")
-#		var default_args = arguments
-#		var def_idx = 0
-#		# m.default_args.size() causes crashes in release exports
-#		for def in m.default_args:
-#			def_idx += 1
-#		if def_idx > 0:
-#			default_args = get_args_with_default(sanitized, m.default_args)
-#		base_methods[m.name] = {"arguments": arguments, "default_arguments": default_args}
-#
-#func get_args_with_default(args: String, base_default_args: Array) -> String:
-#	var retval_args: String
-#	var substr_start = args.length() - base_default_args.size()
-#	var length = args.length() # We're transforming in loop so we capture first
-#	var arg_index = 0
-#	for i in length:
-#		if i < substr_start:
-#			retval_args += "%s, " % args[i]
-#			continue
-#		var letter = args[i]
-#		var arg = base_default_args[arg_index]
-#		if arg is String:
-#			retval_args += '%s = "%s", ' % [letter, str(arg)]
-#		else:
-#			retval_args += '%s = %s, ' % [letter, arg]
-#		arg_index += 1
-#	retval_args = retval_args.rstrip(", ")
-#	return retval_args
-#
-#func method_list() -> Array:
-#	var list: Array = []
-#	if is_built_in:
-#		return ClassDB.class_get_method_list(klass)
-#	var script = load(klass) if inner_klass == "" else _load_nested_class()
-##	# We get our script methods first in case there is a custom constructor
-##	# This way we don't end up reading the empty base constructors of Object
-#	list += script.get_script_method_list()
-#	list += ClassDB.class_get_method_list(script.get_instance_base_type())
-#	var filtered = {}
-#	for m in list:
-#		if m.name in filtered:
-#			continue
-#		filtered[m.name] = m
-#	return filtered.values()	
-## END METHOD CLASS
-
 func add_inner_class(klass: Object, name: String) -> void:
 	klasses.append({"director": klass, "name": name})
 
@@ -268,8 +189,6 @@ func double(deps: Array = [], show_error = true) -> Object:
 		object.set(prop_name, nodepaths[prop_name])
 	return object
 	
-
-
 func _load_nested_class() -> Script:
 	var expression = Expression.new()
 	var script = load(klass)

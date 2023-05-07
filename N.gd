@@ -16,15 +16,18 @@ class Inner:
 		return 0
 		
 	func y(a) -> Inner:
-		return Inner.new()
+		return Inner.new("")
 		
 	func z(a, b = "hello"):
+		pass
+		
+	func _init(username: String):
 		pass
 		
 class Sub extends Inner:
 	
 	func y(a):
-		return Inner.new()
+		return Inner.new("")
 
 func _ready():
 #	print(Inner.get_script_method_list())
