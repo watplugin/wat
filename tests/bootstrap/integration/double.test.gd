@@ -102,20 +102,29 @@ func test_When_we_add_a_doubled_inner_class_to_it():
 	asserts.is_equal(TAU, director.double().Algebra.get_tau(), "Then we can call the static methods of that inner double")
 
 # TODO
-#func test_When_we_stub_a_method_of_a_double_inner_class():
-#	describe("When we stub a method of a doubled inner class")
-#
-#	director = direct.script("res://OldExamples/Scripts/calculator.gd", "Algebra")
-#	director.method("scale").dummy()
-#
-#	asserts.is_null(director.double().scale(0, 0), "Then we get the stubbed value back")
-#
-#func test_When_we_double_an_inner_class() -> void:
-#	describe("When we double an inner class")
-#
-#	var inner = direct.script("res://OldExamples/Scripts/calculator.gd", "Algebra")
-#	var double = inner.double()
-#	asserts.is_Vector2(double.scale(Vector2(1, 1), 1), "Then we can call methods on it")
+func test_When_we_dummy_a_method_of_a_double_inner_class():
+	describe("When we dummy a method of a doubled inner class")
+
+	director = direct.script("res://OldExamples/Scripts/calculator.gd", "Algebra")
+	director.method("scale").dummy()
+
+	asserts.is_null(director.double().scale(0, 0), "Then we get the dummy value back")
+
+func test_When_we_stub_a_method_of_a_double_inner_class():
+	describe("When we stub a method of a doubled inner class")
+
+	director = direct.script("res://OldExamples/Scripts/calculator.gd", "Algebra")
+	director.method("scale").stub(null, [0, 0])
+
+
+	asserts.is_null(director.double().scale(0, 0), "Then we get the stubbed value back")
+
+func test_When_we_double_an_inner_class() -> void:
+	describe("When we double an inner class")
+
+	var inner = direct.script("res://OldExamples/Scripts/calculator.gd", "Algebra")
+	var double = inner.double()
+	asserts.is_Vector2(double.scale(Vector2(1, 1), 1), "Then we can call methods on it")
 
 func test_When_we_double_a_method_with_a_keyword():
 	describe("We can double methods with keyword automatically")

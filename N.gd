@@ -12,14 +12,19 @@ var username
 
 class Inner:
 	
-	func x():
-		pass
+	func x() -> int:
+		return 0
 		
-	func y(a):
-		pass
+	func y(a) -> Inner:
+		return Inner.new()
 		
 	func z(a, b = "hello"):
 		pass
+		
+class Sub extends Inner:
+	
+	func y(a):
+		return Inner.new()
 
 func _ready():
 #	print(Inner.get_script_method_list())

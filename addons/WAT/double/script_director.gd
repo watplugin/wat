@@ -31,7 +31,6 @@ func _init(_registry, _klass: String, _inner_klass: String, deps: Array = []) ->
 	registry = _registry
 	registry.register(self)
 	parse_for_methods()
-#	set_methods()
 	
 func method(name: String) -> Method:
 	if not methods.has(name):
@@ -71,6 +70,7 @@ func parse_for_methods() -> void:
 		engine_methods = ClassDB.class_get_method_list(klass)
 	elif inner_klass != "":
 		var inner_script = _load_nested_class()
+		parse_inner_klass_methods(inner_script.get_script_method_list())
 		engine_methods = ClassDB.class_get_method_list(klass)
 	else:
 		script = load(klass)
@@ -79,7 +79,7 @@ func parse_for_methods() -> void:
 			parse_script(script.source_code)
 			script = script.get_base_script()
 	parse_builtins(engine_methods)
-	print("done")
+
 	
 func parse_builtins(engine_methods: Array) -> void:
 	for method in engine_methods:
@@ -91,6 +91,22 @@ func parse_builtins(engine_methods: Array) -> void:
 		}
 		
 		function["args"] = parse_engine_method_arguments(method.args, method.default_args)
+		append_function(function)
+		
+func parse_inner_klass_methods(inner_klass_methods: Array) -> void:
+	var names: String = "abcdefghijklmnopqrstuvwyxz"
+	for method in inner_klass_methods:
+		var function = {
+			"keyword": "",
+			"name": method.name,
+			"args": "",
+			"return_type": "",
+		}
+		var argString = ""
+		for arg in method.args.size():
+			argString += "%s, " % names[arg]
+		argString = argString.rstrip(", ")
+		function["args"] = argString
 		append_function(function)
 		
 func parse_engine_method_arguments(args: Array, default_args: Array) -> String:
