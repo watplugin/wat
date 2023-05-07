@@ -32,10 +32,12 @@ func _init(_registry, _klass: String, _inner_klass: String, deps: Array = []) ->
 	registry.register(self)
 	parse_for_methods()
 	
-func method(name: String) -> Method:
+func method(name: String, optKeyword: String = "", optRetval = "") -> Method:
 	if not methods.has(name):
 		var base: Dictionary = base_methods[name]
-		methods[name] = Method.new(name, base.keyword, base.args, base.return_type)
+		var keyword = base.keyword if optKeyword == "" else optKeyword
+		var retval = base.return_type if optRetval == "" else optRetval
+		methods[name] = Method.new(name, keyword, base.args, retval)
 	return methods[name]
 
 func clear():
