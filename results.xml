@@ -1,9 +1,7 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0.05">
-	<testsuite name="Double Defaults" failures="0"  tests="3" time="0">
-		<testcase name=" stubbing defaults with partials" time="0"></testcase>
-		<testcase name=" stubbing defaults" time="0"></testcase>
-		<testcase name=" keywords and defaults are automatically doubled" time="0"></testcase>
+<testsuites failures="0" name="TestXML" tests="1" time="0.096">
+	<testsuite name="Default Args" failures="0"  tests="1" time="0">
+		<testcase name=" default arguments of interpolate property" time="0"></testcase>
 	</testsuite>
 
 </testsuites>

@@ -114,7 +114,7 @@ func parse_inner_klass_methods(inner_klass_methods: Array) -> void:
 		
 func parse_engine_method_arguments(args: Array, default_args: Array) -> String:
 	var stringArgs = ""
-	var non_defaults: Array = args.slice(0, args.size() - default_args.size())
+	var non_defaults: Array = args.slice(0, args.size() - (default_args.size() + 1))
 	var defaults: Array = args.slice(args.size() - default_args.size(), args.size())
 	for arg in non_defaults:
 		stringArgs += "%s, " % arg.name
