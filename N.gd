@@ -4,9 +4,29 @@ var methods: Dictionary = {} # name: {}
 var is_built_in = false
 var inner_klass = ""
 var klass = "res://N.gd"
+var username
+
+#func _init(_username: String):
+#	username = _username
+#
+
+class Inner:
+	
+	func x():
+		pass
+		
+	func y(a):
+		pass
+		
+	func z(a, b = "hello"):
+		pass
 
 func _ready():
-	parse_for_methods()
+#	print(Inner.get_script_method_list())
+	for m in Inner.get_script_method_list():
+		print(m)
+		print("")
+#	parse_for_methods()
 	
 func append_function(function: Dictionary) -> void:
 	if methods.has(function["name"]):
@@ -24,8 +44,10 @@ func parse_for_methods() -> void:
 			script = script.get_base_script()
 	else:
 		engine_methods = ClassDB.class_get_method_list(klass)
+	for method in methods:
+		print(methods[method])
 	parse_builtins(engine_methods)
-	print("done")
+
 	
 func parse_builtins(engine_methods: Array) -> void:
 	for method in engine_methods:

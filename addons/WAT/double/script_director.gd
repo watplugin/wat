@@ -67,14 +67,17 @@ func append_function(function: Dictionary) -> void:
 func parse_for_methods() -> void:
 	var script: GDScript
 	var engine_methods: Array = []
-	if not is_built_in and inner_klass == "":
+	if is_built_in:
+		engine_methods = ClassDB.class_get_method_list(klass)
+	elif inner_klass != "":
+		var inner_script = _load_nested_class()
+		engine_methods = ClassDB.class_get_method_list(klass)
+	else:
 		script = load(klass)
 		engine_methods = ClassDB.class_get_method_list(script.get_instance_base_type())
 		while script != null:
 			parse_script(script.source_code)
 			script = script.get_base_script()
-	else:
-		engine_methods = ClassDB.class_get_method_list(klass)
 	parse_builtins(engine_methods)
 	print("done")
 	
