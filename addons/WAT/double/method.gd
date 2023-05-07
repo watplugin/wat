@@ -4,8 +4,9 @@ var name: String = ""
 var spying: bool = false
 var stubbed: bool = false
 var calls_super: bool = false
+#var args: String = ""
+#var args_with_defaults: String = ""
 var args: String = ""
-var args_with_defaults: String = ""
 var keyword: String = ""
 var calls: Array = []
 var stubs: Array = []
@@ -14,11 +15,11 @@ var callables: Array = []
 var default
 var double
 
-func _init(name: String, keyword: String, args: String, defaults: String) -> void:
+func _init(name: String, keyword: String, args: String) -> void:
 	self.name = name
 	self.keyword = keyword
 	self.args = args
-	self.args_with_defaults = defaults
+#	self.args_with_defaults = defaults
 
 func dummy() -> Reference:
 	stubbed = true

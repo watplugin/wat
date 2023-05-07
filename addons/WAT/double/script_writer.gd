@@ -6,7 +6,7 @@ func write(double) -> String:
 	source += _extension_to_string(double)
 	source += "\nconst WATRegistry = []\n"
 	if double.base_methods.has("_init"):
-		source += _constructor_to_string(double.base_methods["_init"].arguments)
+		source += _constructor_to_string(double.base_methods["_init"].args)
 
 	for name in double.methods:
 		var m = double.methods[name]
@@ -31,16 +31,14 @@ func _constructor_to_string(parameters: String) -> String:
 
 func _method_to_string(id: int, method: Object) -> String:
 	var text: String
-	text += "{keyword}func {name}({args_with_defaults}):"
+	text += "{keyword}func {name}({args}):"
 	text += "\n\tvar args = [{args}]"
 	text += "\n\tvar method = WATRegistry[0].method({id}, '{name}')"
 	text += "\n\tmethod.add_call(args)"
 	text += "\n\tif method.executes(args):"
 	text += "\n\t\treturn .{name}({args})"  # We may want to add a retval check here
 	text += "\n\treturn method.primary(args)\n\n"
-	text = text.format({"id": id, "keyword": method.keyword, 
-						"name": method.name, "args_with_defaults": method.args_with_defaults, 
-						"args": method.args})
+	text = text.format({"id": id, "keyword": method.keyword, "name": method.name, "args": method.args})
 	return text
 
 func _inner_class(klass: Dictionary) -> String:

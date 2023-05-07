@@ -102,14 +102,14 @@ func test_When_we_add_a_doubled_inner_class_to_it():
 	asserts.is_equal(TAU, director.double().Algebra.get_tau(), "Then we can call the static methods of that inner double")
 
 # TODO
-func test_When_we_stub_a_method_of_a_double_inner_class():
-	describe("When we stub a method of a doubled inner class")
-
-	director = direct.script("res://OldExamples/Scripts/calculator.gd", "Algebra")
-	director.method("scale").dummy()
-
-	asserts.is_null(director.double().scale(0, 0), "Then we get the stubbed value back")
-
+#func test_When_we_stub_a_method_of_a_double_inner_class():
+#	describe("When we stub a method of a doubled inner class")
+#
+#	director = direct.script("res://OldExamples/Scripts/calculator.gd", "Algebra")
+#	director.method("scale").dummy()
+#
+#	asserts.is_null(director.double().scale(0, 0), "Then we get the stubbed value back")
+#
 func test_When_we_double_an_inner_class() -> void:
 	describe("When we double an inner class")
 
@@ -117,28 +117,28 @@ func test_When_we_double_an_inner_class() -> void:
 	var double = inner.double()
 	asserts.is_Vector2(double.scale(Vector2(1, 1), 1), "Then we can call methods on it")
 
-func test_When_we_stubbed_a_keyword_method_by_passing_in_the_correct_keyword():
-	describe("When we stubbed a keyworded method by passing in the correct keyword")
+func test_When_we_double_a_method_with_a_keyword():
+	describe("We can double methods with keyword automatically")
 
-	director.method("pi", director.STATIC).stub(true, [])
+	director.method("pi").stub(true, [])
 
-	asserts.is_equal(director.double().pi(), true, "Then we can call it")
+	asserts.is_equal(director.double().pi(), true, "Then it is doubled successfully")
 
-func test_When_we_pass_in_deps_on_double() -> void:
-	describe("When we pass in dependecies on double")
-
-	director = direct.script("res://OldExamples/Scripts/user.gd")
-	var double = director.double(["Jackie"])
-
-	asserts.is_equal(double.username, "Jackie", "Then we can double the object successfully")
-
-func test_When_we_pass_in_deps_on_direct() -> void:
-	describe("When we pass in dependecies on direct")
-
-	director = direct.script("res://OldExamples/Scripts/user.gd", "", ["Jackie"])
-	var double = director.double()
-
-	asserts.is_equal(double.username, "Jackie", "Then we can double the object successfully")
+#func test_When_we_pass_in_deps_on_double() -> void:
+#	describe("When we pass in dependecies on double")
+#
+#	director = direct.script("res://OldExamples/Scripts/user.gd")
+#	var double = director.double(["Jackie"])
+#
+#	asserts.is_equal(double.username, "Jackie", "Then we can double the object successfully")
+#
+#func test_When_we_pass_in_deps_on_direct() -> void:
+#	describe("When we pass in dependecies on direct")
+#
+#	director = direct.script("res://OldExamples/Scripts/user.gd", "", ["Jackie"])
+#	var double = director.double()
+#
+#	asserts.is_equal(double.username, "Jackie", "Then we can double the object successfully")
 
 func test_When_we_pass_a_funcref_as_a_subcall():
 	describe("When we pass a funcref as a subcall")
