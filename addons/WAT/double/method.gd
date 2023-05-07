@@ -4,9 +4,12 @@ var name: String = ""
 var spying: bool = false
 var stubbed: bool = false
 var calls_super: bool = false
+#var args: String = ""
+#var args_with_defaults: String = ""
 var args: String = ""
-var args_with_defaults: String = ""
+var argNames: String = ""
 var keyword: String = ""
+var retval: String = ""
 var calls: Array = []
 var stubs: Array = []
 var supers: Array = []
@@ -14,11 +17,23 @@ var callables: Array = []
 var default
 var double
 
-func _init(name: String, keyword: String, args: String, defaults: String) -> void:
+func _init(name: String, keyword: String, args: String, retval: String = "") -> void:
 	self.name = name
 	self.keyword = keyword
 	self.args = args
-	self.args_with_defaults = defaults
+	self.retval = retval
+	self.argNames = parse_arg_names(args)
+
+func parse_arg_names(parameters):
+	var _param_names: String = ""
+	for param in parameters.split(","):
+		if ":" in param:
+			_param_names += "%s, " % param.substr(0, param.find(":")).strip_edges()
+		elif "=" in param:
+			_param_names += "%s, " % param.substr(0, param.find("=")).strip_edges()
+		else:
+			_param_names += "%s, " % param
+	return _param_names.rstrip(", ")
 
 func dummy() -> Reference:
 	stubbed = true
