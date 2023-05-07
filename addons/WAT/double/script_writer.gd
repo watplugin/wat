@@ -25,9 +25,18 @@ func _extension_to_string(double) -> String:
 	
 func _constructor_to_string(parameters: String) -> String:
 	var constructor: String = ""
-	constructor += "\nfunc _init(%s).(%s):" % [parameters, parameters]
+	constructor += "\nfunc _init(%s).(%s):" % [parameters, _params_without_types(parameters)]
 	constructor += "\n\tpass\n"
 	return constructor
+	
+func _params_without_types(parameters: String) -> String:
+	var _param_names: String = ""
+	for param in parameters.split(","):
+		if ":" in param:
+			_param_names += "%s, " % param.substr(0, param.find(":")).strip_edges()
+		elif "=" in param:
+			_param_names += "%s, " % param.substr(0, param.find("=")).strip_edges()
+	return _param_names.rstrip(", ")
 
 func _method_to_string(id: int, method: Object) -> String:
 	var text: String

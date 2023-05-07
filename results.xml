@@ -1,24 +1,26 @@
 <?xml version="1.0" ?>
-<testsuites failures="0" name="TestXML" tests="1" time="0.18">
-	<testsuite name="Given a Test Double" failures="0"  tests="18" time="0">
-		<testcase name="When we call a method that we have stubbed to return a node" time="0"></testcase>
-		<testcase name="When we call a method that was stubbed to return different values based on argument patterns" time="0"></testcase>
-		<testcase name="When we add an doubled inner class to it" time="0"></testcase>
-		<testcase name="We can double methods with keyword automatically" time="0"></testcase>
-		<testcase name="When we call a method that we have dummied" time="0"></testcase>
-		<testcase name="When we call a method that was stubbed with a partial (ie using any()) argument pattern" time="0"></testcase>
-		<testcase name="When we call an add(x, y) method that we haven't directed" time="0"></testcase>
-		<testcase name="When we pass a funcref as a subcall that returns" time="0"></testcase>
-		<testcase name="When we pass an Object with a call_func function" time="0"></testcase>
-		<testcase name="When we call a method that we have stubbed to return true" time="0"></testcase>
-		<testcase name="When we call a method that we stubbed to call its super implementation by default" time="0"></testcase>
-		<testcase name="When we call a method that we are spying on" time="0"></testcase>
-		<testcase name="When we call a method that was stubbed with an argument pattern that includes a non-primitive object" time="0"></testcase>
-		<testcase name="When we dummy a method of a doubled inner class" time="0"></testcase>
-		<testcase name="When we double an inner class" time="0"></testcase>
+<testsuites failures="0" name="TestXML" tests="1" time="1.475">
+	<testsuite name="Given a Test Double" failures="0"  tests="20" time="0">
 		<testcase name="When we pass a funcref as a subcall" time="0"></testcase>
+		<testcase name="When we call a method that was stubbed with an argument pattern that includes a non-primitive object" time="0"></testcase>
+		<testcase name="When we add an doubled inner class to it" time="0"></testcase>
+		<testcase name="When we call a method that we have stubbed to return true" time="0"></testcase>
+		<testcase name="When we call a method that was stubbed with a partial (ie using any()) argument pattern" time="0"></testcase>
 		<testcase name="When we stub a method of a doubled inner class" time="0"></testcase>
+		<testcase name="When we double an inner class" time="0"></testcase>
+		<testcase name="When we pass in dependecies on double" time="0"></testcase>
+		<testcase name="When we pass a funcref as a subcall that returns" time="0"></testcase>
+		<testcase name="When we call a method that was stubbed to return different values based on argument patterns" time="0"></testcase>
+		<testcase name="We can double methods with keyword automatically" time="0"></testcase>
 		<testcase name="When we pass arguments to a method call that we are spying on" time="0"></testcase>
+		<testcase name="When we pass in dependecies on direct" time="0"></testcase>
+		<testcase name="When we pass an Object with a call_func function" time="0"></testcase>
+		<testcase name="When we call an add(x, y) method that we haven't directed" time="0"></testcase>
+		<testcase name="When we dummy a method of a doubled inner class" time="0"></testcase>
+		<testcase name="When we call a method that we have stubbed to return a node" time="0"></testcase>
+		<testcase name="When we call a method that we have dummied" time="0"></testcase>
+		<testcase name="When we call a method that we are spying on" time="0"></testcase>
+		<testcase name="When we call a method that we stubbed to call its super implementation by default" time="0"></testcase>
 	</testsuite>
 
 </testsuites>

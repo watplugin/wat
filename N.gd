@@ -3,38 +3,19 @@ extends Node
 var methods: Dictionary = {} # name: {}
 var is_built_in = false
 var inner_klass = ""
-var klass = "res://N.gd"
+#var klass = "res://N.gd"
+var klass = "res://OldExamples/Scripts/user.gd"
 var username
 
-#func _init(_username: String):
-#	username = _username
-#
+func _init(_username: String = "Hello"):
+	username = _username
 
-class Inner:
-	
-	func x() -> int:
-		return 0
-		
-	func y(a) -> Inner:
-		return Inner.new("")
-		
-	func z(a, b = "hello"):
-		pass
-		
-	func _init(username: String):
-		pass
-		
-class Sub extends Inner:
-	
-	func y(a):
-		return Inner.new("")
 
-func _ready():
-#	print(Inner.get_script_method_list())
-	for m in Inner.get_script_method_list():
-		print(m)
-		print("")
+
+
+#func _ready():
 #	parse_for_methods()
+#	var n = NotBase.new("")
 	
 func append_function(function: Dictionary) -> void:
 	if methods.has(function["name"]):

@@ -133,21 +133,21 @@ func test_When_we_double_a_method_with_a_keyword():
 
 	asserts.is_equal(director.double().pi(), true, "Then it is doubled successfully")
 
-#func test_When_we_pass_in_deps_on_double() -> void:
-#	describe("When we pass in dependecies on double")
-#
-#	director = direct.script("res://OldExamples/Scripts/user.gd")
-#	var double = director.double(["Jackie"])
-#
-#	asserts.is_equal(double.username, "Jackie", "Then we can double the object successfully")
-#
-#func test_When_we_pass_in_deps_on_direct() -> void:
-#	describe("When we pass in dependecies on direct")
-#
-#	director = direct.script("res://OldExamples/Scripts/user.gd", "", ["Jackie"])
-#	var double = director.double()
-#
-#	asserts.is_equal(double.username, "Jackie", "Then we can double the object successfully")
+func test_When_we_pass_in_deps_on_double() -> void:
+	describe("When we pass in dependecies on double")
+
+	director = direct.script("res://OldExamples/Scripts/user.gd")
+	var double = director.double(["Jackie"])
+
+	asserts.is_equal(double.username, "Jackie", "Then we can double the object successfully")
+
+func test_When_we_pass_in_deps_on_direct() -> void:
+	describe("When we pass in dependecies on direct")
+
+	director = direct.script("res://OldExamples/Scripts/user.gd", "", ["Jackie"])
+	var double = director.double()
+
+	asserts.is_equal(double.username, "Jackie", "Then we can double the object successfully")
 
 func test_When_we_pass_a_funcref_as_a_subcall():
 	describe("When we pass a funcref as a subcall")
