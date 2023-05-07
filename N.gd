@@ -13,9 +13,13 @@ func _init(_username: String = "Hello"):
 
 
 
-#func _ready():
+func _ready():
+	do()
 #	parse_for_methods()
 #	var n = NotBase.new("")
+
+master func do():
+	print("done")
 	
 func append_function(function: Dictionary) -> void:
 	if methods.has(function["name"]):

@@ -172,6 +172,7 @@ func script():
 	for klass in klasses:
 		klass.director.script()
 	script.source_code = SCRIPT_WRITER.new().write(self)
+	# TODO: Log doubled scripts
 	script.reload() # Necessary to load source code into memory
 	return script
 
