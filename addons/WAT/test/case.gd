@@ -38,7 +38,7 @@ func _on_asserted(assertion: Dictionary) -> void:
 	_methods.back()["passed"] += assertion["success"] as int # false = 0, true = 1
 	
 func calculate() -> void:
-	var pass_on_empty = load("res://addons/wat/settings.gd").pass_test_methods_with_no_assertions()
+	var pass_on_empty = load("res://addons/WAT/settings.gd").pass_test_methods_with_no_assertions()
 	for method in _methods:
 		if method.total == 0:
 			method.success = pass_on_empty
