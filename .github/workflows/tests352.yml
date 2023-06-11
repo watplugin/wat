@@ -17,6 +17,7 @@ jobs:
         run: |
           nuget restore
           mkdir -p .mono/assemblies/Debug
+          dir /usr/local/bin/GodotSharp/Api/Release
           cp /usr/local/bin/GodotSharp/Api/Release/* .mono/assemblies/Debug
       - name: Compile
         run: msbuild
