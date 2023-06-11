@@ -1,19 +1,14 @@
-name: "  Godot 3.5  "
+name: "  Godot 3.3.2  "
 
 on: [push, pull_request]
 
-env:
-  IMPORT_TIME: 10s
-
 jobs:
   Tests:
-    name: Run All Tests on 3.5.1
-    runs-on: ubuntu-latest
-    container: barichello/godot-ci:mono-3.5.1
+    name: Run All Tests on 3.3.2
+    runs-on:  ubuntu-latest
+    container: barichello/godot-ci:mono-3.3.2
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@v2
       - name: Install Dependencies
         run: |
           nuget restore
@@ -21,16 +16,11 @@ jobs:
           cp /usr/local/bin/GodotSharp/Api/Release/* .mono/assemblies/Debug
       - name: Compile
         run: msbuild
-
-      - name: Reimport Assets
-        run: timeout $IMPORT_TIME godot --editor || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
-
       - name: Run
-        run: godot addons/WAT/cli.tscn run=all
-
+        run: godot addons/WAT/cli.tscn run all
       - name: Upload Test Results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: Test Results
-          path: Tests/results.xml
+          path: tests/results.xml
