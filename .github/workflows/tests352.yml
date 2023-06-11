@@ -2,30 +2,35 @@ name: "  Godot 3.5  "
 
 on: [push, pull_request]
 
+env:
+  IMPORT_TIME: 10s
+
 jobs:
   Tests:
-    name: Run All Tests on 3.5
-    runs-on:  ubuntu-latest
-    container: barichello/godot-ci:mono-3.5
+    name: Run All Tests on 3.5.1
+    runs-on: ubuntu-latest
+    container: barichello/godot-ci:mono-3.5.1
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 6.0.x 
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Install Dependencies
         run: |
           nuget restore
           mkdir -p .mono/assemblies/Debug
-          dir /usr/local/bin/GodotSharp/Api/Release
           cp /usr/local/bin/GodotSharp/Api/Release/* .mono/assemblies/Debug
       - name: Compile
         run: msbuild
+
+      - name: Reimport Assets
+        run: timeout $IMPORT_TIME godot --editor || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
+
       - name: Run
-        run: godot addons/WAT/cli.tscn run all
+        run: godot addons/WAT/cli.tscn run=all
+
       - name: Upload Test Results
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Test Results
-          path: tests/results.xml
+          path: Tests/results.xml
