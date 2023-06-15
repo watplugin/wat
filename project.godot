@@ -77,7 +77,7 @@ _global_script_class_icons={
 Config/Test_Directory="res://tests"
 Config/Results_Directory="res://"
 Config/Test_Metadata_Directory="res://"
-Config/Tags=PoolStringArray( "SampleTag", "NotSoSample", "RealTagPinkySwear", "simple" )
+Config/Tags=PoolStringArray( "SampleTag", "NotSoSample", "RealTagPinkySwear", "simple", "NewTag" )
 Config/Cache_Tests=true
 Config/Window_Size=Vector2( 1280, 720 )
 Config/Minimize_Window_When_Running_Tests=false
@@ -94,7 +94,7 @@ config/icon="res://icon.svg"
 
 [editor_plugins]
 
-enabled=PoolStringArray(  )
+enabled=PoolStringArray( "res://addons/WAT/plugin.cfg" )
 
 [mono]
 

@@ -97,6 +97,7 @@ func _add_tag_run_menu() -> void:
 	_menu.add_child(tag_menu)
 	_menu.add_submenu_item("Tagged", tag_menu.name)
 	_menu.set_item_icon(tag_menu.get_index() - 1, icons.label)
+	tag_menu.connect("about_to_show", self, "_on_tag_run_menu_about_to_show", [tag_menu])
 	for tag in Settings.tags():
 		var options: PopupMenu = PopupMenu.new()
 		tag_menu.add_child(options)
@@ -120,6 +121,23 @@ func _add_tag_editor(script_menu: PopupMenu, script: Object) -> void:
 	script_menu.add_child(tagger)
 	script_menu.add_submenu_item("Edit Tags", tagger.name)
 	script_menu.set_item_icon(2, icons.label)
+	
+func _on_tag_run_menu_about_to_show(tag_run_menu: PopupMenu) -> void:
+	tag_run_menu.clear()
+	tag_run_menu.set_as_minsize()
+	var c: int = 0
+	for tag in Settings.tags():
+		var options: PopupMenu = PopupMenu.new()
+		tag_run_menu.add_child(options)
+		tag_run_menu.add_submenu_item(tag, options.name)
+		tag_run_menu.set_item_icon(c, icons.label)
+		options.add_item("Run")
+		options.add_item("Debug")
+		options.set_item_icon(0, icons.play)
+		options.set_item_icon(1, icons.play_debug)
+		options.set_item_disabled(1, not Engine.is_editor_hint())
+		options.connect("index_pressed", self, "_on_tag_pressed", [tag])
+		c += 1
 	
 func _on_tag_editor_about_to_show(tagger: PopupMenu, script: Object) -> void:
 	tagger.clear()
