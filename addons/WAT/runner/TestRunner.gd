@@ -32,6 +32,7 @@ func _run(thread: Thread) -> void:
 	for test in thread.tests:
 		results.append(yield(thread.controller.run(test), COMPLETED))
 	thread.controller.queue_free()
+	thread = null
 	emit_signal(COMPLETED, results)
 
 func _repeat(tests: Array, repeat: int) -> Array:
