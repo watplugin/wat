@@ -92,9 +92,17 @@ config/name="WAT5"
 run/main_scene="res://addons/WAT/gui.tscn"
 config/icon="res://icon.svg"
 
+[debug]
+
+settings/stdout/verbose_stdout=true
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/WAT/plugin.cfg" )
+
+[global]
+
+verbose=false
 
 [mono]
 

@@ -21,6 +21,7 @@ func _ready() -> void:
 
 	
 func get_run(args: Array, repeat: int = 0, threads: int = 0):
+	OS.set_environment("WAT_RUN_ALL_MODE", "-1")
 	for idx in args.size() - 1:
 		if args[idx] == "run":
 			match args[idx + 1]:

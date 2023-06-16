@@ -116,6 +116,7 @@ namespace WAT
 		}
 		
 		protected bool IsAnyRunAll() {
+			Console.WriteLine(OS.GetEnvironment("WAT_RUN_ALL_MODE"));
 			int result = OS.GetEnvironment("WAT_RUN_ALL_MODE").ToInt();
 			return (result == (int) RunAll.NORMAL_RUN_ALL || result == (int) RunAll.DEBUG_RUN_ALL);
 		}
@@ -226,7 +227,7 @@ namespace WAT
 			EmitSignal(nameof(EventRaised), parameters);
 		}
 
-		protected class TestEventData : Godot.Object
+		protected class TestEventData : Godot.Reference
 		{
 			public object Sender { get; }
 			public EventArgs Arguments { get; }
