@@ -81,3 +81,6 @@ func load_path(resource_path: String, refresh: bool = true) -> void:
 		# .gd scripts need to be reloaded on filesystem update.
 		script_resource = ResourceLoader.load(path, "Script",
 				refresh and not _is_valid_csharp())
+
+func clear():
+	_clear_resource()

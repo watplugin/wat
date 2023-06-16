@@ -97,6 +97,7 @@ func _get_test_script(p: String) -> TestScript:
 			if p.ends_with(".gd") or p.ends_with(".gdc"):
 				test_script.time = YieldCalculator.calculate_yield_time(
 						test_validator.script_resource, test_script.names.size())
+	test_validator.clear()
 	return test_script
 
 func clear() -> void:

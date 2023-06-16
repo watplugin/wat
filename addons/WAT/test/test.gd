@@ -109,6 +109,8 @@ func _ready() -> void:
 	
 func _notification(what):
 	if what == NOTIFICATION_PREDELETE or what == NOTIFICATION_EXIT_TREE:
+		if _watcher != null and is_instance_valid(_watcher):
+			_watcher.clear()
 		recorder = null
 		if recorder != null and is_instance_valid(recorder):
 			recorder.queue_free()
@@ -123,6 +125,7 @@ func _notification(what):
 			_yielder.queue_free()
 		_case = null
 		_methods = []
+		queue_free()
 
 func start():
 	pass

@@ -1,6 +1,9 @@
 tool
 extends PanelContainer
 
+var n = {}
+
+
 const FileSystem: GDScript = preload("res://addons/WAT/filesystem/filesystem.gd")
 const SceneTreeAdjuster: GDScript = preload("res://addons/WAT/ui/scaling/scene_tree_adjuster.gd")
 const Settings: GDScript = preload("res://addons/WAT/settings.gd")
