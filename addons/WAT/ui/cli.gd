@@ -77,7 +77,6 @@ func run(data: Reference, repeats: int = 0, threads: int = 0) -> void:
 	
 	_runner = TestRunner.new()
 	add_child(_runner)
-	var x = load("res://addons/WAT/ui/results/tab_container.gd").new()
 	var results: Array = yield(_runner.run(tests, repeats, threads), "completed")
 	_runner.queue_free()
 	

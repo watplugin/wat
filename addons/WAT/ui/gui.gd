@@ -137,7 +137,3 @@ func _on_test_run_finished(results: Array) -> void:
 	Summary.summarize(results)
 	JUnitXML.write(results, Settings, Summary.time_taken)
 	_filesystem.failed.update(results)
-	
-func _notification(what):
-	if what == NOTIFICATION_WM_QUIT_REQUEST:
-		queue_free()

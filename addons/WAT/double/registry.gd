@@ -1,4 +1,4 @@
-extends Object
+extends Reference
 
 var test_directors: Dictionary = {}
 
@@ -19,8 +19,7 @@ func clear() -> void:
 	var directors = test_directors.values()
 	while not directors.empty():
 		var director = directors.pop_back()
-		director.clear()
+		if director != null and is_instance_valid(director):
+			director.clear()
 
-func _notification(what):
-	if what == NOTIFICATION_PREDELETE:
-		clear()
+

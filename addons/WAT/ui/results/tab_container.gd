@@ -90,3 +90,6 @@ func _on_view_pressed(option: int) -> void:
 		EXPAND_FAILURES:
 			_expand_failures()
 
+func _notification(what):
+	if what == NOTIFICATION_PREDELETE or what == NOTIFICATION_EXIT_TREE:
+		print("QUTTING")

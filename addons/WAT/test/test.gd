@@ -13,8 +13,8 @@ var rerun_method: bool
 var p: Dictionary
 var _last_assertion_passed: bool = false
 
-var recorder: Script = preload("res://addons/WAT/test/recorder.gd")
-var any: Script = preload("res://addons/WAT/test/any.gd")
+var recorder
+var any
 var asserts: Assertions
 var direct
 var _parameters
@@ -94,6 +94,8 @@ func _ready() -> void:
 	_watcher = preload("res://addons/WAT/test/watcher.gd").new()
 	_registry = preload("res://addons/WAT/double/registry.gd").new()
 	_yielder = preload("res://addons/WAT/test/yielder.gd").new()
+	recorder = preload("res://addons/WAT/test/recorder.gd")
+	any = preload("res://addons/WAT/test/any.gd")
 
 	p = _parameters.parameters
 	direct.registry = _registry
@@ -104,6 +106,23 @@ func _ready() -> void:
 	connect("described", _case, "_on_test_method_described")
 	asserts.connect("asserted", _case, "_on_asserted")
 	run()
+	
+func _notification(what):
+	if what == NOTIFICATION_PREDELETE or what == NOTIFICATION_EXIT_TREE:
+		recorder = null
+		if recorder != null and is_instance_valid(recorder):
+			recorder.queue_free()
+		any = null
+		asserts = null
+		if direct != null and is_instance_valid(direct):
+			direct.queue_free()
+		_parameters = null
+		_watcher = null
+		_registry = null
+		if _yielder != null and is_instance_valid(_yielder):
+			_yielder.queue_free()
+		_case = null
+		_methods = []
 
 func start():
 	pass

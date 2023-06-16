@@ -64,3 +64,7 @@ func _get_exported_variable_values(instance) -> Dictionary:
 
 func _is_exported_variable(usage: int) -> bool:
 	return usage == PROPERTY_USAGE_DEFAULT + PROPERTY_USAGE_SCRIPT_VARIABLE 
+
+func _notification(what):
+	if what == NOTIFICATION_PREDELETE:
+		clear()
