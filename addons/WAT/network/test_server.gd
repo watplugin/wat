@@ -1,68 +1,29 @@
 tool
 extends "res://addons/WAT/network/test_network.gd"
 
-signal network_peer_connected
-signal results_received
+# -> Create Test Suite
+# -> Return Suite Created
+# -> Run Test Method
+# <- Return Test Result
 
-enum STATE { SENDING, RECEIVING, DISCONNECTED }
+# TCP stuff
+var server: TCP_Server = TCP_Server.new()
+var client: StreamPeerTCP
+var port = 8080
 
-var _peer_id: int
-# Store incoming cases from client in case of abrupt termination.
-var caselist: Array = []
-var results_view: TabContainer
-var status: int = STATE.DISCONNECTED
+var buffer = ["Request"]
 
 func _ready() -> void:
-	if not Engine.is_editor_hint():
-		return
-	custom_multiplayer.connect("network_peer_connected", self, "_on_network_peer_connected")
-	custom_multiplayer.connect("network_peer_disconnected", self, "_on_network_peer_disconnected")
-	if _error(_peer.create_server(PORT, MAXCLIENTS)) == OK:
-		custom_multiplayer.network_peer = _peer
-	
-func _on_network_peer_connected(id: int) -> void:
-	_peer_id = id
-	# Timeout is 10 minutes.
-	_peer.set_peer_timeout(id, 600000, 601000, 602000)
-	emit_signal("network_peer_connected")
+	server.listen(port, "127.0.0.1")
 
-func _on_network_peer_disconnected(_id: int) -> void:
-	if status == STATE.SENDING:
-		emit_signal("results_received", caselist)
-	caselist.clear()
-	status = STATE.DISCONNECTED
-
-func kick_current_peer():
-	var kicked = false
-	if _peer_id in custom_multiplayer.get_network_connected_peers():
-		_on_results_received_from_client([])
-		kicked = true
-	return kicked
-
-func send_tests(testdir: Array, repeat: int, thread_count: int) -> void:
-	status = STATE.SENDING
-	rpc_id(_peer_id, "_on_tests_received_from_server", testdir, repeat, thread_count)
-
-master func _on_results_received_from_client(results: Array = []) -> void:
-	status = STATE.RECEIVING
-	emit_signal("results_received", results)
-	_peer.disconnect_peer(_peer_id, true)
-
-master func _on_test_script_started(data: Dictionary) -> void:
-	results_view.on_test_script_started(data)
-	
-master func _on_test_script_finished(data: Dictionary) -> void:
-	results_view.on_test_script_finished(data)
-	caselist.append(data)
-
-master func _on_test_method_started(data: Dictionary) -> void:
-	results_view.on_test_method_started(data)
-	
-master func _on_test_method_finished(data: Dictionary) -> void:
-	results_view.on_test_method_finished(data)
-
-master func _on_asserted(data: Dictionary) -> void:
-	results_view.on_asserted(data)
-	
-master func _on_test_method_described(data: Dictionary) -> void:
-	results_view.on_test_method_described(data)
+func _process(delta: float) -> void:
+	if server.is_connection_available():
+		client = server.take_connection()
+	if client and client.get_available_bytes() > 0:
+		print(client.get_utf8_string())
+	if client and not buffer.empty():
+		client.put_utf8_string(buffer.pop_back())
+		
+func _exit_tree() -> void:
+	client.disconnect_from_host()
+	server.stop()

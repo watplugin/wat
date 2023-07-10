@@ -58,7 +58,7 @@ func setup_editor_context(plugin, goto_func: FuncRef, filesystem: Reference) -> 
 	TestMenu.filesystem = _filesystem
 	_filesystem.update()
 	TestMenu.update_menus()
-	Server.results_view = Results
+	#Server.results_view = Results
 
 # Setup tests for display. Returns false if run should be terminated.
 func _setup_display(tests: Array) -> bool:
@@ -103,19 +103,19 @@ func _on_debug_pressed(data = _filesystem.root, run_mode: int = RUN_ALL.NOT_RUN_
 	Results.clear()
 	data = build(data)
 
-	if Server.kick_current_peer():
-			_plugin.get_editor_interface().stop_playing_scene()
+#	if Server.kick_current_peer():
+#			_plugin.get_editor_interface().stop_playing_scene()
 	var tests: Array = data.get_tests()
 	if _setup_display(tests):
 		_plugin.get_editor_interface().play_custom_scene(
 				"res://addons/WAT/runner/TestRunner.tscn")
 		if Settings.is_bottom_panel():
 			_plugin.make_bottom_panel_item_visible(self)
-		yield(Server, "network_peer_connected")
-		Server.send_tests(tests, Repeats.value, Threads.value)
-		var results: Array = yield(Server, "results_received")
-		_plugin.get_editor_interface().stop_playing_scene()
-		_on_test_run_finished(results)
+	#	yield(Server, "network_peer_connected")
+#		Server.send_tests(tests, Repeats.value, Threads.value)
+#		var results: Array = yield(Server, "results_received")
+#		_plugin.get_editor_interface().stop_playing_scene()
+#		_on_test_run_finished(results)
 
 func build(data = null):
 	if not Engine.is_editor_hint():
